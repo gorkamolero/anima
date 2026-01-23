@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+*.mp4
+*.mov
+
+# Generated previews
+*_preview.gif
+*_preview.mov
+
+# Turso
+*.db
+*.db-journal
+.env
+
+# Private content (keep out of open source)
+adventures/shadow-over-innsmouth/
+docs/art/
+*.txt
+prd.json
+prd.json.broken
+progress.txt
+prompt.md
+tasks/

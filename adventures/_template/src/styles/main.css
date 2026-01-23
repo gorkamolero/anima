@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Scan the engine package for Tailwind classes */
+@source "../../../packages/anima/src";
+
+/* Game-specific overrides */
+#game-container {
+	cursor: crosshair;
+}

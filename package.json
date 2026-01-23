@@ -1,0 +1,22 @@
+{
+  "name": "anima",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Point-and-click adventure game engine",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @anima/test-game dev\" \"pnpm --filter api dev\"",
+    "build": "pnpm --filter @anima/test-game build && pnpm --filter api build",
+    "lint": "pnpm --filter @anima/test-game lint && pnpm --filter api lint",
+    "typecheck": "pnpm --filter @anima/test-game typecheck && pnpm --filter api typecheck",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.16",
+    "concurrently": "^9.1.0",
+    "happy-dom": "^20.0.11",
+    "terser": "^5.46.0",
+    "vitest": "^4.0.16"
+  }
+}

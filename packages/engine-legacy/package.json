@@ -1,0 +1,44 @@
+{
+	"name": "@anima/engine",
+	"version": "0.1.0",
+	"description": "Point-and-click adventure game engine",
+	"type": "module",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./scenes": "./src/scenes/index.ts",
+		"./characters": "./src/characters/index.ts",
+		"./hotspots": "./src/hotspots/index.ts",
+		"./dialogue": "./src/dialogue/index.ts",
+		"./editor": "./src/editor/index.ts",
+		"./state": "./src/state/index.ts",
+		"./ui": "./src/ui/index.ts",
+		"./inventory": "./src/inventory/index.ts",
+		"./audio": "./src/audio/index.ts",
+		"./transitions": "./src/transitions/index.ts",
+		"./groundline": "./src/groundline/index.ts"
+	},
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write ."
+	},
+	"peerDependencies": {
+		"phaser": "^3.90.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"dependencies": {
+		"inkjs": "^2.3.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.9",
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3",
+		"phaser": "^3.90.0",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3",
+		"typescript": "~5.7.2"
+	}
+}

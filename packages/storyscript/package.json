@@ -1,0 +1,27 @@
+{
+  "name": "@anima/storyscript",
+  "version": "0.1.0",
+  "description": "Parser for StoryScript adventure game DSL",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "parse": "tsx src/cli.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "parser",
+    "dsl",
+    "adventure-game",
+    "storyscript"
+  ],
+  "author": "Ajna Games",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.19.3"
+  }
+}
