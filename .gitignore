@@ -34,13 +34,4 @@ npm-debug.log*
 *.db
 *.db-journal
 .env
-
-# Private content (keep out of open source)
-adventures/shadow-over-innsmouth/
-docs/art/
-*.txt
-prd.json
-prd.json.broken
-progress.txt
-prompt.md
-tasks/
+.venv/

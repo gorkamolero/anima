@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
 import {
+	type EditorCallbacks,
 	EditorPanel,
 	type SelectedInfo,
-	type EditorCallbacks,
 } from "@anima/engine";
+import { useCallback, useEffect, useState } from "react";
 
 interface EditorInstance {
 	copySelectedJSON: () => void;

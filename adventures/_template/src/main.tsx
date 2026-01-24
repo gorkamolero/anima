@@ -1,7 +1,7 @@
-import { StrictMode, useState, useEffect } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import StartGame from "./game/main";
 import { GameUI } from "./GameUI";
+import StartGame from "./game/main";
 import "./styles/main.css";
 
 declare global {

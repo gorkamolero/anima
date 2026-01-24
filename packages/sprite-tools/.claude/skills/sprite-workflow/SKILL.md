@@ -507,3 +507,29 @@ sources/
 | Style Edit | ChatGPT (web) | Upload reference image |
 | Pose Change | ChatGPT (web) | "Describe First" technique |
 | Video Gen | Veo 3.1 | Only good rubberhose animation |
+
+---
+
+## Working with Images
+
+### Always Create Previews
+
+When checking generated images, **always create a lower-quality preview first** to save bandwidth and context:
+
+```bash
+magick input.png -resize 800x -quality 60 input-preview.jpg
+```
+
+Then view the preview. Only load the full-resolution image when needed for final review.
+
+### Prompting for Image-to-Image
+
+**Don't redescribe the image** - the model already sees it. Just say what you want done:
+
+```
+# BAD - wastes tokens, confuses the model
+"This is a bus station with a bench, suitcase, vintage bus, wooden building..."
+
+# GOOD - direct instruction
+"Flatten this to side-on 2D view. Keep same style and colors."
+```
