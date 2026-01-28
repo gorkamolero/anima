@@ -30,6 +30,8 @@ import sys
 import json
 import time
 import logging
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta
 from pathlib import Path
 from PIL import Image
@@ -220,7 +222,7 @@ def process_single_grid(grid_path: Path, output_dir: Path, delay: float, api_key
     }
 
 
-def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: float = 2.0, api_key: str = None, max_retries: int = 3, retry_failed: bool = False, call_timeout: int = 300):
+def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: float = 2.0, api_key: str = None, max_retries: int = 3, retry_failed: bool = False, call_timeout: int = 300, concurrency: int = 1):
     """Process grids through Nano Banana."""
     
     # Get API key
@@ -272,36 +274,61 @@ def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: f
         grids_to_process = grids_to_process[:limit]
     
     total = len(grids_to_process)
-    log.info(f"Processing {total} grids (delay: {delay}s, retries: {max_retries}, timeout: {call_timeout}s/call)")
+    effective_concurrency = min(concurrency, total) if concurrency > 1 else 1
+    log.info(f"Processing {total} grids (concurrency: {effective_concurrency}, delay: {delay}s, retries: {max_retries}, timeout: {call_timeout}s/call)")
     pipeline_start = time.monotonic()
     
     results = list(existing_results)
+    results_lock = threading.Lock()
     call_times = []
+    completed_count = [0]  # mutable for closure
     
-    for i, grid_name in enumerate(grids_to_process):
+    def _process_grid(idx_and_name):
+        idx, grid_name = idx_and_name
         grid_path = grids_dir / grid_name
         
-        log.info(f"━━━ [{i+1}/{total}] {grid_name} ━━━")
+        log.info(f"━━━ [{idx+1}/{total}] {grid_name} ━━━")
         
         result = process_single_grid(grid_path, output_dir, delay, api_key, max_retries, call_timeout)
         
-        # Track timing for ETA
-        if result.get("elapsed_s"):
-            call_times.append(result["elapsed_s"])
-            avg_time = sum(call_times) / len(call_times)
-            remaining = total - (i + 1)
-            eta_s = avg_time * remaining
-            log.info(f"Progress: {i+1}/{total} done | avg {avg_time:.0f}s/grid | ETA: {timedelta(seconds=int(eta_s))}")
+        with results_lock:
+            completed_count[0] += 1
+            done = completed_count[0]
+            
+            # Track timing for ETA
+            if result.get("elapsed_s"):
+                call_times.append(result["elapsed_s"])
+                avg_time = sum(call_times) / len(call_times)
+                remaining = total - done
+                eta_s = avg_time * remaining / max(effective_concurrency, 1)
+                log.info(f"Progress: {done}/{total} done | avg {avg_time:.0f}s/grid | ETA: {timedelta(seconds=int(eta_s))}")
+            
+            # Update or add result
+            existing_idx = next((j for j, r in enumerate(results) if r["grid"] == grid_name), None)
+            if existing_idx is not None:
+                results[existing_idx] = result
+            else:
+                results.append(result)
         
-        # Update or add result
-        existing_idx = next((j for j, r in enumerate(results) if r["grid"] == grid_name), None)
-        if existing_idx is not None:
-            results[existing_idx] = result
-        else:
-            results.append(result)
-        
-        if i < len(grids_to_process) - 1:
-            time.sleep(delay)
+        return result
+    
+    if effective_concurrency > 1:
+        with ThreadPoolExecutor(max_workers=effective_concurrency) as executor:
+            futures = {
+                executor.submit(_process_grid, (i, name)): name 
+                for i, name in enumerate(grids_to_process)
+            }
+            for future in as_completed(futures):
+                try:
+                    future.result()
+                except Exception as e:
+                    grid_name = futures[future]
+                    log.error(f"Grid {grid_name} raised exception: {e}")
+    else:
+        for i, grid_name in enumerate(grids_to_process):
+            _process_grid((i, grid_name))
+            if i < len(grids_to_process) - 1:
+                time.sleep(delay)
     
     pipeline_elapsed = time.monotonic() - pipeline_start
     log.info(f"Pipeline complete: {timedelta(seconds=int(pipeline_elapsed))} total")
@@ -344,6 +371,7 @@ def main():
     parser.add_argument("--retries", "-r", type=int, default=3, help="Max retries per grid if eval fails (default: 3)")
     parser.add_argument("--retry-failed", action="store_true", help="Only retry grids that failed in previous run")
     parser.add_argument("--timeout", "-t", type=int, default=300, help="Timeout per API call in seconds (default: 300)")
+    parser.add_argument("--concurrency", "-c", type=int, default=3, help="Parallel grid processing (default: 3)")
     
     args = parser.parse_args()
     
@@ -358,7 +386,7 @@ def main():
         log.error(f"Nano Banana script not found at {NANO_BANANA_SCRIPT}")
         sys.exit(1)
     
-    process_grids(grids_dir, output_dir, args.limit, args.delay, max_retries=args.retries, retry_failed=args.retry_failed, call_timeout=args.timeout)
+    process_grids(grids_dir, output_dir, args.limit, args.delay, max_retries=args.retries, retry_failed=args.retry_failed, call_timeout=args.timeout, concurrency=args.concurrency)
 
 
 if __name__ == "__main__":

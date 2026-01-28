@@ -54,7 +54,7 @@ uv run scripts/create_grids.py "$OUTPUT/loop.mp4" -o "$OUTPUT/grids" --frames "$
 
 # Step 2: Nano Banana
 echo -e "\n[2/4] Nano Banana — Generating white/black versions..."
-uv run scripts/batch_nano_banana.py "$OUTPUT/grids" -o "$OUTPUT/processed"
+uv run scripts/batch_nano_banana.py "$OUTPUT/grids" -o "$OUTPUT/processed" --concurrency 5 --delay 2
 
 # Step 3: Extract Matte
 echo -e "\n[3/4] Extract Matte — Calculating alpha..."

@@ -61,7 +61,7 @@ def run_step(name: str, cmd: list, check_output: Path = None, cwd: Path = None) 
 def run_loopycut(video: Path, output_dir: Path) -> dict:
     """Run loopycut to detect loop and return metadata."""
     loop_video = output_dir / "loop.mp4"
-    metadata_file = output_dir / "loop.mp4.json"
+    metadata_file = output_dir / "loop.json"
     
     loopycut_cli = LOOPYCUT_DIR / "cli.py"
     
@@ -110,7 +110,8 @@ def main():
         print(f"\n✗ Loopycut failed - cannot continue without loop detection")
         sys.exit(1)
     
-    frame_count = loop_meta.get("frame_count", loop_meta.get("total_frames"))
+    loop_info = loop_meta.get("loop_info", {})
+    frame_count = loop_info.get("frame_count") or loop_meta.get("frame_count", loop_meta.get("total_frames"))
     if not frame_count:
         print(f"\n✗ Loopycut metadata missing frame_count")
         sys.exit(1)

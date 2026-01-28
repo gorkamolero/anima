@@ -25,6 +25,8 @@ import base64
 import argparse
 import subprocess
 import os
+import sys
+import json
 import time
 from pathlib import Path
 from PIL import Image
@@ -35,62 +37,49 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 MODEL_VERSION = "fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c003"
 API_URL = "https://api.replicate.com/v1/predictions"
 
+# LoopyCut integration
+SCRIPTS_DIR = Path(__file__).parent
+LOOPYCUT_DIR = SCRIPTS_DIR.parent / "tools" / "loopycut"
+LOOPYCUT_VENV = LOOPYCUT_DIR / ".venv" / "bin" / "python"
+LOOPYCUT_PYTHON = str(LOOPYCUT_VENV) if LOOPYCUT_VENV.exists() else sys.executable
+
+
+def run_loopycut(video: Path, output_dir: Path) -> dict:
+    """Run loopycut to detect loop and return metadata. Required step."""
+    loop_video = output_dir / "loop.mp4"
+    metadata_file = output_dir / "loop.json"
+    loopycut_cli = LOOPYCUT_DIR / "cli.py"
+
+    cmd = [
+        LOOPYCUT_PYTHON, str(loopycut_cli),
+        str(video), str(loop_video),
+        "--save-metadata",
+        "--no-audio"
+    ]
+
+    print(f"\n{'='*60}")
+    print(f"STEP: LoopyCut (Detect Loop)")
+    print(f"{'='*60}")
+    print(f"$ {' '.join(cmd)}\n")
+
+    result = subprocess.run(cmd)
+    if result.returncode != 0:
+        print(f"\n✗ LoopyCut failed (exit {result.returncode})")
+        return None
+
+    if not metadata_file.exists():
+        print(f"\n✗ LoopyCut metadata not found: {metadata_file}")
+        return None
+
+    print(f"\n✓ LoopyCut complete")
+    with open(metadata_file) as f:
+        return json.load(f)
+
 def get_replicate_token():
     token = os.environ.get("REPLICATE_API_TOKEN")
     if not token:
         raise ValueError("REPLICATE_API_TOKEN environment variable required")
     return token
-
-
-def detect_loop(video_path: Path, min_frames: int = 8, max_frames: int = 120) -> int | None:
-    """
-    Detect seamless loop in video using frame similarity.
-    Returns number of frames in the loop, or None if no loop detected.
-    """
-    import cv2
-    import numpy as np
-    
-    cap = cv2.VideoCapture(str(video_path))
-    if not cap.isOpened():
-        return None
-    
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    if total_frames < min_frames:
-        cap.release()
-        return total_frames
-    
-    # Read all frames (or up to max)
-    frames = []
-    while len(frames) < min(total_frames, max_frames):
-        ret, frame = cap.read()
-        if not ret:
-            break
-        # Downsample for faster comparison
-        small = cv2.resize(frame, (64, 64))
-        frames.append(small.astype(np.float32))
-    cap.release()
-    
-    if len(frames) < min_frames:
-        return len(frames)
-    
-    # Compare first frame to all others to find loop point
-    first = frames[0]
-    best_match = None
-    best_score = float('inf')
-    
-    for i in range(min_frames, len(frames)):
-        diff = np.mean(np.abs(frames[i] - first))
-        if diff < best_score:
-            best_score = diff
-            best_match = i
-    
-    # Threshold: if match is good enough, we found a loop
-    if best_score < 10.0:  # Tunable threshold
-        print(f"  Loop detected: {best_match} frames (similarity score: {best_score:.2f})")
-        return best_match
-    
-    print(f"  No clear loop detected (best match at frame {best_match}, score {best_score:.2f})")
-    return None
 
 
 def detect_letterbox(video_path: Path) -> tuple[int, int]:
@@ -363,23 +352,34 @@ def main(args):
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Step 0: Detect loop (if requested)
+    # Step 0: LoopyCut (detect loop) - REQUIRED for video input
     frame_limit = args.frames
-    if args.detect_loop and input_path.is_file() and frame_limit is None:
-        print(f"Detecting loop in {input_path}...")
-        loop_frames = detect_loop(input_path)
-        if loop_frames:
-            frame_limit = loop_frames
-            print(f"  Will process {frame_limit} frames")
-        else:
-            print("  No loop detected, processing all frames")
-    
+    source_video = input_path
+
+    if input_path.is_file() and not args.skip_loopycut:
+        loop_meta = run_loopycut(input_path, output_dir)
+        if not loop_meta:
+            print(f"\n✗ LoopyCut failed — cannot continue without loop detection")
+            sys.exit(1)
+
+        loop_info = loop_meta.get("loop_info", {})
+        loop_frame_count = loop_info.get("frame_count") or loop_meta.get("frame_count")
+        if loop_frame_count:
+            print(f"\n→ Detected loop: {loop_frame_count} frames")
+            if frame_limit is None:
+                frame_limit = loop_frame_count
+
+        # Use the trimmed loop video as source
+        loop_video = output_dir / "loop.mp4"
+        if loop_video.exists():
+            source_video = loop_video
+
     # Step 1: Get frames
-    if input_path.is_file():
-        print(f"Extracting frames from {input_path}...")
+    if source_video.is_file():
+        print(f"Extracting frames from {source_video}...")
         frames_dir = output_dir / "frames-raw"
         count, crop_top, crop_bottom = extract_frames(
-            input_path, frames_dir,
+            source_video, frames_dir,
             args.crop_top, args.crop_bottom,
             auto_crop=not args.no_auto_crop
         )
@@ -472,8 +472,8 @@ if __name__ == "__main__":
     parser.add_argument("--crop-bottom", type=int, default=None, help="Pixels to crop from bottom (auto-detected if not set)")
     parser.add_argument("--no-auto-crop", action="store_true", help="Disable auto letterbox detection")
     parser.add_argument("--bg-tolerance", type=int, default=15, help="Background color tolerance for alpha fix (default: 15)")
-    parser.add_argument("--detect-loop", action="store_true", help="Auto-detect loop and only process loop frames")
-    parser.add_argument("--frames", type=int, default=None, help="Limit to N frames (overrides --detect-loop)")
+    parser.add_argument("--skip-loopycut", action="store_true", help="Skip LoopyCut loop detection (use all frames)")
+    parser.add_argument("--frames", type=int, default=None, help="Limit to N frames")
     
     args = parser.parse_args()
     main(args)

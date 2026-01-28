@@ -51,7 +51,7 @@ echo "→ Detected $FRAMES frames"
 # Step 1: Run pipeline_a.py
 echo -e "\n[1/1] Pipeline A — Running rembg + fix_alpha..."
 cd "$SPRITE_TOOLS"
-uv run scripts/pipeline_a.py "$OUTPUT/loop.mp4" "$OUTPUT/final" --concurrency 5
+uv run scripts/pipeline_a.py "$OUTPUT/loop.mp4" "$OUTPUT/final" --concurrency 5 --skip-loopycut
 
 echo -e "\n═══════════════════════════════════════════════════════════"
 echo "  DONE: $OUTPUT/final"
