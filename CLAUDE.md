@@ -92,14 +92,16 @@ The critical workflow: **AI Image → AI Video → Sprite Sheet**
    - `sora-2-pro-i2v`: Motion (best, 70 cr/s, 4/8/12s only)
 3. **Sprite Sheet** - video2sprite.sh converts video to Phaser-ready assets
 
-## Art Style Constraint
+## Art Style
 
-**Ashley's paintings define the visual identity. AI generation must match exactly:**
-- 1930s Fleischer "Rubber Hose" + Tibetan Thangka fusion
-- Clean black ink outlines, consistent weight
-- Opaque vibrant fills (acrylic/gouache look, NOT digital gradient)
+**⚠️ ALWAYS check `adventures/<game>/ART-STYLE.md` first** when generating assets for a specific adventure. Each game has its own visual identity.
 
-If AI output looks generic: REJECT IT. Fallback to extracting from Ashley's paintings.
+Studio defaults (when no ART-STYLE.md exists):
+- Opaque vibrant fills (acrylic/gouache look, NOT digital gradients)
+- Bold, confident color choices
+- Avoid generic AI "smoothness" — each game should have visual personality
+
+When creating a new adventure, copy `_template/` and create an `ART-STYLE.md` defining the game's visual language.
 
 ## StoryScript
 

@@ -1,0 +1,358 @@
+# AnimA Forge: Agent-Led Scene Creation
+#
+# Orchestrates the full pipeline from description to playable scene:
+# 1. Generate background image
+# 2. Generate character reference
+# 3. Create walking animation video
+# 4. Process into spritesheet
+# 5. Write scene definition
+#
+# Usage: prose run anima-forge.prose
+#
+# Requirements:
+# - GOOGLE_API_KEY (for Veo/Gemini)
+# - ImageMagick, FFmpeg, rembg installed
+
+input scene_description: "Describe the scene you want to create"
+input character_description: "Describe the character for this scene"
+input scene_id: "Scene identifier (e.g., 'tavern', 'dock')"
+
+# =============================================================================
+# AGENTS
+# =============================================================================
+
+# The Director: Orchestrates the creative vision
+agent director:
+  model: opus
+  persist: true
+  prompt: """
+You are the AnimA Director. You oversee scene creation for point-and-click
+adventure games in the style of LucasArts classics.
+
+Art style (CRITICAL):
+- 1930s Fleischer "Rubber Hose" + Tibetan Thangka fusion
+- Clean black ink outlines, consistent weight
+- Opaque vibrant fills (acrylic/gouache look, NOT digital gradient)
+- If output looks generic AI: REJECT IT
+
+Your role:
+- Refine prompts for image/video generation
+- Ensure visual consistency across assets
+- Make creative decisions when the path forks
+- Quality control on all outputs
+"""
+
+# The Renderer: Generates images via Gemini/GPT
+agent renderer:
+  model: sonnet
+  prompt: """
+You generate images for AnimA scenes using AI image generation tools.
+
+You have access to:
+- Nano Banana (Gemini) via the nano-banana-pro skill
+- GPT-5 image generation
+
+For backgrounds: Wide aspect ratio, detailed environments
+For characters: Character sheet format, multiple angles/poses
+
+Always include the art style constraints in your prompts:
+- 1930s Fleischer rubber hose animation style
+- Clean black ink outlines
+- Opaque gouache-like fills
+- NO digital gradients, NO photorealistic elements
+"""
+
+# The Animator: Creates video and processes sprites
+agent animator:
+  model: sonnet
+  prompt: """
+You create animations and process them into spritesheets.
+
+Tools at your disposal (in packages/sprite-tools/):
+- sprite-factory.py: Full pipeline from image to spritesheet
+- video-generate.ts: Generate video from still image
+- split-characters.sh: Isolate sprites from backgrounds
+
+Workflow:
+1. Take a character reference image
+2. Generate a walking/idle animation video
+3. Extract frames and create spritesheet
+4. Remove background for transparency
+
+Output format: Phaser-compatible spritesheet with JSON atlas
+"""
+
+# The Scribe: Writes StoryScript scene definitions
+agent scribe:
+  model: sonnet
+  prompt: """
+You write StoryScript (.story) scene definitions for AnimA.
+
+StoryScript format:
+- SCENE block with location, mood, description
+- HOTSPOT blocks for interactive elements
+- ON_ENTER hooks for scene entrance
+- DIALOGUE blocks for conversations
+
+Keep descriptions evocative but concise. 
+Write in the voice of classic adventure games.
+"""
+
+# =============================================================================
+# PHASE 1: CREATIVE DIRECTION
+# =============================================================================
+
+session: director
+  prompt: """
+New scene request:
+
+Scene: {scene_description}
+Character: {character_description}
+ID: {scene_id}
+
+Analyze this request and produce:
+1. A refined background prompt (for image generation)
+2. A refined character prompt (for character sheet)
+3. Key hotspots this scene should have
+4. The mood and lighting direction
+5. Any concerns about the art style
+
+Think like a LucasArts art director from 1992.
+"""
+
+let creative_brief = session: director
+  prompt: "Summarize the creative direction into a brief for the team."
+
+# =============================================================================
+# PHASE 2: BACKGROUND GENERATION
+# =============================================================================
+
+let background_prompt = session: renderer
+  prompt: """
+Create an image generation prompt for the background.
+
+Creative brief:
+{creative_brief}
+
+Scene: {scene_description}
+
+Requirements:
+- Wide aspect ratio (16:9)
+- Point-and-click adventure game background
+- Detailed but not cluttered
+- Clear areas for character to walk
+- 1930s Fleischer + Thangka art style
+
+Output ONLY the prompt text, nothing else.
+"""
+  context: creative_brief
+
+session: renderer
+  prompt: """
+Generate the background image using Nano Banana (Gemini).
+
+Use this prompt:
+{background_prompt}
+
+Save the image to:
+adventures/shadow-over-innsmouth/art/scenes/{scene_id}-background.png
+
+After generating, verify the art style is correct. If it looks like
+generic AI art, try again with stronger style constraints.
+"""
+  context: background_prompt
+
+# =============================================================================
+# PHASE 3: CHARACTER GENERATION
+# =============================================================================
+
+let character_prompt = session: renderer
+  prompt: """
+Create an image generation prompt for the character reference.
+
+Creative brief:
+{creative_brief}
+
+Character: {character_description}
+
+Requirements:
+- Character sheet format (front, side, back views)
+- Consistent proportions for animation
+- Clean silhouette for sprite extraction
+- 1930s Fleischer rubber hose style
+
+Output ONLY the prompt text, nothing else.
+"""
+  context: creative_brief
+
+session: renderer
+  prompt: """
+Generate the character reference sheet using Nano Banana.
+
+Use this prompt:
+{character_prompt}
+
+Save to:
+adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png
+
+This will be used as the reference for animation generation.
+"""
+  context: character_prompt
+
+# =============================================================================
+# PHASE 4: ANIMATION GENERATION
+# =============================================================================
+
+session: animator
+  prompt: """
+Generate a walking animation video for the character.
+
+Character reference:
+adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png
+
+Use sprite-factory.py to generate the video:
+
+```bash
+cd packages/sprite-tools
+python scripts/sprite-factory.py generate \
+  --prompt "Character walking cycle, side view, smooth loop, 4 steps, grey background #828282" \
+  --reference ../../adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png \
+  --output ../../adventures/shadow-over-innsmouth/art/characters/{scene_id}-walk
+```
+
+This will create a video and then process it into a spritesheet.
+"""
+
+loop until **the spritesheet looks correct** (max: 3):
+  session: director
+    prompt: """
+    Review the generated spritesheet:
+    adventures/shadow-over-innsmouth/art/characters/{scene_id}-walk-sheet.png
+
+    Check:
+    1. Is the animation smooth?
+    2. Is the background properly removed?
+    3. Does it match the art style?
+    4. Are the frames properly aligned?
+
+    If there are issues, describe them for the animator to fix.
+    """
+
+  if **there are issues with the spritesheet**:
+    session: animator
+      prompt: "Fix the spritesheet issues identified by the director."
+      context: director
+
+# =============================================================================
+# PHASE 5: SCENE DEFINITION
+# =============================================================================
+
+let scene_draft = session: scribe
+  prompt: """
+Write the StoryScript scene definition.
+
+Scene ID: {scene_id}
+Creative brief: {creative_brief}
+Background: adventures/shadow-over-innsmouth/art/scenes/{scene_id}-background.png
+Character sprite: adventures/shadow-over-innsmouth/art/characters/{scene_id}-walk-sheet.png
+
+Write a SCENE block with:
+- Location and mood
+- Description (what the player sees)
+- ON_ENTER (first impressions/thoughts)
+- At least 3 HOTSPOTs based on the creative brief
+
+Follow the StoryScript format from docs/STORYSCRIPT.md
+"""
+  context: creative_brief
+
+session: director
+  prompt: """
+Review the scene definition:
+
+{scene_draft}
+
+Check:
+1. Does the tone match the game's mood?
+2. Are the hotspots interesting and interactive?
+3. Is the writing evocative without being purple?
+4. Does it integrate well with existing scenes?
+
+Suggest improvements if needed.
+"""
+  context: scene_draft
+
+output scene_file = session: scribe
+  prompt: """
+Write the final scene definition to:
+adventures/shadow-over-innsmouth/story/scenes/{scene_id}.story
+
+Incorporate the director's feedback.
+"""
+  context: [scene_draft, director]
+
+# =============================================================================
+# PHASE 6: INTEGRATION
+# =============================================================================
+
+session: animator
+  prompt: """
+Create the Phaser asset configuration for this scene.
+
+Generate a JSON file at:
+adventures/shadow-over-innsmouth/art/scenes/{scene_id}.json
+
+Format:
+```json
+{
+  "background": "{scene_id}-background.png",
+  "character": {
+    "spritesheet": "{scene_id}-walk-sheet.png",
+    "frameWidth": 64,
+    "frameHeight": 128,
+    "animations": {
+      "walk": { "frames": [0, 1, 2, 3], "frameRate": 8, "repeat": -1 }
+    }
+  },
+  "hotspots": [/* from scene definition */]
+}
+```
+"""
+
+resume: director
+  prompt: """
+Final review of scene {scene_id}:
+
+Assets created:
+- Background: art/scenes/{scene_id}-background.png
+- Character: art/characters/{scene_id}-walk-sheet.png
+- Scene config: art/scenes/{scene_id}.json
+- Story: story/scenes/{scene_id}.story
+
+Run a sanity check:
+1. Do all files exist?
+2. Can the scene be loaded in the engine?
+3. Is everything consistent?
+
+Report the final status.
+"""
+
+# =============================================================================
+# OUTPUT
+# =============================================================================
+
+output summary = session: director
+  prompt: """
+Produce a summary of what was created:
+
+Scene: {scene_id}
+Description: {scene_description}
+
+Files created:
+- [list all files]
+
+How to test:
+- [instructions to run the scene]
+
+Any notes for future work on this scene.
+"""
