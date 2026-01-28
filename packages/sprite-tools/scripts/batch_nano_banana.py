@@ -29,8 +29,18 @@ import os
 import sys
 import json
 import time
+import logging
+from datetime import datetime, timedelta
 from pathlib import Path
 from PIL import Image
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%H:%M:%S'
+)
+log = logging.getLogger("batch_nano")
 
 
 # Nano Banana script location
@@ -106,8 +116,8 @@ def eval_background(white_path: Path, black_path: Path, threshold: int = 5, marg
     return result
 
 
-def run_nano_banana(input_path: Path, output_path: Path, prompt: str, resolution: str = "4K", api_key: str = None) -> bool:
-    """Run Nano Banana edit on a single image."""
+def run_nano_banana(input_path: Path, output_path: Path, prompt: str, resolution: str = "4K", api_key: str = None, call_timeout: int = 300) -> bool:
+    """Run Nano Banana edit on a single image with timing and stall detection."""
     cmd = [
         "uv", "run", str(NANO_BANANA_SCRIPT),
         "--input-image", str(input_path),
@@ -119,88 +129,98 @@ def run_nano_banana(input_path: Path, output_path: Path, prompt: str, resolution
     if api_key:
         cmd.extend(["--api-key", api_key])
     
+    start = time.monotonic()
+    variant = "white" if "WHITE" in prompt else "black"
+    log.info(f"API call started: {input_path.name} → {variant} (timeout: {call_timeout}s)")
+    
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=call_timeout)
+        elapsed = time.monotonic() - start
         
         if result.returncode != 0:
-            print(f"    Error: {result.stderr[:200]}")
+            log.error(f"API call FAILED after {elapsed:.1f}s: {result.stderr[:200]}")
             return False
         
         if output_path.exists():
+            size_mb = output_path.stat().st_size / (1024 * 1024)
+            log.info(f"API call OK: {elapsed:.1f}s, {size_mb:.1f} MB → {output_path.name}")
+            if elapsed > 120:
+                log.warning(f"Slow call: {elapsed:.1f}s (>{120}s threshold)")
             return True
         else:
-            print(f"    Error: Output file not created")
+            log.error(f"API call returned OK but no output file after {elapsed:.1f}s")
             return False
             
     except subprocess.TimeoutExpired:
-        print(f"    Error: Timeout after 5 minutes")
+        elapsed = time.monotonic() - start
+        log.error(f"TIMEOUT: {input_path.name} → {variant} after {elapsed:.1f}s — killing subprocess")
         return False
     except Exception as e:
-        print(f"    Error: {e}")
+        elapsed = time.monotonic() - start
+        log.error(f"EXCEPTION after {elapsed:.1f}s: {e}")
         return False
 
 
-def process_single_grid(grid_path: Path, output_dir: Path, delay: float, api_key: str, max_retries: int = 3) -> dict:
-    """Process a single grid with retry logic."""
+def process_single_grid(grid_path: Path, output_dir: Path, delay: float, api_key: str, max_retries: int = 3, call_timeout: int = 300) -> dict:
+    """Process a single grid with retry logic and logging."""
     grid_name = grid_path.name
     base_name = grid_name.replace("-gray.png", "")
+    grid_start = time.monotonic()
     
     for attempt in range(max_retries):
         if attempt > 0:
-            print(f"  ↻ Retry {attempt}/{max_retries-1}...")
+            log.info(f"↻ Retry {attempt}/{max_retries-1} for {grid_name}")
         
         # Generate WHITE version
         white_path = output_dir / f"{base_name}-white.png"
-        print(f"  → White...", end=" ", flush=True)
-        
-        if run_nano_banana(grid_path, white_path, PROMPT_WHITE, api_key=api_key):
-            print("✓")
-        else:
-            print("✗")
+        white_ok = run_nano_banana(grid_path, white_path, PROMPT_WHITE, api_key=api_key, call_timeout=call_timeout)
+        if not white_ok:
             white_path = None
         
         time.sleep(delay)
         
         # Generate BLACK version
         black_path = output_dir / f"{base_name}-black.png"
-        print(f"  → Black...", end=" ", flush=True)
-        
-        if run_nano_banana(grid_path, black_path, PROMPT_BLACK, api_key=api_key):
-            print("✓")
-        else:
-            print("✗")
+        black_ok = run_nano_banana(grid_path, black_path, PROMPT_BLACK, api_key=api_key, call_timeout=call_timeout)
+        if not black_ok:
             black_path = None
         
         # Evaluate backgrounds
         eval_result = eval_background(white_path, black_path)
-        eval_status = "✓ PASS" if eval_result["pass"] else f"✗ FAIL ({', '.join(eval_result['issues'])})"
-        print(f"  → Eval: {eval_status}")
+        grid_elapsed = time.monotonic() - grid_start
         
         if eval_result["pass"]:
+            log.info(f"✓ {grid_name} PASSED eval (attempt {attempt+1}, {grid_elapsed:.1f}s total)")
             return {
                 "grid": grid_name,
                 "white": str(white_path.name) if white_path and white_path.exists() else None,
                 "black": str(black_path.name) if black_path and black_path.exists() else None,
                 "eval_pass": True,
                 "eval_issues": [],
-                "attempts": attempt + 1
+                "attempts": attempt + 1,
+                "elapsed_s": round(grid_elapsed, 1)
             }
+        else:
+            log.warning(f"✗ {grid_name} FAILED eval: {', '.join(eval_result['issues'])} (attempt {attempt+1})")
         
         if attempt < max_retries - 1:
             time.sleep(delay)
     
     # All retries exhausted
+    grid_elapsed = time.monotonic() - grid_start
+    log.error(f"✗ {grid_name} EXHAUSTED {max_retries} retries ({grid_elapsed:.1f}s total)")
     return {
         "grid": grid_name,
         "white": str(white_path.name) if white_path and white_path.exists() else None,
         "black": str(black_path.name) if black_path and black_path.exists() else None,
         "eval_pass": False,
         "eval_issues": eval_result["issues"],
-        "attempts": max_retries
+        "attempts": max_retries,
+        "elapsed_s": round(grid_elapsed, 1)
     }
 
 
-def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: float = 2.0, api_key: str = None, max_retries: int = 3, retry_failed: bool = False):
+def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: float = 2.0, api_key: str = None, max_retries: int = 3, retry_failed: bool = False, call_timeout: int = 300):
     """Process grids through Nano Banana."""
     
     # Get API key
@@ -251,19 +271,27 @@ def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: f
     if limit:
         grids_to_process = grids_to_process[:limit]
     
-    print(f"Processing {len(grids_to_process)} grids...")
-    print(f"Throttle delay: {delay}s between requests")
-    print(f"Max retries per grid: {max_retries}")
-    print()
+    total = len(grids_to_process)
+    log.info(f"Processing {total} grids (delay: {delay}s, retries: {max_retries}, timeout: {call_timeout}s/call)")
+    pipeline_start = time.monotonic()
     
     results = list(existing_results)
+    call_times = []
     
     for i, grid_name in enumerate(grids_to_process):
         grid_path = grids_dir / grid_name
         
-        print(f"[{i+1}/{len(grids_to_process)}] {grid_name}")
+        log.info(f"━━━ [{i+1}/{total}] {grid_name} ━━━")
         
-        result = process_single_grid(grid_path, output_dir, delay, api_key, max_retries)
+        result = process_single_grid(grid_path, output_dir, delay, api_key, max_retries, call_timeout)
+        
+        # Track timing for ETA
+        if result.get("elapsed_s"):
+            call_times.append(result["elapsed_s"])
+            avg_time = sum(call_times) / len(call_times)
+            remaining = total - (i + 1)
+            eta_s = avg_time * remaining
+            log.info(f"Progress: {i+1}/{total} done | avg {avg_time:.0f}s/grid | ETA: {timedelta(seconds=int(eta_s))}")
         
         # Update or add result
         existing_idx = next((j for j, r in enumerate(results) if r["grid"] == grid_name), None)
@@ -274,6 +302,9 @@ def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: f
         
         if i < len(grids_to_process) - 1:
             time.sleep(delay)
+    
+    pipeline_elapsed = time.monotonic() - pipeline_start
+    log.info(f"Pipeline complete: {timedelta(seconds=int(pipeline_elapsed))} total")
     
     # Save processing results
     results_meta = {
@@ -286,20 +317,20 @@ def process_grids(grids_dir: Path, output_dir: Path, limit: int = None, delay: f
         json.dump(results_meta, f, indent=2)
     
     # Summary
-    print()
     successful = sum(1 for r in results if r["white"] and r["black"])
     eval_passed = sum(1 for r in results if r.get("eval_pass"))
-    print(f"✓ Completed: {successful}/{len(grids)} grids processed")
-    print(f"✓ Eval: {eval_passed}/{len(grids)} passed background check")
+    log.info(f"═══ SUMMARY ═══")
+    log.info(f"Completed: {successful}/{len(grids)} grids processed")
+    log.info(f"Eval: {eval_passed}/{len(grids)} passed background check")
     
     # List failures
     failures = [r for r in results if not r.get("eval_pass")]
     if failures:
-        print(f"\n⚠ Failed grids:")
+        log.warning(f"{len(failures)} failed grids:")
         for r in failures:
-            print(f"  - {r['grid']}: {', '.join(r.get('eval_issues', ['unknown']))}")
+            log.warning(f"  - {r['grid']}: {', '.join(r.get('eval_issues', ['unknown']))}")
     
-    print(f"\nResults saved to {output_dir / 'batch_results.json'}")
+    log.info(f"Results saved to {output_dir / 'batch_results.json'}")
     
     return results
 
@@ -312,6 +343,7 @@ def main():
     parser.add_argument("--delay", "-d", type=float, default=2.0, help="Delay between API calls in seconds (default: 2)")
     parser.add_argument("--retries", "-r", type=int, default=3, help="Max retries per grid if eval fails (default: 3)")
     parser.add_argument("--retry-failed", action="store_true", help="Only retry grids that failed in previous run")
+    parser.add_argument("--timeout", "-t", type=int, default=300, help="Timeout per API call in seconds (default: 300)")
     
     args = parser.parse_args()
     
@@ -319,14 +351,14 @@ def main():
     output_dir = Path(args.output_dir)
     
     if not grids_dir.exists():
-        print(f"Error: Directory not found: {grids_dir}")
+        log.error(f"Directory not found: {grids_dir}")
         sys.exit(1)
     
     if not NANO_BANANA_SCRIPT.exists():
-        print(f"Error: Nano Banana script not found at {NANO_BANANA_SCRIPT}")
+        log.error(f"Nano Banana script not found at {NANO_BANANA_SCRIPT}")
         sys.exit(1)
     
-    process_grids(grids_dir, output_dir, args.limit, args.delay, max_retries=args.retries, retry_failed=args.retry_failed)
+    process_grids(grids_dir, output_dir, args.limit, args.delay, max_retries=args.retries, retry_failed=args.retry_failed, call_timeout=args.timeout)
 
 
 if __name__ == "__main__":
