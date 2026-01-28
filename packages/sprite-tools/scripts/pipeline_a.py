@@ -34,15 +34,83 @@ MODEL_VERSION = "fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c00
 API_URL = "https://api.replicate.com/v1/predictions"
 
 
-def extract_frames(video_path: Path, output_dir: Path) -> int:
-    """Extract frames from video using ffmpeg."""
+def detect_letterbox(video_path: Path) -> tuple[int, int]:
+    """Auto-detect letterbox black bars."""
+    import subprocess
+    # Extract single frame
+    result = subprocess.run(
+        ["ffmpeg", "-i", str(video_path), "-vf", "select=eq(n\\,0)", "-vframes", "1", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+        capture_output=True
+    )
+    if result.returncode != 0:
+        return 0, 0
+    
+    # Get dimensions
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0", str(video_path)],
+        capture_output=True, text=True
+    )
+    width, height = map(int, probe.stdout.strip().split(','))
+    
+    # Parse raw RGB data
+    data = result.stdout
+    if len(data) != width * height * 3:
+        return 0, 0
+    
+    # Detect black rows from top
+    crop_top = 0
+    for y in range(height):
+        row_start = y * width * 3
+        row = data[row_start:row_start + width * 3]
+        if max(row) > 16:  # Found non-black
+            crop_top = y
+            break
+    
+    # Detect black rows from bottom
+    crop_bottom = 0
+    for y in range(height - 1, -1, -1):
+        row_start = y * width * 3
+        row = data[row_start:row_start + width * 3]
+        if max(row) > 16:
+            crop_bottom = height - y - 1
+            break
+    
+    return crop_top, crop_bottom
+
+
+def extract_frames(video_path: Path, output_dir: Path, crop_top: int = None, crop_bottom: int = None, auto_crop: bool = True) -> tuple[int, int, int]:
+    """Extract frames from video using ffmpeg with optional crop.
+    
+    Returns: (frame_count, crop_top_used, crop_bottom_used)
+    """
     output_dir.mkdir(parents=True, exist_ok=True)
-    cmd = [
-        "ffmpeg", "-y", "-i", str(video_path),
-        "-vsync", "0", str(output_dir / "frame-%03d.png")
-    ]
+    
+    # Auto-detect letterbox if not specified
+    if auto_crop and crop_top is None and crop_bottom is None:
+        crop_top, crop_bottom = detect_letterbox(video_path)
+        if crop_top > 0 or crop_bottom > 0:
+            print(f"  Auto-detected letterbox: {crop_top}px top, {crop_bottom}px bottom")
+    
+    crop_top = crop_top or 0
+    crop_bottom = crop_bottom or 0
+    
+    # Build ffmpeg command with optional crop
+    cmd = ["ffmpeg", "-y", "-i", str(video_path)]
+    
+    if crop_top > 0 or crop_bottom > 0:
+        # Get dimensions
+        probe = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0", str(video_path)],
+            capture_output=True, text=True
+        )
+        width, height = map(int, probe.stdout.strip().split(','))
+        new_height = height - crop_top - crop_bottom
+        cmd.extend(["-vf", f"crop={width}:{new_height}:0:{crop_top}"])
+    
+    cmd.extend(["-vsync", "0", str(output_dir / "frame-%03d.png")])
     subprocess.run(cmd, capture_output=True)
-    return len(list(output_dir.glob("*.png")))
+    
+    return len(list(output_dir.glob("*.png"))), crop_top, crop_bottom
 
 
 def threshold_alpha(img: Image.Image, threshold: int = 128) -> Image.Image:
@@ -189,7 +257,13 @@ def main(args):
     if input_path.is_file():
         print(f"Extracting frames from {input_path}...")
         frames_dir = output_dir / "frames-raw"
-        count = extract_frames(input_path, frames_dir)
+        count, crop_top, crop_bottom = extract_frames(
+            input_path, frames_dir,
+            args.crop_top, args.crop_bottom,
+            auto_crop=not args.no_auto_crop
+        )
+        if crop_top > 0 or crop_bottom > 0:
+            print(f"  Cropped: {crop_top}px top, {crop_bottom}px bottom")
         print(f"  Extracted {count} frames")
     else:
         frames_dir = input_path
@@ -243,6 +317,9 @@ if __name__ == "__main__":
     parser.add_argument("--concurrency", type=int, default=3, help="Concurrent API calls (default: 3)")
     parser.add_argument("--fps", type=int, default=24, help="Output video FPS (default: 24)")
     parser.add_argument("--alpha-threshold", type=int, default=128, help="Alpha threshold (default: 128)")
+    parser.add_argument("--crop-top", type=int, default=None, help="Pixels to crop from top (auto-detected if not set)")
+    parser.add_argument("--crop-bottom", type=int, default=None, help="Pixels to crop from bottom (auto-detected if not set)")
+    parser.add_argument("--no-auto-crop", action="store_true", help="Disable auto letterbox detection")
     
     args = parser.parse_args()
     main(args)
