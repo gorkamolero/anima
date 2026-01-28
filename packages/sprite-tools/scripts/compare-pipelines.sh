@@ -77,7 +77,7 @@ fi
 
 if [ -n "$FRAMES_A" ]; then
   i=1
-  for f in $(ls "$FRAMES_A"/*.png | sort); do
+  while IFS= read -r f; do
     # Composite transparent frame onto magenta
     ffmpeg -y -v error \
       -f lavfi -i "color=c=0xFF00FF:s=${WIDTH}x${HEIGHT}:d=1" \
@@ -86,11 +86,11 @@ if [ -n "$FRAMES_A" ]; then
       -frames:v 1 \
       "$TMP_DIR/pipeline-a/frame_$(printf '%03d' $i).png"
     i=$((i + 1))
-  done
-  echo "  ✓ ${#} frames composited"
+  done < <(find "$FRAMES_A" -name "*.png" -maxdepth 1 | sort)
+  echo "  ✓ $((i - 1)) frames composited"
 fi
 
-# Step 3: Create Pipeline B frames on magenta
+# Step 3: Create Pipeline B frames on light blue
 echo -e "\n[3/4] Preparing Pipeline B frames..."
 mkdir -p "$TMP_DIR/pipeline-b"
 if [ -d "$PIPELINE_B/final" ]; then
@@ -102,15 +102,16 @@ fi
 
 if [ -n "$FRAMES_B" ]; then
   i=1
-  for f in $(ls "$FRAMES_B"/frame_*.png 2>/dev/null | sort); do
+  while IFS= read -r f; do
     ffmpeg -y -v error \
-      -f lavfi -i "color=c=0xFF00FF:s=${WIDTH}x${HEIGHT}:d=1" \
+      -f lavfi -i "color=c=0x87CEEB:s=${WIDTH}x${HEIGHT}:d=1" \
       -i "$f" \
       -filter_complex "[0:v][1:v]overlay=(W-w)/2:(H-h)/2:shortest=1,format=yuv420p" \
       -frames:v 1 \
       "$TMP_DIR/pipeline-b/frame_$(printf '%03d' $i).png"
     i=$((i + 1))
-  done
+  done < <(find "$FRAMES_B" -name "*.png" -maxdepth 1 | sort)
+  echo "  ✓ $((i - 1)) frames composited"
 fi
 
 # Step 4: Assemble comparison video
