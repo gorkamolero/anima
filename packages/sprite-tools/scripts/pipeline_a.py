@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["requests", "pillow", "click", "numpy", "opencv-python"]
+# ///
 """
 Pipeline A: Sprite extraction via Replicate rembg API.
 
@@ -6,13 +10,14 @@ Usage:
   python pipeline_a.py <input_video_or_frames_dir> <output_dir> [options]
 
 Steps:
-  1. Extract frames from video (if video input)
-  2. Remove background via Replicate rembg API
-  3. Threshold alpha to clean edges
-  4. Generate QC grid + ProRes video
+  1. Detect loop in video (optional, with --detect-loop)
+  2. Extract frames from video (if video input)
+  3. Remove background via Replicate rembg API
+  4. Fix alpha using original comparison
+  5. Generate QC grid + ProRes video
 
 Requirements:
-  pip install requests pillow
+  pip install requests pillow click numpy opencv-python
 """
 
 import requests
@@ -27,11 +32,65 @@ import io
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Config
-REPLICATE_TOKEN = os.environ.get("REPLICATE_API_TOKEN")
-if not REPLICATE_TOKEN:
-    raise ValueError("REPLICATE_API_TOKEN environment variable required")
 MODEL_VERSION = "fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c003"
 API_URL = "https://api.replicate.com/v1/predictions"
+
+def get_replicate_token():
+    token = os.environ.get("REPLICATE_API_TOKEN")
+    if not token:
+        raise ValueError("REPLICATE_API_TOKEN environment variable required")
+    return token
+
+
+def detect_loop(video_path: Path, min_frames: int = 8, max_frames: int = 120) -> int | None:
+    """
+    Detect seamless loop in video using frame similarity.
+    Returns number of frames in the loop, or None if no loop detected.
+    """
+    import cv2
+    import numpy as np
+    
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        return None
+    
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if total_frames < min_frames:
+        cap.release()
+        return total_frames
+    
+    # Read all frames (or up to max)
+    frames = []
+    while len(frames) < min(total_frames, max_frames):
+        ret, frame = cap.read()
+        if not ret:
+            break
+        # Downsample for faster comparison
+        small = cv2.resize(frame, (64, 64))
+        frames.append(small.astype(np.float32))
+    cap.release()
+    
+    if len(frames) < min_frames:
+        return len(frames)
+    
+    # Compare first frame to all others to find loop point
+    first = frames[0]
+    best_match = None
+    best_score = float('inf')
+    
+    for i in range(min_frames, len(frames)):
+        diff = np.mean(np.abs(frames[i] - first))
+        if diff < best_score:
+            best_score = diff
+            best_match = i
+    
+    # Threshold: if match is good enough, we found a loop
+    if best_score < 10.0:  # Tunable threshold
+        print(f"  Loop detected: {best_match} frames (similarity score: {best_score:.2f})")
+        return best_match
+    
+    print(f"  No clear loop detected (best match at frame {best_match}, score {best_score:.2f})")
+    return None
 
 
 def detect_letterbox(video_path: Path) -> tuple[int, int]:
@@ -122,6 +181,61 @@ def threshold_alpha(img: Image.Image, threshold: int = 128) -> Image.Image:
     return Image.merge('RGBA', (r, g, b, a_thresh))
 
 
+def fix_frame_alpha(rembg_path: Path, orig_path: Path, output_path: Path,
+                    bg_color: tuple = (130, 130, 130), bg_tolerance: int = 15) -> int:
+    """
+    Fix alpha by comparing to original source.
+    
+    Problem: rembg confuses skin shadows (~130-140 RGB) with gray background,
+    making skin pixels transparent.
+    
+    Solution: If original pixel ≠ background gray → force alpha=255
+    Uses ORIGINAL colors (not rembg's modified colors) + fixed alpha.
+    
+    Returns count of fixed pixels.
+    """
+    rembg_img = Image.open(rembg_path).convert('RGBA')
+    orig_img = Image.open(orig_path).convert('RGBA')
+    
+    # Resize original if dimensions don't match (shouldn't happen with proper crop)
+    if orig_img.size != rembg_img.size:
+        orig_img = orig_img.resize(rembg_img.size, Image.LANCZOS)
+    
+    width, height = rembg_img.size
+    
+    # Get pixel data
+    orig_r, orig_g, orig_b, _ = [list(c.getdata()) for c in orig_img.split()]
+    proc_r, proc_g, proc_b, proc_a = [list(c.getdata()) for c in rembg_img.split()]
+    
+    bg_r, bg_g, bg_b = bg_color
+    fixed_count = 0
+    new_a = proc_a.copy()
+    
+    for i in range(len(proc_a)):
+        # Is original pixel NOT background gray?
+        is_bg = (abs(orig_r[i] - bg_r) < bg_tolerance and 
+                 abs(orig_g[i] - bg_g) < bg_tolerance and 
+                 abs(orig_b[i] - bg_b) < bg_tolerance)
+        
+        # If not background but rembg made it transparent, fix it
+        if not is_bg and proc_a[i] < 200:
+            new_a[i] = 255
+            fixed_count += 1
+    
+    # Rebuild image with ORIGINAL colors + fixed alpha
+    new_a_img = Image.new('L', (width, height))
+    new_a_img.putdata(new_a)
+    
+    orig_r_img = Image.new('L', (width, height)); orig_r_img.putdata(orig_r)
+    orig_g_img = Image.new('L', (width, height)); orig_g_img.putdata(orig_g)
+    orig_b_img = Image.new('L', (width, height)); orig_b_img.putdata(orig_b)
+    
+    fixed = Image.merge('RGBA', (orig_r_img, orig_g_img, orig_b_img, new_a_img))
+    fixed.save(output_path)
+    
+    return fixed_count
+
+
 def process_frame(input_path: Path, output_path: Path, alpha_threshold: int = 128) -> bool:
     """Process a single frame via Replicate rembg API."""
     try:
@@ -133,7 +247,7 @@ def process_frame(input_path: Path, output_path: Path, alpha_threshold: int = 12
         
         # Create prediction
         headers = {
-            "Authorization": f"Token {REPLICATE_TOKEN}",
+            "Authorization": f"Token {get_replicate_token()}",
             "Content-Type": "application/json"
         }
         resp = requests.post(
@@ -223,24 +337,13 @@ def create_prores(frames_dir: Path, output_path: Path, fps: int = 24):
     print(f"ProRes saved: {output_path}")
 
 
-def create_preview(frames_dir: Path, output_path: Path, fps: int = 24):
-    """Create preview video with magenta background."""
-    frames = sorted(frames_dir.glob("*.png"))
-    if not frames:
-        return
-    
-    # Get frame size from first frame
-    first_img = Image.open(frames[0])
-    w, h = first_img.size
-    
-    first = frames[0].name
-    pattern = first.rsplit('-', 1)[0] + "-%03d.png" if '-' in first else "frame-%03d.png"
-    
+def create_preview(prores_path: Path, output_path: Path):
+    """Create preview video with magenta background from ProRes 4444."""
     cmd = [
         "ffmpeg", "-y",
-        "-f", "lavfi", "-i", f"color=c=magenta:s={w}x{h}:r={fps}",
-        "-framerate", str(fps), "-i", str(frames_dir / pattern),
-        "-filter_complex", "[0:v][1:v]overlay=0:0:format=auto",
+        "-f", "lavfi", "-i", f"color=c=magenta:s=1920x1080:r=24",
+        "-i", str(prores_path),
+        "-filter_complex", "[1:v]scale=iw:ih[fg];[0:v]scale=iw:ih[bg];[bg][fg]overlay=(W-w)/2:(H-h)/2:format=auto",
         "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",
         "-shortest", str(output_path)
     ]
@@ -252,6 +355,17 @@ def main(args):
     input_path = Path(args.input)
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Step 0: Detect loop (if requested)
+    frame_limit = args.frames
+    if args.detect_loop and input_path.is_file() and frame_limit is None:
+        print(f"Detecting loop in {input_path}...")
+        loop_frames = detect_loop(input_path)
+        if loop_frames:
+            frame_limit = loop_frames
+            print(f"  Will process {frame_limit} frames")
+        else:
+            print("  No loop detected, processing all frames")
     
     # Step 1: Get frames
     if input_path.is_file():
@@ -269,6 +383,12 @@ def main(args):
         frames_dir = input_path
     
     frames = sorted(frames_dir.glob("*.png"))
+    
+    # Apply frame limit
+    if frame_limit and len(frames) > frame_limit:
+        print(f"  Limiting to first {frame_limit} frames (loop)")
+        frames = frames[:frame_limit]
+    
     print(f"\nProcessing {len(frames)} frames...")
     print(f"Concurrency: {args.concurrency}")
     
@@ -296,16 +416,40 @@ def main(args):
         print("No frames processed successfully!")
         return
     
-    # Step 3: QC grid
-    print("\nGenerating QC grid...")
-    create_qc_grid(transparent_dir, output_dir / "qc-faces.png")
+    # Step 3: Fix alpha using original comparison
+    print("\nFixing alpha (comparing to originals)...")
+    fixed_dir = output_dir / "frames-fixed"
+    fixed_dir.mkdir(exist_ok=True)
     
-    # Step 4: Videos
+    total_fixed = 0
+    rembg_frames = sorted(transparent_dir.glob("*.png"))
+    for rf in rembg_frames:
+        orig_path = frames_dir / rf.name
+        if orig_path.exists():
+            fixed = fix_frame_alpha(rf, orig_path, fixed_dir / rf.name,
+                                   bg_tolerance=args.bg_tolerance)
+            total_fixed += fixed
+            print(f"  ✓ {rf.name}: fixed {fixed} pixels")
+        else:
+            # No original? Copy rembg output as-is
+            Image.open(rf).save(fixed_dir / rf.name)
+            print(f"  ? {rf.name}: no original, copied as-is")
+    
+    print(f"✓ Fixed {total_fixed} total pixels")
+    
+    # Use fixed frames for output
+    output_frames_dir = fixed_dir
+    
+    # Step 5: QC grid
+    print("\nGenerating QC grid...")
+    create_qc_grid(output_frames_dir, output_dir / "qc-faces.png")
+    
+    # Step 6: Videos
     print("\nCreating ProRes video...")
-    create_prores(transparent_dir, output_dir / "output.mov", args.fps)
+    create_prores(output_frames_dir, output_dir / "output.mov", args.fps)
     
     print("\nCreating preview video...")
-    create_preview(transparent_dir, output_dir / "preview_magenta.mp4", args.fps)
+    create_preview(output_dir / "output.mov", output_dir / "preview_magenta.mp4")
     
     print(f"\n✓ Complete! Output in {output_dir}")
 
@@ -320,6 +464,9 @@ if __name__ == "__main__":
     parser.add_argument("--crop-top", type=int, default=None, help="Pixels to crop from top (auto-detected if not set)")
     parser.add_argument("--crop-bottom", type=int, default=None, help="Pixels to crop from bottom (auto-detected if not set)")
     parser.add_argument("--no-auto-crop", action="store_true", help="Disable auto letterbox detection")
+    parser.add_argument("--bg-tolerance", type=int, default=15, help="Background color tolerance for alpha fix (default: 15)")
+    parser.add_argument("--detect-loop", action="store_true", help="Auto-detect loop and only process loop frames")
+    parser.add_argument("--frames", type=int, default=None, help="Limit to N frames (overrides --detect-loop)")
     
     args = parser.parse_args()
     main(args)

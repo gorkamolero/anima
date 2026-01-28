@@ -4,17 +4,9 @@
 #
 # Usage: ./sprite-a.sh <video>
 #
-# This pipeline uses ML-based background removal (rembg model on Replicate).
-# Simpler than Pipeline B but may have worse edge quality on complex subjects.
-#
-# Requires: REPLICATE_API_TOKEN environment variable
-#
 # Steps:
 #   0. loopycut         → Detect loop
-#   1. extract frames   → Video → PNGs
-#   2. rembg API        → Background removal per frame
-#   3. threshold alpha  → Clean up semi-transparent artifacts
-#   4. reassemble       → PNG sequence + preview
+#   1. pipeline_a.py    → Extract frames, rembg API, fix_alpha, reassemble
 
 set -e
 
@@ -25,15 +17,16 @@ if [ -z "$VIDEO" ]; then
   exit 1
 fi
 
+# Load token
+source ~/www/anima/.env
+
 if [ -z "$REPLICATE_API_TOKEN" ]; then
-  echo "Error: REPLICATE_API_TOKEN environment variable required"
+  echo "Error: REPLICATE_API_TOKEN not found in ~/www/anima/.env"
   exit 1
 fi
 
 SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
 SPRITE_TOOLS="$(dirname "$SCRIPTS_DIR")"
-PYTHON="$SPRITE_TOOLS/tools/loopycut/.venv/bin/python"
-LOOPYCUT="$SPRITE_TOOLS/tools/loopycut/cli.py"
 
 VIDEO_NAME="$(basename "$VIDEO" | sed 's/\.[^.]*$//')"
 OUTPUT="$SPRITE_TOOLS/output/${VIDEO_NAME}-pipeline-a"
@@ -45,26 +38,18 @@ echo "  PIPELINE A (rembg): $VIDEO → $OUTPUT"
 echo "═══════════════════════════════════════════════════════════"
 
 # Step 0: LoopyCut
-echo -e "\n[0/2] LoopyCut — Detecting loop..."
-$PYTHON "$LOOPYCUT" "$VIDEO" "$OUTPUT/loop.mp4" --save-metadata --no-audio
+echo -e "\n[0/1] LoopyCut — Detecting loop..."
+source "$SPRITE_TOOLS/tools/loopycut/.venv/bin/activate"
+python "$SPRITE_TOOLS/tools/loopycut/cli.py" "$VIDEO" "$OUTPUT/loop.mp4" --save-metadata --no-audio
+deactivate
 
 FRAMES=$(jq -r '.loop_info.frame_count' "$OUTPUT/loop.json")
 echo "→ Detected $FRAMES frames"
 
-# Step 1: Run pipeline_a.py (handles extraction, rembg, threshold, reassembly)
-echo -e "\n[1/2] Pipeline A — Running rembg background removal..."
-$PYTHON "$SCRIPTS_DIR/pipeline_a.py" "$OUTPUT/loop.mp4" "$OUTPUT/final" --concurrency 5
-
-# Step 2: Create preview videos
-echo -e "\n[2/2] Creating preview videos..."
-
-# Magenta background preview
-ffmpeg -y -framerate 24 \
-  -i "$OUTPUT/final/frames/frame-%03d.png" \
-  -filter_complex "color=c=magenta:s=720x1080:r=24[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:format=auto" \
-  -c:v libx264 -crf 18 -pix_fmt yuv420p \
-  -t $(echo "scale=2; $FRAMES / 24" | bc) \
-  "$OUTPUT/final/preview_magenta.mp4" 2>/dev/null || echo "Preview creation skipped"
+# Step 1: Run pipeline_a.py
+echo -e "\n[1/1] Pipeline A — Running rembg + fix_alpha..."
+cd "$SPRITE_TOOLS"
+uv run scripts/pipeline_a.py "$OUTPUT/loop.mp4" "$OUTPUT/final" --concurrency 5
 
 echo -e "\n═══════════════════════════════════════════════════════════"
 echo "  DONE: $OUTPUT/final"

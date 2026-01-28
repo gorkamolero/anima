@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pillow", "opencv-python", "numpy"]
+# ///
 """
 Create sprite grids from video for Nano Banana processing.
 

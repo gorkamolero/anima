@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pillow", "numpy"]
+# ///
 """
 Extract alpha matte from white/black image pairs.
 

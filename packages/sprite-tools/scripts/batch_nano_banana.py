@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pillow", "google-generativeai"]
+# ///
 """
 Batch process grids through Nano Banana for white/black matte extraction.
 

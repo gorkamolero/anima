@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pillow"]
+# ///
 """
 Reassemble alpha grids back into video or sprite sheet.
 
