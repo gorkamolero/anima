@@ -1,39 +1,30 @@
 #!/usr/bin/env python3
 """
-Complete sprite extraction pipeline.
+Pipeline A: Sprite extraction via Replicate rembg API.
 
 Usage:
-  python sprite_pipeline.py <input_video_or_frames_dir> <output_dir> [options]
+  python pipeline_a.py <input_video_or_frames_dir> <output_dir> [options]
 
 Steps:
   1. Extract frames from video (if video input)
-  2. Crop letterbox (optional)
-  3. Remove background via Replicate rembg API
-  4. Threshold alpha to remove artifacts
-  5. Generate QC face grid for review
-  6. Create ProRes 4444 video
+  2. Remove background via Replicate rembg API
+  3. Threshold alpha to clean edges
+  4. Generate QC grid + ProRes video
 
 Requirements:
-  pip install aiohttp pillow
-
-Examples:
-  # From video
-  python sprite_pipeline.py ./video.mp4 ./output --crop 90 90 --concurrency 5
-
-  # From frame directory  
-  python sprite_pipeline.py ./frames/ ./output --concurrency 5
+  pip install requests pillow
 """
 
-import asyncio
-import aiohttp
+import requests
 import base64
 import argparse
 import subprocess
 import os
-import sys
+import time
 from pathlib import Path
 from PIL import Image
 import io
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Config
 REPLICATE_TOKEN = os.environ.get("REPLICATE_API_TOKEN")
@@ -54,12 +45,6 @@ def extract_frames(video_path: Path, output_dir: Path) -> int:
     return len(list(output_dir.glob("*.png")))
 
 
-def crop_frame(img: Image.Image, crop_top: int, crop_bottom: int) -> Image.Image:
-    """Crop letterbox from frame."""
-    w, h = img.size
-    return img.crop((0, crop_top, w, h - crop_bottom))
-
-
 def threshold_alpha(img: Image.Image, threshold: int = 128) -> Image.Image:
     """Threshold alpha channel to remove semi-transparent artifacts."""
     if img.mode != 'RGBA':
@@ -69,112 +54,63 @@ def threshold_alpha(img: Image.Image, threshold: int = 128) -> Image.Image:
     return Image.merge('RGBA', (r, g, b, a_thresh))
 
 
-def apply_alpha_to_original(rembg_img: Image.Image, original_img: Image.Image, 
-                            crop_top: int = 0, crop_bottom: int = 0,
-                            threshold: int = 128) -> Image.Image:
-    """Use rembg's alpha mask but keep original colors (prevents color artifacts)."""
-    # Crop original to match rembg output
-    if crop_top or crop_bottom:
-        w, h = original_img.size
-        original_img = original_img.crop((0, crop_top, w, h - crop_bottom))
-    
-    # Get alpha from rembg, RGB from original
-    orig_r, orig_g, orig_b, _ = original_img.convert('RGBA').split()
-    _, _, _, rembg_a = rembg_img.convert('RGBA').split()
-    
-    # Threshold the alpha
-    a_thresh = rembg_a.point(lambda x: 0 if x < threshold else 255)
-    
-    # Combine: original colors + rembg alpha
-    return Image.merge('RGBA', (orig_r, orig_g, orig_b, a_thresh))
-
-
-async def create_prediction(session: aiohttp.ClientSession, image_data: bytes) -> str:
-    """Create a Replicate prediction."""
-    b64 = base64.b64encode(image_data).decode()
-    data_uri = f"data:image/png;base64,{b64}"
-    
-    async with session.post(
-        API_URL,
-        json={"version": MODEL_VERSION, "input": {"image": data_uri}},
-        headers={"Authorization": f"Token {REPLICATE_TOKEN}", "Content-Type": "application/json"}
-    ) as resp:
-        result = await resp.json()
+def process_frame(input_path: Path, output_path: Path, alpha_threshold: int = 128) -> bool:
+    """Process a single frame via Replicate rembg API."""
+    try:
+        # Load and encode image
+        with open(input_path, 'rb') as f:
+            image_data = f.read()
+        b64 = base64.b64encode(image_data).decode()
+        data_uri = f"data:image/png;base64,{b64}"
+        
+        # Create prediction
+        headers = {
+            "Authorization": f"Token {REPLICATE_TOKEN}",
+            "Content-Type": "application/json"
+        }
+        resp = requests.post(
+            API_URL,
+            json={"version": MODEL_VERSION, "input": {"image": data_uri}},
+            headers=headers,
+            timeout=30
+        )
+        result = resp.json()
+        
         if "id" not in result:
-            if result.get("status") == 429:
-                raise Exception("Rate limited - wait and retry")
             raise Exception(f"API error: {result}")
-        return result["id"]
-
-
-async def poll_prediction(session: aiohttp.ClientSession, pred_id: str) -> str:
-    """Poll until prediction completes."""
-    url = f"{API_URL}/{pred_id}"
-    for _ in range(60):
-        async with session.get(url, headers={"Authorization": f"Token {REPLICATE_TOKEN}"}) as resp:
-            result = await resp.json()
+        
+        pred_id = result["id"]
+        
+        # Poll for completion
+        poll_url = f"{API_URL}/{pred_id}"
+        for _ in range(60):
+            resp = requests.get(poll_url, headers=headers, timeout=10)
+            result = resp.json()
+            
             if result.get("status") == "succeeded":
-                return result.get("output")
+                output_url = result.get("output")
+                break
             elif result.get("status") == "failed":
                 raise Exception(f"Failed: {result.get('error')}")
-        await asyncio.sleep(2)
-    raise Exception("Timeout")
-
-
-async def download_result(session: aiohttp.ClientSession, url: str) -> bytes:
-    """Download result image."""
-    async with session.get(url) as resp:
-        return await resp.read()
-
-
-async def process_frame(
-    session: aiohttp.ClientSession,
-    semaphore: asyncio.Semaphore,
-    input_path: Path,
-    output_path: Path,
-    crop_top: int = 0,
-    crop_bottom: int = 0,
-    alpha_threshold: int = 128,
-    preserve_colors: bool = True
-) -> bool:
-    """Process a single frame."""
-    async with semaphore:
-        try:
-            # Load original
-            original = Image.open(input_path)
             
-            # Crop for rembg processing
-            if crop_top or crop_bottom:
-                img = crop_frame(original, crop_top, crop_bottom)
-            else:
-                img = original
-            
-            # Convert to bytes
-            buf = io.BytesIO()
-            img.save(buf, format='PNG')
-            
-            # Remove background via API
-            pred_id = await create_prediction(session, buf.getvalue())
-            output_url = await poll_prediction(session, pred_id)
-            result_data = await download_result(session, output_url)
-            
-            # Load rembg result
-            rembg_img = Image.open(io.BytesIO(result_data))
-            
-            if preserve_colors:
-                # Use rembg alpha but keep original colors (prevents color artifacts)
-                result_img = apply_alpha_to_original(rembg_img, original, crop_top, crop_bottom, alpha_threshold)
-            else:
-                # Use rembg output directly (may have color artifacts)
-                result_img = threshold_alpha(rembg_img, alpha_threshold)
-            
-            result_img.save(output_path)
-            
-            print(f"  ✓ {input_path.name}")
-            return True
-        except Exception as e:
-            print(f"  ✗ {input_path.name}: {e}")
-            return False
+            time.sleep(2)
+        else:
+            raise Exception("Timeout waiting for prediction")
+        
+        # Download result
+        resp = requests.get(output_url, timeout=30)
+        rembg_img = Image.open(io.BytesIO(resp.content))
+        
+        # Threshold alpha
+        result_img = threshold_alpha(rembg_img, alpha_threshold)
+        result_img.save(output_path)
+        
+        print(f"  ✓ {input_path.name}")
+        return True
+        
+    except Exception as e:
+        print(f"  ✗ {input_path.name}: {e}")
+        return False
 
 
 def create_qc_grid(frames_dir: Path, output_path: Path, region: tuple = (200, 50, 520, 370)):
@@ -191,7 +127,6 @@ def create_qc_grid(frames_dir: Path, output_path: Path, region: tuple = (200, 50
     
     for idx, f in enumerate(frames):
         img = Image.open(f)
-        # Crop face region
         face = img.crop(region)
         face = face.resize((thumb_size, thumb_size), Image.LANCZOS)
         col, row = idx % cols, idx // cols
@@ -203,17 +138,12 @@ def create_qc_grid(frames_dir: Path, output_path: Path, region: tuple = (200, 50
 
 def create_prores(frames_dir: Path, output_path: Path, fps: int = 24):
     """Create ProRes 4444 video from frames."""
-    # Find frame pattern
     frames = sorted(frames_dir.glob("*.png"))
     if not frames:
         return
     
-    # Determine pattern
     first = frames[0].name
-    if '-' in first:
-        pattern = first.rsplit('-', 1)[0] + "-%03d.png"
-    else:
-        pattern = "frame-%03d.png"
+    pattern = first.rsplit('-', 1)[0] + "-%03d.png" if '-' in first else "frame-%03d.png"
     
     cmd = [
         "ffmpeg", "-y", "-framerate", str(fps),
@@ -225,7 +155,32 @@ def create_prores(frames_dir: Path, output_path: Path, fps: int = 24):
     print(f"ProRes saved: {output_path}")
 
 
-async def main(args):
+def create_preview(frames_dir: Path, output_path: Path, fps: int = 24):
+    """Create preview video with magenta background."""
+    frames = sorted(frames_dir.glob("*.png"))
+    if not frames:
+        return
+    
+    # Get frame size from first frame
+    first_img = Image.open(frames[0])
+    w, h = first_img.size
+    
+    first = frames[0].name
+    pattern = first.rsplit('-', 1)[0] + "-%03d.png" if '-' in first else "frame-%03d.png"
+    
+    cmd = [
+        "ffmpeg", "-y",
+        "-f", "lavfi", "-i", f"color=c=magenta:s={w}x{h}:r={fps}",
+        "-framerate", str(fps), "-i", str(frames_dir / pattern),
+        "-filter_complex", "[0:v][1:v]overlay=0:0:format=auto",
+        "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",
+        "-shortest", str(output_path)
+    ]
+    subprocess.run(cmd, capture_output=True)
+    print(f"Preview saved: {output_path}")
+
+
+def main(args):
     input_path = Path(args.input)
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -242,49 +197,52 @@ async def main(args):
     frames = sorted(frames_dir.glob("*.png"))
     print(f"\nProcessing {len(frames)} frames...")
     print(f"Concurrency: {args.concurrency}")
-    if args.crop:
-        print(f"Cropping: {args.crop[0]}px top, {args.crop[1]}px bottom")
     
-    # Step 2: Remove backgrounds
-    transparent_dir = output_dir / "transparent"
+    # Step 2: Remove backgrounds with thread pool
+    transparent_dir = output_dir / "frames"
     transparent_dir.mkdir(exist_ok=True)
     
-    semaphore = asyncio.Semaphore(args.concurrency)
-    crop_top, crop_bottom = args.crop if args.crop else (0, 0)
-    
-    async with aiohttp.ClientSession() as session:
-        tasks = [
-            process_frame(
-                session, semaphore, f,
+    success = 0
+    with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+        futures = {
+            executor.submit(
+                process_frame,
+                f,
                 transparent_dir / f.name,
-                crop_top, crop_bottom, args.alpha_threshold
-            )
-            for f in frames
-        ]
-        results = await asyncio.gather(*tasks)
+                args.alpha_threshold
+            ): f for f in frames
+        }
+        for future in as_completed(futures):
+            if future.result():
+                success += 1
     
-    success = sum(results)
     print(f"\n✓ Processed: {success}/{len(frames)}")
+    
+    if success == 0:
+        print("No frames processed successfully!")
+        return
     
     # Step 3: QC grid
     print("\nGenerating QC grid...")
     create_qc_grid(transparent_dir, output_dir / "qc-faces.png")
     
-    # Step 4: ProRes video
+    # Step 4: Videos
     print("\nCreating ProRes video...")
     create_prores(transparent_dir, output_dir / "output.mov", args.fps)
+    
+    print("\nCreating preview video...")
+    create_preview(transparent_dir, output_dir / "preview_magenta.mp4", args.fps)
     
     print(f"\n✓ Complete! Output in {output_dir}")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Sprite extraction pipeline")
+    parser = argparse.ArgumentParser(description="Pipeline A: rembg sprite extraction")
     parser.add_argument("input", help="Input video or frames directory")
     parser.add_argument("output", help="Output directory")
     parser.add_argument("--concurrency", type=int, default=3, help="Concurrent API calls (default: 3)")
-    parser.add_argument("--crop", nargs=2, type=int, metavar=("TOP", "BOTTOM"), help="Crop letterbox")
     parser.add_argument("--fps", type=int, default=24, help="Output video FPS (default: 24)")
     parser.add_argument("--alpha-threshold", type=int, default=128, help="Alpha threshold (default: 128)")
     
     args = parser.parse_args()
-    asyncio.run(main(args))
+    main(args)
