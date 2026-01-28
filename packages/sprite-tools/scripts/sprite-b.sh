@@ -21,7 +21,9 @@ if [ -z "$VIDEO" ]; then
 fi
 
 # Load token
+set -a
 source ~/www/anima/.env
+set +a
 
 SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
 SPRITE_TOOLS="$(dirname "$SCRIPTS_DIR")"

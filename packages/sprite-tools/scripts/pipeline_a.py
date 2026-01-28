@@ -339,9 +339,16 @@ def create_prores(frames_dir: Path, output_path: Path, fps: int = 24):
 
 def create_preview(prores_path: Path, output_path: Path):
     """Create preview video with magenta background from ProRes 4444."""
+    # Get duration from prores to avoid infinite lavfi color input
+    probe = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(prores_path)],
+        capture_output=True, text=True
+    )
+    duration = probe.stdout.strip() or "10"
     cmd = [
         "ffmpeg", "-y",
-        "-f", "lavfi", "-i", f"color=c=magenta:s=1920x1080:r=24",
+        "-f", "lavfi", "-t", duration, "-i", f"color=c=magenta:s=1920x1080:r=24",
         "-i", str(prores_path),
         "-filter_complex", "[1:v]scale=iw:ih[fg];[0:v]scale=iw:ih[bg];[bg][fg]overlay=(W-w)/2:(H-h)/2:format=auto",
         "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p",

@@ -18,7 +18,9 @@ if [ -z "$VIDEO" ]; then
 fi
 
 # Load token
+set -a
 source ~/www/anima/.env
+set +a
 
 if [ -z "$REPLICATE_API_TOKEN" ]; then
   echo "Error: REPLICATE_API_TOKEN not found in ~/www/anima/.env"
