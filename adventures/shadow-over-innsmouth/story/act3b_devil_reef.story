@@ -1,8 +1,10 @@
 # ============================================================================
 # SHADOW OVER INNSMOUTH - ACT 3B: DEVIL REEF
 # ============================================================================
-# The confrontation. Schoeppi alive = rescue possible. Schoeppi dead = release.
-# Merged draft: Thoth (structure/conditionals) + Hermes (branches/endings)
+# The confrontation. She always leaves. Schoeppi always lives.
+# clerk_noticed_interest gates how far gone Kat is:
+#   TRUE = she's further gone, ABYSSAL available at reef
+#   FALSE = she has humanity left to push him away, together only at beach
 # ============================================================================
 
 GAME
@@ -173,7 +175,7 @@ SCENE reef_descent
 END
 
 # ============================================================================
-# SCENE: THE CHAMBER (Thoth)
+# SCENE: THE CHAMBER
 # ============================================================================
 
 SCENE reef_chamber
@@ -196,20 +198,23 @@ SCENE reef_chamber
     "Their eyes are on the pool. On the water."
     "On her."
     
-    IF NOT clerk_noticed_interest
-      -> kat_alive_schoeppi
+    # clerk_noticed_interest determines how far gone she is
+    IF clerk_noticed_interest
+      -> kat_further_gone
     ELSE
-      -> kat_dead_schoeppi
+      -> kat_still_fighting
     END
   END
 END
 
 # ============================================================================
-# BRANCH GATE: SCHOEPPI ALIVE (Thoth)
+# BRANCH: KAT STILL FIGHTING (clerk didn't notice)
+# She has enough humanity left to push Hermes away
+# ABYSSAL not available — together only at beach
 # ============================================================================
 
-SCENE kat_alive_schoeppi
-  mood: leverage
+SCENE kat_still_fighting
+  mood: desperate_hope
   
   ON_ENTER
     "Kat stands at the edge of the pool."
@@ -217,39 +222,41 @@ SCENE kat_alive_schoeppi
     "Her eyes are on the water. But she's not moving."
     "At her side: Schoeppi. Held by a figure in robes."
     "The dog is struggling. Whining."
-    "She's frozen. Protecting him. Complying."
+    "She's frozen. Protecting him. Waiting."
     hermes (thinks): "She's still fighting."
-    hermes (thinks): "She's staying because of the dog."
-    SET schoeppi_alive = true
+    hermes (thinks): "There's still something human in there."
+    SET kat_far_gone = false
   END
 
   -> confrontation_setup
 END
 
 # ============================================================================
-# BRANCH GATE: SCHOEPPI DEAD (Thoth)
+# BRANCH: KAT FURTHER GONE (clerk noticed interest)
+# She's too transformed to push him away
+# ABYSSAL available — can follow her now
 # ============================================================================
 
-SCENE kat_dead_schoeppi
-  mood: grief
+SCENE kat_further_gone
+  mood: surrender
 
   ON_ENTER
     "Kat stands at the edge of the pool."
     "White dress. Bare feet. Hair loose."
-    "Her eyes are on the water. Fixed. Empty."
-    "At her feet: a collar. Schoeppi's collar."
-    "Nothing else."
-    hermes (thinks): "They killed him."
-    hermes (thinks): "She's not being held."
-    hermes (thinks): "She's choosing to stay."
-    SET schoeppi_alive = false
+    "Her eyes are on the water. Fixed. Distant."
+    "The change is further along. Scales visible on her arms."
+    "Schoeppi sits at her feet. Not held. Not restrained."
+    "He won't leave her. Even now."
+    hermes (thinks): "She's almost gone."
+    hermes (thinks): "I'm almost too late."
+    SET kat_far_gone = true
   END
 
   -> confrontation_setup
 END
 
 # ============================================================================
-# SCENE: CONFRONTATION SETUP (Thoth)
+# SCENE: CONFRONTATION SETUP
 # ============================================================================
 
 SCENE confrontation_setup
@@ -263,22 +270,27 @@ SCENE confrontation_setup
     "Kat turns."
     "She sees you."
     
-    IF schoeppi_alive
+    IF kat_far_gone
+      kat: "..."
+      kat: "You came."
+      "Her voice is distant. Dreaming. Already half-in the water."
+      kat: "I knew you would."
+    ELSE
       kat: "..."
       kat: "You shouldn't have come."
       "But there's relief in her voice. Hidden. Desperate."
-    ELSE
-      kat: "..."
-      kat: "Why did you come?"
-      "Her voice is flat. Distant. Already half-gone."
+      kat: "They'll take you too."
     END
+    
+    "Schoeppi sees you. Whines. Strains toward you."
+    "The one thing that still makes sense."
   END
 
   -> kat_confrontation
 END
 
 # ============================================================================
-# DIALOGUE: THE CONFRONTATION (Thoth)
+# DIALOGUE: THE CONFRONTATION
 # ============================================================================
 
 DIALOGUE kat_confrontation
@@ -287,66 +299,280 @@ DIALOGUE kat_confrontation
   
   CHOICE
     > "I came to bring you home."
-      IF schoeppi_alive
-        kat: "Home?"
+      kat: "Home?"
+      IF kat_far_gone
+        kat: "This is home. It always was."
+        kat: "I just didn't know it."
+        kat: "The water is calling me, Hermes."
+        kat: "It's been calling my whole life."
+        -> far_gone_choice
+      ELSE
         kat: "I don't have a home. I never did."
         kat: "But here... they want me here."
         hermes: "They're using you. Using the dog."
         kat: "I know."
-        kat: "But if I go, they'll—"
-        "She can't say it."
-        -> rescue_attempt
-      ELSE
-        kat: "Home."
-        kat: "This is home. It always was."
-        kat: "I just didn't know it."
-        hermes: "Kat—"
-        kat: "He's gone. Schoeppi's gone."
-        kat: "There's nothing to go back to."
-        -> release_path
+        kat: "But if I leave—"
+        "She looks at Schoeppi. Back at you."
+        kat: "Take him. Get him out."
+        kat: "I'll buy you time."
+        -> still_fighting_choice
       END
       
     > "I know what you're becoming. I saw the photos."
       kat: "..."
       kat: "Then you know I belong here."
       hermes: "You don't have to. The great-aunt fought it. Abel's still fighting."
-      IF schoeppi_alive
+      IF kat_far_gone
+        kat: "They fought. They lost."
+        kat: "Everyone loses eventually."
+        kat: "I'm just... choosing not to fight."
+        -> far_gone_choice
+      ELSE
         kat: "And look at them. Decades of pain."
         kat: "Is that what you want for me?"
         hermes: "I want you to have the choice."
         kat: "..."
         "Something flickers. Hope. Fear."
-        -> rescue_attempt
-      ELSE
-        kat: "They fought. They lost."
-        kat: "Everyone loses eventually."
-        kat: "I'm just... choosing not to fight."
-        -> release_path
+        kat: "Take Schoeppi. Please."
+        -> still_fighting_choice
       END
       
-    > "What happened to Schoeppi?"
-      IF schoeppi_alive
-        kat: "They have him. They—"
-        "Her voice breaks."
-        kat: "If I leave, they'll drown him."
-        kat: "I can't. I can't let them."
-        hermes: "Then we take him with us."
-        kat: "You don't understand. They're everywhere."
-        -> rescue_attempt
+    > "Schoeppi needs you."
+      "The dog whines at the sound of his name."
+      IF kat_far_gone
+        kat: "He'll be okay."
+        kat: "He has you now."
+        "She looks at the dog. Something human flickers."
+        kat: "Take care of him. He loves you."
+        kat: "He always knew. Before I did."
+        -> far_gone_choice
       ELSE
-        kat: "..."
-        kat: "He tried to protect me."
-        kat: "They..."
-        "She stops. The words won't come."
-        kat: "He's gone. And I'm still here."
-        kat: "This is all that's left."
-        -> release_path
+        kat: "I know."
+        "Her voice breaks."
+        kat: "That's why you have to take him."
+        kat: "He can't follow me where I'm going."
+        kat: "But you can save him."
+        -> still_fighting_choice
       END
   END
 END
 
 # ============================================================================
-# BRANCH A: RESCUE ATTEMPT (Hermes)
+# BRANCH: STILL FIGHTING (she pushes him away)
+# All paths lead to beach a year later
+# ============================================================================
+
+DIALOGUE still_fighting_choice
+  "She's giving you Schoeppi. She's giving you a way out."
+  "But not herself."
+  
+  CHOICE
+    > "I'm not leaving without you."
+      hermes: "I'm not leaving without you."
+      
+      kat: "You don't get to choose for me."
+      kat: "No one does. Not anymore."
+      
+      hermes: "Kat—"
+      
+      "She pushes you. Hard."
+      "The congregation parts. A path to the exit."
+      "Schoeppi is suddenly in your arms. She put him there."
+      
+      kat: "Go. While they let you."
+      kat: "I'm buying you this. Don't waste it."
+      
+      -> reef_departure
+      
+    > "Come with us. Please."
+      hermes: "Come with us. Please."
+      hermes: "Both of you. We'll figure it out."
+      
+      "She laughs. Wet. Strange."
+      
+      kat: "There's nothing to figure out."
+      kat: "I'm becoming what I was always meant to be."
+      kat: "You can't save me from myself."
+      
+      "She lifts Schoeppi. Puts him in your arms."
+      
+      kat: "Save him instead."
+      
+      -> reef_departure
+      
+    > Take Schoeppi and go
+      "You reach for the dog."
+      "He comes to you. Whining. Confused."
+      
+      hermes: "I'll come back for you."
+      
+      kat: "No."
+      kat: "You won't."
+      kat: "And that's okay."
+      
+      "She touches your face. One last time."
+      
+      kat: "Goodbye, Hermes."
+      kat: "Thank you for seeing me."
+      
+      -> reef_departure
+  END
+END
+
+# ============================================================================
+# BRANCH: FAR GONE (ABYSSAL available)
+# She's too transformed to push him away
+# ============================================================================
+
+DIALOGUE far_gone_choice
+  "She's not pushing you away."
+  "She's not fighting anymore."
+  "She's just... waiting."
+  
+  kat: "You could come with me."
+  
+  "The words hang in the air."
+  "An invitation. A surrender."
+  
+  CHOICE
+    > "I'll follow you anywhere."
+      hermes: "I'll follow you anywhere."
+      hermes: "Even here. Especially here."
+      
+      "She looks at you. THE LOOK."
+      "The one that sees everything."
+      
+      kat: "You're sure?"
+      
+      hermes: "No."
+      hermes: "But I'm here."
+      
+      -> release_together
+      
+    > "I can't."
+      hermes: "I can't."
+      hermes: "I'm not... I'm not like you."
+      
+      kat: "No. You're not."
+      kat: "You're exactly what you're supposed to be."
+      kat: "That's why I loved you."
+      
+      "She picks up Schoeppi. Presses him into your arms."
+      
+      kat: "Take care of him."
+      kat: "He was the only thing I ever loved without being afraid."
+      kat: "Until you."
+      
+      -> reef_departure_far_gone
+      
+    > "Let me try to save you."
+      hermes: "Let me try. Please."
+      hermes: "I have a boat. Abel's waiting."
+      
+      kat: "Abel."
+      "She almost smiles."
+      kat: "Still fighting after all these years."
+      kat: "Still losing."
+      
+      hermes: "Come with me. We'll figure it out."
+      
+      "A long pause."
+      
+      kat: "...Okay."
+      kat: "Okay. I'll try."
+      
+      "She takes your hand. Cold. Scaled."
+      "But still her."
+      
+      -> rescue_attempt
+  END
+END
+
+# ============================================================================
+# SCENE: REEF DEPARTURE (she pushed him away)
+# Leads to beach a year later
+# ============================================================================
+
+SCENE reef_departure
+  location: "Devil Reef - Exit"
+  time: 4:00am
+  mood: loss
+
+  ON_ENTER
+    "You run."
+    "Schoeppi in your arms. Whining."
+    "The congregation parts for you. Lets you go."
+    "You don't look back."
+    "You can't."
+    
+    "At the reef's edge, the rowboat waits."
+    "You tumble in. Row."
+    "Abel's boat ahead. Engine running."
+    
+    abel: "Where is she?"
+    
+    hermes: "Gone."
+    hermes: "She made her choice."
+    
+    abel: "..."
+    abel: "They all do. Eventually."
+    
+    "The dog whines in your lap."
+    "He's looking back. Toward the reef."
+    "You don't."
+    
+    hermes (thinks): "She told me to go."
+    hermes (thinks): "She told me not to come back."
+    hermes (thinks): "I'm going to anyway."
+    hermes (thinks): "One day."
+    
+    SET reef_outcome = "pushed_away"
+  END
+  
+  -> ending_to_act4
+END
+
+SCENE reef_departure_far_gone
+  location: "Devil Reef - Exit"
+  time: 4:00am
+  mood: grief
+
+  ON_ENTER
+    "You run."
+    "Schoeppi in your arms. Whining."
+    "Behind you: she walks into the pool."
+    "Slowly. Deliberately."
+    "You hear the splash. You don't turn."
+    
+    "At the reef's edge, the rowboat waits."
+    "You row back to Abel alone."
+    
+    abel: "She's gone?"
+    
+    hermes: "Yeah."
+    
+    abel: "Did you say goodbye?"
+    
+    hermes: "Yeah."
+    
+    abel: "That's more than most get."
+    
+    "The dog whines."
+    "He knows."
+    
+    hermes (thinks): "She told me to come to the shore."
+    hermes (thinks): "At night. When the tide is high."
+    hermes (thinks): "She'll know I'm there."
+    
+    SET reef_outcome = "let_her_go"
+  END
+  
+  -> ending_to_act4
+END
+
+# ============================================================================
+# BRANCH A: RESCUE ATTEMPT
+# She agreed to try - leads to SURFACE (false victory)
 # ============================================================================
 
 DIALOGUE rescue_attempt
@@ -362,15 +588,11 @@ DIALOGUE rescue_attempt
   
   hermes: "Then we don't ask permission."
   
-  IF schoeppi_alive
-    hermes: "Where's the dog?"
-    
-    "She points. A robed figure. Arms wrapped around Schoeppi."
-    "The dog sees you. Whines. Struggles."
-    
-    hermes (thinks): "Get the dog. Get the girl. Get out."
-    hermes (thinks): "Fifteen minutes. Maybe less."
-  END
+  "Schoeppi is already at your feet. Whining."
+  "He knows. He's ready."
+  
+  hermes (thinks): "Get the dog. Get the girl. Get out."
+  hermes (thinks): "Fifteen minutes. Maybe less."
   
   kat: "I don't... I don't know if I can."
   kat: "The pull is so strong."
@@ -379,17 +601,17 @@ DIALOGUE rescue_attempt
   
   "She does."
   
-  hermes: "You pushed me away in that church."
-  hermes: "You gave me a chance to run."
-  hermes: "Now I'm giving you one."
+  hermes: "You said you'd try."
+  hermes: "That's all I'm asking."
   
   "A moment. An eternity."
   
   kat: "...Okay."
-  kat: "Okay. Let's try."
+  kat: "Okay. Let's go."
   
   "She takes your hand."
   "Cold. Scaled. Still hers."
+  "Schoeppi runs ahead."
   
   -> rescue_escape
 END
@@ -414,12 +636,7 @@ SCENE rescue_escape
     "Shapes rising. Dozens of them."
     "They know. They KNOW."
     
-    IF schoeppi_alive
-      "Kat lunges for Schoeppi."
-      "The robed figure hisses — releases him."
-      "The dog bolts to her side."
-      kat: "I've got him. GO!"
-    END
+    "Schoeppi runs beside you. Barking. Terrified."
     
     kat: "Don't stop. Whatever you do, don't stop."
     
@@ -562,22 +779,8 @@ SCENE rescue_swim
     "Past shapes that reach for you."
     "Past her own kind."
     
-    IF schoeppi_alive
-      "Schoeppi paddles desperately beside you."
-      "She grabs him too. Holds you both."
-    END
-    
-    "Abel's boat. The hull above you."
-    "She pushes you up. Into air."
-    
-    abel: "GRAB THE ROPE!"
-    
-    "You grab. He pulls."
-    "You hit the deck. Gasping."
-    
-    IF schoeppi_alive
+    # Schoeppi is always alive
       "Schoeppi scrambles up after you. Shaking. Alive."
-    END
     
     hermes: "Kat—"
     
@@ -632,11 +835,8 @@ DIALOGUE rescue_swim_call
   hermes: "Kat—"
   
   kat: "Go. Live."
-  IF schoeppi_alive
-    kat: "Take care of Schoeppi."
-    kat: "He was the only thing I ever loved without being afraid."
+  # Schoeppi is always alive
     kat: "Until you."
-  END
   kat: "And sometimes... come to the beach."
   kat: "I'll know you're there."
   
@@ -675,9 +875,8 @@ SCENE rescue_boat_race
     "Throws you toward the boat."
     "You hit the side. Grab the edge."
     
-    IF schoeppi_alive
+    # Schoeppi is always alive
       "Schoeppi is already in the boat. Whining."
-    END
     
     "Kat is right behind you."
     "Then she stops."
@@ -723,18 +922,8 @@ DIALOGUE rescue_force_ending
   "Shaking. Sobbing."
   "Half-transformed. Neither one thing nor another."
   
-  IF schoeppi_alive
-    "Schoeppi presses against her. Licking her face."
-    "She holds him. Holds onto the only thing that makes sense."
-  END
-  
-  "You don't know what happens next."
-  "Neither does she."
-  "But she's here."
-  "That has to mean something."
-  
+  # Schoeppi is always alive
   -> rescue_ending_together_broken
-END
 
 DIALOGUE rescue_release_at_boat
   hermes: "It's okay."
@@ -764,11 +953,8 @@ DIALOGUE rescue_release_at_boat
   "She's gone."
   "You row back to Abel alone."
   
-  IF schoeppi_alive
-    "Schoeppi whines at the water's edge."
-    "He knows she's not coming back."
+  # Schoeppi is always alive
     "You hold him. It's all you can do."
-  END
   
   -> rescue_ending_apart
 END
@@ -784,9 +970,8 @@ SCENE rescue_boat
     "The rowboat is there. Right where you left it."
     "You tumble in. She follows."
     
-    IF schoeppi_alive
+    # Schoeppi is always alive
       "Schoeppi leaps in after. Shaking. Terrified. Alive."
-    END
     
     "Row. ROW."
     
@@ -829,23 +1014,8 @@ DIALOGUE rescue_boat_hand
   "She collapses on the deck."
   "Half-changed. Gasping."
   
-  IF schoeppi_alive
-    "Schoeppi is already there. Pressed against her."
-    "He never left her side. He never will."
-  END
-  
-  abel: "Hold on!"
-  
-  "The engine screams."
-  "Devil Reef shrinks behind you."
-  "They don't follow."
-  
-  "You made it."
-  "You don't know what comes next."
-  "But you made it."
-  
+  # Schoeppi is always alive
   -> rescue_ending_together_uncertain
-END
 
 DIALOGUE rescue_boat_choice
   hermes: "I can't pull you out of the water."
@@ -1093,16 +1263,11 @@ DIALOGUE release_witness_accept
   kat: "That's all I ever wanted."
   kat: "Someone who tried."
   
-  IF schoeppi_alive
-    kat: "Take care of him. He loves you."
-    kat: "He always knew. Before I did."
-    kat: "He was the only thing I ever loved without being afraid."
-    kat: "Until you."
-  ELSE
-    kat: "He tried to protect me."
-    kat: "At the end. That's... that's who he was."
-    kat: "Better than me."
-  END
+  # Schoeppi callback
+  kat: "Take care of him. He loves you."
+  kat: "He always knew. Before I did."
+  kat: "He was the only thing I ever loved without being afraid."
+  kat: "Until you."
   
   hermes: "I'll always try."
   
@@ -1332,18 +1497,8 @@ SCENE rescue_ending_lost
     abel: "The sea takes what it wants."
     abel: "Always has."
     
-    IF schoeppi_alive
-      "Schoeppi whines. Presses against your leg."
-      "He's looking for her too."
-    END
-    
-    hermes (thinks): "I almost had her."
-    hermes (thinks): "Almost."
-    
-    "Almost is the cruelest word in the language."
-    
+    # Schoeppi is always alive
     -> GAME_END_LOST
-  END
 END
 
 SCENE rescue_ending_apart
@@ -1364,11 +1519,8 @@ SCENE rescue_ending_apart
     abel: "That matters."
     abel: "Even when it's not enough."
     
-    IF schoeppi_alive
-      "Schoeppi lies at your feet."
-      "He knows she's not coming back."
+    # Schoeppi is always alive
       "But he's here. She wanted that."
-    END
     
     "You think about what she said."
     "Come to the beach. She'll know you're there."
@@ -1419,12 +1571,8 @@ SCENE rescue_ending_together_broken
     
     hermes: "You keep saying that."
     
-    IF schoeppi_alive
-      "Schoeppi climbs onto her chest."
-      "Licks her face. Her scales."
-      "He doesn't care what she looks like."
+    # Schoeppi is always alive
       "Neither do you."
-    END
     
     abel: "We're almost to shore."
     abel: "Whatever you two are going to do..."
@@ -1474,12 +1622,8 @@ SCENE rescue_ending_together_uncertain
     hermes: "Later."
     hermes: "For now, just... be here."
     
-    IF schoeppi_alive
-      "Schoeppi curls between you."
-      "The three of you, on a boat, at dawn."
-      "It's not much."
+    # Schoeppi is always alive
       "It's everything."
-    END
     
     "She nods."
     "The shore gets closer."
@@ -1516,11 +1660,8 @@ SCENE rescue_ending_together_choice
     
     hermes: "I know."
     
-    IF schoeppi_alive
-      "Schoeppi barks. Once."
-      "Like he's agreeing."
+    # Schoeppi is always alive
       "Like he's saying: we're in this together."
-    END
     
     "But you look at her."
     "She looks at you."
@@ -1551,30 +1692,8 @@ SCENE surface_false_victory
     ""
     "The second month, she starts eating fish. Only fish."
     "Raw, when she thinks you're not looking."
-    IF schoeppi_alive
-      "Schoeppi watches her. Whines sometimes."
-      "He knows something you don't."
-    END
-    ""
-    "The third month, you find her at the window."
-    "Staring east. Toward the water."
-    kat: "I can hear them."
-    kat: "Even here. Even this far inland."
-    hermes: "We can move further—"
-    kat: "It won't help."
-    ""
-    "She touches your face."
-    "Her hands are cold. Always cold now."
-    kat: "You saved me."
-    kat: "I want you to know that."
-    kat: "Whatever happens next."
-    ""
-    "You should have heard the goodbye in her voice."
-    "You didn't."
-    "You wanted to believe."
-    ""
+    # Schoeppi is always alive
     "She let you believe it for as long as she could."
-  END
   
   -> surface_she_leaves
 END
@@ -1588,12 +1707,8 @@ SCENE surface_she_leaves
     "You wake up alone."
     "The bed is cold. Has been for hours."
     ""
-    IF schoeppi_alive
-      "Schoeppi is at the door."
-      "Howling."
-      "He's been howling all night."
+    # Schoeppi is always alive
       "You slept through it."
-    END
     ""
     CHOICE
       > Search her things
@@ -1662,12 +1777,8 @@ SCENE ending_to_act4
     "Every night. The same dream."
     "She's in the water. Calling."
     ""
-    IF schoeppi_alive
-      "Schoeppi sleeps at the foot of your bed."
-      "He dreams too. You can tell."
-      "His paws twitch. Reaching for something."
+    # Schoeppi is always alive
       "Someone."
-    END
     ""
     "One year."
     "One year of pretending you're not going back."
@@ -1717,12 +1828,8 @@ SCENE rescue_ending_together_broken
     
     hermes: "You keep saying that."
     
-    IF schoeppi_alive
-      "Schoeppi climbs onto her chest."
-      "Licks her face. Her scales."
-      "He doesn't care what she looks like."
+    # Schoeppi is always alive
       "Neither do you."
-    END
     
     abel: "We're almost to shore."
     abel: "Whatever you two are going to do..."
@@ -1772,12 +1879,8 @@ SCENE rescue_ending_together_uncertain
     hermes: "Later."
     hermes: "For now, just... be here."
     
-    IF schoeppi_alive
-      "Schoeppi curls between you."
-      "The three of you, on a boat, at dawn."
-      "It's not much."
+    # Schoeppi is always alive
       "It's everything."
-    END
     
     "She nods."
     "The shore gets closer."
@@ -1814,11 +1917,8 @@ SCENE rescue_ending_together_choice
     
     hermes: "I know."
     
-    IF schoeppi_alive
-      "Schoeppi barks. Once."
-      "Like he's agreeing."
+    # Schoeppi is always alive
       "Like he's saying: we're in this together."
-    END
     
     "But you look at her."
     "She looks at you."
@@ -1949,18 +2049,8 @@ SCENE rescue_ending_lost
     abel: "The sea takes what it wants."
     abel: "Always has."
     
-    IF schoeppi_alive
-      "Schoeppi whines. Presses against your leg."
-      "He's looking for her too."
-    END
-    
-    hermes (thinks): "I almost had her."
-    hermes (thinks): "Almost."
-    
-    "Almost is the cruelest word in the language."
-    
+    # Schoeppi is always alive
     -> ending_to_act4
-  END
 END
 
 SCENE rescue_ending_apart
@@ -1981,11 +2071,8 @@ SCENE rescue_ending_apart
     abel: "That matters."
     abel: "Even when it's not enough."
     
-    IF schoeppi_alive
-      "Schoeppi lies at your feet."
-      "He knows she's not coming back."
+    # Schoeppi is always alive
       "But he's here. She wanted that."
-    END
     
     "You think about what she said."
     "Come to the beach. She'll know you're there."
