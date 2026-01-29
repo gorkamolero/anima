@@ -256,7 +256,32 @@ DIALOGUE final_conversation
   kat: "You came."
   hermes: "I had to."
   
-  kat: "I know. I'm sorry."
+  # Path-specific dialogue based on Devil Reef outcome
+  IF surface_path
+    # SURFACE: They escaped together, she left months later
+    IF kat_left_note
+      hermes: "You said you were sorry."
+      kat: "I was."
+      kat: "I am."
+    ELSE
+      hermes: "You didn't even say goodbye."
+      kat: "I couldn't."
+      kat: "If I'd tried to write it down..."
+      kat: "I would have stayed."
+    END
+    hermes: "I had you. We got out."
+    kat: "I know."
+    kat: "You just didn't want to believe it."
+    kat: "Neither did I."
+  ELSE
+    # CURRENT/DEPTH: She stayed at the reef, he left alone
+    hermes: "I've been coming here for a year."
+    hermes: "Hoping you'd—"
+    kat: "I know."
+    kat: "I felt you. Every time."
+  END
+  
+  kat: "I'm sorry."
   kat: "I shouldn't have called. But I..."
   
   "She struggles. Words are harder for her now."
