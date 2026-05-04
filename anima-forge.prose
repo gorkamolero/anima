@@ -210,17 +210,21 @@ Generate a walking animation video for the character.
 Character reference:
 adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png
 
-Use sprite-factory.py to generate the video:
+Use sprite-factory.py to generate video and extract sprites:
 
 ```bash
-cd packages/sprite-tools
-python scripts/sprite-factory.py generate \
-  --prompt "Character walking cycle, side view, smooth loop, 4 steps, grey background #828282" \
-  --reference ../../adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png \
-  --output ../../adventures/shadow-over-innsmouth/art/characters/{scene_id}-walk
+cd ~/www/anima/packages/sprite-tools/scripts
+python sprite-factory.py generate \
+  --prompt "Character walking cycle, side view, smooth loop, 4 steps" \
+  --reference ~/www/anima/adventures/shadow-over-innsmouth/art/characters/{scene_id}-character-ref.png \
+  --output ~/www/anima/adventures/shadow-over-innsmouth/art/characters/{scene_id}-walk \
+  --pipeline a_prime
 ```
 
-This will create a video and then process it into a spritesheet.
+This will:
+1. Generate animation video via Gemini Veo
+2. Extract sprites using Pipeline A' (optimized rembg)
+3. Create spritesheet with JSON atlas
 """
 
 loop until **the spritesheet looks correct** (max: 3):
