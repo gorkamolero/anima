@@ -51,6 +51,15 @@ export function sceneImageCacheName(
 
 async function editWithFal(background: Blob, prompt: string): Promise<string> {
 	const imageUrl = await fal.storage.upload(background);
+	// ponytail: one retry — fal's edit endpoint fails ~1 in 4 calls; a queue with backoff if that gets worse
+	try {
+		return await editOnce(imageUrl, prompt);
+	} catch {
+		return await editOnce(imageUrl, prompt);
+	}
+}
+
+async function editOnce(imageUrl: string, prompt: string): Promise<string> {
 	const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
 		input: {
 			prompt,

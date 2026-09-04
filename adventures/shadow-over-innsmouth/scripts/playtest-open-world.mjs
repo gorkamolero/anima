@@ -123,6 +123,8 @@ const clickY = Math.round(((y0 + y1) / 2) * 1080);
 const beforeFrame = evalInBrowser(`window.__anima.captureFrame()`);
 writeFrame("before.png", beforeFrame);
 
+const timings = {};
+const tClick = Date.now();
 evalInBrowser(`
 (() => {
 	window.__anima.click(${clickX}, ${clickY});
@@ -154,6 +156,7 @@ evalInBrowser(`
 })()
 `);
 
+timings.clickToOptionsMs = Date.now() - tClick;
 await poll(
 	"free-text input",
 	() =>
@@ -174,21 +177,36 @@ evalInBrowser(`
 	return true;
 })()
 `);
+const tSubmit = Date.now();
 
-const resolved = await poll(
-	"narrator resolution and background edit",
-	() =>
-		evalInBrowser(`
+const snapshotSource = `
 (() => {
 	window.__anima.step(100);
 	return window.__anima.scene.getReviewQaSnapshot();
 })()
-`),
-	(snapshot) =>
-		Boolean(snapshot.openWorld.caption) &&
-		snapshot.backgroundTextureKey !== boot.backgroundTextureKey,
+`;
+await poll(
+	"narrator resolution",
+	() => evalInBrowser(snapshotSource),
+	(snapshot) => Boolean(snapshot.openWorld.caption),
+	60_000,
+);
+timings.submitToCaptionMs = Date.now() - tSubmit;
+const tCaption = Date.now();
+const resolved = await poll(
+	"background edit",
+	() => evalInBrowser(snapshotSource),
+	(snapshot) => snapshot.backgroundTextureKey !== boot.backgroundTextureKey,
 	180_000,
 );
+timings.captionToNewBackgroundMs = Date.now() - tCaption;
+timings.submitToNewBackgroundMs = Date.now() - tSubmit;
+timings.apiCalls = evalInBrowser(`
+performance.getEntriesByType("resource")
+	.filter((entry) => /narrate|scene-image|interactables|generated/.test(entry.name))
+	.map((entry) => ({ url: new URL(entry.name).pathname,
+		ms: Math.round(entry.duration) }))
+`);
 
 const afterFrame = evalInBrowser(`window.__anima.captureFrame()`);
 writeFrame("after.png", afterFrame);
@@ -237,7 +255,7 @@ const result = {
 	click: { x: clickX, y: clickY },
 	caption: resolved.openWorld.caption,
 	imagePrompt: resolved.openWorld.imagePrompt,
-	imageEditMs: resolved.openWorld.imageEditMs,
+	timings,
 	backgroundBefore: boot.backgroundTextureKey,
 	backgroundAfter: resolved.backgroundTextureKey,
 	hermesWalk: { beforeX: walk.beforeX, afterX: walk.after.hermes.x },
