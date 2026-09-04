@@ -1,0 +1,17 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "innsmouth",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["--filter", "@anima/shadow-over-innsmouth", "dev"],
+			"port": 8080
+		},
+		{
+			"name": "api",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["--filter", "api", "dev"],
+			"port": 3001
+		}
+	]
+}
