@@ -14,12 +14,16 @@ export type {
 // Audio
 export * as audio from "./audio";
 export { SceneSoundManager } from "./audio";
-
 export * as characters from "./characters";
-export type { CharacterAnimConfig } from "./characters/Character";
-
+export type {
+	CharacterAnimationState,
+	CharacterAnimConfig,
+} from "./characters/Character";
 // Characters
 export { Character } from "./characters/Character";
+// Agent debug / playtest API
+export type { AgentDebugApi, AgentSceneSnapshot } from "./debug/AgentDebug";
+export { installAgentDebug } from "./debug/AgentDebug";
 export type {
 	DialogueCallbacks,
 	DialogueChoice,
@@ -36,7 +40,6 @@ export type {
 	SelectedInfo,
 } from "./editor";
 export * as editor from "./editor";
-
 // Editor
 export {
 	EditorPanel,
@@ -60,7 +63,6 @@ export {
 	getSceneGroundLine,
 	registerWithGroundLine,
 } from "./groundline";
-
 export type {
 	HotspotConfig,
 	HotspotIcon,
@@ -104,3 +106,19 @@ export type {
 // UI
 export * as ui from "./ui";
 export { UIState } from "./ui";
+// Art landmarks (backgrounds describe their own geometry)
+export type {
+	ArtReport,
+	ArtViolation,
+	Landmark,
+	LandmarksFile,
+	PerspectiveModel,
+} from "./verification/ArtLandmarks";
+export {
+	buildPerspectiveModel,
+	checkArtConsistency,
+	checkCharacterScales,
+	checkGroundLineScales,
+	checkHotspotBounds,
+	verifySceneArt,
+} from "./verification/ArtLandmarks";

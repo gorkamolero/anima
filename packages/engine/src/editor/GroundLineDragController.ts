@@ -114,11 +114,7 @@ export class GroundLineDragController {
 	 * Returns true if the point was removed.
 	 */
 	removePoint(selected: Selectable): boolean {
-		if (
-			!this.manager ||
-			!selected ||
-			selected.type !== "groundLinePoint"
-		) {
+		if (!this.manager || !selected || selected.type !== "groundLinePoint") {
 			return false;
 		}
 

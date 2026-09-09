@@ -1,0 +1,49 @@
+{
+	"image": "arkham-bus-depot-flat-2d.png",
+	"space": "game",
+	"landmarks": [
+		{
+			"id": "doorway",
+			"kind": "object",
+			"rect": { "x": 1446, "y": 252, "width": 390, "height": 636 },
+			"realHeightM": 2.5,
+			"note": "depot entrance arch; primary scale anchor - consistent with the reviewed character size"
+		},
+		{
+			"id": "vending-machine",
+			"kind": "object",
+			"rect": { "x": 78, "y": 288, "width": 318, "height": 606 },
+			"realHeightM": 1.83,
+			"use": false,
+			"note": "painted ~30% oversized relative to the doorway"
+		},
+		{
+			"id": "ticket-booth",
+			"kind": "region",
+			"rect": { "x": 456, "y": 336, "width": 408, "height": 456 },
+			"hotspotId": "ticket_window",
+			"note": "the ARKHAM BUS DEPOT kiosk including its service window"
+		},
+		{
+			"id": "departures-board",
+			"kind": "region",
+			"rect": { "x": 444, "y": 48, "width": 396, "height": 264 },
+			"hotspotId": "schedule_board",
+			"note": "painted DEPARTURES board top-left"
+		},
+		{
+			"id": "bench",
+			"kind": "region",
+			"rect": { "x": 906, "y": 600, "width": 576, "height": 240 },
+			"hotspotId": "waiting_bench",
+			"note": "empty wooden waiting bench mid-room"
+		},
+		{
+			"id": "platform-doorway",
+			"kind": "region",
+			"rect": { "x": 1446, "y": 252, "width": 390, "height": 636 },
+			"hotspotId": "bus_platform",
+			"note": "doorway to the bus platform, bus visible outside"
+		}
+	]
+}

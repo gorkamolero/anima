@@ -1,0 +1,10 @@
+{
+	"name": "hermes-neutral-walk",
+	"image": "hermes-neutral-walk.png",
+	"frameWidth": 910,
+	"frameHeight": 1588,
+	"frameCount": 24,
+	"cols": 6,
+	"rows": 4,
+	"fps": 12
+}

@@ -8,8 +8,8 @@
  */
 
 import type { Scene } from "phaser";
-import type { ActiveSound, HoverSoundConfig, SoundManifest } from "./types";
 import { wrapPhaserSound } from "./SoundWrapper";
+import type { ActiveSound, HoverSoundConfig, SoundManifest } from "./types";
 
 export class HoverSoundHandler {
 	private scene: Scene;
@@ -103,7 +103,9 @@ export class HoverSoundHandler {
 	updateVolume(masterVolume: number): void {
 		if (this.activeHoverSound) {
 			const hoverConfig = this.activeHoverSound.config as HoverSoundConfig;
-			this.activeHoverSound.wrappedSound.setVolume(hoverConfig.volume * masterVolume);
+			this.activeHoverSound.wrappedSound.setVolume(
+				hoverConfig.volume * masterVolume,
+			);
 		}
 	}
 

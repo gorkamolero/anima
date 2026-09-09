@@ -5,7 +5,7 @@ export type {
 	TransitionOptions,
 } from "./BaseScene";
 export { BaseScene } from "./BaseScene";
-export { ScenePreloadManager } from "./ScenePreloadManager";
-export { SceneCamera, type CameraConfig } from "./SceneCamera";
+export { type CameraConfig, SceneCamera } from "./SceneCamera";
 export { SceneParallax } from "./SceneParallax";
+export { ScenePreloadManager } from "./ScenePreloadManager";
 export { SceneTransitions } from "./SceneTransitions";

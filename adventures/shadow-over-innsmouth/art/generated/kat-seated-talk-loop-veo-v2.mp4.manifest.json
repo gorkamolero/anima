@@ -1,0 +1,17 @@
+{
+	"provider": "fal.ai",
+	"endpoint": "fal-ai/veo3.1/fast/image-to-video",
+	"requestId": "019df598-55eb-71c3-9bec-971bad748226",
+	"sourceImage": "../../adventures/shadow-over-innsmouth/public/assets/sprites/kat/kat-seated-idle.png",
+	"output": "../../adventures/shadow-over-innsmouth/art/generated/kat-seated-talk-loop-veo-v2.mp4",
+	"input": {
+		"prompt": "Kat remains seated in the exact same full-body guarded punk pose, headphones on, arms crossed, backpack beside her, boots visible, subtle mouth and jaw movement as if quietly answering Hermes, tiny head and breathing motion, loopable idle talk animation, flat neutral gray background\n\nSprite generation constraints:\n- Preserve the exact character identity, clothing, silhouette, proportions, and illustration style.\n- Plain flat #828282 gray background only.\n- No floor plane, no props, no scene, no cast shadow, no contact shadow, no camera motion.\n- Smooth loopable point-and-click adventure animation.\n- Keep the character seated in the same pose and anchor.\n- Whole seated body, boots, and attached bag must remain fully visible with generous padding.\n- Animate subtle mouth, jaw, head, and breathing movement only.\n- Do not stand up, walk, wave, change outfit, change camera angle, or move across frame.",
+		"image_url": "https://v3b.fal.media/files/b/0a98ec8d/FrdKQ8HuuNjq_cQlcR1_Q_kat-seated-idle.png",
+		"aspect_ratio": "16:9",
+		"duration": "4s",
+		"resolution": "720p",
+		"generate_audio": false,
+		"auto_fix": false,
+		"safety_tolerance": "4"
+	}
+}

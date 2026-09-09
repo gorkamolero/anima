@@ -1,0 +1,87 @@
+{
+	"sceneId": "depot-interior",
+	"reviewSceneId": "inside",
+	"characterId": "hermes",
+	"characterName": "Hermes",
+	"background": "adventures/shadow-over-innsmouth/public/backgrounds/arkham-bus-depot-flat-2d.png",
+	"characterReference": "adventures/shadow-over-innsmouth/art/@hermes.jpeg",
+	"spriteReference": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
+	"baseScale": 0.43,
+	"interpolation": "catmull-rom",
+	"requestedPositions": [
+		{
+			"id": "ticket_left",
+			"x": 150,
+			"note": "left interior floor near vending machine, facing right"
+		},
+		{
+			"id": "ticket_window",
+			"x": 460,
+			"note": "ticket-window approach point, facing right"
+		},
+		{
+			"id": "kat_approach",
+			"x": 780,
+			"note": "waiting-bench talk approach point, facing right toward Kat"
+		},
+		{
+			"id": "bench_right",
+			"x": 1180,
+			"note": "right side of bench, facing left"
+		},
+		{
+			"id": "platform_threshold",
+			"x": 1510,
+			"note": "near the platform doorway, facing left"
+		},
+		{
+			"id": "bus_platform",
+			"x": 1760,
+			"note": "far right platform edge, facing left"
+		}
+	],
+	"measuredPlacements": [
+		{
+			"id": "ticket_left",
+			"x": 150,
+			"y": 914,
+			"scaleFactor": 0.98,
+			"facing": "right"
+		},
+		{
+			"id": "ticket_window",
+			"x": 460,
+			"y": 902,
+			"scaleFactor": 0.965,
+			"facing": "right"
+		},
+		{
+			"id": "kat_approach",
+			"x": 780,
+			"y": 890,
+			"scaleFactor": 0.94,
+			"facing": "right"
+		},
+		{
+			"id": "bench_right",
+			"x": 1180,
+			"y": 890,
+			"scaleFactor": 0.94,
+			"facing": "left"
+		},
+		{
+			"id": "platform_threshold",
+			"x": 1510,
+			"y": 904,
+			"scaleFactor": 0.968,
+			"facing": "left"
+		},
+		{
+			"id": "bus_platform",
+			"x": 1760,
+			"y": 916,
+			"scaleFactor": 0.985,
+			"facing": "left"
+		}
+	]
+}

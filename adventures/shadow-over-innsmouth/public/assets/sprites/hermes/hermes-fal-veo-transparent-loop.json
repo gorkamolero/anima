@@ -1,0 +1,10 @@
+{
+	"name": "hermes-fal-veo-transparent-loop",
+	"image": "hermes-fal-veo-transparent-loop.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 30,
+	"cols": 8,
+	"rows": 4,
+	"fps": 24
+}

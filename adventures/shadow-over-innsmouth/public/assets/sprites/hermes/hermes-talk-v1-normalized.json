@@ -1,0 +1,10 @@
+{
+	"name": "hermes-talk-v1-normalized",
+	"image": "hermes-talk-v1-normalized.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 6,
+	"cols": 6,
+	"rows": 1,
+	"fps": 12
+}

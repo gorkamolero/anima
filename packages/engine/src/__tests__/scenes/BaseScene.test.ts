@@ -68,7 +68,12 @@ vi.mock("../../characters", () => {
 	// Mock getCharacterHeadPosition utility
 	const getCharacterHeadPosition = (
 		character: { x: number; y: number; displayHeight: number } | undefined,
-		fallbackCamera: { scrollX: number; scrollY: number; width: number; height: number },
+		fallbackCamera: {
+			scrollX: number;
+			scrollY: number;
+			width: number;
+			height: number;
+		},
 	): { x: number; y: number } => {
 		if (!character) {
 			return {

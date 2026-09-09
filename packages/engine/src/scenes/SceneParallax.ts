@@ -1,4 +1,4 @@
-import { Scene, GameObjects } from "phaser";
+import { GameObjects, type Scene } from "phaser";
 
 /**
  * Parallax layer configuration

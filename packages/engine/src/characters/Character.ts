@@ -11,17 +11,27 @@ import {
 export interface CharacterAnimConfig {
 	walk: {
 		key: string;
+		texture?: string;
 		frames: { start: number; end: number };
 		frameRate: number;
 	};
 	idle: {
 		key: string;
+		texture?: string;
+		frames: { start: number; end: number };
+		frameRate: number;
+	};
+	talk?: {
+		key: string;
+		texture?: string;
 		frames: { start: number; end: number };
 		frameRate: number;
 	};
 	/** If true, sprite faces left by default (flip when going right) */
 	facesLeft?: boolean;
 }
+
+export type CharacterAnimationState = "idle" | "walk" | "talk";
 
 /**
  * Base character class for point-and-click adventures.
@@ -54,6 +64,7 @@ export class Character extends GameObjects.Sprite {
 	protected moveSpeed = Character.DEFAULT_MOVE_SPEED;
 	protected isMoving = false;
 	protected animConfig: CharacterAnimConfig;
+	protected animationState: CharacterAnimationState = "idle";
 	protected onArrivalResolve: (() => void) | null = null;
 	protected facesLeft: boolean;
 
@@ -107,7 +118,7 @@ export class Character extends GameObjects.Sprite {
 		body.setCollideWorldBounds(true);
 
 		// Start with idle
-		this.play(this.animConfig.idle.key, true);
+		this.playAnimationState("idle");
 
 		// Apply initial ground line position
 		if (this.positionCallback) {
@@ -120,31 +131,34 @@ export class Character extends GameObjects.Sprite {
 	}
 
 	protected createAnimations(): void {
-		const { walk, idle } = this.animConfig;
+		const { walk, idle, talk } = this.animConfig;
 
-		if (!this.scene.anims.exists(walk.key)) {
+		for (const animation of [walk, idle, talk].filter(
+			(item): item is NonNullable<typeof item> => Boolean(item),
+		)) {
+			if (this.scene.anims.exists(animation.key)) continue;
 			this.scene.anims.create({
-				key: walk.key,
-				frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-					start: walk.frames.start,
-					end: walk.frames.end,
-				}),
-				frameRate: walk.frameRate,
+				key: animation.key,
+				frames: this.scene.anims.generateFrameNumbers(
+					animation.texture ?? this.texture.key,
+					{
+						start: animation.frames.start,
+						end: animation.frames.end,
+					},
+				),
+				frameRate: animation.frameRate,
 				repeat: -1,
 			});
 		}
+	}
 
-		if (!this.scene.anims.exists(idle.key)) {
-			this.scene.anims.create({
-				key: idle.key,
-				frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-					start: idle.frames.start,
-					end: idle.frames.end,
-				}),
-				frameRate: idle.frameRate,
-				repeat: -1,
-			});
-		}
+	public playAnimationState(state: CharacterAnimationState): void {
+		const animation =
+			state === "talk"
+				? (this.animConfig.talk ?? this.animConfig.idle)
+				: this.animConfig[state];
+		this.animationState = state;
+		this.play(animation.key, true);
 	}
 
 	/**
@@ -154,8 +168,7 @@ export class Character extends GameObjects.Sprite {
 		this.targetX = targetX;
 		this.isMoving = true;
 
-		// Play walk animation
-		this.play(this.animConfig.walk.key, true);
+		this.playAnimationState("walk");
 
 		// Face direction
 		this.faceDirection(targetX);
@@ -164,7 +177,10 @@ export class Character extends GameObjects.Sprite {
 	/**
 	 * Walk to position and return a promise that resolves on arrival
 	 */
-	public walkToPosition(x: number, minDistance = Character.DEFAULT_APPROACH_DISTANCE): Promise<void> {
+	public walkToPosition(
+		x: number,
+		minDistance = Character.DEFAULT_APPROACH_DISTANCE,
+	): Promise<void> {
 		return new Promise((resolve) => {
 			const currentDistance = Math.abs(this.x - x);
 			if (currentDistance <= minDistance) {
@@ -198,8 +214,7 @@ export class Character extends GameObjects.Sprite {
 		const body = this.body as Phaser.Physics.Arcade.Body;
 		body.setVelocity(0, 0);
 
-		// Play idle animation
-		this.play(this.animConfig.idle.key, true);
+		this.playAnimationState("idle");
 
 		// Resolve any pending promise
 		if (this.onArrivalResolve) {
@@ -250,6 +265,11 @@ export class Character extends GameObjects.Sprite {
 		this.moveSpeed = speed;
 	}
 
+	public setWorldBoundsCollision(enabled: boolean): void {
+		const body = this.body as Phaser.Physics.Arcade.Body | null;
+		body?.setCollideWorldBounds(enabled);
+	}
+
 	/**
 	 * Set position callback manually (for late binding or custom behavior)
 	 */
@@ -264,6 +284,11 @@ export class Character extends GameObjects.Sprite {
 		return this.baseScale;
 	}
 
+	public setBaseScale(scale: number): void {
+		this.baseScale = scale;
+		this.setScale(scale);
+	}
+
 	// ===========================================================================
 	// Getters
 	// ===========================================================================
@@ -274,5 +299,9 @@ export class Character extends GameObjects.Sprite {
 
 	public getCharacterId(): string {
 		return this.characterId;
+	}
+
+	public getAnimationState(): CharacterAnimationState {
+		return this.animationState;
 	}
 }

@@ -1,0 +1,93 @@
+{
+	"sceneId": "terminal-flat-exterior",
+	"reviewSceneId": "outside",
+	"characterId": "hermes",
+	"characterName": "Hermes",
+	"background": "adventures/shadow-over-innsmouth/public/backgrounds/bus-station-kat-seated-composite-v1.png",
+	"characterReference": "adventures/shadow-over-innsmouth/art/@hermes.jpeg",
+	"spriteReference": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
+	"contactSheet": "adventures/shadow-over-innsmouth/art/generated/hermes-terminal-flat-exterior-placement-contact-v1.png",
+	"baseScale": 0.5,
+	"interpolation": "catmull-rom",
+	"requestedPositions": [
+		{
+			"id": "left_dock",
+			"x": 120,
+			"note": "left side of the dock, facing right"
+		},
+		{
+			"id": "default_idle",
+			"x": 520,
+			"note": "open dock walk line, facing right"
+		},
+		{
+			"id": "kat_approach_left",
+			"x": 755,
+			"note": "generated-reference foreground approach beside seated Kat, facing right"
+		},
+		{
+			"id": "kat_approach_right",
+			"x": 1040,
+			"note": "foreground line near Kat's seated bench, facing left"
+		},
+		{
+			"id": "bus_door_approach",
+			"x": 1520,
+			"note": "near the depot door and bus nose, facing right"
+		},
+		{
+			"id": "right_bus_edge",
+			"x": 1800,
+			"note": "right side before the scripted offscreen exit, facing left"
+		}
+	],
+	"measuredPlacements": [
+		{
+			"id": "left_dock",
+			"x": 120,
+			"y": 950,
+			"scaleFactor": 0.913,
+			"facing": "right"
+		},
+		{
+			"id": "default_idle",
+			"x": 520,
+			"y": 966,
+			"scaleFactor": 0.943,
+			"facing": "right"
+		},
+		{
+			"id": "kat_approach_left",
+			"x": 755,
+			"y": 976,
+			"scaleFactor": 0.963,
+			"facing": "right"
+		},
+		{
+			"id": "kat_approach_right",
+			"x": 1040,
+			"y": 966,
+			"scaleFactor": 0.943,
+			"facing": "left"
+		},
+		{
+			"id": "bus_door_approach",
+			"x": 1520,
+			"y": 950,
+			"scaleFactor": 0.913,
+			"facing": "right"
+		},
+		{
+			"id": "right_bus_edge",
+			"x": 1800,
+			"y": 942,
+			"scaleFactor": 0.898,
+			"facing": "left"
+		}
+	],
+	"derivation": {
+		"source": "public/backgrounds/bus-station-kat-seated-composite-v1.landmarks.json",
+		"model": "horizon perspective (horizonY 470), Kat figure anchor, figureCalibration 0.8",
+		"note": "scaleFactors derived from art landmarks, not hand-tuned; regenerate via pnpm verify:art when the art changes"
+	}
+}

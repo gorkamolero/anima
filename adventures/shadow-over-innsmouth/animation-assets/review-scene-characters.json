@@ -1,0 +1,63 @@
+{
+	"schemaVersion": 1,
+	"sceneSet": "shadow-over-innsmouth-review-scenes",
+	"characters": [
+		{
+			"id": "hermes",
+			"displayName": "Hermes",
+			"requiredStates": ["idle", "walk", "talk"],
+			"states": {
+				"idle": {
+					"texture": "hermes-idle-v2-normalized",
+					"image": "public/assets/sprites/hermes/hermes-idle-v2-normalized.png",
+					"metadata": "public/assets/sprites/hermes/hermes-idle-v2-normalized.json",
+					"frames": { "start": 0, "end": 5 },
+					"frameRate": 12,
+					"status": "final-candidate",
+					"notes": "Generated transparent idle loop from Hermes sprite reference, trimmed, BRIA alpha-removed, and normalized to the shared 612x1059 Hermes frame box."
+				},
+				"walk": {
+					"texture": "hermes-fal-veo-transparent-loop",
+					"image": "public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
+					"metadata": "public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.json",
+					"frames": { "start": 0, "end": 29 },
+					"frameRate": 16,
+					"status": "final-candidate",
+					"notes": "Transparent walking loop extracted from generated video."
+				},
+				"talk": {
+					"texture": "hermes-talk-v1-normalized",
+					"image": "public/assets/sprites/hermes/hermes-talk-v1-normalized.png",
+					"metadata": "public/assets/sprites/hermes/hermes-talk-v1-normalized.json",
+					"frames": { "start": 0, "end": 5 },
+					"frameRate": 12,
+					"status": "final-candidate",
+					"notes": "Generated transparent standing talk loop from normalized Hermes idle frame, BRIA alpha-removed, and normalized to the shared 612x1059 Hermes frame box."
+				}
+			}
+		},
+		{
+			"id": "kat",
+			"displayName": "Kat",
+			"requiredStates": ["seatedIdle", "seatedTalk"],
+			"states": {
+				"seatedIdle": {
+					"texture": "kat-seated-talk-loop",
+					"image": "public/assets/sprites/kat/kat-seated-talk-loop.png",
+					"frames": { "start": 0, "end": 0 },
+					"frameRate": 1,
+					"status": "final-candidate",
+					"notes": "Seated idle frame for outside bench conversations."
+				},
+				"seatedTalk": {
+					"texture": "kat-seated-talk-loop",
+					"image": "public/assets/sprites/kat/kat-seated-talk-loop.png",
+					"frames": { "start": 0, "end": 1 },
+					"frameRate": 4,
+					"status": "final-candidate",
+					"notes": "Seated talk loop for outside bench conversations."
+				}
+			}
+		}
+	]
+}

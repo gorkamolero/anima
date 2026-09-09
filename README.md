@@ -14,8 +14,11 @@ A point-and-click adventure game engine and toolchain.
 # Install dependencies
 pnpm install
 
-# Playtest the current game (Shadow over Innsmouth)
-tsx packages/storyscript/src/interpreter.ts adventures/shadow-over-innsmouth/story/act1.story
+# Run the browser game
+pnpm dev
+
+# Terminal-playtest the current game script
+pnpm --filter @anima/storyscript parse ../../adventures/shadow-over-innsmouth/story/full_game.story
 ```
 
 ## Project Structure
@@ -126,7 +129,7 @@ python packages/sprite-tools/scripts/hedra-video.py \
 ## Commands
 
 ```bash
-pnpm dev          # Run game + api
+pnpm dev          # Run Shadow over Innsmouth + api
 pnpm build        # Build all packages
 pnpm lint         # Lint check
 pnpm typecheck    # Type check

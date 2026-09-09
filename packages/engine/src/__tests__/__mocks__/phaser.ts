@@ -264,6 +264,7 @@ export const Scenes = {
 	},
 };
 
+// biome-ignore lint/suspicious/noShadowRestrictedNames: Phaser exposes a Math namespace.
 export const Math = {
 	Clamp: (value: number, min: number, max: number) =>
 		window.Math.min(window.Math.max(value, min), max),

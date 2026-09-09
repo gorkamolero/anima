@@ -1,0 +1,84 @@
+{
+	"image": "bus-station-kat-seated-composite-v1.png",
+	"space": "game",
+	"horizonY": 470,
+	"figureCalibration": 0.8,
+	"$comment": "figureCalibration 0.8: the reviewed character presentation is ~80% of what strict perspective from the seated Kat composite implies. Explicit creative choice, not drift.",
+	"landmarks": [
+		{
+			"id": "kat-seated",
+			"kind": "figure",
+			"rect": {
+				"x": 900,
+				"y": 502,
+				"width": 270,
+				"height": 392
+			},
+			"realHeightM": 1.65,
+			"standingFactor": 0.78,
+			"note": "composited seated figure; primary scale anchor for this scene"
+		},
+		{
+			"id": "bus",
+			"kind": "object",
+			"rect": {
+				"x": 1750,
+				"y": 460,
+				"width": 170,
+				"height": 450
+			},
+			"realHeightM": 3.0,
+			"use": false,
+			"note": "INTENTIONAL stylization (owner ruling 2026-07-13): painted under strict perspective scale so the frame isn't dominated. Do not repaint. Kept use:false so it stays out of the model."
+		},
+		{
+			"id": "car",
+			"kind": "object",
+			"rect": {
+				"x": 1572,
+				"y": 564,
+				"width": 230,
+				"height": 330
+			},
+			"realHeightM": 1.7,
+			"use": false,
+			"note": "INTENTIONAL stylization (owner ruling 2026-07-13): same as bus. Do not repaint."
+		},
+		{
+			"id": "house-door",
+			"kind": "object",
+			"rect": {
+				"x": 1409,
+				"y": 409,
+				"width": 98,
+				"height": 213
+			},
+			"realHeightM": 2.03,
+			"note": "measured precisely at native res; ground contact is the porch deck (y=622) - the house is painted as DISTANT and agrees with the Kat+horizon model within 4%."
+		},
+		{
+			"id": "bench-shelter",
+			"kind": "region",
+			"rect": {
+				"x": 820,
+				"y": 430,
+				"width": 430,
+				"height": 300
+			},
+			"hotspotId": "waiting_bench",
+			"note": "pergola shelter with seated Kat"
+		},
+		{
+			"id": "vehicles",
+			"kind": "region",
+			"rect": {
+				"x": 1572,
+				"y": 446,
+				"width": 348,
+				"height": 468
+			},
+			"hotspotId": "bus",
+			"note": "car + bus group at the right edge"
+		}
+	]
+}

@@ -1,7 +1,7 @@
-import { StrictMode, useState, useEffect } from "react";
+import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import StartGame from "./game/main";
 import { GameUI } from "./GameUI";
+import StartGame from "./game/main";
 import "./styles/main.css";
 
 declare global {
@@ -11,19 +11,20 @@ declare global {
 }
 
 function App() {
-	const [game, setGame] = useState<Phaser.Game | null>(null);
-
-	useEffect(() => {
+	useMountEffect(() => {
 		const gameInstance = StartGame("game-container");
 		window.game = gameInstance;
-		setGame(gameInstance);
 
 		return () => {
 			gameInstance.destroy(true);
 		};
-	}, []);
+	});
 
-	return <GameUI game={game} />;
+	return <GameUI />;
+}
+
+function useMountEffect(effect: () => undefined | (() => void)) {
+	useEffect(effect, []);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -100,7 +100,14 @@ export class GroundLineManager {
 				return { y: sprite.y }; // No ground line, keep current Y
 			}
 
-			const { y, scale } = this.groundLine.getPositionData(x, baseScale);
+			const scalableSprite = sprite as unknown as {
+				getBaseScale?: () => number;
+			};
+			const currentBaseScale =
+				typeof scalableSprite.getBaseScale === "function"
+					? scalableSprite.getBaseScale()
+					: (char?.baseScale ?? baseScale);
+			const { y, scale } = this.groundLine.getPositionData(x, currentBaseScale);
 			return { y, scale };
 		};
 	}

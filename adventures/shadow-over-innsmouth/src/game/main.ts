@@ -1,5 +1,5 @@
 import { AUTO, Game } from "phaser";
-import { TestScene } from "./scenes/TestScene";
+import { StoryGameScene } from "./scenes/StoryGameScene";
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: AUTO,
@@ -11,7 +11,7 @@ const config: Phaser.Types.Core.GameConfig = {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 	},
-	scene: [TestScene],
+	scene: [StoryGameScene],
 	physics: {
 		default: "arcade",
 		arcade: {

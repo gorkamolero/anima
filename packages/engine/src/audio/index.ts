@@ -1,10 +1,13 @@
-export { SceneSoundManager } from "./SceneSoundManager";
 export { HoverSoundHandler } from "./HoverSoundHandler";
-export { SpatialAudioCalculator } from "./SpatialAudio";
-export { loadManifest, preloadSceneAudio, createEmptyManifest } from "./SoundLoader";
-export { VolumeController } from "./VolumeController";
-export { wrapPhaserSound } from "./SoundWrapper";
+export { SceneSoundManager } from "./SceneSoundManager";
+export {
+	createEmptyManifest,
+	loadManifest,
+	preloadSceneAudio,
+} from "./SoundLoader";
 export type { VolumeControllableSound } from "./SoundWrapper";
+export { wrapPhaserSound } from "./SoundWrapper";
+export { SpatialAudioCalculator } from "./SpatialAudio";
 export type {
 	ActiveSound,
 	AmbientSoundConfig,
@@ -15,3 +18,4 @@ export type {
 	SoundManifest,
 	SpatialHotspot,
 } from "./types";
+export { VolumeController } from "./VolumeController";

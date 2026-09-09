@@ -109,7 +109,9 @@ export class InventoryManager {
 	public removeItem(itemId: string): boolean {
 		const gameState = GameState.getInstance();
 		if (!gameState.hasItem(itemId)) {
-			console.warn(`InventoryManager: Cannot remove item not in inventory: ${itemId}`);
+			console.warn(
+				`InventoryManager: Cannot remove item not in inventory: ${itemId}`,
+			);
 			return false;
 		}
 
@@ -291,6 +293,7 @@ export class InventoryManager {
 	 * Reset manager state.
 	 * Clears lookCounts and itemDefinitions.
 	 */
+	// biome-ignore lint/suspicious/useAdjacentOverloadSignatures: Static reset clears the singleton; instance reset clears this manager.
 	public reset(): void {
 		this.lookCounts.clear();
 		this.itemDefinitions.clear();

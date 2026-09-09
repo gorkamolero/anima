@@ -1,6 +1,15 @@
-#!/usr/bin/env tsx
-/**
- * StoryScript - Direct interpreter for point-and-click adventures
- */
-
-export { StoryInterpreter } from './interpreter.ts';
+export {
+	parseStoryScript,
+	type StoryChoice,
+	type StoryDialogue,
+	type StoryGraph,
+	type StoryHotspot,
+	StoryRuntime,
+	type StoryRuntimeSnapshot,
+	type StoryScene,
+	type StoryState,
+	type StoryTrigger,
+	type StoryValue,
+	type StoryVerb,
+	validateStoryGraph,
+} from "./runtime";

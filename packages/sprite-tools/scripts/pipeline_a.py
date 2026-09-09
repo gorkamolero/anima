@@ -239,13 +239,28 @@ def process_frame(input_path: Path, output_path: Path, alpha_threshold: int = 12
             "Authorization": f"Token {get_replicate_token()}",
             "Content-Type": "application/json"
         }
-        resp = requests.post(
-            API_URL,
-            json={"version": MODEL_VERSION, "input": {"image": data_uri}},
-            headers=headers,
-            timeout=30
-        )
-        result = resp.json()
+        for attempt in range(8):
+            resp = requests.post(
+                API_URL,
+                json={"version": MODEL_VERSION, "input": {"image": data_uri}},
+                headers=headers,
+                timeout=30
+            )
+            try:
+                result = resp.json()
+            except ValueError:
+                result = {"detail": "Non-JSON API response"}
+                print(f"  ↻ {input_path.name}: malformed API response, retrying in 10s")
+                time.sleep(10)
+                continue
+            if resp.status_code != 429:
+                break
+
+            wait_seconds = int(result.get("retry_after") or 10)
+            print(f"  ↻ {input_path.name}: throttled, retrying in {wait_seconds}s")
+            time.sleep(wait_seconds)
+        else:
+            raise Exception(f"API throttled after retries: {result}")
         
         if "id" not in result:
             raise Exception(f"API error: {result}")

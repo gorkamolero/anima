@@ -126,7 +126,9 @@ export class TestScene extends BaseScene {
 		// Toggle hotspot debug with H key
 		this.input.keyboard?.on("keydown-H", () => {
 			this.debugHotspots = !this.debugHotspots;
-			this.hotspots.forEach((h) => h.setDebugDraw(this.debugHotspots));
+			this.hotspots.forEach((h) => {
+				h.setDebugDraw(this.debugHotspots);
+			});
 		});
 
 		this.fadeInScene(500);

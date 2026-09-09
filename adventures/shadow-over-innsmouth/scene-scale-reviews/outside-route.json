@@ -1,0 +1,56 @@
+{
+	"id": "outside-route",
+	"description": "Frame-by-frame scale review for Hermes across the exterior scene, separating normal free-walk samples from route-only bus/door samples.",
+	"reviewSceneId": "outside",
+	"characterId": "hermes",
+	"sprite": {
+		"asset": "public/assets/sprites/hermes/hermes-idle-v2-normalized.png",
+		"metadata": "public/assets/sprites/hermes/hermes-idle-v2-normalized.json",
+		"frame": 0
+	},
+	"tolerances": {
+		"maxAdjacentScaleDelta": 0.12,
+		"maxAdjacentHeightDelta": 130
+	},
+	"samples": [
+		{
+			"id": "left_dock_reference",
+			"x": 120,
+			"zone": "left dock reference",
+			"routeOnly": true
+		},
+		{
+			"id": "free_walk_left_limit",
+			"x": 200,
+			"zone": "left dock / free-walk limit"
+		},
+		{ "id": "start_idle", "x": 360, "zone": "open dock" },
+		{ "id": "open_dock", "x": 520, "zone": "open dock" },
+		{ "id": "kat_talk_reference", "x": 755, "zone": "Kat bench" },
+		{
+			"id": "kat_overlap_blocked",
+			"x": 1040,
+			"zone": "blocked Kat overlap",
+			"routeOnly": true
+		},
+		{ "id": "right_walk_resume", "x": 1280, "zone": "right free-walk resume" },
+		{ "id": "door_left", "x": 1320, "zone": "depot porch" },
+		{
+			"id": "free_walk_right_limit",
+			"x": 1520,
+			"zone": "bus nose / free-walk limit"
+		},
+		{
+			"id": "bus_route_only",
+			"x": 1660,
+			"zone": "bus front route only",
+			"routeOnly": true
+		},
+		{
+			"id": "door_route_only",
+			"x": 1800,
+			"zone": "door route only",
+			"routeOnly": true
+		}
+	]
+}

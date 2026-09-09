@@ -1,9 +1,300 @@
 @import "tailwindcss";
 
 /* Scan the engine package for Tailwind classes */
-@source "../../../packages/anima/src";
+@source "../../../packages/engine/src";
 
 /* Game-specific overrides */
 #game-container {
 	cursor: crosshair;
+}
+
+#ui-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 20;
+	pointer-events: none;
+	font-family:
+		"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		"Segoe UI", sans-serif;
+}
+
+.open-world-prompt {
+	position: absolute;
+	right: 50%;
+	bottom: 132px;
+	width: min(620px, calc(100vw - 32px));
+	transform: translateX(50%);
+	padding: 18px;
+	border: 1px solid rgb(233 210 157 / 42%);
+	background: linear-gradient(135deg, rgb(13 30 34 / 96%), rgb(9 12 15 / 97%));
+	box-shadow: 0 22px 64px rgb(0 0 0 / 54%);
+	color: #f4f0df;
+	pointer-events: auto;
+	backdrop-filter: blur(12px);
+}
+
+.open-world-prompt__eyebrow {
+	margin: 0 0 4px;
+	color: #9fc5c1;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.open-world-prompt h2 {
+	margin: 0 0 14px;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 22px;
+	font-weight: 500;
+}
+
+.open-world-prompt__options {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+}
+
+.open-world-prompt button,
+.open-world-prompt input {
+	min-height: 44px;
+	border: 1px solid rgb(122 166 168 / 52%);
+	background: rgb(19 34 39 / 92%);
+	color: #f4f0df;
+	font: inherit;
+}
+
+.open-world-prompt button {
+	padding: 9px 12px;
+	cursor: pointer;
+}
+
+.open-world-prompt button:hover,
+.open-world-prompt button:focus-visible,
+.open-world-prompt input:focus-visible {
+	border-color: #f8e7b8;
+	background: rgb(39 65 73 / 96%);
+	outline: 2px solid rgb(248 231 184 / 24%);
+	outline-offset: 2px;
+}
+
+.open-world-prompt button:disabled {
+	cursor: not-allowed;
+	opacity: 0.45;
+}
+
+.open-world-prompt__free-text {
+	display: grid;
+	gap: 6px;
+	margin-top: 14px;
+}
+
+.open-world-prompt__free-text label {
+	color: #d8c995;
+	font-size: 12px;
+}
+
+.open-world-prompt__free-text > div {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 8px;
+}
+
+.open-world-prompt input {
+	min-width: 0;
+	padding: 0 12px;
+}
+
+.open-world-prompt__waiting,
+.open-world-prompt__caption,
+.open-world-prompt__error {
+	margin: 0;
+	line-height: 1.5;
+}
+
+.open-world-prompt__waiting {
+	color: #d8c995;
+}
+
+.open-world-prompt__error {
+	color: #ffb6a8;
+}
+
+.review-panel {
+	position: absolute;
+	top: 88px;
+	right: 16px;
+	width: min(360px, calc(100vw - 32px));
+	padding: 10px 12px;
+	border: 1px solid rgb(233 210 157 / 24%);
+	background: rgb(8 10 12 / 82%);
+	box-shadow: 0 16px 48px rgb(0 0 0 / 38%);
+	color: #f4f0df;
+	pointer-events: auto;
+	backdrop-filter: blur(10px);
+}
+
+.review-panel.is-collapsed {
+	width: auto;
+}
+
+.review-panel__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 0;
+}
+
+.review-panel__eyebrow {
+	margin: 0 0 3px;
+	color: #9fb8b5;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.review-panel h1 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.review-panel__body {
+	display: none;
+	margin-top: 14px;
+}
+
+.review-panel.is-open .review-panel__body {
+	display: block;
+}
+
+.review-panel__status {
+	display: inline-block;
+	border: 1px solid rgb(122 166 168 / 42%);
+	padding: 4px 8px;
+	margin-bottom: 12px;
+	color: #c4dad6;
+	font-size: 12px;
+	text-transform: capitalize;
+}
+
+.review-panel__tabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.review-panel button,
+.review-panel select,
+.review-panel textarea {
+	border: 1px solid rgb(122 166 168 / 42%);
+	background: rgb(19 34 39 / 92%);
+	color: #f4f0df;
+}
+
+.review-panel button {
+	min-height: 42px;
+	padding: 8px 10px;
+	cursor: pointer;
+	text-align: left;
+}
+
+.review-panel button:hover,
+.review-panel button:focus-visible,
+.review-panel button.is-active {
+	border-color: rgb(248 231 184 / 82%);
+	background: rgb(39 65 73 / 96%);
+	outline: none;
+}
+
+.review-panel button span,
+.review-panel button small {
+	display: block;
+}
+
+.review-panel button span {
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.review-panel button small {
+	margin-top: 2px;
+	color: #b7c3c8;
+	font-size: 11px;
+	line-height: 1.25;
+}
+
+.review-panel__field {
+	display: grid;
+	gap: 6px;
+	margin-top: 12px;
+}
+
+.review-panel__field span {
+	color: #f8e7b8;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.review-panel select {
+	min-height: 40px;
+	padding: 0 10px;
+}
+
+.review-panel textarea {
+	min-height: 112px;
+	resize: vertical;
+	padding: 10px;
+	line-height: 1.4;
+}
+
+.review-panel__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.review-panel__actions button {
+	min-height: 38px;
+	text-align: center;
+}
+
+.review-panel__toggle {
+	min-height: 34px;
+	padding: 6px 10px;
+	text-align: center;
+}
+
+.review-panel__actions span {
+	color: #9fd0a2;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+@media (max-width: 760px) {
+	.open-world-prompt {
+		bottom: 110px;
+		padding: 14px;
+	}
+
+	.open-world-prompt__options {
+		grid-template-columns: 1fr;
+	}
+
+	.review-panel {
+		top: auto;
+		right: 8px;
+		bottom: 8px;
+		left: 8px;
+		width: auto;
+	}
+
+	.review-panel textarea {
+		min-height: 80px;
+	}
 }

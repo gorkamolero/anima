@@ -30,9 +30,7 @@ export function createEmptyManifest(): SoundManifest {
  */
 export async function loadManifest(sceneId: string): Promise<SoundManifest> {
 	try {
-		const response = await fetch(
-			`/audio/scenes/${sceneId}/manifest.json`,
-		);
+		const response = await fetch(`/audio/scenes/${sceneId}/manifest.json`);
 
 		if (!response.ok) {
 			console.warn(

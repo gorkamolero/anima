@@ -1,4 +1,8 @@
-import type { GroundLineConfig, GroundLinePoint } from "./types";
+import type {
+	GroundLineConfig,
+	GroundLineInterpolation,
+	GroundLinePoint,
+} from "./types";
 
 /**
  * Ground line data structure with interpolation.
@@ -6,11 +10,13 @@ import type { GroundLineConfig, GroundLinePoint } from "./types";
  */
 export class GroundLine {
 	private points: GroundLinePoint[];
+	private interpolation: GroundLineInterpolation;
 	private perspectiveConfig: GroundLineConfig["perspectiveScale"];
 
 	constructor(config: GroundLineConfig) {
 		// Sort points by X for proper interpolation
 		this.points = [...config.points].sort((a, b) => a.x - b.x);
+		this.interpolation = config.interpolation ?? "linear";
 		this.perspectiveConfig = config.perspectiveScale;
 	}
 
@@ -19,13 +25,21 @@ export class GroundLine {
 	 * Interpolates linearly between points.
 	 */
 	getYAtX(x: number): number {
+		return this.getInterpolatedValueAtX(x, "y");
+	}
+
+	private getInterpolatedValueAtX(x: number, key: "y" | "scaleFactor"): number {
+		const defaultValue = key === "scaleFactor" ? 1 : 0;
 		if (this.points.length === 0) return 0;
-		if (this.points.length === 1) return this.points[0].y;
+		const firstValue = this.points[0][key];
+		if (this.points.length === 1 || firstValue === undefined) {
+			return firstValue ?? defaultValue;
+		}
 
 		// Clamp to bounds
-		if (x <= this.points[0].x) return this.points[0].y;
+		if (x <= this.points[0].x) return this.points[0][key] ?? firstValue;
 		if (x >= this.points[this.points.length - 1].x) {
-			return this.points[this.points.length - 1].y;
+			return this.points[this.points.length - 1][key] ?? firstValue;
 		}
 
 		// Find surrounding points and interpolate
@@ -35,11 +49,54 @@ export class GroundLine {
 
 			if (x >= left.x && x <= right.x) {
 				const t = (x - left.x) / (right.x - left.x);
-				return left.y + t * (right.y - left.y);
+				const leftValue = left[key];
+				const rightValue = right[key];
+				if (leftValue === undefined || rightValue === undefined) {
+					return leftValue ?? rightValue ?? firstValue;
+				}
+				if (this.interpolation === "catmull-rom") {
+					return this.catmullRomValue(i, key, t);
+				}
+				return this.lerp(leftValue, rightValue, t);
 			}
 		}
 
-		return this.points[0].y;
+		return firstValue;
+	}
+
+	private catmullRomValue(
+		leftIndex: number,
+		key: "y" | "scaleFactor",
+		t: number,
+	): number {
+		const p0 = this.points[Math.max(0, leftIndex - 1)][key];
+		const p1 = this.points[leftIndex][key];
+		const p2 = this.points[leftIndex + 1][key];
+		const p3 =
+			this.points[Math.min(this.points.length - 1, leftIndex + 2)][key];
+
+		if (
+			p0 === undefined ||
+			p1 === undefined ||
+			p2 === undefined ||
+			p3 === undefined
+		) {
+			return this.lerp(p1 ?? 0, p2 ?? p1 ?? 0, t);
+		}
+
+		const t2 = t * t;
+		const t3 = t2 * t;
+		return (
+			0.5 *
+			(2 * p1 +
+				(-p0 + p2) * t +
+				(2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
+				(-p0 + 3 * p1 - 3 * p2 + p3) * t3)
+		);
+	}
+
+	private lerp(a: number, b: number, t: number): number {
+		return a + t * (b - a);
 	}
 
 	/**
@@ -63,12 +120,19 @@ export class GroundLine {
 		return baseScale * scaleFactor;
 	}
 
+	getScaleAtX(x: number, baseScale: number): number {
+		if (this.points.some((point) => point.scaleFactor !== undefined)) {
+			return baseScale * this.getInterpolatedValueAtX(x, "scaleFactor");
+		}
+		return this.getScaleAtY(this.getYAtX(x), baseScale);
+	}
+
 	/**
 	 * Get both Y and scale for a given X position
 	 */
 	getPositionData(x: number, baseScale: number): { y: number; scale: number } {
 		const y = this.getYAtX(x);
-		const scale = this.getScaleAtY(y, baseScale);
+		const scale = this.getScaleAtX(x, baseScale);
 		return { y, scale };
 	}
 
@@ -90,6 +154,7 @@ export class GroundLine {
 		const newPoints = [...this.points, point].sort((a, b) => a.x - b.x);
 		return new GroundLine({
 			points: newPoints,
+			interpolation: this.interpolation,
 			perspectiveScale: this.perspectiveConfig,
 		});
 	}
@@ -99,6 +164,7 @@ export class GroundLine {
 		newPoints[index] = point;
 		return new GroundLine({
 			points: newPoints.sort((a, b) => a.x - b.x),
+			interpolation: this.interpolation,
 			perspectiveScale: this.perspectiveConfig,
 		});
 	}
@@ -111,6 +177,7 @@ export class GroundLine {
 		const newPoints = this.points.filter((_, i) => i !== index);
 		return new GroundLine({
 			points: newPoints,
+			interpolation: this.interpolation,
 			perspectiveScale: this.perspectiveConfig,
 		});
 	}

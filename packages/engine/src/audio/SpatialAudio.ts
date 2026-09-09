@@ -7,7 +7,7 @@
  * - Listener position tracking
  */
 
-import type { ObjectSoundConfig, ActiveSound } from "./types";
+import type { ActiveSound, ObjectSoundConfig } from "./types";
 
 /**
  * SpatialAudioCalculator handles all spatial audio volume calculations

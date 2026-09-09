@@ -4,7 +4,14 @@
 export interface GroundLinePoint {
 	x: number;
 	y: number;
+	/**
+	 * Optional scene-calibrated scale factor at this point.
+	 * The final sprite scale is `characterBaseScale * scaleFactor`.
+	 */
+	scaleFactor?: number;
 }
+
+export type GroundLineInterpolation = "linear" | "catmull-rom";
 
 /**
  * Configuration for ground line in scene config
@@ -12,6 +19,8 @@ export interface GroundLinePoint {
 export interface GroundLineConfig {
 	/** Array of points defining the walking path (sorted left to right) */
 	points: GroundLinePoint[];
+	/** Interpolation method for Y and scaleFactor between points */
+	interpolation?: GroundLineInterpolation;
 	/** Enable perspective scaling based on Y position */
 	perspectiveScale?: {
 		/** Y position where scale = 1.0 (foreground, typically higher Y) */

@@ -1,0 +1,40 @@
+{
+	"video": "packages/sprite-tools/output/fal/kat-veo-walk/alpha.webm",
+	"pipeline": "fal-alpha-video",
+	"output": "adventures/shadow-over-innsmouth/public/assets/sprites/kat/kat-fal-veo-transparent-loop",
+	"fps": 24,
+	"frameLimit": 31,
+	"columns": 8,
+	"trim": true,
+	"globalTrimBox": [110, 118, 625, 1112],
+	"qcMagenta": "adventures/shadow-over-innsmouth/public/assets/sprites/kat/kat-fal-veo-transparent-loop-qc-magenta.png",
+	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/kat/kat-fal-veo-transparent-loop-preview-3x.mp4",
+	"previewLoops": 3,
+	"keptWork": false,
+	"createdAt": "2026-05-04T22:00:43.662067+00:00",
+	"command": "packages/sprite-tools/scripts/sprite-factory.py process-alpha --video packages/sprite-tools/output/fal/kat-veo-walk/alpha.webm --output adventures/shadow-over-innsmouth/public/assets/sprites/kat/kat-fal-veo-transparent-loop --fps 24 --cols 8 --detect-loop --loop-min-frames 16 --loop-max-frames 48 --preview-loops 3 --preview-bg magenta",
+	"loop": {
+		"input_file": "packages/sprite-tools/output/fal/kat-veo-walk/alpha.webm",
+		"output_file": "adventures/shadow-over-innsmouth/public/assets/sprites/kat/.kat-fal-veo-transparent-loop-alpha-work/loop.webm",
+		"loop_info": {
+			"start_frame": 36,
+			"end_frame": 67,
+			"frame_count": 31,
+			"similarity_score": 0.866151148851102,
+			"quality_score": 0.9719212773246727,
+			"final_score": 1.0042129439913394,
+			"seam_distance": 1.0293055772781372,
+			"start_time": 1.5,
+			"end_time": 2.7916666666666665,
+			"duration": 1.2916666666666667,
+			"fps": 24.0,
+			"downsample_factor": 1
+		},
+		"processing_options": {
+			"method": "local-frame-similarity",
+			"include_audio": false,
+			"total_frames": 0,
+			"created_at": "2026-05-04T22:00:40.161193+00:00"
+		}
+	}
+}

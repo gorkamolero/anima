@@ -1,23 +1,23 @@
 import type { Story } from "inkjs";
-import type { SpeechText } from "./SpeechText";
-import { DialogueParser } from "./DialogueParser";
 import { DialogueCallbackHandler } from "./DialogueCallbackHandler";
+import { DialogueParser } from "./DialogueParser";
+import type { SpeechText } from "./SpeechText";
 import { StoryManager } from "./StoryManager";
 import type {
 	DialogueCallbacks,
-	DialogueLine,
 	DialogueChoice,
+	DialogueLine,
 	TagCallback,
 } from "./types";
 
 // Re-export types for backward compatibility
 export type {
 	DialogueCallbacks,
-	DialogueLine,
 	DialogueChoice,
+	DialogueLine,
+	SpeakerTalkingCallback,
 	TagCallback,
 } from "./types";
-export type { SpeakerTalkingCallback } from "./types";
 
 /**
  * Simplified Ink dialogue manager for point-and-click adventures.

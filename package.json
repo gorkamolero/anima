@@ -4,10 +4,10 @@
   "private": true,
   "description": "Point-and-click adventure game engine",
   "scripts": {
-    "dev": "concurrently \"pnpm --filter @anima/test-game dev\" \"pnpm --filter api dev\"",
-    "build": "pnpm --filter @anima/test-game build && pnpm --filter api build",
-    "lint": "pnpm --filter @anima/test-game lint && pnpm --filter api lint",
-    "typecheck": "pnpm --filter @anima/test-game typecheck && pnpm --filter api typecheck",
+    "dev": "concurrently \"pnpm --filter @anima/shadow-over-innsmouth dev\" \"pnpm --filter api dev\"",
+    "build": "pnpm --filter @anima/storyscript build && pnpm --filter @anima/engine typecheck && pnpm --filter @anima/shadow-over-innsmouth build && pnpm --filter api build",
+    "lint": "pnpm --filter @anima/storyscript lint && pnpm --filter @anima/engine lint && pnpm --filter @anima/shadow-over-innsmouth lint && pnpm --filter api lint",
+    "typecheck": "pnpm --filter @anima/storyscript typecheck && pnpm --filter @anima/engine typecheck && pnpm --filter @anima/shadow-over-innsmouth typecheck && pnpm --filter api typecheck",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"

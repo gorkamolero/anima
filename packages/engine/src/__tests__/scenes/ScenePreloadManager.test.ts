@@ -4,7 +4,7 @@
  * TDD: Tests written BEFORE implementation
  */
 
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { ScenePreloadManager } from "../../scenes/ScenePreloadManager";
 
 describe("ScenePreloadManager", () => {

@@ -1,0 +1,87 @@
+{
+	"sceneId": "terminal-exterior",
+	"characterId": "hermes",
+	"characterName": "Hermes",
+	"background": "adventures/shadow-over-innsmouth/public/backgrounds/2026-01-27-bus-station.png",
+	"characterReference": "adventures/shadow-over-innsmouth/art/@hermes.jpeg",
+	"spriteReference": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
+	"contactSheet": "adventures/shadow-over-innsmouth/art/generated/hermes-terminal-exterior-placement-contact-v1.png",
+	"baseScale": 0.4,
+	"interpolation": "catmull-rom",
+	"requestedPositions": [
+		{
+			"id": "left_platform",
+			"x": 180,
+			"note": "far left edge of walkable platform, facing right"
+		},
+		{
+			"id": "bus_approach",
+			"x": 420,
+			"note": "near the bus interaction approach, facing right"
+		},
+		{
+			"id": "sign_idle",
+			"x": 650,
+			"note": "default exterior idle position under the sign, facing right"
+		},
+		{
+			"id": "door_approach",
+			"x": 880,
+			"note": "in front of the depot doors, facing slightly right"
+		},
+		{
+			"id": "bus_front",
+			"x": 1380,
+			"note": "near bus front and fog, facing left"
+		},
+		{
+			"id": "right_fog",
+			"x": 1740,
+			"note": "right side of platform before the street fog, facing left"
+		}
+	],
+	"measuredPlacements": [
+		{
+			"id": "left_platform",
+			"x": 195,
+			"y": 941,
+			"scaleFactor": 1,
+			"facing": "right"
+		},
+		{
+			"id": "bus_approach",
+			"x": 482,
+			"y": 941,
+			"scaleFactor": 1,
+			"facing": "right"
+		},
+		{
+			"id": "sign_idle",
+			"x": 772,
+			"y": 934,
+			"scaleFactor": 0.98,
+			"facing": "right"
+		},
+		{
+			"id": "door_approach",
+			"x": 967,
+			"y": 930,
+			"scaleFactor": 0.97,
+			"facing": "right"
+		},
+		{
+			"id": "bus_front",
+			"x": 1476,
+			"y": 932,
+			"scaleFactor": 0.98,
+			"facing": "left"
+		},
+		{
+			"id": "right_fog",
+			"x": 1768,
+			"y": 930,
+			"scaleFactor": 0.98,
+			"facing": "left"
+		}
+	]
+}

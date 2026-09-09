@@ -44,7 +44,10 @@ export class VolumeController {
 	 */
 	updateActiveSoundVolumes(activeSounds: Map<string, ActiveSound>): void {
 		for (const [, active] of activeSounds) {
-			const baseVolume = "volume" in active.config ? active.config.volume : VolumeController.DEFAULT_MASTER_VOLUME;
+			const baseVolume =
+				"volume" in active.config
+					? active.config.volume
+					: VolumeController.DEFAULT_MASTER_VOLUME;
 			active.wrappedSound.setVolume(baseVolume * this.masterVolume);
 		}
 	}

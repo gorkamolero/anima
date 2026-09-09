@@ -1,0 +1,10 @@
+{
+	"name": "kat-neutral-walk",
+	"image": "kat-neutral-walk.png",
+	"frameWidth": 798,
+	"frameHeight": 1476,
+	"frameCount": 24,
+	"cols": 6,
+	"rows": 4,
+	"fps": 12
+}

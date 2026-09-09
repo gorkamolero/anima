@@ -3,15 +3,15 @@
 import type { Scene } from "phaser";
 import { GameState } from "../state/GameState";
 import { HoverSoundHandler } from "./HoverSoundHandler";
-import { SpatialAudioCalculator } from "./SpatialAudio";
 import {
+	createEmptyManifest,
 	loadManifest,
 	preloadSceneAudio,
-	createEmptyManifest,
 } from "./SoundLoader";
 import { wrapPhaserSound } from "./SoundWrapper";
-import { VolumeController } from "./VolumeController";
+import { SpatialAudioCalculator } from "./SpatialAudio";
 import type { ActiveSound, SoundManifest, SpatialHotspot } from "./types";
+import { VolumeController } from "./VolumeController";
 
 export class SceneSoundManager {
 	/**
@@ -106,7 +106,10 @@ export class SceneSoundManager {
 		}
 
 		for (const ambient of this.manifest.ambient) {
-			if (this.checkCondition(ambient.condition) && !this.activeSounds.has(ambient.id)) {
+			if (
+				this.checkCondition(ambient.condition) &&
+				!this.activeSounds.has(ambient.id)
+			) {
 				this.playAmbient(ambient.id);
 			}
 		}
@@ -139,7 +142,11 @@ export class SceneSoundManager {
 			return;
 		}
 
-		const spatialVolume = this.spatialAudio.calculateSpatialVolume(sourceX, sourceY, config);
+		const spatialVolume = this.spatialAudio.calculateSpatialVolume(
+			sourceX,
+			sourceY,
+			config,
+		);
 		const sound = this.scene.sound.add(soundId, {
 			loop: config.loop,
 			volume: this.volumeController.calculateEffectiveVolume(spatialVolume),
@@ -174,7 +181,9 @@ export class SceneSoundManager {
 
 		const config = this.manifest.oneshot.find((s) => s.triggerId === triggerId);
 		if (!config) {
-			console.warn(`SceneSoundManager: Oneshot trigger not found: ${triggerId}`);
+			console.warn(
+				`SceneSoundManager: Oneshot trigger not found: ${triggerId}`,
+			);
 			return;
 		}
 
@@ -227,7 +236,9 @@ export class SceneSoundManager {
 	/** Update sound states based on game flags */
 	updateSoundStates(): void {
 		if (!this.manifest || !this.initialized) {
-			console.warn("SceneSoundManager: Cannot update sound states - not initialized");
+			console.warn(
+				"SceneSoundManager: Cannot update sound states - not initialized",
+			);
 			return;
 		}
 
@@ -251,7 +262,11 @@ export class SceneSoundManager {
 			} else if (!isPlaying && shouldPlay) {
 				const hotspot = this.hotspotMap.get(objSound.hotspotId);
 				if (hotspot) {
-					this.playObjectSound(objSound.id, hotspot.bounds.centerX, hotspot.bounds.centerY);
+					this.playObjectSound(
+						objSound.id,
+						hotspot.bounds.centerX,
+						hotspot.bounds.centerY,
+					);
 				}
 			}
 		}
@@ -267,7 +282,9 @@ export class SceneSoundManager {
 	}
 
 	/** Fade out all sounds */
-	fadeOutAll(duration: number = SceneSoundManager.DEFAULT_FADE_OUT_DURATION): void {
+	fadeOutAll(
+		duration: number = SceneSoundManager.DEFAULT_FADE_OUT_DURATION,
+	): void {
 		if (!this.scene?.tweens) {
 			for (const [id] of this.activeSounds) this.stopSound(id);
 			this.hoverHandler.destroy();
@@ -336,7 +353,11 @@ export class SceneSoundManager {
 		for (const objSound of this.manifest.objects) {
 			const hotspot = this.hotspotMap.get(objSound.hotspotId);
 			if (hotspot) {
-				this.playObjectSound(objSound.id, hotspot.bounds.centerX, hotspot.bounds.centerY);
+				this.playObjectSound(
+					objSound.id,
+					hotspot.bounds.centerX,
+					hotspot.bounds.centerY,
+				);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { Scene } from "phaser";
+import type { Scene } from "phaser";
 
 /**
  * Camera configuration options
@@ -33,12 +33,7 @@ export class SceneCamera {
 	 * Set up camera bounds based on world dimensions
 	 */
 	public setupBounds(): void {
-		this.scene.cameras.main.setBounds(
-			0,
-			0,
-			this.worldWidth,
-			this.worldHeight,
-		);
+		this.scene.cameras.main.setBounds(0, 0, this.worldWidth, this.worldHeight);
 	}
 
 	/**
@@ -117,10 +112,7 @@ export class SceneCamera {
 	/**
 	 * Fade out the scene to black
 	 */
-	public fadeOut(
-		duration = 500,
-		onComplete?: () => void,
-	): void {
+	public fadeOut(duration = 500, onComplete?: () => void): void {
 		this.scene.cameras.main.fadeOut(
 			duration,
 			0,

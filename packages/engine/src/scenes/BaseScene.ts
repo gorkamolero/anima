@@ -1,20 +1,19 @@
 import { Scene } from "phaser";
 import { SceneSoundManager } from "../audio";
-import { Character, type CharacterAnimConfig, getCharacterHeadPosition } from "../characters";
+import {
+	Character,
+	type CharacterAnimConfig,
+	getCharacterHeadPosition,
+} from "../characters";
+import { installAgentDebug } from "../debug/AgentDebug";
 import { SpeechText } from "../dialogue";
 import { type EditorCallbacks, HotspotEditor } from "../editor";
 import { type GroundLineConfig, GroundLineManager } from "../groundline";
 import { Hotspot, type HotspotConfig } from "../hotspots";
 import { UIState } from "../ui";
-import { SceneCamera, type CameraConfig } from "./SceneCamera";
-import {
-	SceneParallax,
-	type ParallaxLayerConfig,
-} from "./SceneParallax";
-import {
-	SceneTransitions,
-	type TransitionOptions,
-} from "./SceneTransitions";
+import { type CameraConfig, SceneCamera } from "./SceneCamera";
+import { type ParallaxLayerConfig, SceneParallax } from "./SceneParallax";
+import { SceneTransitions, type TransitionOptions } from "./SceneTransitions";
 
 // Re-export types for backward compatibility
 export type { ParallaxLayerConfig } from "./SceneParallax";
@@ -148,6 +147,16 @@ export abstract class BaseScene extends Scene {
 		if (this.groundLineManager) {
 			this.editor.setGroundLineManager(this.groundLineManager);
 		}
+
+		// Expose the agent debug API (window.__anima) for playtesting/automation
+		installAgentDebug(this);
+	}
+
+	/**
+	 * Whether pointer input is currently blocked (e.g. during transitions)
+	 */
+	public isInputBlocked(): boolean {
+		return this.inputBlocked;
 	}
 
 	// ===========================================================================
@@ -256,7 +265,9 @@ export abstract class BaseScene extends Scene {
 	/**
 	 * Iris in from black at scene start
 	 */
-	public async irisInScene(duration = BaseScene.DEFAULT_IRIS_DURATION): Promise<void> {
+	public async irisInScene(
+		duration = BaseScene.DEFAULT_IRIS_DURATION,
+	): Promise<void> {
 		await this.sceneTransitions.irisIn(duration, this.player);
 	}
 

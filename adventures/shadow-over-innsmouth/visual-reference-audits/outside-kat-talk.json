@@ -1,0 +1,24 @@
+{
+	"id": "outside-kat-talk",
+	"description": "Exterior waiting-bench talk placement must match the generated scene reference: Hermes standing beside seated Kat at the foreground bench approach.",
+	"reviewSceneId": "outside",
+	"referenceImage": "art/generated/hermes-exterior-kat-placement-reference-v1.png",
+	"runtimeAction": {
+		"click": { "x": 1040, "y": 560 },
+		"waitFor": "snapshot.reviewSceneId === \"outside\" && snapshot.katState === \"seatedTalk\" && snapshot.hermes && snapshot.hermes.motionState === \"talk\" && Math.abs(snapshot.hermes.x - 755) <= 8"
+	},
+	"referenceCanvas": { "width": 1681, "height": 936 },
+	"referenceHermesBox": { "x": 585, "y": 360, "width": 144, "height": 486 },
+	"referenceKatBox": { "x": 742, "y": 414, "width": 264, "height": 388 },
+	"referenceFoot": { "x": 661, "y": 846 },
+	"tolerances": {
+		"heightRatio": 0.08,
+		"footY": 28,
+		"footX": 80
+	},
+	"runtimeSprite": {
+		"asset": "public/assets/sprites/hermes/hermes-talk-v1-normalized.png",
+		"metadata": "public/assets/sprites/hermes/hermes-talk-v1-normalized.json",
+		"frame": 0
+	}
+}

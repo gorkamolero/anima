@@ -66,7 +66,8 @@ export class HotspotEditor {
 	private suspendedEntities: Set<string> = new Set();
 
 	// Track keyboard listeners for cleanup
-	private keyboardListeners: Array<{ event: string; callback: () => void }> = [];
+	private keyboardListeners: Array<{ event: string; callback: () => void }> =
+		[];
 
 	constructor(scene: Scene, callbacks?: EditorCallbacks) {
 		this.scene = scene;
@@ -170,11 +171,20 @@ export class HotspotEditor {
 
 		addKey("E", () => this.toggle());
 		addKey("S", () => this.enabled && this.copyAllJSON());
-		addKey("C", () => this.enabled && this.selection.current && this.copySelectedJSON());
+		addKey(
+			"C",
+			() => this.enabled && this.selection.current && this.copySelectedJSON(),
+		);
 		// Ground line point shortcuts
 		addKey("A", () => this.enabled && this.addGroundLinePoint());
-		addKey("DELETE", () => this.enabled && this.removeSelectedGroundLinePoint());
-		addKey("BACKSPACE", () => this.enabled && this.removeSelectedGroundLinePoint());
+		addKey(
+			"DELETE",
+			() => this.enabled && this.removeSelectedGroundLinePoint(),
+		);
+		addKey(
+			"BACKSPACE",
+			() => this.enabled && this.removeSelectedGroundLinePoint(),
+		);
 	}
 
 	private suspendEntity(entityId: string): void {

@@ -7,9 +7,9 @@
     "video2sprite": "./scripts/video2sprite.sh"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.10.0",
     "@google/genai": "^1.34.0",
-    "dotenv": "^17.2.3",
-    "replicate": "^1.4.0"
+    "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "tsx": "^4.19.2"

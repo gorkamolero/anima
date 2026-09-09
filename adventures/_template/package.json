@@ -1,5 +1,5 @@
 {
-	"name": "@anima/test-game",
+	"name": "@anima/adventure-template",
 	"description": "Test game using the Anima engine",
 	"version": "0.1.0",
 	"private": true,

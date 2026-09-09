@@ -1,0 +1,40 @@
+{
+	"video": "packages/sprite-tools/output/fal/hermes-veo-walk/alpha.webm",
+	"pipeline": "fal-alpha-video",
+	"output": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop",
+	"fps": 24,
+	"frameLimit": 30,
+	"columns": 8,
+	"trim": true,
+	"globalTrimBox": [49, 94, 661, 1153],
+	"qcMagenta": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop-qc-magenta.png",
+	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop-preview-3x.mp4",
+	"previewLoops": 3,
+	"keptWork": false,
+	"createdAt": "2026-05-04T22:00:43.961294+00:00",
+	"command": "packages/sprite-tools/scripts/sprite-factory.py process-alpha --video packages/sprite-tools/output/fal/hermes-veo-walk/alpha.webm --output adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop --fps 24 --cols 8 --detect-loop --loop-min-frames 16 --loop-max-frames 48 --preview-loops 3 --preview-bg magenta",
+	"loop": {
+		"input_file": "packages/sprite-tools/output/fal/hermes-veo-walk/alpha.webm",
+		"output_file": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/.hermes-fal-veo-transparent-loop-alpha-work/loop.webm",
+		"loop_info": {
+			"start_frame": 57,
+			"end_frame": 87,
+			"frame_count": 30,
+			"similarity_score": 0.7201017082168598,
+			"quality_score": 0.8201551745748005,
+			"final_score": 0.8514051745748005,
+			"seam_distance": 2.7589871883392334,
+			"start_time": 2.375,
+			"end_time": 3.625,
+			"duration": 1.25,
+			"fps": 24.0,
+			"downsample_factor": 1
+		},
+		"processing_options": {
+			"method": "local-frame-similarity",
+			"include_audio": false,
+			"total_frames": 0,
+			"created_at": "2026-05-04T22:00:40.406881+00:00"
+		}
+	}
+}

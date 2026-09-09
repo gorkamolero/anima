@@ -13,7 +13,11 @@ import { getEntityBounds, getHotspotBounds } from "./types";
 export interface InputHandlerCallbacks {
 	onSelect: (sel: Selectable | null) => void;
 	onRedraw: () => void;
-	onStartResize: (corner: "nw" | "ne" | "sw" | "se", wx: number, wy: number) => void;
+	onStartResize: (
+		corner: "nw" | "ne" | "sw" | "se",
+		wx: number,
+		wy: number,
+	) => void;
 	onEntityDragStart: (entityId: string) => void;
 }
 

@@ -63,6 +63,16 @@ pnpm typecheck        # Type check all packages
 # StoryScript - Run/playtest stories
 tsx packages/storyscript/src/interpreter.ts adventures/shadow-over-innsmouth/story/act1.story
 
+# Agent playtesting - drive/observe the running game (see docs/AGENT-PLAYTESTING.md)
+# Every BaseScene installs window.__anima: step(ms), click(x,y), snapshot(), waitUntil(pred).
+# Use it for ALL browser-based game debugging - hidden tabs freeze RAF and Phaser
+# ignores synthetic PointerEvents; __anima handles both.
+cd adventures/shadow-over-innsmouth && pnpm playtest   # full journey, needs pnpm dev running
+# Art landmarks - backgrounds ship <image>.landmarks.json describing their geometry;
+# scale curves & hotspot bounds are DERIVED from them, never hand-tuned. After any
+# art change: update the landmarks file, then run verify:art and apply its suggestions.
+cd adventures/shadow-over-innsmouth && pnpm verify:art # live scene vs art landmarks
+
 # Sprite Tools (from packages/sprite-tools/)
 ./scripts/video2sprite.sh <video> <output-name> [--fps 12] [--fuzz 20]
 ./scripts/chromakey.sh <input> <output> [--fuzz 20]

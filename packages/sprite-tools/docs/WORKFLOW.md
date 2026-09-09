@@ -73,6 +73,80 @@ Always work with **clothed characters** for pose generation. Create clothed vers
 3. **Pose** - Generate poses using clothed version as reference
 4. **Clean** - Remove background from final sprites (remove-bg)
 
+## Scene-Fitted Character Poses
+
+For poses that must fit a specific playable scene, do not ask directly for a
+transparent sprite first. Generate the character in the scene, then isolate the
+character from that accepted scene composite.
+
+Use this when a pose depends on scene geometry, especially:
+
+- seated characters on a bench/chair
+- leaning on counters
+- entering vehicles
+- interacting with scene props
+- scale-sensitive foreground/background staging
+
+The required sequence is:
+
+1. Feed the full character reference, not a crop.
+2. Feed the clean scene/background image.
+3. Generate a scene composite that solves pose, scale, lighting, and contact.
+4. Accept or reject the composite based on scene fit.
+5. Isolate only the character from the accepted composite.
+6. Remove the background and verify alpha directly.
+7. Wire only the transparent character asset into the game.
+
+Do not use the scene composite itself as a sprite. It will carry a rectangular
+background patch into the playable scene.
+
+For talking characters, do not stop at a second generated still except as a
+temporary state-plumbing proof. Use the accepted seated/idle pose as the input
+for a short talk-loop video, remove the background, and export the loop as a
+same-size transparent spritesheet so the game can animate `seatedTalk` without
+scale or anchor jumps.
+
+Create a few-loop review video from transparent frames with:
+
+```bash
+packages/sprite-tools/.venv/bin/python packages/sprite-tools/scripts/make-loop-preview.py \
+  --frames path/to/idle.png path/to/talk-frame.png \
+  --out path/to/talk-loop-preview.webm \
+  --fps 4 \
+  --loops 8
+```
+
+When generating source video through `fal-video.ts`, choose the constraint
+preset that matches the motion:
+
+```bash
+pnpm --filter @will/sprite-tools exec tsx scripts/fal-video.ts generate \
+  --image path/to/seated-idle.png \
+  --prompt "subtle seated talk loop, same pose and anchor" \
+  --output path/to/raw-talk.mp4 \
+  --aspect 16:9 \
+  --duration 4s \
+  --resolution 720p \
+  --audio false \
+  --constraint-preset talk
+```
+
+Do not use the default walk preset for seated talk loops; it appends walking
+constraints and will fight the asset goal.
+
+For movable characters, a reusable walk loop is only a starting point. Prefer
+scene-specific composites from full references whenever the scene has different
+camera distance, ground line, lighting, or perspective. Use the composite to
+derive scale and anchor, then either validate the existing transparent loop or
+generate a scene-specific idle/walk asset. Do not keep a generic sprite just
+because it technically moves if it looks wrong in the scene.
+
+The Innsmouth seated Kat workflow is documented in:
+
+```text
+adventures/shadow-over-innsmouth/SCENE-CHARACTER-ASSET-WORKFLOW.md
+```
+
 ## Valid Sources
 
 Characters ready for pose generation:
@@ -109,22 +183,27 @@ Located in `sources/videos/`:
 ```bash
 cd packages/sprite-tools
 
-# Veo 3.1 via Replicate (recommended)
+# Veo 3.1 via fal.ai (recommended)
 npx tsx scripts/video-generate.ts \
   --model veo \
   --image sources/valid/ashley-cherub-standing.png \
   --prompt "This exact character walks forward to the left, keep identical appearance, bouncy rubberhose walk cycle, arms swing like rubber" \
-  --aspect 9:16
+  --aspect 9:16 \
+  --duration 4 \
+  --resolution 720p
 
 # Wide format (16:9) for characters that move across frame
 npx tsx scripts/video-generate.ts \
   --model veo \
   --image sources/wip/skyler-idle-clean.png \
   --prompt "This exact character walks forward to the left, keep identical appearance, bouncy rubberhose walk cycle" \
-  --aspect 16:9
+  --aspect 16:9 \
+  --duration 4 \
+  --resolution 720p
 ```
 
-**Note:** Use `video-generate.ts` (Replicate) not `veo-video.ts` (Google direct API).
+**Note:** `video-generate.ts` now uses fal.ai. `fal-video.ts` adds BRIA
+background-removal commands for the full sprite pipeline.
 
 ### Key Findings
 
@@ -151,13 +230,13 @@ Girl [ACTION] to the left, Cuphead animation style, Betty Boop Fleischer cartoon
 - Don't use walking pose as input for walking animation
 
 ### API Setup
-- Replicate token: `REPLICATE_API_TOKEN=...` in `.env`
+- fal.ai token: `FAL_KEY=...` in `.env`
 
 ## Models Reference
 
 | Task | Best Model | Notes |
 |------|------------|-------|
 | Isolation | SeedEdit 3.0 | Removes unwanted elements |
-| BG Removal | lucataco/remove-bg | Preserves limbs |
+| BG Removal | fal.ai BRIA video background removal | Use Transparent WebM VP9, then `process-alpha` |
 | Style Edit | ChatGPT (web) | Upload reference image |
 | Pose Change | ChatGPT (web) | Better style preservation |

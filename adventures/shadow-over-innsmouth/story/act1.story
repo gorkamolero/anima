@@ -363,7 +363,7 @@ SCENE innsmouth_streets
       "Looks closed. But you can see movement inside."
     END
     USE
-      -> general_store_scene
+      -> grocery_store
     END
   END
 

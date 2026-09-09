@@ -1,0 +1,40 @@
+{
+	"video": "packages/sprite-tools/output/fal/hermes-idle-v2/alpha.webm",
+	"pipeline": "fal-alpha-video",
+	"output": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2",
+	"fps": 12,
+	"frameLimit": 12,
+	"columns": 6,
+	"trim": true,
+	"globalTrimBox": [208, 10, 560, 1256],
+	"qcMagenta": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2-qc-magenta.png",
+	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2-preview-3x.mp4",
+	"previewLoops": 3,
+	"keptWork": false,
+	"createdAt": "2026-05-06T20:40:13.532015+00:00",
+	"command": "packages/sprite-tools/scripts/sprite-factory.py process-alpha --video packages/sprite-tools/output/fal/hermes-idle-v2/alpha.webm --output adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2 --fps 12 --cols 6 --detect-loop --loop-min-frames 12 --loop-max-frames 36 --preview-loops 3 --preview-bg magenta",
+	"loop": {
+		"input_file": "packages/sprite-tools/output/fal/hermes-idle-v2/alpha.webm",
+		"output_file": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/.hermes-idle-v2-alpha-work/loop.webm",
+		"loop_info": {
+			"start_frame": 47,
+			"end_frame": 59,
+			"frame_count": 12,
+			"similarity_score": 0.760272519419993,
+			"quality_score": 0.7968385709263421,
+			"final_score": 0.8135052375930089,
+			"seam_distance": 0.09407811611890793,
+			"start_time": 1.9583333333333333,
+			"end_time": 2.4583333333333335,
+			"duration": 0.5,
+			"fps": 24.0,
+			"downsample_factor": 1
+		},
+		"processing_options": {
+			"method": "local-frame-similarity",
+			"include_audio": false,
+			"total_frames": 0,
+			"created_at": "2026-05-06T20:40:12.793727+00:00"
+		}
+	}
+}

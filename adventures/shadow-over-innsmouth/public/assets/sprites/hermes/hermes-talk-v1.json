@@ -1,0 +1,10 @@
+{
+	"name": "hermes-talk-v1",
+	"image": "hermes-talk-v1.png",
+	"frameWidth": 369,
+	"frameHeight": 1280,
+	"frameCount": 6,
+	"cols": 6,
+	"rows": 1,
+	"fps": 12
+}

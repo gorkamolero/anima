@@ -1,0 +1,10 @@
+{
+	"name": "hermes-idle-v2-normalized",
+	"image": "hermes-idle-v2-normalized.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 6,
+	"cols": 6,
+	"rows": 1,
+	"fps": 12
+}

@@ -1,9 +1,9 @@
-import { Scene } from "phaser";
+import type { Scene } from "phaser";
+import type { SceneSoundManager } from "../audio";
+import { type Character, getCharacterHeadPosition } from "../characters";
 import { IrisTransition } from "../transitions";
 import { UIState } from "../ui";
 import { ScenePreloadManager } from "./ScenePreloadManager";
-import type { SceneSoundManager } from "../audio";
-import { getCharacterHeadPosition, type Character } from "../characters";
 
 /**
  * Transition options for scene changes
