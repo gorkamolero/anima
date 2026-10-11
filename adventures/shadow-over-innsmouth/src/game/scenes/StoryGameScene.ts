@@ -196,9 +196,6 @@ export class StoryGameScene extends BaseScene {
 	private generatedPlace?: GeneratedPlace;
 	private optionsCache = new Map<string, Promise<[string, string, string]>>();
 	private dwellTimer?: ReturnType<typeof setTimeout>;
-	private narratorAudio?: HTMLAudioElement;
-	private audioError?: string;
-	private firstSentencePlayed = false;
 	private lastResolution?: NarrationResolution;
 	private locationImages = new Map<string, string>();
 
@@ -1072,55 +1069,6 @@ export class StoryGameScene extends BaseScene {
 			this.openWorldBusy = false;
 		}
 	}
-	private speakCaption(caption: string): Promise<void> {
-		this.narratorAudio?.pause();
-		this.audioError = undefined;
-		this.firstSentencePlayed = false;
-		const sentences = caption.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) ?? [
-			caption,
-		];
-		const first = sentences.shift() ?? caption;
-		const fetchAudio = async (text: string) => {
-			const response = await fetch(`${API_BASE_URL}/tts`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ text }),
-			});
-			if (!response.ok)
-				throw new Error(`Narrator audio failed: ${response.status}`);
-			return URL.createObjectURL(await response.blob());
-		};
-		const play = async (url: string) => {
-			const audio = new Audio(url);
-			this.narratorAudio = audio;
-			try {
-				await new Promise<void>((resolve, reject) => {
-					audio.onended = () => resolve();
-					audio.onerror = () => reject(new Error("Audio playback failed"));
-					void audio.play().catch(reject);
-				});
-			} finally {
-				URL.revokeObjectURL(url);
-			}
-		};
-		const firstPlayed = fetchAudio(first)
-			.then(play)
-			.then(() => {
-				this.firstSentencePlayed = true;
-			})
-			.catch((error) => {
-				this.audioError = String(error);
-			});
-		if (sentences.length) {
-			const remainder = fetchAudio(sentences.join(" "));
-			void Promise.all([firstPlayed, remainder])
-				.then(([, url]) => play(url))
-				.catch((error) => {
-					this.audioError = String(error);
-				});
-		}
-		return firstPlayed;
-	}
 
 	private async resolveNarration(choice: string): Promise<void> {
 		const interactable = this.selectedInteractable;
@@ -1142,17 +1090,27 @@ export class StoryGameScene extends BaseScene {
 					sceneDescription: scene.description,
 					object: interactable.name,
 					choice,
-					flags: this.snapshot.state.flags,
+					flags: this.world?.flags ?? this.snapshot.state.flags,
 					mode: "resolve",
 				}),
 			});
 			if (!response.ok) {
-				throw new Error(`Narrator resolution failed: ${response.status}`);
+				throw new Error(`Narrator resolution failed: ${await response.text()}`);
 			}
 			const resolution = (await response.json()) as NarrationResolution;
 			this.lastResolution = resolution;
 			this.optionsCache.clear();
-			const firstSentence = this.speakCaption(resolution.caption);
+			const firstText =
+				resolution.caption.match(/^[^.!?]+[.!?]?/)?.[0] ?? resolution.caption;
+			const readingDelay = (text: string) =>
+				new Promise<void>((resolve) =>
+					setTimeout(resolve, Math.max(2500, text.length * 60)),
+				);
+			const firstSentence = readingDelay(firstText);
+			const fullCaption = readingDelay(resolution.caption);
+			this.reviewOutput = [resolution.caption];
+			this.lastOpenWorldCaption = resolution.caption;
+			this.outputText.setText(resolution.caption);
 			this.emitOpenWorldState({
 				status: "resolved",
 				object: interactable.name,
@@ -1229,6 +1187,7 @@ export class StoryGameScene extends BaseScene {
 					this.background?.setAlpha(1);
 				}
 			}
+			await fullCaption;
 			this.saveState();
 			this.emitOpenWorldState({
 				status: "resolved",
@@ -1569,7 +1528,6 @@ export class StoryGameScene extends BaseScene {
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
 			window.removeEventListener("anima:open-world-choice", onChoice);
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
-			this.narratorAudio?.pause();
 		});
 	}
 
@@ -1628,8 +1586,6 @@ export class StoryGameScene extends BaseScene {
 				sessionId: this.worldSessionId,
 				world: this.world,
 				resolution: this.lastResolution,
-				audioError: this.audioError,
-				firstSentencePlayed: this.firstSentencePlayed,
 				selectedObject: this.selectedInteractable?.name ?? null,
 				caption: this.lastOpenWorldCaption ?? null,
 				imagePrompt: this.lastOpenWorldImagePrompt ?? null,
