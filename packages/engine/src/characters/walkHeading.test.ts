@@ -47,3 +47,23 @@ describe("walk heading", () => {
 		expect(walkPlaybackRate(0, 0.1, 600)).toBe(0);
 	});
 });
+
+import { groundPathHeading, headingFromGround } from "./walkHeading";
+
+describe("ground heading", () => {
+	it("maps ground axes and nearest diagonal to the four views", () => {
+		expect(headingFromGround(0, 1)).toBe("away");
+		expect(headingFromGround(0, -1)).toBe("toward");
+		expect(headingFromGround(-1, 0)).toBe("left");
+		expect(headingFromGround(1, 0)).toBe("right");
+		expect(headingFromGround(0.5, 1)).toBe("away");
+		expect(headingFromGround(1, -0.5)).toBe("right");
+	});
+	it("retains heading at diagonal thresholds and arrival", () => {
+		expect(headingFromGround(1, 1, "away")).toBe("away");
+		expect(headingFromGround(1, 1, "right")).toBe("right");
+		expect(
+			groundPathHeading({ x: 0, y: 0 }, [{ x: 0.01, y: 0 }], 0, "away"),
+		).toBe("away");
+	});
+});

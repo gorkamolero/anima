@@ -52,3 +52,46 @@ export function walkPlaybackRate(
 	if (scale <= 0 || sourceSpeed <= 0) return 0;
 	return Math.max(0, screenSpeed) / (scale * sourceSpeed);
 }
+
+/** Heading on the camera ground plane: positive depth points away. */
+export function headingFromGround(
+	dX: number,
+	dZ: number,
+	previous: WalkDirection = "left",
+): WalkDirection {
+	if (Math.hypot(dX, dZ) < 1e-8) return previous;
+	const vertical = previous === "away" || previous === "toward";
+	if (
+		Math.abs(dZ) >
+		Math.abs(dX) * (vertical ? VERTICAL_EXIT_RATIO : VERTICAL_ENTER_RATIO)
+	)
+		return dZ > 0 ? "away" : "toward";
+	return dX < 0 ? "left" : "right";
+}
+/** Look ahead in metres along a string-pulled ground path. */
+export function groundPathHeading(
+	position: WalkPoint,
+	path: readonly WalkPoint[],
+	index: number,
+	previous: WalkDirection,
+): WalkDirection {
+	let target = position,
+		budget = 0.35;
+	for (let i = index; i < path.length && budget > 0; i++) {
+		const next = path[i],
+			length = Math.hypot(next.x - target.x, next.y - target.y);
+		const f = length ? Math.min(1, budget / length) : 1;
+		target = {
+			x: target.x + (next.x - target.x) * f,
+			y: target.y + (next.y - target.y) * f,
+		};
+		budget -= length;
+	}
+	if (Math.hypot(target.x - position.x, target.y - position.y) < 0.03)
+		return previous;
+	return headingFromGround(
+		target.x - position.x,
+		target.y - position.y,
+		previous,
+	);
+}

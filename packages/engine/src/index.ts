@@ -22,7 +22,12 @@ export type {
 // Characters
 export { Character } from "./characters/Character";
 export type { WalkDirection } from "./characters/walkHeading";
-export { walkHeading, walkPlaybackRate } from "./characters/walkHeading";
+export {
+	groundPathHeading,
+	headingFromGround,
+	walkHeading,
+	walkPlaybackRate,
+} from "./characters/walkHeading";
 // Agent debug / playtest API
 export type { AgentDebugApi, AgentSceneSnapshot } from "./debug/AgentDebug";
 export { installAgentDebug } from "./debug/AgentDebug";

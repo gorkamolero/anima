@@ -3,13 +3,16 @@ import {
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
+	fitFromLine,
 	fitLinear,
+	fromMetres,
+	groundPathHeading,
 	type HotspotVerb,
+	type Perspective,
 	type SceneConfig,
 	scaleAt,
+	toMetres,
 	type WalkDirection,
-	walkHeading,
-	walkPlaybackRate,
 } from "@anima/engine";
 import {
 	parseStoryScript,
@@ -18,6 +21,7 @@ import {
 	type StoryVerb,
 	validateStoryGraph,
 } from "@anima/storyscript";
+import exteriorLandmarks from "../../../public/backgrounds/bus-station-kat-seated-composite-v1.landmarks.json";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import {
@@ -42,7 +46,7 @@ const API_BASE_URL =
 const VERBS: StoryVerb[] = ["LOOK", "TALK", "USE"];
 const PANEL_DEPTH = 100;
 const CHARACTER_DEPTH = 24;
-const HERMES_WALK_SPEED = 300;
+const HERMES_WALK_SPEED = 1; // metres per second
 // Vehicles cut out of the exterior composite, redrawn as an overlay.
 // Depth is y-sorted per frame: on the dock (feet at y >= VEHICLE_GROUND_Y)
 // Hermes walks IN FRONT of the vehicles and covers them; deeper than their
@@ -1316,6 +1320,23 @@ export class StoryGameScene extends BaseScene {
 		}
 	}
 
+	private walkingPerspective(): Perspective {
+		const ground = this.generatedPlace?.ground;
+		const p = ground
+			? { horizonY: ground.horizonY, slope: ground.scaleSlope }
+			: fitFromLine(
+					this.activeScene().groundLine.points,
+					this.reviewSceneId === "outside"
+						? exteriorLandmarks.horizonY
+						: undefined,
+				);
+		return {
+			...p,
+			pixelsPerMetre:
+				((this.hermesSprite?.getBaseScale() ?? 0.5) * 1059) / 1.75,
+		};
+	}
+
 	private async walkHermesTo(
 		x: number,
 		y: number,
@@ -1399,65 +1420,36 @@ export class StoryGameScene extends BaseScene {
 		const hermesSprite = this.hermesSprite;
 		if (!state || !hermesSprite) return;
 
-		this.hermesWalkDirection = walkHeading(
-			hermesSprite,
-			state.points,
+		const perspective = this.walkingPerspective();
+		const path = state.points.map((p) => toMetres(perspective, p));
+		let position = toMetres(perspective, hermesSprite);
+		this.hermesWalkDirection = groundPathHeading(
+			position,
+			path,
 			state.index,
 			this.hermesWalkDirection,
 		);
 		this.hermesFacing = this.hermesWalkDirection === "right" ? 1 : -1;
 		this.setHermesMotionState("walk");
-		let traveled = 0;
-		const initialScale = hermesSprite.scaleX;
-
-		// Screen speed scales with depth: a figure walking away covers fewer
-		// screen px per second, keeping his apparent gait constant.
-		const depthFactor = hermesSprite.scaleX / hermesSprite.getBaseScale();
-		const intoDepth =
-			this.hermesWalkDirection === "away" ||
-			this.hermesWalkDirection === "toward";
-		// Front/back cycles project a shorter stride onto the screen than profile.
-		const strideProjection = intoDepth ? 0.4 : 1;
-		let budget =
-			HERMES_WALK_SPEED * depthFactor * strideProjection * (delta / 1000);
-		while (budget > 0 && state.index < state.points.length) {
-			const point = state.points[state.index];
-			// Per-segment hurry (e.g. fully-occluded hops behind the bus).
-			const step = budget * (point.speedFactor ?? 1);
-			const distance = Phaser.Math.Distance.Between(
-				hermesSprite.x,
-				hermesSprite.y,
-				point.x,
-				point.y,
-			);
-			const targetScale =
-				(point.scaleFactor ?? 1) * hermesSprite.getBaseScale();
-
-			traveled += Math.min(distance, step);
-			if (distance <= step) {
-				hermesSprite.setPosition(point.x, point.y);
-				hermesSprite.setScale(targetScale);
-				state.index++;
-				budget -= distance / (point.speedFactor ?? 1);
-			} else {
-				const fraction = step / distance;
-				hermesSprite.setPosition(
-					hermesSprite.x + (point.x - hermesSprite.x) * fraction,
-					hermesSprite.y + (point.y - hermesSprite.y) * fraction,
-				);
-				hermesSprite.setScale(
-					hermesSprite.scaleX + (targetScale - hermesSprite.scaleX) * fraction,
-				);
-				budget = 0;
-			}
+		let budget = (HERMES_WALK_SPEED * delta) / 1000;
+		while (budget > 0 && state.index < path.length) {
+			const target = path[state.index];
+			const distance = Math.hypot(target.x - position.x, target.y - position.y);
+			const fraction = distance ? Math.min(1, budget / distance) : 1;
+			position = {
+				x: position.x + (target.x - position.x) * fraction,
+				y: position.y + (target.y - position.y) * fraction,
+			};
+			budget -= distance;
+			if (fraction === 1) state.index++;
 		}
-
-		// Match source-pixel ground travel to each view's projected stride.
-		hermesSprite.anims.timeScale = walkPlaybackRate(
-			delta > 0 ? (traveled * 1000) / delta : 0,
-			(initialScale + hermesSprite.scaleX) / 2,
-			600 * strideProjection,
+		const screen = fromMetres(perspective, position);
+		hermesSprite.setPosition(screen.x, screen.y);
+		hermesSprite.setScale(
+			hermesSprite.getBaseScale() *
+				scaleAt(perspective, screen, { min: 0.18, max: 1.5 }),
 		);
+		hermesSprite.anims.timeScale = HERMES_WALK_SPEED / 1;
 
 		if (state.index >= state.points.length) {
 			this.hermesPathState = undefined;
