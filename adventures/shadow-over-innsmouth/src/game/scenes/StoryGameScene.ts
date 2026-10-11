@@ -186,7 +186,7 @@ export class StoryGameScene extends BaseScene {
 		resolve: () => void;
 	};
 	private commandObjects: Phaser.GameObjects.GameObject[] = [];
-	private placementDebugEnabled = true;
+	private placementDebugEnabled = SHOW_DEBUG_OVERLAY;
 	private placementDebugGraphics?: Phaser.GameObjects.Graphics;
 	private placementDebugLabels: Phaser.GameObjects.Text[] = [];
 	private interactables: SceneInteractable[] = [];
