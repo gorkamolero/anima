@@ -129,6 +129,7 @@ export {
 	checkHotspotBounds,
 	verifySceneArt,
 } from "./verification/ArtLandmarks";
+export { walkAreaFromAnchor } from "./walkarea/anchor";
 export {
 	cellPoint,
 	erode,

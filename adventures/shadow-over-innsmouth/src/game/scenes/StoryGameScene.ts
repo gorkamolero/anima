@@ -3,16 +3,20 @@ import {
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
-	fitFromLine,
+	erode,
+	findPath,
 	fitLinear,
 	fromMetres,
 	groundPathHeading,
 	type HotspotVerb,
 	type Perspective,
+	refineMask,
 	type SceneConfig,
 	scaleAt,
 	toMetres,
+	type WalkArea,
 	type WalkDirection,
+	walkAreaFromAnchor,
 } from "@anima/engine";
 import {
 	parseStoryScript,
@@ -36,7 +40,7 @@ import {
 	type ScenePoint,
 } from "./standaloneScenes";
 
-import { clipFloorBelow, type FloorMask, floorPath } from "./worldGeometry";
+import { clipFloorBelow, type FloorMask } from "./worldGeometry";
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
@@ -181,6 +185,7 @@ export class StoryGameScene extends BaseScene {
 	private katSprite?: Phaser.GameObjects.Sprite;
 	private katSeatedSprite?: Phaser.GameObjects.Sprite;
 	private hermesFacing: 1 | -1 = 1;
+	private walkArea?: WalkArea;
 	private hermesWalkDirection: WalkDirection = "left";
 	private hermesMotionState: CharacterAnimationState = "idle";
 	private reviewSceneId: ReviewSceneId = "outside";
@@ -583,6 +588,24 @@ export class StoryGameScene extends BaseScene {
 		const scene = this.activeScene();
 		this.hoveredInteractableName = undefined;
 		this.applySceneGroundLine(scene);
+		const ground = this.generatedPlace?.ground;
+		this.walkArea = ground
+			? {
+					mask: refineMask(ground.floor),
+					perspective: {
+						horizonY: ground.horizonY,
+						slope: ground.scaleSlope,
+						pixelsPerMetre: (ground.baseScale * 1059) / 1.75,
+					},
+					baseScale: ground.baseScale,
+					scaleClamp: { min: 0.18, max: 1.5 },
+				}
+			: walkAreaFromAnchor(
+					scene,
+					this.reviewSceneId === "outside" ? exteriorLandmarks : {},
+					MAX_FEET_Y,
+				);
+		this.walkArea.mask = erode(this.walkArea.mask, this.walkArea.perspective);
 		this.setSceneBackground(
 			this.locationImages.get(this.locationId()) ?? scene.background,
 		);
@@ -871,69 +894,24 @@ export class StoryGameScene extends BaseScene {
 		) {
 			return;
 		}
-		if (this.generatedPlace) {
-			void this.walkGenerated(pointer.x, pointer.y);
-			return;
-		}
-		const freeWalkBounds = scene.freeWalkBounds ?? {
-			minX: 140,
-			maxX: this.scale.width - 140,
-			minY: scene.id === "inside" ? 700 : 760,
-			maxY: undefined,
-		};
-		const boundedX = Phaser.Math.Clamp(
-			pointer.x,
-			freeWalkBounds.minX,
-			freeWalkBounds.maxX,
-		);
-		const targetX = this.snapToFreeWalkRange(scene, boundedX);
-		const hermes = this.getSceneCharacters(scene).hermes;
-		const targetY = Phaser.Math.Clamp(
-			pointer.y,
-			freeWalkBounds.minY ?? (scene.id === "inside" ? 700 : 760),
-			freeWalkBounds.maxY ?? hermes?.y ?? 890,
-		);
-		void this.walkHermesTo(targetX, targetY);
+		void this.walkGenerated(pointer.x, pointer.y);
 	}
 
+	/** Both authored and generated free walks use the same navigation. */
 	public async walkGenerated(x: number, y: number): Promise<void> {
-		const ground = this.generatedPlace?.ground,
+		const area = this.walkArea,
 			sprite = this.hermesSprite;
-		if (!ground || !sprite || this.inputBlocked) return;
-		const path = floorPath(
-			ground.floor,
-			{ x: sprite.x, y: sprite.y },
-			{ x, y },
-			this.walkingPerspective(),
-		).map((p) => ({
-			...p,
-			scaleFactor: scaleAt(
-				{ horizonY: ground.horizonY, slope: ground.scaleSlope },
-				p,
-				{ min: 0.05, max: Infinity },
-			),
-		}));
-		await this.walkHermesPath(path);
-		this.groundLineManager?.suspendCharacter("hermes");
+		if (!area || !sprite || this.inputBlocked) return;
+		const path = findPath(area.mask, sprite, { x, y });
+		await this.walkHermesPath(path, { retainPosition: true });
 	}
+
 	private async returnToParent(): Promise<void> {
 		const place = this.generatedPlace;
 		if (!place) return;
 		const point = place.ground.groundLine.points[0];
 		await this.walkGenerated(point.x, point.y);
 		await this.enterLocation(place.parent);
-	}
-
-	private snapToFreeWalkRange(scene: ReviewScene, x: number): number {
-		const ranges = scene.freeWalkRanges;
-		if (!ranges || ranges.length === 0) return x;
-		if (ranges.some((range) => x >= range.minX && x <= range.maxX)) return x;
-
-		return ranges
-			.flatMap((range) => [range.minX, range.maxX])
-			.reduce((nearest, candidate) =>
-				Math.abs(candidate - x) < Math.abs(nearest - x) ? candidate : nearest,
-			);
 	}
 
 	private updateReviewHotspotHover(): void {
@@ -1322,20 +1300,8 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private walkingPerspective(): Perspective {
-		const ground = this.generatedPlace?.ground;
-		const p = ground
-			? { horizonY: ground.horizonY, slope: ground.scaleSlope }
-			: fitFromLine(
-					this.activeScene().groundLine.points,
-					this.reviewSceneId === "outside"
-						? exteriorLandmarks.horizonY
-						: undefined,
-				);
-		return {
-			...p,
-			pixelsPerMetre:
-				((this.hermesSprite?.getBaseScale() ?? 0.5) * 1059) / 1.75,
-		};
+		if (!this.walkArea) throw new Error("Walk area not initialized");
+		return this.walkArea.perspective;
 	}
 
 	private async walkHermesTo(
