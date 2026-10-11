@@ -99,6 +99,7 @@ export interface AgentDebugApi {
 		stepMs?: number;
 		width?: number;
 		quality?: number;
+		format?: "png" | "jpeg";
 	}): Promise<string>;
 	/**
 	 * Visibility oracle: how much of a character the player can actually
@@ -298,12 +299,12 @@ export function installAgentDebug(scene: BaseScene): void {
 	let virtualTime = performance.now();
 
 	const step = (ms: number): void => {
-		// Math.round, not ceil: 33.33/16.666 float-errors to 2.0001, and
-		// ceiling it silently runs 3 frames per "2-frame" step - every
-		// recording plays 1.5x fast.
-		const frames = Math.max(1, Math.round(ms / 16.666));
+		// Exact elapsed time, subdivided only for simulation stability.
+		game.loop.smoothStep = false;
+		virtualTime = Math.max(virtualTime, game.loop.lastTime);
+		const frames = Math.max(1, Math.ceil(ms / (1000 / 60)));
 		for (let i = 0; i < frames; i++) {
-			virtualTime += 16.666;
+			virtualTime += ms / frames;
 			game.loop.step(virtualTime);
 		}
 	};
@@ -434,7 +435,10 @@ export function installAgentDebug(scene: BaseScene): void {
 			const context = canvas.getContext("2d");
 			if (!context) throw new Error("2d context unavailable for downscale");
 			context.drawImage(image, 0, 0, width, height);
-			return canvas.toDataURL("image/jpeg", quality);
+			return canvas.toDataURL(
+				options.format === "png" ? "image/png" : "image/jpeg",
+				quality,
+			);
 		},
 		visibility(characterId) {
 			return measureVisibility(scene, characterId);
