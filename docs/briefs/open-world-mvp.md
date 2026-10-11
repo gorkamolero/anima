@@ -27,7 +27,7 @@ Turso, prefetch, simulated player swarm, anchor bake, TTS, ambience, video, a se
 
 ### 1. Narrator route: `POST /api/narrate`
 
-File: `api/src/routes/narrate.ts`. Use the Vercel AI SDK (`ai` + `@ai-sdk/google` or the gateway, whichever key is in `.env`; read `.env.example` and add what you need). Use `generateObject` with a zod schema.
+File: `api/src/routes/narrate.ts`. Use the Vercel AI SDK (`ai` + `@openrouter/ai-sdk-provider` with `OPENROUTER_API_KEY`; see `.env.example`). Use `generateObject` with a zod schema.
 
 Request:
 ```ts

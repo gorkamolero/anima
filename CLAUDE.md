@@ -89,7 +89,7 @@ pip install rembg  # optional, AI background removal
 
 Required env vars for video generation:
 - `HEDRA_API_KEY` - For hedra-video.py
-- `GOOGLE_API_KEY` - For veo-video.ts
+- `FAL_KEY` - For Veo video generation on fal
 
 ## Asset Pipeline
 

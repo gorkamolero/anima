@@ -16,8 +16,8 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
-if [ -z "$GOOGLE_API_KEY" ]; then
-    echo "⚠️  GOOGLE_API_KEY not set - video generation will fail"
+if [ -z "$FAL_KEY" ]; then
+    echo "⚠️  FAL_KEY not set - video generation will fail"
 fi
 
 if [ -z "$REPLICATE_API_TOKEN" ]; then

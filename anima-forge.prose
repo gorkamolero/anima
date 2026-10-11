@@ -10,7 +10,8 @@
 # Usage: prose run anima-forge.prose
 #
 # Requirements:
-# - GOOGLE_API_KEY (for Veo/Gemini)
+# - FAL_KEY (for Veo on fal)
+# - OPENROUTER_API_KEY (for Gemini)
 # - ImageMagick, FFmpeg, rembg installed
 
 input scene_description: "Describe the scene you want to create"
