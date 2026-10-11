@@ -14,7 +14,10 @@
  */
 import { spawnSync } from "node:child_process";
 
-const url = process.argv[2] ?? "http://localhost:8080/";
+const url =
+	process.argv.find((arg) => arg.startsWith("http")) ??
+	"http://localhost:8080/";
+const api = process.env.ANIMA_API_URL ?? "http://localhost:4317";
 
 const SCENES = [
 	{
@@ -26,6 +29,16 @@ const SCENES = [
 		landmarks: "backgrounds/arkham-bus-depot-flat-2d.landmarks.json",
 	},
 ];
+
+if (process.argv.includes("--generated")) {
+	const response = await fetch(`${api}/api/places`);
+	if (!response.ok) throw new Error("Unable to list generated places");
+	for (const place of await response.json())
+		SCENES.push({
+			id: place.id,
+			landmarks: `${api}${place.background.replace(/\.png$/, ".landmarks.json")}`,
+		});
+}
 
 function runAgentBrowser(args, options = {}) {
 	const result = spawnSync("agent-browser", ["--session", "anima", ...args], {
@@ -61,9 +74,15 @@ for (const scene of SCENES) {
 	}
 	const anima = window.__anima;
 	if (!anima) throw new Error("window.__anima never appeared");
-	window.dispatchEvent(new CustomEvent("anima:review-scene", { detail: "${scene.id}" }));
+	let done = false, failure;
+	void anima.scene.enterLocation(${JSON.stringify(scene.id)}).then(() => { done = true; }).catch(e => { failure = e; done = true; });
+	for (let i = 0; i < 600 && !done; i++) {
+		anima.step(100);
+		await new Promise(r => setTimeout(r, 20));
+	}
+	if (failure) throw failure;
+	if (!done) throw new Error("Location load timed out");
 	anima.step(300);
-	await anima.waitUntil(() => anima.scene.getReviewQaSnapshot().reviewSceneId === "${scene.id}");
 	return anima.verifyArt("${scene.landmarks}", { referenceCharacterId: "hermes" });
 })()
 `);

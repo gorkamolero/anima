@@ -487,7 +487,7 @@ export class StoryGameScene extends BaseScene {
 		const point = p.ground.groundLine.points[2];
 		return {
 			id: this.reviewSceneId,
-			title: p.id,
+			title: p.description.split(/[.!?]/)[0] || "Uncharted place",
 			description: p.description,
 			background: `open-world:${API_BASE_URL.replace(/\/api$/, "")}${p.background}`,
 			groundLine: p.ground.groundLine,
@@ -504,6 +504,7 @@ export class StoryGameScene extends BaseScene {
 		return this.generatedPlace?.id ?? this.reviewSceneId;
 	}
 	public async enterLocation(id: string): Promise<void> {
+		const alreadyBusy = this.openWorldBusy;
 		this.openWorldBusy = true;
 		try {
 			this.interactables = [];
@@ -527,7 +528,7 @@ export class StoryGameScene extends BaseScene {
 			if (this.generatedPlace)
 				this.groundLineManager?.suspendCharacter("hermes");
 		} finally {
-			this.openWorldBusy = false;
+			this.openWorldBusy = alreadyBusy;
 		}
 	}
 

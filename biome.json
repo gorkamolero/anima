@@ -4,6 +4,7 @@
 		"includes": [
 			"**",
 			"!**/dist/**",
+			"!**/public/generated/**",
 			"!**/node_modules/**",
 			"!packages/sprite-tools/output/**",
 			"!packages/sprite-tools/outputs/**"

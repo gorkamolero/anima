@@ -637,6 +637,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 			const { object } = await generateObject({
 				model: model ?? getModel(),
 				mode: "json",
+				// ponytail: request a complete visual snapshot from Gemini to avoid empty optional-object output; the public contract still accepts partial patches.
 				schema: narrateResolveSchema.extend({ visualStatePatch: visualSchema }),
 				system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
 				prompt: [

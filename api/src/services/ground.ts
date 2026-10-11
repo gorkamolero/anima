@@ -27,6 +27,7 @@ export interface GroundData {
 	scaleSlope: number;
 	baseScale: number;
 	ground: "derived" | "inherited";
+	derivationVersion?: number;
 	verdicts: Array<{ pass: boolean; why: string }>;
 }
 // Fit inverse depth = ax + by + c on segmented floor (least squares).
@@ -98,7 +99,8 @@ export function maskToGround(
 				start = -1;
 			}
 		}
-		if (bestEnd - bestStart < 4) continue;
+		// Reject thin floor fringes beside walls and props: they cannot hold a walking figure.
+		if (bestEnd - bestStart < 12) continue;
 		columns.push({
 			x,
 			top: bestStart,
@@ -153,6 +155,7 @@ export function maskToGround(
 		scaleSlope: slope,
 		baseScale: 0.5,
 		ground: "derived",
+		derivationVersion: 2,
 		verdicts: [],
 	};
 }
@@ -323,6 +326,10 @@ export async function judgeGround(
 			],
 		});
 		recordCall("ground-judge", Date.now() - started);
+		await writeFile(
+			path.replace(/\.png$/, ".json"),
+			JSON.stringify(object, null, 2),
+		);
 		verdicts.push(object);
 	}
 	return verdicts;

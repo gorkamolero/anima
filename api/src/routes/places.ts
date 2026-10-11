@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { Hono } from "hono";
 import { z } from "zod";
 import { ANCHORS, imagePath, ROOT } from "../lib/backgrounds.js";
+import { recordCall } from "../services/costs.js";
 import {
 	deriveGround,
 	type GroundData,
@@ -47,24 +48,37 @@ async function createPlace(
 ): Promise<Place> {
 	const id = placeId(input.parent, input.to);
 	const existing = await getPlace(id);
-	if (existing) return existing;
+	if (
+		existing &&
+		(existing.ground.ground === "derived" ||
+			existing.ground.derivationVersion === 2)
+	) {
+		recordCall("place", 0, true);
+		return existing;
+	}
 	const anchor = input.template === "interior" ? "inside" : "outside";
-	const response = await sceneImageRoutes.request(`${origin}/scene-image`, {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-			scene: anchor,
-			baseBackground: `${ANCHORS[anchor]}#${id}`,
-			visualState: defaultVisual(),
-			imagePrompt: `Create this new place: ${input.description}. Remove the anchor's people and vehicles unless specified by the place. No Hermes or Kat. Keep the camera, horizon line and walkable ground exactly where they are in the input image.`,
-		}),
-	});
+	const response = existing
+		? new Response(JSON.stringify({ url: `${origin}${existing.background}` }))
+		: await sceneImageRoutes.request(`${origin}/scene-image`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					scene: anchor,
+					baseBackground: `${ANCHORS[anchor]}#${id}`,
+					visualState: defaultVisual(),
+					imagePrompt: `Create this new place: ${input.description}. Remove the anchor's people and vehicles unless specified by the place. No Hermes or Kat. Keep the camera, horizon line and walkable ground exactly where they are in the input image.`,
+				}),
+			});
 	if (!response.ok) throw new Error("Place image failed");
 	const image = (await response.json()) as { url: string };
 	let ground = await deriveGround(image.url, input.template);
 	ground.verdicts = await judgeGround(image.url, ground);
 	if (ground.verdicts.some((v) => !v.pass)) {
-		ground = await deriveGround(image.url, input.template, 0.7);
+		ground = await deriveGround(
+			image.url,
+			input.template,
+			input.template === "exterior" ? 0.45 : 0.7,
+		);
 		ground.verdicts = await judgeGround(image.url, ground);
 	}
 	if (ground.verdicts.some((v) => !v.pass)) {
@@ -128,7 +142,7 @@ async function createPlace(
 		),
 	);
 	await (await getWorldDb()).execute({
-		sql: "INSERT OR IGNORE INTO places VALUES (?, ?)",
+		sql: "INSERT OR REPLACE INTO places VALUES (?, ?)",
 		args: [id, JSON.stringify(place)],
 	});
 	return place;
