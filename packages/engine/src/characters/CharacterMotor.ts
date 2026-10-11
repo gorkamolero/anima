@@ -6,7 +6,11 @@ import {
 	toMetres,
 } from "../walkarea/perspective";
 import type { WalkArea } from "../walkarea/types";
-import { groundPathHeading, type WalkDirection } from "./walkHeading";
+import {
+	groundPathHeading,
+	headingFromGround,
+	type WalkDirection,
+} from "./walkHeading";
 
 export interface MotorTarget extends Point {
 	motor?: CharacterMotor;
@@ -80,13 +84,16 @@ export class CharacterMotor {
 			const p = this.area.perspective;
 			let position = toMetres(p, this.target),
 				budget = (this.speed * delta) / 1000;
-			this.heading = groundPathHeading(
-				position,
-				this.path,
-				this.index,
-				this.heading,
-			);
-			this.animate("walk", this.heading, this.speed);
+			if (!this.rootStep) {
+				this.heading = groundPathHeading(
+					position,
+					this.path,
+					this.index,
+					this.heading,
+				);
+				this.animate("walk", this.heading, this.speed);
+			}
+
 			if (this.rootStep) {
 				let screen = { x: this.target.x, y: this.target.y };
 				while (
@@ -104,6 +111,14 @@ export class CharacterMotor {
 					this.applyPresentation();
 					return;
 				}
+				// Root displacement must use this leg, not a future turn: a side
+				// cycle has no forward root travel on a short vertical approach.
+				this.heading = headingFromGround(
+					this.path[this.index].x - position.x,
+					this.path[this.index].y - position.y,
+					this.heading,
+				);
+				this.animate("walk", this.heading, 1);
 				const length = Math.hypot(next.x - screen.x, next.y - screen.y);
 				let pixels = this.rootStep(this.heading, {
 					x: (next.x - screen.x) / length,

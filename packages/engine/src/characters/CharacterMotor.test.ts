@@ -22,8 +22,11 @@ function setup() {
 		baseScale: 0.5,
 		scaleClamp: { min: 0.18, max: 1.5 },
 	};
-	const motor = new CharacterMotor(target, area, () => {});
-	return { target, area, motor };
+	const calls: { state: string; heading: string }[] = [];
+	const motor = new CharacterMotor(target, area, (state, heading) => {
+		calls.push({ state, heading });
+	});
+	return { target, area, motor, calls };
 }
 describe("CharacterMotor", () => {
 	it("maintains ground speed and current-position scale across variable frame times", () => {
@@ -72,5 +75,26 @@ describe("CharacterMotor", () => {
 		motor.update(1);
 		expect(target.x).toBeCloseTo(1100);
 		expect(motor.walking).toBe(false);
+	});
+	it("faces the current root-motion leg before looking ahead around a corner", () => {
+		const { motor, target, calls } = setup();
+		const headings: string[] = [];
+		motor.rootStep = (heading, tangent) => {
+			headings.push(heading);
+			return Math.abs(tangent.y) > 0.9 ? 5 : 10;
+		};
+		void motor.walk([
+			{ x: 960, y: 915 },
+			{ x: 1000, y: 915 },
+		]);
+		motor.update(1);
+		expect(headings[0]).toBe("away");
+		expect(calls.filter((c) => c.state === "walk")).toEqual([
+			{ state: "walk", heading: "away" },
+		]);
+		expect(target.y).toBeCloseTo(915);
+		motor.update(1);
+		expect(headings[1]).toBe("right");
+		expect(target.x).toBeCloseTo(970);
 	});
 });
