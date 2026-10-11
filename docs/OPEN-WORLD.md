@@ -77,7 +77,7 @@ Every attempt so far asked a model for the line and every model failed. The diag
    - **Scale** from `horizonY` and the calibration constant via the existing linear model. Write the result as a `.landmarks.json` so `verify:art` runs unchanged.
    - **Judge, not source:** render Hermes at five points and ask a vision model only "feet on ground, plausible size, yes/no". Models are fine at judging what they are bad at producing.
 
-Semantics from the LLM, coordinates from perception models, verification from the tool that already exists. Occlusion (walking behind things) stays out of scope.
+Semantics from the LLM, coordinates from perception models, verification from the tool that already exists. Occlusion layers and exit regions are derived alongside the floor and loaded by the scene.
 ## Build order
 1. Built: narrator options and resolution on the two calibrated depot anchors.
 2. Built: local libsql session worlds, inventory, flags, NPC memory, twelve-action history, and shared visual-state image cache.
@@ -178,3 +178,56 @@ pass; full game lint is affected by separate concurrent occluder JSON artifacts,
 while game source/script lint passes. Toward idle retains the inherited profile
 pose: a safety hook blocked the follow-up idle/telemetry edit; away idle holds
 its away-cycle frame.
+
+
+## Animation-owned walking and geometry review (2026-10-11)
+
+The motor supports screen-space root displacement on animation frame changes.
+Hermes uses the sheet fps, per-frame `rootMotion` and the current perspective scale;
+the legacy metre-speed mode remains available to other engine clients. Generate the
+metadata with `packages/sprite-tools/scripts/root-motion.py sheet.json --axis x|y
+--travel -1|1`. The script retains its measured seven-row alpha contact centroid in
+`footContacts`, uses measured deltas during contact, and recovers lateral drift on
+airborne frames so the cycle has no net sideways locomotion. Position follows the
+navigation polyline, including small signed stance corrections. Scale is recomputed
+at the new position. Toward and away stops retain their corresponding neutral pose.
+
+**Acceptance limitation:** the supplied lowest-alpha contact metric includes heel/toe
+roll and lateral movement in the depth sprites. Projection onto a straight path
+cannot cancel its perpendicular component. The measured side cycle is much closer;
+this work must not be described as passing the depth-walk acceptance gate. Full
+per-walk results and frame sequences are in `tmp/walkqa` (local, not versioned).
+
+Object picking and hover share the alpha mask of each available occluder. A floor
+pixel has priority; other objects fall back to their box minus visible floor. An
+object click searches reachable floor in front of its contact and requests options
+only after arrival. Erode physical floor first, then clip the feet at the caption
+boundary, so a UI edge does not consume additional navigable ground.
+
+Walk-behind PNGs use per-column supporting contacts. Contact samples retain their
+own column's bottom; canopy columns do not become supporting floor contacts.
+The nearest supporting baseline extends to overhanging portions of the image;
+only overlapping opaque pixels actually hide Hermes. Equal depth draws Hermes last.
+Layers wholly outside all reachable sprite bounds are hidden, but retain their masks
+for interaction. Authored anchor layers and exit JSON are versioned; generated place
+data and segmentation cache metadata remain local.
+
+Hidden floor is bridged **geometrically**, by filling only an occluder silhouette
+strip above its baseline when visible floor exists immediately on both sides of
+that strip. No model predicts hidden floor. This is the owner's chosen rule from
+the walking brief; the prior-art patent discussion is retained in the local research.
+It does not invent routes where either visible support side is missing.
+
+Generated children have parent-return edge regions. Eroded/clipped exit approaches
+are projected onto navigable floor, and authored door destinations come from the
+existing story routes. Known neighbour destinations take precedence over a parent.
+Walking into a region triggers once until the character leaves it; far exits invoke
+the existing narrator travel pipeline. New place creation completes object perception,
+occluders and exits before persisting the place. `?debug=1` shows these regions.
+
+`render-walk.mjs --plan=plan.json --out=tmp/walkqa/place` captures lossless game frames
+through the exclusive virtual clock and encodes at exactly 24 fps. A plan supplies
+`place`, optional `start`, and `beats` with `name`, `click` (or `object`/`exit`) and
+`frames`. All runs force `?mute=1`. `--keep-frames` retains PNGs; telemetry and 6 fps
+contact sheets accompany each clip. Exact duplicate counts during walking supplement
+`freeze.py`, whose whole-frame threshold can classify small sprites as inactive.

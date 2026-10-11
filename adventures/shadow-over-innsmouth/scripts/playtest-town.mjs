@@ -30,7 +30,7 @@ function evaluate(source) {
 }
 const qa = () =>
 	evaluate(
-		"(()=>{window.__anima?.step(600);return window.__anima?.scene?.getReviewQaSnapshot()??null})()",
+		"(()=>{window.__anima?.step(6000);return window.__anima?.scene?.getReviewQaSnapshot()??null})()",
 	);
 async function poll(label, fn, predicate, timeout = 240000) {
 	const start = Date.now();
@@ -133,15 +133,15 @@ async function action(step, choice, pick = false) {
 			? before.interactables.find((x) => /house|building/i.test(x.name))
 			: undefined) ?? target(before);
 	if (!object) throw new Error("No clickable objects");
-	// Use the scene API through __anima, with the actual returned object, so large floor boxes do not intercept a debug click.
+	// Exercise the same pixel hit test and walk-to interaction as a player.
 	evaluate(
-		`void window.__anima.scene.requestNarrationOptions(${JSON.stringify(object)});true`,
+		`(()=>{const s=window.__anima.scene;for(let y=60;y<950;y+=4)for(let x=0;x<1920;x+=4)if(s.findInteractableAtPoint(x,y)?.name===${JSON.stringify(object.name)}){window.__anima.click(x,y);return true;}throw new Error('No clickable pixel for object');})()`,
 	);
 	const options = await poll(
 		"options",
 		() =>
 			evaluate(
-				'[...document.querySelectorAll(".open-world-prompt__options button")].map(b=>b.textContent)',
+				'(()=>{window.__anima.step(600);return [...document.querySelectorAll(".open-world-prompt__options button")].map(b=>b.textContent)})()',
 			),
 		(x) => x.length === 3,
 		90000,
@@ -187,6 +187,10 @@ async function walkPlace(step) {
 	const line = g.groundLine.points;
 	const floor = g.floor;
 	const hotspots = evaluate("window.__anima.snapshot().hotspots");
+	const exits = evaluate("window.__anima.scene.sceneExits").map((e) => ({
+		x: e.region.reduce((s, p) => s + p.x, 0) / e.region.length,
+		y: e.region.reduce((s, p) => s + p.y, 0) / e.region.length,
+	}));
 	const allCells = floor.data
 		.map((v, i) =>
 			v
@@ -200,14 +204,8 @@ async function walkPlace(step) {
 		.filter(
 			(p) =>
 				p.x >= 35 &&
-				p.y < 964 &&
-				!before.interactables.some(
-					(o) =>
-						p.x >= o.bounds[0] * 1920 &&
-						p.x <= o.bounds[2] * 1920 &&
-						p.y >= o.bounds[1] * 1080 &&
-						p.y <= o.bounds[3] * 1080,
-				) &&
+				p.y < 948 &&
+				exits.every((e) => Math.hypot(e.x - p.x, e.y - p.y) > 90) &&
 				!hotspots.some(
 					(o) =>
 						p.x >= o.bounds.x &&
@@ -245,7 +243,7 @@ async function walkPlace(step) {
 			(x) =>
 				x?.hermes.motionState === "idle" &&
 				!evaluate("window.__anima.snapshot().inputBlocked"),
-			60000,
+			180000,
 		);
 		const h = s.hermes;
 		const i =
@@ -328,7 +326,9 @@ try {
 		throw new Error("No visible alley change");
 	const imageCount = ledger().filter((c) => c.kind === "image-attempt").length;
 	for (let i = 0; i < 3 && qa().location !== "outside"; i++) {
-		evaluate("window.__anima.click(10,930);true");
+		evaluate(
+			"(()=>{const e=window.__anima.scene.sceneExits.find(e=>e.kind==='edge-left');if(!e)throw new Error('Missing return exit');const x=e.region.reduce((s,p)=>s+p.x,0)/e.region.length,y=e.region.reduce((s,p)=>s+p.y,0)/e.region.length;window.__anima.click(x,y);return true})()",
+		);
 		await poll(
 			"parent",
 			qa,

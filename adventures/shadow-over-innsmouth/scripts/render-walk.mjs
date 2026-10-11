@@ -17,6 +17,7 @@ const plan = JSON.parse(
 );
 const out = resolve(arg("out", `tmp/walkqa/${plan.place}`));
 const session = arg("session", "walkqa");
+const width = Number(arg("width", "1920"));
 function run(command, args, input) {
 	const r = spawnSync(command, args, {
 		input,
@@ -31,9 +32,17 @@ const browser = (args, input) =>
 const evaluate = (source) => JSON.parse(browser(["eval", "--stdin"], source));
 mkdirSync(out, { recursive: true });
 if (!process.argv.includes("--reuse")) {
-	browser(["open", "http://localhost:8080/?mute=1"]);
+	browser(["open", `http://localhost:8080/?mute=1&walkqa=${Date.now()}`]);
 	browser(["set", "viewport", "1920", "1080"]);
 	browser(["wait", "--load", "networkidle"]);
+}
+for (let i = 0; i < 600; i++) {
+	const ready = evaluate(
+		`(()=>{window.__anima?.step(100);return !!window.__anima && !window.__anima.scene.openWorldBusy && !!window.__anima.scene.world})()`,
+	);
+	if (ready) break;
+	if (i === 599) throw new Error("World initialization timeout");
+	await new Promise((r) => setTimeout(r, 100));
 }
 evaluate(
 	`(async()=>{while(!window.__anima) await new Promise(r=>setTimeout(r,100)); const a=window.__anima,s=a.scene; if(!new URLSearchParams(location.search).has('mute')) throw new Error('Mute required'); s.setPlacementDebugEnabled(false); window.__walkReady=false; s.enterLocation(${JSON.stringify(plan.place)}).then(()=>window.__walkReady=true);return true;})()`,
@@ -52,7 +61,7 @@ if (plan.start)
 	);
 // First capture freezes RAF before any walk is started.
 evaluate(
-	`window.__anima.captureFrame({stepMs:0,width:1920,format:'png'}).then(()=>true)`,
+	`window.__anima.captureFrame({stepMs:0,width:${width},format:'png'}).then(()=>true)`,
 );
 const logs = [];
 for (const beat of plan.beats) {
@@ -62,6 +71,18 @@ for (const beat of plan.beats) {
 		evaluate(
 			`(()=>{const s=window.__anima.scene;s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
 		);
+	if (beat.object) {
+		const point = evaluate(
+			`(()=>{const s=window.__anima.scene;for(let y=60;y<950;y+=4)for(let x=0;x<1920;x+=4)if(s.findInteractableAtPoint(x,y)?.name.toLowerCase()===${JSON.stringify(beat.object.toLowerCase())})return [x,y];throw new Error('No object mask pixel');})()`,
+		);
+		beat.click = point;
+	}
+	if (beat.exit) {
+		const point = evaluate(
+			`(()=>{const s=window.__anima.scene,e=s.sceneExits.find(e=>e.id===${JSON.stringify(beat.exit)}||e.kind===${JSON.stringify(beat.exit)});if(!e)throw new Error('No exit');return [e.region.reduce((n,p)=>n+p.x,0)/e.region.length,e.region.reduce((n,p)=>n+p.y,0)/e.region.length]})()`,
+		);
+		beat.click = point;
+	}
 	if (beat.click)
 		evaluate(
 			`(()=>{window.__anima.click(${beat.click[0]},${beat.click[1]});return true})()`,
@@ -69,7 +90,7 @@ for (const beat of plan.beats) {
 	const log = [];
 	for (let first = 0; first < beat.frames; first += 12) {
 		const frames = evaluate(
-			`(async()=>{const out=[];for(let i=0;i<${Math.min(12, beat.frames - first)};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:1920,format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,location:s.locationId(),occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
+			`(async()=>{const out=[];for(let i=0;i<${Math.min(12, beat.frames - first)};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,location:s.locationId(),ui:s.openWorldBusy,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
 		);
 		for (let j = 0; j < frames.length; j++) {
 			const { png, ...sample } = frames[j];
