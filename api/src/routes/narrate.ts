@@ -2,6 +2,7 @@ import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
 import { getModel } from "../lib/model.js";
+import { recordCall } from "../services/costs.js";
 
 import {
 	getWorldDb,
@@ -572,6 +573,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 		}
 
 		const request = parsed.data;
+		const started = Date.now();
 		const world = request.sessionId
 			? await loadWorld(await getWorldDb(), request.sessionId)
 			: undefined;
@@ -593,6 +595,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
 					prompt: `${sharedPrompt}\nReturn exactly three distinct, grounded invitations for what Hermes might choose, each under 15 words.`,
 				});
+				recordCall(`narrate-${request.mode}`, Date.now() - started);
 				return c.json(object);
 			}
 
@@ -616,6 +619,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					{ error: "Visual change requires visualStatePatch" },
 					502,
 				);
+			recordCall(`narrate-${request.mode}`, Date.now() - started);
 			return c.json(object);
 		} catch (error) {
 			const message =

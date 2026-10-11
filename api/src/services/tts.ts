@@ -3,6 +3,15 @@
  * Provides voice synthesis for game dialogue
  */
 
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { ROOT } from "../lib/backgrounds.js";
+import { recordCall } from "./costs.js";
+
+// George, verified in the account voice list: warm narrative storyteller.
+export const NARRATOR_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb";
+
 export interface TTSConfig {
 	apiKey: string;
 	defaultVoiceId?: string;
@@ -62,6 +71,21 @@ export function createTTSService(config: TTSConfig): TTSService {
 			throw new Error("No voice ID provided and no default voice configured");
 		}
 
+		const started = Date.now();
+		const cacheDir = resolve(ROOT, "api/data/tts");
+		const hash = createHash("sha256")
+			.update(
+				JSON.stringify({ text, voice, modelId, stability, similarityBoost }),
+			)
+			.digest("hex");
+		const cachePath = resolve(cacheDir, `${hash}.mp3`);
+		if (process.env.NODE_ENV !== "test") {
+			const cached = await readFile(cachePath).catch(() => null);
+			if (cached) {
+				recordCall("tts", Date.now() - started, true);
+				return new Uint8Array(cached).buffer;
+			}
+		}
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -92,7 +116,13 @@ export function createTTSService(config: TTSConfig): TTSService {
 			throw new Error(`TTS generation failed: ${response.status} - ${error}`);
 		}
 
-		return response.arrayBuffer();
+		const audio = await response.arrayBuffer();
+		if (process.env.NODE_ENV !== "test") {
+			await mkdir(cacheDir, { recursive: true });
+			await writeFile(cachePath, Buffer.from(audio));
+			recordCall("tts", Date.now() - started);
+		}
+		return audio;
 	}
 
 	/**
@@ -149,7 +179,8 @@ export function getTTSService(): TTSService {
 		}
 		ttsServiceInstance = createTTSService({
 			apiKey,
-			defaultVoiceId: process.env.ELEVENLABS_DEFAULT_VOICE_ID,
+			defaultVoiceId:
+				process.env.ELEVENLABS_DEFAULT_VOICE_ID ?? NARRATOR_VOICE_ID,
 			modelId: process.env.TTS_MODEL_ID,
 			stability: process.env.TTS_STABILITY
 				? parseFloat(process.env.TTS_STABILITY)

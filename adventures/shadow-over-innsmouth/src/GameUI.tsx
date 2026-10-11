@@ -231,8 +231,8 @@ function OpenWorldPrompt({
 			{state.status === "loading" || state.status === "resolving" ? (
 				<p className="open-world-prompt__waiting">
 					{state.status === "loading"
-						? `Considering ${state.object}…`
-						: `Resolving your choice for ${state.object}…`}
+						? `${state.object}`
+						: "The salt air hangs still."}
 				</p>
 			) : null}
 

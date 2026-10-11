@@ -194,6 +194,12 @@ export class StoryGameScene extends BaseScene {
 	private worldSessionId = "";
 	private currentImage?: string;
 	private generatedPlace?: GeneratedPlace;
+	private optionsCache = new Map<string, Promise<[string, string, string]>>();
+	private dwellTimer?: ReturnType<typeof setTimeout>;
+	private narratorAudio?: HTMLAudioElement;
+	private audioError?: string;
+	private firstSentencePlayed = false;
+	private lastResolution?: NarrationResolution;
 	private locationImages = new Map<string, string>();
 
 	constructor() {
@@ -995,6 +1001,20 @@ export class StoryGameScene extends BaseScene {
 				interactables?: SceneInteractable[];
 			};
 			this.interactables = payload.interactables ?? [];
+			this.optionsCache.clear();
+			if (this.dwellTimer) clearTimeout(this.dwellTimer);
+			const location = this.locationId();
+			this.dwellTimer = setTimeout(() => {
+				if (location !== this.locationId()) return;
+				const area = (box: SceneInteractable) =>
+					(box.bounds[2] - box.bounds[0]) * (box.bounds[3] - box.bounds[1]);
+				for (const item of [...this.interactables]
+					.sort((a, b) => area(b) - area(a))
+					.slice(0, 3))
+					void this.fetchOptions(item).catch(() =>
+						this.optionsCache.delete(item.name),
+					);
+			}, 2000);
 		} catch (error) {
 			this.emitOpenWorldState({
 				status: "error",
@@ -1006,50 +1026,100 @@ export class StoryGameScene extends BaseScene {
 		}
 	}
 
+	private fetchOptions(
+		interactable: SceneInteractable,
+	): Promise<[string, string, string]> {
+		const cached = this.optionsCache.get(interactable.name);
+		if (cached) return cached;
+		const scene = this.activeScene();
+		const promise = fetch(`${API_BASE_URL}/narrate`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				scene: this.locationId(),
+				sessionId: this.worldSessionId,
+				sceneDescription: scene.description,
+				object: interactable.name,
+				flags: this.world?.flags ?? {},
+				mode: "options",
+			}),
+		}).then(async (response) => {
+			if (!response.ok)
+				throw new Error(`Narrator options failed: ${response.status}`);
+			return ((await response.json()) as { options: [string, string, string] })
+				.options;
+		});
+		this.optionsCache.set(interactable.name, promise);
+		return promise;
+	}
 	private async requestNarrationOptions(
 		interactable: SceneInteractable,
 	): Promise<void> {
 		this.openWorldBusy = true;
 		this.selectedInteractable = interactable;
-		this.emitOpenWorldState({
-			status: "loading",
-			object: interactable.name,
-		});
-
+		this.emitOpenWorldState({ status: "loading", object: interactable.name });
 		try {
-			const scene = this.activeScene();
-			const response = await fetch(`${API_BASE_URL}/narrate`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					scene: this.locationId(),
-					sessionId: this.worldSessionId,
-					sceneDescription: scene.description,
-					object: interactable.name,
-					flags: this.snapshot.state.flags,
-					mode: "options",
-				}),
-			});
-			if (!response.ok) {
-				throw new Error(`Narrator options failed: ${response.status}`);
-			}
-			const payload = (await response.json()) as {
-				options: [string, string, string];
-			};
+			const options = await this.fetchOptions(interactable);
 			this.emitOpenWorldState({
 				status: "options",
 				object: interactable.name,
-				options: payload.options,
+				options,
 			});
 		} catch (error) {
-			this.emitOpenWorldState({
-				status: "error",
-				message:
-					error instanceof Error ? error.message : "Narrator request failed",
-			});
+			this.optionsCache.delete(interactable.name);
+			this.emitOpenWorldState({ status: "error", message: String(error) });
 		} finally {
 			this.openWorldBusy = false;
 		}
+	}
+	private speakCaption(caption: string): Promise<void> {
+		this.narratorAudio?.pause();
+		this.audioError = undefined;
+		this.firstSentencePlayed = false;
+		const sentences = caption.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) ?? [
+			caption,
+		];
+		const first = sentences.shift() ?? caption;
+		const fetchAudio = async (text: string) => {
+			const response = await fetch(`${API_BASE_URL}/tts`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ text }),
+			});
+			if (!response.ok)
+				throw new Error(`Narrator audio failed: ${response.status}`);
+			return URL.createObjectURL(await response.blob());
+		};
+		const play = async (url: string) => {
+			const audio = new Audio(url);
+			this.narratorAudio = audio;
+			try {
+				await new Promise<void>((resolve, reject) => {
+					audio.onended = () => resolve();
+					audio.onerror = () => reject(new Error("Audio playback failed"));
+					void audio.play().catch(reject);
+				});
+			} finally {
+				URL.revokeObjectURL(url);
+			}
+		};
+		const firstPlayed = fetchAudio(first)
+			.then(play)
+			.then(() => {
+				this.firstSentencePlayed = true;
+			})
+			.catch((error) => {
+				this.audioError = String(error);
+			});
+		if (sentences.length) {
+			const remainder = fetchAudio(sentences.join(" "));
+			void Promise.all([firstPlayed, remainder])
+				.then(([, url]) => play(url))
+				.catch((error) => {
+					this.audioError = String(error);
+				});
+		}
+		return firstPlayed;
 	}
 
 	private async resolveNarration(choice: string): Promise<void> {
@@ -1080,9 +1150,19 @@ export class StoryGameScene extends BaseScene {
 				throw new Error(`Narrator resolution failed: ${response.status}`);
 			}
 			const resolution = (await response.json()) as NarrationResolution;
+			this.lastResolution = resolution;
+			this.optionsCache.clear();
+			const firstSentence = this.speakCaption(resolution.caption);
+			this.emitOpenWorldState({
+				status: "resolved",
+				object: interactable.name,
+				caption: resolution.caption,
+			});
 			await this.patchWorld({
 				statePatch: resolution.statePatch,
-				visualStatePatch: resolution.visualStatePatch,
+				visualStatePatch: resolution.travel
+					? undefined
+					: resolution.visualStatePatch,
 				action: {
 					object: interactable.name,
 					choice,
@@ -1114,6 +1194,7 @@ export class StoryGameScene extends BaseScene {
 					throw new Error(`Scene image failed: ${imageResponse.status}`);
 				}
 				const image = (await imageResponse.json()) as { url: string };
+				await firstSentence;
 				await this.swapBackgroundTexture(image.url);
 				await this.loadInteractables();
 				this.lastImageEditMs = Math.round(performance.now() - startedAt);
@@ -1124,6 +1205,7 @@ export class StoryGameScene extends BaseScene {
 				if (travel.kind === "anchor") {
 					if (travel.to !== "outside" && travel.to !== "inside")
 						throw new Error("Unknown anchor");
+					await firstSentence;
 					await this.enterLocation(travel.to);
 				} else {
 					this.background?.setAlpha(0.35);
@@ -1142,6 +1224,7 @@ export class StoryGameScene extends BaseScene {
 							`Place creation failed: ${await placeResponse.text()}`,
 						);
 					const place = (await placeResponse.json()) as GeneratedPlace;
+					await firstSentence;
 					await this.enterLocation(place.id);
 					this.background?.setAlpha(1);
 				}
@@ -1485,6 +1568,8 @@ export class StoryGameScene extends BaseScene {
 		window.addEventListener("anima:open-world-choice", onChoice);
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
 			window.removeEventListener("anima:open-world-choice", onChoice);
+			if (this.dwellTimer) clearTimeout(this.dwellTimer);
+			this.narratorAudio?.pause();
 		});
 	}
 
@@ -1542,6 +1627,9 @@ export class StoryGameScene extends BaseScene {
 				busy: this.openWorldBusy,
 				sessionId: this.worldSessionId,
 				world: this.world,
+				resolution: this.lastResolution,
+				audioError: this.audioError,
+				firstSentencePlayed: this.firstSentencePlayed,
 				selectedObject: this.selectedInteractable?.name ?? null,
 				caption: this.lastOpenWorldCaption ?? null,
 				imagePrompt: this.lastOpenWorldImagePrompt ?? null,
