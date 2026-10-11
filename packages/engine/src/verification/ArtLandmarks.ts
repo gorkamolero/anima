@@ -1,3 +1,4 @@
+import { fitLinear, scaleAt } from "../walkarea/perspective";
 /**
  * Art landmarks: backgrounds describe their own geometry so scene data
  * (scale curves, hotspot bounds, character sizes) can be DERIVED and
@@ -143,19 +144,14 @@ export function buildPerspectiveModel(file: LandmarksFile): PerspectiveModel {
 		};
 	}
 
-	// Least-squares line ppm = a*y + b
-	const n = points.length;
-	const sumX = points.reduce((s, p) => s + p.x, 0);
-	const sumY = points.reduce((s, p) => s + p.y, 0);
-	const sumXY = points.reduce((s, p) => s + p.x * p.y, 0);
-	const sumXX = points.reduce((s, p) => s + p.x * p.x, 0);
-	const a = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-	const b = (sumY - a * sumX) / n;
+	const perspective = fitLinear(
+		points.map((p) => ({ y: p.x, scaleFactor: p.y })),
+	);
 
 	return {
 		samples,
 		usable: true,
-		ppmAt: (y: number) => Math.max(0, (a * y + b) * calibration),
+		ppmAt: (y: number) => scaleAt(perspective, { x: 0, y }) * calibration,
 	};
 }
 

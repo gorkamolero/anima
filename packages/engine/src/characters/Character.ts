@@ -152,13 +152,16 @@ export class Character extends GameObjects.Sprite {
 		}
 	}
 
-	public playAnimationState(state: CharacterAnimationState): void {
+	public playAnimationState(
+		state: CharacterAnimationState,
+		animationKey?: string,
+	): void {
 		const animation =
 			state === "talk"
 				? (this.animConfig.talk ?? this.animConfig.idle)
 				: this.animConfig[state];
 		this.animationState = state;
-		this.play(animation.key, true);
+		this.play(animationKey ?? animation.key, true);
 	}
 
 	/**

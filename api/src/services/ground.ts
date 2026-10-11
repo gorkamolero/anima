@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
+import { scaleAt as perspectiveScaleAt } from "@anima/engine/walkarea/perspective";
 import { fal } from "@fal-ai/client";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -72,7 +73,11 @@ export function fitPlane(mask: Raster, depth: Raster, depthZero = 0) {
 	return { a, b, c, horizonY: (-(c + a / 2) / b) * 1080 };
 }
 export function scaleAt(y: number, horizonY: number, slope: number): number {
-	return Math.max(0.05, (y - horizonY) * slope);
+	return perspectiveScaleAt(
+		{ horizonY, slope },
+		{ x: 960, y },
+		{ min: 0.05, max: Infinity },
+	);
 }
 export function maskToGround(
 	mask: Raster,

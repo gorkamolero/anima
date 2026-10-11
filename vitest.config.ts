@@ -19,7 +19,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			"@anima/engine": "/home/gorkolas/www/anima/packages/engine/src",
+			"@anima/engine": new URL("./packages/engine/src", import.meta.url).pathname,
 		},
 	},
 });

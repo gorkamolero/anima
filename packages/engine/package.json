@@ -17,7 +17,8 @@
 		"./inventory": "./src/inventory/index.ts",
 		"./audio": "./src/audio/index.ts",
 		"./transitions": "./src/transitions/index.ts",
-		"./groundline": "./src/groundline/index.ts"
+		"./groundline": "./src/groundline/index.ts",
+		"./walkarea/perspective": "./src/walkarea/perspective.ts"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",

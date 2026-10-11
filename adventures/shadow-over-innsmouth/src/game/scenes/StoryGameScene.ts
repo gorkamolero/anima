@@ -3,8 +3,13 @@ import {
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
+	fitLinear,
 	type HotspotVerb,
 	type SceneConfig,
+	scaleAt,
+	type WalkDirection,
+	walkHeading,
+	walkPlaybackRate,
 } from "@anima/engine";
 import {
 	parseStoryScript,
@@ -53,6 +58,8 @@ const SHOW_DEBUG_OVERLAY =
 	typeof window !== "undefined" &&
 	new URLSearchParams(window.location.search).get("debug") === "1";
 const HERMES_TEXTURE = "hermes-fal-veo-transparent-loop";
+const HERMES_AWAY_TEXTURE = "hermes-walk-away";
+const HERMES_TOWARD_TEXTURE = "hermes-walk-toward";
 const HERMES_IDLE_TEXTURE = "hermes-idle-v2-normalized";
 const HERMES_TALK_TEXTURE = "hermes-talk-v1-normalized";
 const KAT_TEXTURE = "kat-fal-veo-transparent-loop";
@@ -170,6 +177,7 @@ export class StoryGameScene extends BaseScene {
 	private katSprite?: Phaser.GameObjects.Sprite;
 	private katSeatedSprite?: Phaser.GameObjects.Sprite;
 	private hermesFacing: 1 | -1 = 1;
+	private hermesWalkDirection: WalkDirection = "left";
 	private hermesMotionState: CharacterAnimationState = "idle";
 	private reviewSceneId: ReviewSceneId = "outside";
 	private reviewOutput: string[] = [];
@@ -246,6 +254,16 @@ export class StoryGameScene extends BaseScene {
 			"assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
 			{ frameWidth: 612, frameHeight: 1059 },
 		);
+		for (const texture of [HERMES_AWAY_TEXTURE, HERMES_TOWARD_TEXTURE]) {
+			this.load.json(
+				`${texture}-meta`,
+				`assets/sprites/hermes/${texture}.json`,
+			);
+			this.load.spritesheet(texture, `assets/sprites/hermes/${texture}.png`, {
+				frameWidth: 612,
+				frameHeight: 1059,
+			});
+		}
 		this.load.spritesheet(
 			HERMES_IDLE_TEXTURE,
 			"assets/sprites/hermes/hermes-idle-v2-normalized.png",
@@ -373,11 +391,25 @@ export class StoryGameScene extends BaseScene {
 		this.createWalkAnimation(KAT_TEXTURE, 30);
 		this.createSeatedKatAnimations();
 
+		for (const texture of [HERMES_AWAY_TEXTURE, HERMES_TOWARD_TEXTURE]) {
+			const meta = this.cache.json.get(`${texture}-meta`);
+			if (!this.anims.exists(`${texture}-walk`))
+				this.anims.create({
+					key: `${texture}-walk`,
+					frames: this.anims.generateFrameNumbers(texture, {
+						start: 0,
+						end: meta.frameCount - 1,
+					}),
+					frameRate: meta.fps,
+					repeat: -1,
+				});
+		}
+
 		const hermesAnimConfig: CharacterAnimConfig = {
 			walk: {
 				key: `${HERMES_TEXTURE}-walk`,
 				frames: { start: 0, end: 29 },
-				frameRate: 16,
+				frameRate: 24,
 			},
 			idle: {
 				key: `${HERMES_TEXTURE}-idle`,
@@ -870,7 +902,11 @@ export class StoryGameScene extends BaseScene {
 			{ x, y },
 		).map((p) => ({
 			...p,
-			scaleFactor: Math.max(0.05, (p.y - ground.horizonY) * ground.scaleSlope),
+			scaleFactor: scaleAt(
+				{ horizonY: ground.horizonY, slope: ground.scaleSlope },
+				p,
+				{ min: 0.05, max: Infinity },
+			),
 		}));
 		await this.walkHermesPath(path);
 		this.groundLineManager?.suspendCharacter("hermes");
@@ -1258,8 +1294,25 @@ export class StoryGameScene extends BaseScene {
 
 	private setHermesMotionState(state: CharacterAnimationState): void {
 		this.hermesMotionState = state;
-		if (this.hermesSprite?.getAnimationState() !== state) {
-			this.hermesSprite?.playAnimationState(state);
+		const sprite = this.hermesSprite;
+		if (!sprite) return;
+		const direction = this.hermesWalkDirection;
+		const texture =
+			direction === "away"
+				? HERMES_AWAY_TEXTURE
+				: direction === "toward"
+					? HERMES_TOWARD_TEXTURE
+					: HERMES_TEXTURE;
+		if (state === "walk") {
+			sprite.playAnimationState(state, `${texture}-walk`);
+			sprite.setFlipX(direction === "right");
+		} else {
+			sprite.anims.timeScale = 1;
+			sprite.playAnimationState(state);
+			if (state === "idle" && direction === "away") {
+				sprite.anims.stop();
+				sprite.setTexture(HERMES_AWAY_TEXTURE, 0).setFlipX(false);
+			} else sprite.setFlipX(direction === "right");
 		}
 	}
 
@@ -1268,27 +1321,29 @@ export class StoryGameScene extends BaseScene {
 		y: number,
 		options: { allowOffscreen?: boolean; hideOnArrival?: boolean } = {},
 	): Promise<void> {
-		const hermesSprite = this.hermesSprite;
-		if (!hermesSprite) return;
-		const linePosition = this.getGroundLinePosition(
-			x,
-			hermesSprite.getBaseScale(),
+		const sprite = this.hermesSprite;
+		if (!sprite) return;
+		const base = sprite.getBaseScale();
+		// Preserve the authored line's scale calibration while honoring depth
+		// inside its walkable band. No ground geometry is changed.
+		const line = this.getGroundLinePosition(x, base);
+		const targetY = options.allowOffscreen ? (line.y ?? y) : y;
+		const points = this.activeScene().groundLine.points;
+		const { slope } = fitLinear(points);
+		const scaleFactor = scaleAt(
+			{
+				horizonY: 0,
+				slope: 0,
+				constant:
+					(line.scale ?? base) / base + (targetY - (line.y ?? targetY)) * slope,
+			},
+			{ x, y: targetY },
+			{ min: 0.05, max: Infinity },
 		);
-		this.setHermesMotionState("walk");
-		this.hermesFacing = x < hermesSprite.x ? -1 : 1;
-		hermesSprite.faceDirection(x);
-		const body = hermesSprite.body as Phaser.Physics.Arcade.Body | null;
-		const hadWorldBoundsCollision = body?.collideWorldBounds ?? false;
-		if (options.allowOffscreen) hermesSprite.setWorldBoundsCollision(false);
-		try {
-			await hermesSprite.walkToPosition(x, 0);
-			hermesSprite.setPosition(x, linePosition.y ?? y);
-			if (linePosition.scale) hermesSprite.setScale(linePosition.scale);
-			if (options.hideOnArrival) hermesSprite.setVisible(false);
-		} finally {
-			hermesSprite.setWorldBoundsCollision(hadWorldBoundsCollision);
-			this.setHermesMotionState("idle");
-		}
+		await this.walkHermesPath([{ x, y: targetY, scaleFactor }], {
+			...options,
+			retainPosition: !options.allowOffscreen,
+		});
 	}
 
 	private exitHermesTo(
@@ -1316,7 +1371,7 @@ export class StoryGameScene extends BaseScene {
 	 */
 	private async walkHermesPath(
 		points: ScenePoint[],
-		options: { hideOnArrival?: boolean } = {},
+		options: { hideOnArrival?: boolean; retainPosition?: boolean } = {},
 	): Promise<void> {
 		const hermesSprite = this.hermesSprite;
 		if (!hermesSprite || points.length === 0) return;
@@ -1332,7 +1387,8 @@ export class StoryGameScene extends BaseScene {
 		} finally {
 			this.hermesPathState = undefined;
 			this.inputBlocked = false;
-			this.groundLineManager?.resumeCharacter("hermes");
+			if (!options.retainPosition && !this.generatedPlace)
+				this.groundLineManager?.resumeCharacter("hermes");
 			this.setHermesMotionState("idle");
 		}
 	}
@@ -1343,10 +1399,27 @@ export class StoryGameScene extends BaseScene {
 		const hermesSprite = this.hermesSprite;
 		if (!state || !hermesSprite) return;
 
+		this.hermesWalkDirection = walkHeading(
+			hermesSprite,
+			state.points,
+			state.index,
+			this.hermesWalkDirection,
+		);
+		this.hermesFacing = this.hermesWalkDirection === "right" ? 1 : -1;
+		this.setHermesMotionState("walk");
+		let traveled = 0;
+		const initialScale = hermesSprite.scaleX;
+
 		// Screen speed scales with depth: a figure walking away covers fewer
 		// screen px per second, keeping his apparent gait constant.
 		const depthFactor = hermesSprite.scaleX / hermesSprite.getBaseScale();
-		let budget = HERMES_WALK_SPEED * depthFactor * (delta / 1000);
+		const intoDepth =
+			this.hermesWalkDirection === "away" ||
+			this.hermesWalkDirection === "toward";
+		// Front/back cycles project a shorter stride onto the screen than profile.
+		const strideProjection = intoDepth ? 0.4 : 1;
+		let budget =
+			HERMES_WALK_SPEED * depthFactor * strideProjection * (delta / 1000);
 		while (budget > 0 && state.index < state.points.length) {
 			const point = state.points[state.index];
 			// Per-segment hurry (e.g. fully-occluded hops behind the bus).
@@ -1359,7 +1432,8 @@ export class StoryGameScene extends BaseScene {
 			);
 			const targetScale =
 				(point.scaleFactor ?? 1) * hermesSprite.getBaseScale();
-			hermesSprite.faceDirection(point.x);
+
+			traveled += Math.min(distance, step);
 			if (distance <= step) {
 				hermesSprite.setPosition(point.x, point.y);
 				hermesSprite.setScale(targetScale);
@@ -1377,6 +1451,13 @@ export class StoryGameScene extends BaseScene {
 				budget = 0;
 			}
 		}
+
+		// Match source-pixel ground travel to each view's projected stride.
+		hermesSprite.anims.timeScale = walkPlaybackRate(
+			delta > 0 ? (traveled * 1000) / delta : 0,
+			(initialScale + hermesSprite.scaleX) / 2,
+			600 * strideProjection,
+		);
 
 		if (state.index >= state.points.length) {
 			this.hermesPathState = undefined;

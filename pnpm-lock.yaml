@@ -103,6 +103,9 @@ importers:
 
   api:
     dependencies:
+      '@anima/engine':
+        specifier: workspace:*
+        version: link:../packages/engine
       '@fal-ai/client':
         specifier: ^1.10.0
         version: 1.10.0

@@ -21,6 +21,8 @@ export type {
 } from "./characters/Character";
 // Characters
 export { Character } from "./characters/Character";
+export type { WalkDirection } from "./characters/walkHeading";
+export { walkHeading, walkPlaybackRate } from "./characters/walkHeading";
 // Agent debug / playtest API
 export type { AgentDebugApi, AgentSceneSnapshot } from "./debug/AgentDebug";
 export { installAgentDebug } from "./debug/AgentDebug";
@@ -122,3 +124,13 @@ export {
 	checkHotspotBounds,
 	verifySceneArt,
 } from "./verification/ArtLandmarks";
+export type { Perspective } from "./walkarea/perspective";
+export {
+	fitFromLine,
+	fitLinear,
+	fromGround,
+	fromMetres,
+	scaleAt,
+	toGround,
+	toMetres,
+} from "./walkarea/perspective";
