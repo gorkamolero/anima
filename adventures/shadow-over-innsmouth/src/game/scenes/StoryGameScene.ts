@@ -14,6 +14,7 @@ import {
 	validateStoryGraph,
 } from "@anima/storyscript";
 import fullGameStory from "../../../story/full_game.story?raw";
+import { isAudioMuted, speakCaption } from "../narratorVoice";
 import {
 	getReviewAction,
 	REVIEW_SCENES,
@@ -196,6 +197,7 @@ export class StoryGameScene extends BaseScene {
 	private generatedPlace?: GeneratedPlace;
 	private optionsCache = new Map<string, Promise<[string, string, string]>>();
 	private dwellTimer?: ReturnType<typeof setTimeout>;
+	private captionVoice?: ReturnType<typeof speakCaption>;
 	private lastResolution?: NarrationResolution;
 	private locationImages = new Map<string, string>();
 
@@ -1101,14 +1103,13 @@ export class StoryGameScene extends BaseScene {
 			const resolution = (await response.json()) as NarrationResolution;
 			this.lastResolution = resolution;
 			this.optionsCache.clear();
-			const firstText =
-				resolution.caption.match(/^[^.!?]+[.!?]?/)?.[0] ?? resolution.caption;
-			const readingDelay = (text: string) =>
-				new Promise<void>((resolve) =>
-					setTimeout(resolve, Math.max(2500, text.length * 60)),
-				);
-			const firstSentence = readingDelay(firstText);
-			const fullCaption = readingDelay(resolution.caption);
+			this.captionVoice?.stop();
+			this.captionVoice = speakCaption(
+				resolution.caption,
+				API_BASE_URL,
+				isAudioMuted(),
+			);
+			const { first: firstSentence, full: fullCaption } = this.captionVoice;
 			this.reviewOutput = [resolution.caption];
 			this.lastOpenWorldCaption = resolution.caption;
 			this.outputText.setText(resolution.caption);
@@ -1529,6 +1530,7 @@ export class StoryGameScene extends BaseScene {
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
 			window.removeEventListener("anima:open-world-choice", onChoice);
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
+			this.captionVoice?.stop();
 		});
 	}
 
@@ -1587,6 +1589,8 @@ export class StoryGameScene extends BaseScene {
 				sessionId: this.worldSessionId,
 				world: this.world,
 				resolution: this.lastResolution,
+				muted: isAudioMuted(),
+				voice: this.captionVoice?.status,
 				selectedObject: this.selectedInteractable?.name ?? null,
 				caption: this.lastOpenWorldCaption ?? null,
 				imagePrompt: this.lastOpenWorldImagePrompt ?? null,

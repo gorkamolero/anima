@@ -1,9 +1,10 @@
 import { AUTO, Game } from "phaser";
+import { isAudioMuted } from "./narratorVoice";
 import { StoryGameScene } from "./scenes/StoryGameScene";
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: AUTO,
-	audio: { noAudio: true },
+	audio: { noAudio: isAudioMuted() },
 	width: 1920,
 	height: 1080,
 	parent: "game-container",
