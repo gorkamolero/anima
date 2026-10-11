@@ -1,0 +1,58 @@
+import { describe, expect, it } from "vitest";
+import { scaleAt, toMetres } from "../walkarea/perspective";
+import { CharacterMotor, type MotorTarget } from "./CharacterMotor";
+
+function setup() {
+	const target: MotorTarget & { scale: number } = {
+		x: 960,
+		y: 920,
+		scale: 1,
+		setPosition(x, y) {
+			this.x = x;
+			this.y = y;
+		},
+		setScale(s) {
+			this.scale = s;
+		},
+		setDepth() {},
+	};
+	const area = {
+		mask: { width: 2, height: 2, data: [1, 1, 1, 1] },
+		perspective: { horizonY: 470, slope: 0.002 },
+		baseScale: 0.5,
+		scaleClamp: { min: 0.18, max: 1.5 },
+	};
+	const motor = new CharacterMotor(target, area, () => {});
+	return { target, area, motor };
+}
+describe("CharacterMotor", () => {
+	it("maintains ground speed and current-position scale across variable frame times", () => {
+		const { motor, target, area } = setup();
+		void motor.walk([{ x: 1100, y: 560 }]);
+		for (const dt of [16, 33, 50, 100, 16, 80, 33]) {
+			const before = toMetres(area.perspective, target);
+			motor.update(dt);
+			const after = toMetres(area.perspective, target);
+			expect(
+				Math.hypot(after.x - before.x, after.y - before.y) / (dt / 1000),
+			).toBeCloseTo(1, 9);
+			expect(target.scale).toBeCloseTo(
+				0.5 * scaleAt(area.perspective, target, area.scaleClamp),
+				10,
+			);
+		}
+	});
+	it("resolves arrival and replacement using only the virtual clock", async () => {
+		const { motor, target } = setup();
+		const first = motor.walk([{ x: 960, y: 800 }]);
+		const second = motor.walk([{ x: 1100, y: 920 }]);
+		await first;
+		motor.update(10000);
+		await second;
+		expect(target.x).toBeCloseTo(1100);
+		expect(motor.walking).toBe(false);
+		expect(motor.heading).toBe("right");
+		motor.detach();
+		expect(target.motor).toBeUndefined();
+	});
+});

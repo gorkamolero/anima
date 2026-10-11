@@ -18,7 +18,8 @@
 		"./audio": "./src/audio/index.ts",
 		"./transitions": "./src/transitions/index.ts",
 		"./groundline": "./src/groundline/index.ts",
-		"./walkarea/perspective": "./src/walkarea/perspective.ts"
+		"./walkarea/perspective": "./src/walkarea/perspective.ts",
+		"./walkarea/types": "./src/walkarea/types.ts"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",

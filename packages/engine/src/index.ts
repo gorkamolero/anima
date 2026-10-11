@@ -21,6 +21,7 @@ export type {
 } from "./characters/Character";
 // Characters
 export { Character } from "./characters/Character";
+export { CharacterMotor } from "./characters/CharacterMotor";
 export type { WalkDirection } from "./characters/walkHeading";
 export {
 	groundPathHeading,

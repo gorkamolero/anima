@@ -3,17 +3,12 @@ import {
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
+	CharacterMotor,
 	erode,
 	findPath,
-	fitLinear,
-	fromMetres,
-	groundPathHeading,
 	type HotspotVerb,
-	type Perspective,
 	refineMask,
 	type SceneConfig,
-	scaleAt,
-	toMetres,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
@@ -50,14 +45,12 @@ const API_BASE_URL =
 const VERBS: StoryVerb[] = ["LOOK", "TALK", "USE"];
 const PANEL_DEPTH = 100;
 const CHARACTER_DEPTH = 24;
-const HERMES_WALK_SPEED = 1; // metres per second
 // Vehicles cut out of the exterior composite, redrawn as an overlay.
 // Depth is y-sorted per frame: on the dock (feet at y >= VEHICLE_GROUND_Y)
 // Hermes walks IN FRONT of the vehicles and covers them; deeper than their
 // ground contact he passes BEHIND and the overlay occludes him.
-const VEHICLE_OVERLAY_DEPTH = 60;
-const HERMES_FRONT_DEPTH = VEHICLE_OVERLAY_DEPTH + 5;
 const VEHICLE_GROUND_Y = 910;
+const VEHICLE_OVERLAY_DEPTH = 10 + VEHICLE_GROUND_Y / 20;
 const TITLE_BAR_HEIGHT = 56;
 const OUTPUT_PANEL_HEIGHT = 116;
 // Lowest feet position: keeps Hermes clear of the caption panel.
@@ -197,11 +190,7 @@ export class StoryGameScene extends BaseScene {
 		Record<ReviewSceneId, ReviewScene["characters"]>
 	> = {};
 	private lastReviewTransition?: ReviewTransitionSnapshot;
-	private hermesPathState?: {
-		points: ScenePoint[];
-		index: number;
-		resolve: () => void;
-	};
+	private hermesMotor?: CharacterMotor;
 	private commandObjects: Phaser.GameObjects.GameObject[] = [];
 	private placementDebugEnabled = SHOW_DEBUG_OVERLAY;
 	private placementDebugGraphics?: Phaser.GameObjects.Graphics;
@@ -499,14 +488,7 @@ export class StoryGameScene extends BaseScene {
 
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
-		this.updateHermesPath(delta);
-		// Y-sort against the vehicle overlay: on the dock he covers the
-		// vehicles; deeper than their ground contact they cover him.
-		this.hermesSprite?.setDepth(
-			this.hermesSprite.y >= VEHICLE_GROUND_Y
-				? HERMES_FRONT_DEPTH
-				: CHARACTER_DEPTH,
-		);
+		this.hermesMotor?.update(delta);
 		this.updateReviewHotspotHover();
 		this.refreshPlacementDebugOverlay();
 	}
@@ -577,8 +559,6 @@ export class StoryGameScene extends BaseScene {
 			this.reviewOutput = [];
 			this.renderReviewScene();
 			await this.restoreLocationImage();
-			if (this.generatedPlace)
-				this.groundLineManager?.suspendCharacter("hermes");
 		} finally {
 			this.openWorldBusy = alreadyBusy;
 		}
@@ -606,6 +586,19 @@ export class StoryGameScene extends BaseScene {
 					MAX_FEET_Y,
 				);
 		this.walkArea.mask = erode(this.walkArea.mask, this.walkArea.perspective);
+		if (this.hermesSprite) {
+			this.hermesMotor?.detach();
+			this.hermesMotor = new CharacterMotor(
+				this.hermesSprite,
+				this.walkArea,
+				(state, heading, rate) => {
+					this.hermesWalkDirection = heading;
+					this.hermesFacing = heading === "right" ? 1 : -1;
+					this.setHermesMotionState(state);
+					if (this.hermesSprite) this.hermesSprite.anims.timeScale = rate;
+				},
+			);
+		}
 		this.setSceneBackground(
 			this.locationImages.get(this.locationId()) ?? scene.background,
 		);
@@ -780,13 +773,11 @@ export class StoryGameScene extends BaseScene {
 		const characters = this.getSceneCharacters(scene);
 		const hermes = characters.hermes;
 		if (hermes) {
-			const linePosition = this.getGroundLinePosition(hermes.x, hermes.scale);
 			this.hermesSprite?.setBaseScale(hermes.scale);
 			this.hermesSprite
 				?.setVisible(hermes.visible !== false)
-				.setPosition(hermes.x, linePosition.y ?? hermes.y)
-				.setScale(linePosition.scale ?? hermes.scale)
 				.setFlipX(hermes.flipX ?? this.hermesFacing === -1);
+			this.hermesMotor?.place(hermes);
 			this.setHermesMotionState(hermes.state === "talk" ? "talk" : "idle");
 		} else {
 			this.hermesSprite?.setVisible(false);
@@ -810,16 +801,6 @@ export class StoryGameScene extends BaseScene {
 
 	private applySceneGroundLine(scene: ReviewScene): void {
 		this.groundLineManager?.setGroundLine(scene.groundLine);
-	}
-
-	private getGroundLinePosition(
-		x: number,
-		baseScale: number,
-	): { y?: number; scale?: number } {
-		return (
-			this.groundLineManager?.getGroundLine()?.getPositionData(x, baseScale) ??
-			{}
-		);
 	}
 
 	private placeKat(basePlacement: SceneCharacterPlacement): void {
@@ -903,7 +884,7 @@ export class StoryGameScene extends BaseScene {
 			sprite = this.hermesSprite;
 		if (!area || !sprite || this.inputBlocked) return;
 		const path = findPath(area.mask, sprite, { x, y });
-		await this.walkHermesPath(path, { retainPosition: true });
+		await this.walkHermesPath(path);
 	}
 
 	private async returnToParent(): Promise<void> {
@@ -1299,39 +1280,13 @@ export class StoryGameScene extends BaseScene {
 		}
 	}
 
-	private walkingPerspective(): Perspective {
-		if (!this.walkArea) throw new Error("Walk area not initialized");
-		return this.walkArea.perspective;
-	}
-
 	private async walkHermesTo(
 		x: number,
 		y: number,
 		options: { allowOffscreen?: boolean; hideOnArrival?: boolean } = {},
 	): Promise<void> {
-		const sprite = this.hermesSprite;
-		if (!sprite) return;
-		const base = sprite.getBaseScale();
-		// Preserve the authored line's scale calibration while honoring depth
-		// inside its walkable band. No ground geometry is changed.
-		const line = this.getGroundLinePosition(x, base);
-		const targetY = options.allowOffscreen ? (line.y ?? y) : y;
-		const points = this.activeScene().groundLine.points;
-		const { slope } = fitLinear(points);
-		const scaleFactor = scaleAt(
-			{
-				horizonY: 0,
-				slope: 0,
-				constant:
-					(line.scale ?? base) / base + (targetY - (line.y ?? targetY)) * slope,
-			},
-			{ x, y: targetY },
-			{ min: 0.05, max: Infinity },
-		);
-		await this.walkHermesPath([{ x, y: targetY, scaleFactor }], {
-			...options,
-			retainPosition: !options.allowOffscreen,
-		});
+		if (options.allowOffscreen) await this.walkHermesPath([{ x, y }], options);
+		else await this.walkGenerated(x, y);
 	}
 
 	private exitHermesTo(
@@ -1347,80 +1302,19 @@ export class StoryGameScene extends BaseScene {
 		});
 	}
 
-	/**
-	 * Walk a scripted path with the groundline suspended: each point's y and
-	 * scaleFactor (x base scale) are honored, so the path can go deeper into
-	 * the scene — around and behind the vehicle overlay. Blocks input while
-	 * the path plays; groundline control resumes afterwards.
-	 *
-	 * Movement is driven from update() with the game-loop delta, NOT Phaser
-	 * tweens: TweenManager runs on Date.now() wall-clock time, which makes
-	 * tweened motion invisible to virtual-clock playtests and recordings.
-	 */
+	/** Scripted exits may leave the free floor; motion still has one owner. */
 	private async walkHermesPath(
 		points: ScenePoint[],
-		options: { hideOnArrival?: boolean; retainPosition?: boolean } = {},
+		options: { hideOnArrival?: boolean } = {},
 	): Promise<void> {
-		const hermesSprite = this.hermesSprite;
-		if (!hermesSprite || points.length === 0) return;
-		this.groundLineManager?.suspendCharacter("hermes");
+		if (!this.hermesMotor || !this.hermesSprite || !points.length) return;
 		this.inputBlocked = true;
-		this.setHermesMotionState("walk");
-		hermesSprite.setWorldBoundsCollision(false);
+		this.hermesSprite.setWorldBoundsCollision(false);
 		try {
-			await new Promise<void>((resolve) => {
-				this.hermesPathState = { points, index: 0, resolve };
-			});
-			if (options.hideOnArrival) hermesSprite.setVisible(false);
+			await this.hermesMotor.walk(points);
+			if (options.hideOnArrival) this.hermesSprite.setVisible(false);
 		} finally {
-			this.hermesPathState = undefined;
 			this.inputBlocked = false;
-			if (!options.retainPosition && !this.generatedPlace)
-				this.groundLineManager?.resumeCharacter("hermes");
-			this.setHermesMotionState("idle");
-		}
-	}
-
-	/** Advance the scripted path by one frame. Called from update(). */
-	private updateHermesPath(delta: number): void {
-		const state = this.hermesPathState;
-		const hermesSprite = this.hermesSprite;
-		if (!state || !hermesSprite) return;
-
-		const perspective = this.walkingPerspective();
-		const path = state.points.map((p) => toMetres(perspective, p));
-		let position = toMetres(perspective, hermesSprite);
-		this.hermesWalkDirection = groundPathHeading(
-			position,
-			path,
-			state.index,
-			this.hermesWalkDirection,
-		);
-		this.hermesFacing = this.hermesWalkDirection === "right" ? 1 : -1;
-		this.setHermesMotionState("walk");
-		let budget = (HERMES_WALK_SPEED * delta) / 1000;
-		while (budget > 0 && state.index < path.length) {
-			const target = path[state.index];
-			const distance = Math.hypot(target.x - position.x, target.y - position.y);
-			const fraction = distance ? Math.min(1, budget / distance) : 1;
-			position = {
-				x: position.x + (target.x - position.x) * fraction,
-				y: position.y + (target.y - position.y) * fraction,
-			};
-			budget -= distance;
-			if (fraction === 1) state.index++;
-		}
-		const screen = fromMetres(perspective, position);
-		hermesSprite.setPosition(screen.x, screen.y);
-		hermesSprite.setScale(
-			hermesSprite.getBaseScale() *
-				scaleAt(perspective, screen, { min: 0.18, max: 1.5 }),
-		);
-		hermesSprite.anims.timeScale = HERMES_WALK_SPEED / 1;
-
-		if (state.index >= state.points.length) {
-			this.hermesPathState = undefined;
-			state.resolve();
 		}
 	}
 
@@ -1611,12 +1505,9 @@ export class StoryGameScene extends BaseScene {
 
 		const scene = this.activeScene();
 		const hermes = this.getSceneCharacters(scene).hermes;
-		const baseScale = this.hermesSprite?.getBaseScale() ?? hermes?.scale ?? 0.4;
-		const linePosition = this.getGroundLinePosition(x, baseScale);
+		this.hermesMotor?.place({ x, y: this.hermesSprite?.y ?? hermes?.y ?? 890 });
 		this.hermesSprite
 			?.setVisible(true)
-			.setPosition(x, linePosition.y ?? hermes?.y ?? 890)
-			.setScale(linePosition.scale ?? baseScale)
 			.setFlipX(options.flipX ?? this.hermesSprite.flipX);
 		this.setHermesMotionState(options.motionState ?? "idle");
 		this.refreshPlacementDebugOverlay();

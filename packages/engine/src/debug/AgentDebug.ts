@@ -25,6 +25,12 @@ export interface AgentSceneSnapshot {
 		visible: boolean;
 		flipX: boolean;
 		displayHeight: number;
+		motion?: {
+			ground: { x: number; y: number };
+			speed: number;
+			heading: string;
+			walking: boolean;
+		};
 		animationState: string;
 		animationKey: string | null;
 		textureKey: string;
@@ -209,6 +215,7 @@ function buildSnapshot(scene: BaseScene): AgentSceneSnapshot {
 		.filter((child): child is Character => child instanceof Character)
 		.map((character) => ({
 			id: character.getCharacterId(),
+			motion: character.motor?.snapshot(),
 			x: Math.round(character.x),
 			y: Math.round(character.y),
 			scale: Number(character.scaleX.toFixed(4)),

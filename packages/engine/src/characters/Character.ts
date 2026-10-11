@@ -4,6 +4,7 @@ import {
 	type PositionUpdateCallback,
 	registerWithGroundLine,
 } from "../groundline";
+import type { CharacterMotor } from "./CharacterMotor";
 
 /**
  * Animation configuration for a character
@@ -38,6 +39,7 @@ export type CharacterAnimationState = "idle" | "walk" | "talk";
  * Handles: click-to-move, animations, walking, ground line following.
  */
 export class Character extends GameObjects.Sprite {
+	public motor?: CharacterMotor;
 	/**
 	 * Default movement speed in pixels per second.
 	 * 300 provides a comfortable walking pace that feels natural
@@ -229,6 +231,8 @@ export class Character extends GameObjects.Sprite {
 	preUpdate(time: number, delta: number): void {
 		super.preUpdate(time, delta);
 
+		if (this.motor) return;
+
 		// Apply ground line position (even when not moving, for editor sync)
 		if (this.positionCallback) {
 			const { y, scale } = this.positionCallback(this.x);
@@ -297,7 +301,7 @@ export class Character extends GameObjects.Sprite {
 	// ===========================================================================
 
 	public getIsMoving(): boolean {
-		return this.isMoving;
+		return this.motor?.walking ?? this.isMoving;
 	}
 
 	public getCharacterId(): string {

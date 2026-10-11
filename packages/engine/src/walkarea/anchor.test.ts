@@ -21,6 +21,6 @@ describe("anchor walk area", () => {
 	it("does not connect the separated exterior bands", () => {
 		const a = walkAreaFromAnchor(REVIEW_SCENES.outside, { horizonY: 470 });
 		const path = findPath(a.mask, { x: 350, y: 900 }, { x: 1400, y: 900 });
-		expect(path.at(-1)?.x).toBeLessThan(760);
+		expect(path[path.length - 1]?.x).toBeLessThan(760);
 	});
 });

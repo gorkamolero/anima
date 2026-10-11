@@ -74,6 +74,11 @@ for (const scene of SCENES) {
 	}
 	const anima = window.__anima;
 	if (!anima) throw new Error("window.__anima never appeared");
+ // Initial world restoration also enters a location; finish it before selecting an anchor.
+ for(let i=0;i<600 && anima.scene.getReviewQaSnapshot().openWorld.busy;i++) {
+  anima.step(100); await new Promise(r=>setTimeout(r,20));
+ }
+
 	let done = false, failure;
 	void anima.scene.enterLocation(${JSON.stringify(scene.id)}).then(() => { done = true; }).catch(e => { failure = e; done = true; });
 	for (let i = 0; i < 600 && !done; i++) {

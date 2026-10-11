@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { scaleAt as perspectiveScaleAt } from "@anima/engine/walkarea/perspective";
+import type { WalkArea } from "@anima/engine/walkarea/types";
 import { fal } from "@fal-ai/client";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -16,6 +17,7 @@ export interface Raster {
 	data: number[];
 }
 export interface GroundData {
+	walkArea?: WalkArea;
 	groundLine: {
 		points: Array<{ x: number; y: number; scaleFactor: number }>;
 		interpolation: "linear";
@@ -155,6 +157,12 @@ export function maskToGround(
 			minX: (r.minX / mask.width) * 1920,
 			maxX: (r.maxX / mask.width) * 1920,
 		})),
+		walkArea: {
+			mask,
+			perspective: { horizonY, slope, pixelsPerMetre: (0.5 * 1059) / 1.75 },
+			baseScale: 0.5,
+			scaleClamp: { min: 0.18, max: 1.5 },
+		},
 		floor: mask,
 		horizonY,
 		scaleSlope: slope,
