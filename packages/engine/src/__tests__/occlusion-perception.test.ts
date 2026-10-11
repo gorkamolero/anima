@@ -5,6 +5,7 @@ import {
 	type FloorRaster,
 } from "../../../../api/src/services/exits.js";
 import {
+	canOcclude,
 	largestComponent,
 	maskGeometry,
 } from "../../../../api/src/services/occluders.js";
@@ -24,6 +25,19 @@ function raster(
 	};
 }
 describe("perception-derived geometry", () => {
+	it("recognizes plural prop labels without including floor or distant scenery", () => {
+		for (const name of [
+			"trees",
+			"wooden benches",
+			"lamp posts",
+			"crates",
+			"cars",
+		])
+			expect(canOcclude({ name, bounds: [0, 0, 0.2, 0.8] })).toBe(true);
+		for (const name of ["floor", "sky", "distant buildings"])
+			expect(canOcclude({ name, bounds: [0, 0, 1, 1] })).toBe(false);
+	});
+
 	it("removes disconnected mask islands without filling transparent holes", () => {
 		const mask = raster(
 			30,

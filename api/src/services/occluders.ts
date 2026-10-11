@@ -42,7 +42,7 @@ export async function cachedFloor(
 /** Semantic shortlist only; SAM, never an LLM, supplies the pixels. */
 export function canOcclude(object: LabelledBox): boolean {
 	return (
-		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile)\b/i.test(
+		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile)(?:s|es)?\b/i.test(
 			object.name,
 		) &&
 		!/\b(sky|floor|ground|road|distant|horizon|window)\b/i.test(object.name)
@@ -352,7 +352,9 @@ async function derive(
 			height: 1080,
 			data: Array.from(raster, (v) => (v > 127 ? 1 : 0)),
 		});
-		const supportFraction = /\b(car|van|bus|truck)\b/i.test(object.name)
+		const supportFraction = /\b(car|van|bus|truck)(?:s|es)?\b/i.test(
+			object.name,
+		)
 			? 0.95
 			: /\b(pergola|gazebo|gargoyle|statue)\b/i.test(object.name)
 				? 0.9
