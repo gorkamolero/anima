@@ -83,3 +83,31 @@ it("falls back to reading time when TTS fails", async () => {
 	expect(ready).toBe(true);
 	expect(speech.status.error).toContain("offline");
 });
+
+it("keeps the reading fallback when browser autoplay rejects speech", async () => {
+	vi.useFakeTimers();
+	vi.stubGlobal(
+		"fetch",
+		vi.fn().mockResolvedValue({ ok: true, blob: async () => new Blob() }),
+	);
+	vi.stubGlobal(
+		"Audio",
+		class {
+			play = vi.fn().mockRejectedValue(new Error("autoplay blocked"));
+		},
+	);
+	vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:test");
+	const revoke = vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
+	const speech = speakCaption("Hello.", "/api", false);
+	let ready = false;
+	void speech.first.then(() => {
+		ready = true;
+	});
+	await vi.advanceTimersByTimeAsync(100);
+	expect(ready).toBe(false);
+	await vi.advanceTimersByTimeAsync(2400);
+	await speech.full;
+	expect(speech.status.firstSentencePlayed).toBe(false);
+	expect(speech.status.error).toContain("autoplay blocked");
+	expect(revoke).toHaveBeenCalledWith("blob:test");
+});
