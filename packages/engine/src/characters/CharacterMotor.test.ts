@@ -55,4 +55,22 @@ describe("CharacterMotor", () => {
 		motor.detach();
 		expect(target.motor).toBeUndefined();
 	});
+	it("consumes signed animation displacement without creating a forward remainder", () => {
+		const { motor, target } = setup();
+		let pixels = 10;
+		motor.rootStep = () => pixels;
+		void motor.walk([{ x: 1100, y: 920 }]);
+		motor.update(1);
+		expect(target.x).toBeCloseTo(970);
+		pixels = -2;
+		motor.update(1);
+		expect(target.x).toBeCloseTo(968);
+		pixels = 0;
+		motor.update(100);
+		expect(target.x).toBeCloseTo(968);
+		pixels = 200;
+		motor.update(1);
+		expect(target.x).toBeCloseTo(1100);
+		expect(motor.walking).toBe(false);
+	});
 });

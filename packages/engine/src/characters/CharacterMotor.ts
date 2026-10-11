@@ -21,7 +21,10 @@ export class CharacterMotor {
 	speed = 1;
 	private path: Point[] = [];
 	private index = 0;
+	private start: Point = { x: 0, y: 0 };
 	private resolve?: () => void;
+	/** Optional animation-owned displacement in screen pixels for this update. */
+	rootStep?: (direction: WalkDirection, tangent: Point) => number;
 	constructor(
 		readonly target: MotorTarget,
 		public area: WalkArea,
@@ -56,6 +59,7 @@ export class CharacterMotor {
 	}
 	walk(points: readonly Point[]): Promise<void> {
 		this.stop();
+		this.start = { x: this.target.x, y: this.target.y };
 		this.path = points.map((p) => toMetres(this.area.perspective, p));
 		this.index = 0;
 		if (!this.path.length) return Promise.resolve();
@@ -83,6 +87,62 @@ export class CharacterMotor {
 				this.heading,
 			);
 			this.animate("walk", this.heading, this.speed);
+			if (this.rootStep) {
+				let screen = { x: this.target.x, y: this.target.y };
+				while (
+					this.index < this.path.length &&
+					Math.hypot(
+						fromMetres(p, this.path[this.index]).x - screen.x,
+						fromMetres(p, this.path[this.index]).y - screen.y,
+					) < 0.001
+				)
+					this.index++;
+				const next =
+					this.path[this.index] && fromMetres(p, this.path[this.index]);
+				if (!next) {
+					this.stop();
+					this.applyPresentation();
+					return;
+				}
+				const length = Math.hypot(next.x - screen.x, next.y - screen.y);
+				let pixels = this.rootStep(this.heading, {
+					x: (next.x - screen.x) / length,
+					y: (next.y - screen.y) / length,
+				});
+				while (pixels < 0) {
+					const previous =
+						this.index > 0
+							? fromMetres(p, this.path[this.index - 1])
+							: this.start;
+					const distance = Math.hypot(
+						previous.x - screen.x,
+						previous.y - screen.y,
+					);
+					const fraction = distance ? Math.min(1, -pixels / distance) : 1;
+					screen = {
+						x: screen.x + (previous.x - screen.x) * fraction,
+						y: screen.y + (previous.y - screen.y) * fraction,
+					};
+					pixels += distance * fraction;
+					if (fraction === 1 && this.index > 0) this.index--;
+					else break;
+				}
+				while (pixels > 0 && this.index < this.path.length) {
+					const end = fromMetres(p, this.path[this.index]);
+					const distance = Math.hypot(end.x - screen.x, end.y - screen.y);
+					const fraction = distance ? Math.min(1, pixels / distance) : 1;
+					screen = {
+						x: screen.x + (end.x - screen.x) * fraction,
+						y: screen.y + (end.y - screen.y) * fraction,
+					};
+					pixels -= distance;
+					if (fraction === 1) this.index++;
+				}
+				this.target.setPosition(screen.x, screen.y);
+				if (this.index >= this.path.length) this.stop();
+				this.applyPresentation();
+				return;
+			}
 			while (budget > 0 && this.index < this.path.length) {
 				const target = this.path[this.index],
 					distance = Math.hypot(target.x - position.x, target.y - position.y);
