@@ -141,7 +141,7 @@ async function action(step, choice, pick = false) {
 		"options",
 		() =>
 			evaluate(
-				'(()=>{window.__anima.step(600);return [...document.querySelectorAll(".open-world-prompt__options button")].map(b=>b.textContent)})()',
+				'(()=>{window.__anima.step(6000);return [...document.querySelectorAll(".open-world-prompt__options button")].map(b=>b.textContent)})()',
 			),
 		(x) => x.length === 3,
 		90000,
@@ -326,6 +326,7 @@ try {
 		throw new Error("No visible alley change");
 	const imageCount = ledger().filter((c) => c.kind === "image-attempt").length;
 	for (let i = 0; i < 3 && qa().location !== "outside"; i++) {
+		const sourceLocation = qa().location;
 		evaluate(
 			"(()=>{const e=window.__anima.scene.sceneExits.find(e=>e.kind==='edge-left');if(!e)throw new Error('Missing return exit');const x=e.region.reduce((s,p)=>s+p.x,0)/e.region.length,y=e.region.reduce((s,p)=>s+p.y,0)/e.region.length;window.__anima.click(x,y);return true})()",
 		);
@@ -333,6 +334,7 @@ try {
 			"parent",
 			qa,
 			(x) =>
+				x.location !== sourceLocation &&
 				!x.openWorld.busy &&
 				x.hermes.motionState === "idle" &&
 				x.interactables.length,

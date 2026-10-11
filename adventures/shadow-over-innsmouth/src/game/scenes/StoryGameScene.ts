@@ -511,6 +511,7 @@ export class StoryGameScene extends BaseScene {
 
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
+		const wasWalking = this.hermesMotor?.walking;
 		this.hermesMotor?.update(delta);
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
@@ -522,7 +523,7 @@ export class StoryGameScene extends BaseScene {
 			if (
 				exit &&
 				exit.id !== this.exitLatch &&
-				this.hermesMotor?.walking &&
+				wasWalking &&
 				!this.openWorldBusy
 			) {
 				this.exitLatch = exit.id;
@@ -665,7 +666,7 @@ export class StoryGameScene extends BaseScene {
 				if (!motion) return 0;
 				const sign = sprite.flipX ? -1 : 1;
 				let pixels =
-					-(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
+					(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
 					sprite.scaleX;
 				// Account for the contact's offset from the bottom-centred sprite origin
 				// when perspective changes scale during this very frame.
@@ -685,7 +686,7 @@ export class StoryGameScene extends BaseScene {
 								this.walkArea.scaleClamp,
 							);
 						pixels =
-							-(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
+							(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
 								sprite.scaleX -
 							((contact.x - 306) * sign * tangent.x +
 								(contact.y - 1059) * tangent.y) *
@@ -1342,7 +1343,7 @@ export class StoryGameScene extends BaseScene {
 			return;
 		}
 		await this.walkHermesPath(path);
-		if (generation === this.geometryGeneration)
+		if (generation === this.geometryGeneration && !this.openWorldBusy)
 			await this.requestNarrationOptions(object);
 	}
 
