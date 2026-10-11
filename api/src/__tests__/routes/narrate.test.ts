@@ -1,11 +1,16 @@
 import { MockLanguageModelV2 } from "ai/test";
 import { Hono } from "hono";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { getModel } from "../../lib/model.js";
 import {
 	createNarrateRoutes,
 	narrateOptionsSchema,
 	narrateResolveSchema,
 } from "../../routes/narrate.js";
+
+vi.mock("../../lib/model.js", () => ({ getModel: vi.fn() }));
+
+beforeEach(() => vi.clearAllMocks());
 
 function testApp(output: unknown): Hono {
 	const model = new MockLanguageModelV2({
@@ -16,8 +21,9 @@ function testApp(output: unknown): Hono {
 			warnings: [],
 		},
 	});
+	vi.mocked(getModel).mockReturnValue(model);
 	const app = new Hono();
-	app.route("/api", createNarrateRoutes(model));
+	app.route("/api", createNarrateRoutes());
 	return app;
 }
 
@@ -45,6 +51,7 @@ describe("POST /api/narrate", () => {
 		const body = await response.json();
 
 		expect(response.status).toBe(200);
+		expect(getModel).toHaveBeenCalledOnce();
 		expect(narrateOptionsSchema.safeParse(body).success).toBe(true);
 	});
 
@@ -70,7 +77,33 @@ describe("POST /api/narrate", () => {
 		const body = await response.json();
 
 		expect(response.status).toBe(200);
+		expect(getModel).toHaveBeenCalledOnce();
 		expect(narrateResolveSchema.safeParse(body).success).toBe(true);
+	});
+
+	it.each([
+		{
+			mode: "options",
+			output: { options: ["Inspect the panel", "Listen carefully"] },
+		},
+		{
+			mode: "resolve",
+			output: {
+				caption: "Smoke rises from the machine.",
+				statePatch: {},
+				visual: { delta: "new" },
+			},
+		},
+	])("rejects invalid $mode model output", async ({ mode, output }) => {
+		const app = testApp(output);
+		const response = await app.request("/api/narrate", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ ...request, mode }),
+		});
+
+		expect(response.status).toBe(502);
+		expect(await response.json()).toHaveProperty("error");
 	});
 
 	it("returns 400 when object is missing", async () => {
@@ -83,5 +116,6 @@ describe("POST /api/narrate", () => {
 		});
 
 		expect(response.status).toBe(400);
+		expect(getModel).not.toHaveBeenCalled();
 	});
 });
