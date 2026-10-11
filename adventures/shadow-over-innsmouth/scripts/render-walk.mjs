@@ -66,6 +66,7 @@ evaluate(
 const logs = [];
 for (const beat of plan.beats) {
 	const dir = resolve(out, `${beat.name}-frames`);
+	rmSync(dir, { recursive: true, force: true });
 	mkdirSync(dir, { recursive: true });
 	if (beat.start)
 		evaluate(
@@ -122,6 +123,8 @@ for (const beat of plan.beats) {
 		`${dir}/%06d.png`,
 		"-c:v",
 		"libx264",
+		"-frames:v",
+		String(log.length),
 		"-crf",
 		"16",
 		"-pix_fmt",

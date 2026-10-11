@@ -1283,9 +1283,13 @@ export class StoryGameScene extends BaseScene {
 					x: exit.region.reduce((n, p) => n + p.x, 0) / exit.region.length,
 					y: exit.region.reduce((n, p) => n + p.y, 0) / exit.region.length,
 				};
-				// Exit geometry belongs to its own floor component, independent
-				// of where the player happened to stand while it loaded.
-				const cell = nearestReachable(exitMask, center, center);
+				// Authored doors stay at their doorway. Generated return edges
+				// need an approach in the player's reachable floor component.
+				const cell = nearestReachable(
+					exitMask,
+					exit.kind === "door" ? center : (this.hermesSprite ?? center),
+					center,
+				);
 				if (cell < 0) return exit;
 				const point = cellPoint(exitMask, cell);
 				return {
