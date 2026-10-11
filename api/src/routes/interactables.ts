@@ -1,22 +1,9 @@
-import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
+import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
-
-const REPOSITORY_ROOT = existsSync(resolve(process.cwd(), "adventures"))
-	? process.cwd()
-	: resolve(process.cwd(), "..");
-const BACKGROUND_DIRECTORY = resolve(
-	REPOSITORY_ROOT,
-	"adventures/shadow-over-innsmouth/public/backgrounds",
-);
-
-const SCENE_BACKGROUNDS: Record<string, string> = {
-	outside: "bus-station-kat-seated-composite-v1.png",
-};
 
 export const interactablesSchema = z.object({
 	interactables: z
@@ -35,10 +22,10 @@ export function createInteractablesRoutes(model?: LanguageModel): Hono {
 
 	routes.get("/interactables/:sceneId", async (c) => {
 		const sceneId = c.req.param("sceneId");
-		const backgroundName = SCENE_BACKGROUNDS[sceneId];
+		const backgroundName = c.req.query("image") ?? ANCHORS[sceneId];
 		if (!backgroundName) return c.json({ error: "Unknown scene" }, 404);
 
-		const backgroundPath = `${BACKGROUND_DIRECTORY}/${backgroundName}`;
+		const backgroundPath = imagePath(backgroundName);
 		const cachePath = backgroundPath.replace(/\.png$/, ".interactables.json");
 
 		try {

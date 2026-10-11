@@ -24,7 +24,18 @@ describe("POST /api/scene-image", () => {
 		const generatedDirectory = join(directory, "generated");
 		await mkdir(generatedDirectory);
 		const imagePrompt = "Dent the vending machine and crack its glass.";
-		const filename = sceneImageCacheName("outside", imagePrompt);
+		const visualState = {
+			timeOfDay: "day",
+			weather: "fog",
+			damage: "dented",
+			npcsPresent: [],
+		};
+		const baseBackground = "/backgrounds/test.png";
+		const filename = sceneImageCacheName(
+			"outside",
+			visualState,
+			baseBackground,
+		);
 		await writeFile(join(generatedDirectory, filename), "cached image");
 		const editImage = vi.fn();
 		const app = createSceneImageRoutes({
@@ -36,13 +47,40 @@ describe("POST /api/scene-image", () => {
 		const response = await app.request("/scene-image", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ scene: "outside", imagePrompt }),
+			body: JSON.stringify({
+				scene: "outside",
+				imagePrompt,
+				visualState,
+				baseBackground,
+			}),
 		});
 
 		expect(response.status).toBe(200);
 		expect(await response.json()).toEqual({
 			url: `http://localhost/generated/${filename}`,
+			cached: true,
 		});
 		expect(editImage).not.toHaveBeenCalled();
 	});
+});
+
+it("canonicalizes NPC order while separating visual states and base art", () => {
+	const state = {
+		timeOfDay: "day",
+		weather: "fog",
+		damage: "intact",
+		npcsPresent: ["kat", "clerk"],
+	};
+	const key = sceneImageCacheName("outside", state, "base");
+	expect(
+		sceneImageCacheName(
+			"outside",
+			{ ...state, npcsPresent: ["clerk", "kat"] },
+			"base",
+		),
+	).toBe(key);
+	expect(
+		sceneImageCacheName("outside", { ...state, damage: "broken" }, "base"),
+	).not.toBe(key);
+	expect(sceneImageCacheName("outside", state, "new base")).not.toBe(key);
 });

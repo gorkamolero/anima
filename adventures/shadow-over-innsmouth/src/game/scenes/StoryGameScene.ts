@@ -165,6 +165,8 @@ export class StoryGameScene extends BaseScene {
 	private lastImageEditMs?: number;
 	private world?: WorldState;
 	private worldSessionId = "";
+	private currentImage?: string;
+	private locationImages = new Map<string, string>();
 
 	constructor() {
 		super({ key: "StoryGameScene" });
@@ -452,7 +454,9 @@ export class StoryGameScene extends BaseScene {
 		const scene = REVIEW_SCENES[this.reviewSceneId];
 		this.hoveredInteractableName = undefined;
 		this.applySceneGroundLine(scene);
-		this.setSceneBackground(scene.background);
+		this.setSceneBackground(
+			this.locationImages.get(scene.id) ?? scene.background,
+		);
 		this.titleText.setText(scene.title);
 		this.stateText.setText([
 			`Review scene: ${scene.id}`,
@@ -807,7 +811,6 @@ export class StoryGameScene extends BaseScene {
 		x: number,
 		y: number,
 	): SceneInteractable | undefined {
-		if (this.reviewSceneId !== "outside") return undefined;
 		const normalizedX = x / this.scale.width;
 		const normalizedY = y / this.scale.height;
 		return this.interactables.find(({ bounds }) => {
@@ -836,7 +839,7 @@ export class StoryGameScene extends BaseScene {
 				this.reviewSceneId = this.world.location;
 			Object.assign(this.snapshot.state.flags, this.world.flags);
 			this.renderReviewScene();
-			await this.loadInteractables();
+			await this.restoreLocationImage();
 		} catch (error) {
 			this.emitOpenWorldState({ status: "error", message: String(error) });
 		} finally {
@@ -856,9 +859,25 @@ export class StoryGameScene extends BaseScene {
 		this.world = (await response.json()) as WorldState;
 	}
 
+	private async restoreLocationImage(): Promise<void> {
+		this.currentImage = undefined;
+		const visual = this.world?.visual[this.reviewSceneId];
+		if (visual) {
+			const response = await fetch(
+				`${API_BASE_URL}/scene-image?scene=${this.reviewSceneId}&visualState=${encodeURIComponent(JSON.stringify(visual))}`,
+			);
+			if (!response.ok) throw new Error("Unable to restore scene image");
+			const image = (await response.json()) as { url: string | null };
+			if (image.url) await this.swapBackgroundTexture(image.url);
+		}
+		await this.loadInteractables();
+	}
+
 	private async loadInteractables(): Promise<void> {
 		try {
-			const response = await fetch(`${API_BASE_URL}/interactables/outside`);
+			const response = await fetch(
+				`${API_BASE_URL}/interactables/${this.reviewSceneId}${this.currentImage ? `?image=${encodeURIComponent(this.currentImage)}` : ""}`,
+			);
 			if (!response.ok) {
 				throw new Error(`Interactables request failed: ${response.status}`);
 			}
@@ -975,8 +994,9 @@ export class StoryGameScene extends BaseScene {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						scene: scene.id,
-						sessionId: this.worldSessionId,
 						imagePrompt: resolution.visual.imagePrompt,
+						visualState: this.world?.visual[scene.id],
+						sourceImage: this.currentImage,
 					}),
 				});
 				if (!imageResponse.ok) {
@@ -984,6 +1004,7 @@ export class StoryGameScene extends BaseScene {
 				}
 				const image = (await imageResponse.json()) as { url: string };
 				await this.swapBackgroundTexture(image.url);
+				await this.loadInteractables();
 				this.lastImageEditMs = Math.round(performance.now() - startedAt);
 			}
 
@@ -1031,6 +1052,8 @@ export class StoryGameScene extends BaseScene {
 				(_camera: Phaser.Cameras.Scene2D.Camera, progress: number) => {
 					if (progress !== 1) return;
 					this.setSceneBackground(textureKey);
+					this.currentImage = url;
+					this.locationImages.set(this.reviewSceneId, textureKey);
 					this.cameras.main.fadeIn(250);
 					resolve();
 				},
@@ -1271,7 +1294,10 @@ export class StoryGameScene extends BaseScene {
 		this.reviewOutput =
 			this.reviewOutput.length > 0 ? this.reviewOutput : scene.output;
 		localStorage.setItem(REVIEW_SCENE_KEY, sceneId);
-		if (this.world) void this.patchWorld({ location: sceneId });
+		if (this.world)
+			void this.patchWorld({ location: sceneId }).then(() =>
+				this.restoreLocationImage(),
+			);
 
 		for (const [characterId, placement] of Object.entries(spawn)) {
 			if (!placement) continue;
@@ -1291,7 +1317,10 @@ export class StoryGameScene extends BaseScene {
 			delete this.reviewCharacterOverrides[sceneId];
 			this.setHermesMotionState("idle");
 			localStorage.setItem(REVIEW_SCENE_KEY, sceneId);
-			if (this.world) void this.patchWorld({ location: sceneId });
+			if (this.world)
+				void this.patchWorld({ location: sceneId }).then(() =>
+					this.restoreLocationImage(),
+				);
 			this.renderReviewScene();
 		};
 		const onSceneChange = (event: Event) => {

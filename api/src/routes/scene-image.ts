@@ -5,6 +5,13 @@ import { basename, resolve } from "node:path";
 import { fal } from "@fal-ai/client";
 import { Hono } from "hono";
 import { z } from "zod";
+import { recordCall, reserveCall } from "../services/costs.js";
+import { ANCHORS, imagePath } from "../lib/backgrounds.js";
+import {
+	getWorldDb,
+	type VisualState,
+	visualSchema,
+} from "../services/world.js";
 
 const REPOSITORY_ROOT = existsSync(resolve(process.cwd(), "adventures"))
 	? process.cwd()
@@ -15,6 +22,7 @@ const PUBLIC_DIRECTORY = resolve(
 );
 const DEFAULT_GENERATED_DIRECTORY = resolve(PUBLIC_DIRECTORY, "generated");
 const SCENE_BACKGROUNDS: Record<string, string> = {
+	inside: imagePath(ANCHORS.inside),
 	outside: resolve(
 		PUBLIC_DIRECTORY,
 		"backgrounds/bus-station-kat-seated-composite-v1.png",
@@ -30,6 +38,9 @@ const requestSchema = z
 	.object({
 		scene: z.string().min(1),
 		imagePrompt: z.string().min(1),
+		visualState: visualSchema,
+		baseBackground: z.string().optional(),
+		sourceImage: z.string().optional(),
 	})
 	.strict();
 
@@ -41,11 +52,21 @@ interface SceneImageOptions {
 }
 
 export function sceneImageCacheName(
-	scene: string,
-	imagePrompt: string,
+	location: string,
+	visual: VisualState,
+	baseBackground: string,
 ): string {
-	return `${createHash("sha1")
-		.update(scene + imagePrompt)
+	return `${createHash("sha256")
+		.update(
+			JSON.stringify({
+				location,
+				timeOfDay: visual.timeOfDay,
+				weather: visual.weather,
+				damage: visual.damage,
+				npcsPresent: [...new Set(visual.npcsPresent)].sort(),
+				baseBackground,
+			}),
+		)
 		.digest("hex")}.png`;
 }
 
@@ -60,7 +81,9 @@ async function editWithFal(background: Blob, prompt: string): Promise<string> {
 }
 
 async function editOnce(imageUrl: string, prompt: string): Promise<string> {
-	const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
+	reserveCall("image");
+ const started = Date.now();
+ const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
 		input: {
 			prompt,
 			image_urls: [imageUrl],
@@ -70,7 +93,8 @@ async function editOnce(imageUrl: string, prompt: string): Promise<string> {
 			output_format: "png",
 		},
 	});
-	const outputUrl = result.data.images[0]?.url;
+	recordCall("image", Date.now() - started);
+ const outputUrl = result.data.images[0]?.url;
 	if (!outputUrl) throw new Error("fal returned no edited image");
 	return outputUrl;
 }
@@ -91,11 +115,18 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 			return c.json({ error: "Invalid scene image request" }, 400);
 		}
 
-		const { scene, imagePrompt } = parsed.data;
-		const backgroundPath = backgrounds[scene];
+		const { scene, imagePrompt, visualState, baseBackground, sourceImage } =
+			parsed.data;
+		const backgroundPath = sourceImage
+			? imagePath(sourceImage)
+			: backgrounds[scene];
 		if (!backgroundPath) return c.json({ error: "Unknown scene" }, 404);
 
-		const filename = sceneImageCacheName(scene, imagePrompt);
+		const filename = sceneImageCacheName(
+			scene,
+			visualState,
+			baseBackground ?? ANCHORS[scene] ?? backgroundPath,
+		);
 		const outputPath = `${generatedDirectory}/${filename}`;
 		// ponytail: absolute URL on the api origin — Vite's publicDir cache misses files written seconds ago
 		const publicUrl = `${new URL(c.req.url).origin}/generated/${filename}`;
@@ -108,7 +139,12 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 					.then(() => true)
 					.catch(() => false)
 			) {
-				return c.json({ url: publicUrl });
+				await (await getWorldDb()).execute({
+					sql: "INSERT OR REPLACE INTO images VALUES (?, ?)",
+					args: [filename, `/generated/${filename}`],
+				});
+				recordCall("image", 0, true);
+ return c.json({ url: publicUrl, cached: true });
 			}
 
 			const source = await readFile(backgroundPath);
@@ -126,7 +162,11 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 				throw new Error(`Unable to download fal image: ${response.status}`);
 			}
 			await writeFile(outputPath, Buffer.from(await response.arrayBuffer()));
-			return c.json({ url: publicUrl });
+			await (await getWorldDb()).execute({
+				sql: "INSERT OR REPLACE INTO images VALUES (?, ?)",
+				args: [filename, `/generated/${filename}`],
+			});
+			return c.json({ url: publicUrl, cached: false });
 		} catch (error) {
 			const message =
 				error instanceof Error
@@ -136,6 +176,26 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 		}
 	});
 
+	routes.get("/scene-image", async (c) => {
+		const scene = c.req.query("scene") ?? "outside";
+		const parsed = visualSchema.safeParse(
+			JSON.parse(c.req.query("visualState") ?? "null"),
+		);
+		if (!parsed.success) return c.json({ error: "Invalid visual state" }, 400);
+		const base = c.req.query("baseBackground") ?? ANCHORS[scene];
+		if (!base) return c.json({ error: "Unknown scene" }, 404);
+		const filename = sceneImageCacheName(scene, parsed.data, base);
+		const result = await (await getWorldDb()).execute({
+			sql: "SELECT path FROM images WHERE cache_key = ?",
+			args: [filename],
+		});
+		return c.json({
+			url: result.rows.length
+				? `${new URL(c.req.url).origin}${result.rows[0].path}`
+				: null,
+			cached: result.rows.length > 0,
+		});
+	});
 	return routes;
 }
 
