@@ -77,6 +77,7 @@ export async function openWorldDb(url?: string): Promise<Client> {
 	await db.batch(
 		[
 			"CREATE TABLE IF NOT EXISTS worlds (session_id TEXT PRIMARY KEY, state TEXT NOT NULL)",
+			"CREATE TABLE IF NOT EXISTS narrations (cache_key TEXT PRIMARY KEY, data TEXT NOT NULL)",
 			"CREATE TABLE IF NOT EXISTS images (cache_key TEXT PRIMARY KEY, path TEXT NOT NULL)",
 			"CREATE TABLE IF NOT EXISTS places (id TEXT PRIMARY KEY, data TEXT NOT NULL)",
 		],

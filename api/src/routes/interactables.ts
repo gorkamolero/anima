@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
+import { recordCall } from "../services/costs.js";
 
 export const interactablesSchema = z.object({
 	interactables: z
@@ -21,6 +22,7 @@ export function createInteractablesRoutes(model?: LanguageModel): Hono {
 	const routes = new Hono();
 
 	routes.get("/interactables/:sceneId", async (c) => {
+		const started = Date.now();
 		const sceneId = c.req.param("sceneId");
 		const backgroundName = c.req.query("image") ?? ANCHORS[sceneId];
 		if (!backgroundName) return c.json({ error: "Unknown scene" }, 404);
@@ -31,7 +33,10 @@ export function createInteractablesRoutes(model?: LanguageModel): Hono {
 		try {
 			// ponytail: one-machine disk cache; move to Turso when scenes run on more than one machine.
 			const cached = await readFile(cachePath, "utf8").catch(() => null);
-			if (cached) return c.json(interactablesSchema.parse(JSON.parse(cached)));
+			if (cached) {
+				recordCall("interactables", Date.now() - started, true);
+				return c.json(interactablesSchema.parse(JSON.parse(cached)));
+			}
 
 			const image = await readFile(backgroundPath);
 			const { object } = await generateObject({
@@ -57,6 +62,7 @@ export function createInteractablesRoutes(model?: LanguageModel): Hono {
 			});
 
 			await writeFile(cachePath, `${JSON.stringify(object, null, "\t")}\n`);
+			recordCall("interactables", Date.now() - started);
 			return c.json(object);
 		} catch (error) {
 			const message =

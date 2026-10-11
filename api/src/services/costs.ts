@@ -5,6 +5,7 @@ import { ROOT } from "../lib/backgrounds.js";
 const directory = resolve(ROOT, "api/data");
 const ledger = resolve(directory, "calls.jsonl");
 export function recordCall(kind: string, ms: number, cached = false): void {
+	if (process.env.NODE_ENV === "test") return;
 	mkdirSync(directory, { recursive: true });
 	appendFileSync(
 		ledger,

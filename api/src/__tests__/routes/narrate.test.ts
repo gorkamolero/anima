@@ -7,8 +7,15 @@ import {
 	narrateOptionsSchema,
 	narrateResolveSchema,
 } from "../../routes/narrate.js";
+import { createWorldRoutes } from "../../routes/world.js";
+import { getWorldDb, openWorldDb } from "../../services/world.js";
 
 vi.mock("../../lib/model.js", () => ({ getModel: vi.fn() }));
+
+vi.mock("../../services/world.js", async (importOriginal) => ({
+	...(await importOriginal<typeof import("../../services/world.js")>()),
+	getWorldDb: vi.fn(),
+}));
 
 beforeEach(() => vi.clearAllMocks());
 
@@ -35,6 +42,55 @@ const request = {
 };
 
 describe("POST /api/narrate", () => {
+	it("accepts optional partial patches and anchor travel in the public contract", () => {
+		const value = {
+			caption: "The door stands open.",
+			statePatch: {},
+			visual: { delta: "none" },
+			travel: { to: "inside", kind: "anchor" },
+		};
+		expect(narrateResolveSchema.safeParse(value).success).toBe(true);
+		expect(
+			narrateResolveSchema.safeParse({
+				...value,
+				visualStatePatch: { weather: "rain" },
+			}).success,
+		).toBe(true);
+	});
+
+	it("shares narrator results across identical worlds and invalidates on remembered state", async () => {
+		const db = await openWorldDb("file::memory:");
+		vi.mocked(getWorldDb).mockResolvedValue(db);
+		try {
+			const app = testApp({
+				options: ["Inspect the door", "Look at the lock", "Listen at the door"],
+			});
+			app.route("/api", createWorldRoutes(db));
+			const ask = (sessionId: string) =>
+				app.request("/api/narrate", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ ...request, mode: "options", sessionId }),
+				});
+			expect((await ask("a")).status).toBe(200);
+			expect((await ask("b")).status).toBe(200);
+			expect(getModel).toHaveBeenCalledTimes(1);
+			await app.request("/api/world/b", {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					statePatch: {
+						inventory: { add: ["key"] },
+						npcMemory: { kat: "remembers the spiral" },
+					},
+				}),
+			});
+			expect((await ask("b")).status).toBe(200);
+			expect(getModel).toHaveBeenCalledTimes(2);
+		} finally {
+			db.close();
+		}
+	});
 	it("returns three validated options", async () => {
 		const app = testApp({
 			options: [
@@ -64,7 +120,12 @@ describe("POST /api/narrate", () => {
 				inventory: { add: ["glass"] },
 				npcMemory: { clerk: "heard the crash" },
 			},
-			visualStatePatch: { damage: "vending machine dented" },
+			visualStatePatch: {
+				timeOfDay: "day",
+				weather: "fog",
+				damage: "vending machine dented",
+				npcsPresent: [],
+			},
 			visual: {
 				delta: "new",
 				imagePrompt: "Dent the vending machine and crack its dark glass.",

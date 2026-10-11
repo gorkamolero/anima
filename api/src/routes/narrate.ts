@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -525,7 +526,12 @@ export const narrateOptionsSchema = z.object({
 export const narrateResolveSchema = z.object({
 	caption: oneToFourSentences,
 	statePatch: statePatchSchema,
-	visualStatePatch: visualSchema.partial().optional(),
+	visualStatePatch: visualSchema
+		.partial()
+		.optional()
+		.describe(
+			"For delta new: describe the changed visible state; for none: empty object.",
+		),
 	travel: z
 		.object({
 			to: z.string().min(1),
@@ -586,6 +592,34 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 			"Return statePatch.flags, inventory {add,remove}, npcMemory when changed. A visual delta new MUST include a nonempty visualStatePatch describing the resulting visible state, preserving earlier changes. Travel only for declared movement: {to: stable short place slug, kind: anchor or new, template: exterior or interior, description}. Anchors: outside (depot exterior), inside (depot interior).",
 		].join("\n");
 
+		const cacheKey = createHash("sha256")
+			.update(
+				JSON.stringify({
+					prompt: sharedPrompt,
+					choice: request.choice,
+					mode: request.mode,
+					version: 3,
+				}),
+			)
+			.digest("hex");
+		const db = request.sessionId ? await getWorldDb() : undefined;
+		if (db) {
+			const cached = await db.execute({
+				sql: "SELECT data FROM narrations WHERE cache_key = ?",
+				args: [cacheKey],
+			});
+			if (cached.rows.length) {
+				recordCall(`narrate-${request.mode}`, Date.now() - started, true);
+				return c.json(JSON.parse(String(cached.rows[0].data)));
+			}
+		}
+		const save = async (value: unknown) => {
+			if (db)
+				await db.execute({
+					sql: "INSERT OR REPLACE INTO narrations VALUES (?,?)",
+					args: [cacheKey, JSON.stringify(value)],
+				});
+		};
 		try {
 			if (request.mode === "options") {
 				const { object } = await generateObject({
@@ -595,6 +629,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
 					prompt: `${sharedPrompt}\nReturn exactly three distinct, grounded invitations for what Hermes might choose, each under 15 words.`,
 				});
+				await save(object);
 				recordCall(`narrate-${request.mode}`, Date.now() - started);
 				return c.json(object);
 			}
@@ -602,7 +637,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 			const { object } = await generateObject({
 				model: model ?? getModel(),
 				mode: "json",
-				schema: narrateResolveSchema,
+				schema: narrateResolveSchema.extend({ visualStatePatch: visualSchema }),
 				system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
 				prompt: [
 					sharedPrompt,
@@ -619,6 +654,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					{ error: "Visual change requires visualStatePatch" },
 					502,
 				);
+			await save(object);
 			recordCall(`narrate-${request.mode}`, Date.now() - started);
 			return c.json(object);
 		} catch (error) {
