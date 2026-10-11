@@ -1,0 +1,10 @@
+{
+	"name": "hermes-walk-away",
+	"image": "hermes-walk-away.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 33,
+	"cols": 8,
+	"rows": 5,
+	"fps": 24
+}
