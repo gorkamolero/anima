@@ -6,8 +6,11 @@ import process from "node:process";
 import { fal } from "@fal-ai/client";
 import { config } from "dotenv";
 
-config({ path: resolve(process.cwd(), ".env"), quiet: true });
-config({ path: resolve(process.cwd(), "../../.env"), quiet: true });
+// Automation can require exported credentials without reading local dotenv files.
+if (process.env.ANIMA_ENV_ONLY !== "1") {
+	config({ path: resolve(process.cwd(), ".env"), quiet: true });
+	config({ path: resolve(process.cwd(), "../../.env"), quiet: true });
+}
 
 interface Options {
 	image: string;
