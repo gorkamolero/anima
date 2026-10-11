@@ -11,8 +11,10 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { gameRoutes } from "./routes/game.js";
+import { groundRoutes } from "./routes/ground.js";
 import { interactablesRoutes } from "./routes/interactables.js";
 import { narrateRoutes } from "./routes/narrate.js";
+import { placesRoutes } from "./routes/places.js";
 import { sceneImageRoutes } from "./routes/scene-image.js";
 import { worldRoutes } from "./routes/world.js";
 
@@ -43,6 +45,8 @@ app.get("/api/health", (c) => {
 // Mount game routes under /api
 app.route("/api", gameRoutes);
 app.route("/api", worldRoutes);
+app.route("/api", groundRoutes);
+app.route("/api", placesRoutes);
 app.route("/api", interactablesRoutes);
 app.route("/api", narrateRoutes);
 app.route("/api", sceneImageRoutes);

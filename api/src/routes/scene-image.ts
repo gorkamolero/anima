@@ -5,8 +5,8 @@ import { basename, resolve } from "node:path";
 import { fal } from "@fal-ai/client";
 import { Hono } from "hono";
 import { z } from "zod";
-import { recordCall, reserveCall } from "../services/costs.js";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
+import { recordCall, reserveCall } from "../services/costs.js";
 import {
 	getWorldDb,
 	type VisualState,
@@ -82,8 +82,8 @@ async function editWithFal(background: Blob, prompt: string): Promise<string> {
 
 async function editOnce(imageUrl: string, prompt: string): Promise<string> {
 	reserveCall("image");
- const started = Date.now();
- const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
+	const started = Date.now();
+	const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
 		input: {
 			prompt,
 			image_urls: [imageUrl],
@@ -94,7 +94,7 @@ async function editOnce(imageUrl: string, prompt: string): Promise<string> {
 		},
 	});
 	recordCall("image", Date.now() - started);
- const outputUrl = result.data.images[0]?.url;
+	const outputUrl = result.data.images[0]?.url;
 	if (!outputUrl) throw new Error("fal returned no edited image");
 	return outputUrl;
 }
@@ -144,7 +144,7 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 					args: [filename, `/generated/${filename}`],
 				});
 				recordCall("image", 0, true);
- return c.json({ url: publicUrl, cached: true });
+				return c.json({ url: publicUrl, cached: true });
 			}
 
 			const source = await readFile(backgroundPath);

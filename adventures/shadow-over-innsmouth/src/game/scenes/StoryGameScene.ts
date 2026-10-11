@@ -26,6 +26,8 @@ import {
 	type ScenePoint,
 } from "./standaloneScenes";
 
+import { type FloorMask, floorPath } from "./worldGeometry";
+
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
 const REVIEW_SCENE_KEY = "anima.shadow-over-innsmouth.review-scene";
@@ -86,7 +88,32 @@ interface WorldState {
 	history: unknown[];
 }
 
+interface GeneratedPlace {
+	id: string;
+	parent: string;
+	description: string;
+	background: string;
+	template: "exterior" | "interior";
+	ground: {
+		groundLine: ReviewScene["groundLine"];
+		freeWalkBounds: ReviewScene["freeWalkBounds"];
+		freeWalkRanges: ReviewScene["freeWalkRanges"];
+		floor: FloorMask;
+		horizonY: number;
+		scaleSlope: number;
+		baseScale: number;
+		ground: "derived" | "inherited";
+		verdicts: Array<{ pass: boolean; why: string }>;
+	};
+}
+
 interface NarrationResolution {
+	travel?: {
+		to: string;
+		kind: "anchor" | "new";
+		template?: "exterior" | "interior";
+		description?: string;
+	};
 	caption: string;
 	statePatch: {
 		flags?: Record<string, string | boolean>;
@@ -166,6 +193,7 @@ export class StoryGameScene extends BaseScene {
 	private world?: WorldState;
 	private worldSessionId = "";
 	private currentImage?: string;
+	private generatedPlace?: GeneratedPlace;
 	private locationImages = new Map<string, string>();
 
 	constructor() {
@@ -450,12 +478,62 @@ export class StoryGameScene extends BaseScene {
 		this.saveState();
 	}
 
+	private activeScene(): ReviewScene {
+		if (!this.generatedPlace) return REVIEW_SCENES[this.reviewSceneId];
+		const p = this.generatedPlace;
+		const point = p.ground.groundLine.points[2];
+		return {
+			id: this.reviewSceneId,
+			title: p.id,
+			description: p.description,
+			background: `open-world:${API_BASE_URL.replace(/\/api$/, "")}${p.background}`,
+			groundLine: p.ground.groundLine,
+			freeWalkBounds: p.ground.freeWalkBounds,
+			freeWalkRanges: p.ground.freeWalkRanges,
+			output: [],
+			characters: {
+				hermes: { ...point, scale: p.ground.baseScale, visible: true },
+			},
+			hotspots: [],
+		};
+	}
+	private locationId(): string {
+		return this.generatedPlace?.id ?? this.reviewSceneId;
+	}
+	public async enterLocation(id: string): Promise<void> {
+		this.openWorldBusy = true;
+		try {
+			this.interactables = [];
+			if (id === "outside" || id === "inside") {
+				this.generatedPlace = undefined;
+				this.reviewSceneId = id;
+			} else {
+				const response = await fetch(`${API_BASE_URL}/places/${id}`);
+				if (!response.ok) throw new Error("Unable to load place");
+				this.generatedPlace = (await response.json()) as GeneratedPlace;
+				this.reviewSceneId =
+					this.generatedPlace.template === "interior" ? "inside" : "outside";
+				await this.swapBackgroundTexture(
+					`${API_BASE_URL.replace(/\/api$/, "")}${this.generatedPlace.background}`,
+				);
+			}
+			await this.patchWorld({ location: id });
+			this.reviewOutput = [];
+			this.renderReviewScene();
+			await this.restoreLocationImage();
+			if (this.generatedPlace)
+				this.groundLineManager?.suspendCharacter("hermes");
+		} finally {
+			this.openWorldBusy = false;
+		}
+	}
+
 	private renderReviewScene(): void {
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
 		this.hoveredInteractableName = undefined;
 		this.applySceneGroundLine(scene);
 		this.setSceneBackground(
-			this.locationImages.get(scene.id) ?? scene.background,
+			this.locationImages.get(this.locationId()) ?? scene.background,
 		);
 		this.titleText.setText(scene.title);
 		this.stateText.setText([
@@ -504,7 +582,7 @@ export class StoryGameScene extends BaseScene {
 		this.clearPlacementDebugLabels();
 		if (!this.placementDebugEnabled || !this.reviewSceneId) return;
 
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
 		const points = scene.groundLine.points;
 		if (points.length > 1) {
 			graphics.lineStyle(3, 0x4de8ff, 0.88);
@@ -716,7 +794,15 @@ export class StoryGameScene extends BaseScene {
 	protected override handlePointerDown(pointer: Phaser.Input.Pointer): void {
 		if (!this.hermesSprite?.visible || this.inputBlocked || this.openWorldBusy)
 			return;
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
+		if (this.generatedPlace && pointer.x < 35) {
+			void this.returnToParent();
+			return;
+		}
+		if (this.generatedPlace && pointer.y > 680) {
+			void this.walkGenerated(pointer.x, pointer.y);
+			return;
+		}
 		const interactable = this.findInteractableAtPoint(pointer.x, pointer.y);
 		if (interactable) {
 			void this.requestNarrationOptions(interactable);
@@ -759,6 +845,29 @@ export class StoryGameScene extends BaseScene {
 		void this.walkHermesTo(targetX, targetY);
 	}
 
+	public async walkGenerated(x: number, y: number): Promise<void> {
+		const ground = this.generatedPlace?.ground,
+			sprite = this.hermesSprite;
+		if (!ground || !sprite || this.inputBlocked) return;
+		const path = floorPath(
+			ground.floor,
+			{ x: sprite.x, y: sprite.y },
+			{ x, y },
+		).map((p) => ({
+			...p,
+			scaleFactor: Math.max(0.05, (p.y - ground.horizonY) * ground.scaleSlope),
+		}));
+		await this.walkHermesPath(path);
+		this.groundLineManager?.suspendCharacter("hermes");
+	}
+	private async returnToParent(): Promise<void> {
+		const place = this.generatedPlace;
+		if (!place) return;
+		const point = place.ground.groundLine.points[0];
+		await this.walkGenerated(point.x, point.y);
+		await this.enterLocation(place.parent);
+	}
+
 	private snapToFreeWalkRange(scene: ReviewScene, x: number): number {
 		const ranges = scene.freeWalkRanges;
 		if (!ranges || ranges.length === 0) return x;
@@ -772,7 +881,7 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private updateReviewHotspotHover(): void {
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
 		const pointer = this.input.activePointer;
 		const interactable = this.findInteractableAtPoint(pointer.x, pointer.y);
 		if (interactable?.name !== this.hoveredInteractableName) {
@@ -838,8 +947,7 @@ export class StoryGameScene extends BaseScene {
 			if (this.world.location === "inside" || this.world.location === "outside")
 				this.reviewSceneId = this.world.location;
 			Object.assign(this.snapshot.state.flags, this.world.flags);
-			this.renderReviewScene();
-			await this.restoreLocationImage();
+			await this.enterLocation(this.world.location);
 		} catch (error) {
 			this.emitOpenWorldState({ status: "error", message: String(error) });
 		} finally {
@@ -860,11 +968,13 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private async restoreLocationImage(): Promise<void> {
-		this.currentImage = undefined;
-		const visual = this.world?.visual[this.reviewSceneId];
+		this.currentImage = this.generatedPlace
+			? `${API_BASE_URL.replace(/\/api$/, "")}${this.generatedPlace.background}`
+			: undefined;
+		const visual = this.world?.visual[this.locationId()];
 		if (visual) {
 			const response = await fetch(
-				`${API_BASE_URL}/scene-image?scene=${this.reviewSceneId}&visualState=${encodeURIComponent(JSON.stringify(visual))}`,
+				`${API_BASE_URL}/scene-image?scene=${this.locationId()}${this.generatedPlace ? `&baseBackground=${encodeURIComponent(this.generatedPlace.background)}` : ""}&visualState=${encodeURIComponent(JSON.stringify(visual))}`,
 			);
 			if (!response.ok) throw new Error("Unable to restore scene image");
 			const image = (await response.json()) as { url: string | null };
@@ -907,12 +1017,12 @@ export class StoryGameScene extends BaseScene {
 		});
 
 		try {
-			const scene = REVIEW_SCENES[this.reviewSceneId];
+			const scene = this.activeScene();
 			const response = await fetch(`${API_BASE_URL}/narrate`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					scene: scene.id,
+					scene: this.locationId(),
 					sessionId: this.worldSessionId,
 					sceneDescription: scene.description,
 					object: interactable.name,
@@ -952,12 +1062,12 @@ export class StoryGameScene extends BaseScene {
 		});
 
 		try {
-			const scene = REVIEW_SCENES[this.reviewSceneId];
+			const scene = this.activeScene();
 			const response = await fetch(`${API_BASE_URL}/narrate`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					scene: scene.id,
+					scene: this.locationId(),
 					sessionId: this.worldSessionId,
 					sceneDescription: scene.description,
 					object: interactable.name,
@@ -986,16 +1096,17 @@ export class StoryGameScene extends BaseScene {
 			this.lastOpenWorldImagePrompt = undefined;
 			this.lastImageEditMs = undefined;
 
-			if (resolution.visual.delta === "new") {
+			if (resolution.visual.delta === "new" && !resolution.travel) {
 				this.lastOpenWorldImagePrompt = resolution.visual.imagePrompt;
 				const startedAt = performance.now();
 				const imageResponse = await fetch(`${API_BASE_URL}/scene-image`, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						scene: scene.id,
+						scene: this.locationId(),
 						imagePrompt: resolution.visual.imagePrompt,
-						visualState: this.world?.visual[scene.id],
+						visualState: this.world?.visual[this.locationId()],
+						baseBackground: this.generatedPlace?.background,
 						sourceImage: this.currentImage,
 					}),
 				});
@@ -1008,6 +1119,33 @@ export class StoryGameScene extends BaseScene {
 				this.lastImageEditMs = Math.round(performance.now() - startedAt);
 			}
 
+			if (resolution.travel) {
+				const travel = resolution.travel;
+				if (travel.kind === "anchor") {
+					if (travel.to !== "outside" && travel.to !== "inside")
+						throw new Error("Unknown anchor");
+					await this.enterLocation(travel.to);
+				} else {
+					this.background?.setAlpha(0.35);
+					const placeResponse = await fetch(`${API_BASE_URL}/places`, {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							parent: this.locationId(),
+							to: travel.to,
+							template: travel.template ?? "exterior",
+							description: travel.description ?? travel.to,
+						}),
+					});
+					if (!placeResponse.ok)
+						throw new Error(
+							`Place creation failed: ${await placeResponse.text()}`,
+						);
+					const place = (await placeResponse.json()) as GeneratedPlace;
+					await this.enterLocation(place.id);
+					this.background?.setAlpha(1);
+				}
+			}
 			this.saveState();
 			this.emitOpenWorldState({
 				status: "resolved",
@@ -1053,7 +1191,7 @@ export class StoryGameScene extends BaseScene {
 					if (progress !== 1) return;
 					this.setSceneBackground(textureKey);
 					this.currentImage = url;
-					this.locationImages.set(this.reviewSceneId, textureKey);
+					this.locationImages.set(this.locationId(), textureKey);
 					this.cameras.main.fadeIn(250);
 					resolve();
 				},
@@ -1288,6 +1426,7 @@ export class StoryGameScene extends BaseScene {
 		sceneId: ReviewSceneId,
 		spawn: ReviewScene["characters"] = {},
 	): void {
+		this.generatedPlace = undefined;
 		const scene = REVIEW_SCENES[sceneId];
 		this.reviewSceneId = sceneId;
 		this.activeCharacterStates = {};
@@ -1312,6 +1451,7 @@ export class StoryGameScene extends BaseScene {
 
 	private bindReviewEvents(): void {
 		const setScene = (sceneId: ReviewSceneId) => {
+			this.generatedPlace = undefined;
 			this.reviewSceneId = sceneId;
 			this.reviewOutput = [];
 			delete this.reviewCharacterOverrides[sceneId];
@@ -1374,7 +1514,7 @@ export class StoryGameScene extends BaseScene {
 			this.renderReviewScene();
 		}
 
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
 		const hermes = this.getSceneCharacters(scene).hermes;
 		const baseScale = this.hermesSprite?.getBaseScale() ?? hermes?.scale ?? 0.4;
 		const linePosition = this.getGroundLinePosition(x, baseScale);
@@ -1389,10 +1529,12 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	public getReviewQaSnapshot() {
-		const scene = REVIEW_SCENES[this.reviewSceneId];
+		const scene = this.activeScene();
 		const hermesBounds = this.hermesSprite?.getBounds();
 		return {
 			reviewSceneId: this.reviewSceneId,
+			location: this.locationId(),
+			generatedPlace: this.generatedPlace,
 			background: scene.background,
 			backgroundTextureKey: this.background?.texture.key ?? null,
 			interactables: this.interactables,
