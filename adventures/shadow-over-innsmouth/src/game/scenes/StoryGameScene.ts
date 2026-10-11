@@ -27,7 +27,7 @@ import {
 	type ScenePoint,
 } from "./standaloneScenes";
 
-import { type FloorMask, floorPath } from "./worldGeometry";
+import { clipFloorBelow, type FloorMask, floorPath } from "./worldGeometry";
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
@@ -47,6 +47,11 @@ const HERMES_FRONT_DEPTH = VEHICLE_OVERLAY_DEPTH + 5;
 const VEHICLE_GROUND_Y = 910;
 const TITLE_BAR_HEIGHT = 56;
 const OUTPUT_PANEL_HEIGHT = 116;
+// Lowest feet position: keeps Hermes clear of the caption panel.
+const MAX_FEET_Y = 1080 - OUTPUT_PANEL_HEIGHT - 16;
+const SHOW_DEBUG_OVERLAY =
+	typeof window !== "undefined" &&
+	new URLSearchParams(window.location.search).get("debug") === "1";
 const HERMES_TEXTURE = "hermes-fal-veo-transparent-loop";
 const HERMES_IDLE_TEXTURE = "hermes-idle-v2-normalized";
 const HERMES_TALK_TEXTURE = "hermes-talk-v1-normalized";
@@ -338,6 +343,7 @@ export class StoryGameScene extends BaseScene {
 			wordWrap: { width: 390 },
 		});
 		this.stateText.setDepth(PANEL_DEPTH + 1);
+		this.stateText.setVisible(SHOW_DEBUG_OVERLAY);
 
 		this.add
 			.rectangle(
@@ -486,7 +492,8 @@ export class StoryGameScene extends BaseScene {
 	private activeScene(): ReviewScene {
 		if (!this.generatedPlace) return REVIEW_SCENES[this.reviewSceneId];
 		const p = this.generatedPlace;
-		const point = p.ground.groundLine.points[2];
+		const spawn = p.ground.groundLine.points[2];
+		const point = { ...spawn, y: Math.min(spawn.y, MAX_FEET_Y) };
 		return {
 			id: this.reviewSceneId,
 			title: p.description.split(/[.!?]/)[0] || "Uncharted place",
@@ -516,7 +523,9 @@ export class StoryGameScene extends BaseScene {
 			} else {
 				const response = await fetch(`${API_BASE_URL}/places/${id}`);
 				if (!response.ok) throw new Error("Unable to load place");
-				this.generatedPlace = (await response.json()) as GeneratedPlace;
+				const place = (await response.json()) as GeneratedPlace;
+				place.ground.floor = clipFloorBelow(place.ground.floor, MAX_FEET_Y);
+				this.generatedPlace = place;
 				this.reviewSceneId =
 					this.generatedPlace.template === "interior" ? "inside" : "outside";
 				await this.swapBackgroundTexture(

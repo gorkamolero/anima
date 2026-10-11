@@ -3,6 +3,16 @@ export interface FloorMask {
 	height: number;
 	data: number[];
 }
+// Drop floor rows whose centre lies below maxY (game space), so Hermes never walks under the caption panel.
+export function clipFloorBelow(mask: FloorMask, maxY: number): FloorMask {
+	const lastRow = Math.floor((maxY * mask.height) / 1080 - 0.5);
+	return {
+		...mask,
+		data: mask.data.map((v, i) =>
+			Math.floor(i / mask.width) > lastRow ? 0 : v,
+		),
+	};
+}
 // Four-connected shortest path on the segmentation grid: no diagonal corner cuts or wall crossings.
 export function floorPath(
 	mask: FloorMask,

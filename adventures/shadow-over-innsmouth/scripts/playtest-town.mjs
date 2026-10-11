@@ -186,7 +186,7 @@ async function walkPlace(step) {
 		throw new Error(`${step} ground is ${g?.ground}`);
 	const line = g.groundLine.points;
 	const floor = g.floor;
-	const cells = floor.data
+	const allCells = floor.data
 		.map((v, i) =>
 			v
 				? {
@@ -195,14 +195,22 @@ async function walkPlace(step) {
 					}
 				: null,
 		)
-		.filter((p) => p && p.x > 300 && p.x < 1500 && p.y < 990);
+		.filter(Boolean);
+	// The scene clips the floor above the caption panel; aim line ends at the nearest walkable cell.
+	const nearestCell = (p) =>
+		allCells.reduce((a, b) =>
+			Math.hypot(b.x - p.x, b.y - p.y) < Math.hypot(a.x - p.x, a.y - p.y)
+				? b
+				: a,
+		);
+	const cells = allCells.filter((p) => p.x > 300 && p.x < 1500 && p.y < 990);
 	cells.sort((a, b) => a.y - b.y);
 	const far = cells[Math.floor(cells.length * 0.15)],
 		near = cells[Math.floor(cells.length * 0.85)];
 	const states = [];
 	for (const [label, p] of [
-		["left", line[0]],
-		["right", line.at(-1)],
+		["left", nearestCell(line[0])],
+		["right", nearestCell(line.at(-1))],
 		["far", far],
 		["near", near],
 	]) {
