@@ -129,6 +129,15 @@ export {
 	checkHotspotBounds,
 	verifySceneArt,
 } from "./verification/ArtLandmarks";
+export {
+	cellPoint,
+	erode,
+	findPath,
+	lineOfSight,
+	nearestCell,
+	nearestReachable,
+	refineMask,
+} from "./walkarea/navigation";
 export type { Perspective } from "./walkarea/perspective";
 export {
 	fitFromLine,
@@ -139,3 +148,4 @@ export {
 	toGround,
 	toMetres,
 } from "./walkarea/perspective";
+export type { FloorMask, WalkArea } from "./walkarea/types";

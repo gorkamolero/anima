@@ -850,10 +850,6 @@ export class StoryGameScene extends BaseScene {
 			void this.returnToParent();
 			return;
 		}
-		if (this.generatedPlace && pointer.y > 680) {
-			void this.walkGenerated(pointer.x, pointer.y);
-			return;
-		}
 		const interactable = this.findInteractableAtPoint(pointer.x, pointer.y);
 		if (interactable) {
 			void this.requestNarrationOptions(interactable);
@@ -873,6 +869,10 @@ export class StoryGameScene extends BaseScene {
 			pointer.y < TITLE_BAR_HEIGHT ||
 			pointer.y > this.scale.height - OUTPUT_PANEL_HEIGHT
 		) {
+			return;
+		}
+		if (this.generatedPlace) {
+			void this.walkGenerated(pointer.x, pointer.y);
 			return;
 		}
 		const freeWalkBounds = scene.freeWalkBounds ?? {
@@ -904,6 +904,7 @@ export class StoryGameScene extends BaseScene {
 			ground.floor,
 			{ x: sprite.x, y: sprite.y },
 			{ x, y },
+			this.walkingPerspective(),
 		).map((p) => ({
 			...p,
 			scaleFactor: scaleAt(
