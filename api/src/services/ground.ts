@@ -228,6 +228,19 @@ export async function perceive(
 			},
 		});
 	}
+	if (!segmentation.data.masks.length) {
+		reserveCall("perception");
+		reserveSegmentation(hash, "road segmentation fallback");
+		segmentation = await fal.subscribe("fal-ai/sam-3/image", {
+			input: {
+				image_url: imageUrl,
+				prompt: "road",
+				apply_mask: false,
+				return_multiple_masks: true,
+				max_masks: 8,
+			},
+		});
+	}
 	const masks = segmentation.data.masks;
 	if (!masks.length) throw new Error("SAM returned no floor mask");
 	const union: Raster = {

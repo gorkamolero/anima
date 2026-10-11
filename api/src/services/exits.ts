@@ -233,5 +233,22 @@ export function deriveExits(
 		}
 		break;
 	}
+	// Multiple disconnected fragments on the first floor row do not mean
+	// multiple onward journeys. Prefer the broad central corridor.
+	const far = exits.filter((e) => e.kind === "far");
+	if (far.length > 1) {
+		const score = (e: Exit) => {
+			const xs = e.region.map((p) => p.x);
+			return (
+				Math.max(...xs) -
+				Math.min(...xs) -
+				Math.abs((Math.max(...xs) + Math.min(...xs)) / 2 - 960) * 0.1
+			);
+		};
+		const best = far.sort((a, b) => score(b) - score(a))[0];
+		return exits
+			.filter((e) => e.kind !== "far" || e === best)
+			.map((e) => (e === best ? { ...e, id: "far" } : e));
+	}
 	return exits;
 }

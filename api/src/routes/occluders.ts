@@ -16,12 +16,7 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 		return c.json({ error: "Invalid background path" }, 400);
 	}
 	try {
-		return c.json(
-			await deriveOccluders(
-				image,
-				place?.background === image ? place.ground : undefined,
-			),
-		);
+		return c.json(await deriveOccluders(image, place?.ground));
 	} catch (error) {
 		if (error instanceof Error && "code" in error && error.code === "ENOENT")
 			return c.json(

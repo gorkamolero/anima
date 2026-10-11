@@ -22,7 +22,7 @@ export interface Occluder {
 	png: string;
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 13;
+const VERSION = 15;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -294,8 +294,29 @@ async function derive(
 			floor,
 			horizonY,
 			version: VERSION,
+			generated: !!ground,
 		}),
 	);
+	const exits = floor ? deriveExits(floor, objects, horizonY) : [];
+	// A generated child always has a return route. When the visible floor does
+	// not touch the image border, the scene projects this edge onto reachable
+	// floor instead of requiring a click through a wall or foreground prop.
+	if (ground)
+		for (const kind of ["edge-left", "edge-right"] as const) {
+			if (!exits.some((exit) => exit.kind === kind)) {
+				const x = kind === "edge-left" ? 0 : 1890;
+				exits.push({
+					id: kind,
+					kind,
+					region: [
+						{ x, y: 850 },
+						{ x: x + 30, y: 850 },
+						{ x: x + 30, y: 948 },
+						{ x, y: 948 },
+					],
+				});
+			}
+		}
 	const meta = await readFile(`${stem}.occluders.cache.json`, "utf8").catch(
 		() => null,
 	);
@@ -316,7 +337,7 @@ async function derive(
 		)
 			return {
 				occluders,
-				exits: floor ? deriveExits(floor, objects, horizonY) : [],
+				exits,
 			};
 	}
 	const [width, height] = execFileSync(
@@ -409,26 +430,6 @@ async function derive(
 		]);
 		occluders.push({ id, label: object.name, ...geometry, png });
 	}
-	const exits = floor ? deriveExits(floor, objects, horizonY) : [];
-	// A generated child always has a return route. When the visible floor does
-	// not touch the image border, the scene projects this edge onto reachable
-	// floor instead of requiring a click through a wall or foreground prop.
-	if (ground)
-		for (const kind of ["edge-left", "edge-right"] as const) {
-			if (!exits.some((exit) => exit.kind === kind)) {
-				const x = kind === "edge-left" ? 0 : 1890;
-				exits.push({
-					id: kind,
-					kind,
-					region: [
-						{ x, y: 850 },
-						{ x: x + 30, y: 850 },
-						{ x: x + 30, y: 948 },
-						{ x, y: 948 },
-					],
-				});
-			}
-		}
 	await writeFile(
 		`${stem}.occluders.json`,
 		`${JSON.stringify(occluders, null, "\t")}\n`,
