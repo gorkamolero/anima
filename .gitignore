@@ -37,3 +37,8 @@ npm-debug.log*
 adventures/*/public/generated/
 
 api/data/
+
+# Local QA and perception cache metadata
+tmp/
+packages/sprite-tools/output/
+*.occluders.cache.json

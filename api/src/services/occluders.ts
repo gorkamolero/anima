@@ -22,9 +22,9 @@ export interface Occluder {
 	png: string;
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 9;
+const VERSION = 13;
 const cacheRoot = resolve(ROOT, "api/data/perception");
-const proofRoot = resolve(ROOT, "tmp/occluders");
+const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
 	createHash("sha256").update(value).digest("hex");
 export async function cachedFloor(
@@ -45,12 +45,14 @@ export function canOcclude(object: LabelledBox): boolean {
 		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile)(?:s|es)?\b/i.test(
 			object.name,
 		) &&
-		!/\b(sky|floor|ground|road|distant|horizon|window)\b/i.test(object.name)
+		!/\b(sky|floor|ground|road|distant|horizon|window|sign)\b/i.test(
+			object.name,
+		)
 	);
 }
 /** Record attempted requests BEFORE submitting, including failures. Cross-process lock
- * prevents concurrent routes from overspending the task's hard 40-call allowance. */
-function reserveSegmentation(key: string, label: string): void {
+ * prevents concurrent routes from overspending the task's hard 120-call allowance. */
+export function reserveSegmentation(key: string, label: string): void {
 	mkdirSync(proofRoot, { recursive: true });
 	const lock = resolve(proofRoot, "budget.lock");
 	try {
@@ -65,12 +67,12 @@ function reserveSegmentation(key: string, label: string): void {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
 		const count = (previous.match(/^\| CALL /gm) ?? []).length;
-		if (count >= 40)
-			throw new Error("Occluder segmentation budget exhausted (40 calls)");
+		if (count >= 120)
+			throw new Error("Occluder segmentation budget exhausted (120 calls)");
 		if (!previous)
 			appendFileSync(
 				ledger,
-				"# Occluder segmentation calls\n\nSAM 3.1, box prompts. Attempts reserved before submission; cache hits cost zero. Limit: 40.\n\n| Attempt | UTC | Cache key | Object |\n|---|---|---|---|\n",
+				"# Occluder segmentation calls\n\nSAM 3.1, box prompts. Attempts reserved before submission; cache hits cost zero. Limit: 120.\n\n| Attempt | UTC | Cache key | Object |\n|---|---|---|---|\n",
 			);
 		appendFileSync(
 			ledger,
@@ -143,11 +145,13 @@ export function maskGeometry(
 	const lower = [...bottoms.values()].sort((a, b) => a - b);
 	const cutoff = lower[Math.floor(lower.length * 0.8)];
 	const columns = [...bottoms].sort((a, b) => a[0] - b[0]);
-	let support = columns.filter(([, y]) => y >= cutoff);
+	let support = columns.filter(
+		([, y]) => y >= Math.max(cutoff, minY + (maxY - minY) * supportFraction),
+	);
 	if (floor) {
 		const contact = columns.filter(
 			([x, y]) =>
-				y >= minY + (maxY - minY) * supportFraction &&
+				y >= Math.max(cutoff, minY + (maxY - minY) * supportFraction) &&
 				[1, 5, 10, 20].some((d) =>
 					floorAt(floor, (x + 0.5) * sx, Math.min(1079, (y + 1) * sy + d)),
 				),
@@ -157,7 +161,7 @@ export function maskGeometry(
 			// visible bottom rather than extending another leg's depth across it.
 			const missing = columns.filter(
 				([x, y]) =>
-					y >= minY + (maxY - minY) * supportFraction &&
+					y >= Math.max(cutoff, minY + (maxY - minY) * supportFraction) &&
 					!contact.some(([cx]) => Math.abs(cx - x) * sx <= 40),
 			);
 			support = [...contact, ...missing].sort((a, b) => a[0] - b[0]);
@@ -169,10 +173,11 @@ export function maskGeometry(
 	for (let i = 0; i < support.length; i += stride) {
 		const group = support.slice(i, i + stride);
 		const xs = group.map((p) => p[0]).sort((a, b) => a - b);
-		const ys = group.map((p) => p[1]).sort((a, b) => a - b);
+		const contactX = xs[Math.floor(xs.length / 2)];
+		const contactY = bottoms.get(contactX) ?? maxY;
 		baseline.push({
 			x: (xs[Math.floor(xs.length / 2)] + 0.5) * sx,
-			y: (ys[Math.floor(ys.length / 2)] + 1) * sy,
+			y: (contactY + 1) * sy,
 		});
 	}
 	return {
@@ -405,8 +410,33 @@ async function derive(
 		occluders.push({ id, label: object.name, ...geometry, png });
 	}
 	const exits = floor ? deriveExits(floor, objects, horizonY) : [];
-	await writeFile(`${stem}.occluders.json`, JSON.stringify(occluders, null, 2));
-	await writeFile(`${stem}.exits.json`, JSON.stringify(exits, null, 2));
+	// A generated child always has a return route. When the visible floor does
+	// not touch the image border, the scene projects this edge onto reachable
+	// floor instead of requiring a click through a wall or foreground prop.
+	if (ground)
+		for (const kind of ["edge-left", "edge-right"] as const) {
+			if (!exits.some((exit) => exit.kind === kind)) {
+				const x = kind === "edge-left" ? 0 : 1890;
+				exits.push({
+					id: kind,
+					kind,
+					region: [
+						{ x, y: 850 },
+						{ x: x + 30, y: 850 },
+						{ x: x + 30, y: 948 },
+						{ x, y: 948 },
+					],
+				});
+			}
+		}
+	await writeFile(
+		`${stem}.occluders.json`,
+		`${JSON.stringify(occluders, null, "\t")}\n`,
+	);
+	await writeFile(
+		`${stem}.exits.json`,
+		`${JSON.stringify(exits, null, "\t")}\n`,
+	);
 	await writeFile(`${stem}.occluders.cache.json`, fingerprint);
 	return { occluders, exits };
 }

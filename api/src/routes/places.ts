@@ -10,7 +10,9 @@ import {
 	type GroundData,
 	judgeGround,
 } from "../services/ground.js";
+import { deriveOccluders } from "../services/occluders.js";
 import { defaultVisual, getWorldDb } from "../services/world.js";
+import { interactablesRoutes } from "./interactables.js";
 import { sceneImageRoutes } from "./scene-image.js";
 
 export interface Place {
@@ -53,6 +55,11 @@ async function createPlace(
 		(existing.ground.ground === "derived" ||
 			existing.ground.derivationVersion === 2)
 	) {
+		const labels = await interactablesRoutes.request(
+			`${origin}/interactables/${input.template === "interior" ? "inside" : "outside"}?image=${encodeURIComponent(existing.background)}`,
+		);
+		if (!labels.ok) throw new Error("Place object perception failed");
+		await deriveOccluders(existing.background, existing.ground);
 		recordCall("place", 0, true);
 		return existing;
 	}
@@ -141,10 +148,16 @@ async function createPlace(
 			2,
 		),
 	);
+	const labels = await interactablesRoutes.request(
+		`${origin}/interactables/${anchor}?image=${encodeURIComponent(background)}`,
+	);
+	if (!labels.ok) throw new Error("Place object perception failed");
+	await deriveOccluders(background, ground);
 	await (await getWorldDb()).execute({
 		sql: "INSERT OR REPLACE INTO places VALUES (?, ?)",
 		args: [id, JSON.stringify(place)],
 	});
+
 	return place;
 }
 export const placesRoutes = new Hono();

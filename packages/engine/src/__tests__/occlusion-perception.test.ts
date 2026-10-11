@@ -34,7 +34,12 @@ describe("perception-derived geometry", () => {
 			"cars",
 		])
 			expect(canOcclude({ name, bounds: [0, 0, 0.2, 0.8] })).toBe(true);
-		for (const name of ["floor", "sky", "distant buildings"])
+		for (const name of [
+			"floor",
+			"sky",
+			"distant buildings",
+			"Arkham Bus Depot sign",
+		])
 			expect(canOcclude({ name, bounds: [0, 0, 1, 1] })).toBe(false);
 	});
 
@@ -88,6 +93,26 @@ describe("perception-derived geometry", () => {
 		);
 		expect(result?.baseline.every((p) => p.y === 756)).toBe(true);
 	});
+	it("never puts a contact below its own silhouette column", () => {
+		const mask = raster(
+			192,
+			108,
+			(x, y) => x >= 30 && x < 75 && y > 20 && y < 60 + (x % 7),
+		);
+		const result = maskGeometry(mask);
+		expect(result).toBeDefined();
+		for (const point of result?.baseline ?? []) {
+			const x = Math.floor(point.x / 10);
+			const last = Array.from({ length: 108 }, (_, y) => y)
+				.filter((y) => mask.data[y * 192 + x])
+				.at(-1);
+			expect(point.y).toBe((Number(last) + 1) * 10);
+			expect(point.y).toBeLessThanOrEqual(
+				(result?.bbox.y ?? 0) + (result?.bbox.h ?? 0),
+			);
+		}
+	});
+
 	it("preserves disconnected side strips and their intervening gap", () => {
 		const floor = raster(
 			30,

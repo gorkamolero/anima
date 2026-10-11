@@ -10,6 +10,7 @@ import { z } from "zod";
 import { imagePath, PUBLIC, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall, reserveCall } from "./costs.js";
+import { reserveSegmentation } from "./occluders.js";
 
 export interface Raster {
 	width: number;
@@ -203,6 +204,7 @@ export async function perceive(
 	);
 	reserveCall("perception");
 	const start = Date.now();
+	reserveSegmentation(hash, "floor segmentation");
 	let segmentation = await fal.subscribe("fal-ai/sam-3/image", {
 		input: {
 			image_url: imageUrl,
@@ -215,6 +217,7 @@ export async function perceive(
 	recordCall("segmentation", Date.now() - start);
 	if (!segmentation.data.masks.length) {
 		reserveCall("perception");
+		reserveSegmentation(hash, "floor segmentation retry");
 		segmentation = await fal.subscribe("fal-ai/sam-3/image", {
 			input: {
 				image_url: imageUrl,

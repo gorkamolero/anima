@@ -4,6 +4,8 @@
 		"includes": [
 			"**",
 			"!**/dist/**",
+			"!**/*.occluders.cache.json",
+			"!tmp/**",
 			"!**/public/generated/**",
 			"!**/node_modules/**",
 			"!packages/sprite-tools/output/**",
