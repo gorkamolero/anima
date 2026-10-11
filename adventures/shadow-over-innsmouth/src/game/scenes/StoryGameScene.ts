@@ -878,12 +878,18 @@ export class StoryGameScene extends BaseScene {
 		void this.walkGenerated(pointer.x, pointer.y);
 	}
 
+	/** Read-only path preview for editor and click-to-walk verification. */
+	public previewWalk(x: number, y: number): ScenePoint[] {
+		return this.walkArea && this.hermesSprite
+			? findPath(this.walkArea.mask, this.hermesSprite, { x, y })
+			: [];
+	}
 	/** Both authored and generated free walks use the same navigation. */
 	public async walkGenerated(x: number, y: number): Promise<void> {
 		const area = this.walkArea,
 			sprite = this.hermesSprite;
 		if (!area || !sprite || this.inputBlocked) return;
-		const path = findPath(area.mask, sprite, { x, y });
+		const path = this.previewWalk(x, y);
 		await this.walkHermesPath(path);
 	}
 

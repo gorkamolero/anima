@@ -25,29 +25,16 @@ three-loop magenta preview. The inherited idle is about 2.4% taller than walking
 
 ## Runtime and verification
 
-`walkHeading` looks 100 screen pixels ahead along the remaining polyline.
-Vertical entry requires |dy| / |dx| >1.15; vertical exit is below 0.75. The last
-20 pixels retain the previous heading. Left/right reuse the existing profile
-sheet, flipped for right. Away idle holds frame zero; front/side idle use the
-existing idle as requested. Generated and anchor walks share the same path
-updater. Anchor clicks now retain their requested Y inside the authored band;
-scale is extended from the authored groundline's existing Y/scale relationship.
+`CharacterMotor` selects the existing cycles from ground-plane velocity, with
+0.35 m path look-ahead and hysteresis (vertical entry ratio 1.15, exit 0.75).
+Positive ground depth selects away, negative depth selects toward; lateral motion
+uses the profile sheet, flipped for right. Away idle holds frame zero. Motion is
+1 m/s in camera-calibrated ground metres and playback cadence follows ground
+speed. Scale is evaluated at the current position every frame, with bounded
+scale factors. Anchor and generated clicks share footprint-aware navigation.
 
-Playback rate is actual path distance per second divided by current scale and
-source stride speed (600 pixels/second profile, 240 depth). Depth movement is
-40% of profile speed to match its shorter projected stride. Perspective still
-reduces travel speed and size into depth. Dedicated 3/4 cycles are not included.
-
-Silent real-time agent-browser recordings at 1920 × 1080, 30 fps, and 6 fps
-contact sheets live in `tmp/hermes-directions/`: `road-away-and-back`,
-`road-diagonals`, `alley`, `depot`, and joined `all`. An additional `inside` take
-checks the interior anchor. These are recordings of live movement, without
-virtual-clock stepping or screenshot crossfades. The test browser suppresses
-world/session writes, interactable loading and narration; place/background
-reads use the real API. No persistent world or cache changes are needed.
-
-Review: back/front views on depth legs, profile on crossings, smooth depth size
-changes and sustained headings without rapid alternation. Magenta loop reviews
-show intact limbs and no obvious seam pop or background halo. Foot planting was
-reviewed visually at game size; this is sprite cadence matching, not skeletal
-foot locking. Grid paths still have their original right-angle routing.
+Current real-time verification recordings and 6 fps contact sheets are in
+`tmp/walkarea/`. Walks are driven by `window.__anima.click`, with per-frame
+`window.__anima.snapshot()` ground telemetry. See `docs/OPEN-WORLD.md` for camera
+calibration and navigation details. No AI image or video generation was used for
+the walking-model migration; these source sheets are unchanged.

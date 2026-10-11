@@ -126,3 +126,55 @@ Perception endpoints checked against fal's model catalog: [SAM 3](https://fal.ai
 Live voice verification is reserved for the owner. Automated tests mock fetch and Audio, cover first-sentence completion, mute with zero requests, TTS failure and autoplay rejection. All development browser sessions use mute. The narrator may occasionally repeat a previous action or add unsupported narrative details; the journey records the actual output and asserts actual image/state changes.
 
 Final muted journeys: both passed steps 1–6 including 2b, with 20 frames each. Run 2 hit 47/50 recorded pipeline cache lookups (94%); its three misses were narrator-option calls (1.44–1.51 s). All resolution, image and place requests hit cache. No TTS calls or audio playback. Cumulative task budget: 11/50 image-edit attempts and 13/200 perception attempts. API tests: 53 passed; both package typechecks and lints passed. All three generated places passed art verification with derived geometry and 5/5 judge approvals each.
+
+## Shared walk area and motor (2026-10-11)
+
+Runtime walking now uses an engine `WalkArea` for anchors and generated places:
+`mask`, `Perspective`, base scale and scale clamps. The 384×216 navigation grid
+is derived from existing data; upsampling a cached SAM mask adds no new perception
+information. Anchor masks rasterize each authored free-walk band from its minimum
+Y to the interpolated line, capped above the caption panel. The exterior bands
+are disconnected: a free click cannot cross the gap occupied by the vehicles.
+Scripted exit routes remain explicit exceptions until exits become floor regions.
+
+`perspective.ts` owns scale evaluation and camera calibration. Exterior fitting
+uses the landmark horizon (470). Fitting the current interior authored line gives
+338.376, **not** 659.84: that earlier value describes the generated interior camera,
+not these authored line points. Per-point residuals preserve every authored scale.
+Bare-fit mean/max errors are exterior 0.0294%/0.0585%, interior 0.2027%/0.3252%;
+with residuals both are zero to floating-point precision. The legacy `groundLine`
+is still emitted for the editor, art verifier, journey harness and `__anima`.
+
+Projection uses `Z = 1 / (slope * (y - horizonY))` and `X = (x - cx) * Z`.
+Metric conversion explicitly applies camera focal length (1000 px) and reference
+pixels per metre (base sprite height / 1.75 m). `CharacterMotor` advances at 1 m/s
+from scene `update(delta)`, projects back to the screen, evaluates current-position
+scale, and supplies ground-velocity heading and animation cadence. A motor-attached
+`Character` skips the legacy line hook. Scale factors are bounded to 0.18–1.5.
+Debug snapshots include full-precision ground coordinates; rounded screen pixels
+are insufficient for measuring slow movement into depth.
+
+Navigation erodes by a 0.3 m footprint diameter, with at least one grid cell of
+clearance, finds targets in the starting connected component, runs eight-connected
+A* without corner cutting, then shortcuts only along visible floor. Interactables
+and hotspots take precedence over floor clicks, including below y=680. This can
+make some floor beneath broad object bounding boxes unclickable; region-accurate
+object picking is a later refinement. `previewWalk` exposes the exact route for
+read-only QA, while recordings and the journey drive `__anima.click`.
+
+Step 6 remains separate: author exit polygons within reachable floor, validate
+parent/child arrival points and connected routes, and replace the generated-place
+left-edge shortcut. Walk-behind objects need aligned alpha masks and per-object
+feet baselines, lifecycle/loading support, and independent crossing tests. The
+existing exterior vehicle overlay retains its authored baseline; general scene
+occluders are not part of this walking migration.
+
+Walking verification: `tmp/walkarea/REPORT.md` records the real-time 1920×1080,
+24 fps takes and inspected 6 fps sheets. Measured wall-clock ground-speed CV:
+road depth 0.003327; road diagonals 0.003381; alley 0.003407; exterior 0.003330;
+interior 0.003157 (all below 0.15). Town run 4 passed with 52 cached call-ledger
+rows and zero uncached calls. Both anchor art checks pass. All package typechecks
+pass; full game lint is affected by separate concurrent occluder JSON artifacts,
+while game source/script lint passes. Toward idle retains the inherited profile
+pose: a safety hook blocked the follow-up idle/telemetry edit; away idle holds
+its away-cycle frame.

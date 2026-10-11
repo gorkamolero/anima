@@ -186,6 +186,7 @@ async function walkPlace(step) {
 		throw new Error(`${step} ground is ${g?.ground}`);
 	const line = g.groundLine.points;
 	const floor = g.floor;
+	const hotspots = evaluate("window.__anima.snapshot().hotspots");
 	const allCells = floor.data
 		.map((v, i) =>
 			v
@@ -195,7 +196,26 @@ async function walkPlace(step) {
 					}
 				: null,
 		)
-		.filter(Boolean);
+		.filter(Boolean)
+		.filter(
+			(p) =>
+				p.x >= 35 &&
+				p.y < 964 &&
+				!before.interactables.some(
+					(o) =>
+						p.x >= o.bounds[0] * 1920 &&
+						p.x <= o.bounds[2] * 1920 &&
+						p.y >= o.bounds[1] * 1080 &&
+						p.y <= o.bounds[3] * 1080,
+				) &&
+				!hotspots.some(
+					(o) =>
+						p.x >= o.bounds.x &&
+						p.x <= o.bounds.x + o.bounds.width &&
+						p.y >= o.bounds.y &&
+						p.y <= o.bounds.y + o.bounds.height,
+				),
+		);
 	// The scene clips the floor above the caption panel; aim line ends at the nearest walkable cell.
 	const nearestCell = (p) =>
 		allCells.reduce((a, b) =>
@@ -214,7 +234,11 @@ async function walkPlace(step) {
 		["far", far],
 		["near", near],
 	]) {
-		evaluate(`void window.__anima.scene.walkGenerated(${p.x},${p.y});true`);
+		const expected = evaluate(
+			`window.__anima.scene.previewWalk(${p.x},${p.y}).at(-1)`,
+		);
+		if (!expected) throw new Error(`${label}: no reachable floor`);
+		evaluate(`window.__anima.click(${p.x},${p.y});true`);
 		const s = await poll(
 			"walk",
 			qa,
@@ -228,7 +252,7 @@ async function walkPlace(step) {
 			Math.floor((h.y / 1080) * floor.height) * floor.width +
 			Math.floor((h.x / 1920) * floor.width);
 		if (!floor.data[i]) throw new Error(`${label}: feet outside floor mask`);
-		if (Math.hypot(h.x - p.x, h.y - p.y) > 20)
+		if (Math.hypot(h.x - expected.x, h.y - expected.y) > 2)
 			throw new Error(`${label}: did not reach requested walk point`);
 		states.push({ label, ...h });
 		await frame(`${step}-${label}`, { hermes: h });
