@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, expect, it } from "vitest";
 import { fitPlane, maskToGround, scaleAt } from "../../services/ground.js";
 
