@@ -208,6 +208,7 @@ export class StoryGameScene extends BaseScene {
 	}[] = [];
 	private sceneExits: Exit[] = [];
 	private exitLatch?: string;
+	private approachingObject = false;
 	private visibleFloor?: FloorMask;
 	private geometryGeneration = 0;
 	private commandObjects: Phaser.GameObjects.GameObject[] = [];
@@ -524,6 +525,7 @@ export class StoryGameScene extends BaseScene {
 				exit &&
 				exit.id !== this.exitLatch &&
 				wasWalking &&
+				!this.approachingObject &&
 				!this.openWorldBusy
 			) {
 				this.exitLatch = exit.id;
@@ -1342,7 +1344,12 @@ export class StoryGameScene extends BaseScene {
 			});
 			return;
 		}
-		await this.walkHermesPath(path);
+		this.approachingObject = true;
+		try {
+			await this.walkHermesPath(path);
+		} finally {
+			this.approachingObject = false;
+		}
 		if (generation === this.geometryGeneration && !this.openWorldBusy)
 			await this.requestNarrationOptions(object);
 	}
