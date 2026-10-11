@@ -88,14 +88,24 @@ for (const beat of plan.beats) {
 			`(()=>{window.__anima.click(${beat.click[0]},${beat.click[1]});return true})()`,
 		);
 	const log = [];
-	for (let first = 0; first < beat.frames; first += 12) {
+	const sourceLocation = evaluate("window.__anima.scene.locationId()");
+	let exitCompleted = !beat.exit;
+	for (
+		let first = 0;
+		first < beat.frames || (!exitCompleted && first < beat.frames + 2400);
+		first += 12
+	) {
 		const frames = evaluate(
-			`(async()=>{const out=[];for(let i=0;i<${Math.min(12, beat.frames - first)};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,location:s.locationId(),ui:s.openWorldBusy,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
+			`(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(12, beat.frames - first) : 12};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
 		);
+		exitCompleted ||=
+			frames.at(-1).location !== sourceLocation &&
+			!frames.at(-1).ui &&
+			!frames.at(-1).inputBlocked;
 		for (let j = 0; j < frames.length; j++) {
 			const { png, ...sample } = frames[j];
 			writeFileSync(
-				resolve(dir, `${String(first + j).padStart(6, "0")}.png`),
+				resolve(dir, `${String(log.length).padStart(6, "0")}.png`),
 				Buffer.from(png.split(",")[1], "base64"),
 			);
 			log.push(sample);
@@ -125,11 +135,13 @@ for (const beat of plan.beats) {
 		"-i",
 		resolve(out, `${beat.name}.mp4`),
 		"-vf",
-		`fps=6,scale=320:-1,tile=6x${Math.ceil(beat.frames / 24)}`,
+		`fps=6,scale=320:-1,tile=6x${Math.ceil(log.length / 24)}`,
 		"-frames:v",
 		"1",
 		resolve(out, `${beat.name}-sheet.png`),
 	]);
+	if (!exitCompleted)
+		throw new Error(`Exit ${beat.exit} did not finish and release input`);
 	logs.push({ name: beat.name, frames: log.length });
 	// Keep the full PNG sequence only on request. Videos and telemetry remain.
 	if (!process.argv.includes("--keep-frames")) rmSync(dir, { recursive: true });

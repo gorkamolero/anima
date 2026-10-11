@@ -226,12 +226,37 @@ async function walkPlace(step) {
 	const far = cells[Math.floor(cells.length * 0.15)],
 		near = cells[Math.floor(cells.length * 0.85)];
 	const states = [];
-	for (const [label, p] of [
+	for (const [label, desired] of [
 		["left", nearestCell(line[0])],
 		["right", nearestCell(line.at(-1))],
 		["far", far],
 		["near", near],
 	]) {
+		// Ordinary floor walks must not intentionally cross a travel region.
+		// Exits have their own assertions below; check the entire route, not
+		// just its destination, now that travel triggers on entry.
+		const candidates = [...allCells].sort(
+			(a, b) =>
+				Math.hypot(a.x - desired.x, a.y - desired.y) -
+				Math.hypot(b.x - desired.x, b.y - desired.y),
+		);
+		const p = evaluate(`(()=>{const s=window.__anima.scene,h=s.hermesSprite;
+			for(const p of ${JSON.stringify(candidates)}) {
+				if(Math.hypot(p.x-h.x,p.y-h.y)<20)continue;
+				const path=[{x:h.x,y:h.y},...s.previewWalk(p.x,p.y)];
+				if(path.length<2)continue;
+				let crosses=false;
+				for(let i=1;i<path.length;i++) {
+					const a=path[i-1],b=path[i],n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/4));
+					for(let j=1;j<=n;j++) {
+						const x=a.x+(b.x-a.x)*j/n,y=a.y+(b.y-a.y)*j/n;
+						if(s.sceneExits.some(e=>x>=Math.min(...e.region.map(p=>p.x))&&x<=Math.max(...e.region.map(p=>p.x))&&y>=Math.min(...e.region.map(p=>p.y))&&y<=Math.max(...e.region.map(p=>p.y))))crosses=true;
+					}
+				}
+				if(!crosses)return p;
+			}return null;})()`);
+		if (!p)
+			throw new Error(`${label}: no floor-only route without crossing an exit`);
 		const expected = evaluate(
 			`window.__anima.scene.previewWalk(${p.x},${p.y}).at(-1)`,
 		);

@@ -1283,11 +1283,9 @@ export class StoryGameScene extends BaseScene {
 					x: exit.region.reduce((n, p) => n + p.x, 0) / exit.region.length,
 					y: exit.region.reduce((n, p) => n + p.y, 0) / exit.region.length,
 				};
-				const cell = nearestReachable(
-					exitMask,
-					this.hermesSprite ?? center,
-					center,
-				);
+				// Exit geometry belongs to its own floor component, independent
+				// of where the player happened to stand while it loaded.
+				const cell = nearestReachable(exitMask, center, center);
 				if (cell < 0) return exit;
 				const point = cellPoint(exitMask, cell);
 				return {
@@ -1320,11 +1318,7 @@ export class StoryGameScene extends BaseScene {
 		if (!mask) return;
 		const candidates = mask.data
 			.flatMap((v, i) => (v ? [cellPoint(mask, i)] : []))
-			.filter(
-				(p) =>
-					p.y >=
-					(layer ? baselineYAt(layer.data, p.x) : object.bounds[3] * 1080),
-			);
+			.filter((p) => !layer || p.y >= baselineYAt(layer.data, p.x));
 		candidates.sort(
 			(a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
 		);
