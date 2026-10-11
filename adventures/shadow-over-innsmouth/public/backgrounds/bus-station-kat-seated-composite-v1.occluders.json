@@ -1,0 +1,187 @@
+[
+	{
+		"id": "bench-133743",
+		"label": "Bench",
+		"bbox": {
+			"x": 804,
+			"y": 628,
+			"w": 390,
+			"h": 253
+		},
+		"baseline": [
+			{
+				"x": 872.5,
+				"y": 881
+			},
+			{
+				"x": 886.5,
+				"y": 870
+			},
+			{
+				"x": 1103.5,
+				"y": 839
+			},
+			{
+				"x": 1123.5,
+				"y": 840
+			},
+			{
+				"x": 1137.5,
+				"y": 840
+			},
+			{
+				"x": 1175.5,
+				"y": 840
+			}
+		],
+		"png": "bus-station-kat-seated-composite-v1.occluder-bench-133743.png"
+	},
+	{
+		"id": "fishing-net-pile-4b7a9a",
+		"label": "Fishing net pile",
+		"bbox": {
+			"x": 1134,
+			"y": 637,
+			"w": 301,
+			"h": 201
+		},
+		"baseline": [
+			{
+				"x": 1207.5,
+				"y": 834
+			},
+			{
+				"x": 1218.5,
+				"y": 837
+			},
+			{
+				"x": 1229.5,
+				"y": 838
+			},
+			{
+				"x": 1240.5,
+				"y": 838
+			},
+			{
+				"x": 1251.5,
+				"y": 837
+			},
+			{
+				"x": 1260.5,
+				"y": 833
+			}
+		],
+		"png": "bus-station-kat-seated-composite-v1.occluder-fishing-net-pile-4b7a9a.png"
+	},
+	{
+		"id": "pergola-3187d8",
+		"label": "Pergola",
+		"bbox": {
+			"x": 610,
+			"y": 229,
+			"w": 683,
+			"h": 632
+		},
+		"baseline": [
+			{
+				"x": 753.5,
+				"y": 848
+			},
+			{
+				"x": 768.5,
+				"y": 861
+			},
+			{
+				"x": 783.5,
+				"y": 857
+			},
+			{
+				"x": 798.5,
+				"y": 855
+			},
+			{
+				"x": 1211.5,
+				"y": 822
+			},
+			{
+				"x": 1240.5,
+				"y": 822
+			}
+		],
+		"png": "bus-station-kat-seated-composite-v1.occluder-pergola-3187d8.png"
+	},
+	{
+		"id": "small-house-bac0d8",
+		"label": "Small house",
+		"bbox": {
+			"x": 1279,
+			"y": 57,
+			"w": 512,
+			"h": 616
+		},
+		"baseline": [
+			{
+				"x": 1487.5,
+				"y": 672
+			},
+			{
+				"x": 1505.5,
+				"y": 673
+			},
+			{
+				"x": 1523.5,
+				"y": 673
+			},
+			{
+				"x": 1541.5,
+				"y": 665
+			},
+			{
+				"x": 1559.5,
+				"y": 667
+			},
+			{
+				"x": 1574.5,
+				"y": 667
+			}
+		],
+		"png": "bus-station-kat-seated-composite-v1.occluder-small-house-bac0d8.png"
+	},
+	{
+		"id": "van-7c111f",
+		"label": "Van",
+		"bbox": {
+			"x": 1556,
+			"y": 431,
+			"w": 364,
+			"h": 378
+		},
+		"baseline": [
+			{
+				"x": 1707.5,
+				"y": 809
+			},
+			{
+				"x": 1720.5,
+				"y": 808
+			},
+			{
+				"x": 1733.5,
+				"y": 808
+			},
+			{
+				"x": 1746.5,
+				"y": 809
+			},
+			{
+				"x": 1759.5,
+				"y": 808
+			},
+			{
+				"x": 1770.5,
+				"y": 801
+			}
+		],
+		"png": "bus-station-kat-seated-composite-v1.occluder-van-7c111f.png"
+	}
+]

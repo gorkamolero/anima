@@ -1,0 +1,31 @@
+[
+	{
+		"id": "bus-3bbdfa",
+		"label": "bus",
+		"bbox": {
+			"x": 1470,
+			"y": 381,
+			"w": 192,
+			"h": 333
+		},
+		"baseline": [
+			{
+				"x": 1546.5,
+				"y": 706
+			},
+			{
+				"x": 1548.5,
+				"y": 713
+			},
+			{
+				"x": 1550.5,
+				"y": 713
+			},
+			{
+				"x": 1551.5,
+				"y": 712
+			}
+		],
+		"png": "arkham-bus-depot-flat-2d.occluder-bus-3bbdfa.png"
+	}
+]

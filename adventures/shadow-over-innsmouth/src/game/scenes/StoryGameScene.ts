@@ -1,14 +1,23 @@
 import {
 	BaseScene,
+	baselineYAt,
+	bridgeOccluders,
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
 	CharacterMotor,
+	cellPoint,
+	type Exit,
 	erode,
+	exitAt,
 	findPath,
+	floorPixel,
 	type HotspotVerb,
+	nearestReachable,
+	type Occluder,
 	refineMask,
 	type SceneConfig,
+	scaleAt,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
@@ -34,7 +43,6 @@ import {
 	type SceneCharacterState,
 	type ScenePoint,
 } from "./standaloneScenes";
-
 import { clipFloorBelow, type FloorMask } from "./worldGeometry";
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
@@ -104,6 +112,7 @@ interface WorldState {
 
 interface GeneratedPlace {
 	id: string;
+	neighbours?: Partial<Record<"edge-left" | "edge-right", string>>;
 	parent: string;
 	description: string;
 	background: string;
@@ -191,6 +200,16 @@ export class StoryGameScene extends BaseScene {
 	> = {};
 	private lastReviewTransition?: ReviewTransitionSnapshot;
 	private hermesMotor?: CharacterMotor;
+	private rootFrame = "";
+	private objectLayers: {
+		data: Occluder;
+		image: Phaser.GameObjects.Image;
+		alpha: (x: number, y: number) => boolean;
+	}[] = [];
+	private sceneExits: Exit[] = [];
+	private exitLatch?: string;
+	private visibleFloor?: FloorMask;
+	private geometryGeneration = 0;
 	private commandObjects: Phaser.GameObjects.GameObject[] = [];
 	private placementDebugEnabled = SHOW_DEBUG_OVERLAY;
 	private placementDebugGraphics?: Phaser.GameObjects.Graphics;
@@ -251,6 +270,10 @@ export class StoryGameScene extends BaseScene {
 			HERMES_TEXTURE,
 			"assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
 			{ frameWidth: 612, frameHeight: 1059 },
+		);
+		this.load.json(
+			`${HERMES_TEXTURE}-meta`,
+			`assets/sprites/hermes/${HERMES_TEXTURE}.json`,
 		);
 		for (const texture of [HERMES_AWAY_TEXTURE, HERMES_TOWARD_TEXTURE]) {
 			this.load.json(
@@ -489,6 +512,24 @@ export class StoryGameScene extends BaseScene {
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
 		this.hermesMotor?.update(delta);
+		if (this.hermesSprite) {
+			for (const layer of this.objectLayers)
+				layer.image.setDepth(
+					10 + baselineYAt(layer.data, this.hermesSprite.x) / 20 - 0.001,
+				);
+			const exit = exitAt(this.hermesSprite, this.sceneExits);
+			if (!exit) this.exitLatch = undefined;
+			if (
+				exit &&
+				exit.id !== this.exitLatch &&
+				this.hermesMotor?.walking &&
+				!this.openWorldBusy
+			) {
+				this.exitLatch = exit.id;
+				this.hermesMotor.stop();
+				void this.triggerExit(exit);
+			}
+		}
 		this.updateReviewHotspotHover();
 		this.refreshPlacementDebugOverlay();
 	}
@@ -547,7 +588,7 @@ export class StoryGameScene extends BaseScene {
 				const response = await fetch(`${API_BASE_URL}/places/${id}`);
 				if (!response.ok) throw new Error("Unable to load place");
 				const place = (await response.json()) as GeneratedPlace;
-				place.ground.floor = clipFloorBelow(place.ground.floor, MAX_FEET_Y);
+				// Erode physical floor before clipping the artificial caption boundary.
 				this.generatedPlace = place;
 				this.reviewSceneId =
 					this.generatedPlace.template === "interior" ? "inside" : "outside";
@@ -566,6 +607,10 @@ export class StoryGameScene extends BaseScene {
 
 	private renderReviewScene(): void {
 		const scene = this.activeScene();
+		this.geometryGeneration++;
+		for (const layer of this.objectLayers) layer.image.destroy();
+		this.objectLayers = [];
+		this.sceneExits = [];
 		this.hoveredInteractableName = undefined;
 		this.applySceneGroundLine(scene);
 		const ground = this.generatedPlace?.ground;
@@ -583,9 +628,16 @@ export class StoryGameScene extends BaseScene {
 			: walkAreaFromAnchor(
 					scene,
 					this.reviewSceneId === "outside" ? exteriorLandmarks : {},
-					MAX_FEET_Y,
+					1080,
 				);
-		this.walkArea.mask = erode(this.walkArea.mask, this.walkArea.perspective);
+		this.visibleFloor = {
+			...this.walkArea.mask,
+			data: [...this.walkArea.mask.data],
+		};
+		this.walkArea.mask = clipFloorBelow(
+			erode(this.walkArea.mask, this.walkArea.perspective),
+			MAX_FEET_Y,
+		);
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
 			this.hermesMotor = new CharacterMotor(
@@ -598,6 +650,50 @@ export class StoryGameScene extends BaseScene {
 					if (this.hermesSprite) this.hermesSprite.anims.timeScale = rate;
 				},
 			);
+			this.hermesMotor.rootStep = (_direction, tangent) => {
+				const sprite = this.hermesSprite;
+				if (!sprite) return 0;
+				const key = sprite.texture.key;
+				const frame = Number(sprite.frame.name);
+				const token = `${key}:${frame}`;
+				if (token === this.rootFrame) return 0;
+				this.rootFrame = token;
+				const metadata = this.cache.json.get(`${key}-meta`) as {
+					rootMotion?: { dx: number; dy: number }[];
+				};
+				const motion = metadata?.rootMotion?.[frame];
+				if (!motion) return 0;
+				const sign = sprite.flipX ? -1 : 1;
+				let pixels =
+					-(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
+					sprite.scaleX;
+				// Account for the contact's offset from the bottom-centred sprite origin
+				// when perspective changes scale during this very frame.
+				const contact = (
+					metadata as { footContacts?: { x: number; y: number }[] }
+				).footContacts?.[frame];
+				if (contact && this.walkArea) {
+					for (let i = 0; i < 3; i++) {
+						const nextScale =
+							this.walkArea.baseScale *
+							scaleAt(
+								this.walkArea.perspective,
+								{
+									x: sprite.x + tangent.x * pixels,
+									y: sprite.y + tangent.y * pixels,
+								},
+								this.walkArea.scaleClamp,
+							);
+						pixels =
+							-(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
+								sprite.scaleX -
+							((contact.x - 306) * sign * tangent.x +
+								(contact.y - 1059) * tangent.y) *
+								(nextScale - sprite.scaleX);
+					}
+				}
+				return pixels;
+			};
 		}
 		this.setSceneBackground(
 			this.locationImages.get(this.locationId()) ?? scene.background,
@@ -651,6 +747,19 @@ export class StoryGameScene extends BaseScene {
 
 		const scene = this.activeScene();
 		const points = scene.groundLine.points;
+		graphics.lineStyle(2, 0xff66dd, 0.9);
+		for (const exit of this.sceneExits) {
+			graphics.strokePoints(exit.region, true);
+			if (exit.region[0])
+				this.addPlacementDebugLabel(
+					exit.region[0].x,
+					exit.region[0].y,
+					exit.id,
+					"#ff66dd",
+				);
+		}
+		for (const layer of this.objectLayers)
+			graphics.strokePoints(layer.data.baseline, false);
 		if (points.length > 1) {
 			graphics.lineStyle(3, 0x4de8ff, 0.88);
 			graphics.beginPath();
@@ -849,17 +958,24 @@ export class StoryGameScene extends BaseScene {
 	protected override handlePointerDown(pointer: Phaser.Input.Pointer): void {
 		if (!this.hermesSprite?.visible || this.inputBlocked || this.openWorldBusy)
 			return;
+		if (pointer.y < TITLE_BAR_HEIGHT || pointer.y > MAX_FEET_Y) return;
 		const scene = this.activeScene();
-		if (this.generatedPlace && pointer.x < 35) {
-			void this.returnToParent();
+		if (
+			this.visibleFloor &&
+			floorPixel(this.visibleFloor, pointer.x, pointer.y)
+		) {
+			void this.walkGenerated(pointer.x, pointer.y);
 			return;
 		}
 		const interactable = this.findInteractableAtPoint(pointer.x, pointer.y);
 		if (interactable) {
-			void this.requestNarrationOptions(interactable);
+			void this.approachObject(interactable, pointer.x);
 			return;
 		}
-		const hotspot = this.findHotspotAtPoint(pointer.x, pointer.y);
+		const hotspot =
+			this.visibleFloor && floorPixel(this.visibleFloor, pointer.x, pointer.y)
+				? undefined
+				: this.findHotspotAtPoint(pointer.x, pointer.y);
 		if (hotspot) {
 			const reviewHotspot = scene.hotspots.find(
 				(item) => item.id === hotspot.id,
@@ -893,14 +1009,6 @@ export class StoryGameScene extends BaseScene {
 		await this.walkHermesPath(path);
 	}
 
-	private async returnToParent(): Promise<void> {
-		const place = this.generatedPlace;
-		if (!place) return;
-		const point = place.ground.groundLine.points[0];
-		await this.walkGenerated(point.x, point.y);
-		await this.enterLocation(place.parent);
-	}
-
 	private updateReviewHotspotHover(): void {
 		const scene = this.activeScene();
 		const pointer = this.input.activePointer;
@@ -921,7 +1029,10 @@ export class StoryGameScene extends BaseScene {
 			]);
 			return;
 		}
-		const hotspot = this.findHotspotAtPoint(pointer.x, pointer.y);
+		const hotspot =
+			this.visibleFloor && floorPixel(this.visibleFloor, pointer.x, pointer.y)
+				? undefined
+				: this.findHotspotAtPoint(pointer.x, pointer.y);
 		if (hotspot) {
 			this.stateText.setText([
 				`Review scene: ${scene.id}`,
@@ -941,9 +1052,15 @@ export class StoryGameScene extends BaseScene {
 		x: number,
 		y: number,
 	): SceneInteractable | undefined {
+		if (this.visibleFloor && floorPixel(this.visibleFloor, x, y))
+			return undefined;
 		const normalizedX = x / this.scale.width;
 		const normalizedY = y / this.scale.height;
-		return this.interactables.find(({ bounds }) => {
+		return this.interactables.find(({ name, bounds }) => {
+			const layer = this.objectLayers.find(
+				(l) => l.data.label.toLowerCase() === name.toLowerCase(),
+			);
+			if (layer) return layer.alpha(x, y);
 			const [x0, y0, x1, y1] = bounds;
 			return (
 				normalizedX >= x0 &&
@@ -1016,6 +1133,7 @@ export class StoryGameScene extends BaseScene {
 				interactables?: SceneInteractable[];
 			};
 			this.interactables = payload.interactables ?? [];
+			await this.loadObjectGeometry();
 			this.optionsCache.clear();
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
 			const location = this.locationId();
@@ -1038,6 +1156,221 @@ export class StoryGameScene extends BaseScene {
 						? error.message
 						: "Unable to identify scene objects",
 			});
+		}
+	}
+
+	private async loadObjectGeometry(): Promise<void> {
+		const generation = this.geometryGeneration;
+		const response = await fetch(
+			`${API_BASE_URL}/occluders/${this.locationId()}${this.currentImage ? `?image=${encodeURIComponent(this.currentImage)}` : ""}`,
+		);
+		if (!response.ok)
+			throw new Error(`Occluders request failed: ${response.status}`);
+		const data = (await response.json()) as {
+			occluders: Occluder[];
+			exits: Exit[];
+		};
+		const base =
+			this.currentImage ??
+			`${window.location.origin}/backgrounds/${this.reviewSceneId === "outside" ? "bus-station-kat-seated-composite-v1" : "arkham-bus-depot-flat-2d"}.png`;
+		const loaded = await Promise.all(
+			data.occluders.map(async (object) => {
+				const url = new URL(object.png, base).href;
+				const img = new Image();
+				img.crossOrigin = "anonymous";
+				await new Promise<void>((resolve, reject) => {
+					img.onload = () => resolve();
+					img.onerror = () =>
+						reject(new Error(`Occluder image failed: ${object.id}`));
+					img.src = url;
+				});
+				const canvas = document.createElement("canvas");
+				canvas.width = img.width;
+				canvas.height = img.height;
+				const context = canvas.getContext("2d");
+				if (!context) throw new Error("No mask context");
+				context.drawImage(img, 0, 0);
+				const pixels = context.getImageData(0, 0, img.width, img.height).data;
+				const alpha = (x: number, y: number) => {
+					const cx = Math.floor(
+							((x - object.bbox.x) * img.width) / object.bbox.w,
+						),
+						cy = Math.floor(((y - object.bbox.y) * img.height) / object.bbox.h);
+					return (
+						cx >= 0 &&
+						cy >= 0 &&
+						cx < img.width &&
+						cy < img.height &&
+						pixels[(cy * img.width + cx) * 4 + 3] > 127
+					);
+				};
+				return { object, url, img, alpha };
+			}),
+		);
+		if (generation !== this.geometryGeneration) return;
+		for (const layer of this.objectLayers) layer.image.destroy();
+		this.objectLayers = [];
+		this.vehicleOverlay?.setVisible(false);
+		const layerArea = this.walkArea;
+		for (const { object, url, img, alpha } of loaded) {
+			const canOverlap =
+				!layerArea ||
+				layerArea.mask.data.some((v, i) => {
+					if (!v) return false;
+					const p = cellPoint(layerArea.mask, i);
+					const scale =
+						layerArea.baseScale *
+						scaleAt(layerArea.perspective, p, layerArea.scaleClamp);
+					return (
+						p.y >= object.bbox.y &&
+						p.y - 1059 * scale <= object.bbox.y + object.bbox.h &&
+						p.x + 306 * scale >= object.bbox.x &&
+						p.x - 306 * scale <= object.bbox.x + object.bbox.w
+					);
+				});
+			if (!this.textures.exists(url)) this.textures.addImage(url, img);
+			this.objectLayers.push({
+				data: object,
+				alpha,
+				image: this.add
+					.image(object.bbox.x, object.bbox.y, url)
+					.setOrigin(0)
+					.setDisplaySize(object.bbox.w, object.bbox.h)
+					.setVisible(canOverlap),
+			});
+		}
+		if (this.visibleFloor && this.walkArea) {
+			const bridged = {
+				...this.visibleFloor,
+				data: [...this.visibleFloor.data],
+			};
+			bridgeOccluders(bridged, this.objectLayers);
+			this.walkArea.mask = clipFloorBelow(
+				erode(bridged, this.walkArea.perspective),
+				MAX_FEET_Y,
+			);
+		}
+		this.sceneExits = data.exits;
+		if (!this.generatedPlace) {
+			for (const hotspot of this.activeScene().hotspots) {
+				const action = hotspot.actions.USE;
+				if (!action?.transitionTo || !hotspot.approach) continue;
+				const point = action.moveTo ?? hotspot.approach;
+				this.sceneExits = this.sceneExits.filter((e) => e.kind !== "door");
+				this.sceneExits.unshift({
+					id: hotspot.id,
+					kind: "door",
+					label: hotspot.name,
+					to: action.transitionTo,
+					region: [
+						{ x: point.x - 10, y: point.y - 10 },
+						{ x: point.x + 10, y: point.y - 10 },
+						{ x: point.x + 10, y: point.y + 10 },
+						{ x: point.x - 10, y: point.y + 10 },
+					],
+				});
+			}
+		}
+		// Caption clipping and footprint erosion can put a raw threshold just
+		// outside the navigable mask. Its reachable approach is the trigger.
+		const exitMask = this.walkArea?.mask;
+		if (exitMask)
+			this.sceneExits = this.sceneExits.map((exit) => {
+				const center = {
+					x: exit.region.reduce((n, p) => n + p.x, 0) / exit.region.length,
+					y: exit.region.reduce((n, p) => n + p.y, 0) / exit.region.length,
+				};
+				const cell = nearestReachable(
+					exitMask,
+					this.hermesSprite ?? center,
+					center,
+				);
+				if (cell < 0) return exit;
+				const point = cellPoint(exitMask, cell);
+				return {
+					...exit,
+					region: [
+						{ x: point.x - 8, y: point.y - 8 },
+						{ x: point.x + 8, y: point.y - 8 },
+						{ x: point.x + 8, y: point.y + 8 },
+						{ x: point.x - 8, y: point.y + 8 },
+					],
+				};
+			});
+		this.exitLatch = this.hermesSprite
+			? exitAt(this.hermesSprite, this.sceneExits)?.id
+			: undefined;
+	}
+
+	private async approachObject(
+		object: SceneInteractable,
+		x: number,
+	): Promise<void> {
+		const layer = this.objectLayers.find(
+			(l) => l.data.label.toLowerCase() === object.name.toLowerCase(),
+		);
+		const generation = this.geometryGeneration;
+		const y = layer
+			? baselineYAt(layer.data, x) + 5
+			: object.bounds[3] * 1080 + 5;
+		const mask = this.walkArea?.mask;
+		if (!mask) return;
+		const candidates = mask.data
+			.flatMap((v, i) => (v ? [cellPoint(mask, i)] : []))
+			.filter(
+				(p) =>
+					p.y >=
+					(layer ? baselineYAt(layer.data, p.x) : object.bounds[3] * 1080),
+			);
+		candidates.sort(
+			(a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
+		);
+		let path: ScenePoint[] = [];
+		for (const point of candidates.slice(0, 128)) {
+			const candidate = this.previewWalk(point.x, point.y);
+			const end = candidate[candidate.length - 1];
+			if (end && Math.hypot(end.x - point.x, end.y - point.y) < 1) {
+				path = candidate;
+				break;
+			}
+		}
+		if (!path.length) {
+			this.emitOpenWorldState({
+				status: "error",
+				message: "There is no reachable floor in front of this object.",
+			});
+			return;
+		}
+		await this.walkHermesPath(path);
+		if (generation === this.geometryGeneration)
+			await this.requestNarrationOptions(object);
+	}
+
+	private async triggerExit(exit: Exit): Promise<void> {
+		try {
+			if (exit.to) {
+				await this.enterLocation(exit.to);
+				return;
+			}
+			if (exit.kind === "edge-left" || exit.kind === "edge-right") {
+				if (this.generatedPlace)
+					await this.enterLocation(
+						this.generatedPlace.neighbours?.[exit.kind] ??
+							this.generatedPlace.parent,
+					);
+				return;
+			}
+			if (exit.kind === "far") {
+				this.selectedInteractable = {
+					name: exit.label ?? "road ahead",
+					bounds: [0, 0, 1, 1],
+				};
+				await this.resolveNarration(
+					"I continue down the road to the next place.",
+				);
+			}
+		} catch (error) {
+			this.emitOpenWorldState({ status: "error", message: String(error) });
 		}
 	}
 
@@ -1279,9 +1612,12 @@ export class StoryGameScene extends BaseScene {
 		} else {
 			sprite.anims.timeScale = 1;
 			sprite.playAnimationState(state);
-			if (state === "idle" && direction === "away") {
+			if (
+				state === "idle" &&
+				(direction === "away" || direction === "toward")
+			) {
 				sprite.anims.stop();
-				sprite.setTexture(HERMES_AWAY_TEXTURE, 0).setFlipX(false);
+				sprite.setTexture(texture, 0).setFlipX(false);
 			} else sprite.setFlipX(direction === "right");
 		}
 	}
