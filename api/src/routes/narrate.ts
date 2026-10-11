@@ -1,7 +1,7 @@
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
+import { getModel } from "../lib/model.js";
 
 const STORY_GUIDE = `
 <story-guide>
@@ -537,13 +537,6 @@ const narrateRequestSchema = z
 	})
 	.strict();
 
-function getNarratorModel(): LanguageModel {
-	const google = createGoogleGenerativeAI({
-		apiKey: process.env.GOOGLE_API_KEY,
-	});
-	return google("gemini-2.5-flash");
-}
-
 export function createNarrateRoutes(model?: LanguageModel): Hono {
 	const routes = new Hono();
 
@@ -569,7 +562,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 		try {
 			if (request.mode === "options") {
 				const { object } = await generateObject({
-					model: model ?? getNarratorModel(),
+					model: model ?? getModel(),
 					mode: "json",
 					schema: narrateOptionsSchema,
 					system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
@@ -579,7 +572,7 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 			}
 
 			const { object } = await generateObject({
-				model: model ?? getNarratorModel(),
+				model: model ?? getModel(),
 				mode: "json",
 				schema: narrateResolveSchema,
 				system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,

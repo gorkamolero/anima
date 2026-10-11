@@ -1,10 +1,10 @@
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
+import { getModel } from "../lib/model.js";
 
 const REPOSITORY_ROOT = existsSync(resolve(process.cwd(), "adventures"))
 	? process.cwd()
@@ -30,13 +30,6 @@ export const interactablesSchema = z.object({
 		.max(12),
 });
 
-function getVisionModel(): LanguageModel {
-	const google = createGoogleGenerativeAI({
-		apiKey: process.env.GOOGLE_API_KEY,
-	});
-	return google("gemini-2.5-flash");
-}
-
 export function createInteractablesRoutes(model?: LanguageModel): Hono {
 	const routes = new Hono();
 
@@ -55,7 +48,7 @@ export function createInteractablesRoutes(model?: LanguageModel): Hono {
 
 			const image = await readFile(backgroundPath);
 			const { object } = await generateObject({
-				model: model ?? getVisionModel(),
+				model: model ?? getModel(),
 				mode: "json",
 				schema: interactablesSchema,
 				messages: [
