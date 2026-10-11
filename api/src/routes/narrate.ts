@@ -3,6 +3,13 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { getModel } from "../lib/model.js";
 
+import {
+	getWorldDb,
+	loadWorld,
+	statePatchSchema,
+	visualSchema,
+} from "../services/world.js";
+
 const STORY_GUIDE = `
 <story-guide>
 
@@ -516,7 +523,16 @@ export const narrateOptionsSchema = z.object({
 
 export const narrateResolveSchema = z.object({
 	caption: oneToFourSentences,
-	statePatch: z.record(z.union([z.string(), z.boolean()])),
+	statePatch: statePatchSchema,
+	visualStatePatch: visualSchema.partial().optional(),
+	travel: z
+		.object({
+			to: z.string().min(1),
+			kind: z.enum(["anchor", "new"]),
+			template: z.enum(["exterior", "interior"]).optional(),
+			description: z.string().optional(),
+		})
+		.optional(),
 	visual: z.discriminatedUnion("delta", [
 		z.object({ delta: z.literal("none") }),
 		z.object({
@@ -530,6 +546,10 @@ const narrateRequestSchema = z
 	.object({
 		scene: z.string().min(1),
 		sceneDescription: z.string().min(1),
+		sessionId: z
+			.string()
+			.regex(/^[a-zA-Z0-9_-]{1,128}$/)
+			.optional(),
 		object: z.string().min(1),
 		choice: z.string().optional(),
 		flags: z.record(z.union([z.string(), z.boolean()])),
@@ -552,11 +572,16 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 		}
 
 		const request = parsed.data;
+		const world = request.sessionId
+			? await loadWorld(await getWorldDb(), request.sessionId)
+			: undefined;
 		const sharedPrompt = [
 			`Scene: ${request.scene}`,
 			`Scene description: ${request.sceneDescription}`,
 			`Clicked object: ${request.object}`,
 			`Current flags: ${JSON.stringify(request.flags)}`,
+			`<world-state>${JSON.stringify(world ? { ...world, visual: world.visual[world.location] } : { flags: request.flags })}</world-state>`,
+			"Return statePatch.flags, inventory {add,remove}, npcMemory when changed. A visual delta new MUST include a nonempty visualStatePatch describing the resulting visible state, preserving earlier changes. Travel only for declared movement: {to: stable short place slug, kind: anchor or new, template: exterior or interior, description}. Anchors: outside (depot exterior), inside (depot interior).",
 		].join("\n");
 
 		try {
@@ -582,6 +607,15 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					"Resolve only that declared action. Caption must be 1-4 sentences.",
 				].join("\n"),
 			});
+			if (
+				object.visual.delta === "new" &&
+				(!object.visualStatePatch ||
+					Object.keys(object.visualStatePatch).length === 0)
+			)
+				return c.json(
+					{ error: "Visual change requires visualStatePatch" },
+					502,
+				);
 			return c.json(object);
 		} catch (error) {
 			const message =

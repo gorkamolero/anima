@@ -59,7 +59,12 @@ describe("POST /api/narrate", () => {
 		const app = testApp({
 			caption:
 				"The machine caves inward with a metallic groan. Briny water beads across the cracked glass.",
-			statePatch: { vendingMachineKicked: true },
+			statePatch: {
+				flags: { vendingMachineKicked: true },
+				inventory: { add: ["glass"] },
+				npcMemory: { clerk: "heard the crash" },
+			},
+			visualStatePatch: { damage: "vending machine dented" },
 			visual: {
 				delta: "new",
 				imagePrompt: "Dent the vending machine and crack its dark glass.",

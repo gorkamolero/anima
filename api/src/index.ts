@@ -14,15 +14,9 @@ import { gameRoutes } from "./routes/game.js";
 import { interactablesRoutes } from "./routes/interactables.js";
 import { narrateRoutes } from "./routes/narrate.js";
 import { sceneImageRoutes } from "./routes/scene-image.js";
+import { worldRoutes } from "./routes/world.js";
 
 export const app = new Hono();
-
-if (process.env.NODE_ENV !== "test") {
-	const envPath = existsSync(resolve(process.cwd(), ".env"))
-		? resolve(process.cwd(), ".env")
-		: resolve(process.cwd(), "../.env");
-	if (existsSync(envPath)) process.loadEnvFile(envPath);
-}
 
 // Middleware
 app.use("*", logger());
@@ -48,6 +42,7 @@ app.get("/api/health", (c) => {
 
 // Mount game routes under /api
 app.route("/api", gameRoutes);
+app.route("/api", worldRoutes);
 app.route("/api", interactablesRoutes);
 app.route("/api", narrateRoutes);
 app.route("/api", sceneImageRoutes);

@@ -71,9 +71,29 @@ interface SceneInteractable {
 	bounds: [number, number, number, number];
 }
 
+interface VisualState {
+	timeOfDay: string;
+	weather: string;
+	damage: string;
+	npcsPresent: string[];
+}
+interface WorldState {
+	location: string;
+	flags: Record<string, string | boolean>;
+	inventory: string[];
+	npcMemory: Record<string, string>;
+	visual: Record<string, VisualState>;
+	history: unknown[];
+}
+
 interface NarrationResolution {
 	caption: string;
-	statePatch: Record<string, string | boolean>;
+	statePatch: {
+		flags?: Record<string, string | boolean>;
+		inventory?: { add?: string[]; remove?: string[] };
+		npcMemory?: Record<string, string>;
+	};
+	visualStatePatch?: Partial<VisualState>;
 	visual: { delta: "none" } | { delta: "new"; imagePrompt: string };
 }
 
@@ -143,6 +163,8 @@ export class StoryGameScene extends BaseScene {
 	private lastOpenWorldCaption?: string;
 	private lastOpenWorldImagePrompt?: string;
 	private lastImageEditMs?: number;
+	private world?: WorldState;
+	private worldSessionId = "";
 
 	constructor() {
 		super({ key: "StoryGameScene" });
@@ -227,7 +249,7 @@ export class StoryGameScene extends BaseScene {
 		this.bindReviewEvents();
 		this.bindOpenWorldEvents();
 		this.setupInputHandlers();
-		void this.loadInteractables();
+		void this.restoreWorld();
 
 		this.input.keyboard?.on("keydown-S", () => this.saveState());
 		this.input.keyboard?.on("keydown-L", () => {
@@ -799,6 +821,41 @@ export class StoryGameScene extends BaseScene {
 		});
 	}
 
+	private async restoreWorld(): Promise<void> {
+		this.openWorldBusy = true;
+		try {
+			this.worldSessionId =
+				localStorage.getItem("anima.world.session") ?? crypto.randomUUID();
+			localStorage.setItem("anima.world.session", this.worldSessionId);
+			const response = await fetch(
+				`${API_BASE_URL}/world/${this.worldSessionId}`,
+			);
+			if (!response.ok) throw new Error("Unable to restore world");
+			this.world = (await response.json()) as WorldState;
+			if (this.world.location === "inside" || this.world.location === "outside")
+				this.reviewSceneId = this.world.location;
+			Object.assign(this.snapshot.state.flags, this.world.flags);
+			this.renderReviewScene();
+			await this.loadInteractables();
+		} catch (error) {
+			this.emitOpenWorldState({ status: "error", message: String(error) });
+		} finally {
+			this.openWorldBusy = false;
+		}
+	}
+	private async patchWorld(patch: unknown): Promise<void> {
+		const response = await fetch(
+			`${API_BASE_URL}/world/${this.worldSessionId}`,
+			{
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(patch),
+			},
+		);
+		if (!response.ok) throw new Error("Unable to save world");
+		this.world = (await response.json()) as WorldState;
+	}
+
 	private async loadInteractables(): Promise<void> {
 		try {
 			const response = await fetch(`${API_BASE_URL}/interactables/outside`);
@@ -837,6 +894,7 @@ export class StoryGameScene extends BaseScene {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					scene: scene.id,
+					sessionId: this.worldSessionId,
 					sceneDescription: scene.description,
 					object: interactable.name,
 					flags: this.snapshot.state.flags,
@@ -881,6 +939,7 @@ export class StoryGameScene extends BaseScene {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					scene: scene.id,
+					sessionId: this.worldSessionId,
 					sceneDescription: scene.description,
 					object: interactable.name,
 					choice,
@@ -892,7 +951,16 @@ export class StoryGameScene extends BaseScene {
 				throw new Error(`Narrator resolution failed: ${response.status}`);
 			}
 			const resolution = (await response.json()) as NarrationResolution;
-			Object.assign(this.snapshot.state.flags, resolution.statePatch);
+			await this.patchWorld({
+				statePatch: resolution.statePatch,
+				visualStatePatch: resolution.visualStatePatch,
+				action: {
+					object: interactable.name,
+					choice,
+					caption: resolution.caption,
+				},
+			});
+			Object.assign(this.snapshot.state.flags, this.world?.flags);
 			this.reviewOutput = [resolution.caption];
 			this.lastOpenWorldCaption = resolution.caption;
 			this.outputText.setText(resolution.caption);
@@ -907,6 +975,7 @@ export class StoryGameScene extends BaseScene {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						scene: scene.id,
+						sessionId: this.worldSessionId,
 						imagePrompt: resolution.visual.imagePrompt,
 					}),
 				});
@@ -1202,6 +1271,7 @@ export class StoryGameScene extends BaseScene {
 		this.reviewOutput =
 			this.reviewOutput.length > 0 ? this.reviewOutput : scene.output;
 		localStorage.setItem(REVIEW_SCENE_KEY, sceneId);
+		if (this.world) void this.patchWorld({ location: sceneId });
 
 		for (const [characterId, placement] of Object.entries(spawn)) {
 			if (!placement) continue;
@@ -1221,6 +1291,7 @@ export class StoryGameScene extends BaseScene {
 			delete this.reviewCharacterOverrides[sceneId];
 			this.setHermesMotionState("idle");
 			localStorage.setItem(REVIEW_SCENE_KEY, sceneId);
+			if (this.world) void this.patchWorld({ location: sceneId });
 			this.renderReviewScene();
 		};
 		const onSceneChange = (event: Event) => {
@@ -1298,6 +1369,8 @@ export class StoryGameScene extends BaseScene {
 			interactables: this.interactables,
 			openWorld: {
 				busy: this.openWorldBusy,
+				sessionId: this.worldSessionId,
+				world: this.world,
 				selectedObject: this.selectedInteractable?.name ?? null,
 				caption: this.lastOpenWorldCaption ?? null,
 				imagePrompt: this.lastOpenWorldImagePrompt ?? null,
