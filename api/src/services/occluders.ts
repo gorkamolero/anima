@@ -1,0 +1,410 @@
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { appendFileSync, mkdirSync, readFileSync, rmdirSync } from "node:fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { basename, resolve } from "node:path";
+import { fal } from "@fal-ai/client";
+import { imagePath, ROOT } from "../lib/backgrounds.js";
+import { interactablesSchema } from "../routes/interactables.js";
+import {
+	deriveExits,
+	type FloorRaster,
+	floorAt,
+	type LabelledBox,
+	type Point,
+} from "./exits.js";
+
+export interface Occluder {
+	id: string;
+	label: string;
+	bbox: { x: number; y: number; w: number; h: number };
+	baseline: Point[];
+	png: string;
+}
+const MODEL = "fal-ai/sam2/image";
+const VERSION = 9;
+const cacheRoot = resolve(ROOT, "api/data/perception");
+const proofRoot = resolve(ROOT, "tmp/occluders");
+const hashOf = (value: Buffer | string) =>
+	createHash("sha256").update(value).digest("hex");
+export async function cachedFloor(
+	image: string,
+): Promise<FloorRaster | undefined> {
+	const hash = hashOf(await readFile(imagePath(image)));
+	const cached = await readFile(
+		resolve(cacheRoot, `${hash}.json`),
+		"utf8",
+	).catch(() => null);
+	return cached
+		? (JSON.parse(cached) as { mask: FloorRaster }).mask
+		: undefined;
+}
+/** Semantic shortlist only; SAM, never an LLM, supplies the pixels. */
+export function canOcclude(object: LabelledBox): boolean {
+	return (
+		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile)\b/i.test(
+			object.name,
+		) &&
+		!/\b(sky|floor|ground|road|distant|horizon|window)\b/i.test(object.name)
+	);
+}
+/** Record attempted requests BEFORE submitting, including failures. Cross-process lock
+ * prevents concurrent routes from overspending the task's hard 40-call allowance. */
+function reserveSegmentation(key: string, label: string): void {
+	mkdirSync(proofRoot, { recursive: true });
+	const lock = resolve(proofRoot, "budget.lock");
+	try {
+		mkdirSync(lock);
+	} catch {
+		throw new Error("Segmentation budget busy; retry shortly");
+	}
+	try {
+		const ledger = resolve(proofRoot, "calls.md");
+		let previous = "";
+		try {
+			previous = readFileSync(ledger, "utf8");
+		} catch {}
+		const count = (previous.match(/^\| CALL /gm) ?? []).length;
+		if (count >= 40)
+			throw new Error("Occluder segmentation budget exhausted (40 calls)");
+		if (!previous)
+			appendFileSync(
+				ledger,
+				"# Occluder segmentation calls\n\nSAM 3.1, box prompts. Attempts reserved before submission; cache hits cost zero. Limit: 40.\n\n| Attempt | UTC | Cache key | Object |\n|---|---|---|---|\n",
+			);
+		appendFileSync(
+			ledger,
+			`| CALL ${count + 1} | ${new Date().toISOString()} | ${key} | ${label.replace(/[\n|]/g, " ")} |\n`,
+		);
+	} finally {
+		rmdirSync(lock);
+	}
+}
+/** Remove disconnected detections; one labelled box represents one prop. */
+export function largestComponent(mask: FloorRaster): FloorRaster {
+	const { width: w, height: h } = mask;
+	const seen = new Uint8Array(w * h),
+		queue = new Int32Array(w * h);
+	let best: number[] = [];
+	for (let seed = 0; seed < w * h; seed++) {
+		if (seen[seed] || !mask.data[seed]) continue;
+		let head = 0,
+			tail = 1;
+		queue[0] = seed;
+		seen[seed] = 1;
+		while (head < tail) {
+			const n = queue[head++],
+				x = n % w,
+				y = Math.floor(n / w);
+			for (const next of [
+				x > 0 ? n - 1 : -1,
+				x < w - 1 ? n + 1 : -1,
+				y > 0 ? n - w : -1,
+				y < h - 1 ? n + w : -1,
+			]) {
+				if (next >= 0 && !seen[next] && mask.data[next]) {
+					seen[next] = 1;
+					queue[tail++] = next;
+				}
+			}
+		}
+		if (tail > best.length) best = Array.from(queue.subarray(0, tail));
+	}
+	const data = new Array<number>(w * h).fill(0);
+	for (const n of best) data[n] = 1;
+	return { width: w, height: h, data };
+}
+export function maskGeometry(
+	mask: FloorRaster,
+	floor?: FloorRaster,
+	supportFraction = 0.8,
+): { bbox: Occluder["bbox"]; baseline: Point[] } | undefined {
+	const { width: w, height: h, data } = mask;
+	let count = 0,
+		minX = w,
+		minY = h,
+		maxX = -1,
+		maxY = -1;
+	const bottoms = new Map<number, number>();
+	for (let y = 0; y < h; y++)
+		for (let x = 0; x < w; x++)
+			if (data[y * w + x]) {
+				count++;
+				minX = Math.min(minX, x);
+				maxX = Math.max(maxX, x);
+				minY = Math.min(minY, y);
+				maxY = Math.max(maxY, y);
+				bottoms.set(x, y);
+			}
+	if (count / (w * h) < 0.002 || count / (w * h) > 0.35) return;
+	const sx = 1920 / w,
+		sy = 1080 / h;
+	// Contact samples come from the lower supporting silhouette, not the canopy.
+	const lower = [...bottoms.values()].sort((a, b) => a - b);
+	const cutoff = lower[Math.floor(lower.length * 0.8)];
+	const columns = [...bottoms].sort((a, b) => a[0] - b[0]);
+	let support = columns.filter(([, y]) => y >= cutoff);
+	if (floor) {
+		const contact = columns.filter(
+			([x, y]) =>
+				y >= minY + (maxY - minY) * supportFraction &&
+				[1, 5, 10, 20].some((d) =>
+					floorAt(floor, (x + 0.5) * sx, Math.min(1079, (y + 1) * sy + d)),
+				),
+		);
+		if (contact.length) {
+			// Coarse floor masks can miss an entire supporting leg. Preserve its
+			// visible bottom rather than extending another leg's depth across it.
+			const missing = columns.filter(
+				([x, y]) =>
+					y >= minY + (maxY - minY) * supportFraction &&
+					!contact.some(([cx]) => Math.abs(cx - x) * sx <= 40),
+			);
+			support = [...contact, ...missing].sort((a, b) => a[0] - b[0]);
+		}
+	}
+	const baseline: Point[] = [];
+	// Quantile buckets avoid inventing a contact point in the gap between bench legs.
+	const stride = Math.max(1, Math.ceil(support.length / 6));
+	for (let i = 0; i < support.length; i += stride) {
+		const group = support.slice(i, i + stride);
+		const xs = group.map((p) => p[0]).sort((a, b) => a - b);
+		const ys = group.map((p) => p[1]).sort((a, b) => a - b);
+		baseline.push({
+			x: (xs[Math.floor(xs.length / 2)] + 0.5) * sx,
+			y: (ys[Math.floor(ys.length / 2)] + 1) * sy,
+		});
+	}
+	return {
+		bbox: {
+			x: minX * sx,
+			y: minY * sy,
+			w: (maxX - minX + 1) * sx,
+			h: (maxY - minY + 1) * sy,
+		},
+		baseline,
+	};
+}
+/** SAM 2 spatial prompts avoid SAM 3's concept-union behavior for this art.
+ * A reviewed crop-sheet response can populate the same image+box cache; its
+ * response record retains both original and reviewed boxes for provenance. */
+async function segment(
+	bytes: Buffer,
+	object: LabelledBox,
+	width: number,
+	height: number,
+): Promise<string | undefined> {
+	const key = hashOf(
+		`${hashOf(bytes)}:${MODEL}:${JSON.stringify(object.bounds)}`,
+	);
+	await mkdir(cacheRoot, { recursive: true });
+	const responsePath = resolve(cacheRoot, `${key}.occlusion-response.json`);
+	const maskPath = resolve(cacheRoot, `${key}.occlusion-mask.png`);
+	const review = await readFile(responsePath, "utf8").catch(() => null);
+	if (review && (JSON.parse(review) as { rejected?: string }).rejected)
+		return undefined;
+	if (
+		await readFile(maskPath)
+			.then(() => true)
+			.catch(() => false)
+	)
+		return maskPath;
+	const cached = await readFile(responsePath, "utf8").catch(() => null);
+	let result: { image: { url: string } };
+	if (cached) result = JSON.parse(cached);
+	else {
+		const [x0, y0, x1, y1] = object.bounds;
+		const box = {
+			x_min: Math.round(x0 * width),
+			y_min: Math.round(y0 * height),
+			x_max: Math.round(x1 * width),
+			y_max: Math.round(y1 * height),
+		};
+		const imageUrl = await fal.storage.upload(
+			new Blob([bytes], { type: "image/png" }),
+		);
+		reserveSegmentation(key, `${MODEL}: ${object.name}`);
+		const response = await fal.subscribe(MODEL, {
+			input: {
+				image_url: imageUrl,
+				box_prompts: [box],
+				apply_mask: false,
+				output_format: "png",
+			},
+		});
+		result = response.data;
+		await writeFile(responsePath, JSON.stringify(result));
+	}
+	if (!result.image?.url)
+		throw new Error(
+			"Cached reviewed mask is missing; restore it before deriving",
+		);
+	const response = await fetch(result.image.url);
+	if (!response.ok) throw new Error("Could not download segmentation mask");
+	await writeFile(maskPath, Buffer.from(await response.arrayBuffer()));
+	return maskPath;
+}
+const pending = new Map<
+	string,
+	Promise<{ occluders: Occluder[]; exits: ReturnType<typeof deriveExits> }>
+>();
+export function deriveOccluders(
+	image: string,
+	ground?: { floor: FloorRaster; horizonY?: number },
+): Promise<{ occluders: Occluder[]; exits: ReturnType<typeof deriveExits> }> {
+	const source = imagePath(image);
+	const existing = pending.get(source);
+	if (existing) return existing;
+	const task = derive(source, image, ground).finally(() =>
+		pending.delete(source),
+	);
+	pending.set(source, task);
+	return task;
+}
+async function derive(
+	source: string,
+	image: string,
+	ground?: { floor: FloorRaster; horizonY?: number },
+) {
+	const bytes = await readFile(source);
+	const objects = interactablesSchema.parse(
+		JSON.parse(
+			await readFile(source.replace(/\.png$/, ".interactables.json"), "utf8"),
+		),
+	).interactables;
+	const floor = ground?.floor ?? (await cachedFloor(image));
+	const stem = source.replace(/\.png$/, "");
+	const landmarks = await readFile(`${stem}.landmarks.json`, "utf8").catch(
+		() => null,
+	);
+	const horizonY =
+		ground?.horizonY ??
+		(landmarks
+			? (JSON.parse(landmarks) as { horizonY?: number }).horizonY
+			: undefined);
+	const fingerprint = hashOf(
+		JSON.stringify({
+			image: hashOf(bytes),
+			objects,
+			floor,
+			horizonY,
+			version: VERSION,
+		}),
+	);
+	const meta = await readFile(`${stem}.occluders.cache.json`, "utf8").catch(
+		() => null,
+	);
+	if (meta === fingerprint) {
+		const occluders = JSON.parse(
+			await readFile(`${stem}.occluders.json`, "utf8"),
+		) as Occluder[];
+		if (
+			(
+				await Promise.all(
+					occluders.map((o) =>
+						readFile(resolve(source, "..", o.png))
+							.then(() => true)
+							.catch(() => false),
+					),
+				)
+			).every(Boolean)
+		)
+			return {
+				occluders,
+				exits: floor ? deriveExits(floor, objects, horizonY) : [],
+			};
+	}
+	const [width, height] = execFileSync(
+		"magick",
+		["identify", "-format", "%w %h", source],
+		{ encoding: "utf8" },
+	)
+		.trim()
+		.split(" ")
+		.map(Number);
+	const occluders: Occluder[] = [];
+	const candidates = objects.filter(
+		(object) =>
+			canOcclude(object) &&
+			(horizonY === undefined || object.bounds[3] * 1080 >= horizonY + 25),
+	);
+	for (const object of candidates) {
+		const maskPath = await segment(bytes, object, width, height);
+		if (!maskPath) continue;
+		const raster = execFileSync(
+			"magick",
+			[
+				maskPath,
+				"-resize",
+				"1920x1080!",
+				"-colorspace",
+				"gray",
+				"-threshold",
+				"50%",
+				"-depth",
+				"8",
+				"gray:-",
+			],
+			{ maxBuffer: 8 * 1024 * 1024 },
+		);
+		const cleaned = largestComponent({
+			width: 1920,
+			height: 1080,
+			data: Array.from(raster, (v) => (v > 127 ? 1 : 0)),
+		});
+		const supportFraction = /\b(car|van|bus|truck)\b/i.test(object.name)
+			? 0.95
+			: /\b(pergola|gazebo|gargoyle|statue)\b/i.test(object.name)
+				? 0.9
+				: /net|pile/i.test(object.name)
+					? 0.55
+					: 0.8;
+		const geometry = maskGeometry(cleaned, floor, supportFraction);
+		if (!geometry) continue;
+		const cleanPath = maskPath.replace(/\.png$/, ".clean.png");
+		execFileSync(
+			"magick",
+			["-size", "1920x1080", "-depth", "8", "gray:-", cleanPath],
+			{ input: Buffer.from(cleaned.data.map((v) => (v ? 255 : 0))) },
+		);
+
+		const id = `${object.name
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, "-")
+			.replace(
+				/^-|-$/g,
+				"",
+			)}-${hashOf(JSON.stringify(object.bounds)).slice(0, 6)}`;
+		const png = `${basename(stem)}.occluder-${id}.png`;
+		const { x, y, w, h } = geometry.bbox;
+		execFileSync("magick", [
+			source,
+			"-resize",
+			"1920x1080!",
+			"(",
+			cleanPath,
+			"-resize",
+			"1920x1080!",
+			"-colorspace",
+			"gray",
+			"-threshold",
+			"50%",
+			")",
+			"-alpha",
+			"off",
+			"-compose",
+			"CopyOpacity",
+			"-composite",
+			"-crop",
+			`${w}x${h}+${x}+${y}`,
+			"+repage",
+			resolve(source, "..", png),
+		]);
+		occluders.push({ id, label: object.name, ...geometry, png });
+	}
+	const exits = floor ? deriveExits(floor, objects, horizonY) : [];
+	await writeFile(`${stem}.occluders.json`, JSON.stringify(occluders, null, 2));
+	await writeFile(`${stem}.exits.json`, JSON.stringify(exits, null, 2));
+	await writeFile(`${stem}.occluders.cache.json`, fingerprint);
+	return { occluders, exits };
+}
