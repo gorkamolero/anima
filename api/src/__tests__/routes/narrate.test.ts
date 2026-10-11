@@ -6,6 +6,7 @@ import {
 	createNarrateRoutes,
 	narrateOptionsSchema,
 	narrateResolveSchema,
+	rememberVisibleChange,
 } from "../../routes/narrate.js";
 import { createWorldRoutes } from "../../routes/world.js";
 import { getWorldDb, openWorldDb } from "../../services/world.js";
@@ -42,6 +43,25 @@ const request = {
 };
 
 describe("POST /api/narrate", () => {
+	it("keeps painted and untouched pictures distinct even when the model says intact", () => {
+		const painted = rememberVisibleChange({
+			caption: "A red spiral marks the door.",
+			statePatch: {},
+			visual: { delta: "new", imagePrompt: "Paint a red spiral on the door." },
+			visualStatePatch: { damage: "intact" },
+		});
+		expect(painted.visualStatePatch?.damage).toContain("red spiral");
+		const observed = rememberVisibleChange(
+			{
+				caption: "The door waits.",
+				statePatch: {},
+				visual: { delta: "none" },
+				visualStatePatch: { damage: "intact" },
+			},
+			painted.visualStatePatch?.damage,
+		);
+		expect(observed.visualStatePatch).toEqual({});
+	});
 	it("accepts optional partial patches and anchor travel in the public contract", () => {
 		const value = {
 			caption: "The door stands open.",

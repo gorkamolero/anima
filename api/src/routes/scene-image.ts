@@ -133,7 +133,21 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 
 		try {
 			await mkdir(generatedDirectory, { recursive: true });
-			// ponytail: immutable disk cache keyed by scene and prompt; add shared storage when deployment has multiple machines.
+			const mapping = await (await getWorldDb()).execute({
+				sql: "SELECT path FROM images WHERE cache_key = ?",
+				args: [filename],
+			});
+			if (
+				mapping.rows.length &&
+				existsSync(imagePath(String(mapping.rows[0].path)))
+			) {
+				recordCall("image", 0, true);
+				return c.json({
+					url: `${new URL(c.req.url).origin}${mapping.rows[0].path}`,
+					cached: true,
+				});
+			}
+			// ponytail: immutable disk cache keyed by location, visual state and base image; add shared storage when deployment has multiple machines.
 			if (
 				await access(outputPath)
 					.then(() => true)

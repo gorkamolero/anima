@@ -549,6 +549,29 @@ export const narrateResolveSchema = z.object({
 	]),
 });
 
+export function rememberVisibleChange(
+	resolution: z.infer<typeof narrateResolveSchema>,
+	previousDamage = "intact",
+): z.infer<typeof narrateResolveSchema> {
+	if (resolution.travel || resolution.visual.delta === "none")
+		return { ...resolution, visualStatePatch: {} };
+	const patch = resolution.visualStatePatch ?? {};
+	// A model can describe paint in imagePrompt but leave every state field unchanged.
+	// Preserve that physical edit in the visual key instead of aliasing the untouched picture.
+	const damage =
+		!patch.damage ||
+		patch.damage === "intact" ||
+		patch.damage === previousDamage
+			? [
+					previousDamage === "intact" ? "" : previousDamage,
+					resolution.visual.imagePrompt,
+				]
+					.filter(Boolean)
+					.join("; ")
+			: patch.damage;
+	return { ...resolution, visualStatePatch: { ...patch, damage } };
+}
+
 const narrateRequestSchema = z
 	.object({
 		scene: z.string().min(1),
@@ -610,7 +633,15 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 			});
 			if (cached.rows.length) {
 				recordCall(`narrate-${request.mode}`, Date.now() - started, true);
-				return c.json(JSON.parse(String(cached.rows[0].data)));
+				const value = JSON.parse(String(cached.rows[0].data));
+				return c.json(
+					request.mode === "resolve"
+						? rememberVisibleChange(
+								value,
+								world?.visual[world.location]?.damage,
+							)
+						: value,
+				);
 			}
 		}
 		const save = async (value: unknown) => {
@@ -655,9 +686,13 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					{ error: "Visual change requires visualStatePatch" },
 					502,
 				);
-			await save(object);
+			const resolution = rememberVisibleChange(
+				object,
+				world?.visual[world.location]?.damage,
+			);
+			await save(resolution);
 			recordCall(`narrate-${request.mode}`, Date.now() - started);
-			return c.json(object);
+			return c.json(resolution);
 		} catch (error) {
 			const message =
 				error instanceof Error ? error.message : "Narration failed";
