@@ -1,0 +1,50 @@
+[
+  {
+    "direction": "away-right",
+    "reference": "hermes-walk-away-right",
+    "sourceFrame": 8,
+    "editAttempt": 1,
+    "uniformScale": 1.0208761747786628,
+    "translation": [
+      2.25481866322525,
+      -0.0693565651892043
+    ],
+    "plantedBootRegistration": {
+      "dx": 1.2030907802421749,
+      "dy": -1.1584129806021326,
+      "residual": 0.0038162823608392927,
+      "boundary": false
+    },
+    "freeBootRegistration": {
+      "dx": 0.14211937299844132,
+      "dy": -1.127056773024099,
+      "residual": 0.0037046024347894093,
+      "boundary": false
+    },
+    "method": "single whole-image uniform scale and translation, generated alpha preserved"
+  },
+  {
+    "direction": "toward-right",
+    "reference": "hermes-walk-toward-right",
+    "sourceFrame": 8,
+    "editAttempt": 1,
+    "uniformScale": 1.017183003741535,
+    "translation": [
+      0.8000964288740015,
+      1.4723671793621242
+    ],
+    "plantedBootRegistration": {
+      "dx": -0.0755220154610471,
+      "dy": -1.243708542924886,
+      "residual": 0.004473374046131488,
+      "boundary": false
+    },
+    "freeBootRegistration": {
+      "dx": 0.318675238856445,
+      "dy": -1.3918309942528795,
+      "residual": 0.0068710666614454075,
+      "boundary": false
+    },
+    "method": "single whole-image uniform scale and translation, generated alpha preserved"
+  }
+]

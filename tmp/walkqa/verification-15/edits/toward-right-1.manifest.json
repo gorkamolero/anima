@@ -1,0 +1,10 @@
+{
+  "tool": "image_gen.imagegen",
+  "prompt": "Precise-object-edit for an adventure game sprite. Edit this exact source frame into a held standing pose with the smallest possible change: relax only the existing trouser creases slightly. Preserve the bent knees, overlapping leg silhouette, both boots, boot positions and angles EXACTLY. This is an animation match cut; no straightening or repositioning limbs. Keep the entire head, hair, face, glasses, neck, torso, jacket, arms, hands, satchel and strap exactly unchanged. Preserve framing, transparent canvas margins, character scale, colors, linework and all silhouette edges. Do not add or remove limbs or alter the stance. Full body transparent PNG, same composition as input.",
+  "referenced_image_paths": [
+    "/Users/gorkolas/Developer/anima/tmp/walkqa/verification-14/edits/toward-right-source.png"
+  ],
+  "transparent_background": true,
+  "rawOutput": "toward-right-1.png",
+  "imageEditsUsed": 1
+}
