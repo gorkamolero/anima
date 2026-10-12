@@ -298,13 +298,14 @@ export function installAgentDebug(scene: BaseScene): void {
 	if ((game as unknown as { pendingDestroy?: boolean }).pendingDestroy) return;
 	let virtualTime = performance.now();
 
-	const step = (ms: number): void => {
+	const step = (ms: number, beforeFinalFrame?: () => void): void => {
 		// Exact elapsed time, subdivided only for simulation stability.
 		game.loop.smoothStep = false;
 		virtualTime = Math.max(virtualTime, game.loop.lastTime);
 		const frames = Math.max(1, Math.ceil(ms / (1000 / 60)));
 		for (let i = 0; i < frames; i++) {
 			virtualTime += ms / frames;
+			if (i === frames - 1) beforeFinalFrame?.();
 			game.loop.step(virtualTime);
 		}
 	};
@@ -419,12 +420,15 @@ export function installAgentDebug(scene: BaseScene): void {
 			// which is the only way to read a WebGL canvas without
 			// preserveDrawingBuffer.
 			const image = await new Promise<HTMLImageElement>((resolve) => {
-				(
-					game.renderer as unknown as {
-						snapshot(callback: (img: HTMLImageElement) => void): void;
-					}
-				).snapshot(resolve);
-				step(stepMs);
+				// step() subdivides at 60 Hz. Queue the snapshot only for its
+				// FINAL subframe, so pixels and post-step telemetry agree.
+				step(stepMs, () => {
+					(
+						game.renderer as unknown as {
+							snapshot(callback: (img: HTMLImageElement) => void): void;
+						}
+					).snapshot(resolve);
+				});
 			});
 			// Let awaited game logic (walk promises, transitions) progress.
 			for (let i = 0; i < 5; i++) await Promise.resolve();
