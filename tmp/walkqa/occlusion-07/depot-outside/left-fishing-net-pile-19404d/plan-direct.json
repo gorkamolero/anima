@@ -1,0 +1,25 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "direct-front-to-behind",
+      "start": [
+        427.5,
+        927.5
+      ],
+      "walk": [
+        427.5,
+        862.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "direct-behind-to-front",
+      "walk": [
+        427.5,
+        927.5
+      ],
+      "frames": 240
+    }
+  ]
+}

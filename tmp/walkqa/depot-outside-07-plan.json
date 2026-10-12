@@ -1,0 +1,53 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "side-far",
+      "start": [
+        244.0,
+        817.5
+      ],
+      "click": [
+        376.0,
+        817.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "side-near",
+      "start": [
+        281.5,
+        917.5
+      ],
+      "click": [
+        633.5,
+        917.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "away-depth",
+      "start": [
+        457.5,
+        917.5
+      ],
+      "click": [
+        310.0,
+        817.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "toward-depth",
+      "start": [
+        310.0,
+        817.5
+      ],
+      "click": [
+        457.5,
+        917.5
+      ],
+      "frames": 120
+    }
+  ]
+}

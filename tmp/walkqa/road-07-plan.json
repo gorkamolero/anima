@@ -1,0 +1,53 @@
+{
+  "place": "place-f2d0a7f7f76225002663",
+  "beats": [
+    {
+      "name": "side-far",
+      "start": [
+        796.0,
+        777.5
+      ],
+      "click": [
+        1104.0,
+        777.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "side-near",
+      "start": [
+        820.5,
+        907.5
+      ],
+      "click": [
+        1204.5,
+        907.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "away-depth",
+      "start": [
+        1012.5,
+        907.5
+      ],
+      "click": [
+        950.0,
+        777.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "toward-depth",
+      "start": [
+        950.0,
+        777.5
+      ],
+      "click": [
+        1012.5,
+        907.5
+      ],
+      "frames": 120
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "behindCells": 75,
+    "frontCells": 534,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "capture-required",
+    "start": [
+      992.5,
+      942.5
+    ],
+    "behind": [
+      992.5,
+      817.5
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "object": "fishing-net-pile-22c3fb",
+    "behindCells": 0,
+    "frontCells": 947,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "behindCells": 71,
+    "frontCells": 1090,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "capture-required",
+    "start": [
+      952.5,
+      942.5
+    ],
+    "behind": [
+      952.5,
+      817.5
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "object": "small-house-bac0d8",
+    "behindCells": 0,
+    "frontCells": 825,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "depot-outside",
+    "object": "van-7c111f",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "depot-outside",
+    "object": "left-fishing-net-pile-19404d",
+    "behindCells": 10,
+    "frontCells": 572,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-outside.png",
+    "status": "capture-required",
+    "start": [
+      457.5,
+      947.5
+    ],
+    "behind": [
+      457.5,
+      872.5
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "object": "bench-6b9a9a",
+    "behindCells": 0,
+    "frontCells": 1665,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-inside.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "depot-inside",
+    "object": "bus-a161f2",
+    "behindCells": 0,
+    "frontCells": 1052,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/depot-inside.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "road",
+    "object": "left-tree-e55fac",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/road.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "road",
+    "object": "left-lobster-trap-9a412d",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/road.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "road",
+    "object": "left-fishing-net-3ea188",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/road.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "road",
+    "object": "right-lobster-trap-d0a0fc",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/road.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "road",
+    "object": "right-fishing-net-a547d7",
+    "behindCells": 0,
+    "frontCells": 0,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/road.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "alley",
+    "object": "crate-47aea2",
+    "behindCells": 0,
+    "frontCells": 12,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/alley.png",
+    "status": "no navigable behind cells under object span"
+  },
+  {
+    "scene": "alley",
+    "object": "fish-basket-bdbdfc",
+    "behindCells": 0,
+    "frontCells": 505,
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/walkareas/alley.png",
+    "status": "no navigable behind cells under object span"
+  }
+]

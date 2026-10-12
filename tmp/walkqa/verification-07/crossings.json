@@ -1,0 +1,149 @@
+[
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "clip": "occlusion-07/depot-outside/bench-a15409/behind-to-front.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/bench-a15409/behind-to-front-f0000.png",
+      "occlusion-07/depot-outside/bench-a15409/behind-to-front-f0179.png"
+    ],
+    "walkingFrames": 10
+  },
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "clip": "occlusion-07/depot-outside/bench-a15409/direct-behind-to-front.mp4",
+    "crossings": [
+      24
+    ],
+    "frames": [
+      "occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0023.png",
+      "occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0024.png",
+      "occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0025.png"
+    ],
+    "walkingFrames": 24
+  },
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "clip": "occlusion-07/depot-outside/bench-a15409/direct-front-to-behind.mp4",
+    "crossings": [
+      4
+    ],
+    "frames": [
+      "occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0003.png",
+      "occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0004.png",
+      "occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0005.png"
+    ],
+    "walkingFrames": 17
+  },
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "clip": "occlusion-07/depot-outside/bench-a15409/front-to-behind.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/bench-a15409/front-to-behind-f0000.png",
+      "occlusion-07/depot-outside/bench-a15409/front-to-behind-f0179.png"
+    ],
+    "walkingFrames": 5
+  },
+  {
+    "scene": "depot-outside",
+    "object": "left-fishing-net-pile-19404d",
+    "clip": "occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front-f0000.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front-f0179.png"
+    ],
+    "walkingFrames": 2
+  },
+  {
+    "scene": "depot-outside",
+    "object": "left-fishing-net-pile-19404d",
+    "clip": "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front.mp4",
+    "crossings": [
+      27
+    ],
+    "frames": [
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0026.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0027.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0028.png"
+    ],
+    "walkingFrames": 27
+  },
+  {
+    "scene": "depot-outside",
+    "object": "left-fishing-net-pile-19404d",
+    "clip": "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind.mp4",
+    "crossings": [
+      3
+    ],
+    "frames": [
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0002.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0003.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0004.png"
+    ],
+    "walkingFrames": 14
+  },
+  {
+    "scene": "depot-outside",
+    "object": "left-fishing-net-pile-19404d",
+    "clip": "occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind-f0000.png",
+      "occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind-f0179.png"
+    ],
+    "walkingFrames": 15
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "clip": "occlusion-07/depot-outside/pergola-b60423/behind-to-front.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/pergola-b60423/behind-to-front-f0000.png",
+      "occlusion-07/depot-outside/pergola-b60423/behind-to-front-f0179.png"
+    ],
+    "walkingFrames": 8
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "clip": "occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front-f0000.png",
+      "occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front-f0239.png"
+    ],
+    "walkingFrames": 0
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "clip": "occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind.mp4",
+    "crossings": [
+      4
+    ],
+    "frames": [
+      "occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0003.png",
+      "occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0004.png",
+      "occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0005.png"
+    ],
+    "walkingFrames": 20
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "clip": "occlusion-07/depot-outside/pergola-b60423/front-to-behind.mp4",
+    "crossings": [],
+    "frames": [
+      "occlusion-07/depot-outside/pergola-b60423/front-to-behind-f0000.png",
+      "occlusion-07/depot-outside/pergola-b60423/front-to-behind-f0179.png"
+    ],
+    "walkingFrames": 3
+  }
+]

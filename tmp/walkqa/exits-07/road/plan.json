@@ -1,0 +1,23 @@
+{
+  "place": "place-f2d0a7f7f76225002663",
+  "beats": [
+    {
+      "name": "edge-left",
+      "start": [
+        947.5,
+        917.5
+      ],
+      "exit": "edge-left",
+      "frames": 180
+    },
+    {
+      "name": "far",
+      "start": [
+        1102.5,
+        827.5
+      ],
+      "exit": "far",
+      "frames": 180
+    }
+  ]
+}

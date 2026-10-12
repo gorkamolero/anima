@@ -1,0 +1,148 @@
+[
+  {
+    "clip": "exits-07/depot-inside/bus_platform.mp4",
+    "transitions": [
+      17
+    ],
+    "locations": [
+      "inside",
+      "outside"
+    ],
+    "frames": [
+      "exits-07/depot-inside/bus_platform-f0000.png",
+      "exits-07/depot-inside/bus_platform-f0016.png",
+      "exits-07/depot-inside/bus_platform-f0017.png",
+      "exits-07/depot-inside/bus_platform-f0018.png",
+      "exits-07/depot-inside/bus_platform-f0159.png"
+    ]
+  },
+  {
+    "clip": "exits-07/depot-inside/edge-left.mp4",
+    "transitions": [],
+    "locations": [
+      "inside"
+    ],
+    "frames": [
+      "exits-07/depot-inside/edge-left-f0000.png",
+      "exits-07/depot-inside/edge-left-f0183.png"
+    ]
+  },
+  {
+    "clip": "exits-07/depot-inside/edge-right.mp4",
+    "transitions": [],
+    "locations": [
+      "inside"
+    ],
+    "frames": [
+      "exits-07/depot-inside/edge-right-f0000.png",
+      "exits-07/depot-inside/edge-right-f0183.png"
+    ]
+  },
+  {
+    "clip": "exits-07/depot-outside/depot_doors.mp4",
+    "transitions": [
+      37
+    ],
+    "locations": [
+      "outside",
+      "inside"
+    ],
+    "frames": [
+      "exits-07/depot-outside/depot_doors-f0000.png",
+      "exits-07/depot-outside/depot_doors-f0036.png",
+      "exits-07/depot-outside/depot_doors-f0037.png",
+      "exits-07/depot-outside/depot_doors-f0038.png",
+      "exits-07/depot-outside/depot_doors-f0159.png"
+    ]
+  },
+  {
+    "clip": "exits-07/depot-outside/edge-left.mp4",
+    "transitions": [],
+    "locations": [
+      "outside"
+    ],
+    "frames": [
+      "exits-07/depot-outside/edge-left-f0000.png",
+      "exits-07/depot-outside/edge-left-f0183.png"
+    ]
+  },
+  {
+    "clip": "exits-07/depot-outside/edge-right.mp4",
+    "transitions": [],
+    "locations": [
+      "outside"
+    ],
+    "frames": [
+      "exits-07/depot-outside/edge-right-f0000.png",
+      "exits-07/depot-outside/edge-right-f0183.png"
+    ]
+  },
+  {
+    "clip": "exits-07/road/edge-left.mp4",
+    "transitions": [
+      11
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663",
+      "outside"
+    ],
+    "frames": [
+      "exits-07/road/edge-left-f0000.png",
+      "exits-07/road/edge-left-f0010.png",
+      "exits-07/road/edge-left-f0011.png",
+      "exits-07/road/edge-left-f0012.png",
+      "exits-07/road/edge-left-f0179.png"
+    ]
+  },
+  {
+    "clip": "exits-07/road/far.mp4",
+    "transitions": [
+      140
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663",
+      "place-395743b437774b879679"
+    ],
+    "frames": [
+      "exits-07/road/far-f0000.png",
+      "exits-07/road/far-f0139.png",
+      "exits-07/road/far-f0140.png",
+      "exits-07/road/far-f0141.png",
+      "exits-07/road/far-f0195.png"
+    ]
+  },
+  {
+    "clip": "exits-07/roundtrip/door-inside-to-outside.mp4",
+    "transitions": [
+      5
+    ],
+    "locations": [
+      "inside",
+      "outside"
+    ],
+    "frames": [
+      "exits-07/roundtrip/door-inside-to-outside-f0000.png",
+      "exits-07/roundtrip/door-inside-to-outside-f0004.png",
+      "exits-07/roundtrip/door-inside-to-outside-f0005.png",
+      "exits-07/roundtrip/door-inside-to-outside-f0006.png",
+      "exits-07/roundtrip/door-inside-to-outside-f0159.png"
+    ]
+  },
+  {
+    "clip": "exits-07/roundtrip/door-outside-to-inside.mp4",
+    "transitions": [
+      37
+    ],
+    "locations": [
+      "outside",
+      "inside"
+    ],
+    "frames": [
+      "exits-07/roundtrip/door-outside-to-inside-f0000.png",
+      "exits-07/roundtrip/door-outside-to-inside-f0036.png",
+      "exits-07/roundtrip/door-outside-to-inside-f0037.png",
+      "exits-07/roundtrip/door-outside-to-inside-f0038.png",
+      "exits-07/roundtrip/door-outside-to-inside-f0159.png"
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+| Scene | Body y | Cycle | Before m/s (pairs) | After m/s (pairs) |
+|---|---|---|---|---|
+| alley | 880–920 | side | 1.438 (159) | 1.262 (18) |
+| alley | 880–920 | walk-away-right | 1.405 (71) | 1.014 (21) |
+| alley | 880–920 | walk-toward-right | no sample | 1.003 (11) |
+| alley | 920–960 | walk-away-right | 1.272 (9) | 1.269 (7) |
+| depot-inside | 880–920 | side | no sample | 1.182 (63) |
+| depot-inside | 880–920 | walk-toward | no sample | 0.853 (13) |
+| depot-inside | 880–920 | walk-toward-right | no sample | 0.932 (12) |
+| depot-inside | 920–960 | side | no sample | 1.201 (27) |
+| depot-inside | 920–960 | walk-away-right | no sample | 0.959 (20) |
+| depot-outside | 800–840 | side | 1.607 (106) | 1.541 (8) |
+| depot-outside | 800–840 | walk-away | 0.464 (6) | 1.204 (11) |
+| depot-outside | 800–840 | walk-toward | 1.667 (85) | 1.935 (19) |
+| depot-outside | 800–840 | walk-toward-right | no sample | 1.389 (12) |
+| depot-outside | 840–880 | side | 1.422 (115) | 1.090 (11) |
+| depot-outside | 840–880 | walk-away | 1.403 (22) | 1.807 (13) |
+| depot-outside | 840–880 | walk-toward | 1.738 (110) | 1.602 (7) |
+| depot-outside | 880–920 | walk-away-right | 0.963 (47) | 1.815 (11) |
+| depot-outside | 920–960 | side | no sample | 1.470 (15) |
+| depot-outside | 920–960 | walk-away-right | no sample | 1.049 (14) |
+| road | 760–800 | side | 1.924 (86) | 1.663 (80) |
+| road | 760–800 | walk-away-right | 1.531 (90) | 1.466 (7) |
+| road | 760–800 | walk-toward | 3.073 (51) | 3.100 (18) |
+| road | 800–840 | walk-away-right | 1.242 (202) | 1.490 (31) |
+| road | 800–840 | walk-toward | 2.889 (128) | 2.706 (35) |
+| road | 840–880 | walk-away-right | 1.445 (182) | 1.411 (24) |
+| road | 840–880 | walk-toward | 2.227 (84) | 2.312 (28) |
+| road | 880–920 | side | 1.644 (105) | 1.841 (9) |
+| road | 880–920 | walk-away-right | 1.231 (121) | 1.756 (17) |
+| road | 880–920 | walk-toward-right | no sample | 1.384 (11) |
+| road | 920–960 | side | 1.601 (19) | 1.541 (18) |
+| road | 920–960 | walk-away-right | 1.069 (12) | 1.533 (9) |

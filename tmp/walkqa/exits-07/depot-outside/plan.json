@@ -1,0 +1,23 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "edge-left",
+      "start": [
+        412.5,
+        917.5
+      ],
+      "exit": "edge-left",
+      "frames": 180
+    },
+    {
+      "name": "edge-right",
+      "start": [
+        1122.5,
+        932.5
+      ],
+      "exit": "edge-right",
+      "frames": 180
+    }
+  ]
+}

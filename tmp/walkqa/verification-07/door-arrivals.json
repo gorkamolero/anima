@@ -1,0 +1,20 @@
+[
+  {
+    "clip": "door-outside-to-inside",
+    "firstVisibleArrival": 48,
+    "frames": [
+      "exits-07/roundtrip/door-outside-to-inside-arrival-f0047.png",
+      "exits-07/roundtrip/door-outside-to-inside-arrival-f0048.png",
+      "exits-07/roundtrip/door-outside-to-inside-arrival-f0049.png"
+    ]
+  },
+  {
+    "clip": "door-inside-to-outside",
+    "firstVisibleArrival": 12,
+    "frames": [
+      "exits-07/roundtrip/door-inside-to-outside-arrival-f0011.png",
+      "exits-07/roundtrip/door-inside-to-outside-arrival-f0012.png",
+      "exits-07/roundtrip/door-inside-to-outside-arrival-f0013.png"
+    ]
+  }
+]

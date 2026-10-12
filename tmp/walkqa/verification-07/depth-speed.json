@@ -1,0 +1,50 @@
+[
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "side",
+    "samples": 63,
+    "speed": 1.181759485295803,
+    "side": 1.181759485295803,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/side-near.json",
+      51
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      920,
+      960
+    ],
+    "cycle": "side",
+    "samples": 27,
+    "speed": 1.2013690201458116,
+    "side": 1.2013690201458116,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/side-near.json",
+      38
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "side",
+    "samples": 80,
+    "speed": 1.663422298450183,
+    "side": 1.663422298450183,
+    "ratio": 1.0,
+    "evidence": [
+      "road/side-far.json",
+      30
+    ]
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "place": "inside",
+  "beats": [
+    {
+      "name": "side-far",
+      "start": [
+        903.0,
+        862.5
+      ],
+      "click": [
+        1227.0,
+        862.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "side-near",
+      "start": [
+        595.0,
+        927.5
+      ],
+      "click": [
+        1615.0,
+        927.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "away-depth",
+      "start": [
+        1105.0,
+        927.5
+      ],
+      "click": [
+        1065.0,
+        862.5
+      ],
+      "frames": 120
+    },
+    {
+      "name": "toward-depth",
+      "start": [
+        1065.0,
+        862.5
+      ],
+      "click": [
+        1105.0,
+        927.5
+      ],
+      "frames": 120
+    }
+  ]
+}

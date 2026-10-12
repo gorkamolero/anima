@@ -1,0 +1,23 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+alley/away-depth.json                           1.0     108    0/25    1.92 0
+alley/side-far.json                             0.3      83    0/7     0.00 0
+alley/side-near.json                            1.3     291    0/32    2.25 0
+alley/toward-depth.json                         0.4      50    0/10    0.00 0
+depot-inside/away-depth.json                    0.8     103    0/20    1.20 0
+depot-inside/side-far.json                      1.3     306    0/32    1.50 0
+depot-inside/side-near.json                     3.5     985    0/84    2.00 0
+depot-inside/toward-depth.json                  0.9      61    0/22    1.09 0
+depot-outside/away-depth.json                   0.8     201    0/20    2.40 0
+depot-outside/side-far.json                     0.9     112    0/22    1.09 0
+depot-outside/side-near.json                    1.1     356    0/26    1.85 0
+depot-outside/toward-depth.json                 3.0      97    0/73    2.30 0
+road/away-depth.json                            3.6     144    0/86    1.95 0
+road/side-far.json                              3.0     293    0/73    1.64 0
+road/side-near.json                             1.6     360    0/38    1.89 0
+road/toward-depth.json                          4.5     131    0/107   1.79 0
+
+side                 ground m/s min/median/max 1.18 1.57 1.83 (n=7)
+walk-away            ground m/s min/median/max 1.4 1.44 1.44 (n=2)
+walk-away-right      ground m/s min/median/max 1.12 1.17 1.85 (n=5)
+walk-toward          ground m/s min/median/max 1.52 1.92 2.71 (n=3)
+walk-toward-right    ground m/s min/median/max 0.88 1.39 2.23 (n=4)

@@ -1,0 +1,1506 @@
+{
+  "sourceRevision": "7a7abcfd002786ae4646cd307774d9ab3a5726c0",
+  "files": [
+    {
+      "path": "tmp/walkqa/occlusion-07/alley/crate-47aea2/reachability.json",
+      "bytes": 228,
+      "sha256": "a114a36b0d588dcd8c4b53337d7afc9769dfc20d61cc1d4ded4252d3d1027aa9"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/alley/fish-basket-bdbdfc/reachability.json",
+      "bytes": 235,
+      "sha256": "b61a8f66a6b494499108fd404cc373a0b385de4572437c2d7cb95014d7ff7724"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-inside/bench-6b9a9a/reachability.json",
+      "bytes": 244,
+      "sha256": "b36f3487b514ea2e5df219c4625432c0561669f6af1a9c3806297ba15d1943b5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-inside/bus-a161f2/reachability.json",
+      "bytes": 242,
+      "sha256": "87c9ba3bc906f45e8eb24f7e60de3a5132692ea3e6169bc1d99d0ec4e6997eef"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/behind-to-front-f0000.png",
+      "bytes": 2336216,
+      "sha256": "aae79523cc447ce6cf943537799def57c2a1e43495487e78de409cf3edb03860"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/behind-to-front-f0179.png",
+      "bytes": 2348395,
+      "sha256": "f8ae82187669e2294e8b04f2f2bbbf8056d748bc72198ef1a3b5a5a5ef5a000d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/behind-to-front-sheet.png",
+      "bytes": 865428,
+      "sha256": "1f01b5b780a33e6b3069fb264c7820ec51e29b5339f7f297f9918f968fd45be3"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/behind-to-front.json",
+      "bytes": 304080,
+      "sha256": "abde173220ae07b741a7bac48bf217d4403bda579b610a2f615795c4bde4a3b6"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/behind-to-front.mp4",
+      "bytes": 730185,
+      "sha256": "0595d29230fc080713a643e9f9da26fb54939e592c1b4307beacb2a7064b7641"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0005.png",
+      "bytes": 2336149,
+      "sha256": "ce92f161f490a30c8632862ca1c64097687d783cce4f818eeb2770ed96904ec7"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0006.png",
+      "bytes": 2338048,
+      "sha256": "0563382f24059953028671f8bc1ef63c6b6a5c38d39a19792039ab6a65d5c4f6"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0007.png",
+      "bytes": 2337466,
+      "sha256": "5c3b0b8d81140ca0daad0773ab9f0f50b9130d98efa5c9b7cf8981dc6751bfc4"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0011.png",
+      "bytes": 2340554,
+      "sha256": "04275e38a453e30fff6a57d619eeabf2766b0aecd48aae903c4906ee3cf65046"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0012.png",
+      "bytes": 2341105,
+      "sha256": "c5c5a7f3653536c3c5dd77449104518b712b45f298ffaca0bee253b99697e6f9"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0013.png",
+      "bytes": 2339753,
+      "sha256": "a8ef6abeec5756b750bc84b3630c404347b943088475da444aa91c8380157bf8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0014.png",
+      "bytes": 2340256,
+      "sha256": "ec4e1971acb61b95eab99aafcffb546aca25512efc0d0e7067bea39cb9bd4cde"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0015.png",
+      "bytes": 2338425,
+      "sha256": "3a0ede67ec44d3602c62aa49c8865d359cd4fa28e2950458f565f95c83d8322f"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0023.png",
+      "bytes": 2340745,
+      "sha256": "2b487c9630d606cf331aae9105049a310d2d65b5551ed8e5be41d533547f2034"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0024.png",
+      "bytes": 2340489,
+      "sha256": "fecca459527a0e7b5cbfebd0c551a5205758d70cef5410885a048647bf230948"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-f0025.png",
+      "bytes": 2340610,
+      "sha256": "7915bfcf026b9d542bac0dff6b9bd1e37f6eaa979d2018a16c715081fe3da5f5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front-sheet.png",
+      "bytes": 1072676,
+      "sha256": "90f1b5ebab709a03791c701a42f15c2846dccbe9c9fedcf7273b78f13b78b263"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front.json",
+      "bytes": 401152,
+      "sha256": "66c536d06cd36b69442c0f2e2dd5d5c6a1d4d48e96869f994f9c274231211611"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-behind-to-front.mp4",
+      "bytes": 782594,
+      "sha256": "319a9c1126ef153393d702294afea80e156f056b1b6294fe67a5c933cfd5d8cb"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0003.png",
+      "bytes": 2336868,
+      "sha256": "1272dcecd9c2cca506f247018659fe1b1151c7d7b913d01b080d614b71704242"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0004.png",
+      "bytes": 2340786,
+      "sha256": "2841b5eda80aadd50562f0972b95e1503cd8b0e5cacb08a334b70c3434f92c5f"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0005.png",
+      "bytes": 2341270,
+      "sha256": "d9394aaf607653aca08945934da5ca41f663efd483142ca9c043d46338891699"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0012.png",
+      "bytes": 2342903,
+      "sha256": "cfd84f3dc6e88bbca353c00b66e4cd38fed45e75d8ab2c0693745459964075c9"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0013.png",
+      "bytes": 2342041,
+      "sha256": "c27e8a654a9210cef1ce242a87b966041521c56aadc01b6302a647c30a326b45"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-f0014.png",
+      "bytes": 2342511,
+      "sha256": "c6afb90c772721933f344a07ab236525a5196e7a550cabfb58fcaeb53f7b8f20"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind-sheet.png",
+      "bytes": 547324,
+      "sha256": "e19d0596911fe7930cc02971de11d258bb728cf80a19c2a467c8f592455d045e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind.json",
+      "bytes": 199224,
+      "sha256": "c4041c8543f37cd3d3815703ae67c469b9f15dd866e43eb0c2e6d9c788553f77"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/direct-front-to-behind.mp4",
+      "bytes": 707956,
+      "sha256": "43717277a188c112f39d7a27e3ef96261b1d3fb459f3958f210c5a8f2ebbe0b5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/front-to-behind-f0000.png",
+      "bytes": 2329258,
+      "sha256": "52c71ccfe71645ddd155e6de2971712aba796fe30406aef8d247a6779ec6d982"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/front-to-behind-f0179.png",
+      "bytes": 2344514,
+      "sha256": "a65ab572a06e34992412ca56a101ffe2262cb3da32eb4b6aa6f774a04f24b9c5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/front-to-behind-sheet.png",
+      "bytes": 853367,
+      "sha256": "ee8eb4bf56b5fc4dcd4d2b01febfb63c13d77524f7386dfb78518adae3bfc695"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/front-to-behind.json",
+      "bytes": 282593,
+      "sha256": "cd7597a9d117427326ebda9e6a346bfcfa1c129c888e057fdbac1a202ff1320a"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/front-to-behind.mp4",
+      "bytes": 686536,
+      "sha256": "4882786d60d6508fdcf4e91349d429899249fae206ef85c9e67d19f6f0ae754b"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/motor-search.json",
+      "bytes": 279,
+      "sha256": "dbfa13be10c0f8d792606061c5a507386703abab645f3875f1ea1953a0035491"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/plan-direct.json",
+      "bytes": 350,
+      "sha256": "2f6a6aae228671e06933eeedda0e6c9fc8f353fcfc38a7381004fd5c8cab9326"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/plan.json",
+      "bytes": 338,
+      "sha256": "5f81af84caed4f79dabd6ee554ab0737ecb2fc8cf324f5939dec75f9873aaaf3"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/reachability.json",
+      "bytes": 298,
+      "sha256": "2da92936ad8e571bf292d5f05a35f1fc18bd3a0cf041323ddc27588a04e24686"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/bench-a15409/render.json",
+      "bytes": 725,
+      "sha256": "0f28da82aa58535757d708c3e1d163b858ead5d2d0aece18c046fda9b3d6dc2d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/fishing-net-pile-22c3fb/reachability.json",
+      "bytes": 256,
+      "sha256": "c08fb7b06d02ef59b3a39e2d7d1361621e08f439b918eb380f355d5d05352e34"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front-f0000.png",
+      "bytes": 2338496,
+      "sha256": "60c2d6b9d8d1ece5c9edccfce134526fce6023beb0d5ee4a4c073127039d566e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front-f0179.png",
+      "bytes": 2344109,
+      "sha256": "01a58c73f82dc3baf9c382549137a667e27938174628d0b89cdb71918a8224b8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front-sheet.png",
+      "bytes": 851788,
+      "sha256": "73295c85db7908c775030c8612bbd6167e5aadbffc3714239749c49ad7c87677"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front.json",
+      "bytes": 295511,
+      "sha256": "3499dc1591c8f206e1499833d0fa6d92568562adf3740f8d37b778ae872a2822"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/behind-to-front.mp4",
+      "bytes": 664640,
+      "sha256": "a4cd8ef15ca51f5653dfc4bcda76afb47cbe79525a8cd26474e1e805d107cd33"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0008.png",
+      "bytes": 2345753,
+      "sha256": "532b3d030c43c4ea083277eff7926745e86ed4fc446f3b5a37f3441540c022f3"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0009.png",
+      "bytes": 2346929,
+      "sha256": "8acc5e049626470c5d0db3033531d273ef9510395c1fab0d49f3307a525b6902"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0010.png",
+      "bytes": 2347247,
+      "sha256": "be9616b8e98246653a16d09945f0228940ba1178df8338d09aad6e05338dd2fa"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0014.png",
+      "bytes": 2349710,
+      "sha256": "90e3309fc34726c96545d53869e16725100428bd5605449a34420ad6096370a8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0015.png",
+      "bytes": 2348784,
+      "sha256": "67ca927fb9d3a99ca70a71b62a64cf6115874808feba39c9549577eac742070d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0016.png",
+      "bytes": 2348329,
+      "sha256": "fa7d55b6fa16fd608a892fb29fc0472b90c4d2c24795dda5731468747c3bf9aa"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0017.png",
+      "bytes": 2347653,
+      "sha256": "d2b40f3ba1232d68d407632dfcd97da24d97be9cd7bacee7d44cf5292a2814cc"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0026.png",
+      "bytes": 2349319,
+      "sha256": "e91319d0328d72482bdd4d1d6b4a63df2f840abec4696eef7516b985dc490953"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0027.png",
+      "bytes": 2349736,
+      "sha256": "21690dd75a36f3f579f985a3eee258607d4ac716d7167492a6d8f3c276b25861"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-f0028.png",
+      "bytes": 2349782,
+      "sha256": "72bf9d49c6906f7447b3b0f522eea7da7eedb79dd3bb43b46b50ec5481b209e0"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front-sheet.png",
+      "bytes": 1081878,
+      "sha256": "fa8ba6ec1898948d7854d92bdfadb42ab8c8576b560ecfac0a80b89f72e94eaa"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front.json",
+      "bytes": 394623,
+      "sha256": "e8698a69b1270cf51772caad701af82e400d5ef634681d4c8c19502946a8dc5c"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-behind-to-front.mp4",
+      "bytes": 816932,
+      "sha256": "049264112869090aff5db06331bec2616d0b0159d183f67667aa25f9fdd3ccb8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0002.png",
+      "bytes": 2343166,
+      "sha256": "045cffb83ffa4709616ec0c4cd3744e5f4867ed7a2fa26ce5003da124a542124"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0003.png",
+      "bytes": 2342936,
+      "sha256": "23aa137d2eceb9d8b119d926043d44d741bfa7f76ca00d8fb78b11633a03207d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0004.png",
+      "bytes": 2344505,
+      "sha256": "ab0081e125da5632b0d3c2ae8c0841b4f319750237a307b7c1cbd9bbcdefe55e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0011.png",
+      "bytes": 2348503,
+      "sha256": "5ee71aa236d6143635e3b9af724ba2bed44ccd3142a247ef5c8f7c452cdba9a1"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0012.png",
+      "bytes": 2349974,
+      "sha256": "8b518356714de82b4d30021644ed75cbe3b6ce8853cfa7ca30d137cdc1bfb6f4"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-f0013.png",
+      "bytes": 2350362,
+      "sha256": "8300c564d6e9d532b610ca00025ea085c86925b6eb39bf34cfd491c501308938"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind-sheet.png",
+      "bytes": 549150,
+      "sha256": "462727b777277e2ad8005a373f16a7489a3a583bdfa35eee4bfeb230cbd0946b"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind.json",
+      "bytes": 196215,
+      "sha256": "bec367c4b9651443fa4f9e5946b646bf5040abc58fc31cab1a75ffec8563ce13"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/direct-front-to-behind.mp4",
+      "bytes": 706611,
+      "sha256": "944b694f0412f66fe5f152f43bda27de5faed2e8789a8b673b0fa6192d96cdf3"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind-f0000.png",
+      "bytes": 2336923,
+      "sha256": "5a1b36f936061ab0a322438abffa0e2b27da0b578ffebd0a6ee030f59175dd1f"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind-f0179.png",
+      "bytes": 2353779,
+      "sha256": "d0a1e720f3c01d891a93cc87b1469f2bab8c6029c1cc74def1b8ad9ed9f35665"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind-sheet.png",
+      "bytes": 870567,
+      "sha256": "2ee8a682a630d3b90edfe396c698b80bd56736bb2b2e5dfec75d5a77a97ef05f"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind.json",
+      "bytes": 299809,
+      "sha256": "9e7cdaa486ff010b86b5a07bf8c1becc0b4d28913b1c7cf778ebaafd9cda007a"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/front-to-behind.mp4",
+      "bytes": 757120,
+      "sha256": "55e86150967b736549561b8f905137d0b603d8f2117e26696d3afe29d77a815e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/motor-search.json",
+      "bytes": 295,
+      "sha256": "be92e019adb1fdc8132643fd81d59203b4e0c4da308965189fd4d05a2c8f741c"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/plan-direct.json",
+      "bytes": 350,
+      "sha256": "a5757cd5f2482a8ed463139de7ebb16991151fddcda0d0486e92c728174cb684"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/plan.json",
+      "bytes": 338,
+      "sha256": "8678d9cf7d07ddb0565f9084b8407888d8b67193245bf7abd7ff592bbc25ab33"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/reachability.json",
+      "bytes": 314,
+      "sha256": "f564bc04556efa32266838fa35df3b4bb1fb24b1c2fcb5edb5134fb763235854"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/left-fishing-net-pile-19404d/render.json",
+      "bytes": 725,
+      "sha256": "65d77959b008f4d21cbef77403233a1d30e6dc3db22885fdeb7ea4b5d5a44ead"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/behind-to-front-f0000.png",
+      "bytes": 2339943,
+      "sha256": "a418c8c581ae6ff725747d4b0c823d2acddef8c4e943a20176159264f4067a9a"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/behind-to-front-f0179.png",
+      "bytes": 2341663,
+      "sha256": "9184bf0acc847298bf405023db9c6eca8327d49e8eef931e5edda4e96a03ce4e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/behind-to-front-sheet.png",
+      "bytes": 856363,
+      "sha256": "292a2474116070be2acf04e4c967fa6af5b198bc8d72e3cb2e8adfe90e371c08"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/behind-to-front.json",
+      "bytes": 300025,
+      "sha256": "10af447b0a3e568db8fa820c28d63e5b5367e7bea031a6cca48d18bdb2d1af72"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/behind-to-front.mp4",
+      "bytes": 701290,
+      "sha256": "6615d75e15955c011785247ed467721332e1070a6a46bb2aa5500ddb6fbe681a"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front-f0000.png",
+      "bytes": 2335658,
+      "sha256": "a6cb80f76363476bdf01909d09cc6fefde401989ec43571e0930f0cd0b5683b1"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front-f0239.png",
+      "bytes": 2340143,
+      "sha256": "26f349433eb81a9c02765a93ed0099750dede683f19d9e7a4d67c3528107adc8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front-sheet.png",
+      "bytes": 1054925,
+      "sha256": "b234f28e9ff34c8e5cbd3783d8b1132a3541b9f167ebaa2d25970060bbdfbe4e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front.json",
+      "bytes": 378481,
+      "sha256": "f2342e7581f7e301358f22f0a15f72dc54d06c58f070327d697836f46617c4c5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-behind-to-front.mp4",
+      "bytes": 667029,
+      "sha256": "933c2c488870da312089bbb5961b5ce768989af2d9315539c2f8a2745547ee7e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0003.png",
+      "bytes": 2335228,
+      "sha256": "5f9f68529d68081251d009471429a37a4b65e1f7344b53da7e185bc5f80a04f6"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0004.png",
+      "bytes": 2337657,
+      "sha256": "85ca9a33e0c1caf8f079725b7e2ed65774e7b79d58730dcc31453f1fb8f662a5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0005.png",
+      "bytes": 2337489,
+      "sha256": "e36dfeb96453c202ae5fea4f0302ff9b160d89558251413fab32d37415d095db"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0012.png",
+      "bytes": 2341029,
+      "sha256": "85a515713f2523762c0bef441eecdd665e272e33128166187a9989fe25f6790d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0013.png",
+      "bytes": 2340484,
+      "sha256": "b33c4eb5382738ab9075a5ea868e211fe043aa61e769627b7c635fbbbc318303"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-f0014.png",
+      "bytes": 2341124,
+      "sha256": "a39091fba126c354a3acb22c3c1cfbb7daa44df2c7b2d57cd09ce3a4d25b6dc8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind-sheet.png",
+      "bytes": 549444,
+      "sha256": "2ec3838fc5fab83d5b75c3867d6523fd50f759bf7e7e9975ed29492ac55d392e"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind.json",
+      "bytes": 200936,
+      "sha256": "a278269baeff13633f912c3e0572314071139732188927b4667abdc80dd70784"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/direct-front-to-behind.mp4",
+      "bytes": 719878,
+      "sha256": "884780421e89516741cfa386dd1a40c08c0bb91ff42010fdc22b206cf475139b"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/front-to-behind-f0000.png",
+      "bytes": 2327993,
+      "sha256": "e78f0841c580d663c3028abb99a9aa6a476b0dcdfa3dae1e4b66e36372e55a8d"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/front-to-behind-f0179.png",
+      "bytes": 2340606,
+      "sha256": "7b37cb2c3ece508b6ecb47447e756dce6fb7c5084849c5e923c093871ad84fe8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/front-to-behind-sheet.png",
+      "bytes": 852788,
+      "sha256": "f57ff1f5a0f4d662499deeb26e7c02a9b0f5920eba6c84cd3c21061d941f3dff"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/front-to-behind.json",
+      "bytes": 283123,
+      "sha256": "b8c12c02ea81f55d10b40d806f776d26c41357cdb2b2e63ecc2f12aee0c39370"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/front-to-behind.mp4",
+      "bytes": 674417,
+      "sha256": "2387dd67626046be148a7933b5e3aca925957461dc4d1ee42bbeac559a112e25"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/motor-search.json",
+      "bytes": 281,
+      "sha256": "2fc4ef3dfc7abf0cfd37e939ddbb5829751a90ae6200ea37608eb9178ad8ca06"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/plan-direct.json",
+      "bytes": 350,
+      "sha256": "1883ce590d88bcddbde410b8a2334dfa6e32ea80f7f7a21eb4d8aca7144724b7"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/plan.json",
+      "bytes": 338,
+      "sha256": "9b0bc5a2dae9ee691625822245085ac42e430bcfd49db997e7325de2aee17eb4"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/reachability.json",
+      "bytes": 301,
+      "sha256": "6f8f544362528c930f90a07b412c02e39e022e721f69989a196644faeb816ce5"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/pergola-b60423/render.json",
+      "bytes": 725,
+      "sha256": "6d76a8aa89ad2c347ea5ea4261a7e370d38de12156f6d89937eae4136364fcce"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/small-house-bac0d8/reachability.json",
+      "bytes": 251,
+      "sha256": "4fd5e60eefae8cbb4dce54f694145ed787b783bfe6b4a2d6dfc0ca688880e3f3"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/depot-outside/van-7c111f/reachability.json",
+      "bytes": 241,
+      "sha256": "0450b1ed2dbeac7ab58a19c378ee36a9b396c9adbb70a82c10f22743ed24ae62"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/road/left-fishing-net-3ea188/reachability.json",
+      "bytes": 236,
+      "sha256": "35ecb080ead63d944feb747bb3b5d6e873af80b6d2795cbdf8bfb3ed52f7dd1c"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/road/left-lobster-trap-9a412d/reachability.json",
+      "bytes": 237,
+      "sha256": "ddb1640eda23329cc1f9f29c5efbfb4c00fe17331f1aeecb57fc0449e4189ab8"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/road/left-tree-e55fac/reachability.json",
+      "bytes": 229,
+      "sha256": "3ba84d78fd4287c4ac080ac65c21cfad70187339c859e193963391bc5258cb23"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/road/right-fishing-net-a547d7/reachability.json",
+      "bytes": 237,
+      "sha256": "dd2ffd1906e84ad6025a66577cbae3fbe74f321ffb504dd8c772ce10c4292809"
+    },
+    {
+      "path": "tmp/walkqa/occlusion-07/road/right-lobster-trap-d0a0fc/reachability.json",
+      "bytes": 238,
+      "sha256": "47b17e3af30fd9e185eaa68fedf251233a0a3c3fd563edcc2225dd4702b0dc07"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/alley/area.json",
+      "bytes": 498806,
+      "sha256": "221aba44053773b7f8d54e962e07964699a1f3da2306c2cd0424e891c341393a"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/alley/navigation.json",
+      "bytes": 498806,
+      "sha256": "9ff1135d41262a5aaa23f50c77e7df2bb5319dd3fbe8b1998c48c1da7b1bf3a3"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/alley/plan.json",
+      "bytes": 58,
+      "sha256": "c122fa9dc3f84c3a14f4d7395da851d05dce68b95489c79dc90c89e208979758"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/alley/render.json",
+      "bytes": 105,
+      "sha256": "884d4b8112efe815d9ecbf0322f54421dce6a8890425ab4929063146caab3006"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/area.json",
+      "bytes": 499442,
+      "sha256": "9c231d69bd4dd94dbe28611b35902f32c10b02a5ac34f30e988c1484356fc4b0"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-f0000.png",
+      "bytes": 2543457,
+      "sha256": "4c391fcafca8efa82b20d8cedd6e9a9137eb68c969f59816fa2b65802674588c"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-f0016.png",
+      "bytes": 2566034,
+      "sha256": "04de62dc8fead31bc6034f69379971da4f1a278fad5045ada47977f60d2c9920"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-f0017.png",
+      "bytes": 2568431,
+      "sha256": "3b0a3170f994696e26a9b8d30499507bff8208b4a06bb4592341bfb17750c00d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-f0018.png",
+      "bytes": 2568798,
+      "sha256": "b5ff09942246b6d3577caecc3945a96010ff7a3aead51ac3985216344e37f263"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-f0159.png",
+      "bytes": 2397559,
+      "sha256": "685aef911d7d86417864977bf05d7f205f0225f72791c3c60b7f958a98509a51"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform-sheet.png",
+      "bytes": 822345,
+      "sha256": "37c71809f12f5d4f3900ec7d76475c20cf3da85e0dd0664fa7d25fec4240355d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform.json",
+      "bytes": 223826,
+      "sha256": "4a66ad711505856c8fdf54b6fdb18a0b54f76954316283a1750f585940b60006"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/bus_platform.mp4",
+      "bytes": 1490156,
+      "sha256": "f1fbc0f19a855cab77f0bdbe497bc02ed8f1f9dd231a8c7131f53d3921c980b9"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/doors-plan.json",
+      "bytes": 187,
+      "sha256": "bd602329cb368982aaf27f49e45c1b7e325f4c0612984eabfcf21c7d6e8351d7"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-left-f0000.png",
+      "bytes": 2659189,
+      "sha256": "496218e1a90592d95b2159a5a272a0397c91e822a393db6129e0fdf6e5916e5c"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-left-f0183.png",
+      "bytes": 2683728,
+      "sha256": "3a9b665013c4f0b6524d317642c3493a3a35718015f96caf97dcf9fa6f69c731"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-left-sheet.png",
+      "bytes": 432204,
+      "sha256": "b2fa282f02f35fda86ddc44a2105d9a4926d2182389b3e8bf18bab4675f7cadc"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-left.json",
+      "bytes": 168719,
+      "sha256": "0a3964efe1a43adcd969e5338e417fa03d43f9f74864f75d22ca68b05659611d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-left.mp4",
+      "bytes": 801896,
+      "sha256": "0506472bdaf4b1bf9abd92d08d704d7a00332de7b773dcf9408265e8cc3f66e1"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-right-f0000.png",
+      "bytes": 2665547,
+      "sha256": "bfa91f5ccd0a4569255b2be617cdda83875b07f37f2c1760a99cea89839753d2"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-right-f0183.png",
+      "bytes": 2673105,
+      "sha256": "81aab0f36b7ce841c30ffcaf4e8d4032119119f4815a15a2626f4ef07e569847"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-right-sheet.png",
+      "bytes": 428973,
+      "sha256": "b5cb3b938c693b95dea44515b9031fd1087e5bb8d73566cec78e5ec90f1a470e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-right.json",
+      "bytes": 171291,
+      "sha256": "80e7c51005c64050ed1c05307c5c5d71ba2212151b215027fe01ecd3c54cdd3f"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/edge-right.mp4",
+      "bytes": 787372,
+      "sha256": "20f7788fda3c9cd4bb1635e194c389b008fb405be5bf1dc2f5eef660e2c0fd0d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/navigation.json",
+      "bytes": 499442,
+      "sha256": "7b8ee32973d14cf5d09fc566087d444eb8015c3eaf9a9a6232c14abaa9507e38"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/plan.json",
+      "bytes": 328,
+      "sha256": "545349ad08d1d8fe52ad54dfaa46c682a68ce71c656ac89bfa1b6dbc9b5af86c"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-inside/render.json",
+      "bytes": 450,
+      "sha256": "83b764c5bc58c9620c7a146bf5ae95552cbb7636edec67a7154e9e69672cf7d5"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-f0000.png",
+      "bytes": 2320810,
+      "sha256": "14e7ffef246c3fb54d2587a4451649814af0aed29503f3c26a182533ca027ca2"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-f0036.png",
+      "bytes": 2347111,
+      "sha256": "71ea83444d66a22ee122e6a97f872ad2b03573a23df256afafffdb67e490ccbe"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-f0037.png",
+      "bytes": 2348074,
+      "sha256": "2133ed299c286982f5240f44abbafdc4e1d79b57e34f0b1cde229ffd8a03cb29"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-f0038.png",
+      "bytes": 2348026,
+      "sha256": "1d209932592b0beeeecc045ca40efa2640495ca525a1237baf212e76ecf33fb5"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-f0159.png",
+      "bytes": 2777770,
+      "sha256": "7343c71013914e4d259e99b8fef68270eb67e054d2e064a7f1022c450eff3441"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors-sheet.png",
+      "bytes": 815258,
+      "sha256": "f04b7e692f24236aa7a5287d96a6d42f8bc65ab21531ebc8ee5ccb870c40d275"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors.json",
+      "bytes": 149438,
+      "sha256": "e587129f852e434d48b173bdbf29d040e7f2da1a3bc1013b734fe72fdfad9d0f"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/depot_doors.mp4",
+      "bytes": 1670222,
+      "sha256": "bfbcb579f3f3d999464e0e25a2ffd1605eeb7d2cb207b88e8f0f4d947629ba6b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/doors-plan.json",
+      "bytes": 186,
+      "sha256": "b71c282b34b696bda5833bfc6890cd00a556b2a2b1c40b8985ab4395c9eae44d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-left-f0000.png",
+      "bytes": 2327777,
+      "sha256": "ae7650ef91c89b13a5d8f33aa66df279b877ee6c0b5cf9023122daf7f47c8a21"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-left-f0183.png",
+      "bytes": 2362227,
+      "sha256": "605b60c574eb34127bfbb58be7ace2b9bce14e92f73874a8039141bb03bf0368"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-left-sheet.png",
+      "bytes": 440476,
+      "sha256": "8fe553c7af2addd77de5fca6192d57694b9c01e554eab794e6d98891aeab99cd"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-left.json",
+      "bytes": 300062,
+      "sha256": "033add10dc8850eb433aea8d9b92af6a6702d622ba170cb194051db9c2eb971d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-left.mp4",
+      "bytes": 1087867,
+      "sha256": "20eaa9431713602a1b49d82dac1f49a528c81eae9cc5a197faca707d96bc9940"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-right-f0000.png",
+      "bytes": 2349015,
+      "sha256": "d5eb78b58fa832e9129798910cd30a17eb36f029154163e21e7ee84df14d4e5f"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-right-f0183.png",
+      "bytes": 2352802,
+      "sha256": "07ec7f15476e4a63224aa653b13e387ec1622636148c14bcbce88b81b1daaa64"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-right-sheet.png",
+      "bytes": 409476,
+      "sha256": "e13523c781694643c1745b255b9f6311d7a2cd080c8cabbb0a14afa0a087ebd6"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-right.json",
+      "bytes": 282809,
+      "sha256": "b9b94b6ec2d1edaad5457299f108df11a1294ea645d42688381c8336343670a4"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/edge-right.mp4",
+      "bytes": 649185,
+      "sha256": "92b2cd197d3760daeade68ea4c9b551f82eaa5a7fbc28f72e2fc03c1b49c138b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/plan.json",
+      "bytes": 328,
+      "sha256": "7d2afeae1efe61c2d06d9a92f5f21000df15842ee32187e0317dcf98f51cfe72"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/depot-outside/render.json",
+      "bytes": 448,
+      "sha256": "a7a1db45d96d6fbff0d4fe3ec5f628c024c8e11264e233816222349a8d7afbba"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/area.json",
+      "bytes": 500517,
+      "sha256": "f8d6706ef5bb23d1cb92ef01163c187238a591005d6b23b637cf0af31dbe3bb6"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-f0000.png",
+      "bytes": 2313454,
+      "sha256": "b5bff94441f9cdf94b95f4e7c8ed6ee8562279da169aabbdff73e114b0ea843d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-f0010.png",
+      "bytes": 2313184,
+      "sha256": "ec3e76537f7fda672a9774fa81e35d99053ba43d8ebacbdb6debe0610c1a9f56"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-f0011.png",
+      "bytes": 2312695,
+      "sha256": "767c0562a6437f4d888c9c5d4dc32b5c1c96403b964c998347804c03aedcba45"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-f0012.png",
+      "bytes": 2387898,
+      "sha256": "900066a8c456c6e38b8fe5f2bea9c70647aa52476a9772e35530dddc025be47e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-f0179.png",
+      "bytes": 2389583,
+      "sha256": "da4dd03615f5c9d0f7f735037796dd5fe321eae930b94dce8f0e904b0bdaa194"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-sheet.png",
+      "bytes": 952799,
+      "sha256": "fcfc71c373d2fb8e70bee4b7ec009d8ba1416484587b76d0df53485a8873669d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-visual-f0011.png",
+      "bytes": 2312695,
+      "sha256": "767c0562a6437f4d888c9c5d4dc32b5c1c96403b964c998347804c03aedcba45"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-visual-f0012.png",
+      "bytes": 2387898,
+      "sha256": "900066a8c456c6e38b8fe5f2bea9c70647aa52476a9772e35530dddc025be47e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left-visual-f0013.png",
+      "bytes": 2388317,
+      "sha256": "836635c29bf48f9e3d54a52ba4103baa3aa7bad58b81564e7de2bf96d5f02f75"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left.json",
+      "bytes": 270498,
+      "sha256": "2bfa7589acb302e7e5ffd715ab47bf8239d333bf5a4eb429a932a0e67ec6eb0b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/edge-left.mp4",
+      "bytes": 1265552,
+      "sha256": "6889daa54bf5653b655815fc1f2f6e6fb5754950a05b6114f851da0fbf7d8c1b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-f0000.png",
+      "bytes": 2430592,
+      "sha256": "a654c432e2c617ae01c8fec134196619ae6b109ee7ea0819d7e0532c4c609de1"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-f0139.png",
+      "bytes": 1661471,
+      "sha256": "7113e9015a2d9a6e6da9ce0ce3bb6a954888cf54a4197e386318d4898095da74"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-f0140.png",
+      "bytes": 1523110,
+      "sha256": "d5935988e65a90301d07f4c29217bf8d2716928d7cf9cba0ffb0c7cc9d884fe1"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-f0141.png",
+      "bytes": 1352599,
+      "sha256": "4a14601b5d30a09ab7a9147c21912f183b49c314d2770ee3061990597081deed"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-f0195.png",
+      "bytes": 2450392,
+      "sha256": "6e422393c5faaef9e6db04a1c2a3004c29b5b74cd3dab7202f78cdae7e881260"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-sheet.png",
+      "bytes": 1570844,
+      "sha256": "9fcb20ec4427b7e312747b5a45e0a81f0fd57a35c009000a8be37098c7a42d71"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-visual-f0151.png",
+      "bytes": 1410721,
+      "sha256": "6adc80922909c17de3ca38cee0de89c0893a3d31dcd2165235b61caee41d26ba"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-visual-f0152.png",
+      "bytes": 2446656,
+      "sha256": "0738d2bf4ceb26764da2e71bea8321825c2c0ab94e4e6475550e249b8c102b7c"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far-visual-f0153.png",
+      "bytes": 2446664,
+      "sha256": "7b6ab9aff61e6fe97a2087f58f95d0c754f441ad3a49bf65157365f7aac0408a"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far.json",
+      "bytes": 258859,
+      "sha256": "4c077c6a66bd9ffab270547a400ae19cf03833fe1f1ac15c0ca8ed9af429ca78"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/far.mp4",
+      "bytes": 2149928,
+      "sha256": "574b17f45102e9fafb40f0ac3408a77252a4c56f6109870b77861b9ba778b654"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/navigation.json",
+      "bytes": 500517,
+      "sha256": "93fc8dbed83ec947b8e6a19bba7cd4305b2e4240d51e02151105a9eaccbee91e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/plan.json",
+      "bytes": 333,
+      "sha256": "d1389ba0d54512108c0a4ef0f07f3f707f6060c07dbb3f1baf4c19081948472a"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/road/render.json",
+      "bytes": 798,
+      "sha256": "3def94fd3a8571cb78ef1027506bd8a48d9026e510e21805d1d5df6e7158c602"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-arrival-f0011.png",
+      "bytes": 2370730,
+      "sha256": "def9adda9d53a979be8d4ffc8f22aaf274bc2e55d55cd70cf6b3b387c84b9a8e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-arrival-f0012.png",
+      "bytes": 2396728,
+      "sha256": "40562862114ae54c79cb0ea8f31d13da04420981de2dd5e7dde3dda5b1a4fb85"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-arrival-f0013.png",
+      "bytes": 2397068,
+      "sha256": "9ac1846baaad65daaffafb7267ac53d6af8c6ab4beb57e0682ef2fa8afa481f7"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-f0000.png",
+      "bytes": 2365867,
+      "sha256": "314160b39ed05cf8234773b3163d3c6b6336541bb413db70732d3a0e67648e59"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-f0004.png",
+      "bytes": 2375256,
+      "sha256": "a938c64282b9d534374afe502e2dad73a552a4edd5dd8a48587464a78497bb6f"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-f0005.png",
+      "bytes": 2359228,
+      "sha256": "e5a9cb5bce290321395196253cda07780c295a0e9c8832d5f5a4a893b0f6a006"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-f0006.png",
+      "bytes": 2359219,
+      "sha256": "c8413c1ff08f49b34e7a5ddcb28d107dc2fb45352ee91c0b3a7749fcfdaed14b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-f0159.png",
+      "bytes": 2397469,
+      "sha256": "b21adea18b5771140adbc11c76d5117c466722bb030cf97a034ad99a43e68b38"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-sheet.png",
+      "bytes": 798553,
+      "sha256": "0c9544574eabf61dd03ab87868fbf4e45131807dce67228da09ee733f74170af"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-visual-f0007.png",
+      "bytes": 2358540,
+      "sha256": "75ed0d5637c25e24740cf3ca85c915d7bef5d12330a26ebd7c434ad651e5b0fc"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-visual-f0008.png",
+      "bytes": 2369806,
+      "sha256": "9f3bdc27989cc702632e2093b88efa040c23bd4f0fe56a124995c66c185c1e1c"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside-visual-f0009.png",
+      "bytes": 2370325,
+      "sha256": "55f47737157f1319a91e2f54ec36a2fa243d2a9d20f007fd7417d6756ba9c225"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside.json",
+      "bytes": 236375,
+      "sha256": "1222416aa3d71e7d9f2e7f5662b2659b3f770aba0772f873818190c6255662b0"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-inside-to-outside.mp4",
+      "bytes": 1244424,
+      "sha256": "d2b531f85443e22c752add1e61aca7f4d8466c6ae1b665fffd2938fb433f8fea"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-arrival-f0047.png",
+      "bytes": 2762310,
+      "sha256": "feded131c2909bb085a50b38246e29fcdbf6b323dca630e669560719715d02a1"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-arrival-f0048.png",
+      "bytes": 2780120,
+      "sha256": "9cbd2a7cf135848d6001728be6111bb9da18e58e8b95434806eb959476cb9acd"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-arrival-f0049.png",
+      "bytes": 2780222,
+      "sha256": "b5b5ce055dd902f7c70c96358d11218d5d040306daf53209c86e6cb7ac8b707d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-f0000.png",
+      "bytes": 2320426,
+      "sha256": "c8dc912baf238f4cdd76ad9cea090d460bf784ba39b518cd58f0d9f18d6fbfaa"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-f0036.png",
+      "bytes": 2346704,
+      "sha256": "782c1646947751d2102c5c457fa5f281ce2e52a344c99a6a34f595dc1432cdbd"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-f0037.png",
+      "bytes": 2330583,
+      "sha256": "4413f0dc64d8f20b9240471511d2e60bac151b62bc18c7a0d4aac54a1cf5ece2"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-f0038.png",
+      "bytes": 2330552,
+      "sha256": "b8eed3424a7e4aaa4b4b5988ca1d35d2f8ca4f0a673cb798f8bc955dd5345539"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-f0159.png",
+      "bytes": 2780340,
+      "sha256": "24dba3e2d5e314752e42b2b977591a7837f1bab6be6221df92116b846458e2d0"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-sheet.png",
+      "bytes": 813358,
+      "sha256": "a35ca49c2b74db6d89241457735de36c0cbcc73cf5ad793d6fbd7d98c2950d6b"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-visual-f0039.png",
+      "bytes": 2330121,
+      "sha256": "903e0a38470461173f14c789b268a1a2313a80a143f04e5c238d38f69850e9cf"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-visual-f0040.png",
+      "bytes": 2762236,
+      "sha256": "f8ec4178154f689a248dd684aafb4b520b088c43fe05a66879d30ff52a5dc74d"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside-visual-f0041.png",
+      "bytes": 2762251,
+      "sha256": "e1ca22e628794d5c1b7b214504d0ea8553e82cefd54ab629beb80478ba93268e"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside.json",
+      "bytes": 153347,
+      "sha256": "2c10db7364d6b960abaa2c2ca92756a14d7cd0c599f50c96c666799ae5da2e77"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/door-outside-to-inside.mp4",
+      "bytes": 1655819,
+      "sha256": "4c226d435b28e781b783d0191fdddff53264a9cd74053273541eeb14e0d2f184"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/plan.json",
+      "bytes": 332,
+      "sha256": "8114d31700d855754a1692b95d6cc953486b3bf0592e3d08c2d6996a9a076418"
+    },
+    {
+      "path": "tmp/walkqa/exits-07/roundtrip/render.json",
+      "bytes": 825,
+      "sha256": "4ada229bf1bf85d0a6aa99d710acebc7a4d70bf7aa56edc58aae20d30bf5ec62"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/area.json",
+      "bytes": 498806,
+      "sha256": "221aba44053773b7f8d54e962e07964699a1f3da2306c2cd0424e891c341393a"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/away-depth-sheet.png",
+      "bytes": 578303,
+      "sha256": "573d558c56547b72dbd71a8522f75a7ae926aec92eb9403f1fc7b7a4b7189c07"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/away-depth.json",
+      "bytes": 109918,
+      "sha256": "0bfbce295a01540d0b44c3d187e4946e5adfdeb2b0adbeec9017006e193d188f"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/away-depth.mp4",
+      "bytes": 724953,
+      "sha256": "7002fa67094cfd3677f2fc20ad78742239f24405947aadb49433f95c25882563"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/navigation.json",
+      "bytes": 498806,
+      "sha256": "9ff1135d41262a5aaa23f50c77e7df2bb5319dd3fbe8b1998c48c1da7b1bf3a3"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/render.json",
+      "bytes": 1407,
+      "sha256": "36082e24ec3130fedc32f11d8aaf923385fc2bd2d7e48ef94c83502ba551983d"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-far-sheet.png",
+      "bytes": 562396,
+      "sha256": "8ebd8336da50c96aa4f9c10ee5f074a7b0f91580b798fc189d4bb2e3dddbb75e"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-far.json",
+      "bytes": 113263,
+      "sha256": "280c132f5c8945bbf3e4428df824b5c8d8d6423dbe1f0c49af83e4147eb81e92"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-far.mp4",
+      "bytes": 598979,
+      "sha256": "21c158ae65a93db39807956eadffb6766c51bf3e28aabe924e67ff4e8a052872"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-near-sheet.png",
+      "bytes": 587086,
+      "sha256": "8423e81a11563876172bfdc931b97d35d04063e6c4c869a9f154c6d0e2c0630d"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-near.json",
+      "bytes": 109476,
+      "sha256": "d6b6605d8b0ccd0cb5a328e029b258967a74398580d9ac06f522eb801f090ff5"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/side-near.mp4",
+      "bytes": 754611,
+      "sha256": "f616ec7ee63d4e8868181bc359db56df9e6462595a5185600ba1ab8cfc27eb8c"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/toward-depth-sheet.png",
+      "bytes": 562959,
+      "sha256": "edf7e46cbe74b559e3c431469498fee30e1bd515bc2ab59d1e66c4ffa7019c44"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/toward-depth.json",
+      "bytes": 109913,
+      "sha256": "6023e35d58c851e21808f5e852b37968894fb548565c3a754e07c91fe76c13bd"
+    },
+    {
+      "path": "tmp/walkqa/final-07/alley/toward-depth.mp4",
+      "bytes": 601399,
+      "sha256": "cec863688ac4aa845107b98c9eb8439f84f3e2c98dc165e946a44211cc93a5d5"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/area.json",
+      "bytes": 499442,
+      "sha256": "9c231d69bd4dd94dbe28611b35902f32c10b02a5ac34f30e988c1484356fc4b0"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/away-depth-sheet.png",
+      "bytes": 585515,
+      "sha256": "c191ae07fcb8afa98404fbe328ac26fa8af3320c685d74092825ba70defdb919"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/away-depth.json",
+      "bytes": 109020,
+      "sha256": "75592a4ddad1b81e1ce0944f27d1bf4ed0fca84981dab7712a1009ccd82ae6e2"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/away-depth.mp4",
+      "bytes": 867882,
+      "sha256": "864f15cf120f870299faecb3f6a9315acdefb8debfb3cd62454fc4be754815b1"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/navigation.json",
+      "bytes": 499442,
+      "sha256": "7b8ee32973d14cf5d09fc566087d444eb8015c3eaf9a9a6232c14abaa9507e38"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/render.json",
+      "bytes": 1383,
+      "sha256": "cc3d1c85656a65fd7832b9410f7a7dfc19102983c24e496b670be0e96b718cbc"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-far-sheet.png",
+      "bytes": 589137,
+      "sha256": "ba1b7b0ec34ade6e45ca18fcab953949aec9f6aab83b0a606759d2315c537cf8"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-far.json",
+      "bytes": 107113,
+      "sha256": "e8974822ed62318c1da6c1f7abe8ec75ccc9942b203130d19c789ea4068142de"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-far.mp4",
+      "bytes": 936588,
+      "sha256": "52a348715ff8051600ea3041d08033e40520dbedd6702856f056872763910580"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-near-sheet.png",
+      "bytes": 648972,
+      "sha256": "b7557e771a847e5a4ab08c8e68187e5a5eb188178580d7d9d57609469e0ea495"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-near.json",
+      "bytes": 100519,
+      "sha256": "542d267d455179cd34c66fd0b082234886037ae155b26c3704a4102745b65ef5"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/side-near.mp4",
+      "bytes": 1340767,
+      "sha256": "d1973c7768ce87a31b8d0074e0b23ca634f9039b77b46f8f8adc0f4c957730ca"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/toward-depth-sheet.png",
+      "bytes": 580567,
+      "sha256": "700075433054c69575e955877be4612d4885130a8e63c076216054ff89ad85f7"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/toward-depth.json",
+      "bytes": 108675,
+      "sha256": "e7ec5d14623c6b367a3992862c3116d7a782f5746b2cf967c86f19c43b391037"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-inside/toward-depth.mp4",
+      "bytes": 872159,
+      "sha256": "47731d2d1b81d0c554c3edca07e4173605019d3de8e57f0924f6b7ed4f15a78a"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/area.json",
+      "bytes": 501026,
+      "sha256": "5ab3b40800bdf56f5c41f8c1a838b31f8246c6f6e889353ccf1265f5162c38ae"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/away-depth-sheet.png",
+      "bytes": 561241,
+      "sha256": "10baeec3c27b0542986c29669f8ff49f23ebb4ac58d26e8ed87e774973c09f65"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/away-depth.json",
+      "bytes": 197825,
+      "sha256": "433492f3edc66e28aee432c81b6c0b3a5fc6e2aaccbf1cc637706a5cd660c921"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/away-depth.mp4",
+      "bytes": 756848,
+      "sha256": "a40c0911e1f27c19c43fae9c4516318a55c7b90dbf9a293b9891eedd7524a38d"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/navigation.json",
+      "bytes": 501026,
+      "sha256": "4c8507334a1b2986d20ccff1ad8f60d19b18d7fb2b2dfe6bef87c4f5479e3144"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/render.json",
+      "bytes": 1386,
+      "sha256": "5eeb94b95e47cb7de833db6183910b1e8f8a3ab91e1844563a06b42ea6717fb2"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-far-sheet.png",
+      "bytes": 549705,
+      "sha256": "5e9bd8f1f5950c3f2f03f0b2be51b0c7d90f7130eb654f5ed586312120859ea5"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-far.json",
+      "bytes": 195393,
+      "sha256": "e1e8bf3506211911b5883c71758d4b9d906b3fca29f3fab5ce276548bb385953"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-far.mp4",
+      "bytes": 735006,
+      "sha256": "8870e891b816cfd8f7b20dc0ad69bdc111c22e160fcf07ec19c545c5c8019b26"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-near-sheet.png",
+      "bytes": 567302,
+      "sha256": "ba76a75b433b93ab92b17488cef2f0983a2668217a4096bfefa68757ffd508fc"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-near.json",
+      "bytes": 197422,
+      "sha256": "8773ec4febd4d74b87a11f24ae39a3346ae0f43937ee9e620d70c0d0d312ae01"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/side-near.mp4",
+      "bytes": 836860,
+      "sha256": "d7d335d896fa4fd559379ff66f46f84e8dc4796f5a4c406b177a1626578ecb45"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/toward-depth-sheet.png",
+      "bytes": 586655,
+      "sha256": "7a0ca822015eb7a3f806d95aa5005bc642720321419c3f8b3d32f29ac6614897"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/toward-depth.json",
+      "bytes": 191374,
+      "sha256": "64983e73399dc46893a129b597e046123353a670bfa885f6c36dc5186edca87a"
+    },
+    {
+      "path": "tmp/walkqa/final-07/depot-outside/toward-depth.mp4",
+      "bytes": 991643,
+      "sha256": "615e25508fed0df60a87313e87fcb4965c70918eed2fbea6c5f1942534f4ac13"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/area.json",
+      "bytes": 500517,
+      "sha256": "f8d6706ef5bb23d1cb92ef01163c187238a591005d6b23b637cf0af31dbe3bb6"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/away-depth-sheet.png",
+      "bytes": 625290,
+      "sha256": "9f983924211583e83d6bd384dc4d2a18baba99261ba203ff4f0374ebc797657c"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/away-depth.json",
+      "bytes": 174710,
+      "sha256": "c37aa89d1419d6bc5d1945f181edefe731b84c8fd126da95e6ce43864cbddf52"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/away-depth.mp4",
+      "bytes": 843322,
+      "sha256": "f768884a2c8c558d083cf36e122f5d5695a6590b2caef3884e5f3b3b47b16210"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/navigation.json",
+      "bytes": 500517,
+      "sha256": "93fc8dbed83ec947b8e6a19bba7cd4305b2e4240d51e02151105a9eaccbee91e"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/render.json",
+      "bytes": 1409,
+      "sha256": "87d5fd6be7dd9fbd62e44df432b39dea19fad7a737a2addc0e5c515460d9ba31"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-far-sheet.png",
+      "bytes": 608006,
+      "sha256": "12fb73da7309e50b3495c932d3dd03d1700b5581f309f50dbf696efb1cb23846"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-far.json",
+      "bytes": 176510,
+      "sha256": "60cb43b433db6c0fb361b64c01ded77356cca2a296bdeb6599eecb0309b1cd5e"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-far.mp4",
+      "bytes": 748932,
+      "sha256": "5acdc4984773996403762b350657a8fa4580a11b7d17b6f95df1398d1f8d2cfd"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-near-sheet.png",
+      "bytes": 614322,
+      "sha256": "13faadb5d0e1a68f1299d7e75c053ecd095bb998ca124cb3d2775a22b066f15c"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-near.json",
+      "bytes": 180308,
+      "sha256": "6c3fca32dccf781aa10bedcb9acee8c0f9015d58436a27f96b6392fd9acd7de9"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/side-near.mp4",
+      "bytes": 770358,
+      "sha256": "17444bad742452ab857353b68a71a235d4fde3a7860e3617d63a1280b509c8fa"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/toward-depth-sheet.png",
+      "bytes": 618883,
+      "sha256": "57d04b7301735fdfc49b62bb6bee51f486cd86a8329bcbffc692448032765145"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/toward-depth.json",
+      "bytes": 170884,
+      "sha256": "cc45ba3fb11c2f2994ca72926d0befb31cc2a55c68eaf0c3eec999a66c44638a"
+    },
+    {
+      "path": "tmp/walkqa/final-07/road/toward-depth.mp4",
+      "bytes": 868720,
+      "sha256": "35ec9074a64cfcf2b200da1c7a22adc7be5ace65320bb07613183e1cfa677f73"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/alley.png",
+      "bytes": 2766163,
+      "sha256": "c1aba80bf85912769caae31e2f93f0c213b54b8154fa3e312274709d80f44337"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/church.png",
+      "bytes": 2712116,
+      "sha256": "0abfc0a7745f566c15c1e3e980844363664d3f47eb97bbc5587d4612c80a3af5"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/depot-inside.png",
+      "bytes": 3068812,
+      "sha256": "aa18f39424334dc52b4ecef45913f1695abf025949387520c1fdc21eb8417e06"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/depot-outside.png",
+      "bytes": 2772931,
+      "sha256": "8fb5322fa47b0c6812902175f21904307401c16a29f552e765a9442bc7b17a9b"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/grocery.png",
+      "bytes": 2552771,
+      "sha256": "2d14b0d4b306cb71e647f84fb7419eab1286289cf72f861b90805f0fdf83d9f9"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/lobby.png",
+      "bytes": 2647840,
+      "sha256": "90dcc26d40187ecb36fd3c7f12b7fb15574762d99f074393a72b5e512a5e0994"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/pier.png",
+      "bytes": 2858679,
+      "sha256": "cd6ced4869820432bf46c50c8f16f557830aae8b29ab10b218c6da25e61a3146"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/road.png",
+      "bytes": 2981141,
+      "sha256": "f2b22c7d9922f740dda5689ba6cfad96d3e8be5a9e89d2a4bf0402cf9b1204ee"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/square.png",
+      "bytes": 3020028,
+      "sha256": "d5225737217a457c33b1d86e649c6a75607558c51e7f6a7e99a801fe49d1dd71"
+    },
+    {
+      "path": "tmp/walkqa/walkareas/stepped-street.png",
+      "bytes": 2888566,
+      "sha256": "5929401174f00af7a88f3929db960e79b7d2841e751b073e7a22cb4fa7c88142"
+    }
+  ],
+  "removedFrameDirectories": []
+}

@@ -1,0 +1,4 @@
+40px body-depth bins; same-cycle adjacent walking frames, >=24 pairs each; mean ground speed (not per-clip median).
+depot-inside   y=[880, 920]   side                 1.182 m/s side=1.182 ratio=1.000 n=63 evidence=['depot-inside/side-near.json', 51]
+depot-inside   y=[920, 960]   side                 1.201 m/s side=1.201 ratio=1.000 n=27 evidence=['depot-inside/side-near.json', 38]
+road           y=[760, 800]   side                 1.663 m/s side=1.663 ratio=1.000 n=80 evidence=['road/side-far.json', 30]

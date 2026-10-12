@@ -1,0 +1,38 @@
+[
+  {
+    "clip": "roundtrip/door-outside-to-inside",
+    "visualBackgroundCrossing": 40,
+    "frames": [
+      "exits-07/roundtrip/door-outside-to-inside-visual-f0039.png",
+      "exits-07/roundtrip/door-outside-to-inside-visual-f0040.png",
+      "exits-07/roundtrip/door-outside-to-inside-visual-f0041.png"
+    ]
+  },
+  {
+    "clip": "roundtrip/door-inside-to-outside",
+    "visualBackgroundCrossing": 8,
+    "frames": [
+      "exits-07/roundtrip/door-inside-to-outside-visual-f0007.png",
+      "exits-07/roundtrip/door-inside-to-outside-visual-f0008.png",
+      "exits-07/roundtrip/door-inside-to-outside-visual-f0009.png"
+    ]
+  },
+  {
+    "clip": "road/edge-left",
+    "visualBackgroundCrossing": 12,
+    "frames": [
+      "exits-07/road/edge-left-visual-f0011.png",
+      "exits-07/road/edge-left-visual-f0012.png",
+      "exits-07/road/edge-left-visual-f0013.png"
+    ]
+  },
+  {
+    "clip": "road/far",
+    "visualBackgroundCrossing": 152,
+    "frames": [
+      "exits-07/road/far-visual-f0151.png",
+      "exits-07/road/far-visual-f0152.png",
+      "exits-07/road/far-visual-f0153.png"
+    ]
+  }
+]

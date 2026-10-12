@@ -1,0 +1,25 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "front-to-behind",
+      "start": [
+        992.5,
+        942.5
+      ],
+      "click": [
+        992.5,
+        817.5
+      ],
+      "frames": 180
+    },
+    {
+      "name": "behind-to-front",
+      "click": [
+        992.5,
+        942.5
+      ],
+      "frames": 180
+    }
+  ]
+}

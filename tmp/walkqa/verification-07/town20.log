@@ -1,0 +1,15 @@
+start 
+changed-depot You paint a sweeping red spiral onto the wooden bench. It stands out starkly against the weathered timber, a bold new mark on the decaying platform, easily visible even from the far end of the harbor.
+road The bus, an ancient hulk, rattles and groans as it pulls away from the depot, leaving the salt-choked air and the distant cry of gulls behind. The road ahead, cracked and overgrown, winds into the gathering gloom. The town recedes in the rearview mirror, its gabled roofs and narrow lanes swallowed by the encroaching shadows.
+road-left 
+road-right 
+road-far 
+road-near 
+alley You turn from the main road, leaving the gnarled trees and oppressive fog behind. The alley beside the house is narrower, darker, and the silence here feels heavier. The scent of brine intensifies, mixing with something vaguely organic and decaying.
+alley-left 
+alley-right 
+alley-far 
+alley-near 
+Error: Scale did not grow toward camera
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:311:9)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:367:2

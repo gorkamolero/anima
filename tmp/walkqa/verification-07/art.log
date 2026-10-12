@@ -1,0 +1,25 @@
+
+> @anima/shadow-over-innsmouth@0.1.0 verify:art /Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth
+> node scripts/verify-art.mjs
+
+
+=== outside (bus-station-kat-seated-composite-v1.png) — PASS (0 errors, 2 warnings) ===
+[WARNING] art-internally-inconsistent :: bus
+  actual:    "150 px/m at y=910"
+  expected:  "315 px/m"
+  use this:  "already excluded from the model (use:false)"
+  note:      INTENTIONAL stylization (owner ruling 2026-07-13): painted under strict perspective scale so the frame isn't dominated. Do not repaint. Kept use:false so it stays out of the model.
+[WARNING] art-internally-inconsistent :: car
+  actual:    "194 px/m at y=894"
+  expected:  "304 px/m"
+  use this:  "already excluded from the model (use:false)"
+  note:      INTENTIONAL stylization (owner ruling 2026-07-13): same as bus. Do not repaint.
+
+=== inside (arkham-bus-depot-flat-2d.png) — PASS (0 errors, 1 warnings) ===
+[WARNING] art-internally-inconsistent :: vending-machine
+  actual:    "331 px/m at y=894"
+  expected:  "254 px/m"
+  use this:  "already excluded from the model (use:false)"
+  note:      painted ~30% oversized relative to the doorway
+
+Art verification: all scenes PASS

@@ -1,0 +1,66 @@
+[
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Bench",
+    "reference": "api/data/perception/a3096a476f823f264a9bc410b790ff0482d54c9848347c36c2c2876096d87416.occlusion-mask.png",
+    "referencePixels": 13752,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Fishing net pile",
+    "reference": "api/data/perception/81366d8cbf48c0c10eb018e2cb483d1f8b9eb592a6abdf0854d86901594df4b0.occlusion-mask.png",
+    "referencePixels": 29036,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Pergola",
+    "reference": "api/data/perception/5949a00cf718de34def34aad9bd7dd248b6f1f18c85b1042d83f8e2627fbda81.occlusion-mask.png",
+    "referencePixels": 149503,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Small house",
+    "reference": "api/data/perception/30891c32ea4c135a4558ace28e2772adf75607baa0dbcdd512aba0372b89f8ce.occlusion-mask.png",
+    "referencePixels": 203332,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Van",
+    "reference": "api/data/perception/2dff199e066f2e314824acffb0edfbb0056d2a701e155bec1af85246b24df952.occlusion-mask.png",
+    "referencePixels": 82208,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "bus-station-kat-seated-composite-v1",
+    "object": "Left fishing net pile",
+    "reference": "api/data/perception/9fb4e03fe837126c1adfb6379a6a8c1eeb95b63d40debdb520dde9e5d3f9960a.occlusion-mask.png",
+    "referencePixels": 44487,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "arkham-bus-depot-flat-2d",
+    "object": "bench",
+    "reference": "api/data/perception/c64864dd385f7feb4e55220567a92c3f5db5806770cc6822b798bc6fc2499952.occlusion-mask.png",
+    "referencePixels": 83719,
+    "missingPixels": 0,
+    "coverage": 1.0
+  },
+  {
+    "scene": "arkham-bus-depot-flat-2d",
+    "object": "bus",
+    "reference": "api/data/perception/7c854de61307e63999a420550144bba24a0d5cd371333d11cda2ab308dc498d2.occlusion-mask.png",
+    "referencePixels": 60656,
+    "missingPixels": 0,
+    "coverage": 1.0
+  }
+]

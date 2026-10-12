@@ -1,0 +1,16 @@
+tmp/walkqa/final-07/alley/away-depth.mp4: frames 120, walking pairs 24, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/alley/side-far.mp4: frames 120, walking pairs 6, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/alley/side-near.mp4: frames 120, walking pairs 31, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/alley/toward-depth.mp4: frames 120, walking pairs 9, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-inside/away-depth.mp4: frames 120, walking pairs 19, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-inside/side-far.mp4: frames 120, walking pairs 31, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-inside/side-near.mp4: frames 120, walking pairs 83, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-inside/toward-depth.mp4: frames 120, walking pairs 21, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-outside/away-depth.mp4: frames 120, walking pairs 19, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-outside/side-far.mp4: frames 120, walking pairs 21, frozen while walking 0 (0%); legacy threshold flags 7
+tmp/walkqa/final-07/depot-outside/side-near.mp4: frames 120, walking pairs 25, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/depot-outside/toward-depth.mp4: frames 120, walking pairs 72, frozen while walking 0 (0%); legacy threshold flags 14
+tmp/walkqa/final-07/road/away-depth.mp4: frames 120, walking pairs 85, frozen while walking 0 (0%); legacy threshold flags 8
+tmp/walkqa/final-07/road/side-far.mp4: frames 120, walking pairs 72, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/road/side-near.mp4: frames 120, walking pairs 37, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/final-07/road/toward-depth.mp4: frames 120, walking pairs 106, frozen while walking 0 (0%); legacy threshold flags 33

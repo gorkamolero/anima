@@ -1,0 +1,20 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "door-outside-to-inside",
+      "start": [
+        1317.5,
+        930
+      ],
+      "exit": "depot_doors",
+      "frames": 160
+    },
+    {
+      "name": "door-inside-to-outside",
+      "continueLocation": true,
+      "exit": "bus_platform",
+      "frames": 160
+    }
+  ]
+}

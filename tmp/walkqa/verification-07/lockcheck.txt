@@ -1,0 +1,16 @@
+{"clip": "tmp/walkqa/final-07/alley/away-depth.mp4", "stances": 2, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 13, 24, "away-right"], [0.0, 1, 12, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/alley/side-far.mp4", "stances": 1, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 0, 6, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/alley/side-near.mp4", "stances": 3, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 18, 29, "toward-right"], [0.0, 5, 17, "away-right"], [0.0, 0, 4, "away-right"]]}
+{"clip": "tmp/walkqa/final-07/alley/toward-depth.mp4", "stances": 1, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 0, 9, "toward"]]}
+{"clip": "tmp/walkqa/final-07/depot-inside/away-depth.mp4", "stances": 2, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 8, 19, "eo-transparent-loop"], [0.0, 0, 7, "away-right"]]}
+{"clip": "tmp/walkqa/final-07/depot-inside/side-far.mp4", "stances": 3, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 19, 31, "toward-right"], [0.0, 7, 18, "eo-transparent-loop"], [0.0, 0, 6, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/depot-inside/side-near.mp4", "stances": 8, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 73, 83, "eo-transparent-loop"], [0.0, 61, 72, "eo-transparent-loop"], [0.0, 50, 60, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/depot-inside/toward-depth.mp4", "stances": 2, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 10, 21, "eo-transparent-loop"], [0.0, 0, 9, "toward"]]}
+{"clip": "tmp/walkqa/final-07/depot-outside/away-depth.mp4", "stances": 2, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 8, 17, "away-right"], [0.0, 0, 7, "away-right"]]}
+{"clip": "tmp/walkqa/final-07/depot-outside/side-far.mp4", "stances": 2, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 8, 21, "away"], [0.0, 0, 7, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/depot-outside/side-near.mp4", "stances": 3, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 17, 25, "away-right"], [0.0, 6, 16, "eo-transparent-loop"], [0.0, 0, 5, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/depot-outside/toward-depth.mp4", "stances": 6, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 61, 72, "eo-transparent-loop"], [0.0, 48, 60, "toward"], [0.0, 36, 47, "toward"]]}
+{"clip": "tmp/walkqa/final-07/road/away-depth.mp4", "stances": 8, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 74, 85, "eo-transparent-loop"], [0.0, 62, 73, "away-right"], [0.0, 52, 61, "away-right"]]}
+{"clip": "tmp/walkqa/final-07/road/side-far.mp4", "stances": 6, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 63, 72, "away-right"], [0.0, 48, 62, "eo-transparent-loop"], [0.0, 36, 47, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/road/side-near.mp4", "stances": 4, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 28, 37, "away-right"], [0.0, 17, 27, "eo-transparent-loop"], [0.0, 6, 16, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/final-07/road/toward-depth.mp4", "stances": 9, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 95, 106, "toward-right"], [0.0, 83, 94, "toward"], [0.0, 70, 82, "toward"]]}
