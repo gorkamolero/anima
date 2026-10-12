@@ -19,6 +19,7 @@ import {
 	nearestCell,
 	type Occluder,
 	objectFootprints,
+	passageArrival,
 	refineMask,
 	type SceneConfig,
 	scaleAt,
@@ -1613,7 +1614,20 @@ export class StoryGameScene extends BaseScene {
 				?.setTexture(HERMES_IDLE_TEXTURE, 0)
 				.setFlipX(kind === "edge-left");
 		}
-		this.hermesMotor.place(point, !edge);
+		if (kind === "near" || kind === "far") {
+			Object.assign(
+				point,
+				passageArrival(this.walkArea, point, kind, MAX_FEET_Y),
+			);
+			this.hermesSprite
+				?.setTexture(
+					kind === "far" ? "hermes-walk-toward" : "hermes-walk-away",
+					0,
+				)
+				.setFlipX(false);
+		}
+		if (kind === "near" || kind === "far") this.hermesMotor.placeContact(point);
+		else this.hermesMotor.place(point, !edge);
 		this.exitLatch = entry.id;
 		const desired = {
 			x:
@@ -1627,7 +1641,10 @@ export class StoryGameScene extends BaseScene {
 		// A walk-in can cross another nearby gate (the depot door beside its
 		// right edge). Do not chain a second journey during the arrival itself.
 		this.arrivingExit = true;
-		void this.walkHermesPath(path).finally(() => {
+		void this.walkHermesPath(path, {
+			initialHeading:
+				kind === "near" ? "away" : kind === "far" ? "toward" : undefined,
+		}).finally(() => {
 			this.arrivingExit = false;
 		});
 	}
@@ -1958,7 +1975,7 @@ export class StoryGameScene extends BaseScene {
 	private exitHermesTo(
 		x: number,
 		y: number,
-		options: { hideOnArrival?: boolean } = {},
+		options: { hideOnArrival?: boolean; initialHeading?: WalkDirection } = {},
 	): Promise<void> {
 		const hermesSprite = this.hermesSprite;
 		if (!hermesSprite) return Promise.resolve();
@@ -1971,13 +1988,13 @@ export class StoryGameScene extends BaseScene {
 	/** Scripted exits may leave the free floor; motion still has one owner. */
 	private async walkHermesPath(
 		points: ScenePoint[],
-		options: { hideOnArrival?: boolean } = {},
+		options: { hideOnArrival?: boolean; initialHeading?: WalkDirection } = {},
 	): Promise<void> {
 		if (!this.hermesMotor || !this.hermesSprite || !points.length) return;
 		this.inputBlocked = true;
 		this.hermesSprite.setWorldBoundsCollision(false);
 		try {
-			await this.hermesMotor.walk(points);
+			await this.hermesMotor.walk(points, options.initialHeading);
 			if (options.hideOnArrival) this.hermesSprite.setVisible(false);
 		} finally {
 			this.inputBlocked = false;

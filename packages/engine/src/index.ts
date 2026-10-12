@@ -88,6 +88,7 @@ export type {
 // Inventory
 export * as inventory from "./inventory";
 export { InventoryManager } from "./inventory";
+export { passageArrival } from "./occlusion/arrivals";
 export { bridgeFloor, bridgeOccluders, floorPixel } from "./occlusion/bridge";
 export type { Exit } from "./occlusion/exits";
 export { exitAt, exitAtArrival } from "./occlusion/exits";
