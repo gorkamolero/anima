@@ -1,0 +1,722 @@
+[
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 21,
+    "support": "R",
+    "headScreenPx": 20.852090680708343,
+    "torsoScreenPx": 21.923205471462815,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-away-right",
+    "afterTexture": "hermes-passing-stand-away-right",
+    "beforeScale": 0.26476676724865594,
+    "afterScale": 0.27249873493156124,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1065.9788879115015,
+        "y": 881.5733934179647
+      },
+      "matched": true,
+      "to": {
+        "x": 1065.9788879115015,
+        "y": 881.5733934179647
+      },
+      "waitFrames": 6
+    },
+    "lowerBodyIoU": 0.37842216775372856,
+    "freeFootScreenPx": 47.85939380619737,
+    "withinTargets": false
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "kind": "stop",
+    "cutFrames": [
+      17,
+      18
+    ],
+    "walkFrame": 44,
+    "support": "R",
+    "headScreenPx": 18.41205311019116,
+    "torsoScreenPx": 21.415807830056675,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-away-right",
+    "afterTexture": "hermes-passing-stand-away-right",
+    "beforeScale": 0.2668978737754043,
+    "afterScale": 0.27498344667096886,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1050.7786749501588,
+        "y": 884.0383000823919
+      },
+      "matched": true,
+      "to": {
+        "x": 1050.7786749501588,
+        "y": 884.0383000823919
+      },
+      "waitFrames": 1
+    },
+    "lowerBodyIoU": 0.41455197759887996,
+    "freeFootScreenPx": 56.39415301209775,
+    "withinTargets": false
+  },
+  {
+    "scene": "road",
+    "heading": "away",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 0,
+    "support": "R",
+    "headScreenPx": 10.199513178978501,
+    "torsoScreenPx": 14.095546643099317,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-away",
+    "afterTexture": "hermes-passing-stand-away",
+    "beforeScale": 0.22496006992450368,
+    "afterScale": 0.2327759836728397,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 998.523298730756,
+        "y": 834.3553012081867
+      },
+      "matched": true,
+      "to": {
+        "x": 998.523298730756,
+        "y": 834.3553012081867
+      },
+      "waitFrames": 7
+    },
+    "lowerBodyIoU": 0.52177368086459,
+    "freeFootScreenPx": 16.459554872164844,
+    "withinTargets": false
+  },
+  {
+    "scene": "road",
+    "heading": "left",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.2543568812330028,
+    "torsoScreenPx": 1.0344884895382975,
+    "within4px": true,
+    "beforeTexture": "hermes-fal-veo-transparent-loop",
+    "afterTexture": "hermes-passing-stand-side",
+    "beforeScale": 0.27366365238390544,
+    "afterScale": 0.27319548776999675,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 851.5768968025682,
+        "y": 884.0383000823919
+      },
+      "matched": true,
+      "to": {
+        "x": 851.5768968025682,
+        "y": 884.0383000823919
+      },
+      "waitFrames": 1
+    },
+    "lowerBodyIoU": 0.9187380001037829,
+    "freeFootScreenPx": 3.409890644813964,
+    "withinTargets": true
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.0259033368776795,
+    "torsoScreenPx": 0.8460791416336925,
+    "within4px": true,
+    "beforeTexture": "hermes-fal-veo-transparent-loop",
+    "afterTexture": "hermes-passing-stand-side",
+    "beforeScale": 0.2238218312154037,
+    "afterScale": 0.223438932499142,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1187.0308300310471,
+        "y": 834.3553012081867
+      },
+      "matched": true,
+      "to": {
+        "x": 1187.0308300310471,
+        "y": 834.3553012081867
+      },
+      "waitFrames": 2
+    },
+    "lowerBodyIoU": 0.9365004703668862,
+    "freeFootScreenPx": 2.788853988167083,
+    "withinTargets": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-left",
+    "kind": "stop",
+    "cutFrames": [
+      28,
+      29
+    ],
+    "walkFrame": 7,
+    "support": "L",
+    "headScreenPx": 3.737884138698934,
+    "torsoScreenPx": 2.9813486882620097,
+    "within4px": true,
+    "beforeTexture": "hermes-walk-toward-right",
+    "afterTexture": "hermes-passing-stand-toward-right",
+    "beforeScale": 0.27922229482802385,
+    "afterScale": 0.2825954279012164,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 756.6836121070337,
+        "y": 885.1512125521317
+      },
+      "matched": true,
+      "to": {
+        "x": 756.6836121070337,
+        "y": 885.1512125521317
+      },
+      "waitFrames": 3
+    },
+    "lowerBodyIoU": 0.7634498639313376,
+    "freeFootScreenPx": 1.9206379068478012,
+    "withinTargets": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-right",
+    "kind": "stop",
+    "cutFrames": [
+      28,
+      29
+    ],
+    "walkFrame": 7,
+    "support": "L",
+    "headScreenPx": 4.1296229168564365,
+    "torsoScreenPx": 3.2938008267081877,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-toward-right",
+    "afterTexture": "hermes-passing-stand-toward-right",
+    "beforeScale": 0.308485427806844,
+    "afterScale": 0.31221207291508685,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1166.7179748532456,
+        "y": 913.857031478816
+      },
+      "matched": true,
+      "to": {
+        "x": 1166.7179748532456,
+        "y": 913.857031478816
+      },
+      "waitFrames": 5
+    },
+    "lowerBodyIoU": 0.7602061265387918,
+    "freeFootScreenPx": 2.121925137535802,
+    "withinTargets": false
+  },
+  {
+    "scene": "road",
+    "heading": "toward",
+    "kind": "stop",
+    "cutFrames": [
+      29,
+      30
+    ],
+    "walkFrame": 13,
+    "support": "L",
+    "headScreenPx": 0.9199310487384077,
+    "torsoScreenPx": 1.1854599221633835,
+    "within4px": true,
+    "beforeTexture": "hermes-walk-toward",
+    "afterTexture": "hermes-passing-stand-toward",
+    "beforeScale": 0.3527822909612995,
+    "afterScale": 0.35312974027835825,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 958.4676505495232,
+        "y": 944.6776554046525
+      },
+      "matched": true,
+      "to": {
+        "x": 958.4676505495232,
+        "y": 944.6776554046525
+      },
+      "waitFrames": 9
+    },
+    "lowerBodyIoU": 0.9498843148382591,
+    "freeFootScreenPx": 4.236166520871301,
+    "withinTargets": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "kind": "stop",
+    "cutFrames": [
+      26,
+      27
+    ],
+    "walkFrame": 44,
+    "support": "R",
+    "headScreenPx": 27.45280975819614,
+    "torsoScreenPx": 32.03310777984306,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-away-right",
+    "afterTexture": "hermes-passing-stand-away-right",
+    "beforeScale": 0.39823763086257286,
+    "afterScale": 0.4096997939082489,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1290.0166459224508,
+        "y": 902.9909662364016
+      },
+      "matched": true,
+      "to": {
+        "x": 1290.0166459224508,
+        "y": 902.9909662364016
+      },
+      "waitFrames": 10
+    },
+    "lowerBodyIoU": 0.4155895489940314,
+    "freeFootScreenPx": 84.10082433732002,
+    "withinTargets": false
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "kind": "stop",
+    "cutFrames": [
+      26,
+      27
+    ],
+    "walkFrame": 44,
+    "support": "R",
+    "headScreenPx": 25.222234112598702,
+    "torsoScreenPx": 29.430377105064363,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-away-right",
+    "afterTexture": "hermes-passing-stand-away-right",
+    "beforeScale": 0.36588031777197166,
+    "afterScale": 0.376411165518385,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1594.969217347956,
+        "y": 868.2324071272079
+      },
+      "matched": true,
+      "to": {
+        "x": 1594.969217347956,
+        "y": 868.2324071272079
+      },
+      "waitFrames": 13
+    },
+    "lowerBodyIoU": 0.4142813677534112,
+    "freeFootScreenPx": 77.26752558962008,
+    "withinTargets": false
+  },
+  {
+    "scene": "depot",
+    "heading": "away",
+    "kind": "stop",
+    "cutFrames": [
+      26,
+      27
+    ],
+    "walkFrame": 11,
+    "support": "L",
+    "headScreenPx": 0.7420381887325724,
+    "torsoScreenPx": 1.6670305802319159,
+    "within4px": true,
+    "beforeTexture": "hermes-walk-away",
+    "afterTexture": "hermes-passing-stand-away",
+    "beforeScale": 0.3431102593615853,
+    "afterScale": 0.34306179760488725,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1398.6725523092464,
+        "y": 821.0198075175763
+      },
+      "matched": true,
+      "to": {
+        "x": 1398.6725523092464,
+        "y": 821.0198075175763
+      },
+      "waitFrames": 9
+    },
+    "lowerBodyIoU": 0.9246114797167921,
+    "freeFootScreenPx": 6.4123450396897015,
+    "withinTargets": true
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.8978345254846278,
+    "torsoScreenPx": 1.5630850621027246,
+    "within4px": true,
+    "beforeTexture": "hermes-fal-veo-transparent-loop",
+    "afterTexture": "hermes-passing-stand-side",
+    "beforeScale": 0.40835686863142023,
+    "afterScale": 0.4076929407132057,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1287.0231095652143,
+        "y": 903.542421336296
+      },
+      "matched": true,
+      "to": {
+        "x": 1287.0231095652143,
+        "y": 903.542421336296
+      },
+      "waitFrames": 1
+    },
+    "lowerBodyIoU": 0.9288997279804896,
+    "freeFootScreenPx": 5.090324231839387,
+    "withinTargets": true
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "kind": "stop",
+    "cutFrames": [
+      18,
+      19
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.8978345254844924,
+    "torsoScreenPx": 1.563085062102709,
+    "within4px": true,
+    "beforeTexture": "hermes-fal-veo-transparent-loop",
+    "afterTexture": "hermes-passing-stand-side",
+    "beforeScale": 0.40835686863142023,
+    "afterScale": 0.4076929407132057,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1630.758476157157,
+        "y": 903.542421336296
+      },
+      "matched": true,
+      "to": {
+        "x": 1630.758476157157,
+        "y": 903.542421336296
+      },
+      "waitFrames": 0
+    },
+    "lowerBodyIoU": 0.9288997279804896,
+    "freeFootScreenPx": 5.090324231839244,
+    "withinTargets": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-left",
+    "kind": "stop",
+    "cutFrames": [
+      17,
+      18
+    ],
+    "walkFrame": 19,
+    "support": "R",
+    "headScreenPx": 14.853091393535912,
+    "torsoScreenPx": 17.83419304269927,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-toward-right",
+    "afterTexture": "hermes-passing-stand-toward-right",
+    "beforeScale": 0.4030210775191794,
+    "afterScale": 0.4221548375740944,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1287.0231095652143,
+        "y": 903.542421336296
+      },
+      "matched": true,
+      "to": {
+        "x": 1287.0231095652143,
+        "y": 903.542421336296
+      },
+      "waitFrames": 0
+    },
+    "lowerBodyIoU": 0.36301905950542596,
+    "freeFootScreenPx": 29.728670471612638,
+    "withinTargets": false
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-right",
+    "kind": "stop",
+    "cutFrames": [
+      17,
+      18
+    ],
+    "walkFrame": 19,
+    "support": "R",
+    "headScreenPx": 16.495042686210414,
+    "torsoScreenPx": 19.805693489603517,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-toward-right",
+    "afterTexture": "hermes-passing-stand-toward-right",
+    "beforeScale": 0.4475734849389427,
+    "afterScale": 0.4688224075026921,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1418.8060636164937,
+        "y": 950.8940045041376
+      },
+      "matched": true,
+      "to": {
+        "x": 1418.8060636164937,
+        "y": 950.8940045041376
+      },
+      "waitFrames": 1
+    },
+    "lowerBodyIoU": 0.36322808461037404,
+    "freeFootScreenPx": 33.015058982735084,
+    "withinTargets": false
+  },
+  {
+    "scene": "depot",
+    "heading": "toward",
+    "kind": "stop",
+    "cutFrames": [
+      17,
+      18
+    ],
+    "walkFrame": 0,
+    "support": "R",
+    "headScreenPx": 10.426967955034378,
+    "torsoScreenPx": 10.336366227518376,
+    "within4px": false,
+    "beforeTexture": "hermes-walk-toward",
+    "afterTexture": "hermes-passing-stand-toward",
+    "beforeScale": 0.3870756611449822,
+    "afterScale": 0.38891106105448336,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1322.8123683744152,
+        "y": 868.2324071272079
+      },
+      "matched": true,
+      "to": {
+        "x": 1322.8123683744152,
+        "y": 868.2324071272079
+      },
+      "waitFrames": 6
+    },
+    "lowerBodyIoU": 0.8081613664307314,
+    "freeFootScreenPx": 1.5845793603880782,
+    "withinTargets": false
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 30,
+    "support": "L",
+    "headScreenPx": 5.662889674800372,
+    "torsoScreenPx": 6.363142261983444,
+    "within4px": false,
+    "beforeTexture": "hermes-passing-stand-away-right",
+    "afterTexture": "hermes-walk-away-right",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.41264099934707493,
+    "cut": null,
+    "lowerBodyIoU": 0.767134921727953,
+    "freeFootScreenPx": 21.773375479952268,
+    "withinTargets": false
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 30,
+    "support": "L",
+    "headScreenPx": 5.662889674800372,
+    "torsoScreenPx": 6.363142261983444,
+    "within4px": false,
+    "beforeTexture": "hermes-passing-stand-away-right",
+    "afterTexture": "hermes-walk-away-right",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.41264099934707493,
+    "cut": null,
+    "lowerBodyIoU": 0.767134921727953,
+    "freeFootScreenPx": 21.773375479952268,
+    "withinTargets": false
+  },
+  {
+    "scene": "starts",
+    "heading": "away",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 11,
+    "support": "L",
+    "headScreenPx": 0.8981524707658778,
+    "torsoScreenPx": 2.0177501066715293,
+    "within4px": true,
+    "beforeTexture": "hermes-passing-stand-away",
+    "afterTexture": "hermes-walk-away",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.41529577839476567,
+    "cut": null,
+    "lowerBodyIoU": 0.9244802715316079,
+    "freeFootScreenPx": 7.7614112429895945,
+    "withinTargets": true
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.9329531266038262,
+    "torsoScreenPx": 1.5920092702326727,
+    "within4px": true,
+    "beforeTexture": "hermes-passing-stand-side",
+    "afterTexture": "hermes-fal-veo-transparent-loop",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.4159133345887748,
+    "cut": null,
+    "lowerBodyIoU": 0.9298789455820794,
+    "freeFootScreenPx": 5.184518464199411,
+    "withinTargets": true
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 29,
+    "support": "R",
+    "headScreenPx": 1.9329531266038262,
+    "torsoScreenPx": 1.5920092702326727,
+    "within4px": true,
+    "beforeTexture": "hermes-passing-stand-side",
+    "afterTexture": "hermes-fal-veo-transparent-loop",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.4159133345887748,
+    "cut": null,
+    "lowerBodyIoU": 0.9298789455820794,
+    "freeFootScreenPx": 5.184518464199411,
+    "withinTargets": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-left",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 7,
+    "support": "L",
+    "headScreenPx": 5.522918627428786,
+    "torsoScreenPx": 4.427426481718429,
+    "within4px": false,
+    "beforeTexture": "hermes-passing-stand-toward-right",
+    "afterTexture": "hermes-walk-toward-right",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.410530833821994,
+    "cut": null,
+    "lowerBodyIoU": 0.7634642197075322,
+    "freeFootScreenPx": 2.835565941378535,
+    "withinTargets": false
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-right",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 7,
+    "support": "L",
+    "headScreenPx": 5.522918627428786,
+    "torsoScreenPx": 4.427426481718429,
+    "within4px": false,
+    "beforeTexture": "hermes-passing-stand-toward-right",
+    "afterTexture": "hermes-walk-toward-right",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.410530833821994,
+    "cut": null,
+    "lowerBodyIoU": 0.7634642197075322,
+    "freeFootScreenPx": 2.835565941378535,
+    "withinTargets": false
+  },
+  {
+    "scene": "starts",
+    "heading": "toward",
+    "kind": "start",
+    "cutFrames": [
+      0,
+      1
+    ],
+    "walkFrame": 13,
+    "support": "L",
+    "headScreenPx": 1.0636396974521205,
+    "torsoScreenPx": 1.3825525836923662,
+    "within4px": true,
+    "beforeTexture": "hermes-passing-stand-toward",
+    "afterTexture": "hermes-walk-toward",
+    "beforeScale": 0.4152371209736649,
+    "afterScale": 0.4148499187948416,
+    "cut": null,
+    "lowerBodyIoU": 0.9509398199336597,
+    "freeFootScreenPx": 4.98072954694357,
+    "withinTargets": true
+  }
+]
