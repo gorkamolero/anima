@@ -10,6 +10,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { connectionsRoutes } from "./routes/connections.js";
 import { gameRoutes } from "./routes/game.js";
 import { groundRoutes } from "./routes/ground.js";
 import { interactablesRoutes } from "./routes/interactables.js";
@@ -45,6 +46,7 @@ app.get("/api/health", (c) => {
 
 // Mount game routes under /api
 app.route("/api", gameRoutes);
+app.route("/api", connectionsRoutes);
 app.route("/api", worldRoutes);
 app.route("/api", groundRoutes);
 app.route("/api", placesRoutes);
