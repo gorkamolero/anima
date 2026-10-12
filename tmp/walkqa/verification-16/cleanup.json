@@ -1,0 +1,16 @@
+{
+  "stopped": [
+    {
+      "port": 4317,
+      "pid": 15744
+    },
+    {
+      "port": 8080,
+      "pid": 15773
+    }
+  ],
+  "browserSessionsClosed": [
+    "anima",
+    "anima-town"
+  ]
+}
