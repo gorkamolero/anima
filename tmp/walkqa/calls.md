@@ -138,3 +138,16 @@ Limits: 4 image edits, 4 Kling videos, 4 BRIA removals. No Veo.
 
 Limits: 2 Kling videos, 2 BRIA removals, 2 image edits only if needed. No Veo.
 Current: 0 videos, 0 BRIA, 0 edits.
+| video | fal-ai/kling-video/v3/standard/image-to-video | away | submission attempted 2026-10-12T02:28:02.391Z |
+  Request 01a12df0-4233-74f0-b2f1-1ee4048f2400 (away, video).
+| video | fal-ai/kling-video/v3/standard/image-to-video | toward | submission attempted 2026-10-12T02:28:03.721Z |
+  Request 01a12df0-473f-7442-a65f-74af8d4800a6 (toward, video).
+  Completed 01a12df0-473f-7442-a65f-74af8d4800a6: tmp/hermes-depth-06/toward-video.mp4
+| bria | bria/video/background-removal | toward | submission attempted 2026-10-12T02:30:08.896Z |
+  Request 01a12df2-2fe3-7bc0-b5e9-7a1f108a3112 (toward, bria).
+  Completed 01a12df2-2fe3-7bc0-b5e9-7a1f108a3112: tmp/hermes-depth-06/toward-bria.webm
+  Completed 01a12df0-4233-74f0-b2f1-1ee4048f2400: tmp/hermes-depth-06/away-video.mp4
+
+Away BRIA: upload rejected before submission (HTTP 403: exhausted fal.ai balance). No BRIA request ID or paid invocation for this attempt. Brief 06 totals so far: 2 Kling videos, 1 BRIA, 0 image edits.
+
+Brief 06 final generation totals: **2/2 Kling videos, 1/2 BRIA removals, 0/2 image edits; no Veo**. Away extracted locally with sprite-factory gray-background keying after the rejected upload, with no additional paid submission. Source, local matte settings, loops and reviewed seeds: tmp/hermes-depth-06/.
