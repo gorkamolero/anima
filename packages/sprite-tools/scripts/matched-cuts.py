@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Measure sole-aligned walk/still matches. Local, deterministic, no image service.
+Head/torso proxies are alpha centroids of the top 23% / 25-62% of each
+silhouette's own visible height. Metrics use sprite pixels, before scaling.
+All frames are measured; one minimum-score exit per support and a ranked entry list
+with at least two remaining support frames are selected; runtime chooses the
+best floor-safe candidate on the actual planted foot. Mirroring preserves
+IoU and displacement lengths, so mirrored headings share the measurements.
+"""
+import json
+import subprocess
+from pathlib import Path
+import numpy as np
+from PIL import Image, ImageDraw
+from scipy.ndimage import shift
+
+ROOT = Path(__file__).resolve().parents[3]
+SPR = ROOT / 'adventures/shadow-over-innsmouth/public/assets/sprites/hermes'
+OUT = ROOT / 'tmp/walkqa/verification-12/matches'
+OUT.mkdir(parents=True, exist_ok=True)
+PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-idle-v2-normalized', ['left', 'right'])] + [
+    ('hermes-walk-'+d, 'hermes-stand-'+d, headings) for d, headings in [
+        ('away', ['away']), ('toward', ['toward']),
+        ('away-right', ['away-right', 'away-left']),
+        ('toward-right', ['toward-right', 'toward-left'])]]
+
+def frames(meta):
+    im = Image.open(SPR / meta['image']).convert('RGBA')
+    w,h = meta['frameWidth'],meta['frameHeight']
+    return [im.crop((i%meta['cols']*w,i//meta['cols']*h,(i%meta['cols']+1)*w,(i//meta['cols']+1)*h)) for i in range(meta['frameCount'])]
+
+def centroid(a, lo, hi):
+    ys = np.where(a > 127)[0]; top,bottom = ys.min(),ys.max()+1
+    y0,y1 = int(top+(bottom-top)*lo),int(top+(bottom-top)*hi)
+    weights = a[y0:y1].astype(float)/255
+    yy,xx = np.indices(weights.shape)
+    return np.array([(weights*xx).sum(), (weights*(yy+y0)).sum()])/weights.sum()
+
+summary=[]
+for walk,stand,headings in PAIRS:
+    path=SPR/(walk+'.json'); meta=json.loads(path.read_text())
+    idle=json.loads((SPR/(stand+'.json')).read_text()); images=frames(meta); still=frames(idle)[0]
+    a=np.array(still.getchannel('A')); pad=350
+    records=[]
+    for i,im in enumerate(images):
+        foot=meta['contacts'][i]['planted']; c=meta['contacts'][i][foot]; s=idle['contacts'][0][foot]
+        delta=np.array([c['x']-s['x'],c['y']-s['y']])
+        b=np.array(im.getchannel('A'))
+        aa=shift(np.pad(a,pad), (delta[1],delta[0]),order=1,mode='constant')>127
+        bb=np.pad(b,pad)>127
+        iou=float((aa&bb).sum()/(aa|bb).sum())
+        head=float(np.linalg.norm(centroid(a,0,.23)+delta-centroid(b,0,.23)))
+        torso=float(np.linalg.norm(centroid(a,.25,.62)+delta-centroid(b,.25,.62)))
+        remaining=1
+        while remaining<len(images) and meta['contacts'][(i+remaining)%len(images)]['planted']==foot: remaining+=1
+        records.append(dict(frame=i,foot=foot,alphaIoU=round(iou,6),headPx=round(head,3),torsoPx=round(torso,3),score=round((1-iou)*100+head+torso,3),remainingSupport=remaining))
+    exits=[min((r for r in records if r['foot']==f),key=lambda r:r['score'])['frame'] for f in ['L','R']]
+    # Cycles may contain more than one stance per anatomical foot. Include
+    # the best cut in every contiguous support, rather than skipping a step.
+    for start in meta['switchFrames']:
+        support=[]; j=start
+        while not support or meta['contacts'][j]['planted']==meta['contacts'][start]['planted']:
+            support.append(records[j]); j=(j+1)%len(images)
+            if j==start: break
+        best=min(support,key=lambda r:r['score'])['frame']
+        if best not in exits: exits.append(best)
+    # Add the best measurements needed to bound cyclic waiting to half a cycle.
+    while True:
+        ordered=sorted(exits); gaps=[((ordered[(j+1)%len(ordered)]-i)%len(images),i) for j,i in enumerate(ordered)]
+        gap,start=max(gaps)
+        if gap<=len(images)//2: break
+        candidates=[r for r in records if 0<(r['frame']-start)%len(images)<gap and max((r['frame']-start)%len(images),gap-(r['frame']-start)%len(images))<=len(images)//2]
+        exits.append(min(candidates,key=lambda r:r['score'])['frame'])
+    entries=[r['frame'] for r in sorted(records,key=lambda r:r['score']) if r['remainingSupport']>=2]
+    meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'sole aligned; alpha>127 IoU; alpha-weighted head 0-23% and torso 25-62% height centroids; score=100*(1-IoU)+headPx+torsoPx'}
+    path.write_text(json.dumps(meta,indent='\t')+'\n')
+    sheet=Image.new('RGB',(1200,500*len(exits)),'#303038'); draw=ImageDraw.Draw(sheet)
+    for row,i in enumerate(exits):
+        r=records[i]; foot=r['foot']; c=meta['contacts'][i][foot]; s=idle['contacts'][0][foot]
+        layers=[]
+        for im,offset in [(images[i],(0,0)),(still,(round(c['x']-s['x']),round(c['y']-s['y'])))]:
+            canvas=Image.new('RGBA',(1000,1400)); canvas.alpha_composite(im,(180+offset[0],180+offset[1])); layers.append(canvas)
+        overlay=Image.blend(layers[0],layers[1],.5) # Debug comparison ONLY, never game artwork.
+        for col,im in enumerate([*layers,overlay]):
+            bg=Image.new('RGBA',im.size,'#505058'); bg.alpha_composite(im)
+            sheet.paste(bg.convert('RGB').resize((350,450)),(col*400,row*500+45))
+        draw.text((10,row*500+5),f'{walk} {foot}: exit {i}, entry {next(j for j in entries if records[j]["foot"]==foot)}, IoU {r["alphaIoU"]}, head {r["headPx"]} px, torso {r["torsoPx"]} px',fill='white')
+        draw.text((10,row*500+25),'WALK                                      SOLE-ALIGNED STANDING                         COMPARISON OVERLAY ONLY',fill='white')
+    sheet.save(OUT/(walk+'.png'))
+    summary.append({'cycle':walk,'headings':headings,'exits':[records[i] for i in exits],'entries':[records[next(i for i in entries if records[i]['foot']==f)] for f in ['L','R']]})
+(OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+print(json.dumps(summary,indent=2))
+
+subprocess.run(["pnpm", "--filter", "@anima/shadow-over-innsmouth", "exec", "biome", "format", "--write", *[str(SPR/(w+".json")) for w,_,_ in PAIRS]], cwd=ROOT, check=True)
