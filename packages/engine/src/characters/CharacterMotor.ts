@@ -72,6 +72,11 @@ export class CharacterMotor {
 		matched: boolean;
 	};
 	private transition?: { to: FootPose; remaining: number; frame: number };
+	private drawn?: {
+		poses: FootPose[];
+		resume?: FootPose;
+		resumeFrameMs: number;
+	};
 
 	constructor(
 		readonly target: MotorTarget,
@@ -93,6 +98,7 @@ export class CharacterMotor {
 	private finish(): void {
 		this.walking = false;
 		this.transition = undefined;
+		this.drawn = undefined;
 		if (this.recoverAfterStanding && this.pose) {
 			this.recoverAfterStanding = false;
 			// Both boots are now grounded. Transfer support without moving either
@@ -134,6 +140,24 @@ export class CharacterMotor {
 		);
 	}
 	stop(immediate = false): void {
+		if (this.drawn && !immediate) {
+			this.path = [];
+			if (!this.drawn.resume) return;
+			// A stop during reverse playback must settle back, not later resume walking.
+			const idle = this.animation.standing?.(this.heading);
+			const frames = idle?.cycle.settleFrames;
+			const index = frames?.indexOf(this.pose?.frame ?? -1) ?? -1;
+			if (idle && frames && index >= 0) {
+				this.drawn = {
+					poses: frames.slice(index + 1).map((frame) => ({ ...idle, frame })),
+					resumeFrameMs: this.frameMs,
+				};
+				this.elapsed = 0;
+				if (!this.drawn.poses.length) this.finish();
+			}
+			return;
+		}
+		if (immediate) this.drawn = undefined;
 		if (immediate) this.recoverAfterStanding = false;
 		this.path = [];
 		if (this.transition && !immediate) return;
@@ -294,6 +318,19 @@ export class CharacterMotor {
 		}
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
+		const idle = this.animation.standing?.(this.heading);
+		if (idle?.cycle.settleFrames?.length) {
+			const resume = this.pose;
+			// Planning has already selected the source entry and its physical support.
+			// Apply the reverse drawings about that same anchor before advancing it.
+			const poses = [...idle.cycle.settleFrames]
+				.reverse()
+				.map((frame) => ({ ...idle, frame }));
+			this.pose = poses.shift() as FootPose;
+			this.drawn = { poses, resume, resumeFrameMs: this.frameMs };
+			this.elapsed = 0;
+			this.apply();
+		}
 		this.animation.show(this.pose);
 
 		return new Promise((resolve) => {
@@ -929,12 +966,33 @@ export class CharacterMotor {
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
 		this.elapsed += delta;
+		if (this.drawn) {
+			// Never skip a drawn pose even if the caller advances a large time step.
+			if (this.elapsed + 1e-8 < 2000 / 24) return;
+			this.elapsed = 0;
+			const d = this.drawn;
+			const next = d.poses.shift();
+			if (next) {
+				this.pose = next;
+				this.apply();
+				if (!d.poses.length && !d.resume) this.finish();
+			} else if (d.resume) {
+				this.pose = d.resume;
+				this.frameMs = d.resumeFrameMs;
+				this.drawn = undefined;
+				this.apply();
+			}
+			return;
+		}
 		if (this.transition) {
 			const t = this.transition;
 			while (
 				this.elapsed + 1e-8 >=
 					(t.remaining === 0
-						? Math.max(this.frameMs, 1000 / 24)
+						? Math.max(
+								this.frameMs,
+								(t.to.cycle.settleFrames ? 2000 : 1000) / 24,
+							)
 						: this.frameMs) &&
 				this.transition &&
 				this.pose
@@ -960,7 +1018,16 @@ export class CharacterMotor {
 						cycleFrames,
 						matched: !this.unmatchedCut,
 					};
-					this.finish();
+					const frames = t.to.cycle.settleFrames;
+					if (frames && frames.length > 1) {
+						const poses = frames.slice(1).map((frame) => ({ ...t.to, frame }));
+						this.pose = poses.shift() as FootPose;
+						this.drawn = { poses, resumeFrameMs: this.frameMs };
+						this.transition = undefined;
+						this.elapsed = 0;
+						this.apply();
+						if (!poses.length) this.finish();
+					} else this.finish();
 				} else {
 					const next: FootPose = {
 						...this.pose,
@@ -1056,7 +1123,13 @@ export class CharacterMotor {
 			walking: this.walking,
 			cut: this.lastCut,
 			unmatchedCut: this.unmatchedCut,
-			settling: Boolean(this.transition),
+			settling: Boolean(this.transition || (this.drawn && !this.drawn.resume)),
+			drawn: this.drawn
+				? {
+						starting: Boolean(this.drawn.resume),
+						remaining: this.drawn.poses.length,
+					}
+				: undefined,
 			transition: this.transition
 				? {
 						frame: this.transition.frame,

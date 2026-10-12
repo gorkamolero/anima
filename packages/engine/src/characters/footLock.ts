@@ -13,6 +13,8 @@ export interface FootCycle {
 	fps: number;
 	contacts: ContactFrame[];
 	switchFrames: number[];
+	/** Drawn stop poses in exit-to-rest order; each intermediate holds two 24 fps ticks. */
+	settleFrames?: number[];
 	matchedCut?: {
 		standing: string;
 		headings: string[];

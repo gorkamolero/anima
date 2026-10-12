@@ -8,7 +8,7 @@ import {
 	lockedPlacement,
 } from "./footLock";
 
-function setup(standing = false) {
+function setup(standing = false, drawn = false) {
 	const cycle: FootCycle = {
 		name: "walk",
 		frameWidth: 100,
@@ -53,9 +53,14 @@ function setup(standing = false) {
 					cycle: {
 						...cycle,
 						name: "standing",
-						contacts: [
-							{ planted: "L", L: { x: 45, y: 200 }, R: { x: 55, y: 200 } },
-						],
+						settleFrames: drawn ? [2, 1, 0] : undefined,
+						contacts: drawn
+							? [
+									{ planted: "L", L: { x: 70, y: 190 }, R: { x: 80, y: 190 } },
+									{ planted: "L", L: { x: 70, y: 190 }, R: { x: 30, y: 190 } },
+									cycle.contacts[0],
+								]
+							: [{ planted: "L", L: { x: 45, y: 200 }, R: { x: 55, y: 200 } }],
 						switchFrames: [],
 					},
 					frame: 0,
@@ -78,6 +83,79 @@ function setup(standing = false) {
 	};
 }
 describe("contact motor", () => {
+	it("holds drawn stop poses for two ticks and starts them in reverse on the locked boot", async () => {
+		const { motor, cycle, target, pose } = setup(true, true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			exitFrames: [0],
+			entryFrames: [0],
+		};
+		motor.place({ x: 960, y: 850 });
+		let done = false;
+		const walk = motor.walk([{ x: 1700, y: 850 }], "right").then(() => {
+			done = true;
+		});
+		const anchor = { ...motor.anchor };
+		const assertLocked = () => {
+			const p = contactOnScreen(pose(), "L", target, target.scale);
+			expect(p.x).toBeCloseTo(anchor.x, 9);
+			expect(p.y).toBeCloseTo(anchor.y, 9);
+		};
+		for (const expected of [0, 1, 1, 2, 2]) {
+			motor.update(1000 / 24);
+			expect(pose().cycle.name).toBe("standing");
+			expect(pose().frame).toBe(expected);
+			assertLocked();
+		}
+		motor.update(1000 / 24);
+		expect(pose().cycle.name).toBe("walk");
+		expect(pose().frame).toBe(0);
+		motor.stop();
+		for (let i = 0; i < 40 && pose().cycle.name === "walk"; i++)
+			motor.update(1000 / 24);
+		expect(pose().cycle.name).toBe("standing");
+		expect(pose().frame).toBe(1);
+		expect(done).toBe(false);
+		assertLocked();
+		motor.update(1000 / 24);
+		expect(pose().frame).toBe(1);
+		motor.update(1000 / 24);
+		expect(pose().frame).toBe(0);
+		assertLocked();
+		await walk;
+		expect(done).toBe(true);
+		expect(motor.walking).toBe(false);
+	});
+	it("cancels pending drawn frames on teleport", () => {
+		const { motor, pose } = setup(true, true);
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1700, y: 850 }], "right");
+		motor.update(2000 / 24);
+		expect(motor.snapshot().drawn).toBeDefined();
+		motor.place({ x: 1000, y: 850 });
+		motor.update(1000);
+		expect(motor.snapshot().drawn).toBeUndefined();
+		expect(motor.walking).toBe(false);
+		expect(pose().frame).toBe(0);
+	});
+	it("settles back to rest when stopped during reverse playback", async () => {
+		const { motor, pose, target } = setup(true, true);
+		motor.place({ x: 960, y: 850 });
+		const walk = motor.walk([{ x: 1700, y: 850 }], "right");
+		motor.update(2000 / 24);
+		expect(pose().frame).toBe(1);
+		const position = { x: target.x, y: target.y };
+		motor.stop();
+		motor.update(2000 / 24);
+		await walk;
+		motor.update(1000);
+		expect(motor.walking).toBe(false);
+		expect(pose().cycle.name).toBe("standing");
+		expect(pose().frame).toBe(0);
+		expect(target.x).toBeCloseTo(position.x, 9);
+		expect(target.y).toBeCloseTo(position.y, 9);
+	});
 	it("cuts to standing on a frame boundary, preserving the support", async () => {
 		const { motor, target, pose } = setup(true);
 		motor.place({ x: 960, y: 850 });
