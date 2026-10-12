@@ -1,0 +1,7 @@
+{
+  "model": "fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+  "duration": "5",
+  "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+  "image_url": "away-first.png",
+  "tail_image_url": "away-last.png"
+}
