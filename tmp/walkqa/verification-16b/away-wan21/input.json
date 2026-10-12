@@ -1,0 +1,11 @@
+{
+  "model": "fal-ai/wan-flf2v",
+  "num_frames": 81,
+  "frames_per_second": 24,
+  "resolution": "480p",
+  "negative_prompt": "walking, steps, moving support foot, turning, camera movement",
+  "enable_prompt_expansion": false,
+  "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+  "start_image_url": "away-first.png",
+  "end_image_url": "away-last.png"
+}

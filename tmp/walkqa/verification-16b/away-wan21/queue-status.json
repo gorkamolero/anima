@@ -1,0 +1,9 @@
+{
+  "status": "IN_PROGRESS",
+  "request_id": "01a13140-271c-72c0-a99b-798a79827ac2",
+  "response_url": "https://queue.fal.run/fal-ai/wan-flf2v/requests/01a13140-271c-72c0-a99b-798a79827ac2",
+  "status_url": "https://queue.fal.run/fal-ai/wan-flf2v/requests/01a13140-271c-72c0-a99b-798a79827ac2/status",
+  "cancel_url": "https://queue.fal.run/fal-ai/wan-flf2v/requests/01a13140-271c-72c0-a99b-798a79827ac2/cancel",
+  "logs": [],
+  "metrics": {}
+}
