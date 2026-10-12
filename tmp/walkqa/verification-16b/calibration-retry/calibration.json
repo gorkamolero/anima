@@ -1,0 +1,12 @@
+{
+  "label": "adult",
+  "rect": {
+    "x": 0.654,
+    "y": 0.665,
+    "width": 0.028,
+    "height": 0.2
+  },
+  "realHeightM": 1.75,
+  "horizonY": 0.842,
+  "reason": "The visible sea horizon is at a normalized y-coordinate of 0.842. A plausible height for a standard door opening is 2.03 meters (80 inches). In the image, the door opening on the shack measures a normalized height of 0.231. Using this as a reference, a 1.75-meter adult standing on the same ground plane (the porch) would have a normalized height of 0.200. The provided rectangle represents this scaled adult standing on the porch next to the door."
+}

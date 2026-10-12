@@ -1,0 +1,13 @@
+{
+  "before": {
+    "horizonY": 475.2,
+    "slope": 0.004721435316336165
+  },
+  "after": {
+    "horizonY": 538.59375,
+    "referenceFactor": 0.3457128553287096,
+    "referenceFootY": 0.5794270833333334,
+    "slope": 0.0039651653657773135
+  },
+  "predictedAt918": 796.5843124304781
+}

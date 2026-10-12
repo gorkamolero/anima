@@ -1,0 +1,12 @@
+{
+  "label": "door_opening",
+  "rect": {
+    "x": 0.548,
+    "y": 0.56,
+    "width": 0.046,
+    "height": 0.176
+  },
+  "realHeightM": 2.03,
+  "horizonY": 0.536,
+  "reason": "The visible door opening of the house provides a suitable object for calibration. Standard door heights are typically 2.03 meters (80 inches). The horizon is clearly visible as the sea meets the sky."
+}

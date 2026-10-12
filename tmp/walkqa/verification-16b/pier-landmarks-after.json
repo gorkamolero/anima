@@ -1,0 +1,21 @@
+{
+  "image": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png",
+  "space": "game",
+  "template": "exterior",
+  "horizonY": 538.59375,
+  "figureCalibration": 1,
+  "landmarks": [
+    {
+      "id": "hut-door-opening",
+      "kind": "object",
+      "rect": {
+        "x": 1409.3023255813953,
+        "y": 413.4375,
+        "width": 96.27906976744185,
+        "height": 212.34375
+      },
+      "realHeightM": 2.03,
+      "note": "Visible object measured during derivation; independent of sprite scale and runtime clamps."
+    }
+  ]
+}

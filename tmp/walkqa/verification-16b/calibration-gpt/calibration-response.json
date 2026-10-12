@@ -1,0 +1,46 @@
+{
+  "id": "gen-1791827716-HFlU5ZdQe5J3b0DsL4fp",
+  "object": "chat.completion",
+  "created": 1791827716,
+  "model": "openai/gpt-4.1",
+  "provider": "OpenAI",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "message": {
+        "role": "assistant",
+        "content": "{\n  \"label\": \"door_opening\",\n  \"rect\": {\n    \"x\": 0.739,\n    \"y\": 0.457,\n    \"width\": 0.085,\n    \"height\": 0.263\n  },\n  \"realHeightM\": 2.0,\n  \"horizonY\": 0.333,\n  \"reason\": \"The main door opening (excluding porch, roof, and frame) of the building on the right is a common architectural standard to use for scale. Standard residential exterior doors are typically about 2 meters (80 inches) tall. The horizon was set at the visible sea-line, where the ocean meets the sky.\"\n}",
+        "refusal": null,
+        "reasoning": null
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1244,
+    "completion_tokens": 144,
+    "total_tokens": 1388,
+    "cost": 0.0036036,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00364,
+      "upstream_inference_prompt_cost": 0.002488,
+      "upstream_inference_completions_cost": 0.001152
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

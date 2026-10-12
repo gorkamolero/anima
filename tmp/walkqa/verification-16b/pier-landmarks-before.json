@@ -1,0 +1,21 @@
+{
+  "image": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png",
+  "space": "game",
+  "template": "exterior",
+  "horizonY": 475.2,
+  "figureCalibration": 0.8,
+  "landmarks": [
+    {
+      "id": "camera-calibration",
+      "kind": "figure",
+      "rect": {
+        "x": 960,
+        "y": -629.3749999999993,
+        "width": 100,
+        "height": 1624.3749999999993
+      },
+      "realHeightM": 1.75,
+      "note": "Scene-specific visual calibration; SAM/depth geometry and independently judged sprite composites."
+    }
+  ]
+}

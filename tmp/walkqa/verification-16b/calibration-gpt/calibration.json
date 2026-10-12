@@ -1,0 +1,12 @@
+{
+  "label": "door_opening",
+  "rect": {
+    "x": 0.739,
+    "y": 0.457,
+    "width": 0.085,
+    "height": 0.263
+  },
+  "realHeightM": 2.0,
+  "horizonY": 0.333,
+  "reason": "The main door opening (excluding porch, roof, and frame) of the building on the right is a common architectural standard to use for scale. Standard residential exterior doors are typically about 2 meters (80 inches) tall. The horizon was set at the visible sea-line, where the ocean meets the sky."
+}

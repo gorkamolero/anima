@@ -1,0 +1,54 @@
+{
+  "id": "gen-1791827668-jjIfuwzXX97Xm2LOgwGL",
+  "object": "chat.completion",
+  "created": 1791827668,
+  "model": "google/gemini-2.5-pro",
+  "provider": "Google",
+  "system_fingerprint": null,
+  "service_tier": "default",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "native_finish_reason": "STOP",
+      "message": {
+        "role": "assistant",
+        "content": "{\n    \"label\": \"adult\",\n    \"rect\": {\n        \"x\": 0.654,\n        \"y\": 0.665,\n        \"width\": 0.028,\n        \"height\": 0.200\n    },\n    \"realHeightM\": 1.75,\n    \"horizonY\": 0.842,\n    \"reason\": \"The visible sea horizon is at a normalized y-coordinate of 0.842. A plausible height for a standard door opening is 2.03 meters (80 inches). In the image, the door opening on the shack measures a normalized height of 0.231. Using this as a reference, a 1.75-meter adult standing on the same ground plane (the porch) would have a normalized height of 0.200. The provided rectangle represents this scaled adult standing on the porch next to the door.\"\n}",
+        "refusal": null,
+        "reasoning": "**Generating JSON Data**\n\nI am currently focused on constructing a JSON object. My immediate task is to define the `label` field as \"adult\" and then proceed with calculating the normalized bounding box coordinates (`x`, `y`, `width`, `height`) for a standard 1.75-meter adult.\n\n**Calculating Bounding Box**\n\nI've established the target `label` as \"adult\" and am now working on the `rect` parameters. My current focus is on measuring the known-height door opening in the image to derive the scaling factor for calculating the adult's bounding box. I'm using pixel measurements from the 1024x576 image.\n\n**Defining Adult Height**\n\nI am now calculating the pixel height for a 1.75-meter adult. I've determined the scale from the door's known height and am applying it to the adult's real height, considering perspective. I'm also locating the horizon's Y-coordinate.\n\n**Calculating Adult Bounding Box**\n\nI have determined the pixel height for a 1.75-meter adult based on the door's scale and perspective. I am now calculating the normalized `x`, `y`, `width`, and `height` for the adult's bounding box, placing it near the calibrated door.\n\n**Refining Adult Calibration**\n\nI've now finalized the normalized bounding box coordinates for a 1.75-meter adult, placing it adjacent to the calibrated door opening. The horizon Y-coordinate has also been calculated and normalized. I am now compiling the full JSON output, including the reasoning for these values.\n\n**Finalizing JSON Structure**\n\nI have completed the calculations for the adult's normalized bounding box and the horizon Y-coordinate. I am now assembling these values, along with the reasoning for their derivation, into the final JSON output as per the required structure.\n\n**Refining Adult Placement**\n\nI've confirmed the normalized bounding box for the adult and the horizon Y-coordinate. My current focus is on precisely positioning this bounding box on the porch, adjacent to the calibrated door, to ensure it accurately represents the 1.75-meter height.\n\n**Finalizing JSON Structure**\n\nI have completed the calculations for the adult's normalized bounding box and the horizon Y-coordinate. I am now assembling these values, along with the reasoning for their derivation, into the final JSON output as per the required structure.\n\n```json\n{\n  \"label\": \"adult\",\n  \"rect\": {\n    \"x\": 0.654,\n    \"y\": 0.665,\n    \"width\": 0.028,\n    \"height\": 0.200\n  },\n  \"realHeightM\": 1.75,\n  \"horizonY\": 0.842,\n  \"reason\": \"The visible sea horizon is at y=0.842. A standard residential door opening is approximately 2.03 meters (80 inches) high. In the image, the door opening on the house measures 133 pixels in height. At this scale, a 1.75-meter adult standing on the same ground plane (the porch) would measure 115 pixels tall. The rectangle represents this calibrated height on the porch next to the door.\"\n}\n```\n\n",
+        "reasoning_details": [
+          {
+            "type": "reasoning.text",
+            "text": "**Generating JSON Data**\n\nI am currently focused on constructing a JSON object. My immediate task is to define the `label` field as \"adult\" and then proceed with calculating the normalized bounding box coordinates (`x`, `y`, `width`, `height`) for a standard 1.75-meter adult.\n\n**Calculating Bounding Box**\n\nI've established the target `label` as \"adult\" and am now working on the `rect` parameters. My current focus is on measuring the known-height door opening in the image to derive the scaling factor for calculating the adult's bounding box. I'm using pixel measurements from the 1024x576 image.\n\n**Defining Adult Height**\n\nI am now calculating the pixel height for a 1.75-meter adult. I've determined the scale from the door's known height and am applying it to the adult's real height, considering perspective. I'm also locating the horizon's Y-coordinate.\n\n**Calculating Adult Bounding Box**\n\nI have determined the pixel height for a 1.75-meter adult based on the door's scale and perspective. I am now calculating the normalized `x`, `y`, `width`, and `height` for the adult's bounding box, placing it near the calibrated door.\n\n**Refining Adult Calibration**\n\nI've now finalized the normalized bounding box coordinates for a 1.75-meter adult, placing it adjacent to the calibrated door opening. The horizon Y-coordinate has also been calculated and normalized. I am now compiling the full JSON output, including the reasoning for these values.\n\n**Finalizing JSON Structure**\n\nI have completed the calculations for the adult's normalized bounding box and the horizon Y-coordinate. I am now assembling these values, along with the reasoning for their derivation, into the final JSON output as per the required structure.\n\n**Refining Adult Placement**\n\nI've confirmed the normalized bounding box for the adult and the horizon Y-coordinate. My current focus is on precisely positioning this bounding box on the porch, adjacent to the calibrated door, to ensure it accurately represents the 1.75-meter height.\n\n**Finalizing JSON Structure**\n\nI have completed the calculations for the adult's normalized bounding box and the horizon Y-coordinate. I am now assembling these values, along with the reasoning for their derivation, into the final JSON output as per the required structure.\n\n```json\n{\n  \"label\": \"adult\",\n  \"rect\": {\n    \"x\": 0.654,\n    \"y\": 0.665,\n    \"width\": 0.028,\n    \"height\": 0.200\n  },\n  \"realHeightM\": 1.75,\n  \"horizonY\": 0.842,\n  \"reason\": \"The visible sea horizon is at y=0.842. A standard residential door opening is approximately 2.03 meters (80 inches) high. In the image, the door opening on the house measures 133 pixels in height. At this scale, a 1.75-meter adult standing on the same ground plane (the porch) would measure 115 pixels tall. The rectangle represents this calibrated height on the porch next to the door.\"\n}\n```\n\n",
+            "format": "google-gemini-v1",
+            "index": 0
+          }
+        ]
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1937,
+    "completion_tokens": 2864,
+    "total_tokens": 4801,
+    "cost": 0.0307506375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.03106125,
+      "upstream_inference_prompt_cost": 0.00242125,
+      "upstream_inference_completions_cost": 0.02864
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2650,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  }
+}

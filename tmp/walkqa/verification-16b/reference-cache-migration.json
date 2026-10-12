@@ -1,0 +1,116 @@
+[
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-v3.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  },
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-guidance-v3.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  },
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-v4.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  },
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-v5.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  },
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-v6.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  },
+  {
+    "path": "api/data/perception/9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781-floor-v7.json",
+    "previous": {
+      "horizonY": 0.44,
+      "referenceFootY": 0.62,
+      "referenceHeight": 0.45
+    },
+    "newReference": {
+      "label": "hut-door-opening",
+      "rect": {
+        "x": 0.7340116279069767,
+        "y": 0.3828125,
+        "width": 0.0501453488372093,
+        "height": 0.19661458333333334
+      },
+      "realHeightM": 2.03
+    },
+    "horizonY": 0.4986979166666667
+  }
+]

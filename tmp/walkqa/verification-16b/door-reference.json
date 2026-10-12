@@ -1,0 +1,12 @@
+{
+  "label": "hut-door-opening",
+  "rect": {
+    "x": 0.7340116279069767,
+    "y": 0.3828125,
+    "width": 0.0501453488372093,
+    "height": 0.19661458333333334
+  },
+  "realHeightM": 2.03,
+  "horizonY": 0.4986979166666667,
+  "provenance": "Assistant visual localization at native image resolution; 2.03m standard door assumption. Three provider localizations rejected by inspection."
+}
