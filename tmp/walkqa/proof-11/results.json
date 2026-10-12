@@ -1,0 +1,162 @@
+[
+  {
+    "scene": "road",
+    "clip": "away-left",
+    "finalHeading": "away-left",
+    "standing": "hermes-stand-away-right",
+    "flip": true,
+    "stopFrame": 26,
+    "maxAnchorErrorIncludingBlend": 1.6077746776921858e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "away-right",
+    "finalHeading": "away-right",
+    "standing": "hermes-stand-away-right",
+    "flip": false,
+    "stopFrame": 51,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "away",
+    "finalHeading": "away",
+    "standing": "hermes-stand-away",
+    "flip": false,
+    "stopFrame": 50,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "left",
+    "finalHeading": "left",
+    "standing": "hermes-idle-v2-normalized",
+    "flip": false,
+    "stopFrame": 33,
+    "maxAnchorErrorIncludingBlend": 1.1368683772161603e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "right",
+    "finalHeading": "right",
+    "standing": "hermes-idle-v2-normalized",
+    "flip": true,
+    "stopFrame": 33,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "toward-left",
+    "finalHeading": "toward-left",
+    "standing": "hermes-stand-toward-right",
+    "flip": true,
+    "stopFrame": 44,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "toward-right",
+    "finalHeading": "toward-right",
+    "standing": "hermes-stand-toward-right",
+    "flip": false,
+    "stopFrame": 25,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "road",
+    "clip": "toward",
+    "finalHeading": "toward",
+    "standing": "hermes-stand-toward",
+    "flip": false,
+    "stopFrame": 36,
+    "maxAnchorErrorIncludingBlend": 2.5421149729252077e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "away-left",
+    "finalHeading": "away-left",
+    "standing": "hermes-stand-away-right",
+    "flip": true,
+    "stopFrame": 26,
+    "maxAnchorErrorIncludingBlend": 2.5421149729252077e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "away-right",
+    "finalHeading": "away-right",
+    "standing": "hermes-stand-away-right",
+    "flip": false,
+    "stopFrame": 26,
+    "maxAnchorErrorIncludingBlend": 2.5421149729252077e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "away",
+    "finalHeading": "away",
+    "standing": "hermes-stand-away",
+    "flip": false,
+    "stopFrame": 72,
+    "maxAnchorErrorIncludingBlend": 3.2155493553843715e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "left",
+    "finalHeading": "left",
+    "standing": "hermes-idle-v2-normalized",
+    "flip": false,
+    "stopFrame": 22,
+    "maxAnchorErrorIncludingBlend": 2.5421149729252077e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "right",
+    "finalHeading": "right",
+    "standing": "hermes-idle-v2-normalized",
+    "flip": true,
+    "stopFrame": 22,
+    "maxAnchorErrorIncludingBlend": 2.2737367544323206e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-left",
+    "finalHeading": "toward-left",
+    "standing": "hermes-stand-toward-right",
+    "flip": true,
+    "stopFrame": 25,
+    "maxAnchorErrorIncludingBlend": 2.5421149729252077e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-right",
+    "finalHeading": "toward-right",
+    "standing": "hermes-stand-toward-right",
+    "flip": false,
+    "stopFrame": 59,
+    "maxAnchorErrorIncludingBlend": 3.2155493553843715e-13,
+    "settleFrames": 4
+  },
+  {
+    "scene": "depot",
+    "clip": "toward",
+    "finalHeading": "toward",
+    "standing": "hermes-stand-toward",
+    "flip": false,
+    "stopFrame": 27,
+    "maxAnchorErrorIncludingBlend": 3.2155493553843715e-13,
+    "settleFrames": 4
+  }
+]
