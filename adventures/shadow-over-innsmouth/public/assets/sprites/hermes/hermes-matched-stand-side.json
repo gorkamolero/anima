@@ -1,0 +1,40 @@
+{
+	"name": "hermes-matched-stand-side",
+	"image": "hermes-matched-stand-side.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 24,
+	"contacts": [
+		{
+			"L": {
+				"x": 333,
+				"y": 1042
+			},
+			"R": {
+				"x": 248,
+				"y": 1014
+			},
+			"planted": "L"
+		}
+	],
+	"switchFrames": [],
+	"normalization": {
+		"reference": "hermes-fal-veo-transparent-loop",
+		"sourceFrame": 8,
+		"editAttempt": 2,
+		"sourceCanvas": [612, 1059],
+		"generatedCanvas": [784, 1360],
+		"translation": [0, 0],
+		"upperBodyRegistration": {
+			"dx": 0.08988543941385979,
+			"dy": 0.056430149098330544,
+			"residual": 0.02682966280138624,
+			"boundary": false
+		},
+		"method": "restore full canvas dimensions, local grey key, translation-only upper-body registration; reviewed shoe landmarks",
+		"origin": [0.5, 1]
+	}
+}

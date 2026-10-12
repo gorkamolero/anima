@@ -1,0 +1,40 @@
+{
+	"name": "hermes-matched-stand-away-right",
+	"image": "hermes-matched-stand-away-right.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 24,
+	"contacts": [
+		{
+			"L": {
+				"x": 270,
+				"y": 1006
+			},
+			"R": {
+				"x": 348,
+				"y": 1027
+			},
+			"planted": "L"
+		}
+	],
+	"switchFrames": [],
+	"normalization": {
+		"reference": "hermes-walk-away-right",
+		"sourceFrame": 18,
+		"editAttempt": 2,
+		"sourceCanvas": [612, 1059],
+		"generatedCanvas": [784, 1360],
+		"translation": [0, 0],
+		"upperBodyRegistration": {
+			"dx": 0.09574694564701301,
+			"dy": 0.09275708996093487,
+			"residual": 0.0018151251728960893,
+			"boundary": false
+		},
+		"method": "restore full canvas dimensions, local grey key, translation-only upper-body registration; reviewed shoe landmarks",
+		"origin": [0.5, 1]
+	}
+}

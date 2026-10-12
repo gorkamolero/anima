@@ -1,0 +1,40 @@
+{
+	"name": "hermes-matched-stand-toward-right",
+	"image": "hermes-matched-stand-toward-right.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 24,
+	"contacts": [
+		{
+			"L": {
+				"x": 384,
+				"y": 1011
+			},
+			"R": {
+				"x": 269.76,
+				"y": 1032.6
+			},
+			"planted": "L"
+		}
+	],
+	"switchFrames": [],
+	"normalization": {
+		"reference": "hermes-walk-toward-right",
+		"sourceFrame": 19,
+		"editAttempt": 1,
+		"sourceCanvas": [612, 1059],
+		"generatedCanvas": [784, 1360],
+		"translation": [0, 0],
+		"upperBodyRegistration": {
+			"dx": -0.014127575836175426,
+			"dy": 0.07708371130356224,
+			"residual": 0.012035864170900513,
+			"boundary": false
+		},
+		"method": "restore full canvas dimensions, local grey key, translation-only upper-body registration; reviewed shoe landmarks",
+		"origin": [0.5, 1]
+	}
+}
