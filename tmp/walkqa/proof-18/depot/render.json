@@ -1,0 +1,209 @@
+{
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "place": "outside",
+  "logs": [
+    {
+      "name": "left",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1571.3573064856678,
+          "y": 880.4402348070674
+        },
+        "frames": 12,
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "texture": "hermes-passing-stand-side",
+        "walk": [
+          1587.5,
+          857.5
+        ],
+        "name": "left",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "right",
+      "frames": 72,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1702.5249448091772,
+          "y": 1030.6990602392857
+        },
+        "frames": 12,
+        "start": [
+          1447.5,
+          967.5
+        ],
+        "texture": "hermes-passing-stand-side",
+        "walk": [
+          1687.5,
+          1037.5
+        ],
+        "name": "right",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away",
+      "frames": 40,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1354.7922168958112,
+          "y": 892.5291605466782
+        },
+        "frames": 12,
+        "start": [
+          1237.5,
+          977.5
+        ],
+        "texture": "hermes-passing-stand-away",
+        "walk": [
+          1357.5,
+          907.5
+        ],
+        "name": "away",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward",
+      "frames": 28,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1455.0747163219824,
+          "y": 994.959972355119
+        },
+        "frames": 12,
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "texture": "hermes-passing-stand-toward",
+        "walk": [
+          1467.5,
+          997.5
+        ],
+        "name": "toward",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away-right",
+      "frames": 44,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1709.4931068751876,
+          "y": 884.3819292801201
+        },
+        "frames": 12,
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "texture": "hermes-passing-stand-away-right",
+        "walk": [
+          1707.5,
+          857.5
+        ],
+        "name": "away-right",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward-left",
+      "frames": 40,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1466.9915879126036,
+          "y": 890.3561264979387
+        },
+        "frames": 12,
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "texture": "hermes-passing-stand-toward-right",
+        "walk": [
+          1467.5,
+          857.5
+        ],
+        "name": "toward-left",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward-right",
+      "frames": 40,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "end": {
+          "x": 1512.3508100706108,
+          "y": 936.2500162279784
+        },
+        "frames": 12,
+        "start": [
+          1237.5,
+          977.5
+        ],
+        "texture": "hermes-passing-stand-toward-right",
+        "walk": [
+          1477.5,
+          907.5
+        ],
+        "name": "toward-right",
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away-left",
+      "frames": 44,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "arrival": {
+          "anchor": {
+            "x": 1449.4888498853293,
+            "y": 891.3797592791577
+          },
+          "distance": 51.085668554397515,
+          "halfStride": 51.29090538857219,
+          "switchFrame": 3,
+          "target": {
+            "x": 1407.5,
+            "y": 867.5
+          }
+        },
+        "frames": 12,
+        "start": [
+          1497.5,
+          967.5
+        ],
+        "walk": [
+          1407.5,
+          867.5
+        ],
+        "name": "away-left",
+        "facing": "away-left",
+        "heading": "away-left"
+      }
+    }
+  ]
+}
