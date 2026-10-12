@@ -54,6 +54,11 @@ if (!process.argv.includes("--reuse")) {
 	browser(["open", `http://localhost:8080/?mute=1&walkqa=${Date.now()}`]);
 	browser(["set", "viewport", "1920", "1080"]);
 	browser(["wait", "--load", "networkidle"]);
+	// A repeated proof must not accumulate narrative history and change cache keys.
+	evaluate(
+		`localStorage.setItem("anima.world.session",${JSON.stringify(`walkqa-${plan.place}-${captureId}`)});location.reload();true`,
+	);
+	browser(["wait", "--load", "networkidle"]);
 }
 for (let i = 0; i < 600; i++) {
 	const ready = evaluate(
