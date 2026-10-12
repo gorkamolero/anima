@@ -1,0 +1,11 @@
+{
+  "model": "RIFE 4.25 MLX",
+  "repository": "https://github.com/xocialize/rife-mlx",
+  "revision": "764b89be56497fb26243d1de75f2957f3889e5d3",
+  "weightsSha256": "40bd5bdc9b41d22ad2fad79da325dcd68988a90d8b8e8fb7b67ed5eedebccf5f",
+  "python": "Python 3.12.14",
+  "paidInterpolationCalls": 1,
+  "segmentationCalls": 2,
+  "generativeVideoCalls": 0,
+  "imageEditCalls": 0
+}

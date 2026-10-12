@@ -1,0 +1,4 @@
+
+> @anima/api@0.1.0 typecheck /Users/gorkolas/Developer/anima/api
+> tsc --noEmit
+

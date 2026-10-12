@@ -1,0 +1,16 @@
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+stderr | api/src/__tests__/services/semantic-scale.test.ts
+The fal credentials are exposed in the browser's environment. That's not recommended for production use cases.
+
+ ✓ api/src/__tests__/services/semantic-scale.test.ts (3 tests) 3ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+Type Errors  no errors
+   Start at  12:32:36
+   Duration  277ms (transform 71ms, setup 14ms, import 118ms, tests 3ms, environment 79ms)
+

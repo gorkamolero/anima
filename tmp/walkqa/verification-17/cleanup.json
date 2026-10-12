@@ -1,0 +1,28 @@
+{
+  "time": "2026-10-12T18:42:20.979760+00:00",
+  "ports": {
+    "4317": {
+      "terminatedTaskPids": [
+        38368
+      ],
+      "noListenersAfterCleanup": true
+    },
+    "8080": {
+      "terminatedTaskPids": [
+        38830
+      ],
+      "noListenersAfterCleanup": true
+    }
+  },
+  "browsers": {
+    "anima": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "anima-town": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed"
+    }
+  },
+  "ownerPortsUntouched": true
+}

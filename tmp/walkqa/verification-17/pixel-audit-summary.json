@@ -1,0 +1,77 @@
+[
+  {
+    "heading": "side",
+    "maxTemplateShift": 8.54400374531753,
+    "nonOpaqueInteriorPixels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "heading": "away",
+    "maxTemplateShift": 0.0,
+    "nonOpaqueInteriorPixels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "heading": "away-right",
+    "maxTemplateShift": 9.433981132056603,
+    "nonOpaqueInteriorPixels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "heading": "toward",
+    "maxTemplateShift": 0.0,
+    "nonOpaqueInteriorPixels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "heading": "toward-right",
+    "maxTemplateShift": 0.0,
+    "nonOpaqueInteriorPixels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

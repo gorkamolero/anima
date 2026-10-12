@@ -1,0 +1,27 @@
+[
+  {
+    "heading": "side",
+    "headJumpAtScale042": 18.827213852121698,
+    "torsoJumpAtScale042": 18.63378237194418
+  },
+  {
+    "heading": "away-right",
+    "headJumpAtScale042": 1.9485464163644608,
+    "torsoJumpAtScale042": 8.83542407451951
+  },
+  {
+    "heading": "away",
+    "headJumpAtScale042": 0.10313507902367702,
+    "torsoJumpAtScale042": 0.27506597176614583
+  },
+  {
+    "heading": "toward",
+    "headJumpAtScale042": 0.5331301880163583,
+    "torsoJumpAtScale042": 0.3678549057676923
+  },
+  {
+    "heading": "toward-right",
+    "headJumpAtScale042": 0.21840179018828437,
+    "torsoJumpAtScale042": 0.0934086170820701
+  }
+]

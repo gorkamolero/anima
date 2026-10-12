@@ -1,0 +1,437 @@
+[
+  {
+    "heading": "side",
+    "frames": [
+      {
+        "frame": 0,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 1.0,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 1,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9988285899162292,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 2,
+        "bootTemplateShift": [
+          1,
+          0
+        ],
+        "correlation": 0.9824979305267334,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 3,
+        "bootTemplateShift": [
+          3,
+          -1
+        ],
+        "correlation": 0.9853565096855164,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 4,
+        "bootTemplateShift": [
+          3,
+          -1
+        ],
+        "correlation": 0.9709675908088684,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 5,
+        "bootTemplateShift": [
+          5,
+          -2
+        ],
+        "correlation": 0.9603592157363892,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 6,
+        "bootTemplateShift": [
+          5,
+          -2
+        ],
+        "correlation": 0.9538939595222473,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 7,
+        "bootTemplateShift": [
+          8,
+          -3
+        ],
+        "correlation": 0.9386270642280579,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 8,
+        "bootTemplateShift": [
+          8,
+          -3
+        ],
+        "correlation": 0.9337972402572632,
+        "nonOpaqueInteriorPixels": 0
+      }
+    ],
+    "note": "Raw pixel diagnostic, not runtime lockcheck; template can change appearance and is not an anatomical tracker."
+  },
+  {
+    "heading": "away",
+    "frames": [
+      {
+        "frame": 0,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9999995231628418,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 1,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9999167919158936,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 2,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9858736395835876,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 3,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9556711912155151,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 4,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9160733819007874,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 5,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.8679705858230591,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 6,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.8261480927467346,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 7,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.7697826027870178,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 8,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.7669995427131653,
+        "nonOpaqueInteriorPixels": 0
+      }
+    ],
+    "note": "Raw pixel diagnostic, not runtime lockcheck; template can change appearance and is not an anatomical tracker."
+  },
+  {
+    "heading": "away-right",
+    "frames": [
+      {
+        "frame": 0,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9999993443489075,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 1,
+        "bootTemplateShift": [
+          1,
+          -1
+        ],
+        "correlation": 0.9858334064483643,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 2,
+        "bootTemplateShift": [
+          2,
+          -2
+        ],
+        "correlation": 0.8823444843292236,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 3,
+        "bootTemplateShift": [
+          3,
+          -4
+        ],
+        "correlation": 0.8360539674758911,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 4,
+        "bootTemplateShift": [
+          5,
+          -6
+        ],
+        "correlation": 0.8723828196525574,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 5,
+        "bootTemplateShift": [
+          5,
+          -7
+        ],
+        "correlation": 0.873029351234436,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 6,
+        "bootTemplateShift": [
+          5,
+          -8
+        ],
+        "correlation": 0.8555369973182678,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 7,
+        "bootTemplateShift": [
+          5,
+          -8
+        ],
+        "correlation": 0.8103113174438477,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 8,
+        "bootTemplateShift": [
+          5,
+          -8
+        ],
+        "correlation": 0.8047667145729065,
+        "nonOpaqueInteriorPixels": 0
+      }
+    ],
+    "note": "Raw pixel diagnostic, not runtime lockcheck; template can change appearance and is not an anatomical tracker."
+  },
+  {
+    "heading": "toward",
+    "frames": [
+      {
+        "frame": 0,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 1.0,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 1,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9999905228614807,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 2,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9996476769447327,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 3,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9980265498161316,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 4,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9956954121589661,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 5,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9937928915023804,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 6,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9918187260627747,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 7,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9890831708908081,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 8,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9890990257263184,
+        "nonOpaqueInteriorPixels": 0
+      }
+    ],
+    "note": "Raw pixel diagnostic, not runtime lockcheck; template can change appearance and is not an anatomical tracker."
+  },
+  {
+    "heading": "toward-right",
+    "frames": [
+      {
+        "frame": 0,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 1.0,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 1,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9999904036521912,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 2,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9957831501960754,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 3,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9733769297599792,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 4,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9507008194923401,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 5,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9306290149688721,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 6,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.9144697785377502,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 7,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.8839771747589111,
+        "nonOpaqueInteriorPixels": 0
+      },
+      {
+        "frame": 8,
+        "bootTemplateShift": [
+          0,
+          0
+        ],
+        "correlation": 0.8839733004570007,
+        "nonOpaqueInteriorPixels": 0
+      }
+    ],
+    "note": "Raw pixel diagnostic, not runtime lockcheck; template can change appearance and is not an anatomical tracker."
+  }
+]

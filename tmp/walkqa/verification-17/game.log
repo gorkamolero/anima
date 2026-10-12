@@ -1,0 +1,22 @@
+
+  VITE v6.4.1  ready in 119 ms
+
+  ➜  Local:   http://localhost:8080/
+  ➜  Network: http://127.17.161.109:8080/
+  ➜  Network: http://100.98.106.20:8080/
+  ➜  Network: http://192.168.1.254:8080/
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/backgrounds/bus-station-flat-v1.ground.json instead of /public/backgrounds/bus-station-flat-v1.ground.json.
+If you intend to use the URL of that asset, use /backgrounds/bus-station-flat-v1.ground.json?url.
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/backgrounds/bus-station-flat-v1.ground.json instead of /public/backgrounds/bus-station-flat-v1.ground.json.
+If you intend to use the URL of that asset, use /backgrounds/bus-station-flat-v1.ground.json?url.
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/backgrounds/bus-station-flat-v1.ground.json instead of /public/backgrounds/bus-station-flat-v1.ground.json.
+If you intend to use the URL of that asset, use /backgrounds/bus-station-flat-v1.ground.json?url.
+Assets in public directory cannot be imported from JavaScript.
+If you intend to import that asset, put the file in the src directory, and use /src/backgrounds/bus-station-flat-v1.ground.json instead of /public/backgrounds/bus-station-flat-v1.ground.json.
+If you intend to use the URL of that asset, use /backgrounds/bus-station-flat-v1.ground.json?url.
+undefined
+/Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 143: vite --config vite/config.dev.mjs --port 8080 --strictPort

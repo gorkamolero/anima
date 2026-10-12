@@ -1,0 +1,16 @@
+file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/verify-art.mjs:50
+		throw new Error(
+		      ^
+
+Error: agent-browser eval --stdin failed
+✗ Evaluation error: TypeError: Failed to fetch
+    at StoryGameScene.patchWorld (http://localhost:8080/src/game/scenes/StoryGameScene.ts:885:28)
+    at StoryGameScene.enterLocation (http://localhost:8080/src/game/scenes/StoryGameScene.ts:474:18)
+    at <anonymous>:15:19
+
+    at runAgentBrowser (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/verify-art.mjs:50:9)
+    at evalInBrowser (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/verify-art.mjs:60:20)
+    at file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/verify-art.mjs:69:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.21.0

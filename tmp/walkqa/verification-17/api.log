@@ -1,0 +1,721 @@
+Provider credentials disabled; no dotenv; API port 4317
+Server running at http://localhost:4317
+<-- GET /api/places
+--> GET /api/places [32m200[0m 23ms
+<-- GET /api/world/30e78856-505a-4276-a821-49764a616345
+--> GET /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345
+--> OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345 [32m204[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 3ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 1ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 2ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- GET /api/places
+--> GET /api/places [32m200[0m 20ms
+<-- GET /api/world/30e78856-505a-4276-a821-49764a616345
+--> GET /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345
+--> OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345 [32m204[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 2ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 1ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 3ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 1ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 3ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=inside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=inside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/inside
+--> GET /api/interactables/inside [32m200[0m 0ms
+<-- GET /api/occluders/inside
+--> GET /api/occluders/inside [32m200[0m 2s
+<-- GET /api/connections/inside
+--> GET /api/connections/inside [32m200[0m 1ms
+<-- GET /api/places/place-aa7dd184a5f30fbc1f89
+--> GET /api/places/place-aa7dd184a5f30fbc1f89 [32m200[0m 1ms
+<-- GET /generated/c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png
+--> GET /generated/c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-aa7dd184a5f30fbc1f89&baseBackground=%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-aa7dd184a5f30fbc1f89&baseBackground=%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png [32m200[0m 4ms
+<-- GET /api/occluders/place-aa7dd184a5f30fbc1f89?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png
+--> GET /api/occluders/place-aa7dd184a5f30fbc1f89?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png [32m200[0m 565ms
+<-- GET /api/connections/place-aa7dd184a5f30fbc1f89
+--> GET /api/connections/place-aa7dd184a5f30fbc1f89 [32m200[0m 1ms
+<-- GET /generated/c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.landmarks.json
+--> GET /generated/c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.landmarks.json [32m200[0m 1ms
+<-- GET /api/places/place-d3fc732744430e25f7c1
+--> GET /api/places/place-d3fc732744430e25f7c1 [32m200[0m 1ms
+<-- GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png
+--> GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-d3fc732744430e25f7c1&baseBackground=%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-d3fc732744430e25f7c1&baseBackground=%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png [32m200[0m 3ms
+<-- GET /api/occluders/place-d3fc732744430e25f7c1?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png
+--> GET /api/occluders/place-d3fc732744430e25f7c1?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png [32m200[0m 526ms
+<-- GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-bench-de5b53.png
+--> GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-bench-de5b53.png [32m200[0m 0ms
+<-- GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-fishing-nets-1e01c2.png
+--> GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-fishing-nets-1e01c2.png [32m200[0m 0ms
+<-- GET /api/connections/place-d3fc732744430e25f7c1
+--> GET /api/connections/place-d3fc732744430e25f7c1 [32m200[0m 0ms
+<-- GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.landmarks.json
+--> GET /generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-395743b437774b879679
+--> GET /api/places/place-395743b437774b879679 [32m200[0m 1ms
+<-- GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png
+--> GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png [32m200[0m 1ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-395743b437774b879679&baseBackground=%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-395743b437774b879679&baseBackground=%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png [32m200[0m 3ms
+<-- GET /api/occluders/place-395743b437774b879679?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png
+--> GET /api/occluders/place-395743b437774b879679?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png [32m200[0m 531ms
+<-- GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-hotel-building-cc6e19.png
+--> GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-hotel-building-cc6e19.png [32m200[0m 0ms
+<-- GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-covered-bench-def9a7.png
+--> GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-covered-bench-def9a7.png [32m200[0m 0ms
+<-- GET /api/connections/place-395743b437774b879679
+--> GET /api/connections/place-395743b437774b879679 [32m200[0m 1ms
+<-- GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.landmarks.json
+--> GET /generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-e3110e2fd21ee4e07819
+--> GET /api/places/place-e3110e2fd21ee4e07819 [32m200[0m 0ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png [32m200[0m 0ms
+<-- OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345
+--> OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345 [32m204[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-e3110e2fd21ee4e07819&baseBackground=%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-e3110e2fd21ee4e07819&baseBackground=%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png [32m200[0m 2ms
+<-- GET /api/occluders/place-e3110e2fd21ee4e07819?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png
+--> GET /api/occluders/place-e3110e2fd21ee4e07819?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png [32m200[0m 539ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-left-house-door-8040df.png
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-left-house-door-8040df.png [32m200[0m 0ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-right-house-door-aea2be.png
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-right-house-door-aea2be.png [32m200[0m 0ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-left-house-88a961.png
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-left-house-88a961.png [32m200[0m 0ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-right-house-85fad2.png
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-right-house-85fad2.png [32m200[0m 0ms
+<-- GET /api/connections/place-e3110e2fd21ee4e07819
+--> GET /api/connections/place-e3110e2fd21ee4e07819 [32m200[0m 1ms
+<-- GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.landmarks.json
+--> GET /generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-96acfd3d8faaf8f903fe
+--> GET /api/places/place-96acfd3d8faaf8f903fe [32m200[0m 2ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-96acfd3d8faaf8f903fe&baseBackground=%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-96acfd3d8faaf8f903fe&baseBackground=%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png [32m200[0m 1ms
+<-- GET /api/occluders/place-96acfd3d8faaf8f903fe?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png
+--> GET /api/occluders/place-96acfd3d8faaf8f903fe?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png [32m200[0m 11s
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-0-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-1-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-3-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-0-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-1-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-3-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-4-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-4-55e961.png [32m200[0m 1ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-2-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-5-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-6-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-7-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-7-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-9-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-9-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-6-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961.png [32m200[0m 1ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-0-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-10-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-10-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-11-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-11-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-2-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-3-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-4-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-5-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-6-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-7-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-7-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961.png [32m200[0m 0ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-9-55e961.png
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-9-55e961.png [32m200[0m 0ms
+<-- GET /api/connections/place-96acfd3d8faaf8f903fe
+--> GET /api/connections/place-96acfd3d8faaf8f903fe [32m200[0m 1ms
+<-- GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.landmarks.json
+--> GET /generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-7587ff22de8e1ebc9f87
+--> GET /api/places/place-7587ff22de8e1ebc9f87 [32m200[0m 2ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png [32m200[0m 0ms
+<-- OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345
+--> OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345 [32m204[0m 1ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-7587ff22de8e1ebc9f87&baseBackground=%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-7587ff22de8e1ebc9f87&baseBackground=%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png [32m200[0m 2ms
+<-- GET /api/occluders/place-7587ff22de8e1ebc9f87?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png
+--> GET /api/occluders/place-7587ff22de8e1ebc9f87?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png [32m200[0m 525ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-lamp-post-0-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-lamp-post-0-55e961.png [32m200[0m 1ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-0-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-1-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-2-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-3-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-4-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-5-55e961.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-nets-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-left-house-eba894.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-left-house-eba894.png [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-right-house-179fc3.png
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.occluder-right-house-179fc3.png [32m200[0m 0ms
+<-- GET /api/connections/place-7587ff22de8e1ebc9f87
+--> GET /api/connections/place-7587ff22de8e1ebc9f87 [32m200[0m 0ms
+<-- GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.landmarks.json
+--> GET /generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-15965c132f18663902c3
+--> GET /api/places/place-15965c132f18663902c3 [32m200[0m 2ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-15965c132f18663902c3&baseBackground=%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-15965c132f18663902c3&baseBackground=%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png
+--> GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png [32m200[0m 1ms
+<-- GET /api/occluders/place-15965c132f18663902c3?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png
+--> GET /api/occluders/place-15965c132f18663902c3?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fd6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png [32m200[0m 517ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-0-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-1-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-10-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-10-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-2-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-3-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-4-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-4-55e961.png [32m200[0m 1ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-5-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-5-55e961.png [32m200[0m 1ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-6-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-7-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-7-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-9-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-9-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-0-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-1-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-2-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-3-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-4-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-5-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-6-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pulpit-0-55e961.png
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pulpit-0-55e961.png [32m200[0m 0ms
+<-- GET /api/connections/place-15965c132f18663902c3
+--> GET /api/connections/place-15965c132f18663902c3 [32m200[0m 0ms
+<-- GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.landmarks.json
+--> GET /generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-7672fad03a2b6c668284
+--> GET /api/places/place-7672fad03a2b6c668284 [32m200[0m 2ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-7672fad03a2b6c668284&baseBackground=%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-7672fad03a2b6c668284&baseBackground=%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png
+--> GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png [32m200[0m 4ms
+<-- GET /api/occluders/place-7672fad03a2b6c668284?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png
+--> GET /api/occluders/place-7672fad03a2b6c668284?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fc90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png [32m200[0m 504ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-desk-0-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-desk-0-55e961.png [32m200[0m 1ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-0-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-1-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-2-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-3-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-4-55e961.png
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-4-55e961.png [32m200[0m 0ms
+<-- GET /api/connections/place-7672fad03a2b6c668284
+--> GET /api/connections/place-7672fad03a2b6c668284 [32m200[0m 1ms
+<-- GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.landmarks.json
+--> GET /generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-0be8458a1e434dd7ee9e
+--> GET /api/places/place-0be8458a1e434dd7ee9e [32m200[0m 2ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-0be8458a1e434dd7ee9e&baseBackground=%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-0be8458a1e434dd7ee9e&baseBackground=%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png [32m200[0m 1ms
+<-- GET /api/occluders/place-0be8458a1e434dd7ee9e?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png
+--> GET /api/occluders/place-0be8458a1e434dd7ee9e?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png [32m200[0m 566ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-fountain-0-55e961.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-fountain-0-55e961.png [32m200[0m 1ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-0-55e961.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-1-55e961.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-2-55e961.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-left-building-52db90.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-left-building-52db90.png [32m200[0m 0ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883.png [32m200[0m 0ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-right-building-7d65d0.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-right-building-7d65d0.png [32m200[0m 1ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-right-building-66ec1d.png
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-right-building-66ec1d.png [32m200[0m 0ms
+<-- GET /api/connections/place-0be8458a1e434dd7ee9e
+--> GET /api/connections/place-0be8458a1e434dd7ee9e [32m200[0m 1ms
+<-- GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.landmarks.json
+--> GET /generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.landmarks.json [32m200[0m 1ms
+<-- GET /api/places/place-045884673aa9e212d400
+--> GET /api/places/place-045884673aa9e212d400 [32m200[0m 2ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-045884673aa9e212d400&baseBackground=%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-045884673aa9e212d400&baseBackground=%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png
+--> GET /api/interactables/inside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png [32m200[0m 1ms
+<-- GET /api/occluders/place-045884673aa9e212d400?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png
+--> GET /api/occluders/place-045884673aa9e212d400?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Ff85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png [32m200[0m 487ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-0-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-1-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-2-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-3-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-4-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-5-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-barrels-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-0-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-1-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-1-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-11-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-11-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-2-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-2-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-3-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-3-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-4-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-4-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-5-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-5-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-6-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-6-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-7-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-7-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-8-55e961.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-sacks-8-55e961.png [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-counter-1d7b82.png
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.occluder-counter-1d7b82.png [32m200[0m 0ms
+<-- GET /api/connections/place-045884673aa9e212d400
+--> GET /api/connections/place-045884673aa9e212d400 [32m200[0m 0ms
+<-- GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.landmarks.json
+--> GET /generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.landmarks.json [32m200[0m 1ms
+<-- GET /api/places/place-f2d0a7f7f76225002663
+--> GET /api/places/place-f2d0a7f7f76225002663 [32m200[0m 2ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 1ms
+<-- GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 556ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961.png [32m200[0m 1ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc.png [32m200[0m 0ms
+<-- GET /api/connections/place-f2d0a7f7f76225002663
+--> GET /api/connections/place-f2d0a7f7f76225002663 [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.landmarks.json
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.landmarks.json [32m200[0m 1ms
+<-- GET /api/places/place-2635d8cd03bce818a634
+--> GET /api/places/place-2635d8cd03bce818a634 [32m200[0m 1ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 0ms
+<-- OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345
+--> OPTIONS /api/world/30e78856-505a-4276-a821-49764a616345 [32m204[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-2635d8cd03bce818a634&baseBackground=%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-2635d8cd03bce818a634&baseBackground=%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 1ms
+<-- GET /api/occluders/place-2635d8cd03bce818a634?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /api/occluders/place-2635d8cd03bce818a634?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 509ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-crate-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-crate-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-debris-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-debris-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-gargoyle-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-gargoyle-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961.png [32m200[0m 0ms
+<-- GET /api/connections/place-2635d8cd03bce818a634
+--> GET /api/connections/place-2635d8cd03bce818a634 [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.landmarks.json
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-2a19481aac649a2e69f1
+--> GET /api/places/place-2a19481aac649a2e69f1 [32m200[0m 2ms
+<-- GET /generated/4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png
+--> GET /generated/4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png [32m200[0m 0ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-2a19481aac649a2e69f1&baseBackground=%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-2a19481aac649a2e69f1&baseBackground=%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png [32m200[0m 2ms
+<-- GET /api/occluders/place-2a19481aac649a2e69f1?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png
+--> GET /api/occluders/place-2a19481aac649a2e69f1?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png [32m200[0m 500ms
+<-- GET /api/connections/place-2a19481aac649a2e69f1
+--> GET /api/connections/place-2a19481aac649a2e69f1 [32m200[0m 1ms
+<-- GET /generated/4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.landmarks.json
+--> GET /generated/4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.landmarks.json [32m200[0m 1ms
+<-- GET /api/places/place-c65c23ccd4fb41403e93
+--> GET /api/places/place-c65c23ccd4fb41403e93 [32m200[0m 1ms
+<-- GET /generated/bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png
+--> GET /generated/bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png [32m200[0m 1ms
+<-- PATCH /api/world/30e78856-505a-4276-a821-49764a616345
+--> PATCH /api/world/30e78856-505a-4276-a821-49764a616345 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=place-c65c23ccd4fb41403e93&baseBackground=%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-c65c23ccd4fb41403e93&baseBackground=%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png [32m200[0m 1ms
+<-- GET /api/occluders/place-c65c23ccd4fb41403e93?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png
+--> GET /api/occluders/place-c65c23ccd4fb41403e93?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2Fbab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png [32m200[0m 496ms
+<-- GET /api/connections/place-c65c23ccd4fb41403e93
+--> GET /api/connections/place-c65c23ccd4fb41403e93 [32m200[0m 1ms
+<-- GET /generated/bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.landmarks.json
+--> GET /generated/bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.landmarks.json [32m200[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+<-- POST /api/narrate
+<-- POST /api/narrate
+--> POST /api/narrate [31m502[0m 486ms
+--> POST /api/narrate [31m502[0m 447ms
+--> POST /api/narrate [31m502[0m 450ms
+<-- GET /api/world/96aed042-3adb-4e38-b60b-6d24c1019605
+--> GET /api/world/96aed042-3adb-4e38-b60b-6d24c1019605 [32m200[0m 2ms
+<-- OPTIONS /api/world/96aed042-3adb-4e38-b60b-6d24c1019605
+--> OPTIONS /api/world/96aed042-3adb-4e38-b60b-6d24c1019605 [32m204[0m 0ms
+<-- PATCH /api/world/96aed042-3adb-4e38-b60b-6d24c1019605
+--> PATCH /api/world/96aed042-3adb-4e38-b60b-6d24c1019605 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 1ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 3ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- GET /api/world/town-demo-81-1791830287592
+--> GET /api/world/town-demo-81-1791830287592 [32m200[0m 1ms
+<-- OPTIONS /api/world/town-demo-81-1791830287592
+--> OPTIONS /api/world/town-demo-81-1791830287592 [32m204[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 2ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 4ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 2ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- GET /api/places/place-f2d0a7f7f76225002663
+--> GET /api/places/place-f2d0a7f7f76225002663 [32m200[0m 3ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 0ms
+<-- OPTIONS /api/world/town-demo-81-1791830287592
+--> OPTIONS /api/world/town-demo-81-1791830287592 [32m204[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 1ms
+<-- GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 592ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021.png [32m200[0m 0ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc.png
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc.png [32m200[0m 0ms
+<-- GET /api/connections/place-f2d0a7f7f76225002663
+--> GET /api/connections/place-f2d0a7f7f76225002663 [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.landmarks.json
+--> GET /generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-2635d8cd03bce818a634
+--> GET /api/places/place-2635d8cd03bce818a634 [32m200[0m 1ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 0ms
+<-- OPTIONS /api/world/town-demo-81-1791830287592
+--> OPTIONS /api/world/town-demo-81-1791830287592 [32m204[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-2635d8cd03bce818a634&baseBackground=%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-2635d8cd03bce818a634&baseBackground=%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 1ms
+<-- GET /api/occluders/place-2635d8cd03bce818a634?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png
+--> GET /api/occluders/place-2635d8cd03bce818a634?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png [32m200[0m 520ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-crate-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-crate-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-debris-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-debris-0-55e961.png [32m200[0m 1ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-gargoyle-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-gargoyle-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961.png [32m200[0m 0ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961.png
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961.png [32m200[0m 0ms
+<-- GET /api/connections/place-2635d8cd03bce818a634
+--> GET /api/connections/place-2635d8cd03bce818a634 [32m200[0m 1ms
+<-- GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.landmarks.json
+--> GET /generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.landmarks.json [32m200[0m 0ms
+<-- GET /api/places/place-f2d0a7f7f76225002663
+--> GET /api/places/place-f2d0a7f7f76225002663 [32m200[0m 2ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 1ms
+<-- GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=place-f2d0a7f7f76225002663&baseBackground=%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/interactables/outside?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 1ms
+<-- GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png
+--> GET /api/occluders/place-f2d0a7f7f76225002663?image=http%3A%2F%2Flocalhost%3A4317%2Fgenerated%2F37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png [32m200[0m 564ms
+<-- GET /api/connections/place-f2d0a7f7f76225002663
+--> GET /api/connections/place-f2d0a7f7f76225002663 [32m200[0m 1ms
+<-- OPTIONS /api/world/town-demo-81-1791830287592
+--> OPTIONS /api/world/town-demo-81-1791830287592 [32m204[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 3ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 4ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 3ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- OPTIONS /api/world/town-demo-81-1791830287592
+--> OPTIONS /api/world/town-demo-81-1791830287592 [32m204[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=inside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=inside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 0ms
+<-- GET /api/interactables/inside
+--> GET /api/interactables/inside [32m200[0m 1ms
+<-- GET /api/occluders/inside
+--> GET /api/occluders/inside [32m200[0m 2s
+<-- GET /api/connections/inside
+--> GET /api/connections/inside [32m200[0m 0ms
+<-- PATCH /api/world/town-demo-81-1791830287592
+--> PATCH /api/world/town-demo-81-1791830287592 [32m200[0m 2ms
+<-- GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D
+--> GET /api/scene-image?scene=outside&visualState=%7B%22timeOfDay%22%3A%22day%22%2C%22weather%22%3A%22salt%20fog%22%2C%22damage%22%3A%22intact%22%2C%22npcsPresent%22%3A%5B%5D%7D [32m200[0m 1ms
+<-- GET /api/interactables/outside
+--> GET /api/interactables/outside [32m200[0m 0ms
+<-- GET /api/occluders/outside
+--> GET /api/occluders/outside [32m200[0m 3ms
+<-- GET /api/connections/outside
+--> GET /api/connections/outside [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+<-- OPTIONS /api/narrate
+--> OPTIONS /api/narrate [32m204[0m 1ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 0ms
+<-- POST /api/narrate
+--> POST /api/narrate [32m200[0m 1ms
+undefined
+/Users/gorkolas/Developer/anima/api:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 143: tsx src/index.ts
