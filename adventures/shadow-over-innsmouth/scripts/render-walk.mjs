@@ -56,7 +56,7 @@ if (!process.argv.includes("--reuse")) {
 	browser(["wait", "--load", "networkidle"]);
 	// A repeated proof must not accumulate narrative history and change cache keys.
 	evaluate(
-		`localStorage.setItem("anima.world.session",${JSON.stringify(`walkqa-${plan.place}-${captureId}`)});location.reload();true`,
+		`localStorage.setItem("anima.world.session",${JSON.stringify(`walkqa-${plan.place}-${Date.now()}-${process.pid}`)});location.reload();true`,
 	);
 	browser(["wait", "--load", "networkidle"]);
 }
