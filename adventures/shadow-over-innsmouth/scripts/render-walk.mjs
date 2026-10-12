@@ -167,6 +167,8 @@ for (const beat of plan.beats) {
 		if (
 			process.argv.includes("--retain-failures") &&
 			!exitCompleted &&
+			!frames.at(-1).ui &&
+			frames.at(-1).location === sourceLocation &&
 			idleFrames >= 48 &&
 			first >= beat.frames
 		)
