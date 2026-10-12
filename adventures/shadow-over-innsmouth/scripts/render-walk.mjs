@@ -136,7 +136,7 @@ for (const beat of plan.beats) {
 	mkdirSync(dir, { recursive: true });
 	if (beat.start)
 		evaluate(
-			`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-idle-v2-normalized',0).setFlipX(false);s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
+			`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-idle-v2-normalized',0).setFlipX(false);if(${JSON.stringify(beat.facing ?? null)})s.hermesMotor.heading=${JSON.stringify(beat.facing ?? null)};s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
 		);
 	if (beat.object) {
 		const point = evaluate(
@@ -175,7 +175,7 @@ for (const beat of plan.beats) {
 		first += 4
 	) {
 		const frames = evaluate(
-			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){let sample;const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png',onFrame:()=>{const s=window.__anima.scene,h=s.hermesSprite;sample={visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth};}});out.push({png,...sample});}return out})();window.__walkBatch={token,promise};return promise})()`,
+			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){let sample;const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png',onFrame:()=>{const s=window.__anima.scene,h=s.hermesSprite;sample={visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),alpha:h.alpha,blend:s.hermesBlend?.visible?{texture:s.hermesBlend.texture.key,frame:Number(s.hermesBlend.frame.name),x:s.hermesBlend.x,y:s.hermesBlend.y,scale:s.hermesBlend.scaleX,flip:s.hermesBlend.flipX,alpha:s.hermesBlend.alpha}:null,walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth};}});out.push({png,...sample});}return out})();window.__walkBatch={token,promise};return promise})()`,
 			true,
 		);
 		const currentGeometry = areas[frames.at(-1).location]

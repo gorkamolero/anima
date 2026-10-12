@@ -1,7 +1,7 @@
 """Per-clip walk statistics from the verified per-frame logs.
 
 - on-floor: the planted contact point (sheet keypoint projected through the log) lies on
-  the scene's walk mask (<scene>/area.json, 384x216 over 1920x1080), every walking frame;
+  the scene's walk mask (<scene>/area.json, 384x216 over 1920x1080), every visible frame, including standing and settling;
 - ground speed per cycle (m/s) from contact.ground;
 - cadence (steps/s) = planted-foot switches per second;
 - walk length (s) and straight-line distance.
@@ -48,14 +48,15 @@ for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
             continue
         if not isinstance(L, list) or not L or "contact" not in L[0]:
             continue
-        w = [r for r in L if r.get("walking") and r.get("visible", True)]
+        visible = [r for r in L if r.get("visible", True)]
+        w = [r for r in visible if r.get("walking") and not r["contact"].get("settling")]
         off, contacts, switches, seg = 0, 0, 0, collections.defaultdict(lambda: [0.0, 0])
         prev = None
-        for r in w:
+        for r in visible:
             m = meta(r["texture"])
             c = m.get("contacts", [None] * 999)[int(r["frame"])] if "contacts" in m else None
             if c:
-                ft = c["planted"]
+                ft = r.get("contact", {}).get("planted", c["planted"])
                 s, sg = r["scale"], (-1 if r["flip"] else 1)
                 x = r["x"] + (c[ft]["x"] - m["frameWidth"] / 2) * s * sg
                 y = r["y"] + (c[ft]["y"] - m["frameHeight"]) * s
@@ -70,9 +71,10 @@ for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
                     fx, fy = math.floor(x * footprints["width"] / 1920), math.floor(y * footprints["height"] / 1080)
                     if 0 <= fx < footprints["width"] and 0 <= fy < footprints["height"]:
                         contacts += bool(footprints["data"][fy * footprints["width"] + fx])
-                if prev and (prev[0] != r["texture"] or prev[1] != ft):
-                    switches += 1
-                prev = (r["texture"], ft)
+                if r.get("walking") and not r["contact"].get("settling"):
+                    if prev and prev != ft:
+                        switches += 1
+                    prev = ft
         for a, b in zip(w, w[1:]):
             ga, gb = a["contact"].get("ground"), b["contact"].get("ground")
             if not ga or not gb:
@@ -87,7 +89,7 @@ for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
             if n >= 12:
                 speeds[k].append(d / (n / 24))
         dist = math.hypot(w[-1]["x"] - w[0]["x"], w[-1]["y"] - w[0]["y"]) if w else 0
-        rows.append((os.path.relpath(f, root), len(w) / 24, dist, off, len(w), switches / (len(w) / 24) if w else 0, contacts if footprints else None))
+        rows.append((os.path.relpath(f, root), len(w) / 24, dist, off, len(visible), switches / (len(w) / 24) if w else 0, contacts if footprints else None))
 
 print("clip".ljust(44), "walk s", " dist px", "off-floor", "steps/s", "object-contacts")
 for r in rows:

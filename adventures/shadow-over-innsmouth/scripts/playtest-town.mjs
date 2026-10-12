@@ -252,8 +252,13 @@ async function walkPlace(step) {
 		);
 	const cells = allCells.filter((p) => p.x > 300 && p.x < 1500 && p.y < 990);
 	cells.sort((a, b) => a.y - b.y);
-	const far = cells[Math.floor(cells.length * 0.15)],
-		near = cells[Math.floor(cells.length * 0.85)];
+	const far = cells[Math.floor(cells.length * 0.15)];
+	// Keep near/far targets separated after the allowed half-stride arrival
+	// tolerance and standing-origin shift; the old <990 band could overlap.
+	const nearCells = allCells
+		.filter((p) => p.x > 300 && p.x < 1500 && p.y < 1040)
+		.sort((a, b) => a.y - b.y);
+	const near = nearCells[Math.floor(nearCells.length * 0.95)];
 	const states = [];
 	for (const [label, desired] of [
 		["left", nearestCell(line[0])],
@@ -300,30 +305,38 @@ async function walkPlace(step) {
 			180000,
 		);
 		const h = s.hermes;
-		const i =
-			Math.floor((h.y / 1080) * floor.height) * floor.width +
-			Math.floor((h.x / 1920) * floor.width);
-		if (!floor.data[i]) throw new Error(`${label}: feet outside floor mask`);
-		const { arrival, position } = evaluate(
-			"(()=>{const s=window.__anima.scene;return {arrival:s.hermesMotor.snapshot().arrival,position:{x:s.hermesSprite.x,y:s.hermesSprite.y}}})()",
+		// Sprite origin moves when a stance settles. Test both physical soles on
+		// the raw floor, not the routing mask eroded for the character centre.
+		const solesOnFloor = evaluate(
+			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,m=s.cache.json.get(h.texture.key+'-meta'),a=s.walkArea,floor=a.rawMask??a.mask;return ['L','R'].every(foot=>{const c=m.contacts[Number(h.frame.name)][foot],x=h.x+(c.x-m.frameWidth/2)*h.scaleX*(h.flipX?-1:1),y=h.y+(c.y-m.frameHeight)*h.scaleX;const ix=Math.floor(x/1920*floor.width),iy=Math.floor(y/1080*floor.height);return ix>=0&&iy>=0&&ix<floor.width&&iy<floor.height&&floor.data[iy*floor.width+ix]>0});})()",
+		);
+		if (!solesOnFloor)
+			throw new Error(`${label}: standing sole outside floor mask`);
+		const { arrival, anchor } = evaluate(
+			"(()=>{const s=window.__anima.scene;return {arrival:s.hermesMotor.snapshot().arrival,anchor:s.hermesMotor.snapshot().anchor}})()",
 		);
 		if (
 			!arrival ||
 			Math.hypot(arrival.target.x - expected.x, arrival.target.y - expected.y) >
 				1.5 ||
-			Math.hypot(position.x - arrival.target.x, position.y - arrival.target.y) >
-				arrival.halfStride + 1e-6
+			arrival.distance > arrival.halfStride + 1e-6 ||
+			Math.hypot(anchor.x - arrival.anchor.x, anchor.y - arrival.anchor.y) > 1
 		)
 			throw new Error(`${label}: did not stop within half a drawn stride`);
-		const atSwitch = evaluate(
-			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,m=s.cache.json.get(h.texture.key+'-meta');return m.switchFrames.includes(Number(h.frame.name));})()",
+		const standing = evaluate(
+			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,c=s.hermesMotor.snapshot(),d=c.heading;const suffix=d.startsWith('away-')?'away-right':d.startsWith('toward-')?'toward-right':d;const expected=d==='left'||d==='right'?'hermes-idle-v2-normalized':'hermes-stand-'+suffix;return !c.walking&&!c.settling&&h.texture.key===expected&&Number(h.frame.name)===0&&h.flipX===(d==='right'||d.endsWith('-left'));})()",
 		);
-		if (!atSwitch)
-			throw new Error(`${label}: arrival did not hold a switch frame`);
+		if (!standing)
+			throw new Error(
+				`${label}: arrival did not settle into its directional standing pose`,
+			);
 		states.push({ label, ...h });
 		await frame(`${step}-${label}`, { hermes: h });
 	}
-	if (states[3].scale <= states[2].scale)
+	// Exit avoidance and half-stride settlement can reorder the nominal far/near
+	// labels. Compare rendered depths, not labels, while keeping the growth check.
+	const byDepth = [...states].sort((a, b) => a.y - b.y);
+	if (byDepth.at(-1).scale <= byDepth[0].scale)
 		throw new Error("Scale did not grow toward camera");
 	const art = await evaluate(
 		`window.__anima.verifyArt(${JSON.stringify(before.generatedPlace ? `http://localhost:4317${before.generatedPlace.background.replace(".png", ".landmarks.json")}` : `backgrounds/${before.location === "outside" ? "bus-station-flat-v1" : "arkham-bus-depot-flat-2d"}.landmarks.json`)},{referenceCharacterId:'hermes'})`,
