@@ -1,0 +1,18 @@
+{
+  "model": "fal-ai/nano-banana-2/edit",
+  "view": "side",
+  "attempt": 1,
+  "source": "side-input.png",
+  "prompt": "Edit this exact walk frame into one standing sprite. Same character, same framing, same camera, same scale and position. He has stopped walking and stands still with both feet flat on the ground, weight even, arms relaxed at his sides. Keep head, torso, satchel, face and clothes identical; change only the legs and feet, and the arms if needed. Preserve the head and torso at their EXACT pixel coordinates and size. Preserve the planted shoe at its current position; bring the lifted shoe down beside it. Do not recenter, enlarge, straighten or redraw the upper body. Preserve the glasses, face, hair, jacket, and the bag on the same side. Keep the entire 612 by 1059 canvas and flat uniform #828282 grey background, no ground shadow, no cropping, no text.",
+  "parameters": {
+    "prompt": "Edit this exact walk frame into one standing sprite. Same character, same framing, same camera, same scale and position. He has stopped walking and stands still with both feet flat on the ground, weight even, arms relaxed at his sides. Keep head, torso, satchel, face and clothes identical; change only the legs and feet, and the arms if needed. Preserve the head and torso at their EXACT pixel coordinates and size. Preserve the planted shoe at its current position; bring the lifted shoe down beside it. Do not recenter, enlarge, straighten or redraw the upper body. Preserve the glasses, face, hair, jacket, and the bag on the same side. Keep the entire 612 by 1059 canvas and flat uniform #828282 grey background, no ground shadow, no cropping, no text.",
+    "aspect_ratio": "auto",
+    "resolution": "1K",
+    "num_images": 1,
+    "output_format": "png",
+    "limit_generations": true
+  },
+  "submitted": "2026-10-12T15:31:19.093Z",
+  "requestId": "01a130bd-60c5-7750-9736-4b2bfef29421",
+  "completed": "2026-10-12T15:31:32.492Z"
+}

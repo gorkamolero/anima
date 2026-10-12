@@ -1,0 +1,132 @@
+[
+  {
+    "direction": "side",
+    "walk": "hermes-fal-veo-transparent-loop",
+    "frame": 8,
+    "attempt": 1,
+    "rawSize": [
+      784,
+      1360
+    ],
+    "canvas": [
+      612,
+      1059
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "registration": {
+      "dx": 0.09341381070947398,
+      "dy": 0.10961013132624842,
+      "residual": 0.0479742452964549,
+      "boundary": false
+    },
+    "headPx": 3.562040879776323,
+    "torsoPx": 4.476266610123541
+  },
+  {
+    "direction": "away",
+    "walk": "hermes-walk-away",
+    "frame": 2,
+    "attempt": 1,
+    "rawSize": [
+      784,
+      1360
+    ],
+    "canvas": [
+      612,
+      1059
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "registration": {
+      "dx": -0.11522579860536451,
+      "dy": 0.13519211714685847,
+      "residual": 0.012865082648448262,
+      "boundary": false
+    },
+    "headPx": 0.4640214859047245,
+    "torsoPx": 5.065635983568499
+  },
+  {
+    "direction": "away-right",
+    "walk": "hermes-walk-away-right",
+    "frame": 18,
+    "attempt": 1,
+    "rawSize": [
+      784,
+      1360
+    ],
+    "canvas": [
+      612,
+      1059
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "registration": {
+      "dx": 0.10118958335737115,
+      "dy": 0.09916436639754303,
+      "residual": 0.0034079625275852555,
+      "boundary": false
+    },
+    "headPx": 0.9470742579844643,
+    "torsoPx": 2.677873763188296
+  },
+  {
+    "direction": "toward",
+    "walk": "hermes-walk-toward",
+    "frame": 5,
+    "attempt": 1,
+    "rawSize": [
+      784,
+      1357
+    ],
+    "canvas": [
+      612,
+      1059
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "registration": {
+      "dx": 0.01613420200925447,
+      "dy": 0.24278901978586417,
+      "residual": 0.07652580757626187,
+      "boundary": false
+    },
+    "headPx": 0.2730607309729659,
+    "torsoPx": 9.155190424869797
+  },
+  {
+    "direction": "toward-right",
+    "walk": "hermes-walk-toward-right",
+    "frame": 19,
+    "attempt": 1,
+    "rawSize": [
+      784,
+      1360
+    ],
+    "canvas": [
+      612,
+      1059
+    ],
+    "translation": [
+      0,
+      0
+    ],
+    "registration": {
+      "dx": -0.014127575836175426,
+      "dy": 0.07708371130356224,
+      "residual": 0.012035864170900513,
+      "boundary": false
+    },
+    "headPx": 0.6619987327125366,
+    "torsoPx": 6.302903208437882
+  }
+]

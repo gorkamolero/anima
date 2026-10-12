@@ -1,0 +1,22 @@
+{
+  "side": [
+    "hermes-fal-veo-transparent-loop",
+    8
+  ],
+  "away": [
+    "hermes-walk-away",
+    2
+  ],
+  "away-right": [
+    "hermes-walk-away-right",
+    18
+  ],
+  "toward": [
+    "hermes-walk-toward",
+    5
+  ],
+  "toward-right": [
+    "hermes-walk-toward-right",
+    19
+  ]
+}

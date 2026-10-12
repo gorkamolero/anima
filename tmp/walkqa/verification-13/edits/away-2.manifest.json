@@ -1,0 +1,18 @@
+{
+  "model": "fal-ai/nano-banana-2/edit",
+  "view": "away",
+  "attempt": 2,
+  "source": "away-input.png",
+  "prompt": "Edit this exact walk frame into one standing sprite. Same character, same framing, same camera, same scale and position. He has stopped walking and stands still with both feet flat on the ground, weight even, arms relaxed at his sides. Keep head, torso, satchel, face and clothes identical; change only the legs and feet, and the arms if needed. Preserve the head and torso at their EXACT pixel coordinates and size. Preserve the planted shoe at its current position; bring the lifted shoe down beside it. Do not recenter, enlarge, straighten or redraw the upper body. Preserve the glasses, face, hair, jacket, and the bag on the same side. Keep the entire 612 by 1059 canvas and flat uniform #828282 grey background, no ground shadow, no cropping, no text. STRICT CORRECTION: copy all pixels above the hips unchanged, including both arms and hands in their exact original positions. The arms are already relaxed enough; DO NOT change them. Absolutely no repositioning or redrawing of the head, hair, glasses, torso or satchel. Preserve the entire planted shoe and its leg unchanged. Only lower the other raised foot to the floor beside it. This is a local single-leg-only edit, not a new drawing. Place the lowered left shoe sole near (296,1012), slightly behind the unchanged right shoe, on the same ground plane. The planted sole landmark is at x=340, y=1036 on the 612x1059 input. Keep that shoe's shape, position and orientation exactly unchanged. Do not move it to make the stance symmetrical.",
+  "parameters": {
+    "prompt": "Edit this exact walk frame into one standing sprite. Same character, same framing, same camera, same scale and position. He has stopped walking and stands still with both feet flat on the ground, weight even, arms relaxed at his sides. Keep head, torso, satchel, face and clothes identical; change only the legs and feet, and the arms if needed. Preserve the head and torso at their EXACT pixel coordinates and size. Preserve the planted shoe at its current position; bring the lifted shoe down beside it. Do not recenter, enlarge, straighten or redraw the upper body. Preserve the glasses, face, hair, jacket, and the bag on the same side. Keep the entire 612 by 1059 canvas and flat uniform #828282 grey background, no ground shadow, no cropping, no text. STRICT CORRECTION: copy all pixels above the hips unchanged, including both arms and hands in their exact original positions. The arms are already relaxed enough; DO NOT change them. Absolutely no repositioning or redrawing of the head, hair, glasses, torso or satchel. Preserve the entire planted shoe and its leg unchanged. Only lower the other raised foot to the floor beside it. This is a local single-leg-only edit, not a new drawing. Place the lowered left shoe sole near (296,1012), slightly behind the unchanged right shoe, on the same ground plane. The planted sole landmark is at x=340, y=1036 on the 612x1059 input. Keep that shoe's shape, position and orientation exactly unchanged. Do not move it to make the stance symmetrical.",
+    "aspect_ratio": "auto",
+    "resolution": "1K",
+    "num_images": 1,
+    "output_format": "png",
+    "limit_generations": true
+  },
+  "submitted": "2026-10-12T15:36:35.499Z",
+  "requestId": "01a130c2-3481-7721-ad58-2e7a97ed4416",
+  "completed": "2026-10-12T15:36:49.160Z"
+}
