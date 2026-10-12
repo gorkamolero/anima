@@ -1,0 +1,7 @@
+{
+  "walkqa19-road": true,
+  "walkqa19-depot": true,
+  "walkqa19-starts": true,
+  "anima": true,
+  "anima-town": true
+}

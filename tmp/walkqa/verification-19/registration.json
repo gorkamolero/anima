@@ -1,0 +1,18 @@
+[
+  {
+    "candidate": 1,
+    "translation": [
+      -12,
+      -12
+    ],
+    "maskedCorrelation": 0.8832335472106934
+  },
+  {
+    "candidate": 2,
+    "translation": [
+      13,
+      -7
+    ],
+    "maskedCorrelation": 0.9126200675964355
+  }
+]

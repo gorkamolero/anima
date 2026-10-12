@@ -1,0 +1,72 @@
+{
+  "plantedSoleInteriorIdentical": true,
+  "soleContourYDeltaSourcePx": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "assetAlpha": [
+    {
+      "frame": 0,
+      "nonopaqueInterior": 1158
+    },
+    {
+      "frame": 1,
+      "nonopaqueInterior": 0
+    },
+    {
+      "frame": 2,
+      "nonopaqueInterior": 0
+    }
+  ],
+  "preserved": {
+    "hermes-passing-stand-away-right.json": true,
+    "hermes-passing-stand-away-right.png": true,
+    "hermes-passing-stand-away.json": true,
+    "hermes-passing-stand-away.png": true,
+    "hermes-passing-stand-toward-right.json": true,
+    "hermes-passing-stand-toward-right.png": true,
+    "hermes-passing-stand-toward.json": true,
+    "hermes-passing-stand-toward.png": true
+  },
+  "exitExact": true,
+  "beforeRepairSoleContourYDeltaSourcePx": [
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -1,
+    -1,
+    -2,
+    -2,
+    -3,
+    -3,
+    -4,
+    -4,
+    -3,
+    -3,
+    -3
+  ]
+}

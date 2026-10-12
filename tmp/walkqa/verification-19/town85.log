@@ -1,0 +1,11 @@
+start 
+depot-hotspots-and-kat 
+depot-left 
+depot-right 
+depot-far 
+depot-near 
+road-arrival 
+Error: left: no floor-only route without crossing an exit
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:293:10)
+    at replayTown (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:398:8)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:448:3

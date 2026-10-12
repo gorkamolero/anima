@@ -1,0 +1,51 @@
+{
+  "name": "side-settle-mirrored",
+  "image": "stop-sheet-mirrored.png",
+  "frameWidth": 612,
+  "frameHeight": 1059,
+  "frameCount": 3,
+  "cols": 3,
+  "rows": 1,
+  "fps": 24,
+  "contacts": [
+    {
+      "R": {
+        "x": 254.31167085929013,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 346,
+        "y": 1030
+      }
+    },
+    {
+      "R": {
+        "x": 254.31167085929013,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 346,
+        "y": 1030
+      }
+    },
+    {
+      "R": {
+        "x": 254.31167085929013,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 362,
+        "y": 998
+      }
+    }
+  ],
+  "settleFrames": [
+    0,
+    1,
+    2
+  ],
+  "holdTicks": 2
+}

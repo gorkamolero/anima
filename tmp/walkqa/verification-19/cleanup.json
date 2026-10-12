@@ -1,0 +1,14 @@
+{
+  "listeners": {
+    "4317": false,
+    "8080": false
+  },
+  "browsers": {
+    "walkqa19-road": true,
+    "walkqa19-depot": true,
+    "walkqa19-starts": true,
+    "anima": true,
+    "anima-town": true
+  },
+  "ownerPortsTouched": false
+}

@@ -1,0 +1,30 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+depot/away-left.json                            1.2      52    0/44     n/a 0
+depot/away-right.json                           1.2     193    0/44     n/a 0
+depot/away.json                                 0.7     125    0/40     n/a 0
+depot/left.json                                 0.7     179    0/32     n/a 0
+depot/right.json                                2.5     178    0/76    1.97 0
+depot/toward-left.json                          0.7     175    0/40     n/a 0
+depot/toward-right.json                         0.7      91    0/40     n/a 0
+depot/toward.json                               0.1       0    0/28     n/a 0
+road/away-left.json                             1.2      44    0/44     n/a 0
+road/away-right.json                            0.3       0    0/60     n/a 0
+road/away.json                                  0.7     103    0/40     n/a 0
+road/left.json                                  0.7      54    0/32     n/a 0
+road/right.json                                 1.2     120    0/56     n/a 0
+road/toward-left.json                           1.6      91    0/64     n/a 0
+road/toward-right.json                          1.2     160    0/40     n/a 0
+road/toward.json                                0.8      41    0/36     n/a 0
+starts/away-left.json                           2.6     259    0/78    1.94 0
+starts/away-right.json                          3.0     289    0/86    1.97 0
+starts/away.json                                0.1       0    0/30     n/a 0
+starts/left.json                                0.8      38    0/34     n/a 0
+starts/right.json                               1.2     300    0/46     n/a 0
+starts/toward-left.json                         1.2     222    0/58     n/a 0
+starts/toward-right.json                        1.3     200    0/58     n/a 0
+starts/toward.json                              0.1       0    0/30     n/a 0
+
+side                 ground m/s min/median/max 2.02 2.02 2.02 (n=1)
+walk-away-right      ground m/s min/median/max 0.66 1.14 1.45 (n=8)
+walk-toward          ground m/s min/median/max 1.27 1.66 1.66 (n=2)
+walk-toward-right    ground m/s min/median/max 0.68 1.65 1.86 (n=4)
