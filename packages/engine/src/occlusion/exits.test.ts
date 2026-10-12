@@ -43,3 +43,33 @@ describe("footfall exit arrival", () => {
 		).toBeUndefined();
 	});
 });
+
+it("uses a requested stance-clear approach without expanding the physical trigger", () => {
+	const gate: Exit = {
+		id: "return",
+		kind: "edge-left",
+		region: [
+			{ x: 0, y: 0 },
+			{ x: 10, y: 0 },
+			{ x: 10, y: 10 },
+			{ x: 0, y: 10 },
+		],
+		approach: { x: 50, y: 50 },
+	};
+	const arrival = { target: { x: 50, y: 50 }, halfStride: 10 };
+	expect(exitAtArrival({ x: 55, y: 50 }, "return", arrival, [gate])).toBe(gate);
+	expect(
+		exitAtArrival({ x: 55, y: 50 }, undefined, arrival, [gate]),
+	).toBeUndefined();
+	expect(
+		exitAtArrival({ x: 75, y: 50 }, "return", arrival, [gate]),
+	).toBeUndefined();
+	expect(
+		exitAtArrival(
+			{ x: 55, y: 50 },
+			"return",
+			{ target: { x: 54, y: 50 }, halfStride: 10 },
+			[gate],
+		),
+	).toBeUndefined();
+});

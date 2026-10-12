@@ -3,6 +3,7 @@ export interface Exit {
 	id: string;
 	kind: "edge-left" | "edge-right" | "far" | "door";
 	region: Point[];
+	approach?: Point;
 	label?: string;
 	to?: string;
 }
@@ -53,6 +54,15 @@ export function exitAtArrival(
 		arrival.halfStride + 1e-6
 	)
 		return undefined;
+	const requested = exits.find((exit) => exit.id === requestedId);
+	if (
+		requested?.approach &&
+		Math.hypot(
+			arrival.target.x - requested.approach.x,
+			arrival.target.y - requested.approach.y,
+		) < 1e-6
+	)
+		return requested;
 	const exit = exitAt(arrival.target, exits);
 	return exit?.id === requestedId ? exit : undefined;
 }

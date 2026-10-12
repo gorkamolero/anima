@@ -996,6 +996,10 @@ export class StoryGameScene extends BaseScene {
 		if (!this.hermesSprite?.visible || this.inputBlocked || this.openWorldBusy)
 			return;
 		if (pointer.y < TITLE_BAR_HEIGHT || pointer.y > MAX_FEET_Y) return;
+		if (exitAt(pointer, this.sceneExits)) {
+			void this.walkGenerated(pointer.x, pointer.y);
+			return;
+		}
 		const scene = this.activeScene();
 		if (
 			this.visibleFloor &&
@@ -1042,8 +1046,10 @@ export class StoryGameScene extends BaseScene {
 		const area = this.walkArea,
 			sprite = this.hermesSprite;
 		if (!area || !sprite || this.inputBlocked) return;
-		const path = this.previewWalk(x, y);
-		this.requestedExit = exitAt({ x, y }, this.sceneExits)?.id;
+		const exit = exitAt({ x, y }, this.sceneExits);
+		const destination = exit?.approach ?? { x, y };
+		const path = this.previewWalk(destination.x, destination.y);
+		this.requestedExit = exit?.id;
 		try {
 			await this.walkHermesPath(path);
 		} finally {
@@ -1334,7 +1340,8 @@ export class StoryGameScene extends BaseScene {
 					center,
 				);
 				if (cell < 0) return exit;
-				let point = cellPoint(exitMask, cell);
+				const point = cellPoint(exitMask, cell);
+				let approach: ScenePoint | undefined;
 				// Edge travel needs a standing approach, not the last boundary pixel.
 				// Keep the original floor for routing; the extra footprint clearance
 				// only selects a target where the final support phase can fit.
@@ -1348,11 +1355,12 @@ export class StoryGameScene extends BaseScene {
 							candidate,
 						).at(-1);
 						if (end && Math.hypot(end.x - candidate.x, end.y - candidate.y) < 1)
-							point = candidate;
+							approach = candidate;
 					}
 				}
 				return {
 					...exit,
+					...(approach ? { approach } : {}),
 					region: [
 						{ x: point.x - 8, y: point.y - 8 },
 						{ x: point.x + 8, y: point.y - 8 },
