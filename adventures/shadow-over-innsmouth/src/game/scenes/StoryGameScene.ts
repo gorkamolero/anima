@@ -1599,8 +1599,8 @@ export class StoryGameScene extends BaseScene {
 					x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
 					y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
 				};
-		// Side arrivals begin at the literal image boundary, with the planted
-		// boot facing inward. Floor snapping would pull the whole body on-screen.
+		// Side arrivals put the planted sole on the literal image boundary,
+		// facing inward. A rest pose's sprite origin can leave that sole off-floor.
 		const edge = kind === "edge-left" || kind === "edge-right";
 		if (edge) {
 			const mask = this.walkArea.clearanceMask ?? this.walkArea.mask;
@@ -1645,7 +1645,8 @@ export class StoryGameScene extends BaseScene {
 						: kind === "edge-right"
 							? "left"
 							: "toward";
-		if (kind === "near" || kind === "far") this.hermesMotor.placeContact(point);
+		if (edge || kind === "near" || kind === "far")
+			this.hermesMotor.placeContact(point);
 		else this.hermesMotor.place(point, !edge);
 		this.exitLatch = entry.id;
 		const desired = {
