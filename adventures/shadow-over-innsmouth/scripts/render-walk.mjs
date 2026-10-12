@@ -82,6 +82,20 @@ if (plan.start)
 evaluate(
 	`window.__anima.captureFrame({stepMs:0,width:${width},format:'png'}).then(()=>true)`,
 );
+const geometry = evaluate(
+	`(()=>{const s=window.__anima.scene;return {area:s.walkArea,location:s.locationId(),exits:s.sceneExits,objects:s.objectLayers.map(l=>l.data)}})()`,
+);
+writeFileSync(resolve(out, "navigation.json"), JSON.stringify(geometry));
+writeFileSync(
+	resolve(out, "area.json"),
+	JSON.stringify({
+		...geometry,
+		area: {
+			...geometry.area,
+			mask: geometry.area.rawMask ?? geometry.area.mask,
+		},
+	}),
+);
 const logs = [];
 for (const beat of plan.beats) {
 	// A crossing can itself enter an exit. Every proof beat belongs to its named scene.
@@ -103,7 +117,7 @@ for (const beat of plan.beats) {
 	mkdirSync(dir, { recursive: true });
 	if (beat.start)
 		evaluate(
-			`(()=>{const s=window.__anima.scene;s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
+			`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-idle-v2-normalized',0).setFlipX(false);s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
 		);
 	if (beat.object) {
 		const point = evaluate(
@@ -150,6 +164,13 @@ for (const beat of plan.beats) {
 			idleFrames = sample.walking ? 0 : idleFrames + 1;
 			walkCompleted = idleFrames >= 4;
 		}
+		if (
+			process.argv.includes("--retain-failures") &&
+			!exitCompleted &&
+			idleFrames >= 48 &&
+			first >= beat.frames
+		)
+			break;
 		writeFileSync(
 			resolve(out, `${beat.name}.partial.json`),
 			JSON.stringify(log),
@@ -187,10 +208,16 @@ for (const beat of plan.beats) {
 		resolve(out, `${beat.name}-sheet.png`),
 	]);
 	if (!walkCompleted) throw new Error(`Walk ${beat.name} did not finish`);
-	if (!exitCompleted)
+	if (!exitCompleted && !process.argv.includes("--retain-failures"))
 		throw new Error(`Exit ${beat.exit} did not finish and release input`);
 	rmSync(resolve(out, `${beat.name}.partial.json`), { force: true });
-	logs.push({ name: beat.name, frames: log.length });
+	logs.push({
+		name: beat.name,
+		frames: log.length,
+		exitCompleted,
+		walkCompleted,
+		requested: beat,
+	});
 	// Keep the full PNG sequence only on request. Videos and telemetry remain.
 	if (!process.argv.includes("--keep-frames")) rmSync(dir, { recursive: true });
 	console.log(beat.name, log.length);

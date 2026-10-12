@@ -48,7 +48,7 @@ def register(previous, current, roi, radius=64, prediction=(0, 0), masked=False)
     return {'dx': float(px+ix-radius+sx), 'dy': float(py+iy-radius+sy), 'residual': float(max(0, cost[iy, ix])/mass), 'boundary': bool(ix in (0,2*radius) or iy in (0,2*radius))}
 
 
-def track_stance(frames, start, count, point, size):
+def track_stance(frames, start, count, point, size, search_radius=24):
     """Move the same sole keypoint by chained local boot registration, never re-pick it."""
     points = [dict(point)]
     diagnostics = []
@@ -61,7 +61,7 @@ def track_stance(frames, start, count, point, size):
         rx, ry = size
         roi = [max(0, round(q['x']-rx)), max(0, round(q['y']-ry)),
                min(w, round(q['x']+rx)), min(h, round(q['y']+8))]
-        result = register(frames[previous], frames[current], roi, radius=48 if step == 1 else 24, prediction=velocity)
+        result = register(frames[previous], frames[current], roi, radius=max(48, search_radius) if step == 1 else search_radius, prediction=velocity)
         refined = register(frames[previous], frames[current], roi, radius=2,
                            prediction=(result['dx'], result['dy']), masked=True)
         if not refined['boundary']:
@@ -92,6 +92,8 @@ def extract(sheet, debug, seeds=None):
     # Explicit reviewed physical-foot handoffs replace image-half classifications.
     spec=seeds or m.get('contactSeeds') or {'switches':[{'frame':0,'foot':'L','point':seed_sole(frames[0],True)}],
                   'other':seed_sole(frames[0],False),'patch':[max(12,w*.065),max(15,h*.045)]}
+    def track(frames, start, count, point, size):
+        return track_stance(frames, start, count, point, size, spec.get('searchRadius', 24))
     switches=sorted(spec['switches'],key=lambda v:v['frame'])
     contacts=[{} for _ in frames]; diagnostics=[]
     patch=spec.get('patch',[w*.075,h*.05])
@@ -101,9 +103,9 @@ def extract(sheet, debug, seeds=None):
         foot=seed['foot']
         # Include the preceding pose to transfer the new foot at a real handoff.
         previous=(start-1)%n
-        backward,_=track_stance([frames[start],frames[previous]],0,2,seed['point'],patch)
+        backward,_=track([frames[start],frames[previous]],0,2,seed['point'],patch)
         contacts[previous][foot]=backward[-1]
-        tracked,diag=track_stance(frames,start,count,seed['point'],patch)
+        tracked,diag=track(frames,start,count,seed['point'],patch)
         diagnostics.extend(dict(foot=foot,**d) for d in diag)
         for k,point in enumerate(tracked):
             i=(start+k)%n;contacts[i][foot]=point;contacts[i]['planted']=foot
@@ -113,7 +115,7 @@ def extract(sheet, debug, seeds=None):
         known=[i for i,c in enumerate(contacts) if foot in c]
         if not known:
             start=spec.get('other',seed_sole(frames[0],foot=='L'))
-            tracked,_=track_stance(frames,0,n,start,patch)
+            tracked,_=track(frames,0,n,start,patch)
             for c,q in zip(contacts,tracked):c[foot]=q
             continue
         for j,a in enumerate(known):
@@ -122,14 +124,14 @@ def extract(sheet, debug, seeds=None):
             checkpoints=[c for c in spec.get('swing',[]) if c['foot']==foot and 0<(c['frame']-a)%n<gap]
             if checkpoints:
                 seed=checkpoints[0];mid=seed['frame'];before=(mid-a)%n;after=(b-mid)%n
-                forward,_=track_stance(frames,mid,after,seed['point'],patch)
+                forward,_=track(frames,mid,after,seed['point'],patch)
                 reverse=[frames[(mid-k)%n] for k in range(before)]
-                backward,_=track_stance(reverse,0,before,seed['point'],patch)
+                backward,_=track(reverse,0,before,seed['point'],patch)
                 for k,q in enumerate(forward):contacts[(mid+k)%n][foot]=q
                 for k,q in enumerate(backward):contacts[(mid-k)%n][foot]=q
             else:
                 reverse=[frames[(b-k)%n] for k in range(gap)]
-                tracked,_=track_stance(reverse,0,gap,contacts[b][foot],patch)
+                tracked,_=track(reverse,0,gap,contacts[b][foot],patch)
                 for k in range(1,gap):contacts[(b-k)%n][foot]=tracked[k]
     for key in ('rootMotion','visualRoot','footRegistration','footContacts','plantedFoot','rootMotionAxis','rootMotionMethod'):
         m.pop(key,None)

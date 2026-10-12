@@ -150,4 +150,17 @@ describe("contact motor", () => {
 		expect(motor.walking).toBe(false);
 		expect(target.x).toBeGreaterThan(1050);
 	});
+	it("uses the raw floor for boots and the eroded floor for the body", () => {
+		const { motor, area, cycle } = setup();
+		motor.area.rawMask = { ...area.mask, data: [...area.mask.data] };
+		for (let i = 0; i < area.mask.data.length; i++)
+			if (Math.floor(i / area.mask.width) < 82) area.mask.data[i] = 0;
+		for (const c of cycle.contacts) {
+			c.L.y = 50;
+			c.R.y = 50;
+		}
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(motor.anchor.y).toBeLessThan(820);
+		expect(motor.walking).toBe(true);
+	});
 });
