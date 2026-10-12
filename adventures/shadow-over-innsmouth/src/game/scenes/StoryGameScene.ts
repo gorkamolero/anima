@@ -1345,11 +1345,15 @@ export class StoryGameScene extends BaseScene {
 				this.walkArea.perspective,
 			);
 			subtractFootprints(bridged, footprints);
+			this.walkArea.clearanceMask = clipFloorBelow(
+				erode(bridged, this.walkArea.perspective, 0.3, footprints, 0),
+				MAX_FEET_Y,
+			);
 			this.walkArea.objectFootprints = footprints;
 			this.walkArea.rawMask = bridged;
 			this.visibleFloor = { ...bridged, data: [...bridged.data] };
 			this.walkArea.mask = clipFloorBelow(
-				erode(bridged, this.walkArea.perspective),
+				erode(bridged, this.walkArea.perspective, 0.3, footprints),
 				MAX_FEET_Y,
 			);
 		}
@@ -1434,6 +1438,16 @@ export class StoryGameScene extends BaseScene {
 					// exit request may trigger at its reachable stance approach.
 				};
 			});
+		// Fragmented pixels on one image edge are aliases of one journey.
+		// Use the same reachable departure, rather than routing each fragment
+		// into a different narrow pocket beside a foreground obstacle.
+		for (const kind of ["edge-left", "edge-right"] as const) {
+			const primary = this.sceneExits.find((exit) => exit.kind === kind);
+			if (primary?.approach)
+				for (const exit of this.sceneExits) {
+					if (exit.kind === kind) exit.approach = { ...primary.approach };
+				}
+		}
 		// Geometry may shrink after perception loads. Enter on an interior floor
 		// cell, away from travel gates, instead of spawning on a clipped edge.
 		if (this.hermesSprite && this.hermesMotor && exitMask) {
@@ -1569,17 +1583,45 @@ export class StoryGameScene extends BaseScene {
 				);
 		}
 		entry.to = travel.from;
-		const point = entry.approach ?? {
-			x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
-			y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
-		};
-		this.hermesMotor.place(point);
+		const point = entry.approach
+			? { ...entry.approach }
+			: {
+					x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
+					y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
+				};
+		// Side arrivals begin at the literal image boundary, with the planted
+		// boot facing inward. Floor snapping would pull the whole body on-screen.
+		const edge = kind === "edge-left" || kind === "edge-right";
+		if (edge) {
+			const mask = this.walkArea.clearanceMask ?? this.walkArea.mask;
+			const column = kind === "edge-left" ? 0 : mask.width - 1;
+			const boundary = Array.from(
+				{ length: mask.height },
+				(_, row) => row * mask.width + column,
+			)
+				.filter((i) => mask.data[i])
+				.sort(
+					(a, b) =>
+						Math.abs(cellPoint(mask, a).y - point.y) -
+						Math.abs(cellPoint(mask, b).y - point.y),
+				);
+			if (!boundary.length)
+				throw new Error("No walkable image boundary for edge arrival");
+			point.y = cellPoint(mask, boundary[0]).y;
+			point.x = kind === "edge-left" ? 0 : 1919.999;
+			this.hermesSprite
+				?.setTexture(HERMES_IDLE_TEXTURE, 0)
+				.setFlipX(kind === "edge-left");
+		}
+		this.hermesMotor.place(point, !edge);
 		this.exitLatch = entry.id;
 		const desired = {
 			x:
 				point.x +
-				(kind === "edge-left" ? 100 : kind === "edge-right" ? -100 : 0),
-			y: point.y + (kind === "near" ? -80 : kind === "far" ? 65 : 100),
+				(kind === "edge-left" ? 400 : kind === "edge-right" ? -400 : 0),
+			y:
+				point.y +
+				(edge ? 80 : kind === "near" ? -80 : kind === "far" ? 65 : 100),
 		};
 		const path = this.previewWalk(desired.x, desired.y);
 		// A walk-in can cross another nearby gate (the depot door beside its
