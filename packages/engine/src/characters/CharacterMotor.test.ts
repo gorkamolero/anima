@@ -378,6 +378,32 @@ describe("contact motor", () => {
 		expect(target.depth).toBeCloseTo(10 + anchor.y / 20, 10);
 	});
 
+	it("does not transfer to a swinging foot when boundary recovery cannot settle", () => {
+		const { motor, cycle, pose, target } = setup(true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [0],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1700, y: 850 }]);
+		motor.update(250);
+		cycle.contacts[3].L.x = 10000;
+		// The planner requests this recovery after exhausting safe turns.
+		Object.assign(motor, { recoverAfterStanding: true });
+		const before = motor.snapshot();
+		const position = { x: target.x, y: target.y, depth: target.depth };
+		motor.stop();
+		expect(motor.snapshot().unmatchedCut).toBe(true);
+		expect(motor.snapshot().planted).toBe(before.planted);
+		expect(motor.anchor).toEqual(before.anchor);
+		expect({ x: target.x, y: target.y, depth: target.depth }).toEqual(position);
+		expect(
+			contactOnScreen(pose(), before.planted, target, target.scale),
+		).toEqual(before.anchor);
+	});
+
 	it("locks the first foot through start and mirrored perspective changes", () => {
 		for (const flipX of [false, true]) {
 			const { cycle, area } = setup();

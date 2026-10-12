@@ -174,6 +174,9 @@ export class CharacterMotor {
 				// A blocked source frame is not permission to cut on another pose.
 				// Keep the last safe drawing when no floor-safe approach exists.
 				this.unmatchedCut = true;
+				// Recovery may transfer support only after reaching a standing pose.
+				// Here the other boot can still be in the air.
+				this.recoverAfterStanding = false;
 				this.finish();
 				return;
 			}
