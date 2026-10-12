@@ -625,6 +625,9 @@ export class StoryGameScene extends BaseScene {
 	}
 	public async enterLocation(id: string): Promise<void> {
 		const alreadyBusy = this.openWorldBusy;
+		// Do not expose the authored default spawn while floor geometry and
+		// the actual entry position are still loading.
+		this.hermesSprite?.setVisible(false);
 		this.openWorldBusy = true;
 		try {
 			this.interactables = [];
@@ -646,8 +649,10 @@ export class StoryGameScene extends BaseScene {
 			await this.patchWorld({ location: id });
 			this.reviewOutput = [];
 			this.renderReviewScene();
+			this.hermesSprite?.setVisible(false);
 			await this.restoreLocationImage();
 		} finally {
+			this.hermesSprite?.setVisible(this.geometryReady);
 			this.openWorldBusy = alreadyBusy;
 		}
 	}
