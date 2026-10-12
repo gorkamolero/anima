@@ -27,11 +27,9 @@ app.use("*", logger());
 app.use(
 	"*",
 	cors({
-		origin: [
-			"http://localhost:5173",
-			"http://localhost:3000",
-			"http://localhost:8080",
-		],
+		// Any local dev port (several game instances can run side by side).
+		origin: (origin) =>
+			/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) ? origin : null,
 		credentials: true,
 	}),
 );
