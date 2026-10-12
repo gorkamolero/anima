@@ -210,11 +210,9 @@ export class CharacterMotor {
 					continue;
 				const predicted = this.predictStance(pose);
 				if (!predicted) continue;
-				// Avoid stepping into a support state with no safe continuation.
-				const terminal =
-					distance(predicted.end, goal) <=
-					Math.max(2, distance(predicted.start, predicted.end) / 2);
-				if (!terminal) {
+				// An arrival must remain escapable too: otherwise the next
+				// click cannot turn from the held contact in a narrow pocket.
+				{
 					let continuation = false;
 					for (const following of GROUND_SECTORS) {
 						const selected = this.animation.select(following);
@@ -551,7 +549,7 @@ export class CharacterMotor {
 		}
 		// A route can be connected in pixels but impossible for the drawn
 		// feet. Do not repeat the same support detour indefinitely.
-		const support = `${Math.round(this.anchor.x / 5)},${Math.round(this.anchor.y / 5)},${this.foot},${this.heading}`;
+		const support = `${Math.round(this.anchor.x * 10)},${Math.round(this.anchor.y * 10)},${this.foot},${this.heading}`;
 		if (this.visitedSupports.has(support)) {
 			this.stop();
 			return true;
