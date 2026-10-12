@@ -39,3 +39,33 @@ describe("navigation", () => {
 		expect(m.data[cellAt(m, { x: 960, y: 540 })]).toBe(1);
 	});
 });
+
+it("dilates physical supports without eroding open floor a second time", () => {
+	const floor = { width: 384, height: 216, data: Array(384 * 216).fill(1) };
+	const supports = { ...floor, data: Array(384 * 216).fill(0) };
+	supports.data[100 * 384 + 100] = 1;
+	const cleared = erode(
+		floor,
+		{ horizonY: 0, slope: 0, constant: 1, pixelsPerMetre: 300 },
+		0.3,
+		supports,
+	);
+	expect(cleared.data[100 * 384]).toBe(1);
+	expect(cleared.data[100 * 384 + 108]).toBe(0);
+	expect(cleared.data[100 * 384 + 110]).toBe(1);
+});
+
+it("rejects a one-cell floor sliver without applying the physical radius to open floor", () => {
+	const floor = { width: 384, height: 216, data: Array(384 * 216).fill(0) };
+	for (let x = 0; x < 384; x++)
+		for (const y of [100, 110, 111, 112]) floor.data[y * 384 + x] = 1;
+	const supports = { ...floor, data: Array(384 * 216).fill(0) };
+	const cleared = erode(
+		floor,
+		{ horizonY: 0, slope: 0, constant: 1, pixelsPerMetre: 300 },
+		0.3,
+		supports,
+	);
+	expect(cleared.data[100 * 384 + 200]).toBe(0);
+	expect(cleared.data[111 * 384 + 200]).toBe(1);
+});

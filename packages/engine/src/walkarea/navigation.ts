@@ -92,11 +92,15 @@ export function refineMask(mask: FloorMask): FloorMask {
 		),
 	};
 }
-/** Circular 0.3 m footprint diameter, at least one cell of clearance. */
+/** Circular 0.3 m footprint diameter. When supports are supplied, dilate only
+ * objects. A single raster-cell margin rejects unresolved boundary slivers;
+ * raw floor edges are also checked against the actual boot contacts. */
 export function erode(
 	mask: FloorMask,
 	perspective: Perspective,
 	diameterM = 0.3,
+	obstacles?: FloorMask,
+	floorMarginCells = 1,
 ): FloorMask {
 	const data = mask.data.slice(),
 		cw = 1920 / mask.width,
@@ -117,11 +121,20 @@ export function erode(
 				for (let dx = -rx; dx <= rx; dx++) {
 					if ((dx * cw) ** 2 + (dy * ch) ** 2 > radius ** 2) continue;
 					if (
-						x + dx < 0 ||
-						y + dy < 0 ||
-						x + dx >= mask.width ||
-						y + dy >= mask.height ||
-						!mask.data[(y + dy) * mask.width + x + dx]
+						obstacles
+							? x + dx >= 0 &&
+								y + dy >= 0 &&
+								x + dx < mask.width &&
+								y + dy < mask.height &&
+								(!!obstacles.data[(y + dy) * mask.width + x + dx] ||
+									((dx * cw) ** 2 + (dy * ch) ** 2 <=
+										(floorMarginCells * Math.min(cw, ch)) ** 2 &&
+										!mask.data[(y + dy) * mask.width + x + dx]))
+							: x + dx < 0 ||
+								y + dy < 0 ||
+								x + dx >= mask.width ||
+								y + dy >= mask.height ||
+								!mask.data[(y + dy) * mask.width + x + dx]
 					) {
 						data[i] = 0;
 						break outer;

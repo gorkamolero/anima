@@ -31,13 +31,50 @@ export function bridgeFloor(
 				col < mask.width && y < baselineYAt(object, x) && alphaAt(x, y);
 			if (hidden && start < 0) start = col;
 			if (!hidden && start >= 0) {
+				// Alpha holes between overlapping props can be smaller than one
+				// pair of source floor samples. Keep that bounded run together, then
+				// require real floor at both outer ends as usual.
+				let resumes = false;
+				if (col < mask.width && !before[row * mask.width + col]) {
+					for (
+						let gap = 1;
+						gap <= Math.floor(20 / dx) && col + gap < mask.width;
+						gap++
+					) {
+						const nextX = (col + gap + 0.5) * dx;
+						if (y < baselineYAt(object, nextX) && alphaAt(nextX, y)) {
+							resumes = true;
+							break;
+						}
+					}
+				}
+				if (resumes) continue;
+				// Cached floor cells are 10 px wide while object alpha is full
+				// resolution. Allow one source sample from each independent mask at each
+				// silhouette edge, still requiring visible floor on both sides.
+				const tolerance = Math.floor(20 / dx);
+				let left = start - 1,
+					right = col;
+				while (
+					left > 0 &&
+					start - 1 - left < tolerance &&
+					!before[row * mask.width + left]
+				)
+					left--;
+				while (
+					right < mask.width - 1 &&
+					right - col < tolerance &&
+					!before[row * mask.width + right]
+				)
+					right++;
 				if (
-					start > 0 &&
-					col < mask.width &&
-					before[row * mask.width + start - 1] &&
-					before[row * mask.width + col]
+					left >= 0 &&
+					right < mask.width &&
+					before[row * mask.width + left] &&
+					before[row * mask.width + right]
 				) {
-					for (let c = start; c < col; c++) mask.data[row * mask.width + c] = 1;
+					for (let c = left + 1; c < right; c++)
+						mask.data[row * mask.width + c] = 1;
 				}
 				start = -1;
 			}

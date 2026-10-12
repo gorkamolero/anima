@@ -26,3 +26,13 @@ describe("geometric hidden-floor bridge", () => {
 		expect(mask.data[5 * 10 + 4]).toBe(0);
 	});
 });
+
+it("joins a silhouette to coarse floor samples only within two independent 10 px samples", () => {
+	for (const gap of [4, 5]) {
+		const mask = { width: 384, height: 216, data: Array(384 * 216).fill(1) };
+		for (let y = 0; y < 216; y++)
+			for (let x = 100; x < 120 + gap; x++) mask.data[y * 384 + x] = 0;
+		bridgeFloor(mask, object, (x) => x >= 500 && x < 600);
+		expect(mask.data[100 * 384 + 110]).toBe(gap === 4 ? 1 : 0);
+	}
+});
