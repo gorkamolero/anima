@@ -8,6 +8,7 @@ import { z } from "zod";
 import { imagePath, PUBLIC } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
+import { calibrateGround, type ScaleReference } from "./ground-calibration.js";
 import { safeGroundLine } from "./ground-line.js";
 import {
 	DERIVATION_VERSION,
@@ -26,6 +27,7 @@ export interface Raster {
 	data: number[];
 }
 export interface GroundData {
+	scaleReference?: ScaleReference;
 	walkArea?: WalkArea;
 	groundLine: {
 		points: Array<{ x: number; y: number; scaleFactor: number }>;
@@ -258,12 +260,8 @@ export async function deriveGround(
 	const perceived = await perceiveFloor(image, description, key);
 	const { depth, guidance, stairMask } = perceived;
 	const mask = await subtractCachedObstacles(image, perceived.mask);
-	const horizonY = guidance.horizonY * 1080;
-	const baseScale = 0.5;
-	const referenceFactor =
-		(guidance.referenceHeight * 1080) / (1059 * baseScale);
-	const slope =
-		referenceFactor / Math.max(100, guidance.referenceFootY * 1080 - horizonY);
+	const { horizonY, slope, referenceFactor, referenceFootY } =
+		calibrateGround(guidance);
 	const data = maskToGround(
 		mask,
 		horizonY,
@@ -271,6 +269,15 @@ export async function deriveGround(
 		fraction ?? (template === "exterior" ? 0.62 : 0.5),
 		5,
 	);
+	data.scaleReference = guidance.scaleReference;
+	if (guidance.scaleReference && data.walkArea) {
+		// Keep the measured projection over all reachable depths; an arbitrary
+		// legacy cap must not silently invalidate the reference object.
+		data.walkArea.scaleClamp.max = Math.max(
+			1.5,
+			(data.freeWalkBounds.maxY - horizonY) * slope,
+		);
+	}
 	data.derivationVersion = DERIVATION_VERSION;
 	data.walkable = true;
 	data.travelEnabled = true;
@@ -289,9 +296,8 @@ export async function deriveGround(
 		.filter(
 			(_, i) =>
 				mask.data[i] &&
-				Math.abs(
-					Math.floor(i / mask.width) / mask.height - guidance.referenceFootY,
-				) < 0.07,
+				Math.abs(Math.floor(i / mask.width) / mask.height - referenceFootY) <
+					0.07,
 		)
 		.sort((a, b) => a - b);
 	const referenceDepth =

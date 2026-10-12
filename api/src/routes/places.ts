@@ -12,6 +12,7 @@ import {
 	type GroundData,
 	judgeFloorOverlay,
 } from "../services/ground.js";
+import { referenceLandmark } from "../services/ground-calibration.js";
 import { groundMaskReview, groundOverlay } from "../services/ground-overlay.js";
 import { proofDirectory } from "../services/ground-perception.js";
 import { repairGround } from "../services/ground-repair.js";
@@ -247,16 +248,18 @@ async function createPlace(
 					space: "game",
 					template: input.template,
 					horizonY: ground.horizonY,
-					figureCalibration: 0.8,
-					landmarks: [
-						{
-							id: "camera-calibration",
-							kind: "figure",
-							rect: { x: 960, y: y - height, width: 100, height },
-							realHeightM: 1.75,
-							note: "Scene-specific visual calibration; SAM/depth geometry and asymmetric floor review.",
-						},
-					],
+					figureCalibration: ground.scaleReference ? 1 : 0.8,
+					landmarks: ground.scaleReference
+						? [referenceLandmark(ground.scaleReference)]
+						: [
+								{
+									id: "camera-calibration",
+									kind: "figure",
+									rect: { x: 960, y: y - height, width: 100, height },
+									realHeightM: 1.75,
+									note: "Scene-specific visual calibration; SAM/depth geometry and asymmetric floor review.",
+								},
+							],
 				},
 				null,
 				2,

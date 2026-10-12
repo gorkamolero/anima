@@ -10,6 +10,7 @@ import { getModel } from "../lib/model.js";
 import { recordCall, reserveCall } from "./costs.js";
 import { derivationError } from "./derivation-errors.js";
 import { fitPlane, type Raster } from "./ground.js";
+import { scaleReferenceSchema } from "./ground-calibration.js";
 import { reserveSegmentation } from "./occluders.js";
 
 export const DERIVATION_VERSION = 7;
@@ -73,6 +74,7 @@ const guidanceSchema = z.object({
 	// Visible adult height at a reference foot position, used to normalize relative depth.
 	referenceFootY: z.number().min(0.4).max(1),
 	referenceHeight: z.number().min(0.08).max(0.65),
+	scaleReference: scaleReferenceSchema.optional(),
 	areas: z
 		.array(
 			z.object({
@@ -269,7 +271,7 @@ export async function perceiveFloor(
 	if (storedGuidance)
 		guidance = guidanceSchema.parse(JSON.parse(storedGuidance));
 	else {
-		const question = `Identify the VISIBLE walkable floor in this adventure background. Description: ${description}. Give separate conservative normalized polygons for exposed floor passages and stair treads. Outline around furniture: NO pew seats, counters, pillars, fountain, railings, walls, sky or water. Include rugs as floor. Do not include hidden floor under objects. Concave polygons allowed; split into polygons around holes. Stair polygons must cover only the exposed walking strip, not banisters. Give a seed point on each visible floor area for segmentation. Estimate the camera horizon and an adult's plausible image height at referenceFootY using door/desk/pew proportions. All coordinates and heights normalized 0..1. These are conservative segmentation constraints, not hidden-floor predictions.`;
+		const question = `Identify the VISIBLE walkable floor in this adventure background. Description: ${description}. Give separate conservative normalized polygons for exposed floor passages and stair treads. Outline around furniture: NO pew seats, counters, pillars, fountain, railings, walls, sky or water. Include rugs as floor. Do not include hidden floor under objects. Concave polygons allowed; split into polygons around holes. Stair polygons must cover only the exposed walking strip, not banisters. Give a seed point on each visible floor area for segmentation. Estimate the camera horizon and an adult's plausible image height at referenceFootY using door/desk/pew proportions. Also provide scaleReference: a labelled visible known-height object, its tight normalized rect {x,y,width,height}, and realHeightM. Prefer the actual door opening, excluding frame, roof and porch. Never substitute the whole building. The object bottom is its ground position; adult scale will be computed from this measurement. All coordinates and heights normalized 0..1. These are conservative segmentation constraints, not hidden-floor predictions.`;
 		const { object } = await generateObject({
 			model: getModel(),
 			mode: "json",
