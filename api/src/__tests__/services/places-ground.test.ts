@@ -207,3 +207,45 @@ it("accepts conservative coverage and does not rederive existing places after a 
 		).ground.ground,
 	).toBe("derived");
 });
+
+it.each([
+	15, 16,
+])("guards a %i percent floor loss on refresh and retains review overlays", async (percent) => {
+	const initial = maskToGround(
+		{
+			width: 40,
+			height: 40,
+			data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+		},
+		300,
+		0.002,
+	);
+	mocks.derive.mockResolvedValueOnce(initial);
+	const place = await (await request()).json();
+	const next = structuredClone(initial);
+	let remaining = (800 * percent) / 100;
+	next.floor.data = next.floor.data.map((v) => (v && remaining-- > 0 ? 0 : v));
+	mocks.derive.mockResolvedValueOnce(next);
+	const refreshed = await (
+		await placesRoutes.request(`http://localhost/places/${place.id}/rederive`, {
+			method: "POST",
+		})
+	).json();
+	const persisted = JSON.parse(mocks.rows.get(place.id) ?? "null");
+	expect(refreshed.ground.floor.data.filter(Boolean).length).toBe(
+		percent > 15 ? 800 : 680,
+	);
+	expect(persisted.ground.floor).toEqual(refreshed.ground.floor);
+	if (percent > 15) {
+		const { writeFile } = await import("node:fs/promises");
+		expect(
+			vi
+				.mocked(writeFile)
+				.mock.calls.some(
+					([, body]) =>
+						String(body).includes('"status":"review-required"') &&
+						String(body).includes('"overlays"'),
+				),
+		).toBe(true);
+	}
+});

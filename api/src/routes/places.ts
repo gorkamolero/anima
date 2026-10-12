@@ -5,10 +5,7 @@ import { z } from "zod";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { recordCall } from "../services/costs.js";
 import { derivationError } from "../services/derivation-errors.js";
-import {
-	labelledFloorObjects,
-	locateFloorHazards,
-} from "../services/floor-judge.js";
+import { labelledFloorObjects } from "../services/floor-judge.js";
 import {
 	deriveGround,
 	failedGround,
@@ -143,7 +140,6 @@ async function createPlace(
 				`Visible-floor coverage score: ${verdict.probabilities?.coverage ?? "unknown"}; missing floor does not reject.`,
 			];
 			if (verdict.pass) break;
-			await locateFloorHazards(verdict);
 			if (attempt === 2 || !repairGround(ground, verdict)) {
 				ground = failedGround(`Floor mask rejected: ${verdict.why}`, ground);
 				break;
@@ -224,6 +220,39 @@ async function createPlace(
 			`Occluder/exit derivation incomplete: ${derivationError(error)}`,
 			ground,
 		);
+	}
+	// Keep the complete previous record (including perspective/regions) when
+	// a refresh loses more than 15% of its floor. Preserve both exact overlays.
+	if (existing && existing.ground.ground !== "failed") {
+		const area = (g: GroundData) =>
+			g.floor.data.filter(Boolean).length / (g.floor.width * g.floor.height);
+		const comparison = diagnosticGround ?? ground;
+		const previousArea = area(existing.ground);
+		const loss = previousArea ? 1 - area(comparison) / previousArea : 0;
+		if (area(comparison) < previousArea * 0.85) {
+			const stamp = `${id}-shrink-${Date.now()}`;
+			const overlays = await Promise.all([
+				groundOverlay(background, existing.ground, `${stamp}-previous`),
+				groundOverlay(background, comparison, `${stamp}-candidate`),
+			]);
+			const reason = `Floor refresh lost ${(loss * 100).toFixed(2)}% (>15%); previous floor retained pending visual review.`;
+			console.warn(`[floor-regression] ${id}: ${reason}`);
+			await writeFile(
+				audit ?? `${proofDirectory(id)}/${stamp}.json`,
+				JSON.stringify({
+					id,
+					status: "review-required",
+					reason,
+					loss,
+					preservedPrevious: true,
+					overlays,
+					previous: existing.ground,
+					candidate: comparison,
+					derivationFailure: ground.reason,
+				}),
+			);
+			return existing;
+		}
 	}
 	place.ground = ground;
 	if (audit) {
