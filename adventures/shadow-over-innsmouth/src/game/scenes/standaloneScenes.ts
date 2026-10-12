@@ -119,13 +119,13 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 			clampToBounds: true,
 		},
 		freeWalkBounds: {
-			minX: 200,
-			maxX: 1520,
-			minY: 760,
+			minX: 0,
+			maxX: 1920,
+			minY: 0,
 			maxY: 1080,
 		},
 		// Segmented floor and object supports now supply the exclusions.
-		freeWalkRanges: [{ minX: 200, maxX: 1520 }],
+		freeWalkRanges: [{ minX: 0, maxX: 1920 }],
 		characters: {
 			hermes: { x: 360, y: 950, scale: 0.5, visible: true, state: "idle" },
 			kat: {
@@ -277,7 +277,7 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 		description:
 			"The worn depot interior holds a ticket window, empty benches, a departure board, and a humming vending machine beneath tired fluorescent lights.",
 		background: "arkham-depot-interior-clean",
-		freeWalkBounds: { minX: 140, maxX: 1780, minY: 700, maxY: 1080 },
+		freeWalkBounds: { minX: 0, maxX: 1920, minY: 0, maxY: 1080 },
 		groundLine: {
 			interpolation: "catmull-rom",
 			points: [

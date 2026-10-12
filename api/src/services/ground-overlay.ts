@@ -121,7 +121,8 @@ export async function groundMaskReview(
 		],
 		{
 			input: Buffer.from(
-				ground.floor.data.flatMap((v) => [0, 255, 0, v ? 140 : 0]),
+				// Opaque eligibility pixels prevent scene texture from obscuring mask membership.
+				ground.floor.data.flatMap((v) => [0, 255, 0, v ? 255 : 0]),
 			),
 		},
 	);

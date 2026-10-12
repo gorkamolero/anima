@@ -17,7 +17,7 @@ describe("hard-scene occluders", () => {
 			false,
 		);
 	});
-	it("rejects a floating contact baseline when a floor mask is available", () => {
+	it("retains segmented object geometry when floor clearance removes contact samples", () => {
 		const mask = {
 			width: 100,
 			height: 100,
@@ -34,6 +34,8 @@ describe("hard-scene occluders", () => {
 			...mask,
 			data: mask.data.map((_, i) => (Math.floor(i / 100) > 80 ? 1 : 0)),
 		};
-		expect(maskGeometry(mask, floor)).toBeUndefined();
+		const geometry = maskGeometry(mask, floor);
+		expect(geometry?.bbox).toEqual(maskGeometry(mask)?.bbox);
+		expect(geometry?.baseline.length).toBeGreaterThan(0);
 	});
 });

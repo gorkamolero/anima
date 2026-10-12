@@ -5,7 +5,7 @@ import { dirname, resolve } from "node:path";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import type { GroundData, GroundVerdict, Raster } from "./ground.js";
 import { safeGroundLine } from "./ground-line.js";
-import { erodeFloor, readRaster } from "./ground-perception.js";
+import { readRaster } from "./ground-perception.js";
 
 /** Subtraction only. Region membership and the legacy line follow the new floor. */
 export function replaceFloor(ground: GroundData, floor: Raster) {
@@ -33,51 +33,28 @@ export function replaceFloor(ground: GroundData, floor: Raster) {
 		...ground.freeWalkRanges[0],
 	};
 }
+/** A localization box is a search hint, never an exclusion. Only segmented
+ * object pixels may repair a rejection; unresolved hazards still fail closed. */
 export function repairGround(
 	ground: GroundData,
 	verdict: GroundVerdict,
+	objectMask?: Raster,
 ): boolean {
-	let floor = { ...ground.floor, data: [...ground.floor.data] };
-	const before = floor.data.filter(Boolean).length;
-	const globalHazard = (verdict.rejected ?? []).some(
-		(k) => !verdict.questions?.[k]?.bounds,
-	);
-	const boundsToRemove = verdict.hazardBounds?.length
-		? verdict.hazardBounds
-		: (globalHazard
-				? Object.keys(verdict.questions ?? {}).filter(
-						(k) =>
-							verdict.questions?.[k]?.bounds && !verdict.questions[k].advisory,
-					)
-				: (verdict.rejected ?? [])
-			).flatMap((k) =>
-				verdict.questions?.[k]?.bounds
-					? [verdict.questions[k].bounds as number[]]
-					: [],
-			);
-	for (const bounds of boundsToRemove) {
-		const padding = verdict.hazardBounds?.length ? 0.05 : 0;
-		const [bx0, by0, bx1, by1] = bounds;
-		const [x0, y0, x1, y1] = [
-			bx0 - padding,
-			by0 - padding,
-			bx1 + padding,
-			by1 + padding,
-		];
-		floor.data = floor.data.map((v, i) => {
-			const x = ((i % floor.width) + 0.5) / floor.width,
-				y = (Math.floor(i / floor.width) + 0.5) / floor.height;
-			return x >= x0 && x <= x1 && y >= y0 && y <= y1 ? 0 : v;
-		});
-	}
-	// An unlocalized hazard excludes all overlapping candidate obstacle boxes,
-	// plus boundary clearance. Known standable labels are never subtraction targets.
-	if (globalHazard) floor = erodeFloor(floor);
-	if (floor.data.filter(Boolean).length === before) return false;
-	replaceFloor(ground, floor);
+	if (!objectMask) return false;
+	const floor = ground.floor;
+	if (objectMask.width !== floor.width || objectMask.height !== floor.height)
+		throw new Error("Object exclusion grid mismatch");
+	const next = {
+		...floor,
+		data: floor.data.map((v, i) => (v && !objectMask.data[i] ? 1 : 0)),
+	};
+	const removed =
+		floor.data.filter(Boolean).length - next.data.filter(Boolean).length;
+	if (!removed) return false;
+	replaceFloor(ground, next);
 	ground.notes = [
 		...(ground.notes ?? []),
-		`Conservatively removed ${before - floor.data.filter(Boolean).length} cells after ${verdict.why}`,
+		`Removed ${removed} segmented object cells after ${verdict.why}`,
 	];
 	return true;
 }
@@ -95,20 +72,21 @@ export async function subtractCachedObstacles(
 	const excluded = new Uint8Array(floor.data.length);
 	for (const name of names) {
 		const mask = readRaster(resolve(root, name));
-		mask.data.forEach((v, i) => {
-			if (v <= 32) return;
-			const x = i % mask.width,
-				y = Math.floor(i / mask.width);
-			for (let dy = -1; dy <= 1; dy++)
-				for (let dx = -1; dx <= 1; dx++)
-					if (
-						x + dx >= 0 &&
-						x + dx < mask.width &&
-						y + dy >= 0 &&
-						y + dy < mask.height
-					)
-						excluded[(y + dy) * mask.width + x + dx] = 1;
-		});
+		// Resample to the destination grid. Legacy floors may use
+		// 384x216; indexing a 192x108 obstacle directly corrupts those floors.
+		for (let y = 0; y < floor.height; y++)
+			for (let x = 0; x < floor.width; x++) {
+				const mx = Math.min(
+					mask.width - 1,
+					Math.floor(((x + 0.5) * mask.width) / floor.width),
+				);
+				const my = Math.min(
+					mask.height - 1,
+					Math.floor(((y + 0.5) * mask.height) / floor.height),
+				);
+				if (mask.data[my * mask.width + mx] <= 32) continue;
+				excluded[y * floor.width + x] = 1;
+			}
 	}
 	const source = imagePath(image);
 	const segmented = await readFile(
@@ -144,6 +122,9 @@ export async function subtractCachedObstacles(
 				if (v > 32) excluded[i] = 1;
 			});
 		}
+	// Physical support clearance belongs to the baseline-depth footprint pass
+	// after runtime bridging. Dilating whole silhouettes here erases floor
+	// beside the tops of foreground objects and applies clearance twice.
 	return {
 		...floor,
 		data: floor.data.map((v, i) => (v && !excluded[i] ? 1 : 0)),

@@ -28,7 +28,7 @@ export interface Occluder {
 	};
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 19;
+const VERSION = 20;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -74,10 +74,12 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const scope = ["04a", "07"].includes(process.env.DERIVATION_BRIEF ?? "")
+		const scope = ["04a", "04c", "07"].includes(
+			process.env.DERIVATION_BRIEF ?? "",
+		)
 			? `${process.env.DERIVATION_BRIEF} `
 			: "";
-		const limit = scope === "07 " ? 60 : 120;
+		const limit = scope === "04c " ? 20 : scope === "07 " ? 60 : 120;
 		const count = previous
 			.split("\n")
 			.filter(
@@ -176,7 +178,8 @@ export function maskGeometry(
 					floorAt(floor, (x + 0.5) * sx, Math.min(1079, (y + 1) * sy + d)),
 				),
 		);
-		if (!contact.length && maxY < h - 2) return;
+		// A clearance gap or missing floor must not erase an object mask.
+		// Without floor contacts, retain its segmented supporting silhouette.
 		if (contact.length) {
 			// Coarse floor masks can miss an entire supporting leg. Preserve its
 			// visible bottom rather than extending another leg's depth across it.

@@ -2,10 +2,7 @@ import { basename } from "node:path";
 import { Hono } from "hono";
 import { z } from "zod";
 import { derivationError } from "../services/derivation-errors.js";
-import {
-	labelledFloorObjects,
-	locateFloorHazards,
-} from "../services/floor-judge.js";
+import { labelledFloorObjects } from "../services/floor-judge.js";
 import {
 	deriveGround,
 	failedGround,
@@ -51,7 +48,6 @@ groundRoutes.post("/ground", async (c) => {
 				`Visible-floor coverage score: ${verdict.probabilities?.coverage ?? "unknown"}; missing floor does not reject.`,
 			];
 			if (verdict.pass) return c.json(ground);
-			await locateFloorHazards(verdict);
 			if (attempt === 2 || !repairGround(ground, verdict))
 				return c.json(failedGround(verdict.why, ground));
 		}

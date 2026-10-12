@@ -309,7 +309,11 @@ export async function labelledFloorObjects(
 				(o.bbox.x + o.bbox.w) / 1920,
 				(o.bbox.y + o.bbox.h) / 1080,
 			];
-			const existing = objects.find((v) => v.name === o.label);
+			const canonical = (name: string) =>
+				name.toLowerCase().replace(/-\d+$/, "").replaceAll("-", " ");
+			const existing = objects.find(
+				(v) => canonical(v.name) === canonical(o.label),
+			);
 			if (existing) existing.bounds = bounds;
 			else objects.push({ name: o.label, bounds });
 		}

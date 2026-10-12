@@ -58,36 +58,29 @@ describe("asymmetric floor judge", () => {
 		expect(q.object_0.instructions).toContain("barrel");
 		expect(q.object_1).toBeUndefined();
 	});
-	it("subtracts a rejected object and rebuilds the safe line without adding pixels", () => {
+	it("never subtracts a localization rectangle without a segmented object", () => {
 		const g = ground(),
-			before = [...g.floor.data];
+			before = structuredClone(g.floor);
 		expect(
 			repairGround(g, {
 				pass: false,
-				why: "barrel",
-				rejected: ["object_0"],
-				questions: floorQuestions([
-					{ name: "barrel", bounds: [0, 0.7, 0.2, 1] },
-				]),
+				why: "water",
+				rejected: ["environment"],
+				hazardBounds: [[0, 0.7, 0.2, 1]],
 			}),
-		).toBe(true);
-		expect(g.floor.data.every((v, i) => !v || before[i])).toBe(true);
-		expect(g.floor.data[35 * 40 + 2]).toBe(0);
-		expect(g.walkArea?.mask).toEqual(g.floor);
+		).toBe(false);
+		expect(g.floor).toEqual(before);
 	});
-	it("uses localized global hazards without subtracting unrelated object boxes", () => {
+	it("subtracts only object pixels, preserving floor inside its bounding box", () => {
 		const g = ground();
-		repairGround(g, {
-			pass: false,
-			why: "water",
-			rejected: ["environment"],
-			questions: floorQuestions([
-				{ name: "crate", bounds: [0.6, 0.7, 0.8, 1] },
-			]),
-			hazardBounds: [[0, 0.7, 0.2, 1]],
-		});
+		const mask = {
+			...g.floor,
+			data: g.floor.data.map((_, i) => (i % 40 === 2 && i >= 1200 ? 1 : 0)),
+		};
+		expect(repairGround(g, { pass: false, why: "post" }, mask)).toBe(true);
 		expect(g.floor.data[35 * 40 + 2]).toBe(0);
-		expect(g.floor.data[35 * 40 + 28]).toBe(1);
+		expect(g.floor.data[35 * 40 + 3]).toBe(1);
+		expect(g.walkArea?.mask).toEqual(g.floor);
 	});
 	it("keeps only stairs with valid local depth scales", () => {
 		const g = ground(),
