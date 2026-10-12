@@ -28,7 +28,9 @@ root = sys.argv[1]
 speeds = collections.defaultdict(list)
 rows = []
 for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
-    area = json.load(open(scene))["area"]
+    geometry = json.load(open(scene))
+    area = geometry["area"]
+    areas = geometry.get("areas", {})
     A = area["mask"]
     footprints = area.get("objectFootprints")
     mw, mh, md = A["width"], A["height"], A["data"]
@@ -46,7 +48,7 @@ for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
             continue
         if not isinstance(L, list) or not L or "contact" not in L[0]:
             continue
-        w = [r for r in L if r.get("walking")]
+        w = [r for r in L if r.get("walking") and r.get("visible", True)]
         off, contacts, switches, seg = 0, 0, 0, collections.defaultdict(lambda: [0.0, 0])
         prev = None
         for r in w:
@@ -57,6 +59,12 @@ for scene in sorted(glob.glob(os.path.join(root, "*", "area.json"))):
                 s, sg = r["scale"], (-1 if r["flip"] else 1)
                 x = r["x"] + (c[ft]["x"] - m["frameWidth"] / 2) * s * sg
                 y = r["y"] + (c[ft]["y"] - m["frameHeight"]) * s
+                current = areas.get(r.get("location"), area)
+                if areas and r.get("location") not in areas:
+                    raise ValueError(f"Missing floor for {r.get('location')} in {f}")
+                A = current["mask"]
+                mw, mh, md = A["width"], A["height"], A["data"]
+                footprints = current.get("objectFootprints")
                 off += 0 if on(x, y) else 1
                 if footprints:
                     fx, fy = math.floor(x * footprints["width"] / 1920), math.floor(y * footprints["height"] / 1080)
