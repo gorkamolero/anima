@@ -93,9 +93,12 @@ for (const beat of plan.beats) {
 	const log = [];
 	const sourceLocation = evaluate("window.__anima.scene.locationId()");
 	let exitCompleted = !beat.exit;
+	let walkCompleted = false;
+	let idleFrames = 0;
 	for (
 		let first = 0;
-		first < beat.frames || (!exitCompleted && first < beat.frames + 2400);
+		first < beat.frames ||
+		((!exitCompleted || !walkCompleted) && first < beat.frames + 2400);
 		first += 12
 	) {
 		const frames = evaluate(
@@ -112,6 +115,8 @@ for (const beat of plan.beats) {
 				Buffer.from(png.split(",")[1], "base64"),
 			);
 			log.push(sample);
+			idleFrames = sample.walking ? 0 : idleFrames + 1;
+			walkCompleted = idleFrames >= 4;
 		}
 	}
 	writeFileSync(resolve(out, `${beat.name}.json`), JSON.stringify(log));
@@ -145,6 +150,7 @@ for (const beat of plan.beats) {
 		"1",
 		resolve(out, `${beat.name}-sheet.png`),
 	]);
+	if (!walkCompleted) throw new Error(`Walk ${beat.name} did not finish`);
 	if (!exitCompleted)
 		throw new Error(`Exit ${beat.exit} did not finish and release input`);
 	logs.push({ name: beat.name, frames: log.length });
