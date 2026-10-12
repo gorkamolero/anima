@@ -28,6 +28,21 @@ export function objectFootprints(
 					(perspective.pixelsPerMetre ?? 300) *
 					scaleAt(perspective, { x, y: baseline }),
 			);
+			// A bench's seat occupies the space between its supporting legs.
+			// Treating only opaque leg pixels as support lets a route walk through
+			// the seat and abruptly flip its entire overlap at the front baseline.
+			// Follow the contact polyline (not the object's rectangular bounds).
+			if (/\bbench\b/i.test(layer.data.label)) {
+				const contacts = layer.data.baseline;
+				if (
+					contacts.length > 1 &&
+					x >= contacts[0].x &&
+					x <= contacts[contacts.length - 1].x &&
+					y >= baseline - strip &&
+					y <= baseline + dy / 2
+				)
+					return true;
+			}
 			// Conservative subcell sampling catches thin posts and mask edges.
 			for (const ox of [-0.4, 0, 0.4])
 				for (const oy of [-0.4, 0, 0.4]) {

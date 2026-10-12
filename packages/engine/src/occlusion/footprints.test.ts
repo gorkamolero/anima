@@ -43,3 +43,34 @@ describe("object supports", () => {
 		).toThrow();
 	});
 });
+
+it("blocks walking through a bench between its legs while preserving a route behind it", () => {
+	const mask = { width: 384, height: 216, data: Array(384 * 216).fill(1) };
+	const bench = {
+		data: {
+			...layer.data,
+			label: "Bench",
+			baseline: [
+				{ x: 800, y: 800 },
+				{ x: 1000, y: 820 },
+			],
+		},
+		alpha: (x: number, y: number) => (x < 820 || x > 980) && layer.alpha(x, y),
+	};
+	const footprint = objectFootprints(mask, [bench], perspective);
+	expect(floorPixel(footprint, 900, 800)).toBe(true);
+	expect(floorPixel(footprint, 900, 700)).toBe(false);
+	expect(floorPixel(footprint, 1050, 800)).toBe(false);
+	// A roof on posts must still allow walking underneath it.
+	expect(
+		floorPixel(
+			objectFootprints(
+				mask,
+				[{ ...bench, data: { ...bench.data, label: "Pergola" } }],
+				perspective,
+			),
+			900,
+			800,
+		),
+	).toBe(false);
+});
