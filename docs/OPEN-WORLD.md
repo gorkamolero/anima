@@ -186,17 +186,29 @@ The motor supports screen-space root displacement on animation frame changes.
 Hermes uses the sheet fps, per-frame `rootMotion` and the current perspective scale;
 the legacy metre-speed mode remains available to other engine clients. Generate the
 metadata with `packages/sprite-tools/scripts/root-motion.py sheet.json --axis x|y
---travel -1|1`. The script retains its measured seven-row alpha contact centroid in
-`footContacts`, uses measured deltas during contact, and recovers lateral drift on
-airborne frames so the cycle has no net sideways locomotion. Position follows the
-navigation polyline, including small signed stance corrections. Scale is recomputed
-at the new position. Toward and away stops retain their corresponding neutral pose.
+--travel -1|1`. The script registers the bottom seven percent of the figure in left/right
+foot ROIs with alpha-weighted RGB/alpha SSD, an integer ±20 px search, and subpixel
+parabola fits. A boundary estimate recenters one additional ±20 search for profile
+strides longer than 20 source pixels. Cyclic stance selection discourages one-frame
+foot switches; no displacement smoothing is applied. `rootMotion` is **body**
+displacement (minus the registered shift), `plantedFoot` identifies the selected ROI,
+and `footRegistration` retains both candidates and their residuals for audit. Local
+`*-registration.png` sheets show the ROIs and chosen vectors. The Python extractor
+requires numpy/Pillow; its translation and transparent-RGB regression tests live in
+`packages/sprite-tools/scripts/test_root_motion.py`.
 
-**Acceptance limitation:** the supplied lowest-alpha contact metric includes heel/toe
-roll and lateral movement in the depth sprites. Projection onto a straight path
-cannot cancel its perpendicular component. The measured side cycle is much closer;
-this work must not be described as passing the depth-walk acceptance gate. Full
-per-walk results and frame sequences are in `tmp/walkqa` (local, not versioned).
+The motor projects body displacement along the navigation polyline and recomputes
+scale. Toward and away stops retain their corresponding neutral poses. The QA helper
+`scripts/measure-walk.mjs` sums full 2D registered-foot drift over each stance before
+dividing by total body travel. It does not read `rootMotion` to infer its result.
+
+**Acceptance still fails.** Registration cancels forward depth drift, but the
+unmodified cycles have perpendicular registered motion which a scalar displacement
+along a straight path cannot cancel. Road away-near measures 0.422 median / 1.210 p90
+and 4.36 px maximum stance drift under the new full-stance metric. An independent
+screen-space boot template measures 2.18 px over one away stance; a toward sample is
+1.27 px. These are failures, not an acceptance claim. Results under the earlier
+lowest-alpha/per-frame metric are not directly comparable.
 
 Object picking and hover share the alpha mask of each available occluder. A floor
 pixel has priority; other objects fall back to their box minus visible floor. An
@@ -231,3 +243,26 @@ through the exclusive virtual clock and encodes at exactly 24 fps. A plan suppli
 `frames`. All runs force `?mute=1`. `--keep-frames` retains PNGs; telemetry and 6 fps
 contact sheets accompany each clip. Exact duplicate counts during walking supplement
 `freeze.py`, whose whole-frame threshold can classify small sprites as inactive.
+
+## Resumed verification (2026-10-11)
+
+340 tests, engine/game/API typecheck and lint, and both anchor art checks pass.
+Town run 5 passes with 61 cached calls and zero uncached calls. Object approaches
+suppress automatic exits; coarse boxes without measured baselines use nearest
+reachable approaches. Authored door projection is independent of spawn, while
+return edges are projected into the player's reachable component. Exit entry is
+checked on the last walking step, and changed depths are sorted before the same
+frame renders. The far-travel proof reaches its created place and releases input.
+
+Capture directories are cleared before each take and encodes are bounded to the
+recorded frame count. Exit captures continue until arrival and input release. Exact
+frame hashes and walking telemetry distinguish frozen walking frames from intentional
+idle tails. All 47 local proof clips have zero identical consecutive walking frames.
+
+The proof set is **not signed off**: road tree/trap and alley crate attempts do not
+establish the required two-way overlapping baseline crossings. The pergola crossing
+has both directions and before/at/after images. Movement clips and inspected 6 fps
+sheets, random foot close-ups, screen-template checks, the complete table, and named
+limitations are partially recorded in `tmp/walkqa/results.json`; the previous run
+did not write `tmp/walkqa/report.md`. The broader
+`FOOTFALL-GOAL.md` package extraction and ten-scene goal remain unfinished.
