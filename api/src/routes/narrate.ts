@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "../services/costs.js";
+import { deriveExits } from "../services/exits.js";
 
 import {
 	getWorldDb,
@@ -535,7 +536,7 @@ export const narrateResolveSchema = z.object({
 	travel: z
 		.object({
 			to: z.string().min(1),
-			kind: z.enum(["anchor", "new"]),
+			kind: z.enum(["anchor", "new", "existing"]),
 			template: z.enum(["exterior", "interior"]).optional(),
 			description: z.string().optional(),
 		})
@@ -582,6 +583,7 @@ const narrateRequestSchema = z
 			.optional(),
 		object: z.string().min(1),
 		choice: z.string().optional(),
+		exit: z.string().min(1).optional(),
 		flags: z.record(z.union([z.string(), z.boolean()])),
 		mode: z.enum(["options", "resolve"]),
 	})
@@ -606,10 +608,39 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 		const world = request.sessionId
 			? await loadWorld(await getWorldDb(), request.sessionId)
 			: undefined;
+		const knownPlaces = request.exit
+			? (await (await getWorldDb()).execute("SELECT data FROM places")).rows
+					.map((row) => JSON.parse(String(row.data)))
+					.filter(
+						(p) =>
+							p.id !== request.scene &&
+							p.ground.ground !== "failed" &&
+							p.template === "exterior",
+					)
+					.filter((p) => {
+						const opposite = request.exit?.startsWith("edge-left")
+							? "edge-right"
+							: request.exit?.startsWith("edge-right")
+								? "edge-left"
+								: undefined;
+						return (
+							!opposite ||
+							deriveExits(p.ground.floor, [], p.ground.horizonY).some(
+								(e) => e.kind === opposite,
+							)
+						);
+					})
+					.map((p) => ({ id: p.id, description: p.description }))
+			: [];
 		const sharedPrompt = [
 			`Scene: ${request.scene}`,
 			`Scene description: ${request.sceneDescription}`,
 			`Clicked object: ${request.object}`,
+			...(request.exit
+				? [
+						`Known places available for travel: ${JSON.stringify(knownPlaces)}. If one is the natural destination, use kind existing and its exact id. Otherwise use kind new; do not pretend the current scene is a new destination.`,
+					]
+				: []),
 			`Current flags: ${JSON.stringify(request.flags)}`,
 			`<world-state>${JSON.stringify(world ? { ...world, visual: world.visual[world.location] } : { flags: request.flags })}</world-state>`,
 			"Return statePatch.flags, inventory {add,remove}, npcMemory when changed. A visual delta new MUST include a nonempty visualStatePatch describing the resulting visible state, preserving earlier changes. Travel only for declared movement: {to: stable short place slug, kind: anchor or new, template: exterior or interior, description}. Anchors: outside (depot exterior), inside (depot interior).",
@@ -669,12 +700,22 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 				model: model ?? getModel(),
 				mode: "json",
 				// ponytail: request a complete visual snapshot from Gemini to avoid empty optional-object output; the public contract still accepts partial patches.
-				schema: narrateResolveSchema.extend({ visualStatePatch: visualSchema }),
+				schema: narrateResolveSchema.extend({
+					visualStatePatch: visualSchema,
+					travel: request.exit
+						? narrateResolveSchema.shape.travel.unwrap()
+						: narrateResolveSchema.shape.travel,
+				}),
 				system: `${STORY_GUIDE}\n\n${AGENCY_RULES}\n\n${POINT_AND_CLICK_RULES}`,
 				prompt: [
 					sharedPrompt,
 					`Hermes declared: ${request.choice ?? ""}`,
 					"Resolve only that declared action. Caption must be 1-4 sentences.",
+					...(request.exit
+						? [
+								"This is a physical scene exit. Travel is mandatory: give a stable destination and its description. Never change the current picture. The new place must provide a walkable entrance on the opposite edge for a return trip.",
+							]
+						: []),
 				].join("\n"),
 			});
 			if (

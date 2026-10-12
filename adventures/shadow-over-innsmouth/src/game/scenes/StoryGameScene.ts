@@ -17,7 +17,6 @@ import {
 	floorPixel,
 	type HotspotVerb,
 	nearestCell,
-	nearestReachable,
 	type Occluder,
 	objectFootprints,
 	refineMask,
@@ -68,7 +67,8 @@ const VEHICLE_OVERLAY_DEPTH = 10 + VEHICLE_GROUND_Y / 20;
 const TITLE_BAR_HEIGHT = 56;
 const OUTPUT_PANEL_HEIGHT = 116;
 // Lowest feet position: keeps Hermes clear of the caption panel.
-const MAX_FEET_Y = 1080 - OUTPUT_PANEL_HEIGHT - 16;
+// Captions live above the scene floor; foreground artwork remains walkable.
+const MAX_FEET_Y = 1080 - 16;
 const SHOW_DEBUG_OVERLAY =
 	typeof window !== "undefined" &&
 	new URLSearchParams(window.location.search).get("debug") === "1";
@@ -141,7 +141,7 @@ interface GeneratedPlace {
 interface NarrationResolution {
 	travel?: {
 		to: string;
-		kind: "anchor" | "new";
+		kind: "anchor" | "new" | "existing";
 		template?: "exterior" | "interior";
 		description?: string;
 	};
@@ -216,6 +216,14 @@ export class StoryGameScene extends BaseScene {
 	}[] = [];
 	private sceneExits: Exit[] = [];
 	private exitLatch?: string;
+	private arrivingExit = false;
+	private travellingExit?: { from: string; exit: Exit };
+	private connections: Array<{
+		exit: string;
+		kind: Exit["kind"];
+		to: string;
+		entry: string;
+	}> = [];
 	private requestedExit?: string;
 	private approachingObject = false;
 	private visibleFloor?: FloorMask;
@@ -407,7 +415,7 @@ export class StoryGameScene extends BaseScene {
 		this.add
 			.rectangle(
 				0,
-				height - OUTPUT_PANEL_HEIGHT,
+				TITLE_BAR_HEIGHT,
 				width,
 				OUTPUT_PANEL_HEIGHT,
 				0x050608,
@@ -415,7 +423,7 @@ export class StoryGameScene extends BaseScene {
 			)
 			.setOrigin(0, 0)
 			.setDepth(PANEL_DEPTH);
-		this.outputText = this.add.text(28, height - OUTPUT_PANEL_HEIGHT + 16, "", {
+		this.outputText = this.add.text(28, TITLE_BAR_HEIGHT + 16, "", {
 			color: "#f4f0df",
 			fontFamily: '"Courier New", monospace',
 			fontSize: "16px",
@@ -570,6 +578,7 @@ export class StoryGameScene extends BaseScene {
 				(previousExit?.id !== exit.id || this.requestedExit === exit.id) &&
 				wasWalking &&
 				!this.approachingObject &&
+				!this.arrivingExit &&
 				!this.openWorldBusy
 			) {
 				this.exitLatch = exit.id;
@@ -651,6 +660,8 @@ export class StoryGameScene extends BaseScene {
 			this.renderReviewScene();
 			this.hermesSprite?.setVisible(false);
 			await this.restoreLocationImage();
+			if (this.travellingExit)
+				await this.arriveThroughExit(this.travellingExit);
 		} finally {
 			this.hermesSprite?.setVisible(this.geometryReady);
 			this.openWorldBusy = alreadyBusy;
@@ -1041,10 +1052,7 @@ export class StoryGameScene extends BaseScene {
 			if (verb) hotspot.interact(verb.toLowerCase() as HotspotVerb);
 			return;
 		}
-		if (
-			pointer.y < TITLE_BAR_HEIGHT ||
-			pointer.y > this.scale.height - OUTPUT_PANEL_HEIGHT
-		) {
+		if (pointer.y < TITLE_BAR_HEIGHT || pointer.y > MAX_FEET_Y) {
 			return;
 		}
 		void this.walkGenerated(pointer.x, pointer.y);
@@ -1060,7 +1068,14 @@ export class StoryGameScene extends BaseScene {
 	public async walkGenerated(x: number, y: number): Promise<void> {
 		const area = this.walkArea,
 			sprite = this.hermesSprite;
-		if (!area || !sprite || this.inputBlocked || !this.geometryReady) return;
+		if (
+			!area ||
+			!sprite ||
+			this.inputBlocked ||
+			this.arrivingExit ||
+			!this.geometryReady
+		)
+			return;
 		const exit = exitAt({ x, y }, this.sceneExits);
 		const destination = exit?.approach ?? { x, y };
 		const path = this.previewWalk(destination.x, destination.y);
@@ -1339,6 +1354,34 @@ export class StoryGameScene extends BaseScene {
 			);
 		}
 		this.sceneExits = data.exits;
+		const connectionResponse = await fetch(
+			`${API_BASE_URL}/connections/${this.locationId()}`,
+		);
+		if (!connectionResponse.ok)
+			throw new Error("Unable to load exit connections");
+		this.connections = await connectionResponse.json();
+		for (const link of this.connections) {
+			let exit = this.sceneExits.find((e) => e.id === link.exit);
+			if (!exit && link.kind === "near") {
+				exit = {
+					id: link.exit,
+					kind: "near",
+					region: [
+						{ x: 900, y: MAX_FEET_Y - 16 },
+						{ x: 1020, y: MAX_FEET_Y - 16 },
+						{ x: 1020, y: MAX_FEET_Y },
+						{ x: 900, y: MAX_FEET_Y },
+					],
+				};
+				this.sceneExits.push(exit);
+			}
+			if (exit) exit.to = link.to;
+			if (link.kind === "edge-left" || link.kind === "edge-right")
+				for (const fragment of this.sceneExits.filter(
+					(e) => e.kind === link.kind,
+				))
+					fragment.to = link.to;
+		}
 		if (!this.generatedPlace) {
 			for (const hotspot of this.activeScene().hotspots) {
 				const action = hotspot.actions.USE;
@@ -1371,42 +1414,24 @@ export class StoryGameScene extends BaseScene {
 					x: exit.region.reduce((n, p) => n + p.x, 0) / exit.region.length,
 					y: exit.region.reduce((n, p) => n + p.y, 0) / exit.region.length,
 				};
-				// Authored doors stay at their doorway. Generated return edges
-				// need an approach in the player's reachable floor component.
-				const cell = nearestReachable(
-					exitMask,
-					exit.kind === "door" ? center : (this.hermesSprite ?? center),
-					center,
-				);
+				// An entry belongs to its physical threshold, independent of the
+				// previous scene's sprite position or disconnected floor component.
+				const cell = nearestCell(exitMask, center);
 				if (cell < 0) return exit;
 				const point = cellPoint(exitMask, cell);
-				let approach: ScenePoint | undefined;
-				// Edge travel needs a standing approach, not the last boundary pixel.
-				// Keep the original floor for routing; the extra footprint clearance
-				// only selects a target where the final support phase can fit.
-				if (exit.kind !== "door" && approachMask) {
-					const interior = nearestCell(approachMask, point);
-					if (interior >= 0) {
-						const candidate = cellPoint(approachMask, interior);
-						const route = findPath(
-							exitMask,
-							this.hermesSprite ?? point,
-							candidate,
-						);
-						const end = route[route.length - 1];
-						if (end && Math.hypot(end.x - candidate.x, end.y - candidate.y) < 1)
-							approach = candidate;
-					}
-				}
+				const interior =
+					exit.kind !== "door" && approachMask
+						? nearestCell(approachMask, point)
+						: -1;
+				const approach =
+					interior >= 0 && approachMask
+						? cellPoint(approachMask, interior)
+						: point;
 				return {
 					...exit,
-					...(approach ? { approach } : {}),
-					region: [
-						{ x: point.x - 8, y: point.y - 8 },
-						{ x: point.x + 8, y: point.y - 8 },
-						{ x: point.x + 8, y: point.y + 8 },
-						{ x: point.x - 8, y: point.y + 8 },
-					],
+					approach: approach ?? point,
+					// Keep physical thresholds at their artwork. Only an explicit
+					// exit request may trigger at its reachable stance approach.
 				};
 			});
 		// Geometry may shrink after perception loads. Enter on an interior floor
@@ -1483,55 +1508,124 @@ export class StoryGameScene extends BaseScene {
 			await this.requestNarrationOptions(object);
 	}
 
+	private async arriveThroughExit(travel: {
+		from: string;
+		exit: Exit;
+	}): Promise<void> {
+		if (!this.hermesMotor || !this.walkArea)
+			throw new Error("Arrival floor unavailable");
+		const existing = this.connections.find(
+			(c) => c.to === travel.from && c.entry === travel.exit.id,
+		);
+		const kind: Exit["kind"] =
+			travel.exit.kind === "edge-left"
+				? "edge-right"
+				: travel.exit.kind === "edge-right"
+					? "edge-left"
+					: travel.exit.kind === "far"
+						? "near"
+						: travel.exit.kind === "near"
+							? "far"
+							: "door";
+		let entry =
+			this.sceneExits.find((e) => e.id === existing?.exit) ??
+			this.sceneExits.find(
+				(e) => e.kind === kind && (!e.to || e.to === travel.from),
+			);
+		if (!entry && kind === "near") {
+			const cell = nearestCell(this.walkArea.mask, { x: 960, y: MAX_FEET_Y });
+			const p = cellPoint(this.walkArea.mask, cell);
+			entry = {
+				id: "near",
+				kind: "near",
+				approach: p,
+				region: [
+					{ x: p.x - 12, y: p.y - 8 },
+					{ x: p.x + 12, y: p.y - 8 },
+					{ x: p.x + 12, y: p.y + 8 },
+					{ x: p.x - 12, y: p.y + 8 },
+				],
+			};
+			this.sceneExits.push(entry);
+		}
+		if (!entry)
+			throw new Error(`No physical ${kind} return exit in destination`);
+		if (!existing) {
+			const response = await fetch(`${API_BASE_URL}/connections`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					from: {
+						scene: travel.from,
+						exit: travel.exit.id,
+						kind: travel.exit.kind,
+					},
+					to: { scene: this.locationId(), exit: entry.id, kind: entry.kind },
+				}),
+			});
+			if (!response.ok)
+				throw new Error(
+					`Could not save return connection: ${await response.text()}`,
+				);
+		}
+		entry.to = travel.from;
+		const point = entry.approach ?? {
+			x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
+			y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
+		};
+		this.hermesMotor.place(point);
+		this.exitLatch = entry.id;
+		const desired = {
+			x:
+				point.x +
+				(kind === "edge-left" ? 100 : kind === "edge-right" ? -100 : 0),
+			y: point.y + (kind === "near" ? -80 : kind === "far" ? 65 : 100),
+		};
+		const path = this.previewWalk(desired.x, desired.y);
+		// A walk-in can cross another nearby gate (the depot door beside its
+		// right edge). Do not chain a second journey during the arrival itself.
+		this.arrivingExit = true;
+		void this.walkHermesPath(path).finally(() => {
+			this.arrivingExit = false;
+		});
+	}
+
 	private async triggerExit(exit: Exit): Promise<void> {
+		// Disconnected pieces of one image edge share a single journey.
+		if (exit.kind === "edge-left" || exit.kind === "edge-right") {
+			const primary = this.sceneExits.find((e) => e.kind === exit.kind);
+			if (primary) exit = { ...exit, id: primary.id, to: primary.to };
+		}
 		const from = this.locationId();
+		this.travellingExit = { from, exit };
 		try {
 			if (exit.to) {
 				await this.enterLocation(exit.to);
 				return;
 			}
-			if (exit.kind === "edge-left" || exit.kind === "edge-right") {
-				if (this.generatedPlace)
-					await this.enterLocation(
-						this.generatedPlace.neighbours?.[exit.kind] ??
-							this.generatedPlace.parent,
-					);
-				return;
-			}
-			if (exit.kind === "far") {
-				this.selectedInteractable = {
-					name: exit.label ?? "road ahead",
-					bounds: [0, 0, 1, 1],
-				};
-				await this.resolveNarration(
-					"I continue down the road to the next place.",
-				);
-			}
+			const destination =
+				from === "outside" && exit.kind === "edge-left"
+					? "the road out of town"
+					: from === "outside" && exit.kind === "edge-right"
+						? "along the harbour"
+						: (exit.label ??
+							(exit.kind === "edge-left"
+								? "the road to the left"
+								: exit.kind === "edge-right"
+									? "the road to the right"
+									: "the passage ahead"));
+			this.selectedInteractable = { name: destination, bounds: [0, 0, 1, 1] };
+			await this.resolveNarration(
+				`I continue through this exit to ${destination}.`,
+			);
+			if (this.locationId() === from)
+				throw new Error("Exit narration did not complete travel");
 		} catch (error) {
+			this.travellingExit = undefined;
+			if (this.locationId() !== from) await this.enterLocation(from);
 			this.emitOpenWorldState({ status: "error", message: String(error) });
 		} finally {
-			if (this.locationId() !== from && this.hermesMotor && this.walkArea) {
-				const opposite =
-					exit.kind === "edge-left"
-						? "edge-right"
-						: exit.kind === "edge-right"
-							? "edge-left"
-							: undefined;
-				const entry =
-					this.sceneExits.find((e) => e.to === from) ??
-					this.sceneExits.find((e) => e.kind === opposite);
-				if (entry) {
-					const point = entry.approach ?? {
-						x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
-						y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
-					};
-					this.hermesMotor.place({
-						x: point.x + (point.x > 960 ? -60 : 60),
-						y: Math.min(point.y + 25, MAX_FEET_Y),
-					});
-					this.exitLatch = entry.id;
-				}
-			}
+			this.travellingExit = undefined;
 		}
 	}
 
@@ -1584,6 +1678,7 @@ export class StoryGameScene extends BaseScene {
 
 	private async resolveNarration(choice: string): Promise<void> {
 		const interactable = this.selectedInteractable;
+		const physicalExit = Boolean(this.travellingExit);
 		if (!interactable || this.openWorldBusy) return;
 		this.openWorldBusy = true;
 		this.emitOpenWorldState({
@@ -1602,6 +1697,7 @@ export class StoryGameScene extends BaseScene {
 					sceneDescription: scene.description,
 					object: interactable.name,
 					choice,
+					exit: this.travellingExit?.exit.id,
 					flags: this.world?.flags ?? this.snapshot.state.flags,
 					mode: "resolve",
 				}),
@@ -1671,7 +1767,23 @@ export class StoryGameScene extends BaseScene {
 
 			if (resolution.travel) {
 				const travel = resolution.travel;
-				if (travel.kind === "anchor") {
+				const narrativeDeparture = !this.travellingExit;
+				if (narrativeDeparture) {
+					const departure =
+						travel.kind === "anchor"
+							? this.sceneExits.find((e) => e.to === travel.to)
+							: this.sceneExits.find(
+									(e) =>
+										e.kind ===
+										(this.locationId() === "outside" ? "edge-left" : "far"),
+								);
+					if (departure)
+						this.travellingExit = { from: this.locationId(), exit: departure };
+				}
+				if (travel.kind === "existing") {
+					await firstSentence;
+					await this.enterLocation(travel.to);
+				} else if (travel.kind === "anchor") {
 					if (travel.to !== "outside" && travel.to !== "inside")
 						throw new Error("Unknown anchor");
 					await firstSentence;
@@ -1697,6 +1809,7 @@ export class StoryGameScene extends BaseScene {
 					await this.enterLocation(place.id);
 					this.background?.setAlpha(1);
 				}
+				if (narrativeDeparture) this.travellingExit = undefined;
 			}
 			await fullCaption;
 			this.saveState();
@@ -1713,7 +1826,9 @@ export class StoryGameScene extends BaseScene {
 				message:
 					error instanceof Error ? error.message : "Narrator resolution failed",
 			});
+			if (physicalExit) throw error;
 		} finally {
+			if (!physicalExit) this.travellingExit = undefined;
 			this.openWorldBusy = false;
 		}
 	}
