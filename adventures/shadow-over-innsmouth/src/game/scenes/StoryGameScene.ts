@@ -16,6 +16,7 @@ import {
 	findPath,
 	floorPixel,
 	type HotspotVerb,
+	nearestCell,
 	nearestReachable,
 	type Occluder,
 	refineMask,
@@ -1316,6 +1317,9 @@ export class StoryGameScene extends BaseScene {
 		// Caption clipping and footprint erosion can put a raw threshold just
 		// outside the navigable mask. Its reachable approach is the trigger.
 		const exitMask = this.walkArea?.mask;
+		const approachMask = this.walkArea
+			? erode(this.walkArea.mask, this.walkArea.perspective)
+			: undefined;
 		if (exitMask)
 			this.sceneExits = this.sceneExits.map((exit) => {
 				const center = {
@@ -1330,7 +1334,23 @@ export class StoryGameScene extends BaseScene {
 					center,
 				);
 				if (cell < 0) return exit;
-				const point = cellPoint(exitMask, cell);
+				let point = cellPoint(exitMask, cell);
+				// Edge travel needs a standing approach, not the last boundary pixel.
+				// Keep the original floor for routing; the extra footprint clearance
+				// only selects a target where the final support phase can fit.
+				if (exit.kind !== "door" && approachMask) {
+					const interior = nearestCell(approachMask, point);
+					if (interior >= 0) {
+						const candidate = cellPoint(approachMask, interior);
+						const end = findPath(
+							exitMask,
+							this.hermesSprite ?? point,
+							candidate,
+						).at(-1);
+						if (end && Math.hypot(end.x - candidate.x, end.y - candidate.y) < 1)
+							point = candidate;
+					}
+				}
 				return {
 					...exit,
 					region: [
