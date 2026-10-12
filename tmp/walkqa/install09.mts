@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {replaceReviewedAnchorFloor} from '../../api/src/services/occluders.ts';
+import {occludersRoutes} from '../../api/src/routes/occluders.ts';
+const review=JSON.parse(await readFile('tmp/walkqa/verification-08/dock-floor-review.json','utf8'));
+const audit=await replaceReviewedAnchorFloor('/backgrounds/bus-station-kat-seated-composite-v1.png',review.floor,{approvedBy:'reviewer',date:'2026-10-12',overlays:['tmp/walkqa/verification-08/dock-close.png','tmp/walkqa/verification-08/dock-candidate.png'],judgeDisagreement:review.verdict});
+const response=await occludersRoutes.request('http://localhost/occluders/outside');
+const stored=await response.json();
+if(response.status!==200||JSON.stringify(stored.floor)!==JSON.stringify(review.floor))throw Error('GET floor mismatch');
+await writeFile('tmp/walkqa/verification-09/dock-installed.json',JSON.stringify({audit,status:response.status,floorMatches:true,geometry:stored}));
+console.log({audit,status:response.status,floorMatches:true});
