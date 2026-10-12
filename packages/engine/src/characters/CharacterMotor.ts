@@ -166,6 +166,16 @@ export class CharacterMotor {
 				);
 				return distance(p, this.target);
 			};
+			const remainingFrames = (frame: number) => {
+				let count = 1;
+				while (
+					count < next.cycle.contacts.length &&
+					next.cycle.contacts[(frame + count) % next.cycle.contacts.length]
+						.planted === this.foot
+				)
+					count++;
+				return count;
+			};
 			// An idle foot can enter mid-stance. Pick the closest safe drawing pose,
 			// avoiding an artificial backwards body jump just to start a depth walk.
 			if (turning && same) continue;
@@ -173,7 +183,11 @@ export class CharacterMotor {
 				starting || turning
 					? next.cycle.contacts
 							.flatMap((c, i) => (c.planted === this.foot ? [i] : []))
-							.sort((a, b) => placementDistance(a) - placementDistance(b))
+							.sort(
+								(a, b) =>
+									(turning ? remainingFrames(b) - remainingFrames(a) : 0) ||
+									placementDistance(a) - placementDistance(b),
+							)
 					: [
 							same
 								? this.pose.frame
@@ -308,8 +322,8 @@ export class CharacterMotor {
 			return false;
 		}
 		this.pose = best.pose;
-		// A partial turn keeps the full source stance's frame timing. Stretching
-		// its few remaining poses over a whole step caused frozen walking frames.
+		// Keep full supports on their source clock. Partial turns get the
+		// available step time below, capped at one output frame per source pose.
 		const contacts = this.pose.cycle.contacts;
 		let first = this.pose.frame;
 		for (let n = 0; n < contacts.length - 1; n++) {
@@ -346,7 +360,19 @@ export class CharacterMotor {
 				(switches[(i + 1) % switches.length] - frame + contacts.length) %
 					contacts.length || contacts.length,
 		);
-		this.frameMs = stanceFrameMs(lengths, count, cadence);
+		let supportFrames = 1;
+		while (
+			supportFrames < contacts.length &&
+			contacts[(this.pose.frame + supportFrames) % contacts.length].planted ===
+				this.foot
+		)
+			supportFrames++;
+		// Give a partial support the available step time, without ever holding
+		// a source pose for more than one 24 fps output frame.
+		this.frameMs = Math.max(
+			stanceFrameMs(lengths, count, cadence),
+			Math.min(1000 / 24, 1000 / (cadence * supportFrames)),
+		);
 		this.heading = best.heading;
 		this.apply();
 		// Zero is within the one-pixel steering allowance. All steering is now discrete.
