@@ -1,0 +1,6 @@
+{
+  "image_url": "../sources/toward.png",
+  "prompt": "This exact character, who was walking, stops: he brings his trailing foot forward to plant beside the other and settles into a relaxed standing pose, both feet flat, arms at his sides. Camera completely static, character stays the same size and position, the planted foot does not move, full body in frame, flat grey background. Finish the single stopping movement promptly in the first half second, then hold completely still. Preserve the exact heading and illustrated character design. No more walking, no turn, no camera movement.",
+  "duration": "3",
+  "model": "fal-ai/kling-video/v3/turbo/standard/image-to-video"
+}

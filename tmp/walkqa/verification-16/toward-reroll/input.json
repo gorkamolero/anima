@@ -1,0 +1,6 @@
+{
+  "image_url": "../sources/toward.png",
+  "prompt": "A single tiny settle into standing, NOT a walking cycle. Freeze the planted boot exactly where it is in the input image throughout this entire shot. Only the other boot moves a short distance beside it, sole flat on the ground. Straighten the bent knees and relax both arms down at his sides. Complete this tiny motion immediately in 0.4 seconds, then stay completely motionless for the rest of the shot. Do not take even one additional stride. Do not lift or slide the support foot. Do not change heading, turn, scale, position, face, clothing or illustration style. Locked static camera, full body, uniform flat grey background. Both feet flat and close together, weight even, relaxed upright resting pose.",
+  "duration": "3",
+  "model": "fal-ai/kling-video/v3/turbo/standard/image-to-video"
+}
