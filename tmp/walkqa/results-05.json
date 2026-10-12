@@ -1,0 +1,3687 @@
+[
+  {
+    "clip": "alley/away-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/away-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 42,
+      "stillFoot_px_median": 0.37,
+      "p90": 1.88,
+      "max": 4.94,
+      "stances": 3,
+      "stanceDrift_px_median": 5.18,
+      "stanceDrift_px_max": 6.48,
+      "flatDrift_px_median": 2.39,
+      "flatDrift_px_max": 2.6,
+      "worstFlat": [
+        14,
+        31
+      ],
+      "worstStance": [
+        14,
+        31,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/away-far.mp4",
+      "frames": 72,
+      "walkingFrames": 42,
+      "walkingSeconds": 1.75,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9411764705865827,
+      "scaleErrorMax": 1.3811174426336947e-13,
+      "offFloorFrames": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 13.182257867666817,
+        "halfStride": 51.01038430814177,
+        "switchFrame": 24,
+        "target": {
+          "x": 997.5,
+          "y": 832.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/away-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/away-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/away-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 78,
+      "stillFoot_px_median": 0.37,
+      "p90": 2.08,
+      "max": 11.62,
+      "stances": 6,
+      "stanceDrift_px_median": 5.69,
+      "stanceDrift_px_max": 10.3,
+      "flatDrift_px_median": 2.91,
+      "flatDrift_px_max": 8.39,
+      "worstFlat": [
+        74,
+        77
+      ],
+      "worstStance": [
+        64,
+        74,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/away-near.mp4",
+      "frames": 84,
+      "walkingFrames": 78,
+      "walkingSeconds": 3.25,
+      "anchorErrorMax": 3.2155493553843715e-13,
+      "anchorDriftMax": 0.9411764705886325,
+      "scaleErrorMax": 1.212363542890671e-13,
+      "offFloorFrames": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 39.31881203443869,
+        "halfStride": 49.138868771554115,
+        "switchFrame": 12,
+        "target": {
+          "x": 1047.5,
+          "y": 852.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/away-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/crate-behind.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/crate-behind.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 64,
+      "stillFoot_px_median": 0.53,
+      "p90": 7.16,
+      "max": 13.38,
+      "stances": 9,
+      "stanceDrift_px_median": 9.72,
+      "stanceDrift_px_max": 11.78,
+      "flatDrift_px_median": 2.0,
+      "flatDrift_px_max": 10.63,
+      "worstFlat": [
+        29,
+        35
+      ],
+      "worstStance": [
+        29,
+        35,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/crate-behind.mp4",
+      "frames": 144,
+      "walkingFrames": 64,
+      "walkingSeconds": 2.667,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9374999999992925,
+      "scaleErrorMax": 1.099120794378905e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 8.136814986872936,
+        "halfStride": 44.93648945596946,
+        "switchFrame": 14,
+        "target": {
+          "x": 557.5,
+          "y": 817.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/crate-behind-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/crate-front.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/crate-front.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 36,
+      "stillFoot_px_median": 1.28,
+      "p90": 3.04,
+      "max": 14.01,
+      "stances": 6,
+      "stanceDrift_px_median": 4.25,
+      "stanceDrift_px_max": 8.25,
+      "flatDrift_px_median": 3.75,
+      "flatDrift_px_max": 7.37,
+      "worstFlat": [
+        10,
+        20
+      ],
+      "worstStance": [
+        23,
+        31,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/crate-front.mp4",
+      "frames": 144,
+      "walkingFrames": 36,
+      "walkingSeconds": 1.5,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9230769230770474,
+      "scaleErrorMax": 1.099120794378905e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 6.437987320190908,
+        "halfStride": 55.52440010400635,
+        "switchFrame": 24,
+        "target": {
+          "x": 577.5,
+          "y": 887.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/crate-front-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/diagonal-away-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/diagonal-away-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 33,
+      "stillFoot_px_median": 0.69,
+      "p90": 3.61,
+      "max": 7.97,
+      "stances": 5,
+      "stanceDrift_px_median": 4.48,
+      "stanceDrift_px_max": 12.1,
+      "flatDrift_px_median": 2.71,
+      "flatDrift_px_max": 5.13,
+      "worstFlat": [
+        4,
+        10
+      ],
+      "worstStance": [
+        10,
+        18,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/diagonal-away-left.mp4",
+      "frames": 72,
+      "walkingFrames": 33,
+      "walkingSeconds": 1.375,
+      "anchorErrorMax": 4.687428401686771e-13,
+      "anchorDriftMax": 0.9166666666665481,
+      "scaleErrorMax": 1.1746159600534156e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 52.49228099246832,
+        "halfStride": 52.594633657937486,
+        "switchFrame": 36,
+        "target": {
+          "x": 797.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/diagonal-away-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/diagonal-away-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/diagonal-away-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 33,
+      "stillFoot_px_median": 0.84,
+      "p90": 2.36,
+      "max": 7.0,
+      "stances": 5,
+      "stanceDrift_px_median": 6.36,
+      "stanceDrift_px_max": 15.15,
+      "flatDrift_px_median": 3.86,
+      "flatDrift_px_max": 4.59,
+      "worstFlat": [
+        16,
+        22
+      ],
+      "worstStance": [
+        22,
+        30,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/diagonal-away-right.mp4",
+      "frames": 72,
+      "walkingFrames": 33,
+      "walkingSeconds": 1.375,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9166666666666778,
+      "scaleErrorMax": 6.683542608243442e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 32.815762932804056,
+        "halfStride": 55.40596992644964,
+        "switchFrame": 24,
+        "target": {
+          "x": 1097.5,
+          "y": 842.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/diagonal-away-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/diagonal-toward-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/diagonal-toward-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 49,
+      "stillFoot_px_median": 0.74,
+      "p90": 3.96,
+      "max": 12.11,
+      "stances": 8,
+      "stanceDrift_px_median": 5.78,
+      "stanceDrift_px_max": 10.09,
+      "flatDrift_px_median": 2.63,
+      "flatDrift_px_max": 5.35,
+      "worstFlat": [
+        23,
+        33
+      ],
+      "worstStance": [
+        0,
+        8,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/diagonal-toward-left.mp4",
+      "frames": 72,
+      "walkingFrames": 49,
+      "walkingSeconds": 2.042,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9230769230767607,
+      "scaleErrorMax": 1.2179146580137967e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 51.206013182784154,
+        "halfStride": 52.07435683902782,
+        "switchFrame": 24,
+        "target": {
+          "x": 797.5,
+          "y": 917.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/diagonal-toward-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/diagonal-toward-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/diagonal-toward-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 176,
+      "stillFoot_px_median": 0.27,
+      "p90": 3.09,
+      "max": 10.44,
+      "stances": 27,
+      "stanceDrift_px_median": 1.75,
+      "stanceDrift_px_max": 7.32,
+      "flatDrift_px_median": 1.96,
+      "flatDrift_px_max": 5.8,
+      "worstFlat": [
+        35,
+        45
+      ],
+      "worstStance": [
+        56,
+        61,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/diagonal-toward-right.mp4",
+      "frames": 208,
+      "walkingFrames": 201,
+      "walkingSeconds": 8.375,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9375000000005851,
+      "scaleErrorMax": 1.8907098109366416e-13,
+      "offFloorFrames": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        174
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 2.247685992126522,
+        "halfStride": 8.57459289396507,
+        "switchFrame": 29,
+        "target": {
+          "x": 1147.5,
+          "y": 917.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/diagonal-toward-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/diagonal.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/diagonal.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 77,
+      "stillFoot_px_median": 0.54,
+      "p90": 1.7,
+      "max": 13.89,
+      "stances": 7,
+      "stanceDrift_px_median": 4.92,
+      "stanceDrift_px_max": 19.81,
+      "flatDrift_px_median": 2.19,
+      "flatDrift_px_max": 9.11,
+      "worstFlat": [
+        15,
+        24
+      ],
+      "worstStance": [
+        24,
+        43,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/diagonal.mp4",
+      "frames": 84,
+      "walkingFrames": 77,
+      "walkingSeconds": 3.208,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9411764705897567,
+      "scaleErrorMax": 1.156852391659413e-13,
+      "offFloorFrames": [
+        72,
+        73,
+        74,
+        75
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 6.877647411997294,
+        "halfStride": 8.82406673794737,
+        "switchFrame": 2,
+        "target": {
+          "x": 1097.5,
+          "y": 842.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/diagonal-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/exit.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/exit.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 12,
+      "stillFoot_px_median": 0.48,
+      "p90": 6.03,
+      "max": 14.98,
+      "stances": 2,
+      "stanceDrift_px_median": 8.41,
+      "stanceDrift_px_max": 10.52,
+      "flatDrift_px_median": 3.67,
+      "flatDrift_px_max": 6.3,
+      "worstFlat": [
+        8,
+        11
+      ],
+      "worstStance": [
+        0,
+        8,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/exit.mp4",
+      "frames": 14,
+      "walkingFrames": 12,
+      "walkingSeconds": 0.5,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.8461538461533952,
+      "scaleErrorMax": 1.1035616864774056e-13,
+      "offFloorFrames": [
+        10,
+        11
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 7.449445521516496,
+        "halfStride": 61.46972282453544,
+        "switchFrame": 12,
+        "target": {
+          "x": 352,
+          "y": 942
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/exit-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/object-click.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/object-click.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 11,
+      "stillFoot_px_median": 0.36,
+      "p90": 1.33,
+      "max": 2.22,
+      "stances": 2,
+      "stanceDrift_px_median": 2.12,
+      "stanceDrift_px_max": 2.72,
+      "flatDrift_px_median": 1.99,
+      "flatDrift_px_max": 3.11,
+      "worstFlat": [
+        6,
+        10
+      ],
+      "worstStance": [
+        6,
+        10,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/object-click.mp4",
+      "frames": 144,
+      "walkingFrames": 11,
+      "walkingSeconds": 0.458,
+      "anchorErrorMax": 5.684341886080802e-14,
+      "anchorDriftMax": 0.8333333333327844,
+      "scaleErrorMax": 5.762057497804562e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 40.89000887149757,
+        "halfStride": 80.04692706415372,
+        "switchFrame": 3,
+        "target": {
+          "x": 377.5,
+          "y": 862.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/object-click-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/side-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/side-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 104,
+      "stillFoot_px_median": 0.25,
+      "p90": 2.39,
+      "max": 10.68,
+      "stances": 16,
+      "stanceDrift_px_median": 2.52,
+      "stanceDrift_px_max": 13.29,
+      "flatDrift_px_median": 1.45,
+      "flatDrift_px_max": 4.57,
+      "worstFlat": [
+        49,
+        52
+      ],
+      "worstStance": [
+        44,
+        49,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/side-far.mp4",
+      "frames": 116,
+      "walkingFrames": 111,
+      "walkingSeconds": 4.625,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9374999999988529,
+      "scaleErrorMax": 1.8918200339612667e-13,
+      "offFloorFrames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 4.776815842082312,
+        "halfStride": 6.885550259008591,
+        "switchFrame": 13,
+        "target": {
+          "x": 1102.5,
+          "y": 847.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/side-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/side-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/side-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 39,
+      "stillFoot_px_median": 0.97,
+      "p90": 2.21,
+      "max": 4.88,
+      "stances": 5,
+      "stanceDrift_px_median": 4.72,
+      "stanceDrift_px_max": 11.43,
+      "flatDrift_px_median": 2.83,
+      "flatDrift_px_max": 6.41,
+      "worstFlat": [
+        18,
+        28
+      ],
+      "worstStance": [
+        18,
+        28,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/side-near.mp4",
+      "frames": 72,
+      "walkingFrames": 39,
+      "walkingSeconds": 1.625,
+      "anchorErrorMax": 3.595093471822542e-13,
+      "anchorDriftMax": 0.9444444444438148,
+      "scaleErrorMax": 7.749356711883593e-14,
+      "offFloorFrames": [
+        29
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 23.30820684517775,
+        "halfStride": 63.91990672333333,
+        "switchFrame": 24,
+        "target": {
+          "x": 1157.5,
+          "y": 922.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/side-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/toward-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/toward-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 39,
+      "stillFoot_px_median": 0.93,
+      "p90": 3.26,
+      "max": 12.22,
+      "stances": 6,
+      "stanceDrift_px_median": 3.59,
+      "stanceDrift_px_max": 6.49,
+      "flatDrift_px_median": 2.87,
+      "flatDrift_px_max": 9.01,
+      "worstFlat": [
+        26,
+        36
+      ],
+      "worstStance": [
+        26,
+        36,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/toward-far.mp4",
+      "frames": 72,
+      "walkingFrames": 40,
+      "walkingSeconds": 1.667,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.923076923077248,
+      "scaleErrorMax": 1.2168044349891716e-13,
+      "offFloorFrames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 37.36034273769992,
+        "halfStride": 49.27261962347079,
+        "switchFrame": 12,
+        "target": {
+          "x": 1047.5,
+          "y": 852.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/toward-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "alley/toward-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/alley/toward-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 80,
+      "stillFoot_px_median": 0.19,
+      "p90": 3.32,
+      "max": 15.68,
+      "stances": 11,
+      "stanceDrift_px_median": 2.16,
+      "stanceDrift_px_max": 8.91,
+      "flatDrift_px_median": 1.4,
+      "flatDrift_px_max": 5.43,
+      "worstFlat": [
+        85,
+        88
+      ],
+      "worstStance": [
+        76,
+        85,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "alley/toward-near.mp4",
+      "frames": 96,
+      "walkingFrames": 89,
+      "walkingSeconds": 3.708,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9375000000005256,
+      "scaleErrorMax": 1.1035616864774056e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 27.216144069097105,
+        "halfStride": 59.1819536584809,
+        "switchFrame": 12,
+        "target": {
+          "x": 1047.5,
+          "y": 927.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/alley/toward-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/away-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/away-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 27,
+      "stillFoot_px_median": 0.2,
+      "p90": 1.02,
+      "max": 6.1,
+      "stances": 3,
+      "stanceDrift_px_median": 1.34,
+      "stanceDrift_px_max": 2.59,
+      "flatDrift_px_median": 0.97,
+      "flatDrift_px_max": 1.38,
+      "worstFlat": [
+        2,
+        15
+      ],
+      "worstStance": [
+        2,
+        15,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/away-far.mp4",
+      "frames": 72,
+      "walkingFrames": 28,
+      "walkingSeconds": 1.167,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9166666666669907,
+      "scaleErrorMax": 6.88338275267597e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 17.027616708999847,
+        "halfStride": 58.53084384535625,
+        "switchFrame": 3,
+        "target": {
+          "x": 897.5,
+          "y": 727.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/away-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/away-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/away-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 57,
+      "stillFoot_px_median": 0.32,
+      "p90": 1.65,
+      "max": 11.53,
+      "stances": 4,
+      "stanceDrift_px_median": 4.09,
+      "stanceDrift_px_max": 5.73,
+      "flatDrift_px_median": 1.93,
+      "flatDrift_px_max": 2.84,
+      "worstFlat": [
+        49,
+        56
+      ],
+      "worstStance": [
+        33,
+        47,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/away-near.mp4",
+      "frames": 72,
+      "walkingFrames": 59,
+      "walkingSeconds": 2.458,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9411764705880143,
+      "scaleErrorMax": 7.971401316808624e-14,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 14.004928775212653,
+        "halfStride": 48.358904291148704,
+        "switchFrame": 24,
+        "target": {
+          "x": 897.5,
+          "y": 802.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/away-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/bench-behind.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/bench-behind.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 25,
+      "stillFoot_px_median": 0.42,
+      "p90": 4.53,
+      "max": 12.07,
+      "stances": 4,
+      "stanceDrift_px_median": 3.06,
+      "stanceDrift_px_max": 10.53,
+      "flatDrift_px_median": 0.92,
+      "flatDrift_px_max": 9.27,
+      "worstFlat": [
+        20,
+        26
+      ],
+      "worstStance": [
+        20,
+        26,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/bench-behind.mp4",
+      "frames": 180,
+      "walkingFrames": 27,
+      "walkingSeconds": 1.125,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9166666666666883,
+      "scaleErrorMax": 7.926992395823618e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 22.26609560993969,
+        "halfStride": 45.984296916360485,
+        "switchFrame": 14,
+        "target": {
+          "x": 1177.5,
+          "y": 817.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/bench-behind-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/bench-front.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/bench-front.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 64,
+      "stillFoot_px_median": 0.46,
+      "p90": 4.49,
+      "max": 14.93,
+      "stances": 8,
+      "stanceDrift_px_median": 7.56,
+      "stanceDrift_px_max": 12.97,
+      "flatDrift_px_median": 2.22,
+      "flatDrift_px_max": 3.98,
+      "worstFlat": [
+        47,
+        51
+      ],
+      "worstStance": [
+        14,
+        24,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/bench-front.mp4",
+      "frames": 144,
+      "walkingFrames": 64,
+      "walkingSeconds": 2.667,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9230769230774853,
+      "scaleErrorMax": 1.3988810110276972e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 38.09009128129787,
+        "halfStride": 78.02087503678014,
+        "switchFrame": 3,
+        "target": {
+          "x": 1177.5,
+          "y": 857.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/bench-front-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/diagonal-away-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-away-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 75,
+      "stillFoot_px_median": 0.48,
+      "p90": 2.24,
+      "max": 11.69,
+      "stances": 10,
+      "stanceDrift_px_median": 3.53,
+      "stanceDrift_px_max": 13.45,
+      "flatDrift_px_median": 1.4,
+      "flatDrift_px_max": 1.95,
+      "worstFlat": [
+        64,
+        74
+      ],
+      "worstStance": [
+        20,
+        29,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/diagonal-away-left.mp4",
+      "frames": 80,
+      "walkingFrames": 75,
+      "walkingSeconds": 3.125,
+      "anchorErrorMax": 3.410605131648481e-13,
+      "anchorDriftMax": 0.944444444444144,
+      "scaleErrorMax": 1.354472090042691e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 6.9064420621777725,
+        "halfStride": 41.908672595297325,
+        "switchFrame": 21,
+        "target": {
+          "x": 647.5,
+          "y": 742.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/diagonal-away-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/diagonal-away-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-away-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 117,
+      "stillFoot_px_median": 0.59,
+      "p90": 3.2,
+      "max": 10.17,
+      "stances": 13,
+      "stanceDrift_px_median": 5.48,
+      "stanceDrift_px_max": 13.28,
+      "flatDrift_px_median": 3.58,
+      "flatDrift_px_max": 9.97,
+      "worstFlat": [
+        55,
+        77
+      ],
+      "worstStance": [
+        38,
+        47,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/diagonal-away-right.mp4",
+      "frames": 124,
+      "walkingFrames": 117,
+      "walkingSeconds": 4.875,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9411764705894408,
+      "scaleErrorMax": 1.5354384430565915e-13,
+      "offFloorFrames": [
+        16,
+        17,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 26.790295297009816,
+        "halfStride": 38.105528598879246,
+        "switchFrame": 12,
+        "target": {
+          "x": 997.5,
+          "y": 742.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/diagonal-away-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-toward-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 158,
+      "stillFoot_px_median": 0.26,
+      "p90": 3.14,
+      "max": 14.68,
+      "stances": 23,
+      "stanceDrift_px_median": 3.55,
+      "stanceDrift_px_max": 13.69,
+      "flatDrift_px_median": 1.78,
+      "flatDrift_px_max": 10.57,
+      "worstFlat": [
+        61,
+        64
+      ],
+      "worstStance": [
+        19,
+        23,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/diagonal-toward-left.mp4",
+      "frames": 172,
+      "walkingFrames": 167,
+      "walkingSeconds": 6.958,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9375000000008791,
+      "scaleErrorMax": 1.525446435834965e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 10.18281837733674,
+        "halfStride": 49.595159228558614,
+        "switchFrame": 12,
+        "target": {
+          "x": 647.5,
+          "y": 862.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/diagonal-toward-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-toward-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 182,
+      "stillFoot_px_median": 0.26,
+      "p90": 3.06,
+      "max": 14.05,
+      "stances": 26,
+      "stanceDrift_px_median": 2.07,
+      "stanceDrift_px_max": 12.26,
+      "flatDrift_px_median": 1.08,
+      "flatDrift_px_max": 12.95,
+      "worstFlat": [
+        45,
+        51
+      ],
+      "worstStance": [
+        45,
+        51,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/diagonal-toward-right.mp4",
+      "frames": 208,
+      "walkingFrames": 203,
+      "walkingSeconds": 8.458,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9444444444448559,
+      "scaleErrorMax": 1.5287771049088406e-13,
+      "offFloorFrames": [
+        184,
+        200,
+        201,
+        202
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 17.35346068956998,
+        "halfStride": 53.88028701213795,
+        "switchFrame": 21,
+        "target": {
+          "x": 997.5,
+          "y": 857.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/diagonal-toward-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/diagonal.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 91,
+      "stillFoot_px_median": 0.41,
+      "p90": 4.87,
+      "max": 11.31,
+      "stances": 11,
+      "stanceDrift_px_median": 4.83,
+      "stanceDrift_px_max": 23.26,
+      "flatDrift_px_median": 1.59,
+      "flatDrift_px_max": 12.02,
+      "worstFlat": [
+        30,
+        35
+      ],
+      "worstStance": [
+        66,
+        70,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/diagonal.mp4",
+      "frames": 100,
+      "walkingFrames": 93,
+      "walkingSeconds": 3.875,
+      "anchorErrorMax": 3.410605131648481e-13,
+      "anchorDriftMax": 0.9411764705875039,
+      "scaleErrorMax": 7.926992395823618e-14,
+      "offFloorFrames": [
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 1.7920952320903714,
+        "halfStride": 42.9919686701057,
+        "switchFrame": 24,
+        "target": {
+          "x": 997.5,
+          "y": 742.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/diagonal-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/exit.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/exit.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 28,
+      "stillFoot_px_median": 0.39,
+      "p90": 2.31,
+      "max": 7.11,
+      "stances": 4,
+      "stanceDrift_px_median": 2.54,
+      "stanceDrift_px_max": 7.76,
+      "flatDrift_px_median": 1.54,
+      "flatDrift_px_max": 4.3,
+      "worstFlat": [
+        14,
+        24
+      ],
+      "worstStance": [
+        14,
+        24,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/exit.mp4",
+      "frames": 29,
+      "walkingFrames": 29,
+      "walkingSeconds": 1.208,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9166666666665672,
+      "scaleErrorMax": 9.892087149410145e-14,
+      "offFloorFrames": [
+        0,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/exit-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/object-click.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/object-click.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 26,
+      "stillFoot_px_median": 0.4,
+      "p90": 3.58,
+      "max": 11.17,
+      "stances": 4,
+      "stanceDrift_px_median": 2.44,
+      "stanceDrift_px_max": 19.25,
+      "flatDrift_px_median": 1.25,
+      "flatDrift_px_max": 1.36,
+      "worstFlat": [
+        21,
+        26
+      ],
+      "worstStance": [
+        14,
+        21,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/object-click.mp4",
+      "frames": 180,
+      "walkingFrames": 27,
+      "walkingSeconds": 1.125,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.8750000000004179,
+      "scaleErrorMax": 8.326672684688674e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 40.49500234467348,
+        "halfStride": 40.80119673496999,
+        "switchFrame": 14,
+        "target": {
+          "x": 577.5,
+          "y": 767.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/object-click-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/side-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/side-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 59,
+      "stillFoot_px_median": 0.46,
+      "p90": 1.9,
+      "max": 6.24,
+      "stances": 8,
+      "stanceDrift_px_median": 3.47,
+      "stanceDrift_px_max": 6.48,
+      "flatDrift_px_median": 1.61,
+      "flatDrift_px_max": 3.87,
+      "worstFlat": [
+        20,
+        27
+      ],
+      "worstStance": [
+        20,
+        27,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/side-far.mp4",
+      "frames": 72,
+      "walkingFrames": 59,
+      "walkingSeconds": 2.458,
+      "anchorErrorMax": 2.5421149729252077e-13,
+      "anchorDriftMax": 0.9444444444448578,
+      "scaleErrorMax": 7.793765632868599e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 25.997123841778368,
+        "halfStride": 43.15905876467223,
+        "switchFrame": 21,
+        "target": {
+          "x": 1007.5,
+          "y": 742.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/side-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/side-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/side-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 106,
+      "stillFoot_px_median": 0.52,
+      "p90": 3.0,
+      "max": 15.18,
+      "stances": 15,
+      "stanceDrift_px_median": 3.59,
+      "stanceDrift_px_max": 7.47,
+      "flatDrift_px_median": 1.37,
+      "flatDrift_px_max": 6.4,
+      "worstFlat": [
+        92,
+        102
+      ],
+      "worstStance": [
+        81,
+        88,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/side-near.mp4",
+      "frames": 112,
+      "walkingFrames": 106,
+      "walkingSeconds": 4.417,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9444444444450152,
+      "scaleErrorMax": 1.354472090042691e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 37.48917711443238,
+        "halfStride": 49.49591872753411,
+        "switchFrame": 12,
+        "target": {
+          "x": 1007.5,
+          "y": 857.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/side-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/toward-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/toward-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 91,
+      "stillFoot_px_median": 0.21,
+      "p90": 2.94,
+      "max": 11.59,
+      "stances": 13,
+      "stanceDrift_px_median": 2.68,
+      "stanceDrift_px_max": 7.76,
+      "flatDrift_px_median": 2.68,
+      "flatDrift_px_max": 6.34,
+      "worstFlat": [
+        57,
+        67
+      ],
+      "worstStance": [
+        82,
+        92,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/toward-far.mp4",
+      "frames": 100,
+      "walkingFrames": 96,
+      "walkingSeconds": 4.0,
+      "anchorErrorMax": 2.5421149729252077e-13,
+      "anchorDriftMax": 0.9375000000004025,
+      "scaleErrorMax": 1.5232259897857148e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 39.376042990089005,
+        "halfStride": 43.66533815754737,
+        "switchFrame": 12,
+        "target": {
+          "x": 897.5,
+          "y": 792.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/toward-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-inside/toward-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-inside/toward-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 51,
+      "stillFoot_px_median": 0.21,
+      "p90": 3.41,
+      "max": 10.14,
+      "stances": 9,
+      "stanceDrift_px_median": 0.84,
+      "stanceDrift_px_max": 14.53,
+      "flatDrift_px_median": 0.43,
+      "flatDrift_px_max": 14.9,
+      "worstFlat": [
+        41,
+        53
+      ],
+      "worstStance": [
+        41,
+        53,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-inside/toward-near.mp4",
+      "frames": 72,
+      "walkingFrames": 58,
+      "walkingSeconds": 2.417,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9375000000006871,
+      "scaleErrorMax": 8.393286066166183e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 46.884831831101074,
+        "halfStride": 47.550988566003475,
+        "switchFrame": 24,
+        "target": {
+          "x": 897.5,
+          "y": 857.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-inside/toward-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/away-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/away-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 42,
+      "stillFoot_px_median": 0.29,
+      "p90": 1.97,
+      "max": 5.63,
+      "stances": 4,
+      "stanceDrift_px_median": 5.07,
+      "stanceDrift_px_max": 8.4,
+      "flatDrift_px_median": 1.01,
+      "flatDrift_px_max": 2.4,
+      "worstFlat": [
+        0,
+        15
+      ],
+      "worstStance": [
+        0,
+        15,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/away-far.mp4",
+      "frames": 72,
+      "walkingFrames": 44,
+      "walkingSeconds": 1.833,
+      "anchorErrorMax": 5.684341886080802e-14,
+      "anchorDriftMax": 0.9375000000003058,
+      "scaleErrorMax": 1.0191847366058937e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 6.571534469483455,
+        "halfStride": 40.829766731566174,
+        "switchFrame": 14,
+        "target": {
+          "x": 397.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/away-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/away-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/away-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 99,
+      "stillFoot_px_median": 0.53,
+      "p90": 2.04,
+      "max": 13.19,
+      "stances": 10,
+      "stanceDrift_px_median": 5.0,
+      "stanceDrift_px_max": 17.13,
+      "flatDrift_px_median": 1.9,
+      "flatDrift_px_max": 11.14,
+      "worstFlat": [
+        72,
+        84
+      ],
+      "worstStance": [
+        48,
+        65,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/away-near.mp4",
+      "frames": 108,
+      "walkingFrames": 102,
+      "walkingSeconds": 4.25,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9411764705879135,
+      "scaleErrorMax": 1.6586731987899839e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 26.336378360927934,
+        "halfStride": 44.89726494465346,
+        "switchFrame": 12,
+        "target": {
+          "x": 597.5,
+          "y": 847.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/away-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/diagonal-away-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-away-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 92,
+      "stillFoot_px_median": 0.33,
+      "p90": 4.67,
+      "max": 15.56,
+      "stances": 10,
+      "stanceDrift_px_median": 3.98,
+      "stanceDrift_px_max": 14.28,
+      "flatDrift_px_median": 1.73,
+      "flatDrift_px_max": 11.11,
+      "worstFlat": [
+        20,
+        26
+      ],
+      "worstStance": [
+        10,
+        18,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/diagonal-away-left.mp4",
+      "frames": 100,
+      "walkingFrames": 95,
+      "walkingSeconds": 3.958,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.941176470588288,
+      "scaleErrorMax": 2.2393198406689407e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 17.325574204159622,
+        "halfStride": 39.98223757417471,
+        "switchFrame": 12,
+        "target": {
+          "x": 347.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/diagonal-away-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/diagonal-away-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-away-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 47,
+      "stillFoot_px_median": 0.93,
+      "p90": 5.58,
+      "max": 9.84,
+      "stances": 7,
+      "stanceDrift_px_median": 11.04,
+      "stanceDrift_px_max": 13.88,
+      "flatDrift_px_median": 2.59,
+      "flatDrift_px_max": 11.32,
+      "worstFlat": [
+        20,
+        27
+      ],
+      "worstStance": [
+        10,
+        18,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/diagonal-away-right.mp4",
+      "frames": 72,
+      "walkingFrames": 47,
+      "walkingSeconds": 1.958,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9285714285713599,
+      "scaleErrorMax": 1.0258460747536446e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 17.180371555910106,
+        "halfStride": 40.381564346209544,
+        "switchFrame": 2,
+        "target": {
+          "x": 697.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/diagonal-away-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-toward-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 185,
+      "stillFoot_px_median": 0.21,
+      "p90": 2.55,
+      "max": 14.14,
+      "stances": 29,
+      "stanceDrift_px_median": 1.39,
+      "stanceDrift_px_max": 15.32,
+      "flatDrift_px_median": 1.28,
+      "flatDrift_px_max": 15.32,
+      "worstFlat": [
+        8,
+        11
+      ],
+      "worstStance": [
+        8,
+        11,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/diagonal-toward-left.mp4",
+      "frames": 208,
+      "walkingFrames": 204,
+      "walkingSeconds": 8.5,
+      "anchorErrorMax": 1.2710574864626038e-13,
+      "anchorDriftMax": 0.9375000000002445,
+      "scaleErrorMax": 1.6397994073713562e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 4.618297465889136,
+        "halfStride": 8.105404683973882,
+        "switchFrame": 13,
+        "target": {
+          "x": 347.5,
+          "y": 917.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/diagonal-toward-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-toward-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 181,
+      "stillFoot_px_median": 0.35,
+      "p90": 3.11,
+      "max": 13.2,
+      "stances": 29,
+      "stanceDrift_px_median": 2.03,
+      "stanceDrift_px_max": 18.38,
+      "flatDrift_px_median": 2.43,
+      "flatDrift_px_max": 18.49,
+      "worstFlat": [
+        138,
+        152
+      ],
+      "worstStance": [
+        138,
+        152,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/diagonal-toward-right.mp4",
+      "frames": 200,
+      "walkingFrames": 195,
+      "walkingSeconds": 8.125,
+      "anchorErrorMax": 1.6077746776921858e-13,
+      "anchorDriftMax": 0.9375000000007717,
+      "scaleErrorMax": 1.63202784619898e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 54.68083800800712,
+        "halfStride": 56.11789556750986,
+        "switchFrame": 12,
+        "target": {
+          "x": 697.5,
+          "y": 917.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/diagonal-toward-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/diagonal.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 74,
+      "stillFoot_px_median": 0.52,
+      "p90": 2.55,
+      "max": 12.3,
+      "stances": 9,
+      "stanceDrift_px_median": 3.28,
+      "stanceDrift_px_max": 16.12,
+      "flatDrift_px_median": 1.59,
+      "flatDrift_px_max": 13.9,
+      "worstFlat": [
+        20,
+        26
+      ],
+      "worstStance": [
+        32,
+        48,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/diagonal.mp4",
+      "frames": 80,
+      "walkingFrames": 76,
+      "walkingSeconds": 3.167,
+      "anchorErrorMax": 1.2710574864626038e-13,
+      "anchorDriftMax": 0.9411764705878066,
+      "scaleErrorMax": 1.6830981053317373e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 25.9043181171473,
+        "halfStride": 43.44532888797365,
+        "switchFrame": 24,
+        "target": {
+          "x": 697.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/diagonal-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/exit.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/exit.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 27,
+      "stillFoot_px_median": 0.61,
+      "p90": 2.51,
+      "max": 11.1,
+      "stances": 3,
+      "stanceDrift_px_median": 5.4,
+      "stanceDrift_px_max": 6.06,
+      "flatDrift_px_median": 2.28,
+      "flatDrift_px_max": 3.33,
+      "worstFlat": [
+        0,
+        15
+      ],
+      "worstStance": [
+        0,
+        15,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/exit.mp4",
+      "frames": 28,
+      "walkingFrames": 28,
+      "walkingSeconds": 1.167,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.916666666666097,
+      "scaleErrorMax": 1.0169642905566434e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/exit-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/object-click.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/object-click.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 9,
+      "stillFoot_px_median": 0.88,
+      "p90": 2.02,
+      "max": 2.32,
+      "stances": 1,
+      "stanceDrift_px_median": 4.1,
+      "stanceDrift_px_max": 4.1,
+      "flatDrift_px_median": 2.4,
+      "flatDrift_px_max": 2.4,
+      "worstFlat": [
+        0,
+        6
+      ],
+      "worstStance": [
+        0,
+        6,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/object-click.mp4",
+      "frames": 180,
+      "walkingFrames": 9,
+      "walkingSeconds": 0.375,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.7999999999997136,
+      "scaleErrorMax": 3.6415315207705135e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 48.21578874960977,
+        "halfStride": 58.49105086435456,
+        "switchFrame": 24,
+        "target": {
+          "x": 722.5,
+          "y": 882.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/object-click-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/post-behind.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/post-behind.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 26,
+      "stillFoot_px_median": 0.33,
+      "p90": 4.71,
+      "max": 11.16,
+      "stances": 3,
+      "stanceDrift_px_median": 0.99,
+      "stanceDrift_px_max": 17.01,
+      "flatDrift_px_median": 0.42,
+      "flatDrift_px_max": 16.27,
+      "worstFlat": [
+        12,
+        23
+      ],
+      "worstStance": [
+        12,
+        23,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/post-behind.mp4",
+      "frames": 120,
+      "walkingFrames": 26,
+      "walkingSeconds": 1.083,
+      "anchorErrorMax": 0.0,
+      "anchorDriftMax": 0.9000000000003148,
+      "scaleErrorMax": 1.4943601911454607e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 25.34599884883238,
+        "halfStride": 48.90017255650551,
+        "switchFrame": 24,
+        "target": {
+          "x": 727.5,
+          "y": 827.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/post-behind-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/post-front.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/post-front.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 80,
+      "stillFoot_px_median": 0.15,
+      "p90": 2.4,
+      "max": 11.31,
+      "stances": 11,
+      "stanceDrift_px_median": 0.69,
+      "stanceDrift_px_max": 16.12,
+      "flatDrift_px_median": 0.41,
+      "flatDrift_px_max": 15.58,
+      "worstFlat": [
+        71,
+        84
+      ],
+      "worstStance": [
+        71,
+        84,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/post-front.mp4",
+      "frames": 120,
+      "walkingFrames": 89,
+      "walkingSeconds": 3.708,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9375000000001034,
+      "scaleErrorMax": 1.1879386363489175e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 30.35822067096338,
+        "halfStride": 51.14491118126232,
+        "switchFrame": 24,
+        "target": {
+          "x": 722.5,
+          "y": 882.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/post-front-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/side-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/side-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 54,
+      "stillFoot_px_median": 0.61,
+      "p90": 3.35,
+      "max": 9.95,
+      "stances": 8,
+      "stanceDrift_px_median": 5.5,
+      "stanceDrift_px_max": 7.21,
+      "flatDrift_px_median": 2.2,
+      "flatDrift_px_max": 4.34,
+      "worstFlat": [
+        31,
+        40
+      ],
+      "worstStance": [
+        31,
+        40,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/side-far.mp4",
+      "frames": 72,
+      "walkingFrames": 54,
+      "walkingSeconds": 2.25,
+      "anchorErrorMax": 1.2710574864626038e-13,
+      "anchorDriftMax": 0.9444444444453717,
+      "scaleErrorMax": 2.2459811788166917e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 25.486353628506812,
+        "halfStride": 67.05292744223316,
+        "switchFrame": 3,
+        "target": {
+          "x": 707.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/side-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/side-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/side-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 49,
+      "stillFoot_px_median": 0.53,
+      "p90": 4.94,
+      "max": 15.22,
+      "stances": 8,
+      "stanceDrift_px_median": 4.82,
+      "stanceDrift_px_max": 10.47,
+      "flatDrift_px_median": 1.76,
+      "flatDrift_px_max": 7.07,
+      "worstFlat": [
+        23,
+        33
+      ],
+      "worstStance": [
+        0,
+        8,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/side-near.mp4",
+      "frames": 72,
+      "walkingFrames": 49,
+      "walkingSeconds": 2.042,
+      "anchorErrorMax": 2.3437142008433856e-13,
+      "anchorDriftMax": 0.9230769230772224,
+      "scaleErrorMax": 9.547918011776346e-14,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 70.23757217695858,
+        "halfStride": 95.7807891229982,
+        "switchFrame": 3,
+        "target": {
+          "x": 707.5,
+          "y": 922.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/side-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/toward-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/toward-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 65,
+      "stillFoot_px_median": 0.19,
+      "p90": 2.78,
+      "max": 11.57,
+      "stances": 9,
+      "stanceDrift_px_median": 2.36,
+      "stanceDrift_px_max": 11.25,
+      "flatDrift_px_median": 0.72,
+      "flatDrift_px_max": 4.75,
+      "worstFlat": [
+        13,
+        17
+      ],
+      "worstStance": [
+        60,
+        68,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/toward-far.mp4",
+      "frames": 80,
+      "walkingFrames": 73,
+      "walkingSeconds": 3.042,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9375000000000437,
+      "scaleErrorMax": 1.1546319456101628e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 23.97258540318699,
+        "halfStride": 44.49336523696213,
+        "switchFrame": 24,
+        "target": {
+          "x": 597.5,
+          "y": 837.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/toward-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "depot-outside/toward-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/depot-outside/toward-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 63,
+      "stillFoot_px_median": 0.2,
+      "p90": 2.88,
+      "max": 14.58,
+      "stances": 10,
+      "stanceDrift_px_median": 1.61,
+      "stanceDrift_px_max": 8.19,
+      "flatDrift_px_median": 1.47,
+      "flatDrift_px_max": 4.74,
+      "worstFlat": [
+        13,
+        17
+      ],
+      "worstStance": [
+        60,
+        68,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "depot-outside/toward-near.mp4",
+      "frames": 80,
+      "walkingFrames": 73,
+      "walkingSeconds": 3.042,
+      "anchorErrorMax": 1.1368683772161603e-13,
+      "anchorDriftMax": 0.9375000000004479,
+      "scaleErrorMax": 1.1657341758564144e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 40.223484164007075,
+        "halfStride": 54.77957289665929,
+        "switchFrame": 24,
+        "target": {
+          "x": 597.5,
+          "y": 927.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/depot-outside/toward-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/away-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/away-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 95,
+      "stillFoot_px_median": 0.31,
+      "p90": 1.71,
+      "max": 4.28,
+      "stances": 14,
+      "stanceDrift_px_median": 1.11,
+      "stanceDrift_px_max": 3.44,
+      "flatDrift_px_median": 0.91,
+      "flatDrift_px_max": 1.49,
+      "worstFlat": [
+        17,
+        26
+      ],
+      "worstStance": [
+        50,
+        55,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/away-far.mp4",
+      "frames": 132,
+      "walkingFrames": 125,
+      "walkingSeconds": 5.208,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9411764705881168,
+      "scaleErrorMax": 3.701483564100272e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 6.537234399777203,
+        "halfStride": 17.099191187147188,
+        "switchFrame": 24,
+        "target": {
+          "x": 957.5,
+          "y": 737.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/away-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/away-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/away-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 111,
+      "stillFoot_px_median": 0.32,
+      "p90": 1.46,
+      "max": 7.43,
+      "stances": 12,
+      "stanceDrift_px_median": 2.96,
+      "stanceDrift_px_max": 8.09,
+      "flatDrift_px_median": 2.01,
+      "flatDrift_px_max": 2.78,
+      "worstFlat": [
+        0,
+        15
+      ],
+      "worstStance": [
+        108,
+        113,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/away-near.mp4",
+      "frames": 132,
+      "walkingFrames": 125,
+      "walkingSeconds": 5.208,
+      "anchorErrorMax": 2.5421149729252077e-13,
+      "anchorDriftMax": 0.9411764705890128,
+      "scaleErrorMax": 1.91402449445377e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 28.943530778332175,
+        "halfStride": 32.894163894316726,
+        "switchFrame": 24,
+        "target": {
+          "x": 957.5,
+          "y": 862.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/away-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/diagonal-away-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/diagonal-away-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 122,
+      "stillFoot_px_median": 0.34,
+      "p90": 1.75,
+      "max": 8.72,
+      "stances": 10,
+      "stanceDrift_px_median": 2.95,
+      "stanceDrift_px_max": 9.31,
+      "flatDrift_px_median": 1.66,
+      "flatDrift_px_max": 8.66,
+      "worstFlat": [
+        14,
+        36
+      ],
+      "worstStance": [
+        14,
+        36,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/diagonal-away-left.mp4",
+      "frames": 136,
+      "walkingFrames": 130,
+      "walkingSeconds": 5.417,
+      "anchorErrorMax": 2.5421149729252077e-13,
+      "anchorDriftMax": 0.9411764705888923,
+      "scaleErrorMax": 2.320366121466577e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 15.48222872730613,
+        "halfStride": 24.208345931741555,
+        "switchFrame": 24,
+        "target": {
+          "x": 837.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/diagonal-away-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/diagonal-away-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/diagonal-away-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 137,
+      "stillFoot_px_median": 0.35,
+      "p90": 1.64,
+      "max": 9.41,
+      "stances": 16,
+      "stanceDrift_px_median": 2.93,
+      "stanceDrift_px_max": 6.68,
+      "flatDrift_px_median": 1.44,
+      "flatDrift_px_max": 4.57,
+      "worstFlat": [
+        119,
+        133
+      ],
+      "worstStance": [
+        119,
+        133,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/diagonal-away-right.mp4",
+      "frames": 156,
+      "walkingFrames": 151,
+      "walkingSeconds": 6.292,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9411764705898171,
+      "scaleErrorMax": 4.496403249731884e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 13.289853836356448,
+        "halfStride": 21.756885617121423,
+        "switchFrame": 12,
+        "target": {
+          "x": 1077.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/diagonal-away-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/diagonal-toward-left.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/diagonal-toward-left.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 170,
+      "stillFoot_px_median": 0.23,
+      "p90": 1.33,
+      "max": 9.13,
+      "stances": 26,
+      "stanceDrift_px_median": 1.59,
+      "stanceDrift_px_max": 8.17,
+      "flatDrift_px_median": 1.09,
+      "flatDrift_px_max": 4.36,
+      "worstFlat": [
+        190,
+        200
+      ],
+      "worstStance": [
+        178,
+        186,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/diagonal-toward-left.mp4",
+      "frames": 208,
+      "walkingFrames": 204,
+      "walkingSeconds": 8.5,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9375000000006078,
+      "scaleErrorMax": 2.956523914576792e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 30.636394693769446,
+        "halfStride": 32.50107647540845,
+        "switchFrame": 12,
+        "target": {
+          "x": 837.5,
+          "y": 897.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/diagonal-toward-left-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/diagonal-toward-right.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/diagonal-toward-right.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 197,
+      "stillFoot_px_median": 0.23,
+      "p90": 1.77,
+      "max": 9.48,
+      "stances": 33,
+      "stanceDrift_px_median": 1.24,
+      "stanceDrift_px_max": 6.45,
+      "flatDrift_px_median": 1.12,
+      "flatDrift_px_max": 3.65,
+      "worstFlat": [
+        116,
+        126
+      ],
+      "worstStance": [
+        85,
+        92,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/diagonal-toward-right.mp4",
+      "frames": 252,
+      "walkingFrames": 248,
+      "walkingSeconds": 10.333,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9375000000005118,
+      "scaleErrorMax": 2.9387603461827894e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 22.920719036751393,
+        "halfStride": 34.65077263643597,
+        "switchFrame": 12,
+        "target": {
+          "x": 1077.5,
+          "y": 897.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/diagonal-toward-right-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/diagonal.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/diagonal.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 118,
+      "stillFoot_px_median": 0.32,
+      "p90": 1.89,
+      "max": 5.34,
+      "stances": 15,
+      "stanceDrift_px_median": 4.03,
+      "stanceDrift_px_max": 10.55,
+      "flatDrift_px_median": 1.67,
+      "flatDrift_px_max": 4.75,
+      "worstFlat": [
+        14,
+        20
+      ],
+      "worstStance": [
+        102,
+        109,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/diagonal.mp4",
+      "frames": 132,
+      "walkingFrames": 127,
+      "walkingSeconds": 5.292,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9411764705891651,
+      "scaleErrorMax": 2.4780177909633494e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 11.148165667744552,
+        "halfStride": 34.94116010313594,
+        "switchFrame": 3,
+        "target": {
+          "x": 1077.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/diagonal-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/exit.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/exit.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 91,
+      "stillFoot_px_median": 0.33,
+      "p90": 1.96,
+      "max": 16.53,
+      "stances": 12,
+      "stanceDrift_px_median": 4.37,
+      "stanceDrift_px_max": 19.35,
+      "flatDrift_px_median": 1.34,
+      "flatDrift_px_max": 8.95,
+      "worstFlat": [
+        23,
+        32
+      ],
+      "worstStance": [
+        0,
+        10,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/exit.mp4",
+      "frames": 94,
+      "walkingFrames": 94,
+      "walkingSeconds": 3.917,
+      "anchorErrorMax": 5.684341886080802e-14,
+      "anchorDriftMax": 0.9444444444437305,
+      "scaleErrorMax": 2.162714451969805e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/exit-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/far-exit.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/far-exit.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 24,
+      "stillFoot_px_median": 0.34,
+      "p90": 0.68,
+      "max": 1.35,
+      "stances": 3,
+      "stanceDrift_px_median": 1.09,
+      "stanceDrift_px_max": 2.4,
+      "flatDrift_px_median": 1.09,
+      "flatDrift_px_max": 1.73,
+      "worstFlat": [
+        17,
+        23
+      ],
+      "worstStance": [
+        17,
+        23,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/far-exit.mp4",
+      "frames": 72,
+      "walkingFrames": 30,
+      "walkingSeconds": 1.25,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.8749999999986067,
+      "scaleErrorMax": 3.7614356074300304e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/far-exit-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/object-click.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/object-click.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 29,
+      "stillFoot_px_median": 0.37,
+      "p90": 1.15,
+      "max": 7.3,
+      "stances": 4,
+      "stanceDrift_px_median": 2.3,
+      "stanceDrift_px_max": 2.95,
+      "flatDrift_px_median": 1.18,
+      "flatDrift_px_max": 1.83,
+      "worstFlat": [
+        18,
+        27
+      ],
+      "worstStance": [
+        18,
+        27,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/object-click.mp4",
+      "frames": 180,
+      "walkingFrames": 29,
+      "walkingSeconds": 1.208,
+      "anchorErrorMax": 3.2155493553843715e-13,
+      "anchorDriftMax": 0.9444444444443085,
+      "scaleErrorMax": 8.493206138382448e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 28.866330903695943,
+        "halfStride": 43.8732131200812,
+        "switchFrame": 21,
+        "target": {
+          "x": 1242.5,
+          "y": 932.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/object-click-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/side-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/side-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 59,
+      "stillFoot_px_median": 0.21,
+      "p90": 0.66,
+      "max": 1.91,
+      "stances": 8,
+      "stanceDrift_px_median": 1.35,
+      "stanceDrift_px_max": 1.87,
+      "flatDrift_px_median": 0.52,
+      "flatDrift_px_max": 1.26,
+      "worstFlat": [
+        48,
+        58
+      ],
+      "worstStance": [
+        48,
+        58,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/side-far.mp4",
+      "frames": 72,
+      "walkingFrames": 59,
+      "walkingSeconds": 2.458,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9444444444438526,
+      "scaleErrorMax": 1.7319479184152442e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 9.678232542167052,
+        "halfStride": 24.96506866132194,
+        "switchFrame": 21,
+        "target": {
+          "x": 1097.5,
+          "y": 787.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/side-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/side-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/side-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 47,
+      "stillFoot_px_median": 0.32,
+      "p90": 1.07,
+      "max": 6.77,
+      "stances": 6,
+      "stanceDrift_px_median": 1.72,
+      "stanceDrift_px_max": 5.47,
+      "flatDrift_px_median": 0.7,
+      "flatDrift_px_max": 1.27,
+      "worstFlat": [
+        24,
+        28
+      ],
+      "worstStance": [
+        15,
+        24,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/side-near.mp4",
+      "frames": 72,
+      "walkingFrames": 47,
+      "walkingSeconds": 1.958,
+      "anchorErrorMax": 2.5421149729252077e-13,
+      "anchorDriftMax": 0.9444444444445997,
+      "scaleErrorMax": 8.559819519859957e-14,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 17.791636090269037,
+        "halfStride": 44.14643818981888,
+        "switchFrame": 21,
+        "target": {
+          "x": 1147.5,
+          "y": 922.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/side-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/toward-far.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/toward-far.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 130,
+      "stillFoot_px_median": 0.26,
+      "p90": 1.42,
+      "max": 7.99,
+      "stances": 21,
+      "stanceDrift_px_median": 1.12,
+      "stanceDrift_px_max": 3.14,
+      "flatDrift_px_median": 1.07,
+      "flatDrift_px_max": 3.23,
+      "worstFlat": [
+        153,
+        158
+      ],
+      "worstStance": [
+        153,
+        158,
+        "right"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/toward-far.mp4",
+      "frames": 188,
+      "walkingFrames": 182,
+      "walkingSeconds": 7.583,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9375000000006318,
+      "scaleErrorMax": 1.871836019518014e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 13.699040295394022,
+        "halfStride": 27.702587885294,
+        "switchFrame": 24,
+        "target": {
+          "x": 957.5,
+          "y": 827.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/toward-far-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/toward-near.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/toward-near.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 101,
+      "stillFoot_px_median": 0.23,
+      "p90": 1.72,
+      "max": 10.58,
+      "stances": 15,
+      "stanceDrift_px_median": 2.12,
+      "stanceDrift_px_max": 6.45,
+      "flatDrift_px_median": 1.27,
+      "flatDrift_px_max": 3.45,
+      "worstFlat": [
+        48,
+        55
+      ],
+      "worstStance": [
+        48,
+        55,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/toward-near.mp4",
+      "frames": 124,
+      "walkingFrames": 120,
+      "walkingSeconds": 5.0,
+      "anchorErrorMax": 2.2737367544323206e-13,
+      "anchorDriftMax": 0.9374999999997679,
+      "scaleErrorMax": 1.8640644583456378e-13,
+      "offFloorFrames": [],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 34.1562250572112,
+        "halfStride": 39.17512634172524,
+        "switchFrame": 24,
+        "target": {
+          "x": 957.5,
+          "y": 927.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/toward-near-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/trap-behind.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/trap-behind.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 102,
+      "stillFoot_px_median": 0.3,
+      "p90": 1.45,
+      "max": 9.15,
+      "stances": 10,
+      "stanceDrift_px_median": 2.22,
+      "stanceDrift_px_max": 10.71,
+      "flatDrift_px_median": 1.35,
+      "flatDrift_px_max": 2.87,
+      "worstFlat": [
+        16,
+        32
+      ],
+      "worstStance": [
+        16,
+        32,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/trap-behind.mp4",
+      "frames": 180,
+      "walkingFrames": 105,
+      "walkingSeconds": 4.375,
+      "anchorErrorMax": 4.687428401686771e-13,
+      "anchorDriftMax": 0.9411764705896657,
+      "scaleErrorMax": 1.9406698470447736e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        100
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 20.457839577058422,
+        "halfStride": 46.39218778512636,
+        "switchFrame": 3,
+        "target": {
+          "x": 1362.5,
+          "y": 857.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/trap-behind-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/trap-front.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/trap-front.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 68,
+      "stillFoot_px_median": 0.27,
+      "p90": 2.71,
+      "max": 10.92,
+      "stances": 10,
+      "stanceDrift_px_median": 4.38,
+      "stanceDrift_px_max": 11.85,
+      "flatDrift_px_median": 1.64,
+      "flatDrift_px_max": 9.08,
+      "worstFlat": [
+        24,
+        32
+      ],
+      "worstStance": [
+        52,
+        60,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/trap-front.mp4",
+      "frames": 180,
+      "walkingFrames": 73,
+      "walkingSeconds": 3.042,
+      "anchorErrorMax": 4.547473508864641e-13,
+      "anchorDriftMax": 0.9375000000004795,
+      "scaleErrorMax": 1.892930256985892e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        13,
+        14,
+        15,
+        16
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": {
+        "distance": 12.768107415594423,
+        "halfStride": 40.521456570905386,
+        "switchFrame": 12,
+        "target": {
+          "x": 1197.5,
+          "y": 942.5
+        }
+      }
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/trap-front-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/tree-behind.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/tree-behind.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 117,
+      "stillFoot_px_median": 0.29,
+      "p90": 1.35,
+      "max": 8.07,
+      "stances": 13,
+      "stanceDrift_px_median": 2.4,
+      "stanceDrift_px_max": 6.61,
+      "flatDrift_px_median": 0.94,
+      "flatDrift_px_max": 2.09,
+      "worstFlat": [
+        65,
+        81
+      ],
+      "worstStance": [
+        81,
+        88,
+        "left"
+      ]
+    },
+    "telemetry": {
+      "clip": "road/tree-behind.mp4",
+      "frames": 122,
+      "walkingFrames": 122,
+      "walkingSeconds": 5.083,
+      "anchorErrorMax": 1.6077746776921858e-13,
+      "anchorDriftMax": 0.9444444444441762,
+      "scaleErrorMax": 2.1604940059205546e-13,
+      "offFloorFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": "tmp/walkqa/checks-05/road/tree-behind-worst.png",
+    "status": "FAIL"
+  },
+  {
+    "clip": "road/tree-front.mp4",
+    "footcheck": {
+      "video": "tmp/walkqa/final-05/road/tree-front.mp4",
+      "res": "1920x1080",
+      "walkingPairs": 2,
+      "stillFoot_px_median": 5.3,
+      "p90": 7.85,
+      "max": 8.49,
+      "stances": 0,
+      "stanceDrift_px_median": null,
+      "stanceDrift_px_max": null,
+      "flatDrift_px_median": null,
+      "flatDrift_px_max": null,
+      "worstFlat": null,
+      "worstStance": null
+    },
+    "telemetry": {
+      "clip": "road/tree-front.mp4",
+      "frames": 180,
+      "walkingFrames": 1,
+      "walkingSeconds": 0.042,
+      "anchorErrorMax": 0.0,
+      "anchorDriftMax": 0.0,
+      "scaleErrorMax": 6.661338147750939e-15,
+      "offFloorFrames": [
+        0
+      ],
+      "frozenTelemetryFrames": [],
+      "arrival": null
+    },
+    "feetstrip": null,
+    "status": "unresolved"
+  }
+]

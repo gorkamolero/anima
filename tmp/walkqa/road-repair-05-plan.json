@@ -1,0 +1,39 @@
+{
+  "place": "place-f2d0a7f7f76225002663",
+  "start": [
+    960,
+    925
+  ],
+  "beats": [
+    {
+      "name": "tree-front",
+      "click": [
+        700,
+        940
+      ],
+      "frames": 180,
+      "start": [
+        430,
+        820
+      ]
+    },
+    {
+      "name": "exit",
+      "start": [
+        700,
+        900
+      ],
+      "exit": "edge-left",
+      "frames": 144
+    },
+    {
+      "name": "far-exit",
+      "start": [
+        1008,
+        751
+      ],
+      "exit": "far",
+      "frames": 144
+    }
+  ]
+}

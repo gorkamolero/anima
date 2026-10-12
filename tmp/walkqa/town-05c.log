@@ -1,0 +1,21 @@
+start 
+changed-depot You paint a sweeping red spiral onto the wooden bench. It stands out starkly against the weathered timber, a bold new mark on the decaying platform, easily visible even from the far end of the harbor.
+road The bus, an ancient hulk, rattles and groans as it pulls away from the depot, leaving the salt-choked air and the distant cry of gulls behind. The road ahead, cracked and overgrown, winds into the gathering gloom. The town recedes in the rearview mirror, its gabled roofs and narrow lanes swallowed by the encroaching shadows.
+road-left 
+road-right 
+road-far 
+road-near 
+alley You turn from the main road, leaving the gnarled trees and oppressive fog behind. The alley beside the house is narrower, darker, and the silence here feels heavier. The scent of brine intensifies, mixing with something vaguely organic and decaying.
+alley-left 
+alley-right 
+alley-far 
+alley-near 
+chosen-option Your knuckles rap against the cold, damp wood of the alley door. The sound is muffled, absorbed by the oppressive silence of the alley, but a faint, high-pitched squeaking can be heard from within.
+changed-alley You paint a large, swirling red spiral across the weather-beaten wood of the door. The vibrant color stands out starkly against the grime and decay, a fresh, defiant mark in the oppressive alley.
+return-0 
+return-1 
+reload 
+inside The heavy timber doors of the bus depot creak open as you push through, revealing the dimly lit interior. The salty air outside gives way to the stale, close atmosphere within, carrying faint echoes of distant gulls.
+inside-option You step through the doorway. The stale air of the depot is immediately replaced by the damp, chilling embrace of the Innsmouth fog. The world outside is a muted tapestry of grey, the familiar platform now barely visible through the swirling mist.
+finish 
+PASS /Users/gorkolas/Developer/anima/tmp/open-world-demo/journey.md

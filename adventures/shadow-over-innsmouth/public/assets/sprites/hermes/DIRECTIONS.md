@@ -83,9 +83,12 @@ requiring the old two-pixel exact endpoint.
 
 ## Verification status
 
-See `tmp/walkqa/reports/05-foot-lock.md`. Initial contact-driven trials still fail
-the independent pixel gate, particularly at toe-off and cycle transitions. Full
-four-scene proofs, including every diagonal, are being recorded. Do not describe
-this walking system as accepted until the report says so.
+See `tmp/walkqa/reports/05-foot-lock.md`. The complete 63-clip matrix is **not
+accepted: 62 pixel failures and one no-stance clip**. All reported worst stances
+were inspected. Exact runtime anchors do not correct inaccurate physical-foot
+tracks or boot deformation. Swing points still lose identity through crossings;
+the stance trajectories can leave the floor mask. Road diagonal walking time is
+5.292 seconds, but toward-right still takes 10.333 seconds. These assets and the
+motor require further work before acceptance.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

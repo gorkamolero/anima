@@ -1,0 +1,7 @@
+Scope: 3 of 7 workspace projects
+packages/engine typecheck$ tsc --noEmit
+packages/engine typecheck: Done
+api typecheck$ tsc --noEmit
+adventures/shadow-over-innsmouth typecheck$ tsc --noEmit
+adventures/shadow-over-innsmouth typecheck: Done
+api typecheck: Done

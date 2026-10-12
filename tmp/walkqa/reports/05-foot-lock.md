@@ -83,6 +83,9 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 
 ## Commits
 
+- Final report commit: `docs(walking): record the complete failed pixel acceptance matrix` (this report, proof index and verification records).
+
+- 6876cdd: remove dead speed/heading helpers and extractor arguments.
 - d43bd5d: restore the requested scene between proof beats.
 
 - 0fa659c: baseline and call ledger.
@@ -91,11 +94,11 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 - f0b950e: diagonal assets, physical-foot metadata and call provenance.
 - ef10c0c: contact-driven motor, local view heading sectors, tests, adapter and capture telemetry.
 
-- Milestone: physical-foot registration replaces image-half identity; existing side/away/toward contact sheets reviewed frame by frame. Motor uses anchor-relative placement and a single frame clock, view-relative eight-sector headings, switch-only turns, bounded anchor correction, and contact-pose hold. 343 tests pass; engine and game typecheck pass. Pixel proof still pending.
+- Milestone: physical-foot registration replaces image-half identity; existing side/away/toward contact sheets reviewed frame by frame. Motor uses anchor-relative placement and a single frame clock, view-relative eight-sector headings, switch-only turns, bounded anchor correction, and contact-pose hold. 343 tests pass; engine and game typecheck pass. Pixel proof was still pending at this milestone.
 - Diagonal assets generated with Kling v3 Standard, 5 seconds, audio disabled. Away loop [28,76), toward [60,85), 24fps. Constant normalization matches 1030.5px median side height; no per-frame alignment. Previews and manifests under public/assets/sprites/hermes.
 
 - Milestone: second side trial remains FAIL, 11.24px, worst 28-39 (`tmp/walkqa/trial-05b/side-near-worst.png`). Early profile handoff was rejected because it anchored the still-swinging boot; restored profile switches 3/21. Full capture runs use the later reviewed data.
-- Town replay first attempt stopped at the obsolete 2px arrival assertion. Updated to independently require half-stride distance and a switch frame. Retry pending.
+- Town replay first attempt stopped at the obsolete 2px arrival assertion. Updated to independently require half-stride distance and a switch frame. Retry was pending at this milestone; the later replay passed.
 
 - Milestone: all three non-road exit retries now complete and release input after the explicit-exit/half-stride integration fix. Source walking clips are separated at the actual scene transition; full uncut videos, full telemetry and destination frames are retained under `tmp/walkqa/transitions-05/`. This prevents a second background from corrupting the checker median. No walking frames are omitted from the source segment.
 - Verification after exit fix: 346 tests pass; engine, game and API typecheck/lint pass. Town replay is now reaching both return exits; final replay PASS: 83 cached calls, 0 uncached calls; no TTS requests (`tmp/open-world-demo/run-1.json`, `journey.md`).
@@ -131,5 +134,115 @@ below are source frame height times scale; these are not tiny sprites.
 | depot-inside/exit | 5/144 | 408-456 | Starts at the door; only five walking frames then scene transition. New approach starts farther from the door. | tmp/walkqa/no-stance-05/depot-inside-exit-2.png |
 
 Raw diagnosis telemetry: `tmp/walkqa/no-stance-05/telemetry.json`. New measurements are included above; all seven formerly unmeasured cases now fail with measurable stances. None of these explanations is counted as a pass.
+
+## Final review — not accepted
+
+All 63 clips were submitted to the unchanged independent checker at 1920×1080,
+24 fps. **62 fail the 1.5 px maximum; road/tree-front has no measurable stance.**
+All 62 reported worst stances were generated with the supplied `feetstrip.py` and
+opened for visual review. The complete frame ranges, paths, walking durations and
+floor violations are in [the evidence index](05-foot-lock-evidence.md).
+Machine-readable merged results: `tmp/walkqa/results-05.json`.
+
+This is a regression from the prior report's six passing clips, even though the
+original road diagonal is substantially faster. Exact contact algebra is not a
+substitute for the required pixel evidence. No acceptance threshold or checker
+was changed.
+
+### Remaining defects and evidence
+
+1. **Contact tracking and support timing remain wrong in the artwork.** Soles
+   rotate/deform around toe-off and the registration point can drift relative to
+   the actual sole. In the side cycle, frames 12–19 put the swing R point on the
+   outgoing leg; frames 0–1 collapse the two points onto one boot. The archived
+   neutral sheet has particularly bad swing tracks. These are visible in
+   `tmp/walkqa/contacts-05/hermes-fal-veo-transparent-loop-contacts.png` and
+   `hermes-neutral-walk-contacts.png`. All per-frame fields exist, but the requirement
+   for reliable physical keypoints on both feet is **not met**. The tighter-ROI
+   experiment was rejected after independent checks; the full proof uses the
+   original reviewed stance seeds, not that experiment.
+2. **Visible foot motion remains around crossings and handoffs.** Examples:
+   `tmp/walkqa/checks-05/alley/side-near-worst.png` (18–28),
+   `tmp/walkqa/checks-05/depot-inside/diagonal-worst.png` (66–70), and
+   `tmp/walkqa/checks-05/road/diagonal-worst.png` (102–109). Some checker runs combine
+   a toe-off, incoming support and cycle change into one screen-half stance.
+   That limits diagnosis, but does not turn these failures into passes.
+3. **The motor can leave the floor mask during a stance.** String pulling and
+   rounded corners constrain the planned path; they do not constrain the drawn
+   body trajectory after contact locking. 747/5,259 logged walking frames fail
+   the floor test. `tmp/walkqa/evidence-05/alley-diagonal-toward-right-100.png`
+   shows Hermes on the building edge. The per-frame indices are in the telemetry
+   results. This requires planning entire stance trajectories inside the floor,
+   not snapping the sprite or increasing anchor slide.
+4. **Toward diagonals remain too slow.** Road toward-left/right require 8.500 /
+   10.333 walking seconds, excluding held frames. Away-left/right take 5.417 /
+   6.292 seconds; the original road diagonal takes 5.292 seconds. Eight nominal
+   sectors do not guarantee the drawn ground displacement matches each heading.
+5. **Road tree-front is unresolved.** Restoring the scene fixes the earlier
+   wrong-scene capture, but this start enters the left exit after only one walking
+   frame. The location ID changes before the background finishes loading.
+   `tmp/walkqa/evidence-05/road-tree-front-0.png` and `road-tree-front-1.png`
+   document that short source segment. It has zero checker stances and is not
+   counted as a pass or a valid foreground crossing. The current road floor mask
+   has no floor at y950 and below; the proposed foreground crossings were not
+   demonstrated.
+6. **Occluded/mis-cropped evidence remains explicitly limited.** Outside
+   post-behind, away-near and several diagonal strips show boots hidden by the net;
+   they cannot establish visible sole planting. `tmp/walkqa/evidence-05/depot-outside-post-behind-15.png`
+   provides full-frame context. The supplied road exit feetstrip crops foreground
+   nets rather than Hermes's feet; see `tmp/walkqa/evidence-05/road-exit-0.png` and
+   `road-exit-5.png` for the visible walking figure. The raw checker failure is
+   retained; there is no measurement exemption.
+
+### Assets and reproducibility
+
+Both diagonals and their previews are under
+`adventures/shadow-over-innsmouth/public/assets/sprites/hermes/`:
+
+- `hermes-away-right-keyframe.png`, `hermes-walk-away-right.png`,
+  `hermes-walk-away-right.json`, `hermes-walk-away-right.manifest.json`,
+  `hermes-walk-away-right-preview-3x.mp4`.
+- `hermes-toward-right-keyframe.png`, `hermes-walk-toward-right.png`,
+  `hermes-walk-toward-right.json`, `hermes-walk-toward-right.manifest.json`,
+  `hermes-walk-toward-right-preview-3x.mp4`.
+
+`DIRECTIONS.md` contains the prompts, source references, model and request IDs,
+loop ranges and normalization details. The opposite diagonal directions use
+horizontal mirroring. No Veo was called for Brief 05. The 3 edit / 2 Kling / 2 BRIA
+attempts are recorded individually in `tmp/walkqa/calls.md`; the first front
+keyframe edit was rejected for facing left. The ledger also retains its separate
+historical segmentation-attempt entries.
+
+Main captures: `tmp/walkqa/final-05/<scene>/<clip>.mp4`, with matching `.json`
+telemetry and `-sheet.png` previews. Each scene's `matrix.json` lists all retained
+clips; `render.json` is only the last capture batch. Exits with at least two source
+frames are split at the actual scene change; full uncut videos, telemetry and
+final destination PNGs remain under `tmp/walkqa/transitions-05/`. No source walking
+frames were omitted. Road tree-front remains uncut because its source is only one
+frame, and is explicitly unresolved above.
+
+### Verification
+
+- `pnpm test:run`: **340 passing tests** after removing six obsolete tests for
+  deleted heading/playback helpers. Log: `tmp/walkqa/tests-final-05.log`.
+- Python registration tests: **3 pass**, `tmp/walkqa/registration-tests-final-05.log`.
+- Engine, game and API typecheck/lint: **pass**, `typecheck-final-05.log` and
+  `lint-all-final-05.log` under `tmp/walkqa/`.
+- Anchor `verify:art`: outside and inside **pass**, with the existing art warnings;
+  `tmp/walkqa/verify-art-05.log`.
+- Current muted town replay: **pass, 83 cached calls, 0 uncached calls**.
+  `tmp/walkqa/town-05c.log` and the isolated current record
+  `tmp/walkqa/verification-05/town-run-1.json`. Older `run-2.json` and later numbered
+  files in `tmp/open-world-demo/` predate this verification and are not new runs.
+- Telemetry has zero repeated position/frame pairs while walking; this is narrower
+  than an independent pixel freeze or complete motion-arc acceptance.
+
+Final artifact check: all 63 videos are 1920×1080 at 24 fps and their frame counts match their telemetry. Video hashes and unchanged checker hashes are in `tmp/walkqa/verification-05/proof-manifest.json`.
+
+Task-owned API 4317 and game 8080 servers were stopped, along with the task browser sessions. No capture or checker workers remain. The pre-existing untracked `packages/engine/src/debug/AgentDebug.test.ts` was preserved.
+
+The broader Footfall goal is not complete. Remaining work includes reliable
+contact tracks, drawing-aware stance routing, valid foreground crossings and
+successful pixel proofs. No push, merge, deployment or GitHub settings changes.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

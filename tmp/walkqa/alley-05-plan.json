@@ -1,0 +1,179 @@
+{
+  "place": "place-2635d8cd03bce818a634",
+  "beats": [
+    {
+      "name": "away-near",
+      "start": [
+        1050,
+        925
+      ],
+      "click": [
+        1050,
+        850
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-near",
+      "start": [
+        1050,
+        850
+      ],
+      "click": [
+        1050,
+        930
+      ],
+      "frames": 72
+    },
+    {
+      "name": "away-far",
+      "start": [
+        1010,
+        890
+      ],
+      "click": [
+        1010,
+        800
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-far",
+      "start": [
+        1050,
+        780
+      ],
+      "click": [
+        1050,
+        840
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-near",
+      "start": [
+        750,
+        925
+      ],
+      "click": [
+        1160,
+        925
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-far",
+      "start": [
+        750,
+        790
+      ],
+      "click": [
+        1160,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal",
+      "start": [
+        800,
+        920
+      ],
+      "click": [
+        1150,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-right",
+      "start": [
+        800,
+        920
+      ],
+      "click": [
+        1150,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-left",
+      "start": [
+        1150,
+        790
+      ],
+      "click": [
+        800,
+        920
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-left",
+      "start": [
+        1150,
+        920
+      ],
+      "click": [
+        800,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-right",
+      "start": [
+        800,
+        790
+      ],
+      "click": [
+        1150,
+        920
+      ],
+      "frames": 72
+    },
+    {
+      "name": "object-click",
+      "start": [
+        500,
+        860
+      ],
+      "object": "crate",
+      "frames": 144
+    },
+    {
+      "name": "crate-behind",
+      "start": [
+        350,
+        850
+      ],
+      "click": [
+        560,
+        820
+      ],
+      "frames": 144
+    },
+    {
+      "name": "crate-front",
+      "start": [
+        350,
+        890
+      ],
+      "click": [
+        580,
+        890
+      ],
+      "frames": 144
+    },
+    {
+      "name": "exit",
+      "start": [
+        385,
+        925
+      ],
+      "exit": "edge-left",
+      "frames": 144
+    }
+  ]
+}

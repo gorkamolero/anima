@@ -1,0 +1,512 @@
+{
+  "clips": [
+    {
+      "video": "tmp/walkqa/final-05/alley/away-far.mp4",
+      "sha256": "bc937d952c92b328679077baf92abd1bc45db99b95ca366c085dee6771cb600f",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/away-near.mp4",
+      "sha256": "91e24871c4f20f72af3d66561e9416331196e9a23f0d44cc0e35ac0b03d4f0b5",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "84"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/crate-behind.mp4",
+      "sha256": "9788f1067df6db0ea2f00c437f97ff6681d512c9b5bf1d7d48d8ea8fb817a1e9",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "144"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/crate-front.mp4",
+      "sha256": "c0968f2ed93b76fe356776c1adbb4e6c3011cad1f0cd367dea94dff8de2ab6c5",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "144"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/diagonal-away-left.mp4",
+      "sha256": "ed8a1459bc3b48fccef3f69ad9f5ce0ef271124c3bb4177366496977ede658ca",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/diagonal-away-right.mp4",
+      "sha256": "8fc21ba9c2c461102b1c36daf7a83a2252547d10f18b888144e2a779a160623d",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/diagonal-toward-left.mp4",
+      "sha256": "e5fa97ca2371a9d45bac8b4d0593e4aa713c404c3f8b39bd43e68b798a2e35dd",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/diagonal-toward-right.mp4",
+      "sha256": "703509eb1ad380f95ad4fd90d5a5292ea6190a288db525d5becffccbe8ea7611",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "208"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/diagonal.mp4",
+      "sha256": "f158798be21ac6723c5ee4e4e8e4fcbc7920a61597f3c9cf5c7e13ad6d8e055b",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "84"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/exit.mp4",
+      "sha256": "9f34d7c5c41eacfc4f13fc9d94b8840c3aaf564ca63a719c21cc71615a334a0c",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "14"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/object-click.mp4",
+      "sha256": "ec1f34f80055540a8d9847731cdca4ce73ba07bf27638072e92e344d99d3e30c",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "144"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/side-far.mp4",
+      "sha256": "5b4b7de43811b0d6a181e8291013eb14d1147495ec48243538b371ffaf6f1fe2",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "116"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/side-near.mp4",
+      "sha256": "a61280eeef4d3974b55ee619fd6c451d2a51bf7164caf77b6f1ce1eb35e7fcee",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/toward-far.mp4",
+      "sha256": "51e996fe983f2435f378b2528ec07f1d6589a33a5eedebe913893fa054e87f38",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/alley/toward-near.mp4",
+      "sha256": "f56281bedac269ebe74fcb32bfafbea3818abbd81d2126ffada62ac818274f95",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "96"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/away-far.mp4",
+      "sha256": "ed1483aef53c493a40b890394c140e5a7e3b40f9f282e629badec449d0ef27da",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/away-near.mp4",
+      "sha256": "bd050f5f86e8cedb646a03aa8b665eddd429fd2d8208bf2e9134d99b6fad1ac0",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/bench-behind.mp4",
+      "sha256": "25765d34049995185515c45280035542fae04b911fcd0d81d93f289ff9c5bb9c",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/bench-front.mp4",
+      "sha256": "8d9524123be37ba70f6eb64a26dd23c26c1149b78c8fec7bd35164404503f5e3",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "144"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-away-left.mp4",
+      "sha256": "bb097257d7e7e25df7f9dc7ba9f400733077d86ace5455e086eef14ef7de33df",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "80"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-away-right.mp4",
+      "sha256": "2eea28547dca37b148150f34f6c7eb2a781a41fe4ad1165e98fa30b70d31ca53",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "124"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-toward-left.mp4",
+      "sha256": "7a959853c31065e3d44deb12a5dfab2c3eaff256fe34e37d5c5804aec41c1bf9",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "172"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal-toward-right.mp4",
+      "sha256": "75f9209789cb9163f2c5f52d5a87427dddbd3be6c48176a74ac27030fb1cda35",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "208"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/diagonal.mp4",
+      "sha256": "6b2694deedfbe29006245c30514676d57223632ff0639daf14f84f56100cf411",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "100"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/exit.mp4",
+      "sha256": "2efc4a137409db728563a0da9b3b3b4e31761a993f32fd844da7b295aaf1baf6",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "29"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/object-click.mp4",
+      "sha256": "2c0175462925c1c5cb82a2c83bcedaee282703ce03c286d639eed079805d3426",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/side-far.mp4",
+      "sha256": "04fc31fb0f9be7e5dbdf55858c662f5cbaa37749523169afc0bd95f99ed29c6e",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/side-near.mp4",
+      "sha256": "64c31e136d739059f4ceb0edbcc406e5d79dd213ae13c08c12cd712a196931e5",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "112"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/toward-far.mp4",
+      "sha256": "f1709ae72b8edaf5aa30ceb51f73b839e6e2c783adfda5c2b6b62384ac6bd73d",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "100"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-inside/toward-near.mp4",
+      "sha256": "a130aa70503258edc6a4442c644b7a4f4c50ebeada436f5e997d914c24a5a8c4",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/away-far.mp4",
+      "sha256": "c142c33c0ea3687a62b3f9de1707397cbf80a12e1f3ade5486b453bcaec2b6c0",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/away-near.mp4",
+      "sha256": "38460db6e36fe1b7f2f6e484c71a0dfd5b7fc6d15df77eb19fb24fbef77a8399",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "108"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-away-left.mp4",
+      "sha256": "a81782f18132e0ea8c0f704141d7cc3730441411f2f6ebd117e64c1a65a6253f",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "100"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-away-right.mp4",
+      "sha256": "2094ad4ce828fc0bf47d55c27723d2d3dbafc4db84fdbd12fa3e3b1f68864097",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-toward-left.mp4",
+      "sha256": "c7db2113a5ac3ec2f438c4e230804e3034d7b351ef9f0011005ce98ca00768a4",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "208"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal-toward-right.mp4",
+      "sha256": "04a34c8f6d18637c28559a8dc3d9ba09eef0fcd5b3cbd2fa4b09e2d04e33c432",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "200"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/diagonal.mp4",
+      "sha256": "d88941ce5a2b97bdd24b55957ccd3540ff5bbd1fcf513b4f6ac78cf979c33cd4",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "80"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/exit.mp4",
+      "sha256": "5c3db7d0a8debe8d48bf3922e97b48cb5ca2e29cd6964be469ec3dc065a9390e",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "28"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/object-click.mp4",
+      "sha256": "deae5c8a90c8a35d20bd6f5dd340dcc6e3bf7ca64977d8bf21bd788c60b95b60",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/post-behind.mp4",
+      "sha256": "1fc1d6ae71abbf98e2fb94c430763d558df46cd6d2334d5d1ed960e004f21f1a",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "120"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/post-front.mp4",
+      "sha256": "7052ffa8946034549ae1055f2549302b7faa8a9a594d6db468858faade7ea428",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "120"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/side-far.mp4",
+      "sha256": "660ec61263a83bf7f1165fad77a9ae4d0768ae0a90b5a7eecd470f54bee3483c",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/side-near.mp4",
+      "sha256": "567d45dea8414735d93c22342d71d0febc6103a1ba6a0395139de2369930e178",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/toward-far.mp4",
+      "sha256": "2282b2816406758f80a5608511867b5caaf00899971ebcb543e2b4ce4f8b87fe",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "80"
+    },
+    {
+      "video": "tmp/walkqa/final-05/depot-outside/toward-near.mp4",
+      "sha256": "c0576d2c5956f4fad99858661336e2b527467af4d623fd7479f4466da92cef6e",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "80"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/away-far.mp4",
+      "sha256": "76958ccabd3e86513cecb5f10b3da7dc6d5add40ee491f69892c297f2f165a3f",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "132"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/away-near.mp4",
+      "sha256": "13ecaef76fc6bb5463a4199c786cf10860c9c99253471114ee2db24af176d188",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "132"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/diagonal-away-left.mp4",
+      "sha256": "e63094ae519a7bc64874debfcb8d8393283ba3c9bb45276dbe0f40350c699e39",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "136"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/diagonal-away-right.mp4",
+      "sha256": "a196a81ad6be1013b9dcc6afaf4c4836bb67b7a74317e97e85734d37447df81f",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "156"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/diagonal-toward-left.mp4",
+      "sha256": "624f5ca6aa44eb1bd9cbe1d4c93ba85205585ff9422c4faceebc799c18f669bd",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "208"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/diagonal-toward-right.mp4",
+      "sha256": "2a8941be5d5483e577f8f260f41e29ec7eb7af578d34473c224ff353f5e9b808",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "252"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/diagonal.mp4",
+      "sha256": "602b9800c37759b7e392efda5f701ab6269b6dcc73cef8a35fd98a22a23800a5",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "132"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/exit.mp4",
+      "sha256": "f48dc585fd9fc977b70055d9565f6a65613594c44e5d71d72c92ef00b9c72355",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "94"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/far-exit.mp4",
+      "sha256": "fbc3ad630086933ab107c369d99d848d177e410f4621198bef8ed8041111dc56",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/object-click.mp4",
+      "sha256": "4e481a5bb15467ebba3976a4304d60313e82985a1c69814669dc3907333d847d",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/side-far.mp4",
+      "sha256": "c190c78bc03242d31c0cb6f2d89f049b15e32cb7fbe5248926810571fac17aa9",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/side-near.mp4",
+      "sha256": "e066353dc230921bcdbada4c6e7ea4af32da6e2df12b28e2b9d12a1282b08b47",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "72"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/toward-far.mp4",
+      "sha256": "844bf881cfff18061b9ee8e33725c02f4b1dcdc6e09eba37bc78911020f4cf69",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "188"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/toward-near.mp4",
+      "sha256": "2470164715807ff31c72a158d97c830c1578721f6d1d194133f2bdc001ab68ac",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "124"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/trap-behind.mp4",
+      "sha256": "f38389dff96dc4c168a582e658c087c14b2fd1308be27189b80d8f483f0f922c",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/trap-front.mp4",
+      "sha256": "78c0da87f1fb741abbf5e655147676b0416dcbe531b17c6d665203615997b9da",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/tree-behind.mp4",
+      "sha256": "7ba500ff03b9826d96f6a12ce075c8e2e10fa6aaf7afc398a8edef04f41e02e3",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "122"
+    },
+    {
+      "video": "tmp/walkqa/final-05/road/tree-front.mp4",
+      "sha256": "31ec70c5577eb089ffcf8a8584709e1087c27f91a391a59bec796ba49503045d",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1",
+      "nb_frames": "180"
+    }
+  ],
+  "tools": {
+    "tmp/walkqa/tools/footcheck.py": "149cc1ecf5fae1f1cb8708f2b142da22d5d6f3f9cd7f1a1163a6f88a20fcb7d4",
+    "tmp/walkqa/tools/feetstrip.py": "d668c07d122fdaf888193715311cc325967a8a6583507f2edefae6205ef5b4b3"
+  }
+}

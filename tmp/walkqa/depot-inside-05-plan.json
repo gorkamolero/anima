@@ -1,0 +1,179 @@
+{
+  "place": "inside",
+  "beats": [
+    {
+      "name": "away-near",
+      "start": [
+        900,
+        880
+      ],
+      "click": [
+        900,
+        805
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-near",
+      "start": [
+        900,
+        805
+      ],
+      "click": [
+        900,
+        885
+      ],
+      "frames": 72
+    },
+    {
+      "name": "away-far",
+      "start": [
+        900,
+        745
+      ],
+      "click": [
+        900,
+        700
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-far",
+      "start": [
+        900,
+        735
+      ],
+      "click": [
+        900,
+        795
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-near",
+      "start": [
+        600,
+        880
+      ],
+      "click": [
+        1010,
+        880
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-far",
+      "start": [
+        600,
+        745
+      ],
+      "click": [
+        1010,
+        745
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal",
+      "start": [
+        650,
+        875
+      ],
+      "click": [
+        1000,
+        745
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-right",
+      "start": [
+        650,
+        875
+      ],
+      "click": [
+        1000,
+        745
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-left",
+      "start": [
+        1000,
+        745
+      ],
+      "click": [
+        650,
+        875
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-left",
+      "start": [
+        1000,
+        875
+      ],
+      "click": [
+        650,
+        745
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-right",
+      "start": [
+        650,
+        745
+      ],
+      "click": [
+        1000,
+        875
+      ],
+      "frames": 72
+    },
+    {
+      "name": "object-click",
+      "start": [
+        575,
+        795
+      ],
+      "object": "ticket booth",
+      "frames": 180
+    },
+    {
+      "name": "bench-behind",
+      "start": [
+        1180,
+        880
+      ],
+      "click": [
+        1180,
+        820
+      ],
+      "frames": 180
+    },
+    {
+      "name": "bench-front",
+      "click": [
+        1180,
+        900
+      ],
+      "frames": 144,
+      "start": [
+        1180,
+        820
+      ]
+    },
+    {
+      "name": "exit",
+      "start": [
+        1100,
+        910
+      ],
+      "exit": "door",
+      "frames": 144
+    }
+  ]
+}

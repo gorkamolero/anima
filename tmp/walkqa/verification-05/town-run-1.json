@@ -1,0 +1,904 @@
+{
+  "run": 1,
+  "muted": true,
+  "records": [
+    {
+      "step": "start",
+      "frame": "01-run1-start.png",
+      "ms": 0
+    },
+    {
+      "step": "changed-depot",
+      "frame": "02-run1-changed-depot.png",
+      "ms": 12415,
+      "choice": "I paint a large red spiral on this object, clearly visible from across the platform.",
+      "object": "Bench",
+      "caption": "You paint a sweeping red spiral onto the wooden bench. It stands out starkly against the weathered timber, a bold new mark on the decaying platform, easily visible even from the far end of the harbor.",
+      "delta": "new"
+    },
+    {
+      "step": "road",
+      "frame": "03-run1-road.png",
+      "ms": 20096,
+      "choice": "I follow the road out of town toward Innsmouth.",
+      "object": "girl on bench",
+      "caption": "The bus, an ancient hulk, rattles and groans as it pulls away from the depot, leaving the salt-choked air and the distant cry of gulls behind. The road ahead, cracked and overgrown, winds into the gathering gloom. The town recedes in the rearview mirror, its gabled roofs and narrow lanes swallowed by the encroaching shadows.",
+      "delta": "new",
+      "travel": {
+        "description": "A desolate, overgrown road leading into the fog-shrouded, decaying town of Innsmouth. Weathered, gambrel-roofed houses line the distant streets, their windows dark and uninviting. The air grows heavy with the scent of salt and decay, and a low, distant hum seems to emanate from the sea.",
+        "kind": "new",
+        "template": "exterior",
+        "to": "innsmouth_road"
+      },
+      "place": {
+        "id": "place-f2d0a7f7f76225002663",
+        "ground": "derived",
+        "verdicts": [
+          {
+            "pass": true,
+            "why": "The bespectacled man's feet are firmly on the ground, and his size appears plausible relative to the surrounding environment, including the houses and trees, fitting the perspective of the scene."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, and his size is plausible in relation to the surrounding buildings and trees, suggesting he is standing on a street in a town."
+          },
+          {
+            "pass": true,
+            "why": "yes/yes. The feet are firmly on the ground, and the size is plausible next to the buildings and trees, not appearing too small or large for the scene."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, and his size is plausible in relation to the surrounding buildings and trees."
+          },
+          {
+            "pass": true,
+            "why": "The feet of the bespectacled man with a satchel are firmly on the ground, aligning with the perspective of the road. His size is also plausible and consistent with the surrounding buildings and trees, suggesting he fits naturally within the environment."
+          }
+        ]
+      }
+    },
+    {
+      "step": "road-left",
+      "frame": "04-run1-road-left.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 275,
+          "width": 159,
+          "x": 554,
+          "y": 606
+        },
+        "className": "Character",
+        "displayHeight": 275,
+        "motionState": "idle",
+        "scale": 0.2597,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 633,
+        "y": 881
+      }
+    },
+    {
+      "step": "road-right",
+      "frame": "05-run1-road-right.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 255,
+          "width": 148,
+          "x": 1333,
+          "y": 606
+        },
+        "className": "Character",
+        "displayHeight": 255,
+        "motionState": "idle",
+        "scale": 0.2411,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 1406,
+        "y": 861
+      }
+    },
+    {
+      "step": "road-far",
+      "frame": "06-run1-road-far.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 162,
+          "width": 94,
+          "x": 869,
+          "y": 608
+        },
+        "className": "Character",
+        "displayHeight": 162,
+        "motionState": "idle",
+        "scale": 0.1529,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 916,
+        "y": 770
+      }
+    },
+    {
+      "step": "road-near",
+      "frame": "07-run1-road-near.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 318,
+          "width": 184,
+          "x": 701,
+          "y": 605
+        },
+        "className": "Character",
+        "displayHeight": 318,
+        "motionState": "idle",
+        "scale": 0.3003,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 793,
+        "y": 923
+      }
+    },
+    {
+      "step": "alley",
+      "frame": "08-run1-alley.png",
+      "ms": 15402,
+      "choice": "I go down the alley beside this road.",
+      "object": "left house",
+      "caption": "You turn from the main road, leaving the gnarled trees and oppressive fog behind. The alley beside the house is narrower, darker, and the silence here feels heavier. The scent of brine intensifies, mixing with something vaguely organic and decaying.",
+      "delta": "new",
+      "travel": {
+        "description": "A narrow, dark alley running alongside a decaying house in Innsmouth. The air is thick with the smell of brine and decay. What little light penetrates the fog struggles to reach the cobblestones.",
+        "kind": "new",
+        "template": "exterior",
+        "to": "alley-beside-house"
+      },
+      "place": {
+        "id": "place-2635d8cd03bce818a634",
+        "ground": "derived",
+        "verdicts": [
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, aligning correctly with the perspective of the cobblestone street. His size is also plausible in relation to the surrounding buildings and objects, such as the drainpipe next to him and the street furniture."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, and his size is plausible in relation to the surrounding buildings and street level."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet appear to be firmly on the ground, and his size is proportionate to the buildings and environment around him, suggesting he belongs in the scene."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and objects like the doorway and window. He appears to be of average human height within this environment."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and environment."
+          }
+        ]
+      }
+    },
+    {
+      "step": "alley-left",
+      "frame": "09-run1-alley-left.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 422,
+          "width": 244,
+          "x": 296,
+          "y": 457
+        },
+        "className": "Character",
+        "displayHeight": 422,
+        "motionState": "idle",
+        "scale": 0.3984,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 418,
+        "y": 879
+      }
+    },
+    {
+      "step": "alley-right",
+      "frame": "10-run1-alley-right.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 466,
+          "width": 269,
+          "x": 1035,
+          "y": 456
+        },
+        "className": "Character",
+        "displayHeight": 466,
+        "motionState": "idle",
+        "scale": 0.4397,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 1169,
+        "y": 922
+      }
+    },
+    {
+      "step": "alley-far",
+      "frame": "11-run1-alley-far.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 327,
+          "width": 189,
+          "x": 799,
+          "y": 459
+        },
+        "className": "Character",
+        "displayHeight": 327,
+        "motionState": "idle",
+        "scale": 0.3089,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 894,
+        "y": 786
+      }
+    },
+    {
+      "step": "alley-near",
+      "frame": "12-run1-alley-near.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 479,
+          "width": 277,
+          "x": 507,
+          "y": 456
+        },
+        "className": "Character",
+        "displayHeight": 479,
+        "motionState": "idle",
+        "scale": 0.452,
+        "textureKey": "hermes-idle-v2-normalized",
+        "x": 645,
+        "y": 935
+      }
+    },
+    {
+      "step": "chosen-option",
+      "frame": "13-run1-chosen-option.png",
+      "ms": 12485,
+      "choice": "You knock on the door.",
+      "object": "door left",
+      "caption": "Your knuckles rap against the cold, damp wood of the alley door. The sound is muffled, absorbed by the oppressive silence of the alley, but a faint, high-pitched squeaking can be heard from within.",
+      "delta": "none",
+      "place": {
+        "id": "place-2635d8cd03bce818a634",
+        "ground": "derived",
+        "verdicts": [
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, aligning correctly with the perspective of the cobblestone street. His size is also plausible in relation to the surrounding buildings and objects, such as the drainpipe next to him and the street furniture."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, and his size is plausible in relation to the surrounding buildings and street level."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet appear to be firmly on the ground, and his size is proportionate to the buildings and environment around him, suggesting he belongs in the scene."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and objects like the doorway and window. He appears to be of average human height within this environment."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and environment."
+          }
+        ]
+      }
+    },
+    {
+      "step": "changed-alley",
+      "frame": "14-run1-changed-alley.png",
+      "ms": 12351,
+      "choice": "I use red paint to draw a large permanent spiral across this object. I am painting now, not repeating my previous action; the red mark is plainly visible.",
+      "object": "door left",
+      "caption": "You paint a large, swirling red spiral across the weather-beaten wood of the door. The vibrant color stands out starkly against the grime and decay, a fresh, defiant mark in the oppressive alley.",
+      "delta": "new",
+      "place": {
+        "id": "place-2635d8cd03bce818a634",
+        "ground": "derived",
+        "verdicts": [
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, aligning correctly with the perspective of the cobblestone street. His size is also plausible in relation to the surrounding buildings and objects, such as the drainpipe next to him and the street furniture."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are firmly on the ground, and his size is plausible in relation to the surrounding buildings and street level."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet appear to be firmly on the ground, and his size is proportionate to the buildings and environment around him, suggesting he belongs in the scene."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and objects like the doorway and window. He appears to be of average human height within this environment."
+          },
+          {
+            "pass": true,
+            "why": "The man's feet are clearly on the ground, and his size is plausible in relation to the surrounding buildings and environment."
+          }
+        ]
+      }
+    },
+    {
+      "step": "return-0",
+      "frame": "15-run1-return-0.png",
+      "ms": 0
+    },
+    {
+      "step": "return-1",
+      "frame": "16-run1-return-1.png",
+      "ms": 0
+    },
+    {
+      "step": "reload",
+      "frame": "17-run1-reload.png",
+      "ms": 0
+    },
+    {
+      "step": "inside",
+      "frame": "18-run1-inside.png",
+      "ms": 13467,
+      "choice": "I walk through the depot doors into the depot interior.",
+      "object": "girl on bench",
+      "caption": "The heavy timber doors of the bus depot creak open as you push through, revealing the dimly lit interior. The salty air outside gives way to the stale, close atmosphere within, carrying faint echoes of distant gulls.",
+      "delta": "none",
+      "travel": {
+        "description": "The interior of the bus depot is cavernous and damp. Old, peeling advertisements for long-defunct shipping lines cling to the walls. The air is still and heavy, carrying the scent of dust, brine, and something faintly metallic. The bus from outside dominates the space, its rear door ajar, while a small, grimy counter serves as a ticket booth. Dim light filters in from high windows, barely illuminating the cobweb-draped corners.",
+        "kind": "anchor",
+        "template": "interior",
+        "to": "inside"
+      }
+    },
+    {
+      "step": "inside-option",
+      "frame": "19-run1-inside-option.png",
+      "ms": 15215,
+      "choice": "I walk through the doorway into the fog outside.",
+      "object": "doorway",
+      "caption": "You step through the doorway. The stale air of the depot is immediately replaced by the damp, chilling embrace of the Innsmouth fog. The world outside is a muted tapestry of grey, the familiar platform now barely visible through the swirling mist.",
+      "delta": "none",
+      "travel": {
+        "kind": "anchor",
+        "to": "outside"
+      }
+    },
+    {
+      "step": "finish",
+      "frame": "20-run1-finish.png",
+      "ms": 0
+    }
+  ],
+  "calls": [
+    {
+      "at": "2026-10-12T01:42:31.864Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:33.554Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:34.353Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:34.674Z",
+      "kind": "narrate-resolve",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:34.682Z",
+      "kind": "image",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:35.692Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:35.693Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:35.693Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:38.163Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:40.288Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:40.288Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:40.289Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:47.453Z",
+      "kind": "narrate-resolve",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:47.461Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:47.468Z",
+      "kind": "place",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:56.022Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:58.195Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:58.197Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:42:58.198Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:09.967Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:10.131Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:10.309Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:10.419Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.184Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.361Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.472Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.509Z",
+      "kind": "narrate-resolve",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.518Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:11.521Z",
+      "kind": "place",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.395Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.397Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.398Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.716Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.718Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:12.720Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:13.841Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:13.842Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:13.843Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:15.889Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:16.519Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.198Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.199Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.200Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.643Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.644Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.645Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:18.745Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:20.448Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:20.782Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:20.783Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:20.784Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:22.798Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:22.800Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:22.801Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:31.225Z",
+      "kind": "narrate-resolve",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:43.794Z",
+      "kind": "narrate-options",
+      "ms": 2,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:44.129Z",
+      "kind": "narrate-resolve",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:44.138Z",
+      "kind": "image",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:49.359Z",
+      "kind": "interactables",
+      "ms": 4,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:51.479Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:51.481Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:51.482Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:56.963Z",
+      "kind": "interactables",
+      "ms": 2,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:43:58.772Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:02.026Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:03.039Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:03.373Z",
+      "kind": "narrate-resolve",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:04.069Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:04.070Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:04.070Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:09.698Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:11.738Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:11.739Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:11.740Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:14.205Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:16.540Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:16.541Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:16.543Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:17.543Z",
+      "kind": "narrate-resolve",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:20.227Z",
+      "kind": "interactables",
+      "ms": 2,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:22.339Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:22.341Z",
+      "kind": "narrate-options",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-12T01:44:22.342Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    }
+  ]
+}
