@@ -1,0 +1,6 @@
+{
+  "tool": "image_gen",
+  "attempt": 2,
+  "prompt": "Precise sprite edit, strict minimal change. Edit ONLY the small lifted boot and ankle in this source image. Keep ALL OTHER PIXELS AS CLOSE TO SOURCE AS POSSIBLE, especially the bent raised knee at image right, BOTH leg silhouettes, head, face, torso, arms, hands, satchel and planted boot. Keep the knee bent exactly as now. Rotate the raised boot so its sole rests flat adjacent to the planted boot, with only a tiny downward settle. BOTH soles must be flat and BOTH legs must remain visibly distinct. DO NOT straighten the knee or make an upright symmetrical stance. Do not redraw or clean up the linework, face, hands, clothing textures. Same full image canvas, margins, location and scale; transparent background. This is a motion continuity frame and shifting anything except the raised ankle/boot will break the animation.",
+  "outputPath": "/Users/gorkolas/.codex/generated_images/01a130f0-5005-7461-9aff-13a177e4dddd/exec-824a710e-8ae8-4b49-bcc1-e745d2a2090b.png"
+}

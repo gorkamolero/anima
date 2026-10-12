@@ -1,0 +1,6 @@
+{
+  "tool": "image_gen",
+  "attempt": 1,
+  "prompt": "Use case: precise-object-edit. Edit this exact front-three-quarter game sprite into a stopped passing pose. Keep entire head, hair, face, glasses, neck, torso, jacket, BOTH ARMS AND HANDS, satchel and strap identical in position, size, outline and color. Change only the boots and minimal lower legs. Both soles should rest flat, close together at their current positions. The forward boot is already planted, keep it exactly unchanged; lower only the other heel slightly. Keep both legs visibly present with existing overlap. Do not straighten knees, change body height, move head, arms or bag, widen stance or reposition feet. Same full 612x1059 canvas proportions and margins, no recentering/rescaling. Transparent background, no shadow or text.",
+  "outputPath": "/Users/gorkolas/.codex/generated_images/01a130f0-5005-7461-9aff-13a177e4dddd/exec-294584ef-e051-4a72-b5f6-fe7fe9b4ef40.png"
+}

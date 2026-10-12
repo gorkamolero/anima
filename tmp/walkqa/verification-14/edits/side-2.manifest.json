@@ -1,0 +1,6 @@
+{
+  "tool": "image_gen",
+  "attempt": 2,
+  "prompt": "Minimal image edit for animation continuity. Keep this source sprite EXACTLY as it is. Only flatten the sole of the foremost boot, leaving its toe and sole at the same floor height as now. Preserve the entire rear planted boot without any change: its bottom is at source y=1018 on this 612x1059 image and it MUST NOT MOVE UP OR SIDEWAYS. Keep both knees, both leg silhouettes, the head, torso, satchel, arms, hands, original linework and grain exactly unchanged. No tidying up, no redraw of the face or clothes. Boots remain close together and BOTH are visible. Preserve ALL outermost pixels' placement and full canvas margins; do not shrink the character or move the feet upward. Transparent background.",
+  "outputPath": "/Users/gorkolas/.codex/generated_images/01a130f0-5005-7461-9aff-13a177e4dddd/exec-e326882f-e24f-4d9c-ac53-67c5dc90d2a1.png"
+}

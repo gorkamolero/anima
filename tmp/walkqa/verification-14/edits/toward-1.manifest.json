@@ -1,0 +1,6 @@
+{
+  "tool": "image_gen",
+  "attempt": 1,
+  "prompt": "Use case: precise-object-edit. Edit this exact front-view game sprite into a stopped passing pose. Keep the entire head, hair, face, glasses, torso, jacket, BOTH ARMS AND HANDS, satchel and strap identical in position, size, outline and color. Change only the feet and minimal lower legs: both boots flat on the floor right where they already are, very close together. The image-right boot is planted: preserve it exactly. Settle the image-left boot by at most 10 source pixels so its sole is flat. Preserve both legs and their existing outlines as much as possible. Do NOT recenter, raise head, straighten body, widen stance, move arms or bag. Exact same full 612x1059 canvas proportions and margins. Transparent background, no shadow or text.",
+  "outputPath": "/Users/gorkolas/.codex/generated_images/01a130f0-5005-7461-9aff-13a177e4dddd/exec-d38858ca-3785-4d2e-89a6-2a6755406bbf.png"
+}

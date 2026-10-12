@@ -1,0 +1,6 @@
+{
+  "tool": "image_gen",
+  "attempt": 2,
+  "prompt": "Minimal sprite edit for animation continuity. Preserve this image EXACTLY, except rotate the image-left free boot slightly so its sole is flat. KEEP THE IMAGE-RIGHT PLANTED BOOT EXACTLY UNCHANGED at the same position, including its sole at y=989 and its within-shoe contact x=334.52 y=967.02 on the 612x1059 source canvas. Do not move either boot UP; keep the image-left toe at y=1003 and bring only the heel down. Keep BOTH legs, knees, jacket, arms, hands, satchel, face, glasses, hair and all upper body exactly unchanged. Do not redraw or simplify original linework and grain. Exact same full canvas, margins and subject size. No recentering, rescaling, crop, pose straightening or added shadow. Transparent background.",
+  "outputPath": "/Users/gorkolas/.codex/generated_images/01a130f0-5005-7461-9aff-13a177e4dddd/exec-0ec1836c-e62b-47b6-8d77-79a14930b3c9.png"
+}
