@@ -1,0 +1,12 @@
+{
+  "status": "IN_QUEUE",
+  "request_id": "01a13133-f44d-74e1-b566-0d938bae1b8e",
+  "response_url": "https://queue.fal.run/fal-ai/kling-video/requests/01a13133-f44d-74e1-b566-0d938bae1b8e",
+  "status_url": "https://queue.fal.run/fal-ai/kling-video/requests/01a13133-f44d-74e1-b566-0d938bae1b8e/status",
+  "cancel_url": "https://queue.fal.run/fal-ai/kling-video/requests/01a13133-f44d-74e1-b566-0d938bae1b8e/cancel",
+  "logs": null,
+  "metrics": {},
+  "queue_position": 0,
+  "user_queue_position": 0,
+  "user_queued_count": 1
+}
