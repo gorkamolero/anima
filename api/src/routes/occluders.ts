@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
-import { deriveOccluders } from "../services/occluders.js";
+import { cachedFloor, deriveOccluders } from "../services/occluders.js";
 import { getPlace } from "./places.js";
 export const occludersRoutes = new Hono();
 /** Same anchor and ?image resolution as interactables, plus persisted place IDs.
@@ -16,7 +16,17 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 		return c.json({ error: "Invalid background path" }, 400);
 	}
 	try {
-		return c.json(await deriveOccluders(image, place?.ground));
+		const geometry = await deriveOccluders(image, place?.ground);
+		const floor = place?.ground?.floor ?? (await cachedFloor(image));
+		if (!floor)
+			return c.json(
+				{
+					error:
+						"Segmented floor missing; explicitly derive this scene before walking",
+				},
+				409,
+			);
+		return c.json({ ...geometry, floor });
 	} catch (error) {
 		if (error instanceof Error && "code" in error && error.code === "ENOENT")
 			return c.json(

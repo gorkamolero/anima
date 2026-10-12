@@ -307,22 +307,39 @@ export class CharacterMotor {
 			return false;
 		}
 		this.pose = best.pose;
-		// Unequal source stance lengths must not create rushed half-steps.
-		// Preserve nominal cycle cadence while distributing frames within each stance.
+		// A partial turn keeps the full source stance's frame timing. Stretching
+		// its few remaining poses over a whole step caused frozen walking frames.
+		const contacts = this.pose.cycle.contacts;
+		let first = this.pose.frame;
+		for (let n = 0; n < contacts.length - 1; n++) {
+			const previous = (first + contacts.length - 1) % contacts.length;
+			if (contacts[previous].planted !== this.foot) break;
+			first = previous;
+		}
 		let count = 1;
 		while (
-			count < this.pose.cycle.contacts.length &&
-			this.pose.cycle.contacts[
-				(this.pose.frame + count) % this.pose.cycle.contacts.length
-			].planted === this.foot
+			count < contacts.length &&
+			contacts[(first + count) % contacts.length].planted === this.foot
 		)
 			count++;
-		const cadence =
-			(this.pose.cycle.fps * this.pose.cycle.switchFrames.length) /
-			this.pose.cycle.contacts.length;
-		this.frameMs = starting
-			? 1000 / this.pose.cycle.fps
-			: 1000 / (cadence * count);
+		// Modulate only the animation clock: the contact solver still owns every
+		// pixel of travel. Far poses use slower cadence; near poses quicker.
+		const mask = this.area.mask;
+		let far = mask.height,
+			near = 0;
+		for (let i = 0; i < mask.data.length; i++)
+			if (mask.data[i]) {
+				const row = Math.floor(i / mask.width);
+				far = Math.min(far, row);
+				near = Math.max(near, row);
+			}
+		const row = (this.target.y * mask.height) / 1080 - 0.5;
+		const depth = Math.max(
+			0,
+			Math.min(1, (row - far) / Math.max(1, near - far)),
+		);
+		const cadence = 1.6 + 0.6 * depth;
+		this.frameMs = 1000 / (cadence * count);
 		this.heading = best.heading;
 		this.apply();
 		// Zero is within the one-pixel steering allowance. All steering is now discrete.

@@ -1218,6 +1218,7 @@ export class StoryGameScene extends BaseScene {
 			throw new Error(`Occluders request failed: ${response.status}`);
 		const data = (await response.json()) as {
 			occluders: Occluder[];
+			floor: FloorMask;
 			exits: Exit[];
 		};
 		const base =
@@ -1294,7 +1295,14 @@ export class StoryGameScene extends BaseScene {
 				...this.visibleFloor,
 				data: [...this.visibleFloor.data],
 			};
-			bridgeOccluders(bridged, this.objectLayers);
+			if (!this.generatedPlace) {
+				const segmented = refineMask(data.floor);
+				bridgeOccluders(segmented, this.objectLayers);
+				for (let i = 0; i < bridged.data.length; i++)
+					bridged.data[i] = bridged.data[i] && segmented.data[i] ? 1 : 0;
+			} else {
+				bridgeOccluders(bridged, this.objectLayers);
+			}
 			const footprints = objectFootprints(
 				bridged,
 				this.objectLayers,

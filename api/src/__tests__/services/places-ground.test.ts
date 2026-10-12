@@ -62,6 +62,7 @@ vi.mock("../../services/ground-repair.js", () => ({
 	repairGround: vi.fn(() => false),
 }));
 
+import { findPath } from "../../../../packages/engine/src/walkarea/navigation";
 import { placesRoutes } from "../../routes/places.js";
 import { maskToGround } from "../../services/ground.js";
 
@@ -174,6 +175,35 @@ it("accepts conservative coverage and does not rederive existing places after a 
 	const place = await (await request()).json();
 	expect(place.ground.ground).toBe("derived");
 	expect(place.ground.notes.join(" ")).toContain("0.2");
+	place.ground.derivationVersion = -100;
+	mocks.rows.set(place.id, JSON.stringify(place));
+	const loaded = await placesRoutes.request(
+		`http://localhost/places/${place.id}`,
+	);
+	expect(loaded.status).toBe(200);
+	const old = await loaded.json();
+	expect(old.ground.derivationVersion).toBe(-100);
+	expect(
+		findPath(old.ground.floor, { x: 400, y: 800 }, { x: 1400, y: 800 }).length,
+	).toBeGreaterThan(1);
 	await request();
 	expect(mocks.derive).toHaveBeenCalledTimes(1);
+	const refreshed = await placesRoutes.request(
+		`http://localhost/places/${place.id}/rederive`,
+		{ method: "POST" },
+	);
+	expect(refreshed.status).toBe(200);
+	expect(mocks.derive).toHaveBeenCalledTimes(2);
+	expect((await refreshed.json()).id).toBe(place.id);
+	mocks.derive.mockRejectedValueOnce(new Error("Replacement failed"));
+	await placesRoutes.request(`http://localhost/places/${place.id}/rederive`, {
+		method: "POST",
+	});
+	expect(
+		(
+			await (
+				await placesRoutes.request(`http://localhost/places/${place.id}`)
+			).json()
+		).ground.ground,
+	).toBe("derived");
 });

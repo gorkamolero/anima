@@ -23,3 +23,15 @@ Geometry implementation and regression tests; anchor segmented floor integration
 Added baseline-adjacent silhouette footprints for every runtime occluder, using a depth-scaled 0.15 m support strip and subcell alpha sampling. Subtraction runs after bridge construction; existing perspective-aware 0.3 m body erosion supplies clearance. Physical footprint pixels are exported as `area.objectFootprints`; `walkstats.py` reports object contacts separately and explicitly prints MISSING for historical logs without footprint geometry. Negative out-of-image contacts now use floor rounding.
 
 Validation: two footprint tests pass (behind-strip bridge preserved, support and below-baseline pixels excluded, body dilation enforced, mismatched grids rejected). Engine and game typechecks pass. This is not yet anchor floor intersection or a visual geometry sign-off.
+
+## Floor intersection and first visual audit
+
+Cached anchor floor masks were available, requiring zero paid calls. `/occluders/:scene` now supplies segmented floor; anchor runtime intersects the authored band with segmented/bridged floor before support subtraction. All ten runtime overlays were rendered with `tools/overlay07.py` and opened individually.
+
+Observed failures: depot-outside green avoids nets but authored disjoint ranges leave isolated left/right patches; depot-inside has a very narrow band and its current occluder response is empty. Road's stored 04b floor has only a central patch, preventing left-tree reachability; alley has foreground floor only and an empty occluder response. Pier retains tiny disconnected deck patches. Stepped-street's labelled lamp-post mask incorrectly includes background building/stairs. Church green is within central aisle; lobby green remains on floor/rug; grocery green stays within central/foreground floor; square green avoids fountain/plinth but has no established rear route. These are initial diagnostics, not final acceptance. Files: `walkareas/<scene>.png`, underlying `geometry-07/<scene>/{area,navigation}.json`.
+
+## Compatibility and timing increments
+
+04b landed as bdbc1cf, releasing its reserved API files. Added explicit `POST /api/places/:id/rederive` using the existing image and stable ID. Timestamped start/result audit JSON is stored in that place's proof directory. Failed replacement preserves a previously working record. Regression sets derivationVersion=-100, GETs it, finds a walking path, and verifies no implicit derivation; explicit rederive and failed-replacement preservation also pass (4 service tests).
+
+Motor partial turns now retain complete-stance frame timing instead of stretching a few poses across an entire step. Animation cadence interpolates 1.6–2.2 steps/s from far to near navigable depth; contact placement remains unchanged. Thirteen motor tests pass, including a new depth-cadence/anchor-preservation test. Actual clip freeze/speed verification is still outstanding.

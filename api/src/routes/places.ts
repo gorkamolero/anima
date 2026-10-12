@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { Hono } from "hono";
 import { z } from "zod";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
@@ -54,11 +54,28 @@ async function createPlace(
 		template: "exterior" | "interior";
 		description: string;
 		refresh?: boolean;
+		id?: string;
 	},
 	origin: string,
 ): Promise<Place> {
-	const id = placeId(input.parent, input.to);
+	const id = input.id ?? placeId(input.parent, input.to);
 	const existing = await getPlace(id);
+	const audit =
+		existing && input.refresh
+			? `${proofDirectory(id)}/rederive-${Date.now()}.json`
+			: undefined;
+	if (audit) {
+		await mkdir(proofDirectory(id), { recursive: true });
+		await writeFile(
+			audit,
+			JSON.stringify({
+				id,
+				status: "started",
+				at: new Date().toISOString(),
+				previousVersion: existing?.ground.derivationVersion,
+			}),
+		);
+	}
 	if (existing && !input.refresh) {
 		if (existing.ground.ground === "failed") return existing;
 		const labels = await interactablesRoutes.request(
@@ -209,6 +226,27 @@ async function createPlace(
 		);
 	}
 	place.ground = ground;
+	if (audit) {
+		await writeFile(
+			audit,
+			JSON.stringify({
+				id,
+				status: ground.ground === "failed" ? "failed" : "complete",
+				at: new Date().toISOString(),
+				previousVersion: existing?.ground.derivationVersion,
+				nextVersion: ground.derivationVersion,
+				reason: ground.reason,
+				preservedPrevious:
+					ground.ground === "failed" && existing?.ground.ground !== "failed",
+			}),
+		);
+		if (
+			ground.ground === "failed" &&
+			existing &&
+			existing.ground.ground !== "failed"
+		)
+			return existing;
+	}
 	await writeFile(
 		`${proofDirectory(id)}/result.json`,
 		JSON.stringify(place, null, 2),
@@ -261,6 +299,30 @@ placesRoutes.post("/places", async (c) => {
 			},
 			502,
 		);
+	} finally {
+		pending.delete(id);
+	}
+});
+
+/** Explicit per-place refresh; reuse the stored background and retain a working
+ * previous floor if the attempted replacement fails. Audit lives beside proofs. */
+placesRoutes.post("/places/:id/rederive", async (c) => {
+	const id = c.req.param("id");
+	const place = await getPlace(id);
+	if (!place) return c.json({ error: "Unknown place" }, 404);
+	if (pending.has(id))
+		return c.json({ error: "Place derivation already running" }, 409);
+	try {
+		pending.set(
+			id,
+			createPlace(
+				{ ...place, to: id, refresh: true },
+				new URL(c.req.url).origin,
+			),
+		);
+		return c.json(await pending.get(id));
+	} catch (error) {
+		return c.json({ error: derivationError(error) }, 502);
 	} finally {
 		pending.delete(id);
 	}
