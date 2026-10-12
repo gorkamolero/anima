@@ -182,8 +182,20 @@ async function action(step, choice, pick = false) {
 }
 async function walkPlace(step) {
 	const before = qa(),
-		g = before.generatedPlace?.ground;
-	if (g?.ground !== "derived")
+		g =
+			before.generatedPlace?.ground ??
+			(before.location === "outside"
+				? JSON.parse(
+						readFileSync(
+							resolve(
+								root,
+								"adventures/shadow-over-innsmouth/public/backgrounds/bus-station-flat-v1.ground.json",
+							),
+							"utf8",
+						),
+					)
+				: { ground: "authored", groundLine: { points: before.groundLine } });
+	if (g?.ground !== "derived" && before.location !== "inside")
 		throw new Error(`${step} ground is ${g?.ground}`);
 	const line = g.groundLine.points;
 	const floor = evaluate("window.__anima.scene.walkArea.mask");
@@ -219,7 +231,8 @@ async function walkPlace(step) {
 		.filter(
 			(p) =>
 				interior(p) &&
-				p.x >= 35 &&
+				p.x >= 100 &&
+				p.x <= 1820 &&
 				p.y < 948 &&
 				exits.every((e) => Math.hypot(e.x - p.x, e.y - p.y) > 90) &&
 				!hotspots.some(
@@ -313,10 +326,77 @@ async function walkPlace(step) {
 	if (states[3].scale <= states[2].scale)
 		throw new Error("Scale did not grow toward camera");
 	const art = await evaluate(
-		`window.__anima.verifyArt(${JSON.stringify(`http://localhost:4317${before.generatedPlace.background.replace(".png", ".landmarks.json")}`)},{referenceCharacterId:'hermes'})`,
+		`window.__anima.verifyArt(${JSON.stringify(before.generatedPlace ? `http://localhost:4317${before.generatedPlace.background.replace(".png", ".landmarks.json")}` : `backgrounds/${before.location === "outside" ? "bus-station-flat-v1" : "arkham-bus-depot-flat-2d"}.landmarks.json`)},{referenceCharacterId:'hermes'})`,
 	);
 	writeFileSync(resolve(out, `${step}-art.json`), JSON.stringify(art, null, 2));
 	if (!art.pass) throw new Error("Art verification failed");
+}
+async function depotChecks() {
+	const result = evaluate(`(()=>{
+		const s=window.__anima.scene,k=s.katSeatedSprite,a=s.walkArea;
+		const hotspots=s.getReviewQaSnapshot().hotspots;
+		const expected=[['bus','van'],['waiting_bench','bench']];
+		for(const [id,label] of expected){
+			const h=hotspots.find(h=>h.id===id)?.bounds,o=s.objectLayers.find(l=>l.data.label===label)?.data.bbox;
+			if(!h||!o||Math.abs(h.x-o.x)>2||Math.abs(h.y-o.y)>2||Math.abs(h.width-o.w)>2||Math.abs(h.height-o.h)>2)throw Error('Depot hotspot mismatch: '+id);
+		}
+		const door=hotspots.find(h=>h.id==='depot_doors').bounds;
+		const label=s.interactables.find(o=>/depot door/i.test(o.name));
+		if(!label||Math.abs(door.x-label.bounds[0]*1920)>2)throw Error('Door hotspot mismatch');
+		const bench=s.objectLayers.find(l=>l.data.label==='bench').data;
+		const baseline=Math.max(...bench.baseline.map(p=>p.y));
+		const expectedScale=a.baseScale*a.perspective.slope*(baseline-a.perspective.horizonY);
+		if(!k.visible||Math.abs(k.scaleX/expectedScale-1)>.03||Math.abs(k.depth-(10+k.y/20))>.01)throw Error('Kat placement/depth mismatch');
+		return {kat:{x:k.x,y:k.y,scale:k.scaleX,depth:k.depth},hotspots};
+	})()`);
+	await frame("depot-hotspots-and-kat", result);
+}
+async function replayExit(id, destination, label) {
+	const from = qa().location;
+	evaluate(
+		`(()=>{const s=window.__anima.scene,e=s.sceneExits.find(e=>e.id===${JSON.stringify(id)});if(!e||!e.to)throw Error('Missing saved exit');window.__anima.click(e.region.reduce((n,p)=>n+p.x,0)/e.region.length,e.region.reduce((n,p)=>n+p.y,0)/e.region.length);return true})()`,
+	);
+	await poll(
+		label,
+		qa,
+		(x) =>
+			x.location !== from &&
+			!x.openWorld.busy &&
+			x.hermes.motionState === "idle" &&
+			x.interactables.length,
+		180000,
+	);
+	if (destination && qa().location !== destination)
+		throw Error(label + ": wrong destination");
+	await frame(label);
+}
+async function replayTown() {
+	// Replay persisted town connections, retaining the narrative/edit journey below
+	// as the default creation test. This mode cannot create a substitute town.
+	await depotChecks();
+	await walkPlace("depot");
+	await replayExit("edge-left", null, "road-arrival");
+	const road = qa().location;
+	await walkPlace("road");
+	await replayExit("far", null, "alley-arrival");
+	await walkPlace("alley");
+	const parentExit = evaluate(
+		`window.__anima.scene.sceneExits.find(e=>e.to===${JSON.stringify(road)})?.id`,
+	);
+	await replayExit(parentExit, road, "road-return");
+	const depotExit = evaluate(
+		"window.__anima.scene.sceneExits.find(e=>e.to==='outside')?.id",
+	);
+	await replayExit(depotExit, "outside", "depot-return");
+	await replayExit("depot_doors", "inside", "inside-arrival");
+	await walkPlace("inside");
+	await replayExit("bus_platform", "outside", "depot-final");
+	await depotChecks();
+	const uncached = ledger()
+		.slice(baseline)
+		.filter((c) => !c.cached);
+	if (uncached.length)
+		throw Error("Town replay made " + uncached.length + " uncached calls");
 }
 try {
 	browser(["set", "viewport", "1920", "1080"]);
@@ -346,6 +426,12 @@ try {
 	browser(["click", "button.review-panel__toggle"]);
 	evaluate("window.__anima.scene.setPlacementDebugEnabled(false);true");
 	await frame("start");
+	if (process.argv.includes("--replay")) {
+		await replayTown();
+		report();
+		console.log("PASS saved town replay: 0 uncached calls");
+		process.exit(0);
+	}
 	const originalDepotImage = qa().backgroundTextureKey;
 	const changed = await action(
 		"changed-depot",

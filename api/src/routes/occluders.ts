@@ -48,14 +48,33 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 				},
 				409,
 			);
-		const geometry = await deriveOccluders(
-			image,
-			(place ? { ...place.ground, template: place.template } : undefined) ?? {
-				floor,
-				horizonY: anchorGround?.horizonY,
-				template: key === "inside" ? "interior" : "exterior",
-			},
-		);
+		// Shipped anchor derivations are immutable runtime assets. Re-derivation
+		// is explicit; a clean checkout must not spend calls rebuilding them.
+		const geometry = anchorGround
+			? {
+					occluders: JSON.parse(
+						await readFile(
+							imagePath(image).replace(/\.png$/, ".occluders.json"),
+							"utf8",
+						),
+					),
+					exits: JSON.parse(
+						await readFile(
+							imagePath(image).replace(/\.png$/, ".exits.json"),
+							"utf8",
+						),
+					),
+				}
+			: await deriveOccluders(
+					image,
+					(place
+						? { ...place.ground, template: place.template }
+						: undefined) ?? {
+						floor,
+						horizonY: anchorGround?.horizonY,
+						template: key === "inside" ? "interior" : "exterior",
+					},
+				);
 		return c.json({ ...geometry, floor });
 	} catch (error) {
 		if (error instanceof Error && "code" in error && error.code === "ENOENT")
