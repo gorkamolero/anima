@@ -11,7 +11,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 
-def register(previous, current, roi, radius=64, prediction=(0, 0)):
+def register(previous, current, roi, radius=64, prediction=(0, 0), masked=False):
     """Integer SSD on premultiplied RGB plus alpha, then a parabola per axis."""
     x0, y0, x1, y1 = roi
     def weighted(image):
@@ -29,11 +29,14 @@ def register(previous, current, roi, radius=64, prediction=(0, 0)):
     sh, sw = search.shape[:2]
     shape = (1 << (sh+th-2).bit_length(), 1 << (sw+tw-2).bit_length())
     cross = np.zeros(shape)
+    mask = (template[:, :, 3] > .5).astype(np.float32) if masked else np.ones(template.shape[:2], dtype=np.float32)
+    template = template * mask[:, :, None]
     for channel in range(4):
         cross += np.fft.irfft2(np.fft.rfft2(search[:, :, channel], s=shape) *
                               np.fft.rfft2(template[::-1, ::-1, channel], s=shape), s=shape)
-    energy = np.pad(np.sum(search**2, axis=2), ((1, 0), (1, 0))).cumsum(0).cumsum(1)
-    windows = energy[th:, tw:] - energy[:-th, tw:] - energy[th:, :-tw] + energy[:-th, :-tw]
+    energy = np.sum(search**2, axis=2)
+    windows = np.fft.irfft2(np.fft.rfft2(energy, s=shape) *
+                           np.fft.rfft2(mask[::-1, ::-1], s=shape), s=shape)[th-1:sh, tw-1:sw]
     cost = windows + np.sum(template**2) - 2*cross[th-1:sh, tw-1:sw]
     iy, ix = np.unravel_index(cost.argmin(), cost.shape)
     def sub(v0, v1, v2):
@@ -54,12 +57,17 @@ def extract(sheet, axis, travel, debug):
     for i, frame in enumerate(frames):
         previous = frames[i-1]
         ys, xs = np.nonzero(previous[:, :, 3] > 127)
-        center = w//2
+        center = (int(xs.min()) + int(xs.max()))//2
         top, bottom = max(0, int(ys.max()-.09*(ys.max()-ys.min()))), min(h, int(ys.max()+1))
         rois = [[max(0, int(xs.min())-6), top, center+4, bottom], [center-4, top, min(w, int(xs.max())+7), bottom]]
         choices = []
         for foot, roi in zip(('left', 'right'), rois):
             result = register(previous, frame, roi)
+            # A wide masked search can match the other boot. Establish identity
+            # using silhouette + colour first, then refine only locally.
+            refined = register(previous, frame, roi, radius=2,
+                               prediction=(result['dx'], result['dy']), masked=True)
+            result['dx'], result['dy'] = refined['dx'], refined['dy']
             weights = previous[roi[1]:roi[3], roi[0]:roi[2], 3].astype(float)
             yy, xx = np.indices(weights.shape)
             mass = max(1, weights.sum())
@@ -93,10 +101,14 @@ def extract(sheet, axis, travel, debug):
     m['footRegistration'] = pairs
     m['footContacts'] = [{'x': p['chosen']['point']['x']+p['chosen']['dx'], 'y': p['chosen']['point']['y']+p['chosen']['dy']} for p in pairs]
     m['rootMotionAxis'] = axis
-    m['rootMotionMethod'] = 'foot-roi-ssd-v3; 64px search; directional cyclic stance; body displacement = minus registered foot shift'
+    m['rootMotionMethod'] = 'foot-roi-ssd-v5; 64px silhouette search then 2px masked refinement; directional cyclic stance; body displacement = minus registered foot shift'
     # Periodic, zero-mean displacement relative to average cycle travel.
     vectors = np.array([[r['dx'], r['dy']] for r in m['rootMotion']])
-    offsets = np.cumsum(vectors - vectors.mean(axis=0), axis=0)
+    # Recover net transverse drift at contact handoffs, where the old foot
+    # is swinging, rather than leaking the recovery through every stance.
+    switches = np.array([pairs[i]['chosen']['foot'] != pairs[i-1]['chosen']['foot'] for i in range(len(pairs))], dtype=float)
+    if not switches.sum(): switches[:] = 1
+    offsets = np.cumsum(vectors - switches[:, None] / switches.sum() * vectors.sum(axis=0), axis=0)
     offsets -= offsets.mean(axis=0)
     m['visualRoot'] = [{'x': float(x), 'y': float(y)} for x, y in offsets]
     sheet.write_text(json.dumps(m, indent='\t')+'\n')

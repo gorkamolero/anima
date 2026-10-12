@@ -1622,9 +1622,15 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private setHermesMotionState(state: CharacterAnimationState): void {
+		const previousState = this.hermesMotionState;
 		this.hermesMotionState = state;
 		const sprite = this.hermesSprite;
 		if (!sprite) return;
+		if (state === "idle" && previousState === "walk") {
+			// Arrival must not replace the last contact with unrelated frame zero.
+			sprite.anims.stop();
+			return;
+		}
 		const direction = this.hermesWalkDirection;
 		const texture =
 			direction === "away"

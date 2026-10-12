@@ -18,6 +18,8 @@ const plan = JSON.parse(
 const out = resolve(arg("out", `tmp/walkqa/${plan.place}`));
 const session = arg("session", "walkqa");
 const width = Number(arg("width", "1920"));
+if (width !== 1920)
+	throw new Error("Footfall proof captures require 1920x1080");
 function run(command, args, input) {
 	const r = spawnSync(command, args, {
 		input,
@@ -97,7 +99,7 @@ for (const beat of plan.beats) {
 		first += 12
 	) {
 		const frames = evaluate(
-			`(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(12, beat.frames - first) : 12};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
+			`(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(12, beat.frames - first) : 12};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,visualOffset:s.hermesMotor.visualOffset,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
 		);
 		exitCompleted ||=
 			frames.at(-1).location !== sourceLocation &&
@@ -152,5 +154,9 @@ for (const beat of plan.beats) {
 }
 writeFileSync(
 	resolve(out, "render.json"),
-	JSON.stringify({ fps: 24, place: plan.place, logs }, null, 2),
+	JSON.stringify(
+		{ fps: 24, width, height: 1080, place: plan.place, logs },
+		null,
+		2,
+	),
 );
