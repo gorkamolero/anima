@@ -1,0 +1,363 @@
+[
+  {
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "headings": [
+      "left",
+      "right"
+    ],
+    "exits": [
+      {
+        "frame": 11,
+        "foot": "L",
+        "alphaIoU": 0.312912,
+        "headPx": 94.487,
+        "torsoPx": 91.53,
+        "lowerBodyIoU": 0.315927,
+        "freeFootPx": 185.615,
+        "bootSpreadPx": 87.563,
+        "passing": true,
+        "lowerBodyScore": 275.913,
+        "score": 275.913,
+        "remainingSupport": 10
+      },
+      {
+        "frame": 29,
+        "foot": "R",
+        "alphaIoU": 0.95134,
+        "headPx": 5.927,
+        "torsoPx": 4.739,
+        "lowerBodyIoU": 0.926841,
+        "freeFootPx": 12.566,
+        "bootSpreadPx": 92.384,
+        "passing": true,
+        "lowerBodyScore": 42.978,
+        "score": 42.978,
+        "remainingSupport": 4
+      }
+    ],
+    "entries": [
+      {
+        "frame": 11,
+        "foot": "L",
+        "alphaIoU": 0.312912,
+        "headPx": 94.487,
+        "torsoPx": 91.53,
+        "lowerBodyIoU": 0.315927,
+        "freeFootPx": 185.615,
+        "bootSpreadPx": 87.563,
+        "passing": true,
+        "lowerBodyScore": 275.913,
+        "score": 275.913,
+        "remainingSupport": 10
+      },
+      {
+        "frame": 29,
+        "foot": "R",
+        "alphaIoU": 0.95134,
+        "headPx": 5.927,
+        "torsoPx": 4.739,
+        "lowerBodyIoU": 0.926841,
+        "freeFootPx": 12.566,
+        "bootSpreadPx": 92.384,
+        "passing": true,
+        "lowerBodyScore": 42.978,
+        "score": 42.978,
+        "remainingSupport": 4
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away",
+    "headings": [
+      "away"
+    ],
+    "exits": [
+      {
+        "frame": 11,
+        "foot": "L",
+        "alphaIoU": 0.968925,
+        "headPx": 2.282,
+        "torsoPx": 4.937,
+        "lowerBodyIoU": 0.91909,
+        "freeFootPx": 18.7,
+        "bootSpreadPx": 69.692,
+        "passing": true,
+        "lowerBodyScore": 44.214,
+        "score": 44.214,
+        "remainingSupport": 9
+      },
+      {
+        "frame": 0,
+        "foot": "R",
+        "alphaIoU": 0.558773,
+        "headPx": 52.411,
+        "torsoPx": 64.707,
+        "lowerBodyIoU": 0.542411,
+        "freeFootPx": 72.763,
+        "bootSpreadPx": 102.533,
+        "passing": true,
+        "lowerBodyScore": 144.155,
+        "score": 144.155,
+        "remainingSupport": 5
+      }
+    ],
+    "entries": [
+      {
+        "frame": 11,
+        "foot": "L",
+        "alphaIoU": 0.968925,
+        "headPx": 2.282,
+        "torsoPx": 4.937,
+        "lowerBodyIoU": 0.91909,
+        "freeFootPx": 18.7,
+        "bootSpreadPx": 69.692,
+        "passing": true,
+        "lowerBodyScore": 44.214,
+        "score": 44.214,
+        "remainingSupport": 9
+      },
+      {
+        "frame": 0,
+        "foot": "R",
+        "alphaIoU": 0.558773,
+        "headPx": 52.411,
+        "torsoPx": 64.707,
+        "lowerBodyIoU": 0.542411,
+        "freeFootPx": 72.763,
+        "bootSpreadPx": 102.533,
+        "passing": true,
+        "lowerBodyScore": 144.155,
+        "score": 144.155,
+        "remainingSupport": 5
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward",
+    "headings": [
+      "toward"
+    ],
+    "exits": [
+      {
+        "frame": 13,
+        "foot": "L",
+        "alphaIoU": 0.975967,
+        "headPx": 1.774,
+        "torsoPx": 2.832,
+        "lowerBodyIoU": 0.951243,
+        "freeFootPx": 11.974,
+        "bootSpreadPx": 84.988,
+        "passing": true,
+        "lowerBodyScore": 38.097,
+        "score": 38.097,
+        "remainingSupport": 5
+      },
+      {
+        "frame": 0,
+        "foot": "R",
+        "alphaIoU": 0.75107,
+        "headPx": 26.664,
+        "torsoPx": 26.143,
+        "lowerBodyIoU": 0.808186,
+        "freeFootPx": 3.735,
+        "bootSpreadPx": 71.911,
+        "passing": true,
+        "lowerBodyScore": 40.895,
+        "score": 40.895,
+        "remainingSupport": 5
+      }
+    ],
+    "entries": [
+      {
+        "frame": 13,
+        "foot": "L",
+        "alphaIoU": 0.975967,
+        "headPx": 1.774,
+        "torsoPx": 2.832,
+        "lowerBodyIoU": 0.951243,
+        "freeFootPx": 11.974,
+        "bootSpreadPx": 84.988,
+        "passing": true,
+        "lowerBodyScore": 38.097,
+        "score": 38.097,
+        "remainingSupport": 5
+      },
+      {
+        "frame": 0,
+        "foot": "R",
+        "alphaIoU": 0.75107,
+        "headPx": 26.664,
+        "torsoPx": 26.143,
+        "lowerBodyIoU": 0.808186,
+        "freeFootPx": 3.735,
+        "bootSpreadPx": 71.911,
+        "passing": true,
+        "lowerBodyScore": 40.895,
+        "score": 40.895,
+        "remainingSupport": 5
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away-right",
+    "headings": [
+      "away-right",
+      "away-left"
+    ],
+    "exits": [
+      {
+        "frame": 30,
+        "foot": "L",
+        "alphaIoU": 0.813919,
+        "headPx": 15.564,
+        "torsoPx": 16.129,
+        "lowerBodyIoU": 0.765616,
+        "freeFootPx": 52.839,
+        "bootSpreadPx": 89.008,
+        "passing": true,
+        "lowerBodyScore": 98.53,
+        "score": 98.53,
+        "remainingSupport": 6
+      },
+      {
+        "frame": 21,
+        "foot": "R",
+        "alphaIoU": 0.423501,
+        "headPx": 81.376,
+        "torsoPx": 87.932,
+        "lowerBodyIoU": 0.377759,
+        "freeFootPx": 178.628,
+        "bootSpreadPx": 108.564,
+        "passing": true,
+        "lowerBodyScore": 267.993,
+        "score": 267.993,
+        "remainingSupport": 3
+      },
+      {
+        "frame": 8,
+        "foot": "L",
+        "alphaIoU": 0.879093,
+        "headPx": 1.353,
+        "torsoPx": 0.2,
+        "lowerBodyIoU": 0.697557,
+        "freeFootPx": 68.804,
+        "bootSpreadPx": 53.853,
+        "passing": true,
+        "lowerBodyScore": 112.512,
+        "score": 112.512,
+        "remainingSupport": 6
+      },
+      {
+        "frame": 44,
+        "foot": "R",
+        "alphaIoU": 0.449768,
+        "headPx": 72.899,
+        "torsoPx": 85.704,
+        "lowerBodyIoU": 0.411878,
+        "freeFootPx": 209.045,
+        "bootSpreadPx": 136.454,
+        "passing": true,
+        "lowerBodyScore": 301.971,
+        "score": 301.971,
+        "remainingSupport": 6
+      }
+    ],
+    "entries": [
+      {
+        "frame": 30,
+        "foot": "L",
+        "alphaIoU": 0.813919,
+        "headPx": 15.564,
+        "torsoPx": 16.129,
+        "lowerBodyIoU": 0.765616,
+        "freeFootPx": 52.839,
+        "bootSpreadPx": 89.008,
+        "passing": true,
+        "lowerBodyScore": 98.53,
+        "score": 98.53,
+        "remainingSupport": 6
+      },
+      {
+        "frame": 21,
+        "foot": "R",
+        "alphaIoU": 0.423501,
+        "headPx": 81.376,
+        "torsoPx": 87.932,
+        "lowerBodyIoU": 0.377759,
+        "freeFootPx": 178.628,
+        "bootSpreadPx": 108.564,
+        "passing": true,
+        "lowerBodyScore": 267.993,
+        "score": 267.993,
+        "remainingSupport": 3
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward-right",
+    "headings": [
+      "toward-right",
+      "toward-left"
+    ],
+    "exits": [
+      {
+        "frame": 7,
+        "foot": "L",
+        "alphaIoU": 0.825411,
+        "headPx": 17.846,
+        "torsoPx": 14.177,
+        "lowerBodyIoU": 0.762733,
+        "freeFootPx": 7.44,
+        "bootSpreadPx": 55.588,
+        "passing": true,
+        "lowerBodyScore": 45.063,
+        "score": 45.063,
+        "remainingSupport": 5
+      },
+      {
+        "frame": 19,
+        "foot": "R",
+        "alphaIoU": 0.536863,
+        "headPx": 58.617,
+        "torsoPx": 53.678,
+        "lowerBodyIoU": 0.370516,
+        "freeFootPx": 73.258,
+        "bootSpreadPx": 99.044,
+        "passing": true,
+        "lowerBodyScore": 160.967,
+        "score": 160.967,
+        "remainingSupport": 5
+      }
+    ],
+    "entries": [
+      {
+        "frame": 7,
+        "foot": "L",
+        "alphaIoU": 0.825411,
+        "headPx": 17.846,
+        "torsoPx": 14.177,
+        "lowerBodyIoU": 0.762733,
+        "freeFootPx": 7.44,
+        "bootSpreadPx": 55.588,
+        "passing": true,
+        "lowerBodyScore": 45.063,
+        "score": 45.063,
+        "remainingSupport": 5
+      },
+      {
+        "frame": 19,
+        "foot": "R",
+        "alphaIoU": 0.536863,
+        "headPx": 58.617,
+        "torsoPx": 53.678,
+        "lowerBodyIoU": 0.370516,
+        "freeFootPx": 73.258,
+        "bootSpreadPx": 99.044,
+        "passing": true,
+        "lowerBodyScore": 160.967,
+        "score": 160.967,
+        "remainingSupport": 5
+      }
+    ]
+  }
+]

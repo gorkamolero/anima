@@ -1,0 +1,91 @@
+[
+  {
+    "cycle": "hermes-walk-away",
+    "exits": [
+      11,
+      0
+    ],
+    "entries": [
+      11,
+      12,
+      0,
+      1
+    ],
+    "halfCycleCap": 15,
+    "maxWait": 18,
+    "uncoveredPhases": [
+      12,
+      13,
+      14
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away-right",
+    "exits": [
+      30,
+      21,
+      8,
+      44
+    ],
+    "entries": [
+      30,
+      8,
+      29,
+      9,
+      21,
+      44
+    ],
+    "halfCycleCap": 24,
+    "maxWait": 13,
+    "uncoveredPhases": []
+  },
+  {
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "exits": [
+      11,
+      29
+    ],
+    "entries": [
+      29,
+      28,
+      11
+    ],
+    "halfCycleCap": 15,
+    "maxWait": 17,
+    "uncoveredPhases": [
+      12,
+      13
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward-right",
+    "exits": [
+      7,
+      19
+    ],
+    "entries": [
+      7,
+      8,
+      19
+    ],
+    "halfCycleCap": 12,
+    "maxWait": 12,
+    "uncoveredPhases": []
+  },
+  {
+    "cycle": "hermes-walk-toward",
+    "exits": [
+      13,
+      0
+    ],
+    "entries": [
+      13,
+      0,
+      12,
+      24
+    ],
+    "halfCycleCap": 12,
+    "maxWait": 12,
+    "uncoveredPhases": []
+  }
+]

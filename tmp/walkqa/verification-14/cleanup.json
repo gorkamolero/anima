@@ -1,0 +1,36 @@
+{
+  "browserSessions": {
+    "walkqa14": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "proof14": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "proof14-road": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "proof14-depot": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "proof14-starts": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    },
+    "anima-town": {
+      "exit": 0,
+      "output": "\u2713 Browser closed"
+    }
+  },
+  "remainingQaListeners": {
+    "4317": "",
+    "8080": ""
+  },
+  "ownerPortsUntouched": [
+    4410,
+    8090
+  ]
+}

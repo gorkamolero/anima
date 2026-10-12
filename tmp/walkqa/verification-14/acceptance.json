@@ -1,0 +1,153 @@
+{
+  "frames": 708,
+  "alphaHistogramMismatches": [],
+  "badAlpha": [],
+  "unmatchedCuts": [],
+  "maxAnchorError": 4.547473508864641e-13,
+  "clips": [
+    {
+      "scene": "road",
+      "heading": "away-left",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "road",
+      "heading": "away-right",
+      "frames": 24,
+      "stopFrame": 18
+    },
+    {
+      "scene": "road",
+      "heading": "away",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "road",
+      "heading": "left",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "road",
+      "heading": "right",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "road",
+      "heading": "toward-left",
+      "frames": 36,
+      "stopFrame": 29
+    },
+    {
+      "scene": "road",
+      "heading": "toward-right",
+      "frames": 36,
+      "stopFrame": 29
+    },
+    {
+      "scene": "road",
+      "heading": "toward",
+      "frames": 36,
+      "stopFrame": 30
+    },
+    {
+      "scene": "depot",
+      "heading": "away-left",
+      "frames": 32,
+      "stopFrame": 27
+    },
+    {
+      "scene": "depot",
+      "heading": "away-right",
+      "frames": 32,
+      "stopFrame": 27
+    },
+    {
+      "scene": "depot",
+      "heading": "away",
+      "frames": 32,
+      "stopFrame": 27
+    },
+    {
+      "scene": "depot",
+      "heading": "left",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "depot",
+      "heading": "right",
+      "frames": 24,
+      "stopFrame": 19
+    },
+    {
+      "scene": "depot",
+      "heading": "toward-left",
+      "frames": 24,
+      "stopFrame": 18
+    },
+    {
+      "scene": "depot",
+      "heading": "toward-right",
+      "frames": 24,
+      "stopFrame": 18
+    },
+    {
+      "scene": "depot",
+      "heading": "toward",
+      "frames": 24,
+      "stopFrame": 18
+    },
+    {
+      "scene": "starts",
+      "heading": "away-left",
+      "frames": 26,
+      "stopFrame": 20
+    },
+    {
+      "scene": "starts",
+      "heading": "away-right",
+      "frames": 26,
+      "stopFrame": 20
+    },
+    {
+      "scene": "starts",
+      "heading": "away",
+      "frames": 26,
+      "stopFrame": 21
+    },
+    {
+      "scene": "starts",
+      "heading": "left",
+      "frames": 34,
+      "stopFrame": 30
+    },
+    {
+      "scene": "starts",
+      "heading": "right",
+      "frames": 38,
+      "stopFrame": 31
+    },
+    {
+      "scene": "starts",
+      "heading": "toward-left",
+      "frames": 38,
+      "stopFrame": 32
+    },
+    {
+      "scene": "starts",
+      "heading": "toward-right",
+      "frames": 38,
+      "stopFrame": 32
+    },
+    {
+      "scene": "starts",
+      "heading": "toward",
+      "frames": 38,
+      "stopFrame": 32
+    }
+  ]
+}
