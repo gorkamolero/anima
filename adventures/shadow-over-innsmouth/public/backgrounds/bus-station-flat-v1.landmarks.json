@@ -1,0 +1,53 @@
+{
+  "image": "bus-station-flat-v1.png",
+  "space": "game",
+  "template": "exterior",
+  "horizonY": 475.2,
+  "landmarks": [
+    {
+      "id": "derived-adult-reference",
+      "kind": "figure",
+      "rect": {
+        "x": 1300,
+        "y": 486.00000000000006,
+        "width": 113.39999999999998,
+        "height": 377.99999999999994
+      },
+      "realHeightM": 1.75,
+      "note": "Pipeline reference adult from floor guidance; no painted figure. See outside-flat/guidance.json and depth.png."
+    },
+    {
+      "id": "waiting_bench",
+      "kind": "region",
+      "hotspotId": "waiting_bench",
+      "rect": {
+        "x": 753,
+        "y": 698,
+        "width": 312,
+        "height": 186
+      }
+    },
+    {
+      "id": "bus",
+      "kind": "region",
+      "hotspotId": "bus",
+      "rect": {
+        "x": 1495,
+        "y": 492,
+        "width": 425,
+        "height": 361
+      }
+    },
+    {
+      "id": "depot_doors",
+      "kind": "region",
+      "hotspotId": "depot_doors",
+      "rect": {
+        "x": 1329,
+        "y": 465,
+        "width": 105,
+        "height": 225
+      }
+    }
+  ]
+}

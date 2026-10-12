@@ -22,7 +22,7 @@ const api = process.env.ANIMA_API_URL ?? "http://localhost:4317";
 const SCENES = [
 	{
 		id: "outside",
-		landmarks: "backgrounds/bus-station-kat-seated-composite-v1.landmarks.json",
+		landmarks: "backgrounds/bus-station-flat-v1.landmarks.json",
 	},
 	{
 		id: "inside",

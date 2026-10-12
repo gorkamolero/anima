@@ -10,7 +10,7 @@ const { REVIEW_SCENES } = scenes;
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 const output = [];
 for (const [id, template, image] of [
-	["outside", "exterior", "bus-station-kat-seated-composite-v1"],
+	["outside", "exterior", "bus-station-flat-v1"],
 	["inside", "interior", "arkham-bus-depot-flat-2d"],
 ]) {
 	try {

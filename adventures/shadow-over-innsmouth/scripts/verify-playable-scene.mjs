@@ -175,13 +175,13 @@ runAgentBrowser(["wait", "--load", "networkidle"]);
 const outside = evalInBrowser(bootstrapScript);
 expect("outside scene loaded", outside.reviewSceneId === "outside", outside);
 expect(
-	"outside uses accepted Kat composite background",
-	outside.background === "bus-station-kat-seated",
+	"outside uses the flat depot background",
+	outside.background === "bus-station-flat",
 	outside,
 );
 expect(
-	"outside does not render the rejected standalone Kat sprite",
-	outside.kat?.visible === false,
+	"outside renders seated Kat as a sprite",
+	outside.kat?.seatedVisible === true,
 	outside.kat,
 );
 expectGroundLineMatchesCalibration(outside, "outside");

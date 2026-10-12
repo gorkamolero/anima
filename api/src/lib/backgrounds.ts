@@ -6,7 +6,7 @@ export const ROOT = resolve(
 );
 export const PUBLIC = resolve(ROOT, "adventures/shadow-over-innsmouth/public");
 export const ANCHORS: Record<string, string> = {
-	outside: "/backgrounds/bus-station-kat-seated-composite-v1.png",
+	outside: "/backgrounds/bus-station-flat-v1.png",
 	inside: "/backgrounds/arkham-bus-depot-flat-2d.png",
 };
 export function imagePath(image: string): string {

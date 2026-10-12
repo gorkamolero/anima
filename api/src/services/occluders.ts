@@ -28,7 +28,7 @@ export interface Occluder {
 	};
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 21;
+const VERSION = 22;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -196,6 +196,7 @@ export function maskGeometry(
 	mask: FloorRaster,
 	floor?: FloorRaster,
 	supportFraction = 0.8,
+	minimumFraction = 0.002,
 ): { bbox: Occluder["bbox"]; baseline: Point[] } | undefined {
 	const { width: w, height: h, data } = mask;
 	let count = 0,
@@ -214,7 +215,7 @@ export function maskGeometry(
 				maxY = Math.max(maxY, y);
 				bottoms.set(x, y);
 			}
-	if (count / (w * h) < 0.002 || count / (w * h) > 0.35) return;
+	if (count / (w * h) < minimumFraction || count / (w * h) > 0.35) return;
 	const sx = 1920 / w,
 		sy = 1080 / h;
 	// Contact samples come from the lower supporting silhouette, not the canopy.
@@ -503,7 +504,12 @@ async function derive(
 				: /net|pile/i.test(object.name)
 					? 0.55
 					: 0.8;
-		const geometry = maskGeometry(cleaned, floor, supportFraction);
+		const geometry = maskGeometry(
+			cleaned,
+			floor,
+			supportFraction,
+			/post|pole/i.test(object.name) ? 0.00015 : 0.002,
+		);
 		if (!geometry) continue;
 		const cleanPath = maskPath.replace(/\.png$/, ".clean.png");
 		execFileSync(

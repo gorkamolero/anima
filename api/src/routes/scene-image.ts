@@ -23,10 +23,7 @@ const PUBLIC_DIRECTORY = resolve(
 const DEFAULT_GENERATED_DIRECTORY = resolve(PUBLIC_DIRECTORY, "generated");
 const SCENE_BACKGROUNDS: Record<string, string> = {
 	inside: imagePath(ANCHORS.inside),
-	outside: resolve(
-		PUBLIC_DIRECTORY,
-		"backgrounds/bus-station-kat-seated-composite-v1.png",
-	),
+	outside: resolve(PUBLIC_DIRECTORY, "backgrounds/bus-station-flat-v1.png"),
 };
 
 const ART_STYLE = [

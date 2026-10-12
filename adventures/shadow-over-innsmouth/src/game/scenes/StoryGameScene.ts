@@ -35,7 +35,7 @@ import {
 	type StoryVerb,
 	validateStoryGraph,
 } from "@anima/storyscript";
-import exteriorLandmarks from "../../../public/backgrounds/bus-station-kat-seated-composite-v1.landmarks.json";
+import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import {
@@ -59,12 +59,6 @@ const API_BASE_URL =
 const VERBS: StoryVerb[] = ["LOOK", "TALK", "USE"];
 const PANEL_DEPTH = 100;
 const CHARACTER_DEPTH = 24;
-// Vehicles cut out of the exterior composite, redrawn as an overlay.
-// Depth is y-sorted per frame: on the dock (feet at y >= VEHICLE_GROUND_Y)
-// Hermes walks IN FRONT of the vehicles and covers them; deeper than their
-// ground contact he passes BEHIND and the overlay occludes him.
-const VEHICLE_GROUND_Y = 910;
-const VEHICLE_OVERLAY_DEPTH = 10 + VEHICLE_GROUND_Y / 20;
 const TITLE_BAR_HEIGHT = 56;
 const OUTPUT_PANEL_HEIGHT = 116;
 // Lowest feet position: keeps Hermes clear of the caption panel.
@@ -188,7 +182,6 @@ export class StoryGameScene extends BaseScene {
 	private runtime!: StoryRuntime;
 	private snapshot!: StoryRuntimeSnapshot;
 	private background?: Phaser.GameObjects.Image;
-	private vehicleOverlay?: Phaser.GameObjects.Image;
 	private outputText!: Phaser.GameObjects.Text;
 	private titleText!: Phaser.GameObjects.Text;
 	private stateText!: Phaser.GameObjects.Text;
@@ -257,14 +250,6 @@ export class StoryGameScene extends BaseScene {
 	preload(): void {
 		this.load.image("bus-station", "backgrounds/2026-01-27-bus-station.png");
 		this.load.image("bus-station-flat", "backgrounds/bus-station-flat-v1.png");
-		this.load.image(
-			"bus-station-kat-seated",
-			"backgrounds/bus-station-kat-seated-composite-v1.png",
-		);
-		this.load.image(
-			"bus-station-vehicle-overlay",
-			"backgrounds/bus-station-vehicle-overlay-v1.png",
-		);
 		this.load.image(
 			"arkham-depot-interior",
 			"backgrounds/arkham-bus-depot-full-scene-v2.png",
@@ -384,10 +369,6 @@ export class StoryGameScene extends BaseScene {
 
 		this.add.rectangle(0, 0, width, height, 0x0f1115).setOrigin(0, 0);
 		this.background = this.add.image(width / 2, height / 2, "bus-station");
-		this.vehicleOverlay = this.add
-			.image(width / 2, height / 2, "bus-station-vehicle-overlay")
-			.setDepth(VEHICLE_OVERLAY_DEPTH)
-			.setVisible(false);
 		this.fitBackgroundToScreen();
 		this.background.setAlpha(1);
 
@@ -678,7 +659,9 @@ export class StoryGameScene extends BaseScene {
 		this.sceneExits = [];
 		this.hoveredInteractableName = undefined;
 		this.applySceneGroundLine(scene);
-		const ground = this.generatedPlace?.ground;
+		const ground =
+			this.generatedPlace?.ground ??
+			(this.reviewSceneId === "outside" ? exteriorGround : undefined);
 		this.walkArea = ground
 			? {
 					mask: refineMask(ground.floor),
@@ -690,11 +673,7 @@ export class StoryGameScene extends BaseScene {
 					baseScale: ground.baseScale,
 					scaleClamp: { min: 0.18, max: 1.5 },
 				}
-			: walkAreaFromAnchor(
-					scene,
-					this.reviewSceneId === "outside" ? exteriorLandmarks : {},
-					1080,
-				);
+			: walkAreaFromAnchor(scene, {}, 1080);
 		this.visibleFloor = {
 			...this.walkArea.mask,
 			data: [...this.walkArea.mask.data],
@@ -896,18 +875,12 @@ export class StoryGameScene extends BaseScene {
 
 	private setSceneBackground(textureKey: string): void {
 		this.background?.setTexture(textureKey);
-		this.vehicleOverlay?.setVisible(textureKey === "bus-station-kat-seated");
 		this.fitBackgroundToScreen();
 	}
 
 	private fitBackgroundToScreen(): void {
 		const { width, height } = this.scale;
 		this.background
-			?.setPosition(width / 2, height / 2)
-			.setDisplaySize(width, height);
-		// Same full-canvas stretch as the background so the cutout stays
-		// pixel-aligned with the vehicles it was cut from.
-		this.vehicleOverlay
 			?.setPosition(width / 2, height / 2)
 			.setDisplaySize(width, height);
 	}
@@ -992,6 +965,7 @@ export class StoryGameScene extends BaseScene {
 			.setVisible(placement.visible !== false)
 			.setPosition(placement.x, placement.y)
 			.setScale(placement.scale)
+			.setDepth(10 + placement.y / 20)
 			.setFlipX(placement.flipX ?? false);
 
 		if (target === this.katSeatedSprite) {
@@ -1260,7 +1234,7 @@ export class StoryGameScene extends BaseScene {
 		};
 		const base =
 			this.currentImage ??
-			`${window.location.origin}/backgrounds/${this.reviewSceneId === "outside" ? "bus-station-kat-seated-composite-v1" : "arkham-bus-depot-flat-2d"}.png`;
+			`${window.location.origin}/backgrounds/${this.reviewSceneId === "outside" ? "bus-station-flat-v1" : "arkham-bus-depot-flat-2d"}.png`;
 		const loaded = await Promise.all(
 			data.occluders.map(async (object) => {
 				const url = new URL(object.png, base).href;
@@ -1298,7 +1272,6 @@ export class StoryGameScene extends BaseScene {
 		if (generation !== this.geometryGeneration) return;
 		for (const layer of this.objectLayers) layer.image.destroy();
 		this.objectLayers = [];
-		this.vehicleOverlay?.setVisible(false);
 		const layerArea = this.walkArea;
 		for (const { object, url, img, alpha } of loaded) {
 			const canOverlap =
@@ -1332,7 +1305,7 @@ export class StoryGameScene extends BaseScene {
 				...this.visibleFloor,
 				data: [...this.visibleFloor.data],
 			};
-			if (!this.generatedPlace) {
+			if (!this.generatedPlace && this.reviewSceneId !== "outside") {
 				const segmented = refineMask(data.floor);
 				bridgeOccluders(segmented, this.objectLayers);
 				for (let i = 0; i < bridged.data.length; i++)
@@ -1345,6 +1318,18 @@ export class StoryGameScene extends BaseScene {
 				this.objectLayers,
 				this.walkArea.perspective,
 			);
+			// A seated actor occupies the seat-to-boot projection on the ground.
+			// Both seated states share placement; exclude it after hidden-floor bridging.
+			const kat = this.katSeatedSprite;
+			if (kat?.visible) {
+				for (let i = 0; i < footprints.data.length; i++) {
+					const p = cellPoint(footprints, i);
+					const sx = (p.x - kat.x) / kat.scaleX + 410;
+					const sy = (p.y - kat.y) / kat.scaleY + 880;
+					if (sx >= 260 && sx <= 800 && sy >= 535 && sy <= 880)
+						footprints.data[i] = 1;
+				}
+			}
 			subtractFootprints(bridged, footprints);
 			this.walkArea.clearanceMask = clipFloorBelow(
 				erode(bridged, this.walkArea.perspective, 0.3, footprints, 0),
@@ -2251,12 +2236,7 @@ export class StoryGameScene extends BaseScene {
 				standingVisible: Boolean(this.katSprite?.visible),
 			},
 			katState: this.activeCharacterStates.kat ?? scene.characters.kat?.state,
-			vehicleOverlay: this.vehicleOverlay
-				? {
-						visible: this.vehicleOverlay.visible,
-						depth: this.vehicleOverlay.depth,
-					}
-				: null,
+
 			lastTransition: this.lastReviewTransition,
 			hotspots: this.getHotspots().map((hotspot) => ({
 				id: hotspot.id,

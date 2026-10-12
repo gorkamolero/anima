@@ -1,4 +1,5 @@
 import type { StoryVerb } from "@anima/storyscript";
+import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 
 export type ReviewSceneId = "outside" | "inside";
 export type ReviewCharacterId = "hermes" | "kat";
@@ -102,22 +103,8 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 		title: "Innsmouth Bus Terminal - Exterior",
 		description:
 			"A salt-weathered bus depot stands on a timber harbor platform at sunset, with Kat seated beneath a rope-hung shelter, fishing boats on the water, and an old bus waiting beside the doors.",
-		background: "bus-station-kat-seated",
-		groundLine: {
-			interpolation: "catmull-rom",
-			// scaleFactors derived from bus-station-kat-seated-composite-v1.landmarks.json
-			// (horizon perspective model, Kat anchor, figureCalibration 0.8) —
-			// verified by `pnpm verify:art`; regenerate there if the art changes
-			points: [
-				{ x: 120, y: 950, scaleFactor: 0.913 },
-				{ x: 520, y: 966, scaleFactor: 0.943 },
-				{ x: 755, y: 976, scaleFactor: 0.963 },
-				{ x: 1040, y: 966, scaleFactor: 0.943 },
-				{ x: 1520, y: 950, scaleFactor: 0.913 },
-				{ x: 1800, y: 942, scaleFactor: 0.898 },
-			],
-			clampToBounds: true,
-		},
+		background: "bus-station-flat",
+		groundLine: { ...exteriorGround.groundLine, interpolation: "linear" },
 		freeWalkBounds: {
 			minX: 0,
 			maxX: 1920,
@@ -129,25 +116,25 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 		characters: {
 			hermes: { x: 360, y: 950, scale: 0.5, visible: true, state: "idle" },
 			kat: {
-				x: 1040,
-				y: 880,
-				scale: 0.42,
-				visible: false,
+				x: 920,
+				y: 924.479068303431,
+				scale: 0.3753016472563215,
+				visible: true,
 				state: "seatedIdle",
 				states: {
 					seatedIdle: {
-						x: 1040,
-						y: 880,
-						scale: 0.42,
-						visible: false,
-						flipX: true,
+						x: 920,
+						y: 924.479068303431,
+						scale: 0.3753016472563215,
+						visible: true,
+						flipX: false,
 					},
 					seatedTalk: {
-						x: 1040,
-						y: 880,
-						scale: 0.42,
-						visible: false,
-						flipX: true,
+						x: 920,
+						y: 924.479068303431,
+						scale: 0.3753016472563215,
+						visible: true,
+						flipX: false,
 					},
 				},
 			},
@@ -161,8 +148,8 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 			{
 				id: "bus",
 				name: "Innsmouth Bus",
-				bounds: { x: 1640, y: 488, width: 280, height: 250 },
-				approach: { x: 1540, y: 895 },
+				bounds: { x: 1495, y: 492, width: 425, height: 361 },
+				approach: { x: 1480, y: 905 },
 				actions: {
 					LOOK: {
 						lines: [
@@ -174,8 +161,8 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 						// On the dock he walks IN FRONT of the vehicles (y-sorted
 						// depth), so approaching the bus keeps him fully visible.
 						route: [
-							{ x: 1540, y: 918 },
-							{ x: 1660, y: 946 },
+							{ x: 1450, y: 930 },
+							{ x: 1600, y: 925 },
 						],
 						lines: [
 							"Hermes crosses toward the idling bus.",
@@ -187,8 +174,8 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 			{
 				id: "waiting_bench",
 				name: "Waiting Bench",
-				bounds: { x: 820, y: 430, width: 430, height: 300 },
-				approach: { x: 760, y: 893 },
+				bounds: { x: 753, y: 698, width: 312, height: 186 },
+				approach: { x: 880, y: 990 },
 				actions: {
 					LOOK: {
 						lines: [
@@ -197,7 +184,7 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 						],
 					},
 					TALK: {
-						route: [{ x: 755, y: 976 }],
+						route: [{ x: 880, y: 990 }],
 						talkingCharacter: "kat",
 						talkingState: "seatedTalk",
 						lines: [
@@ -210,39 +197,19 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 			{
 				id: "depot_doors",
 				name: "Depot Doors",
-				bounds: { x: 1455, y: 330, width: 205, height: 320 },
-				approach: { x: 1800, y: 900 },
+				bounds: { x: 1329, y: 465, width: 105, height: 225 },
+				approach: { x: 1380, y: 750 },
 				actions: {
 					LOOK: {
 						lines: [
-							"The station door is tucked past the bus, half-hidden by the vehicle's nose.",
-							"To reach it, Hermes would have to slip around the right side.",
+							"The station door stands above a shallow wooden step.",
+							"Warm light leaks through the weathered frame.",
 						],
 					},
 					USE: {
-						// Around, behind, and INTO THE HOUSE: along the dock in front
-						// of the vehicles (he covers them - y-sorted depth), hooks up
-						// at the bus's right edge (crossing VEHICLE_GROUND_Y flips him
-						// behind), then climbs the depth toward the porch - emerging
-						// in the gap left of the car's nose at house-door scale - and
-						// enters the door. The house-door landmark is the character's
-						// scale reference at the end of this path: all scaleFactors
-						// follow the landmarks perspective model factor(y) =
-						// 0.0019284 * (y - 470), which puts him at ~178px beside the
-						// 213px door.
-						offGroundLine: true,
 						route: [
-							{ x: 1500, y: 946, scaleFactor: 0.918 },
-							{ x: 1885, y: 938, scaleFactor: 0.902 },
-							{ x: 1900, y: 908, scaleFactor: 0.845 },
-							// Fully hidden behind the bus only for this hop - hurried
-							// (speedFactor) so the disappearance never reads as a stall.
-							{ x: 1790, y: 850, scaleFactor: 0.733, speedFactor: 2.0 },
-							// From here his head and shoulders ride above the car while
-							// he climbs - visibly walking the whole way to the porch.
-							{ x: 1650, y: 745, scaleFactor: 0.53, speedFactor: 1.3 },
-							{ x: 1560, y: 668, scaleFactor: 0.382 },
-							{ x: 1458, y: 632, scaleFactor: 0.312 },
+							{ x: 1380, y: 790 },
+							{ x: 1380, y: 750 },
 						],
 						hideOnExit: true,
 						transitionTo: "inside",
@@ -263,7 +230,7 @@ export const REVIEW_SCENES: Record<ReviewSceneId, ReviewScene> = {
 							},
 						},
 						lines: [
-							"Hermes slips behind the bus and disappears through the station door.",
+							"Hermes crosses the platform and enters through the station door.",
 							"Inside, stale warmth replaces the salt wind.",
 						],
 					},
