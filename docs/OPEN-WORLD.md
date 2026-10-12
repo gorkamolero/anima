@@ -266,3 +266,31 @@ sheets, random foot close-ups, screen-template checks, the complete table, and n
 limitations are partially recorded in `tmp/walkqa/results.json`; the previous run
 did not write `tmp/walkqa/report.md`. The broader
 `FOOTFALL-GOAL.md` package extraction and ten-scene goal remain unfinished.
+
+## Brief 03 independent pixel gate (2026-10-11)
+
+The renderer now rejects captures below 1920×1080, records visual-offset telemetry,
+and continues through arrival plus four settling frames instead of truncating the
+last stance at the plan's nominal duration. It still uses the exact 24 fps virtual
+clock and `?mute=1`.
+
+The motor separates the navigation point from a presentation-only sprite offset.
+The along-path root component advances navigation; the perpendicular component
+comes from generated, zero-mean periodic `visualRoot` data. Recentring is distributed
+across four frames at contact handoffs. Cycle changes and stops ease the offset over
+four frames; arrival retains the last walk pose rather than replacing it with frame
+zero. These mechanisms do **not** yet establish planted-foot acceptance.
+
+`root-motion.py` now searches ±64 source pixels, penalizes swing-direction contact
+picks, and refines foreground matches within ±2 pixels of the silhouette match.
+Boundary refinements are rejected because wide foreground-only registration can
+match the opposite boot. Three regression tests cover fractional translation,
+transparent RGB, and a 47-pixel profile stride. The three sheets are regenerated
+by the script, then formatted with Biome; debug images cover every cycle frame.
+
+The independent acceptance program is `tmp/walkqa/tools/footcheck.py`, unchanged.
+It reads rendered pixels, not sprite metadata or telemetry. The complete before/
+after record and unresolved failures are maintained in
+`tmp/walkqa/reports/03-planted-feet.md`; results are in
+`tmp/walkqa/footcheck-results.jsonl`. Do not treat the implementation, ordinary
+regression tests, or a clip with no detected stance as passing that gate.
