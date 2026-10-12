@@ -110,12 +110,17 @@ export async function asymmetricFloorJudge(
 	overlay: string,
 	objects: FloorObject[] = [],
 	ground?: GroundData,
+	referenceImage?: string,
 ): Promise<GroundVerdict> {
 	const questions = floorQuestions(objects, ground);
 	const bytes = await readFile(overlay);
+	const reference = referenceImage
+		? await readFile(imagePath(referenceImage))
+		: undefined;
 	const fingerprint = createHash("sha256")
 		.update("asymmetric-v3-signed-confidence")
 		.update(JSON.stringify(questions))
+		.update(reference ?? "")
 		.update(
 			execFileSync("magick", [overlay, "-depth", "8", "rgb:-"], {
 				maxBuffer: 12 * 1024 * 1024,
@@ -221,6 +226,19 @@ export async function asymmetricFloorJudge(
 										type: "text",
 										text: `Inspect the image and answer ONLY this typed question. For noul give yes=true only when the forbidden inclusion actually exists (for advisory floor coverage, yes means covered); confidence is certainty in that yes/no answer. For score give the coverage fraction. First locate actual bright GREEN pixels on the named surface. Grayscale pixels are excluded. Adjacent green floor does not mean an object is green. Missing floor is safe. Docks, decks, streets, steps and rugs are standable. For a hazard report describe exactly which green pixels are on the forbidden surface. Question: ${JSON.stringify(question)}`,
 									},
+									...(reference
+										? [
+												{
+													type: "text" as const,
+													text: "First image: original artwork, to identify materials hidden by the opaque mask. Second image: mask overlay. Judge GREEN membership only in the second image. Compare the same coordinates in both. Identify the surface from the original artwork rather than guessing the material hidden by opaque green.",
+												},
+												{
+													type: "image" as const,
+													image: reference,
+													mediaType: "image/png",
+												},
+											]
+										: []),
 									{ type: "image", image: bytes, mediaType: "image/png" },
 								],
 							},

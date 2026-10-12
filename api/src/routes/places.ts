@@ -192,7 +192,12 @@ async function createPlace(
 		const objects = await labelledFloorObjects(image.url);
 		for (let attempt = 0; attempt < 3; attempt++) {
 			const maskReview = await groundMaskReview(image.url, ground, id);
-			const verdict = await judgeFloorOverlay(maskReview, objects, ground);
+			const verdict = await judgeFloorOverlay(
+				maskReview,
+				objects,
+				ground,
+				image.url,
+			);
 			ground.verdicts.push(verdict);
 			ground.notes = [
 				...(ground.notes ?? []),

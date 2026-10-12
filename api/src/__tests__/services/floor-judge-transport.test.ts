@@ -73,7 +73,7 @@ it("falls back on rejected image state with the same named questions and preserv
 			String(text).includes("no water"),
 		),
 	).toBe(true);
-	expect(mocks.generate).toHaveBeenCalledTimes(3);
+	expect(mocks.generate).toHaveBeenCalledTimes(2);
 	expect(JSON.stringify(mocks.generate.mock.calls)).toContain("Missing floor");
 });
 it("does not treat missing fallback answers as safe probabilities", async () => {
