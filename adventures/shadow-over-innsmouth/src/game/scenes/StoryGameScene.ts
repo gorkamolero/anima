@@ -204,7 +204,6 @@ export class StoryGameScene extends BaseScene {
 	> = {};
 	private lastReviewTransition?: ReviewTransitionSnapshot;
 	private hermesMotor?: CharacterMotor;
-	private hermesBlend?: Phaser.GameObjects.Sprite;
 	private objectLayers: {
 		data: Occluder;
 		image: Phaser.GameObjects.Image;
@@ -537,8 +536,10 @@ export class StoryGameScene extends BaseScene {
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
 		const wasWalking = this.hermesMotor?.walking;
+		// A matched sprite cut can move its origin across an edge while the
+		// planted sole stays inside. Travel follows the physical floor contact.
 		const previousExit = this.hermesSprite
-			? exitAt(this.hermesSprite, this.sceneExits)
+			? exitAt(this.hermesMotor?.anchor ?? this.hermesSprite, this.sceneExits)
 			: undefined;
 		this.hermesMotor?.update(delta);
 		if (this.hermesSprite) {
@@ -556,7 +557,10 @@ export class StoryGameScene extends BaseScene {
 			// changed baselines now so this captured frame uses its own order.
 			this.children.depthSort();
 			const exit =
-				exitAt(this.hermesSprite, this.sceneExits) ??
+				exitAt(
+					this.hermesMotor?.anchor ?? this.hermesSprite,
+					this.sceneExits,
+				) ??
 				exitAtArrival(
 					this.hermesSprite,
 					this.requestedExit,
@@ -577,12 +581,6 @@ export class StoryGameScene extends BaseScene {
 				this.hermesMotor?.stop();
 				void this.triggerExit(exit);
 			}
-		}
-		if (this.hermesBlend && this.hermesSprite) {
-			this.hermesBlend.setVisible(
-				this.hermesSprite.visible && this.hermesBlend.alpha > 0,
-			);
-			this.hermesBlend.setDepth(this.hermesSprite.depth);
 		}
 		this.updateReviewHotspotHover();
 		this.refreshPlacementDebugOverlay();
@@ -701,12 +699,6 @@ export class StoryGameScene extends BaseScene {
 		);
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
-			this.hermesBlend?.destroy();
-			this.hermesBlend = this.add
-				.sprite(0, 0, HERMES_IDLE_TEXTURE, 0)
-				.setAlpha(0)
-				.setOrigin(0.5, 1)
-				.setVisible(false);
 			const cycle = (texture: string) => {
 				const data = this.cache.json.get(`${texture}-meta`) as FootCycle;
 				if (!data?.contacts)
@@ -760,19 +752,7 @@ export class StoryGameScene extends BaseScene {
 						const { texture, flipX } = hermesStanding(direction);
 						return { cycle: cycle(texture), frame: 0, flipX };
 					},
-					blend: (pose, placement, weight) => {
-						const sprite = this.hermesSprite;
-						if (!sprite || !this.hermesBlend) return;
-						sprite.setAlpha(1 - weight);
-						this.hermesBlend
-							.setTexture(pose.cycle.name, pose.frame)
-							.setPosition(placement.x, placement.y)
-							.setScale(placement.scale)
-							.setFlipX(pose.flipX)
-							.setAlpha(weight)
-							.setDepth(sprite.depth)
-							.setVisible(sprite.visible && weight > 0);
-					},
+
 					show,
 				},
 			);
