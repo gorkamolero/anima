@@ -145,6 +145,11 @@ for (const beat of plan.beats) {
 		beat.click = point;
 	}
 	const sourceLocation = evaluate("window.__anima.scene.locationId()");
+	const expectedDestination = beat.exit
+		? evaluate(
+				`window.__anima.scene.sceneExits.find(e=>e.id===${JSON.stringify(beat.exit)}||e.kind===${JSON.stringify(beat.exit)})?.to??null`,
+			)
+		: null;
 	if (beat.walk)
 		evaluate(
 			`(()=>{void window.__anima.scene.walkGenerated(${beat.walk[0]},${beat.walk[1]});return true})()`,
@@ -168,7 +173,9 @@ for (const beat of plan.beats) {
 			true,
 		);
 		exitCompleted ||=
-			frames.at(-1).location !== sourceLocation &&
+			(expectedDestination
+				? frames.at(-1).location === expectedDestination
+				: frames.at(-1).location !== sourceLocation) &&
 			!frames.at(-1).ui &&
 			!frames.at(-1).inputBlocked;
 		for (let j = 0; j < frames.length; j++) {
@@ -240,6 +247,7 @@ for (const beat of plan.beats) {
 	// Keep the full PNG sequence only on request. Videos and telemetry remain.
 	if (!process.argv.includes("--keep-frames")) rmSync(dir, { recursive: true });
 	console.log(beat.name, log.length);
+	if (!exitCompleted) break;
 }
 writeFileSync(
 	resolve(out, "render.json"),
