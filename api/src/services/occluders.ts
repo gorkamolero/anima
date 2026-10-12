@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { appendFileSync, mkdirSync, readFileSync, rmdirSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { fal } from "@fal-ai/client";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
@@ -13,6 +13,7 @@ import {
 	type LabelledBox,
 	type Point,
 } from "./exits.js";
+import { DERIVATION_VERSION } from "./ground-perception.js";
 
 export interface Occluder {
 	id: string;
@@ -22,7 +23,7 @@ export interface Occluder {
 	png: string;
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 15;
+const VERSION = 18;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -32,9 +33,11 @@ export async function cachedFloor(
 ): Promise<FloorRaster | undefined> {
 	const hash = hashOf(await readFile(imagePath(image)));
 	const cached = await readFile(
-		resolve(cacheRoot, `${hash}.json`),
+		resolve(cacheRoot, `${hash}-floor-v${DERIVATION_VERSION}.json`),
 		"utf8",
-	).catch(() => null);
+	).catch(() =>
+		readFile(resolve(cacheRoot, `${hash}.json`), "utf8").catch(() => null),
+	);
 	return cached
 		? (JSON.parse(cached) as { mask: FloorRaster }).mask
 		: undefined;
@@ -42,7 +45,7 @@ export async function cachedFloor(
 /** Semantic shortlist only; SAM, never an LLM, supplies the pixels. */
 export function canOcclude(object: LabelledBox): boolean {
 	return (
-		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile)(?:s|es)?\b/i.test(
+		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile|pew|pillar|column|fountain|desk|counter|shelf|shelves|pulpit)(?:s|es)?\b/i.test(
 			object.name,
 		) &&
 		!/\b(sky|floor|ground|road|distant|horizon|window|sign)\b/i.test(
@@ -66,7 +69,14 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const count = (previous.match(/^\| CALL /gm) ?? []).length;
+		const scope = process.env.DERIVATION_BRIEF === "04a" ? "04a " : "";
+		const count = previous
+			.split("\n")
+			.filter(
+				(line) =>
+					line.startsWith(`| CALL ${scope}`) &&
+					(scope || !line.startsWith("| CALL 04a ")),
+			).length;
 		if (count >= 120)
 			throw new Error("Occluder segmentation budget exhausted (120 calls)");
 		if (!previous)
@@ -76,7 +86,7 @@ export function reserveSegmentation(key: string, label: string): void {
 			);
 		appendFileSync(
 			ledger,
-			`| CALL ${count + 1} | ${new Date().toISOString()} | ${key} | ${label.replace(/[\n|]/g, " ")} |\n`,
+			`| CALL ${scope}${count + 1} | ${new Date().toISOString()} | ${key} | ${label.replace(/[\n|]/g, " ")} |\n`,
 		);
 	} finally {
 		rmdirSync(lock);
@@ -156,6 +166,7 @@ export function maskGeometry(
 					floorAt(floor, (x + 0.5) * sx, Math.min(1079, (y + 1) * sy + d)),
 				),
 		);
+		if (!contact.length && maxY < h - 2) return;
 		if (contact.length) {
 			// Coarse floor masks can miss an entire supporting leg. Preserve its
 			// visible bottom rather than extending another leg's depth across it.
@@ -255,7 +266,11 @@ const pending = new Map<
 >();
 export function deriveOccluders(
 	image: string,
-	ground?: { floor: FloorRaster; horizonY?: number },
+	ground?: {
+		floor: FloorRaster;
+		horizonY?: number;
+		template?: "interior" | "exterior";
+	},
 ): Promise<{ occluders: Occluder[]; exits: ReturnType<typeof deriveExits> }> {
 	const source = imagePath(image);
 	const existing = pending.get(source);
@@ -269,7 +284,11 @@ export function deriveOccluders(
 async function derive(
 	source: string,
 	image: string,
-	ground?: { floor: FloorRaster; horizonY?: number },
+	ground?: {
+		floor: FloorRaster;
+		horizonY?: number;
+		template?: "interior" | "exterior";
+	},
 ) {
 	const bytes = await readFile(source);
 	const objects = interactablesSchema.parse(
@@ -287,6 +306,28 @@ async function derive(
 		(landmarks
 			? (JSON.parse(landmarks) as { horizonY?: number }).horizonY
 			: undefined);
+	const template =
+		ground?.template ??
+		(landmarks
+			? (JSON.parse(landmarks) as { template?: string }).template
+			: undefined);
+	if (ground?.template && landmarks)
+		await writeFile(
+			`${stem}.landmarks.json`,
+			JSON.stringify(
+				{ ...JSON.parse(landmarks), template: ground.template },
+				null,
+				2,
+			),
+		);
+	const semanticMasks = ground
+		? (await readdir(cacheRoot)).filter(
+				(name) =>
+					name.startsWith(`${hashOf(bytes)}-obstacle-`) &&
+					/-\d+\.png$/.test(name) &&
+					!/-obstacle-(wall|water)-/.test(name),
+			)
+		: [];
 	const fingerprint = hashOf(
 		JSON.stringify({
 			image: hashOf(bytes),
@@ -294,29 +335,16 @@ async function derive(
 			floor,
 			horizonY,
 			version: VERSION,
+			semanticMasks,
+			template,
 			generated: !!ground,
 		}),
 	);
-	const exits = floor ? deriveExits(floor, objects, horizonY) : [];
-	// A generated child always has a return route. When the visible floor does
-	// not touch the image border, the scene projects this edge onto reachable
-	// floor instead of requiring a click through a wall or foreground prop.
-	if (ground)
-		for (const kind of ["edge-left", "edge-right"] as const) {
-			if (!exits.some((exit) => exit.kind === kind)) {
-				const x = kind === "edge-left" ? 0 : 1890;
-				exits.push({
-					id: kind,
-					kind,
-					region: [
-						{ x, y: 850 },
-						{ x: x + 30, y: 850 },
-						{ x: x + 30, y: 948 },
-						{ x, y: 948 },
-					],
-				});
-			}
-		}
+	const exits = floor
+		? deriveExits(floor, objects, horizonY, {
+				allowFar: template !== "interior",
+			})
+		: [];
 	const meta = await readFile(`${stem}.occluders.cache.json`, "utf8").catch(
 		() => null,
 	);
@@ -349,13 +377,27 @@ async function derive(
 		.split(" ")
 		.map(Number);
 	const occluders: Occluder[] = [];
-	const candidates = objects.filter(
-		(object) =>
-			canOcclude(object) &&
-			(horizonY === undefined || object.bounds[3] * 1080 >= horizonY + 25),
-	);
+	const semantic = semanticMasks.map((name) => ({
+		name: name.slice(`${hashOf(bytes)}-obstacle-`.length).replace(/\.png$/, ""),
+		bounds: [0, 0, 1, 1],
+		maskPath: resolve(cacheRoot, name),
+	}));
+	const represented = semantic.map((s) => s.name.replace(/-\d+$/, ""));
+	const candidates: Array<LabelledBox & { maskPath?: string }> = [
+		...semantic,
+		...objects.filter(
+			(object) =>
+				canOcclude(object) &&
+				!represented.some((label) =>
+					object.name.toLowerCase().includes(label.replace(/s$/, "")),
+				) &&
+				(horizonY === undefined || object.bounds[3] * 1080 >= horizonY + 25),
+		),
+	];
+
 	for (const object of candidates) {
-		const maskPath = await segment(bytes, object, width, height);
+		const maskPath =
+			object.maskPath ?? (await segment(bytes, object, width, height));
 		if (!maskPath) continue;
 		const raster = execFileSync(
 			"magick",

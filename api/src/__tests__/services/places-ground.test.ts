@@ -1,0 +1,215 @@
+// @vitest-environment node
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const mocks = vi.hoisted(() => ({
+	derive: vi.fn(),
+	judge: vi.fn(),
+	floorJudge: vi.fn(),
+	occlude: vi.fn(),
+	rows: new Map<string, string>(),
+}));
+vi.mock("node:fs/promises", async (importOriginal) => ({
+	...(await importOriginal<typeof import("node:fs/promises")>()),
+	writeFile: vi.fn(),
+}));
+vi.mock("../../services/ground.js", async (importOriginal) => ({
+	...(await importOriginal<typeof import("../../services/ground.js")>()),
+	deriveGround: mocks.derive,
+	judgeGround: mocks.judge,
+	judgeFloorOverlay: mocks.floorJudge,
+}));
+vi.mock("../../services/ground-overlay.js", () => ({
+	groundOverlay: vi.fn(async () => "/proof/overlay.png"),
+	groundMaskReview: vi.fn(async () => "/proof/mask.png"),
+}));
+vi.mock("../../services/occluders.js", () => ({
+	deriveOccluders: mocks.occlude,
+	reserveSegmentation: vi.fn(),
+}));
+vi.mock("../../services/world.js", () => ({
+	defaultVisual: () => ({}),
+	getWorldDb: async () => ({
+		execute: async (q: string | { sql: string; args: string[] }) => {
+			if (typeof q === "string")
+				return { rows: [...mocks.rows.values()].map((data) => ({ data })) };
+			if (q.sql.startsWith("INSERT")) {
+				mocks.rows.set(q.args[0], q.args[1]);
+				return { rows: [] };
+			}
+			return {
+				rows: mocks.rows.has(q.args[0])
+					? [{ data: mocks.rows.get(q.args[0]) }]
+					: [],
+			};
+		},
+	}),
+}));
+vi.mock("../../routes/interactables.js", () => ({
+	interactablesRoutes: { request: async () => new Response("{}") },
+}));
+vi.mock("../../routes/scene-image.js", () => ({
+	sceneImageRoutes: {
+		request: async () =>
+			Response.json({ url: "http://localhost/generated/cached.png" }),
+	},
+}));
+
+import { placesRoutes } from "../../routes/places.js";
+import { maskToGround } from "../../services/ground.js";
+
+const request = () =>
+	placesRoutes.request("http://localhost/places", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			parent: "inside",
+			to: "new-room",
+			template: "interior",
+			description: "New room",
+		}),
+	});
+beforeEach(() => {
+	vi.clearAllMocks();
+	mocks.rows.clear();
+	mocks.floorJudge.mockResolvedValue({
+		pass: true,
+		why: "floor plausible",
+		overlay: "mask.png",
+	});
+	mocks.occlude.mockResolvedValue({ occluders: [], exits: [] });
+	mocks.judge.mockResolvedValue([{ pass: true, why: "plausible" }]);
+});
+describe("place ground failure contract", () => {
+	it("persists segmentation failures, excludes them from travel, and returns a diagnostic lookup", async () => {
+		mocks.derive.mockRejectedValue(new Error("No reliable floor"));
+		const response = await request();
+		expect(response.status).toBe(200);
+		const place = await response.json();
+		expect(place.ground.ground).toBe("failed");
+		expect(place.ground.reason).toBe("No reliable floor");
+		expect(mocks.rows.size).toBe(1);
+		expect(mocks.occlude).not.toHaveBeenCalled();
+		expect(
+			await (await placesRoutes.request("http://localhost/places")).json(),
+		).toEqual([]);
+		expect(
+			(await placesRoutes.request(`http://localhost/places/${place.id}`))
+				.status,
+		).toBe(409);
+		expect(
+			await (
+				await placesRoutes.request("http://localhost/places?includeFailed=true")
+			).json(),
+		).toHaveLength(1);
+	});
+	it("keeps both judge attempts and never substitutes an unrelated anchor line", async () => {
+		const ground = () =>
+			maskToGround(
+				{
+					width: 40,
+					height: 40,
+					data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+				},
+				300,
+				0.002,
+			);
+		mocks.derive.mockImplementation(async () => ground());
+		mocks.judge
+			.mockResolvedValueOnce([
+				{
+					pass: false,
+					why: "pew",
+					question: "floor?",
+					answer: "no",
+					reason: "pew",
+					overlay: "first.png",
+				},
+			])
+			.mockResolvedValueOnce([
+				{
+					pass: false,
+					why: "desk",
+					question: "floor?",
+					answer: "no",
+					reason: "desk",
+					overlay: "second.png",
+				},
+			]);
+		const place = await (await request()).json();
+		expect(place.ground.ground).toBe("failed");
+		expect(place.ground.groundLine.points).toEqual([]);
+		expect(
+			place.ground.verdicts.map((v: { overlay: string }) => v.overlay),
+		).toEqual(["mask.png", "first.png", "second.png"]);
+	});
+	it("persists incomplete occlusion as failed instead of losing the created place", async () => {
+		mocks.derive.mockResolvedValue(
+			maskToGround(
+				{
+					width: 40,
+					height: 40,
+					data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+				},
+				300,
+				0.002,
+			),
+		);
+		mocks.occlude.mockRejectedValue(new Error("Provider unavailable"));
+		const place = await (await request()).json();
+		expect(place.ground.ground).toBe("failed");
+		expect(place.ground.reason).toContain("Provider unavailable");
+		expect(mocks.rows.size).toBe(1);
+	});
+});
+
+it("retains a challenged mask verdict and accepts a reasoned correction", async () => {
+	mocks.derive.mockResolvedValue(
+		maskToGround(
+			{
+				width: 40,
+				height: 40,
+				data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+			},
+			300,
+			0.002,
+		),
+	);
+	mocks.floorJudge
+		.mockResolvedValueOnce({
+			pass: false,
+			why: "gap",
+			overlay: "first-mask.png",
+		})
+		.mockResolvedValueOnce({
+			pass: true,
+			why: "gap is water, correctly excluded",
+			overlay: "second-mask.png",
+		});
+	const place = await (await request()).json();
+	expect(place.ground.ground).toBe("derived");
+	expect(
+		place.ground.verdicts.slice(0, 2).map((v: { pass: boolean }) => v.pass),
+	).toEqual([false, true]);
+	expect(mocks.floorJudge).toHaveBeenLastCalledWith("/proof/mask.png", "gap");
+});
+it("never lets passing sprite placements overrule two floor-mask rejections", async () => {
+	mocks.derive.mockResolvedValue(
+		maskToGround(
+			{
+				width: 40,
+				height: 40,
+				data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+			},
+			300,
+			0.002,
+		),
+	);
+	mocks.floorJudge.mockResolvedValue({
+		pass: false,
+		why: "water included",
+		overlay: "mask.png",
+	});
+	const place = await (await request()).json();
+	expect(place.ground.ground).toBe("failed");
+	expect(place.ground.reason).toContain("water included");
+});

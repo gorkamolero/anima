@@ -1,16 +1,21 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { scaleAt as perspectiveScaleAt } from "@anima/engine/walkarea/perspective";
 import type { WalkArea } from "@anima/engine/walkarea/types";
-import { fal } from "@fal-ai/client";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, PUBLIC, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
-import { recordCall, reserveCall } from "./costs.js";
-import { reserveSegmentation } from "./occluders.js";
+import { recordCall } from "./costs.js";
+import { safeGroundLine } from "./ground-line.js";
+import {
+	DERIVATION_VERSION,
+	perceiveFloor,
+	proofDirectory,
+} from "./ground-perception.js";
+import { depthRegions } from "./ground-regions.js";
 
 export interface Raster {
 	width: number;
@@ -30,9 +35,68 @@ export interface GroundData {
 	horizonY: number;
 	scaleSlope: number;
 	baseScale: number;
-	ground: "derived" | "inherited";
+	ground: "derived" | "inherited" | "failed";
+	reason?: string;
+	walkable?: boolean;
+	travelEnabled?: boolean;
+	regions?: GroundRegion[];
+	overlays?: string[];
 	derivationVersion?: number;
-	verdicts: Array<{ pass: boolean; why: string }>;
+	verdicts: GroundVerdict[];
+}
+export interface GroundVerdict {
+	pass: boolean;
+	why: string;
+	question?: string;
+	answer?: string;
+	reason?: string;
+	overlay?: string;
+	attempt?: string;
+}
+/** Regions use game coordinates (1920x1080). Intersect polygon AND mask.
+ * scaleAtY is piecewise linear, clamped at endpoints; factors multiply baseScale.
+ * Regions override the global perspective only inside their visible mask. */
+export interface GroundRegion {
+	id: string;
+	kind: "floor" | "stairs";
+	polygon: Array<{ x: number; y: number }>;
+	mask: Raster;
+	scaleAtY: Array<{ y: number; scaleFactor: number }>;
+	interpolation: "linear";
+	source: "relative-depth";
+}
+export function failedGround(
+	reason: string,
+	candidate?: GroundData,
+): GroundData {
+	const empty: Raster = {
+		width: 192,
+		height: 108,
+		data: Array(192 * 108).fill(0),
+	};
+	return {
+		...candidate,
+		ground: "failed",
+		reason,
+		walkable: false,
+		travelEnabled: false,
+		derivationVersion: DERIVATION_VERSION,
+		groundLine: { points: [], interpolation: "linear", clampToBounds: true },
+		freeWalkBounds: { minX: 0, maxX: 0, minY: 0, maxY: 0 },
+		freeWalkRanges: [],
+		floor: empty,
+		walkArea: {
+			mask: empty,
+			perspective: { horizonY: 0, slope: 0, pixelsPerMetre: 300 },
+			baseScale: 0.5,
+			scaleClamp: { min: 0.18, max: 1.5 },
+		},
+		regions: [],
+		horizonY: candidate?.horizonY ?? 0,
+		scaleSlope: 0,
+		baseScale: 0.5,
+		verdicts: candidate?.verdicts ?? [],
+	};
 }
 // Fit inverse depth = ax + by + c on segmented floor (least squares).
 // Relative depth has an unknown shift: depthZero is calibrated once on anchors.
@@ -173,148 +237,164 @@ export function maskToGround(
 		verdicts: [],
 	};
 }
-const cacheRoot = resolve(ROOT, "api/data/perception");
-function raster(path: string): Raster {
-	const bytes = execFileSync("magick", [
-		path,
-		"-resize",
-		"192x108!",
-		"-colorspace",
-		"gray",
-		"-depth",
-		"8",
-		"gray:-",
-	]);
-	return { width: 192, height: 108, data: [...bytes] };
-}
-export async function perceive(
-	image: string,
-): Promise<{ mask: Raster; depth: Raster }> {
-	const bytes = await readFile(imagePath(image));
-	const hash = createHash("sha256").update(bytes).digest("hex");
-	await mkdir(cacheRoot, { recursive: true });
-	const cache = resolve(cacheRoot, `${hash}.json`);
-	const stored = await readFile(cache, "utf8").catch(() => null);
-	if (stored) {
-		recordCall("perception", 0, true);
-		return JSON.parse(stored);
-	}
-	const imageUrl = await fal.storage.upload(
-		new Blob([bytes], { type: "image/png" }),
-	);
-	reserveCall("perception");
-	const start = Date.now();
-	reserveSegmentation(hash, "floor segmentation");
-	let segmentation = await fal.subscribe("fal-ai/sam-3/image", {
-		input: {
-			image_url: imageUrl,
-			prompt: "floor / ground / road / pavement / sand / dock / boards",
-			apply_mask: false,
-			return_multiple_masks: true,
-			max_masks: 8,
-		},
-	});
-	recordCall("segmentation", Date.now() - start);
-	if (!segmentation.data.masks.length) {
-		reserveCall("perception");
-		reserveSegmentation(hash, "floor segmentation retry");
-		segmentation = await fal.subscribe("fal-ai/sam-3/image", {
-			input: {
-				image_url: imageUrl,
-				prompt: "floor",
-				apply_mask: false,
-				return_multiple_masks: true,
-				max_masks: 8,
-			},
-		});
-	}
-	if (!segmentation.data.masks.length) {
-		reserveCall("perception");
-		reserveSegmentation(hash, "road segmentation fallback");
-		segmentation = await fal.subscribe("fal-ai/sam-3/image", {
-			input: {
-				image_url: imageUrl,
-				prompt: "road",
-				apply_mask: false,
-				return_multiple_masks: true,
-				max_masks: 8,
-			},
-		});
-	}
-	const masks = segmentation.data.masks;
-	if (!masks.length) throw new Error("SAM returned no floor mask");
-	const union: Raster = {
-		width: 192,
-		height: 108,
-		data: Array(192 * 108).fill(0),
-	};
-	for (let i = 0; i < masks.length; i++) {
-		const path = resolve(cacheRoot, `${hash}-mask-${i}.png`);
-		await writeFile(
-			path,
-			Buffer.from(await (await fetch(masks[i].url)).arrayBuffer()),
-		);
-		const m = raster(path);
-		m.data.forEach((v, j) => {
-			if (v > 127) union.data[j] = 1;
-		});
-	}
-	reserveCall("perception");
-	const depthStart = Date.now();
-	const depthResult = await fal.subscribe(
-		"fal-ai/image-preprocessors/depth-anything/v2",
-		{ input: { image_url: imageUrl } },
-	);
-	recordCall("depth", Date.now() - depthStart);
-	const depthPath = resolve(cacheRoot, `${hash}-depth.png`);
-	await writeFile(
-		depthPath,
-		Buffer.from(await (await fetch(depthResult.data.image.url)).arrayBuffer()),
-	);
-	const result = { mask: union, depth: raster(depthPath) };
-	await writeFile(cache, JSON.stringify(result));
-	return result;
+export async function perceive(image: string) {
+	return perceiveFloor(image, "", basename(image, ".png"));
 }
 export async function deriveGround(
 	image: string,
 	template: "exterior" | "interior",
 	fraction?: number,
+	description = "",
+	key = basename(image, ".png"),
 ): Promise<GroundData> {
-	const { mask, depth } = await perceive(image);
-	const plane = fitPlane(mask, depth, template === "exterior" ? -32.9 : 0);
-	// ponytail: relative-depth shift is calibrated on the two anchor cameras, not metric depth.
-	const horizonY = plane.horizonY;
-	const slope = template === "exterior" ? 0.0019284 : 0.0039;
+	const { mask, depth, guidance, stairMask } = await perceiveFloor(
+		image,
+		description,
+		key,
+	);
+	const horizonY = guidance.horizonY * 1080;
+	const baseScale = 0.5;
+	const referenceFactor =
+		(guidance.referenceHeight * 1080) / (1059 * baseScale);
+	const slope =
+		referenceFactor / Math.max(100, guidance.referenceFootY * 1080 - horizonY);
 	const data = maskToGround(
 		mask,
 		horizonY,
 		slope,
-		fraction ?? (template === "exterior" ? 0.62 : 0.25),
-		template === "exterior" ? 5 : 100,
+		fraction ?? (template === "exterior" ? 0.62 : 0.5),
+		5,
 	);
-	data.baseScale = template === "exterior" ? 0.5 : 0.43;
+	data.derivationVersion = DERIVATION_VERSION;
+	data.walkable = true;
+	data.travelEnabled = true;
+	data.groundLine.points = safeGroundLine(
+		mask,
+		horizonY,
+		slope,
+		fraction ?? (template === "exterior" ? 0.62 : 0.5),
+	);
+	const minX = data.groundLine.points[0].x,
+		maxX = data.groundLine.points[data.groundLine.points.length - 1].x;
+	data.freeWalkBounds.minX = minX;
+	data.freeWalkBounds.maxX = maxX;
+	data.freeWalkRanges = [{ minX, maxX }];
+	const referenceDepths = depth.data
+		.filter(
+			(_, i) =>
+				mask.data[i] &&
+				Math.abs(
+					Math.floor(i / mask.width) / mask.height - guidance.referenceFootY,
+				) < 0.07,
+		)
+		.sort((a, b) => a - b);
+	const referenceDepth =
+		referenceDepths[Math.floor(referenceDepths.length / 2)] ?? 200;
+	data.regions = depthRegions(
+		mask,
+		depth,
+		stairMask,
+		referenceDepth,
+		referenceFactor,
+	);
 	return data;
+}
+export async function judgeFloorOverlay(
+	overlay: string,
+	previousReason?: string,
+): Promise<GroundVerdict> {
+	const archive = overlay.replace(/\.png$/, `-floor-judge-${Date.now()}.png`);
+	await copyFile(overlay, archive);
+	overlay = archive;
+	const question = [
+		"Review the walkable floor mask in this image. The background is GRAYSCALE. Only the allowed floor is tinted bright GREEN. Judge only the green mask: does it cover the visible walkable passages, rugs and exposed stairs, without covering walls, furniture, pew seats, counters or water? Missing major stairs/passages or any clear forbidden surface is a failure. Only standing-person passages count: do not require floor underneath furniture or tiny slivers narrower than a person. Ignore sub-pixel segmentation edges. Dirt, grass and boards are valid floor; rugs are valid floor. State specific visual evidence.",
+		previousReason
+			? ` A prior reviewer said: ${previousReason}. Re-examine that specific claim against the actual GREEN pixels. The mask intentionally leaves a small safety margin around obstacles and holes. Such margins, gaps showing water, and floor hidden under furniture do not constitute missing major passages. A raised object pedestal need not be walkable. Fail if there is actual furniture/wall/water inclusion or a missing broad traversable passage, and identify where. Do not assume the prior review is correct.`
+			: "",
+	].join(" ");
+	const fingerprint = createHash("sha256")
+		.update(question)
+		.update(
+			execFileSync("magick", [overlay, "-depth", "8", "rgb:-"], {
+				maxBuffer: 12 * 1024 * 1024,
+			}),
+		)
+		.digest("hex");
+	const cache = resolve(
+		ROOT,
+		"api/data/perception",
+		`${fingerprint}-floor-verdict.json`,
+	);
+	await mkdir(resolve(cache, ".."), { recursive: true });
+	const stored = await readFile(cache, "utf8").catch(() => null);
+	// Identical pixels and questions must not change eligibility on a cache replay.
+	const object: { pass: boolean; why: string } = stored
+		? JSON.parse(stored)
+		: (
+				await generateObject({
+					model: getModel(),
+					mode: "json",
+					schema: z.object({ pass: z.boolean(), why: z.string() }),
+					messages: [
+						{
+							role: "user",
+							content: [
+								{ type: "text", text: question },
+								{
+									type: "image",
+									image: await readFile(overlay),
+									mediaType: "image/png",
+								},
+							],
+						},
+					],
+				})
+			).object;
+	if (!stored) await writeFile(cache, JSON.stringify(object));
+	recordCall("floor-mask-judge", 0, !!stored);
+	const verdict = {
+		...object,
+		question,
+		answer: object.pass ? "yes" : "no",
+		reason: object.why,
+		overlay,
+		attempt: "floor-mask",
+	};
+	await writeFile(
+		overlay.replace(/\.png$/, "-verdict.json"),
+		JSON.stringify(verdict, null, 2),
+	);
+	return verdict;
 }
 export async function judgeGround(
 	image: string,
 	data: GroundData,
-): Promise<Array<{ pass: boolean; why: string }>> {
+	key = basename(image, ".png"),
+): Promise<GroundVerdict[]> {
 	const source = imagePath(image);
 	const id = basename(source, ".png");
-	const out = resolve(ROOT, "tmp/open-world-demo/ground-judges");
+	const out = proofDirectory(key);
+	const attempt = Date.now().toString();
 	await mkdir(out, { recursive: true });
 	const sprite = resolve(
 		PUBLIC,
 		"assets/sprites/hermes/hermes-idle-v2-normalized.png",
 	);
 	const verdicts = [];
-	for (let i = 0; i < 5; i++) {
+	const sampleCount = Math.min(5, data.groundLine.points.length);
+	for (let i = 0; i < sampleCount; i++) {
 		const point =
 			data.groundLine.points[
-				Math.round((i * (data.groundLine.points.length - 1)) / 4)
+				Math.round(
+					(0.1 + (0.8 * i) / Math.max(1, sampleCount - 1)) *
+						(data.groundLine.points.length - 1),
+				)
 			];
 		const scale = data.baseScale * point.scaleFactor;
-		const path = resolve(out, `${id}-${i}-${point.y.toFixed(0)}.png`);
+		const path = resolve(
+			out,
+			`${id}-judge-${attempt}-${i}-${point.y.toFixed(0)}.png`,
+		);
 		execFileSync("magick", [
 			source,
 			"-resize",
@@ -332,6 +412,8 @@ export async function judgeGround(
 			"-composite",
 			path,
 		]);
+		const question =
+			"Judge only the composited bespectacled man with a satchel: are the feet on visible walkable floor (including rugs or steps), and is the size plausible next to the surroundings? pass=true only if both. Ignore lack of contact shadow and foreground occlusion: this diagnostic has no shadow or occluder layers. Do not reject just for these rendering omissions. Reject feet actually on furniture/water/walls, or clearly incorrect size. Explain specific evidence.";
 		const started = Date.now();
 		const { object } = await generateObject({
 			model: getModel(),
@@ -343,7 +425,7 @@ export async function judgeGround(
 					content: [
 						{
 							type: "text",
-							text: "Judge only the composited bespectacled man with a satchel: are the feet on the ground, and is the size plausible next to the surroundings? yes/no + why. pass=true only if both. Do not provide coordinates.",
+							text: question,
 						},
 						{
 							type: "image",
@@ -355,11 +437,19 @@ export async function judgeGround(
 			],
 		});
 		recordCall("ground-judge", Date.now() - started);
+		const verdict = {
+			...object,
+			question,
+			answer: object.pass ? "yes" : "no",
+			reason: object.why,
+			overlay: path,
+			attempt,
+		};
 		await writeFile(
 			path.replace(/\.png$/, ".json"),
-			JSON.stringify(object, null, 2),
+			JSON.stringify(verdict, null, 2),
 		);
-		verdicts.push(object);
+		verdicts.push(verdict);
 	}
 	return verdicts;
 }

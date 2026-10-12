@@ -1,15 +1,22 @@
 import { createHash } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { writeFile } from "node:fs/promises";
 import { Hono } from "hono";
 import { z } from "zod";
-import { ANCHORS, imagePath, ROOT } from "../lib/backgrounds.js";
+import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { recordCall } from "../services/costs.js";
+import { derivationError } from "../services/derivation-errors.js";
 import {
 	deriveGround,
+	failedGround,
 	type GroundData,
+	judgeFloorOverlay,
 	judgeGround,
 } from "../services/ground.js";
+import { groundMaskReview, groundOverlay } from "../services/ground-overlay.js";
+import {
+	DERIVATION_VERSION,
+	proofDirectory,
+} from "../services/ground-perception.js";
 import { deriveOccluders } from "../services/occluders.js";
 import { defaultVisual, getWorldDb } from "../services/world.js";
 import { interactablesRoutes } from "./interactables.js";
@@ -45,6 +52,7 @@ async function createPlace(
 		to: string;
 		template: "exterior" | "interior";
 		description: string;
+		refresh?: boolean;
 	},
 	origin: string,
 ): Promise<Place> {
@@ -52,14 +60,27 @@ async function createPlace(
 	const existing = await getPlace(id);
 	if (
 		existing &&
-		(existing.ground.ground === "derived" ||
-			existing.ground.derivationVersion === 2)
+		existing.ground.derivationVersion === DERIVATION_VERSION &&
+		!input.refresh
 	) {
+		if (existing.ground.ground === "failed") return existing;
 		const labels = await interactablesRoutes.request(
 			`${origin}/interactables/${input.template === "interior" ? "inside" : "outside"}?image=${encodeURIComponent(existing.background)}`,
 		);
 		if (!labels.ok) throw new Error("Place object perception failed");
-		await deriveOccluders(existing.background, existing.ground);
+		const { occluders, exits } = await deriveOccluders(existing.background, {
+			...existing.ground,
+			template: existing.template,
+		});
+		existing.ground.overlays = [
+			await groundOverlay(
+				existing.background,
+				existing.ground,
+				id,
+				occluders,
+				exits,
+			),
+		];
 		recordCall("place", 0, true);
 		return existing;
 	}
@@ -78,41 +99,75 @@ async function createPlace(
 			});
 	if (!response.ok) throw new Error("Place image failed");
 	const image = (await response.json()) as { url: string };
-	let ground = await deriveGround(image.url, input.template);
-	ground.verdicts = await judgeGround(image.url, ground);
-	if (ground.verdicts.some((v) => !v.pass)) {
+	let ground: GroundData = failedGround("Derivation not completed");
+	let diagnosticGround: GroundData | undefined;
+	try {
 		ground = await deriveGround(
 			image.url,
 			input.template,
-			input.template === "exterior" ? 0.45 : 0.7,
+			undefined,
+			input.description,
+			id,
 		);
-		ground.verdicts = await judgeGround(image.url, ground);
+		diagnosticGround = ground;
+		await writeFile(
+			`${proofDirectory(id)}/candidate-ground.json`,
+			JSON.stringify(ground),
+		);
+		ground.overlays = [await groundOverlay(image.url, ground, id)];
+		const maskReview = await groundMaskReview(image.url, ground, id);
+		const floorVerdicts = [await judgeFloorOverlay(maskReview)];
+		if (!floorVerdicts[0].pass)
+			floorVerdicts.push(
+				await judgeFloorOverlay(maskReview, floorVerdicts[0].why),
+			);
+		const floorVerdict = floorVerdicts[floorVerdicts.length - 1];
+		const first = [
+			...floorVerdicts,
+			...(await judgeGround(image.url, ground, id)),
+		];
+		ground.verdicts = [...(existing?.ground.verdicts ?? []), ...first];
+		if (
+			!floorVerdict.pass ||
+			first.slice(floorVerdicts.length).some((v) => !v.pass)
+		) {
+			const previousOverlays = ground.overlays;
+			ground = await deriveGround(
+				image.url,
+				input.template,
+				0.65,
+				input.description,
+				id,
+			);
+			ground.overlays = previousOverlays;
+			const second = await judgeGround(image.url, ground, id);
+			ground.verdicts = [
+				...(existing?.ground.verdicts ?? []),
+				...first,
+				...second,
+			];
+			if (!floorVerdict.pass || second.some((v) => !v.pass))
+				ground = failedGround(
+					!floorVerdict.pass
+						? `Floor mask rejected: ${floorVerdict.why}`
+						: `Placement judge rejected both attempts: ${second
+								.filter((v) => !v.pass)
+								.map((v) => v.why)
+								.join("; ")}`,
+					ground,
+				);
+		}
+	} catch (error) {
+		ground = failedGround(derivationError(error), ground);
 	}
-	if (ground.verdicts.some((v) => !v.pass)) {
-		const calibration = JSON.parse(
-			await readFile(
-				resolve(
-					ROOT,
-					`adventures/shadow-over-innsmouth/placement-calibration/hermes-${anchor === "outside" ? "terminal-flat-exterior" : "depot-interior"}.json`,
-				),
-				"utf8",
-			),
-		) as {
-			baseScale: number;
-			measuredPlacements: Array<{ x: number; y: number; scaleFactor: number }>;
-		};
-		ground = {
-			...ground,
-			ground: "inherited",
-			groundLine: {
-				points: calibration.measuredPlacements,
-				interpolation: "linear",
-				clampToBounds: true,
-			},
-			baseScale: calibration.baseScale,
-		};
-		console.warn(`Ground inherited: ${id}; derived judge rejected twice`);
-	}
+	ground.overlays = [
+		...(ground.overlays ?? []),
+		await groundOverlay(
+			image.url,
+			ground,
+			ground.ground === "failed" ? `${id}-failed` : id,
+		),
+	];
 	const background = new URL(image.url).pathname;
 	const place = {
 		id,
@@ -123,36 +178,64 @@ async function createPlace(
 		ground,
 	};
 	// ponytail: this explicit camera calibration sample checks implementation consistency; the independent vision judge checks plausibility against the art.
-	const y = ground.groundLine.points[2].y;
-	const height =
-		(1059 * ground.baseScale * (y - ground.horizonY) * ground.scaleSlope) / 0.8;
+	if (ground.ground !== "failed") {
+		const y =
+			ground.groundLine.points[Math.min(2, ground.groundLine.points.length - 1)]
+				.y;
+		const height =
+			(1059 * ground.baseScale * (y - ground.horizonY) * ground.scaleSlope) /
+			0.8;
+		await writeFile(
+			imagePath(background).replace(/\.png$/, ".landmarks.json"),
+			JSON.stringify(
+				{
+					image: background.split("/").at(-1),
+					space: "game",
+					template: input.template,
+					horizonY: ground.horizonY,
+					figureCalibration: 0.8,
+					landmarks: [
+						{
+							id: "camera-calibration",
+							kind: "figure",
+							rect: { x: 960, y: y - height, width: 100, height },
+							realHeightM: 1.75,
+							note: "Scene-specific visual calibration; SAM/depth geometry and independently judged sprite composites.",
+						},
+					],
+				},
+				null,
+				2,
+			),
+		);
+	}
+	try {
+		const labels = await interactablesRoutes.request(
+			`${origin}/interactables/${anchor}?image=${encodeURIComponent(background)}`,
+		);
+		if (!labels.ok) throw new Error("Place object perception failed");
+		const diagnostic = ground.ground === "failed" ? diagnosticGround : ground;
+		if (diagnostic) {
+			const { occluders, exits } = await deriveOccluders(background, {
+				...diagnostic,
+				template: input.template,
+			});
+			ground.overlays = [
+				...(ground.overlays ?? []),
+				await groundOverlay(background, diagnostic, id, occluders, exits),
+			];
+		}
+	} catch (error) {
+		ground = failedGround(
+			`Occluder/exit derivation incomplete: ${derivationError(error)}`,
+			ground,
+		);
+	}
+	place.ground = ground;
 	await writeFile(
-		imagePath(background).replace(/\.png$/, ".landmarks.json"),
-		JSON.stringify(
-			{
-				image: background.split("/").at(-1),
-				space: "game",
-				horizonY: ground.horizonY,
-				figureCalibration: 0.8,
-				landmarks: [
-					{
-						id: "camera-calibration",
-						kind: "figure",
-						rect: { x: 960, y: y - height, width: 100, height },
-						realHeightM: 1.75,
-						note: "Inherited template scale calibration; geometry from SAM/depth and independently judged sprite composites.",
-					},
-				],
-			},
-			null,
-			2,
-		),
+		`${proofDirectory(id)}/result.json`,
+		JSON.stringify(place, null, 2),
 	);
-	const labels = await interactablesRoutes.request(
-		`${origin}/interactables/${anchor}?image=${encodeURIComponent(background)}`,
-	);
-	if (!labels.ok) throw new Error("Place object perception failed");
-	await deriveOccluders(background, ground);
 	await (await getWorldDb()).execute({
 		sql: "INSERT OR REPLACE INTO places VALUES (?, ?)",
 		args: [id, JSON.stringify(place)],
@@ -163,10 +246,19 @@ async function createPlace(
 export const placesRoutes = new Hono();
 placesRoutes.get("/places", async (c) => {
 	const result = await (await getWorldDb()).execute("SELECT data FROM places");
-	return c.json(result.rows.map((row) => JSON.parse(String(row.data))));
+	const places = result.rows.map(
+		(row) => JSON.parse(String(row.data)) as Place,
+	);
+	return c.json(
+		c.req.query("includeFailed") === "true"
+			? places
+			: places.filter((p) => p.ground.ground !== "failed"),
+	);
 });
 placesRoutes.get("/places/:id", async (c) => {
 	const place = await getPlace(c.req.param("id"));
+	if (place?.ground.ground === "failed")
+		return c.json({ error: place.ground.reason, place }, 409);
 	return place ? c.json(place) : c.json({ error: "Unknown place" }, 404);
 });
 placesRoutes.post("/places", async (c) => {
@@ -176,6 +268,7 @@ placesRoutes.post("/places", async (c) => {
 			to: z.string().min(1),
 			template: z.enum(["exterior", "interior"]),
 			description: z.string().min(1),
+			refresh: z.boolean().optional(),
 		})
 		.safeParse(await c.req.json().catch(() => null));
 	if (!parsed.success) return c.json({ error: "Invalid place" }, 400);

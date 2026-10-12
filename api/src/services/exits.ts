@@ -141,6 +141,7 @@ export function deriveExits(
 	floor: FloorRaster,
 	objects: readonly LabelledBox[],
 	horizonY?: number,
+	options: { allowFar?: boolean } = {},
 ): Exit[] {
 	const exits: Exit[] = [];
 	const append = (kind: Exit["kind"], polygons: Point[][], label?: string) => {
@@ -191,6 +192,8 @@ export function deriveExits(
 			),
 		);
 	}
+	// Enclosed rooms need a labelled door, not an inferred exit into a rear shelf/wall.
+	if (options.allowFar === false) return exits;
 	// A receding open corridor must have several floor cells across, widen toward
 	// the camera, and terminate near the horizon; a flat floor/wall seam is not far travel.
 	for (let y = 0; y < floor.height - 5; y++) {
