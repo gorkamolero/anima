@@ -1,0 +1,92 @@
+# Brief 06 — steering, speed and complete walks
+
+Status: implementation in progress; acceptance pending.
+
+Read the complete goal, reviewer findings, Brief 05 report and git log -15. The reviewer supersedes the old footcheck verdict: physical foot locking is accepted; footcheck.py is retired as a gate. Pre-existing untracked AgentDebug.test.ts is preserved.
+
+## Baseline
+F9: alley side-far 87/111 off-floor frames; alley diagonal-toward-right 134/201; depot-outside post-behind 26/26.
+F7: side median 1.14 m/s; diagonals 1.35–1.40; away 0.54; toward 0.59. Away cadence 1.45 steps/s. At maximum allowed cadence (2.2), away reaches only approximately 0.82 m/s against side minimum 0.912; playback alone cannot satisfy the supplied baseline. Toward maximum similarly predicts 0.84 m/s.
+F8: road tree-front zero walking frames; far-exit 14 px; floor snapping collapses several far plans.
+
+Full baseline output:
+```
+clip                                         walk s  dist px off-floor steps/s
+alley/away-far.json                             1.8      75   10/42    1.14
+alley/away-near.json                            3.2     114   29/78    1.23
+alley/crate-behind.json                         2.7     328   12/64    1.50
+alley/crate-front.json                          1.5     314   22/36    1.33
+alley/diagonal-away-left.json                   1.4     339    0/33    1.45
+alley/diagonal-away-right.json                  1.4     363    0/33    1.45
+alley/diagonal-toward-left.json                 2.0     387   24/49    1.47
+alley/diagonal-toward-right.json                8.4     456  134/201   1.55
+alley/diagonal.json                             3.2     353   16/77    1.25
+alley/exit.json                                 0.5     115    0/12    0.00
+alley/object-click.json                         0.5      98    0/11    0.00
+alley/side-far.json                             4.6     360   87/111   1.51
+alley/side-near.json                            1.6     428    0/39    1.23
+alley/toward-far.json                           1.7     127   28/40    1.20
+alley/toward-near.json                          3.7     103    0/89    1.35
+depot-inside/away-far.json                      1.2      37   12/28    0.86
+depot-inside/away-near.json                     2.5      90    0/59    1.22
+depot-inside/bench-behind.json                  1.1      54    0/27    0.89
+depot-inside/bench-front.json                   2.7      71    0/64    1.50
+depot-inside/diagonal-away-left.json            3.1     472    0/75    1.60
+depot-inside/diagonal-away-right.json           4.9     482   25/117   1.64
+depot-inside/diagonal-toward-left.json          7.0     439    0/167   1.58
+depot-inside/diagonal-toward-right.json         8.5     346    0/203   1.54
+depot-inside/diagonal.json                      3.9     361    0/93    1.55
+depot-inside/exit.json                          1.2     271    0/29    0.83
+depot-inside/object-click.json                  1.1      69    0/27    0.89
+depot-inside/side-far.json                      2.5     416    0/59    1.22
+depot-inside/side-near.json                     4.4     544   40/106   1.58
+depot-inside/toward-far.json                    4.0      66   15/96    1.50
+depot-inside/toward-near.json                   2.4      47    0/58    1.24
+depot-outside/away-far.json                     1.8      66    0/44    1.09
+depot-outside/away-near.json                    4.2     114    0/102   1.41
+depot-outside/diagonal-away-left.json           4.0     413   13/95    1.52
+depot-outside/diagonal-away-right.json          2.0     434    0/47    1.53
+depot-outside/diagonal-toward-left.json         8.5     451   18/204   1.53
+depot-outside/diagonal-toward-right.json        8.1     322   36/195   1.60
+depot-outside/diagonal.json                     3.2     375   43/76    1.58
+depot-outside/exit.json                         1.2      48   28/28    0.86
+depot-outside/object-click.json                 0.4      99    0/9     0.00
+depot-outside/post-behind.json                  1.1      48   26/26    0.92
+depot-outside/post-front.json                   3.7      67    0/89    1.35
+depot-outside/side-far.json                     2.2     391   12/54    1.33
+depot-outside/side-near.json                    2.0     467   24/49    1.47
+depot-outside/toward-far.json                   3.0      87   30/73    1.32
+depot-outside/toward-near.json                  3.0     107    0/73    1.32
+road/away-far.json                              5.2      71    0/125   1.34
+road/away-near.json                             5.2      86    0/125   1.34
+road/diagonal-away-left.json                    5.4     252    0/130   1.48
+road/diagonal-away-right.json                   6.3     242    0/151   1.59
+road/diagonal-toward-left.json                  8.5     250    0/204   1.53
+road/diagonal-toward-right.json                10.3     270    0/248   1.55
+road/diagonal.json                              5.3     268    0/127   1.51
+road/exit.json                                  3.9     250   14/94    1.53
+road/far-exit.json                              1.2      14    0/30    0.80
+road/object-click.json                          1.2     207    0/29    0.83
+road/side-far.json                              2.5     241    0/59    1.22
+road/side-near.json                             2.0     341    0/47    1.02
+road/toward-far.json                            7.6      63    0/182   1.45
+road/toward-near.json                           5.0      64    0/120   1.40
+road/trap-behind.json                           4.4     136   15/105   1.37
+road/trap-front.json                            3.0     209   17/73    1.32
+road/tree-behind.json                           5.1     324   33/122   1.38
+road/tree-front.json                            0.0       0    0/1     0.00
+
+side                 ground m/s min/median/max 1.01 1.14 1.96 (n=21)
+walk-away            ground m/s min/median/max 0.28 0.54 1.12 (n=25)
+walk-away-right      ground m/s min/median/max 1.04 1.35 1.91 (n=20)
+walk-toward          ground m/s min/median/max 0.42 0.59 1.05 (n=20)
+walk-toward-right    ground m/s min/median/max 1.04 1.4 2.18 (n=32)
+```
+
+## Implementation and commits
+Pending.
+
+## Verification and open failures
+Pending. No acceptance claim. No new paid calls yet.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
