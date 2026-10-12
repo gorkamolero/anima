@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Brief 14: restore full generated canvases, then register upper bodies by translation.
+"""Brief 14: restore full generated canvases, then register with whole-image scale and translation.
 Preserves generated alpha. No remote calls, compositing, or changes to walk art.
 """
 import importlib.util
