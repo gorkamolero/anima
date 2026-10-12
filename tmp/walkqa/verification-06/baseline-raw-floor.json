@@ -1,0 +1,254 @@
+{
+  "road/toward-near.json": {
+    "off": 0,
+    "walking": 120
+  },
+  "road/exit.json": {
+    "off": 0,
+    "walking": 94
+  },
+  "road/trap-behind.json": {
+    "off": 0,
+    "walking": 105
+  },
+  "road/away-far.json": {
+    "off": 0,
+    "walking": 125
+  },
+  "road/diagonal-toward-left.json": {
+    "off": 0,
+    "walking": 204
+  },
+  "road/diagonal-away-right.json": {
+    "off": 0,
+    "walking": 151
+  },
+  "road/diagonal-away-left.json": {
+    "off": 0,
+    "walking": 130
+  },
+  "road/diagonal-toward-right.json": {
+    "off": 0,
+    "walking": 248
+  },
+  "road/toward-far.json": {
+    "off": 0,
+    "walking": 182
+  },
+  "road/side-near.json": {
+    "off": 0,
+    "walking": 47
+  },
+  "road/tree-behind.json": {
+    "off": 0,
+    "walking": 122
+  },
+  "road/tree-front.json": {
+    "off": 0,
+    "walking": 1
+  },
+  "road/diagonal.json": {
+    "off": 0,
+    "walking": 127
+  },
+  "road/side-far.json": {
+    "off": 0,
+    "walking": 59
+  },
+  "road/far-exit.json": {
+    "off": 0,
+    "walking": 30
+  },
+  "road/away-near.json": {
+    "off": 0,
+    "walking": 125
+  },
+  "road/object-click.json": {
+    "off": 0,
+    "walking": 29
+  },
+  "road/trap-front.json": {
+    "off": 0,
+    "walking": 73
+  },
+  "alley/toward-near.json": {
+    "off": 0,
+    "walking": 89
+  },
+  "alley/exit.json": {
+    "off": 0,
+    "walking": 12
+  },
+  "alley/away-far.json": {
+    "off": 0,
+    "walking": 42
+  },
+  "alley/crate-behind.json": {
+    "off": 12,
+    "walking": 64
+  },
+  "alley/diagonal-toward-left.json": {
+    "off": 12,
+    "walking": 49
+  },
+  "alley/diagonal-away-right.json": {
+    "off": 0,
+    "walking": 33
+  },
+  "alley/diagonal-away-left.json": {
+    "off": 0,
+    "walking": 33
+  },
+  "alley/diagonal-toward-right.json": {
+    "off": 103,
+    "walking": 201
+  },
+  "alley/toward-far.json": {
+    "off": 0,
+    "walking": 40
+  },
+  "alley/side-near.json": {
+    "off": 0,
+    "walking": 39
+  },
+  "alley/diagonal.json": {
+    "off": 0,
+    "walking": 77
+  },
+  "alley/side-far.json": {
+    "off": 50,
+    "walking": 111
+  },
+  "alley/crate-front.json": {
+    "off": 11,
+    "walking": 36
+  },
+  "alley/away-near.json": {
+    "off": 0,
+    "walking": 78
+  },
+  "alley/object-click.json": {
+    "off": 0,
+    "walking": 11
+  },
+  "depot-outside/toward-near.json": {
+    "off": 0,
+    "walking": 73
+  },
+  "depot-outside/exit.json": {
+    "off": 12,
+    "walking": 28
+  },
+  "depot-outside/post-front.json": {
+    "off": 0,
+    "walking": 89
+  },
+  "depot-outside/post-behind.json": {
+    "off": 26,
+    "walking": 26
+  },
+  "depot-outside/away-far.json": {
+    "off": 0,
+    "walking": 44
+  },
+  "depot-outside/diagonal-toward-left.json": {
+    "off": 0,
+    "walking": 204
+  },
+  "depot-outside/diagonal-away-right.json": {
+    "off": 0,
+    "walking": 47
+  },
+  "depot-outside/diagonal-away-left.json": {
+    "off": 0,
+    "walking": 95
+  },
+  "depot-outside/diagonal-toward-right.json": {
+    "off": 12,
+    "walking": 195
+  },
+  "depot-outside/toward-far.json": {
+    "off": 0,
+    "walking": 73
+  },
+  "depot-outside/side-near.json": {
+    "off": 0,
+    "walking": 49
+  },
+  "depot-outside/diagonal.json": {
+    "off": 16,
+    "walking": 76
+  },
+  "depot-outside/side-far.json": {
+    "off": 0,
+    "walking": 54
+  },
+  "depot-outside/away-near.json": {
+    "off": 0,
+    "walking": 102
+  },
+  "depot-outside/object-click.json": {
+    "off": 0,
+    "walking": 9
+  },
+  "depot-inside/toward-near.json": {
+    "off": 0,
+    "walking": 58
+  },
+  "depot-inside/bench-front.json": {
+    "off": 0,
+    "walking": 64
+  },
+  "depot-inside/exit.json": {
+    "off": 0,
+    "walking": 29
+  },
+  "depot-inside/away-far.json": {
+    "off": 0,
+    "walking": 28
+  },
+  "depot-inside/diagonal-toward-left.json": {
+    "off": 0,
+    "walking": 167
+  },
+  "depot-inside/bench-behind.json": {
+    "off": 0,
+    "walking": 27
+  },
+  "depot-inside/diagonal-away-right.json": {
+    "off": 0,
+    "walking": 117
+  },
+  "depot-inside/diagonal-away-left.json": {
+    "off": 0,
+    "walking": 75
+  },
+  "depot-inside/diagonal-toward-right.json": {
+    "off": 0,
+    "walking": 203
+  },
+  "depot-inside/toward-far.json": {
+    "off": 0,
+    "walking": 96
+  },
+  "depot-inside/side-near.json": {
+    "off": 0,
+    "walking": 106
+  },
+  "depot-inside/diagonal.json": {
+    "off": 0,
+    "walking": 93
+  },
+  "depot-inside/side-far.json": {
+    "off": 0,
+    "walking": 59
+  },
+  "depot-inside/away-near.json": {
+    "off": 0,
+    "walking": 59
+  },
+  "depot-inside/object-click.json": {
+    "off": 0,
+    "walking": 27
+  }
+}

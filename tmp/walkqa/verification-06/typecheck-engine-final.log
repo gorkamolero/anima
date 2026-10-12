@@ -1,0 +1,3 @@
+
+> @anima/engine@0.1.0 typecheck /Users/gorkolas/Developer/anima/packages/engine
+> tsc --noEmit

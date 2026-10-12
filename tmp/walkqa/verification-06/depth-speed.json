@@ -1,0 +1,658 @@
+[
+  {
+    "scene": "alley",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "side",
+    "samples": 30,
+    "speed": 1.41181872824925,
+    "side": 1.41181872824925,
+    "ratio": 1.0,
+    "evidence": [
+      "alley/diagonal-away-left.json",
+      84
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "side",
+    "samples": 60,
+    "speed": 1.3289769017524757,
+    "side": 1.3289769017524757,
+    "ratio": 1.0,
+    "evidence": [
+      "alley/diagonal-toward-right.json",
+      16
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away-right",
+    "samples": 82,
+    "speed": 1.0911212524581917,
+    "side": 1.3289769017524757,
+    "ratio": 0.8210234888351844,
+    "evidence": [
+      "alley/diagonal-away-left.json",
+      68
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-toward",
+    "samples": 34,
+    "speed": 1.0935004560324388,
+    "side": 1.3289769017524757,
+    "ratio": 0.8228137408486766,
+    "evidence": [
+      "alley/toward-near.json",
+      11
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "side",
+    "samples": 38,
+    "speed": 1.183063236028044,
+    "side": 1.183063236028044,
+    "ratio": 1.0,
+    "evidence": [
+      "alley/diagonal-away-right.json",
+      32
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-away-right",
+    "samples": 37,
+    "speed": 1.4320140878228076,
+    "side": 1.183063236028044,
+    "ratio": 1.2104290322050566,
+    "evidence": [
+      "alley/diagonal-away-left.json",
+      48
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-toward",
+    "samples": 58,
+    "speed": 1.325851577682491,
+    "side": 1.183063236028044,
+    "ratio": 1.1206937527142145,
+    "evidence": [
+      "alley/diagonal-toward-right.json",
+      81
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "side",
+    "samples": 159,
+    "speed": 1.438108117396973,
+    "side": 1.438108117396973,
+    "ratio": 1.0,
+    "evidence": [
+      "alley/diagonal-away-left.json",
+      6
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "walk-away-right",
+    "samples": 71,
+    "speed": 1.4052069882135136,
+    "side": 1.438108117396973,
+    "ratio": 0.9771219362539921,
+    "evidence": [
+      "alley/diagonal-away-right.json",
+      13
+    ]
+  },
+  {
+    "scene": "alley",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "walk-toward",
+    "samples": 29,
+    "speed": 1.6127131451454841,
+    "side": 1.438108117396973,
+    "ratio": 1.1214130047917068,
+    "evidence": [
+      "alley/diagonal-toward-right.json",
+      90
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      720,
+      760
+    ],
+    "cycle": "side",
+    "samples": 28,
+    "speed": 1.6597430946682945,
+    "side": 1.6597430946682945,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/diagonal-toward-left.json",
+      7
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "side",
+    "samples": 185,
+    "speed": 1.419645739556334,
+    "side": 1.419645739556334,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/diagonal-toward-right.json",
+      34
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "walk-away-right",
+    "samples": 58,
+    "speed": 1.4104582642562307,
+    "side": 1.419645739556334,
+    "ratio": 0.9935283324254017,
+    "evidence": [
+      "depot-inside/away-near.json",
+      12
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "walk-toward",
+    "samples": 71,
+    "speed": 1.2892376266629773,
+    "side": 1.419645739556334,
+    "ratio": 0.9081403837170591,
+    "evidence": [
+      "depot-inside/toward-far.json",
+      17
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "side",
+    "samples": 241,
+    "speed": 1.4178051610328302,
+    "side": 1.4178051610328302,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/diagonal-away-right.json",
+      15
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away",
+    "samples": 45,
+    "speed": 1.1400229858683455,
+    "side": 1.4178051610328302,
+    "ratio": 0.8040759176231744,
+    "evidence": [
+      "depot-inside/diagonal-away-right.json",
+      64
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away-right",
+    "samples": 67,
+    "speed": 1.1116732902778135,
+    "side": 1.4178051610328302,
+    "ratio": 0.7840804370242181,
+    "evidence": [
+      "depot-inside/diagonal-away-right.json",
+      46
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-toward",
+    "samples": 53,
+    "speed": 1.2644441825811779,
+    "side": 1.4178051610328302,
+    "ratio": 0.8918321200496031,
+    "evidence": [
+      "depot-inside/diagonal-toward-right.json",
+      100
+    ]
+  },
+  {
+    "scene": "depot-inside",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "side",
+    "samples": 38,
+    "speed": 1.3604770077167683,
+    "side": 1.3604770077167683,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-inside/diagonal.json",
+      28
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "side",
+    "samples": 106,
+    "speed": 1.6071236472061414,
+    "side": 1.6071236472061414,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-outside/diagonal-toward-right.json",
+      24
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away-right",
+    "samples": 68,
+    "speed": 1.3298621089651057,
+    "side": 1.6071236472061414,
+    "ratio": 0.8274796474290991,
+    "evidence": [
+      "depot-outside/diagonal-away-left.json",
+      67
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-toward",
+    "samples": 85,
+    "speed": 1.6668471187051277,
+    "side": 1.6071236472061414,
+    "ratio": 1.037161715343316,
+    "evidence": [
+      "depot-outside/object-click.json",
+      52
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "side",
+    "samples": 115,
+    "speed": 1.4223332167894498,
+    "side": 1.4223332167894498,
+    "ratio": 1.0,
+    "evidence": [
+      "depot-outside/object-click.json",
+      7
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-away-right",
+    "samples": 69,
+    "speed": 1.4356976709292153,
+    "side": 1.4223332167894498,
+    "ratio": 1.0093961485128866,
+    "evidence": [
+      "depot-outside/diagonal-away-right.json",
+      35
+    ]
+  },
+  {
+    "scene": "depot-outside",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-toward",
+    "samples": 110,
+    "speed": 1.7381808340543419,
+    "side": 1.4223332167894498,
+    "ratio": 1.2220630254124534,
+    "evidence": [
+      "depot-outside/object-click.json",
+      66
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "side",
+    "samples": 86,
+    "speed": 1.9236769971397998,
+    "side": 1.9236769971397998,
+    "ratio": 1.0,
+    "evidence": [
+      "road/diagonal-toward-right.json",
+      15
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "walk-away-right",
+    "samples": 90,
+    "speed": 1.5309261765091833,
+    "side": 1.9236769971397998,
+    "ratio": 0.795833281151371,
+    "evidence": [
+      "road/diagonal-away-right.json",
+      87
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      760,
+      800
+    ],
+    "cycle": "walk-toward",
+    "samples": 51,
+    "speed": 3.0730174266087174,
+    "side": 1.9236769971397998,
+    "ratio": 1.5974705894897132,
+    "evidence": [
+      "road/toward-far.json",
+      23
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "side",
+    "samples": 402,
+    "speed": 1.648351710319233,
+    "side": 1.648351710319233,
+    "ratio": 1.0,
+    "evidence": [
+      "road/trap-front.json",
+      85
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away",
+    "samples": 38,
+    "speed": 1.2890818577486152,
+    "side": 1.648351710319233,
+    "ratio": 0.7820429643009629,
+    "evidence": [
+      "road/diagonal.json",
+      73
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-away-right",
+    "samples": 202,
+    "speed": 1.2422535147191742,
+    "side": 1.648351710319233,
+    "ratio": 0.7536337705977745,
+    "evidence": [
+      "road/far-exit.json",
+      66
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-toward",
+    "samples": 128,
+    "speed": 2.8892022147821113,
+    "side": 1.648351710319233,
+    "ratio": 1.7527826110742863,
+    "evidence": [
+      "road/toward-far.json",
+      56
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      800,
+      840
+    ],
+    "cycle": "walk-toward-right",
+    "samples": 88,
+    "speed": 1.4029182822156425,
+    "side": 1.648351710319233,
+    "ratio": 0.8511037258813788,
+    "evidence": [
+      "road/tree-front.json",
+      169
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "side",
+    "samples": 101,
+    "speed": 1.5397834136251836,
+    "side": 1.5397834136251836,
+    "ratio": 1.0,
+    "evidence": [
+      "road/trap-behind.json",
+      2
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-away",
+    "samples": 50,
+    "speed": 0.8731888026321286,
+    "side": 1.5397834136251836,
+    "ratio": 0.5670854711808719,
+    "evidence": [
+      "road/trap-front.json",
+      105
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-away-right",
+    "samples": 182,
+    "speed": 1.445491517611345,
+    "side": 1.5397834136251836,
+    "ratio": 0.9387628836760601,
+    "evidence": [
+      "road/diagonal-away-right.json",
+      52
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-toward",
+    "samples": 84,
+    "speed": 2.2266985214650394,
+    "side": 1.5397834136251836,
+    "ratio": 1.4461115126721749,
+    "evidence": [
+      "road/toward-far.json",
+      78
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      840,
+      880
+    ],
+    "cycle": "walk-toward-right",
+    "samples": 26,
+    "speed": 0.9865195789733412,
+    "side": 1.5397834136251836,
+    "ratio": 0.6406872357786556,
+    "evidence": [
+      "road/trap-behind.json",
+      53
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "side",
+    "samples": 105,
+    "speed": 1.6441437539442438,
+    "side": 1.6441437539442438,
+    "ratio": 1.0,
+    "evidence": [
+      "road/trap-front.json",
+      4
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "walk-away-right",
+    "samples": 121,
+    "speed": 1.2309797297096696,
+    "side": 1.6441437539442438,
+    "ratio": 0.7487056571279682,
+    "evidence": [
+      "road/diagonal.json",
+      12
+    ]
+  },
+  {
+    "scene": "road",
+    "yRange": [
+      880,
+      920
+    ],
+    "cycle": "walk-toward",
+    "samples": 54,
+    "speed": 2.218471295779382,
+    "side": 1.6441437539442438,
+    "ratio": 1.3493171083473365,
+    "evidence": [
+      "road/object-click.json",
+      64
+    ]
+  }
+]

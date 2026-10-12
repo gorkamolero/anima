@@ -1,0 +1,43 @@
+{
+  "code": "03fd619fa7ccbaa26f2779c863cc4485bb81fa5a",
+  "apiSourceTree": "b76e7694590455224b35936f1a49bd4711a3419b",
+  "tools": {
+    "tmp/walkqa/tools/lockcheck.py": "3dc518d8547e6a1cbfbc3cc03d000e30c263f4aa90234d488b338fc17d97e378",
+    "tmp/walkqa/tools/walkstats.py": "5b6ca07c2493d479ab27d2a63a9720916750f9a56dfc7897b2583c0c259923f0",
+    "tmp/walkqa/tools/stancecam.py": "24ba9becf42872cf0fed41c39ff6db82e36d73ed6ce6dee70ff1f13545aa92d6",
+    "tmp/walkqa/tools/freeze.py": "b6e725696a3335d4566894511f9b82e51631e254411d9add0bb11647bc6d5681"
+  },
+  "spriteMetadata": {
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2-normalized.json": "255773ef3682eca2589c9637ac17d0c83388e0f779e3c93f8e16febb6087ef90",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away-right.manifest.json": "25bd93cbd086c9a0f4e1531e9819a89e3fc098b24d6aa407b977fdfdbf4ab9a7",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away.json": "349030a18c5c9b325513625d52117866aee7842ee8e2d750ae32a86cb06d42e4",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away.manifest.json": "68d59244592fc32413b1a9dac39b9aeec410a4d9a5e879e6ada5f072cef9e288",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-talk-v1.manifest.json": "114f466bc98e40f48eb143a4141067c7adaf8100a8a43ec90a135d27989423e4",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-talk-v1.json": "37d80054bc5c2768207abaf5869dd808078b5a7edac8ff7cb2097cc20d544438",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward-right.manifest.json": "5be2b46a10dc41d7604e0065e296525f04cf03e5e9872be0521de6b37efd57ad",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-neutral-walk.json": "bcd02d65286f1925f799d303645c8189c0b44ca79738e7c848d6468abe37ec27",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2.json": "2a6e0bd7e70f8a6927258d2f065a21c7b6f5be8f4e4b722cb9a867d85fa37189",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-idle-v2.manifest.json": "a993f268d70ddb0f7ebf2ed3e167d681a502076ab4c6fa01aedb1dd6860caae6",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away-right.json": "52c00194492a228187b9fbd0422f166767f2ce42d8aa42e43edffb403acac996",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward.manifest.json": "8b762af0149a0b74abb4082c9e4c78272a5afe12afd837d91ef7c87ef1e9185c",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.manifest.json": "e396c1dda5567d089ed32b53057dc35642a6309e2eb59f6acf922f96ddc74b92",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-neutral-walk.manifest.json": "9ae4bc7f4f4b84244a348440de1a90025715cca1f825da8767636418a6895db3",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-talk-v1-normalized.json": "4ac728d56693aee6da8fd2e257a8daa02bc6941eddecf04c1f18e95c2e744ce4",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop.json": "1f0a12ff96c53335b7c08402fcbf3404b5d52b8ab186192ca0b882cee31fdc6f",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward-right.json": "884b02364ad12a79ea716a26d28c9e030a0e8ae31679b18d9246a9777c08e893",
+    "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward.json": "379eec16ad84edecf0856e3567ffe2c64dc92fac30389a4e5b2a8a5e1c266d96"
+  },
+  "muted": true,
+  "townRun": 15,
+  "townUncachedCalls": 0,
+  "generation": {
+    "Kling": 2,
+    "BRIA": 1,
+    "imageEdits": 0,
+    "Veo": 0
+  },
+  "sourceAPIIsolationNote": "Committed API source copied before the concurrent ground/exit changes; tree hash retained from isolation start.",
+  "townCalls": 69,
+  "proofCacheArchive": "api-proof-input-cache.tar.gz",
+  "proofCacheSHA256": "c2306cf747b27b8233d63935db5a51ee0a0cad21d3aafdb92c5d4f997c8af786"
+}

@@ -1,0 +1,607 @@
+[
+  {
+    "clip": "road/away-near",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.6165561012373546
+  },
+  {
+    "clip": "road/toward-near",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.4129924501058895
+  },
+  {
+    "clip": "road/away-far",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.501357270496469
+  },
+  {
+    "clip": "road/away-far",
+    "cycle": "hermes-walk-away",
+    "speed": 2.226434143365357
+  },
+  {
+    "clip": "road/toward-far",
+    "cycle": "hermes-walk-toward",
+    "speed": 3.0081251147607477
+  },
+  {
+    "clip": "road/side-near",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.683147349733018
+  },
+  {
+    "clip": "road/side-far",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.7946236358213206
+  },
+  {
+    "clip": "road/diagonal",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.4445753479192303
+  },
+  {
+    "clip": "road/diagonal",
+    "cycle": "hermes-walk-away",
+    "speed": 1.803227794157341
+  },
+  {
+    "clip": "road/diagonal-away-right",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.4445753479192303
+  },
+  {
+    "clip": "road/diagonal-away-right",
+    "cycle": "hermes-walk-away",
+    "speed": 1.803227794157341
+  },
+  {
+    "clip": "road/diagonal-toward-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.8365126571856842
+  },
+  {
+    "clip": "road/diagonal-toward-left",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.5952944260768827
+  },
+  {
+    "clip": "road/diagonal-toward-left",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 2.0888334181815513
+  },
+  {
+    "clip": "road/diagonal-away-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3991919306997784
+  },
+  {
+    "clip": "road/diagonal-away-left",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.469967551504917
+  },
+  {
+    "clip": "road/diagonal-away-left",
+    "cycle": "hermes-walk-away",
+    "speed": 1.8971189926904986
+  },
+  {
+    "clip": "road/diagonal-toward-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 2.010657821490097
+  },
+  {
+    "clip": "road/diagonal-toward-right",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.9527956397048816
+  },
+  {
+    "clip": "road/object-click",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.637950682855379
+  },
+  {
+    "clip": "road/object-click",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.1439609955107866
+  },
+  {
+    "clip": "road/trap-behind",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4500040687879479
+  },
+  {
+    "clip": "road/trap-behind",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.839657246489343
+  },
+  {
+    "clip": "road/trap-behind",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 1.2723837230684474
+  },
+  {
+    "clip": "road/trap-behind",
+    "cycle": "hermes-walk-away",
+    "speed": 0.5966125701454686
+  },
+  {
+    "clip": "road/trap-front",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.6593508637911183
+  },
+  {
+    "clip": "road/trap-front",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.3190615142426303
+  },
+  {
+    "clip": "road/trap-front",
+    "cycle": "hermes-walk-away",
+    "speed": 1.0340615614971365
+  },
+  {
+    "clip": "road/trap-front",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 1.093561914134436
+  },
+  {
+    "clip": "road/tree-behind",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.6565175996666548
+  },
+  {
+    "clip": "road/tree-behind",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.3986549951760598
+  },
+  {
+    "clip": "road/tree-front",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.8166095866910716
+  },
+  {
+    "clip": "road/tree-front",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.1641428848222235
+  },
+  {
+    "clip": "road/tree-front",
+    "cycle": "hermes-walk-away",
+    "speed": 0.7295239906049196
+  },
+  {
+    "clip": "road/tree-front",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 1.9073384160093418
+  },
+  {
+    "clip": "road/exit",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.8061609108072247
+  },
+  {
+    "clip": "road/exit",
+    "cycle": "hermes-walk-away-right",
+    "speed": 2.0100755989419596
+  },
+  {
+    "clip": "road/far-exit",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.4512191639553635
+  },
+  {
+    "clip": "road/far-exit",
+    "cycle": "hermes-walk-away",
+    "speed": 1.9401565081435754
+  },
+  {
+    "clip": "alley/away-near",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.223016302633745
+  },
+  {
+    "clip": "alley/toward-near",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.7386637859234495
+  },
+  {
+    "clip": "alley/away-far",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.4623682981261168
+  },
+  {
+    "clip": "alley/away-far",
+    "cycle": "hermes-walk-away",
+    "speed": 1.9632975568636932
+  },
+  {
+    "clip": "alley/toward-far",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.3462744417245363
+  },
+  {
+    "clip": "alley/side-near",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.542790647567196
+  },
+  {
+    "clip": "alley/side-far",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4230994196151578
+  },
+  {
+    "clip": "alley/diagonal",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4093396710960975
+  },
+  {
+    "clip": "alley/diagonal",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.332941352164185
+  },
+  {
+    "clip": "alley/diagonal",
+    "cycle": "hermes-walk-away",
+    "speed": 1.037740299476343
+  },
+  {
+    "clip": "alley/diagonal-away-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4093396710960975
+  },
+  {
+    "clip": "alley/diagonal-away-right",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.332941352164185
+  },
+  {
+    "clip": "alley/diagonal-away-right",
+    "cycle": "hermes-walk-away",
+    "speed": 1.037740299476343
+  },
+  {
+    "clip": "alley/diagonal-toward-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.324474380400175
+  },
+  {
+    "clip": "alley/diagonal-toward-left",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.7036049967026703
+  },
+  {
+    "clip": "alley/diagonal-away-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.2402743747586826
+  },
+  {
+    "clip": "alley/diagonal-away-left",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.2690192179150053
+  },
+  {
+    "clip": "alley/diagonal-toward-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.6265004115272956
+  },
+  {
+    "clip": "alley/diagonal-toward-right",
+    "cycle": "hermes-walk-away",
+    "speed": 1.2297550760742912
+  },
+  {
+    "clip": "alley/diagonal-toward-right",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.1174520814281503
+  },
+  {
+    "clip": "alley/object-click",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3760261020114521
+  },
+  {
+    "clip": "alley/object-click",
+    "cycle": "hermes-walk-away",
+    "speed": 0.40126247805160287
+  },
+  {
+    "clip": "alley/crate-behind",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3735726677487372
+  },
+  {
+    "clip": "alley/crate-front",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3735726677487372
+  },
+  {
+    "clip": "alley/exit",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.2697843982094925
+  },
+  {
+    "clip": "alley/exit",
+    "cycle": "hermes-walk-away",
+    "speed": 1.9573076970338237
+  },
+  {
+    "clip": "depot-outside/away-near",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.9240603319903797
+  },
+  {
+    "clip": "depot-outside/toward-near",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.7338880888233383
+  },
+  {
+    "clip": "depot-outside/toward-near",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.176437920553138
+  },
+  {
+    "clip": "depot-outside/away-far",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.9458613595384033
+  },
+  {
+    "clip": "depot-outside/toward-far",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.8031692414698273
+  },
+  {
+    "clip": "depot-outside/toward-far",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.166986795109916
+  },
+  {
+    "clip": "depot-outside/side-near",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4681164072290338
+  },
+  {
+    "clip": "depot-outside/side-far",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.7209950274919223
+  },
+  {
+    "clip": "depot-outside/diagonal",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.49053238433106
+  },
+  {
+    "clip": "depot-outside/diagonal",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.2684111515651588
+  },
+  {
+    "clip": "depot-outside/diagonal-away-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.49053238433106
+  },
+  {
+    "clip": "depot-outside/diagonal-away-right",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.2684111515651588
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.468453437685843
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-left",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.006790911647224
+  },
+  {
+    "clip": "depot-outside/diagonal-away-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.255940567556604
+  },
+  {
+    "clip": "depot-outside/diagonal-away-left",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.818183272134913
+  },
+  {
+    "clip": "depot-outside/diagonal-away-left",
+    "cycle": "hermes-walk-away",
+    "speed": 1.8889666018600575
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.7397300725456846
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-right",
+    "cycle": "hermes-walk-away",
+    "speed": 1.237051898987932
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-right",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.5972088282759092
+  },
+  {
+    "clip": "depot-outside/object-click",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.5027494753212234
+  },
+  {
+    "clip": "depot-outside/object-click",
+    "cycle": "hermes-walk-away",
+    "speed": 1.8021820611784232
+  },
+  {
+    "clip": "depot-outside/object-click",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.6246488746819558
+  },
+  {
+    "clip": "depot-outside/post-behind",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.5417502225908966
+  },
+  {
+    "clip": "depot-outside/post-behind",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.0706376404808968
+  },
+  {
+    "clip": "depot-outside/post-front",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.6731843838466038
+  },
+  {
+    "clip": "depot-outside/exit",
+    "cycle": "hermes-walk-toward",
+    "speed": 2.253841399364115
+  },
+  {
+    "clip": "depot-inside/away-near",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.8823547232556488
+  },
+  {
+    "clip": "depot-inside/toward-near",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.2449227762434185
+  },
+  {
+    "clip": "depot-inside/away-far",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.853541404977107
+  },
+  {
+    "clip": "depot-inside/toward-far",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.3079528009907846
+  },
+  {
+    "clip": "depot-inside/side-near",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4042100340628476
+  },
+  {
+    "clip": "depot-inside/side-far",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4620412338646682
+  },
+  {
+    "clip": "depot-inside/diagonal",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4121069888035849
+  },
+  {
+    "clip": "depot-inside/diagonal",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.1295363738275548
+  },
+  {
+    "clip": "depot-inside/diagonal",
+    "cycle": "hermes-walk-away",
+    "speed": 0.8857422477212064
+  },
+  {
+    "clip": "depot-inside/diagonal-away-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4121069888035849
+  },
+  {
+    "clip": "depot-inside/diagonal-away-right",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.1295363738275548
+  },
+  {
+    "clip": "depot-inside/diagonal-away-right",
+    "cycle": "hermes-walk-away",
+    "speed": 0.8857422477212064
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3976939559876702
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-left",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.4791252447217342
+  },
+  {
+    "clip": "depot-inside/diagonal-away-left",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4405021440988248
+  },
+  {
+    "clip": "depot-inside/diagonal-away-left",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.592702323677995
+  },
+  {
+    "clip": "depot-inside/diagonal-away-left",
+    "cycle": "hermes-walk-away",
+    "speed": 1.3188689723723364
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4442898697110569
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 1.1416030640386639
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right",
+    "cycle": "hermes-walk-away",
+    "speed": 1.6997069927515795
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right",
+    "cycle": "hermes-walk-toward",
+    "speed": 1.4968149584438482
+  },
+  {
+    "clip": "depot-inside/object-click",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4494259405428092
+  },
+  {
+    "clip": "depot-inside/object-click",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.264029909124656
+  },
+  {
+    "clip": "depot-inside/bench-behind",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4935148315710667
+  },
+  {
+    "clip": "depot-inside/bench-behind",
+    "cycle": "hermes-walk-away-right",
+    "speed": 1.1475731384677073
+  },
+  {
+    "clip": "depot-inside/bench-behind",
+    "cycle": "hermes-walk-away",
+    "speed": 1.458573734591625
+  },
+  {
+    "clip": "depot-inside/bench-front",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.4311865865413775
+  },
+  {
+    "clip": "depot-inside/exit",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "speed": 1.3618028645730311
+  },
+  {
+    "clip": "depot-inside/exit",
+    "cycle": "hermes-walk-toward-right",
+    "speed": 1.0213509470529782
+  }
+]

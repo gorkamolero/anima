@@ -1,0 +1,1 @@
+{"switches": [{"frame": 5, "foot": "L", "point": {"x": 277, "y": 905}}, {"frame": 20, "foot": "R", "point": {"x": 340, "y": 902}}], "patch": [25, 24], "swing": [{"frame": 10, "foot": "R", "point": {"x": 342, "y": 1042}}, {"frame": 25, "foot": "L", "point": {"x": 267, "y": 1040}}], "searchRadius": 64}

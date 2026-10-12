@@ -1,0 +1,5 @@
+
+> @anima/engine@0.1.0 lint /Users/gorkolas/Developer/anima/packages/engine
+> biome check .
+
+Checked 88 files in 50ms. No fixes applied.

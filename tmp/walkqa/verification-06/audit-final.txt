@@ -1,0 +1,71 @@
+63 clips: 1920x1080, 24 fps, frame/log counts verified; 5 transitions preserved separately; body off-floor: 0
+clip                                         walk s  dist px off-floor steps/s
+alley/away-far.json                             3.8     153    0/91    1.85
+alley/away-near.json                            2.7     137    0/65    1.85
+alley/crate-behind.json                         1.8     555    0/42    1.71
+alley/crate-front.json                          1.8     555    0/42    1.71
+alley/diagonal-away-left.json                   3.7     269    0/89    1.89
+alley/diagonal-away-right.json                  2.8     242    0/67    1.79
+alley/diagonal-toward-left.json                 2.3     287    0/56    1.71
+alley/diagonal-toward-right.json                4.7     404    0/112   1.93
+alley/diagonal.json                             2.8     242    0/67    1.79
+alley/exit.json                                 4.0     174    0/97    1.73
+alley/object-click.json                         2.8     644    0/68    1.76
+alley/side-far.json                             1.2     275    0/29    1.66
+alley/side-near.json                            1.2     393    0/29    1.66
+alley/toward-far.json                           3.2     133    0/77    1.87
+alley/toward-near.json                          2.2     191    0/54    1.78
+depot-inside/away-far.json                      1.1      80    0/27    1.78
+depot-inside/away-near.json                     1.1      80    0/27    1.78
+depot-inside/bench-behind.json                  4.1     740    0/98    1.96
+depot-inside/bench-front.json                   2.5     707    0/61    1.97
+depot-inside/diagonal-away-left.json            2.9     509    0/69    1.74
+depot-inside/diagonal-away-right.json           3.7     487    0/88    1.91
+depot-inside/diagonal-toward-left.json          2.8     485    0/66    1.82
+depot-inside/diagonal-toward-right.json         4.2     496    0/101   1.90
+depot-inside/diagonal.json                      3.7     487    0/88    1.91
+depot-inside/exit.json                          2.1     539    0/51    1.88
+depot-inside/object-click.json                  1.8     430    0/43    1.67
+depot-inside/side-far.json                      2.5     639    0/61    1.97
+depot-inside/side-near.json                     2.6     676    0/62    1.94
+depot-inside/toward-far.json                    2.3     117    0/56    1.71
+depot-inside/toward-near.json                   2.3     117    0/56    1.71
+depot-outside/away-far.json                     1.1      87    0/27    1.78
+depot-outside/away-near.json                    1.1      90    0/27    1.78
+depot-outside/diagonal-away-left.json           2.9     391    0/70    1.71
+depot-outside/diagonal-away-right.json          2.2     329    0/52    1.85
+depot-outside/diagonal-toward-left.json         2.3     385    0/55    1.75
+depot-outside/diagonal-toward-right.json        3.8     354    0/90    1.87
+depot-outside/diagonal.json                     2.2     329    0/52    1.85
+depot-outside/exit.json                         1.2     154    0/30    1.60
+depot-outside/object-click.json                 3.3     349    0/79    1.82
+depot-outside/post-behind.json                  1.7     300    0/41    1.76
+depot-outside/post-front.json                   1.2     356    0/29    1.66
+depot-outside/side-far.json                     1.2     319    0/29    1.66
+depot-outside/side-near.json                    1.2     325    0/29    1.66
+depot-outside/toward-far.json                   3.3     126    0/79    1.82
+depot-outside/toward-near.json                  3.3     126    0/79    1.82
+road/away-far.json                              4.8     121    0/115   1.88
+road/away-near.json                             2.5     114    0/61    1.97
+road/diagonal-away-left.json                    4.8     254    0/115   1.88
+road/diagonal-away-right.json                   3.8     253    0/90    1.87
+road/diagonal-toward-left.json                  5.2     267    0/124   1.94
+road/diagonal-toward-right.json                 3.6     245    0/87    1.93
+road/diagonal.json                              3.8     253    0/90    1.87
+road/exit.json                                  3.6     511    0/87    1.93
+road/far-exit.json                              5.6     157    0/135   1.96
+road/object-click.json                          3.1     347    0/75    1.92
+road/side-far.json                              2.5     378    0/61    1.97
+road/side-near.json                             1.2     258    0/29    1.66
+road/toward-far.json                            3.8     117    0/92    1.83
+road/toward-near.json                           3.8     146    0/92    1.83
+road/trap-behind.json                           6.4     499    0/154   2.03
+road/trap-front.json                            5.8     424    0/139   1.90
+road/tree-behind.json                           6.4     543    0/154   2.03
+road/tree-front.json                           13.6     692    0/326   2.06
+
+side                 ground m/s min/median/max 1.24 1.47 2.01 (n=42)
+walk-away            ground m/s min/median/max 0.4 1.46 2.23 (n=22)
+walk-away-right      ground m/s min/median/max 1.07 1.4 2.01 (n=32)
+walk-toward          ground m/s min/median/max 1.12 1.74 3.01 (n=19)
+walk-toward-right    ground m/s min/median/max 1.02 1.27 2.09 (n=6)

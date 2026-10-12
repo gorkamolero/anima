@@ -1,0 +1,32 @@
+[
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/exit.mp4",
+    "sourceFrames": 51,
+    "fullFrames": 144,
+    "transition": "tmp/walkqa/transitions-06/depot-inside/exit.mp4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/exit.mp4",
+    "sourceFrames": 30,
+    "fullFrames": 144,
+    "transition": "tmp/walkqa/transitions-06/depot-outside/exit.mp4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/exit.mp4",
+    "sourceFrames": 87,
+    "fullFrames": 144,
+    "transition": "tmp/walkqa/transitions-06/road/exit.mp4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/far-exit.mp4",
+    "sourceFrames": 164,
+    "fullFrames": 208,
+    "transition": "tmp/walkqa/transitions-06/road/far-exit.mp4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/tree-behind.mp4",
+    "sourceFrames": 154,
+    "fullFrames": 180,
+    "transition": "tmp/walkqa/transitions-06/road/tree-behind.mp4"
+  }
+]

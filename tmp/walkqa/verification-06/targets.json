@@ -1,0 +1,1608 @@
+[
+  {
+    "clip": "road/away-near",
+    "walkingFrames": 61,
+    "target": {
+      "x": 997.5,
+      "y": 797.5
+    },
+    "last": {
+      "x": 1022.683262120997,
+      "y": 824.2044833996221
+    },
+    "shortfall": 36.705941272436185,
+    "arrival": {
+      "distance": 36.705941272436185,
+      "halfStride": 42.60445992435778,
+      "switchFrame": 3,
+      "target": {
+        "x": 997.5,
+        "y": 797.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/toward-near",
+    "walkingFrames": 92,
+    "target": {
+      "x": 997.5,
+      "y": 922.5
+    },
+    "last": {
+      "x": 997.8495595416438,
+      "y": 921.5200105759616
+    },
+    "shortfall": 1.0404667915802794,
+    "arrival": {
+      "distance": 1.0404667915802794,
+      "halfStride": 17.113034646932086,
+      "switchFrame": 5,
+      "target": {
+        "x": 997.5,
+        "y": 922.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/away-far",
+    "walkingFrames": 115,
+    "target": {
+      "x": 997.5,
+      "y": 737.5
+    },
+    "last": {
+      "x": 1000.325281729497,
+      "y": 740.584779107325
+    },
+    "shortfall": 4.183070521999105,
+    "arrival": {
+      "distance": 4.183070521999105,
+      "halfStride": 7.805002550243085,
+      "switchFrame": 5,
+      "target": {
+        "x": 997.5,
+        "y": 737.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/toward-far",
+    "walkingFrames": 92,
+    "target": {
+      "x": 967.5,
+      "y": 867.5
+    },
+    "last": {
+      "x": 967.780144768349,
+      "y": 859.9066084404142
+    },
+    "shortfall": 7.598557525505917,
+    "arrival": {
+      "distance": 7.598557525505917,
+      "halfStride": 13.71476545666684,
+      "switchFrame": 5,
+      "target": {
+        "x": 967.5,
+        "y": 867.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/side-near",
+    "walkingFrames": 29,
+    "target": {
+      "x": 1177.5,
+      "y": 887.5
+    },
+    "last": {
+      "x": 1166.6542713330855,
+      "y": 913.6768113667472
+    },
+    "shortfall": 28.334701050948038,
+    "arrival": {
+      "distance": 28.334701050948055,
+      "halfStride": 40.61883154127466,
+      "switchFrame": 21,
+      "target": {
+        "x": 1177.5,
+        "y": 887.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/side-far",
+    "walkingFrames": 61,
+    "target": {
+      "x": 1147.5,
+      "y": 797.5
+    },
+    "last": {
+      "x": 1131.6387220573029,
+      "y": 822.539757226914
+    },
+    "shortfall": 29.64067441807432,
+    "arrival": {
+      "distance": 29.64067441807432,
+      "halfStride": 42.27141384767696,
+      "switchFrame": 3,
+      "target": {
+        "x": 1147.5,
+        "y": 797.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/diagonal",
+    "walkingFrames": 90,
+    "target": {
+      "x": 1077.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 1074.1783514278486,
+      "y": 792.998688553008
+    },
+    "shortfall": 6.424089432741187,
+    "arrival": {
+      "distance": 6.424089432741187,
+      "halfStride": 25.15741852364662,
+      "switchFrame": 24,
+      "target": {
+        "x": 1077.5,
+        "y": 787.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/diagonal-away-right",
+    "walkingFrames": 90,
+    "target": {
+      "x": 1077.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 1074.1783514278486,
+      "y": 792.998688553008
+    },
+    "shortfall": 6.424089432741187,
+    "arrival": {
+      "distance": 6.424089432741187,
+      "halfStride": 25.15741852364662,
+      "switchFrame": 24,
+      "target": {
+        "x": 1077.5,
+        "y": 787.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/diagonal-toward-left",
+    "walkingFrames": 124,
+    "target": {
+      "x": 837.5,
+      "y": 897.5
+    },
+    "last": {
+      "x": 834.4235082110499,
+      "y": 898.1789639032907
+    },
+    "shortfall": 3.1505227676449086,
+    "arrival": {
+      "distance": 3.150522767644909,
+      "halfStride": 16.099875354943798,
+      "switchFrame": 18,
+      "target": {
+        "x": 837.5,
+        "y": 897.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/diagonal-away-left",
+    "walkingFrames": 115,
+    "target": {
+      "x": 837.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 838.9626905190785,
+      "y": 797.3979398824827
+    },
+    "shortfall": 10.005432398044722,
+    "arrival": {
+      "distance": 10.005432398044722,
+      "halfStride": 25.766346096698587,
+      "switchFrame": 24,
+      "target": {
+        "x": 837.5,
+        "y": 787.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/diagonal-toward-right",
+    "walkingFrames": 87,
+    "target": {
+      "x": 1077.5,
+      "y": 897.5
+    },
+    "last": {
+      "x": 1076.9896571088486,
+      "y": 863.261893248461
+    },
+    "shortfall": 34.24191004889083,
+    "arrival": {
+      "distance": 34.24191004889083,
+      "halfStride": 50.418307828433655,
+      "switchFrame": 3,
+      "target": {
+        "x": 1077.5,
+        "y": 897.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/object-click",
+    "walkingFrames": 75,
+    "target": {
+      "x": 1432.5,
+      "y": 807.5
+    },
+    "last": {
+      "x": 1235.2416132991132,
+      "y": 934.9761042697302
+    },
+    "shortfall": 234.86385052541337,
+    "arrival": {
+      "distance": 7.669111412294569,
+      "halfStride": 18.164576384762576,
+      "switchFrame": 18,
+      "target": {
+        "x": 1242.5,
+        "y": 932.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": "right lobster trap"
+  },
+  {
+    "clip": "road/trap-behind",
+    "walkingFrames": 154,
+    "target": {
+      "x": 1402.5,
+      "y": 862.5
+    },
+    "last": {
+      "x": 1398.403140469882,
+      "y": 834.151827487727
+    },
+    "shortfall": 28.64268044012482,
+    "arrival": {
+      "distance": 28.64268044012482,
+      "halfStride": 44.59453131042209,
+      "switchFrame": 3,
+      "target": {
+        "x": 1402.5,
+        "y": 862.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/trap-front",
+    "walkingFrames": 139,
+    "target": {
+      "x": 1402.5,
+      "y": 862.5
+    },
+    "last": {
+      "x": 1374.6532264178172,
+      "y": 829.7618001516477
+    },
+    "shortfall": 42.97944308908632,
+    "arrival": {
+      "distance": 42.97944308908632,
+      "halfStride": 43.71625991373652,
+      "switchFrame": 3,
+      "target": {
+        "x": 1402.5,
+        "y": 862.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/tree-behind",
+    "walkingFrames": 154,
+    "target": {
+      "x": 467.5,
+      "y": 807.5
+    },
+    "last": {
+      "x": 451.5959271972657,
+      "y": 801.1798696757036
+    },
+    "shortfall": 17.113841737925572,
+    "arrival": null,
+    "requestedExit": "edge-left",
+    "exitCompleted": true,
+    "transitioned": true,
+    "object": null
+  },
+  {
+    "clip": "road/tree-front",
+    "walkingFrames": 326,
+    "target": {
+      "x": 417.5,
+      "y": 822.5
+    },
+    "last": {
+      "x": 444.9117098746966,
+      "y": 823.1538450229181
+    },
+    "shortfall": 27.419506771066004,
+    "arrival": {
+      "distance": 27.41950677106606,
+      "halfStride": 28.46085920096461,
+      "switchFrame": 21,
+      "target": {
+        "x": 417.5,
+        "y": 822.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "road/exit",
+    "walkingFrames": 87,
+    "target": {
+      "x": 467.5,
+      "y": 807.5
+    },
+    "last": {
+      "x": 454.3248611561344,
+      "y": 812.0797193882148
+    },
+    "shortfall": 13.948408985612929,
+    "arrival": null,
+    "requestedExit": "edge-left",
+    "exitCompleted": true,
+    "transitioned": true,
+    "object": null
+  },
+  {
+    "clip": "road/far-exit",
+    "walkingFrames": 135,
+    "target": {
+      "x": 1012.5,
+      "y": 742.5
+    },
+    "last": {
+      "x": 1009.4136116199112,
+      "y": 742.4231748706578
+    },
+    "shortfall": 3.0873443820289386,
+    "arrival": {
+      "distance": 3.087344382028825,
+      "halfStride": 17.05625307628247,
+      "switchFrame": 24,
+      "target": {
+        "x": 1012.5,
+        "y": 742.5
+      }
+    },
+    "requestedExit": "far",
+    "exitCompleted": true,
+    "transitioned": true,
+    "object": null
+  },
+  {
+    "clip": "alley/away-near",
+    "walkingFrames": 65,
+    "target": {
+      "x": 697.5,
+      "y": 747.5
+    },
+    "last": {
+      "x": 740.168189373926,
+      "y": 789.258082591695
+    },
+    "shortfall": 59.701857979329546,
+    "arrival": {
+      "distance": 59.701857979329546,
+      "halfStride": 64.68272377996175,
+      "switchFrame": 3,
+      "target": {
+        "x": 697.5,
+        "y": 747.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/toward-near",
+    "walkingFrames": 54,
+    "target": {
+      "x": 897.5,
+      "y": 927.5
+    },
+    "last": {
+      "x": 857.9055707158437,
+      "y": 901.3082305608356
+    },
+    "shortfall": 47.47344117180046,
+    "arrival": {
+      "distance": 47.4734411718004,
+      "halfStride": 48.464214695039736,
+      "switchFrame": 18,
+      "target": {
+        "x": 897.5,
+        "y": 927.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/away-far",
+    "walkingFrames": 91,
+    "target": {
+      "x": 607.5,
+      "y": 662.5
+    },
+    "last": {
+      "x": 604.3814053054639,
+      "y": 665.4972641847603
+    },
+    "shortfall": 4.3254162183581375,
+    "arrival": {
+      "distance": 4.3254162183581375,
+      "halfStride": 39.92306318653206,
+      "switchFrame": 3,
+      "target": {
+        "x": 607.5,
+        "y": 662.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/toward-far",
+    "walkingFrames": 77,
+    "target": {
+      "x": 697.5,
+      "y": 822.5
+    },
+    "last": {
+      "x": 700.9608370381567,
+      "y": 793.5546814965498
+    },
+    "shortfall": 29.151481202005,
+    "arrival": {
+      "distance": 29.151481202005,
+      "halfStride": 41.65148260924689,
+      "switchFrame": 12,
+      "target": {
+        "x": 697.5,
+        "y": 822.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/side-near",
+    "walkingFrames": 29,
+    "target": {
+      "x": 1047.5,
+      "y": 887.5
+    },
+    "last": {
+      "x": 1008.2245961330184,
+      "y": 927.4453451858928
+    },
+    "shortfall": 56.019531870006254,
+    "arrival": {
+      "distance": 56.01953187000617,
+      "halfStride": 61.98360924222283,
+      "switchFrame": 21,
+      "target": {
+        "x": 1047.5,
+        "y": 887.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/side-far",
+    "walkingFrames": 29,
+    "target": {
+      "x": 997.5,
+      "y": 847.5
+    },
+    "last": {
+      "x": 979.0500126925416,
+      "y": 853.2381521390107
+    },
+    "shortfall": 19.321708558401593,
+    "arrival": {
+      "distance": 19.321708558401593,
+      "halfStride": 49.23943061461027,
+      "switchFrame": 12,
+      "target": {
+        "x": 997.5,
+        "y": 847.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/diagonal",
+    "walkingFrames": 67,
+    "target": {
+      "x": 847.5,
+      "y": 777.5
+    },
+    "last": {
+      "x": 831.8996949321049,
+      "y": 806.9889618085718
+    },
+    "shortfall": 33.36118083579779,
+    "arrival": {
+      "distance": 33.36118083579779,
+      "halfStride": 47.20636448696015,
+      "switchFrame": 24,
+      "target": {
+        "x": 847.5,
+        "y": 777.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/diagonal-away-right",
+    "walkingFrames": 67,
+    "target": {
+      "x": 847.5,
+      "y": 777.5
+    },
+    "last": {
+      "x": 831.8996949321049,
+      "y": 806.9889618085718
+    },
+    "shortfall": 33.36118083579779,
+    "arrival": {
+      "distance": 33.36118083579779,
+      "halfStride": 47.20636448696015,
+      "switchFrame": 24,
+      "target": {
+        "x": 847.5,
+        "y": 777.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/diagonal-toward-left",
+    "walkingFrames": 56,
+    "target": {
+      "x": 597.5,
+      "y": 917.5
+    },
+    "last": {
+      "x": 579.6795470078231,
+      "y": 916.76360091452
+    },
+    "shortfall": 17.835661705119968,
+    "arrival": {
+      "distance": 17.83566170511997,
+      "halfStride": 25.295743384654177,
+      "switchFrame": 18,
+      "target": {
+        "x": 597.5,
+        "y": 917.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/diagonal-away-left",
+    "walkingFrames": 89,
+    "target": {
+      "x": 647.5,
+      "y": 747.5
+    },
+    "last": {
+      "x": 688.0214080650784,
+      "y": 790.3208073425673
+    },
+    "shortfall": 58.95427086349098,
+    "arrival": {
+      "distance": 58.95427086349098,
+      "halfStride": 64.89533310555066,
+      "switchFrame": 3,
+      "target": {
+        "x": 647.5,
+        "y": 747.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/diagonal-toward-right",
+    "walkingFrames": 112,
+    "target": {
+      "x": 997.5,
+      "y": 927.5
+    },
+    "last": {
+      "x": 1053.6613521611373,
+      "y": 912.3017532520788
+    },
+    "shortfall": 58.1814762684652,
+    "arrival": {
+      "distance": 58.1814762684652,
+      "halfStride": 89.29891138228392,
+      "switchFrame": 3,
+      "target": {
+        "x": 997.5,
+        "y": 927.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/object-click",
+    "walkingFrames": 68,
+    "target": {
+      "x": 507.5,
+      "y": 732.5
+    },
+    "last": {
+      "x": 396.8743921775963,
+      "y": 864.4866611735646
+    },
+    "shortfall": 172.21644472529798,
+    "arrival": {
+      "distance": 19.475982513594932,
+      "halfStride": 55.16497651165136,
+      "switchFrame": 24,
+      "target": {
+        "x": 377.5,
+        "y": 862.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": "crate"
+  },
+  {
+    "clip": "alley/crate-behind",
+    "walkingFrames": 42,
+    "target": {
+      "x": 362.5,
+      "y": 862.5
+    },
+    "last": {
+      "x": 432.165708080647,
+      "y": 915.6683952671268
+    },
+    "shortfall": 87.63668830837548,
+    "arrival": {
+      "distance": 87.63668830837541,
+      "halfStride": 89.97244372236673,
+      "switchFrame": 3,
+      "target": {
+        "x": 362.5,
+        "y": 862.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/crate-front",
+    "walkingFrames": 42,
+    "target": {
+      "x": 367.5,
+      "y": 877.5
+    },
+    "last": {
+      "x": 432.165708080647,
+      "y": 915.6683952671268
+    },
+    "shortfall": 75.08981421497248,
+    "arrival": {
+      "distance": 75.0898142149724,
+      "halfStride": 89.97244372236673,
+      "switchFrame": 3,
+      "target": {
+        "x": 367.5,
+        "y": 877.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "alley/exit",
+    "walkingFrames": 97,
+    "target": {
+      "x": 582.5,
+      "y": 647.5
+    },
+    "last": {
+      "x": 579.2631617521465,
+      "y": 645.7283198938035
+    },
+    "shortfall": 3.6899826885040734,
+    "arrival": {
+      "distance": 3.6899826885040734,
+      "halfStride": 35.96807680849366,
+      "switchFrame": 3,
+      "target": {
+        "x": 582.5,
+        "y": 647.5
+      }
+    },
+    "requestedExit": "far",
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/away-near",
+    "walkingFrames": 27,
+    "target": {
+      "x": 497.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 493.0314047440675,
+      "y": 814.6940447437986
+    },
+    "shortfall": 27.55874476620919,
+    "arrival": {
+      "distance": 27.55874476620919,
+      "halfStride": 43.49908889336895,
+      "switchFrame": 14,
+      "target": {
+        "x": 497.5,
+        "y": 787.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/toward-near",
+    "walkingFrames": 79,
+    "target": {
+      "x": 497.5,
+      "y": 922.5
+    },
+    "last": {
+      "x": 509.5499348188437,
+      "y": 903.1760345834604
+    },
+    "shortfall": 22.77315455877824,
+    "arrival": {
+      "distance": 22.773154558778337,
+      "halfStride": 23.91772159389905,
+      "switchFrame": 18,
+      "target": {
+        "x": 497.5,
+        "y": 922.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/away-far",
+    "walkingFrames": 27,
+    "target": {
+      "x": 397.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 393.1877738467368,
+      "y": 802.5907030367022
+    },
+    "shortfall": 15.694731999585699,
+    "arrival": {
+      "distance": 15.694731999585684,
+      "halfStride": 41.971413090230584,
+      "switchFrame": 14,
+      "target": {
+        "x": 397.5,
+        "y": 787.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/toward-far",
+    "walkingFrames": 79,
+    "target": {
+      "x": 397.5,
+      "y": 912.5
+    },
+    "last": {
+      "x": 409.56374015036374,
+      "y": 903.1979100743328
+    },
+    "shortfall": 15.2336044126365,
+    "arrival": {
+      "distance": 15.233604412636431,
+      "halfStride": 23.922043269160497,
+      "switchFrame": 18,
+      "target": {
+        "x": 397.5,
+        "y": 912.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/side-near",
+    "walkingFrames": 29,
+    "target": {
+      "x": 697.5,
+      "y": 877.5
+    },
+    "last": {
+      "x": 696.2669492323433,
+      "y": 882.1074472550991
+    },
+    "shortfall": 4.769589542522432,
+    "arrival": {
+      "distance": 4.769589542522432,
+      "halfStride": 52.04169500568785,
+      "switchFrame": 14,
+      "target": {
+        "x": 697.5,
+        "y": 877.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/side-far",
+    "walkingFrames": 29,
+    "target": {
+      "x": 697.5,
+      "y": 817.5
+    },
+    "last": {
+      "x": 681.0072591654475,
+      "y": 849.9364413844967
+    },
+    "shortfall": 36.388641496016355,
+    "arrival": {
+      "distance": 36.388641496016355,
+      "halfStride": 50.34710663777613,
+      "switchFrame": 21,
+      "target": {
+        "x": 697.5,
+        "y": 817.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/diagonal",
+    "walkingFrames": 52,
+    "target": {
+      "x": 697.5,
+      "y": 797.5
+    },
+    "last": {
+      "x": 696.5005057545065,
+      "y": 814.0823281401766
+    },
+    "shortfall": 16.612422920671996,
+    "arrival": {
+      "distance": 16.612422920671996,
+      "halfStride": 43.45235519598664,
+      "switchFrame": 14,
+      "target": {
+        "x": 697.5,
+        "y": 797.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/diagonal-away-right",
+    "walkingFrames": 52,
+    "target": {
+      "x": 697.5,
+      "y": 797.5
+    },
+    "last": {
+      "x": 696.5005057545065,
+      "y": 814.0823281401766
+    },
+    "shortfall": 16.612422920671996,
+    "arrival": {
+      "distance": 16.612422920671996,
+      "halfStride": 43.45235519598664,
+      "switchFrame": 14,
+      "target": {
+        "x": 697.5,
+        "y": 797.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-left",
+    "walkingFrames": 55,
+    "target": {
+      "x": 297.5,
+      "y": 897.5
+    },
+    "last": {
+      "x": 265.28909744826615,
+      "y": 883.4258712945507
+    },
+    "shortfall": 35.15143442328985,
+    "arrival": {
+      "distance": 35.15143442328985,
+      "halfStride": 49.03841326015056,
+      "switchFrame": 18,
+      "target": {
+        "x": 297.5,
+        "y": 897.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/diagonal-away-left",
+    "walkingFrames": 70,
+    "target": {
+      "x": 297.5,
+      "y": 797.5
+    },
+    "last": {
+      "x": 282.5726098772856,
+      "y": 811.9032896094549
+    },
+    "shortfall": 20.743233293041442,
+    "arrival": {
+      "distance": 20.74323329304144,
+      "halfStride": 46.69505050846435,
+      "switchFrame": 24,
+      "target": {
+        "x": 297.5,
+        "y": 797.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/diagonal-toward-right",
+    "walkingFrames": 90,
+    "target": {
+      "x": 697.5,
+      "y": 897.5
+    },
+    "last": {
+      "x": 697.0873273299383,
+      "y": 895.4924832992692
+    },
+    "shortfall": 2.049493116926442,
+    "arrival": {
+      "distance": 2.049493116926442,
+      "halfStride": 23.11047916447418,
+      "switchFrame": 5,
+      "target": {
+        "x": 697.5,
+        "y": 897.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/object-click",
+    "walkingFrames": 79,
+    "target": {
+      "x": 732.5,
+      "y": 787.5
+    },
+    "last": {
+      "x": 700.981816832842,
+      "y": 879.327766845764
+    },
+    "shortfall": 97.08622267880504,
+    "arrival": {
+      "distance": 21.75075332029204,
+      "halfStride": 22.620278087151423,
+      "switchFrame": 18,
+      "target": {
+        "x": 722.5,
+        "y": 882.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": "Bench"
+  },
+  {
+    "clip": "depot-outside/post-behind",
+    "walkingFrames": 41,
+    "target": {
+      "x": 727.5,
+      "y": 827.5
+    },
+    "last": {
+      "x": 704.3283286403048,
+      "y": 793.5456751879916
+    },
+    "shortfall": 41.107450991773845,
+    "arrival": {
+      "distance": 41.107450991773845,
+      "halfStride": 44.19895355736944,
+      "switchFrame": 24,
+      "target": {
+        "x": 727.5,
+        "y": 827.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/post-front",
+    "walkingFrames": 29,
+    "target": {
+      "x": 722.5,
+      "y": 887.5
+    },
+    "last": {
+      "x": 669.3980338879375,
+      "y": 893.6688100619189
+    },
+    "shortfall": 53.45907801811279,
+    "arrival": {
+      "distance": 53.45907801811279,
+      "halfStride": 56.14089121439349,
+      "switchFrame": 21,
+      "target": {
+        "x": 722.5,
+        "y": 887.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-outside/exit",
+    "walkingFrames": 30,
+    "target": {
+      "x": 1487.5,
+      "y": 872.5
+    },
+    "last": {
+      "x": 1473.3246457312569,
+      "y": 866.4286381736066
+    },
+    "shortfall": 15.420833410401709,
+    "arrival": null,
+    "requestedExit": "door",
+    "exitCompleted": true,
+    "transitioned": true,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/away-near",
+    "walkingFrames": 27,
+    "target": {
+      "x": 897.5,
+      "y": 727.5
+    },
+    "last": {
+      "x": 893.4369449866119,
+      "y": 753.9143921414385
+    },
+    "shortfall": 26.725054316942103,
+    "arrival": {
+      "distance": 26.725054316942103,
+      "halfStride": 40.59915601201653,
+      "switchFrame": 14,
+      "target": {
+        "x": 897.5,
+        "y": 727.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/toward-near",
+    "walkingFrames": 56,
+    "target": {
+      "x": 897.5,
+      "y": 852.5
+    },
+    "last": {
+      "x": 938.2569211445356,
+      "y": 841.3086432459085
+    },
+    "shortfall": 42.26550706166011,
+    "arrival": {
+      "distance": 42.26550706166022,
+      "halfStride": 48.473903916177605,
+      "switchFrame": 12,
+      "target": {
+        "x": 897.5,
+        "y": 852.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/away-far",
+    "walkingFrames": 27,
+    "target": {
+      "x": 647.5,
+      "y": 727.5
+    },
+    "last": {
+      "x": 643.4303939154798,
+      "y": 753.7564900964384
+    },
+    "shortfall": 26.570001239509374,
+    "arrival": {
+      "distance": 26.570001239509377,
+      "halfStride": 40.64653482484347,
+      "switchFrame": 14,
+      "target": {
+        "x": 647.5,
+        "y": 727.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/toward-far",
+    "walkingFrames": 56,
+    "target": {
+      "x": 647.5,
+      "y": 852.5
+    },
+    "last": {
+      "x": 688.35806999198,
+      "y": 841.5800667308757
+    },
+    "shortfall": 42.292160338195785,
+    "arrival": {
+      "distance": 42.292160338195785,
+      "halfStride": 48.53155338237893,
+      "switchFrame": 12,
+      "target": {
+        "x": 647.5,
+        "y": 852.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/side-near",
+    "walkingFrames": 62,
+    "target": {
+      "x": 1097.5,
+      "y": 827.5
+    },
+    "last": {
+      "x": 1087.2788006163714,
+      "y": 838.5544227764796
+    },
+    "shortfall": 15.055669356127579,
+    "arrival": {
+      "distance": 15.05566935612758,
+      "halfStride": 75.50904859077667,
+      "switchFrame": 3,
+      "target": {
+        "x": 1097.5,
+        "y": 827.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/side-far",
+    "walkingFrames": 61,
+    "target": {
+      "x": 1097.5,
+      "y": 762.5
+    },
+    "last": {
+      "x": 1047.0999676426156,
+      "y": 804.6383528066227
+    },
+    "shortfall": 65.69477938832583,
+    "arrival": {
+      "distance": 65.69477938832583,
+      "halfStride": 70.35720334148141,
+      "switchFrame": 3,
+      "target": {
+        "x": 1097.5,
+        "y": 762.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/diagonal",
+    "walkingFrames": 88,
+    "target": {
+      "x": 1097.5,
+      "y": 737.5
+    },
+    "last": {
+      "x": 1088.409310707654,
+      "y": 744.8136758324642
+    },
+    "shortfall": 11.667496989172378,
+    "arrival": {
+      "distance": 11.667496989172378,
+      "halfStride": 43.10127456613459,
+      "switchFrame": 24,
+      "target": {
+        "x": 1097.5,
+        "y": 737.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/diagonal-away-right",
+    "walkingFrames": 88,
+    "target": {
+      "x": 1097.5,
+      "y": 737.5
+    },
+    "last": {
+      "x": 1088.409310707654,
+      "y": 744.8136758324642
+    },
+    "shortfall": 11.667496989172378,
+    "arrival": {
+      "distance": 11.667496989172378,
+      "halfStride": 43.10127456613459,
+      "switchFrame": 24,
+      "target": {
+        "x": 1097.5,
+        "y": 737.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-left",
+    "walkingFrames": 66,
+    "target": {
+      "x": 597.5,
+      "y": 837.5
+    },
+    "last": {
+      "x": 622.0088581036858,
+      "y": 826.7399158904203
+    },
+    "shortfall": 26.766836488308368,
+    "arrival": {
+      "distance": 26.766836488308368,
+      "halfStride": 46.44790290044055,
+      "switchFrame": 5,
+      "target": {
+        "x": 597.5,
+        "y": 837.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/diagonal-away-left",
+    "walkingFrames": 69,
+    "target": {
+      "x": 597.5,
+      "y": 737.5
+    },
+    "last": {
+      "x": 584.4084187537044,
+      "y": 761.206029751938
+    },
+    "shortfall": 27.080719084398925,
+    "arrival": {
+      "distance": 27.080719084398925,
+      "halfStride": 44.99829771105545,
+      "switchFrame": 24,
+      "target": {
+        "x": 597.5,
+        "y": 737.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/diagonal-toward-right",
+    "walkingFrames": 101,
+    "target": {
+      "x": 1097.5,
+      "y": 837.5
+    },
+    "last": {
+      "x": 1090.610376880697,
+      "y": 827.299003720968
+    },
+    "shortfall": 12.309639792084035,
+    "arrival": {
+      "distance": 12.309639792084036,
+      "halfStride": 20.193125282193115,
+      "switchFrame": 18,
+      "target": {
+        "x": 1097.5,
+        "y": 837.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/object-click",
+    "walkingFrames": 43,
+    "target": {
+      "x": 577.5,
+      "y": 727.5
+    },
+    "last": {
+      "x": 612.1467740962893,
+      "y": 795.4721446014291
+    },
+    "shortfall": 76.29293150087295,
+    "arrival": {
+      "distance": 44.5290896929475,
+      "halfStride": 48.62835907721535,
+      "switchFrame": 24,
+      "target": {
+        "x": 577.5,
+        "y": 767.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": "ticket booth"
+  },
+  {
+    "clip": "depot-inside/bench-behind",
+    "walkingFrames": 98,
+    "target": {
+      "x": 1147.5,
+      "y": 777.5
+    },
+    "last": {
+      "x": 1132.0982157288256,
+      "y": 768.0833144551434
+    },
+    "shortfall": 18.05239389628162,
+    "arrival": {
+      "distance": 18.05239389628162,
+      "halfStride": 43.809287566336245,
+      "switchFrame": 21,
+      "target": {
+        "x": 1147.5,
+        "y": 777.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/bench-front",
+    "walkingFrames": 61,
+    "target": {
+      "x": 1147.5,
+      "y": 847.5
+    },
+    "last": {
+      "x": 1115.8954483892928,
+      "y": 854.1022232655121
+    },
+    "shortfall": 32.286793500772454,
+    "arrival": {
+      "distance": 32.286793500772454,
+      "halfStride": 77.8794135310062,
+      "switchFrame": 3,
+      "target": {
+        "x": 1147.5,
+        "y": 847.5
+      }
+    },
+    "requestedExit": null,
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null
+  },
+  {
+    "clip": "depot-inside/exit",
+    "walkingFrames": 51,
+    "target": {
+      "x": 1417.5,
+      "y": 862.5
+    },
+    "last": {
+      "x": 1392.0327980923098,
+      "y": 859.750900667093
+    },
+    "shortfall": 25.615150207430933,
+    "arrival": null,
+    "requestedExit": "door",
+    "exitCompleted": true,
+    "transitioned": true,
+    "object": null
+  }
+]

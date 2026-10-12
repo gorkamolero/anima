@@ -1,0 +1,254 @@
+[
+  {
+    "clip": "tmp/walkqa/final-06/alley/away-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/away-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/crate-behind.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/crate-front.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-away-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-away-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-toward-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-toward-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/exit.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/object-click.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/side-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/side-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/toward-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/toward-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/away-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/away-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/bench-behind.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/bench-front.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-away-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-away-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-toward-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-toward-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/exit.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/object-click.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/side-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/side-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/toward-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/toward-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/away-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/away-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-away-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-away-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-toward-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-toward-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/exit.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/object-click.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/post-behind.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/post-front.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/side-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/side-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/toward-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/toward-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/away-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/away-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-away-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-away-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-toward-left.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-toward-right.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/exit.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/far-exit.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/object-click.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/side-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/side-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/toward-far.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/toward-near.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/trap-behind.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/trap-front.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/tree-behind.mp4",
+    "offBodyFrames": []
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/tree-front.mp4",
+    "offBodyFrames": []
+  }
+]

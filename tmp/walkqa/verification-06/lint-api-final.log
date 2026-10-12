@@ -1,0 +1,5 @@
+
+> @anima/api@0.1.0 lint /Users/gorkolas/Developer/anima/api
+> biome check src
+
+Checked 40 files in 31ms. No fixes applied.

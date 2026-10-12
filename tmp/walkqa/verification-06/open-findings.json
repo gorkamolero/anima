@@ -1,0 +1,35 @@
+[
+  {
+    "clip": "alley/exit",
+    "walkingFrames": 97,
+    "target": {
+      "x": 582.5,
+      "y": 647.5
+    },
+    "last": {
+      "x": 579.2631617521465,
+      "y": 645.7283198938035
+    },
+    "shortfall": 3.6899826885040734,
+    "arrival": {
+      "distance": 3.6899826885040734,
+      "halfStride": 35.96807680849366,
+      "switchFrame": 3,
+      "target": {
+        "x": 582.5,
+        "y": 647.5
+      }
+    },
+    "requestedExit": "far",
+    "exitCompleted": false,
+    "transitioned": false,
+    "object": null,
+    "issues": [
+      "requested exit did not transition"
+    ],
+    "frame": 96,
+    "framePath": "tmp/walkqa/verification-06/failure-frames/alley-exit-f0096.png",
+    "walkingSeconds": 4.041666666666667,
+    "cadence": 1.7319587628865978
+  }
+]

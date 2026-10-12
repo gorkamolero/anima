@@ -1,0 +1,14 @@
+Stopped task-owned API and game process trees on 4317 and 8080. Closed brief06-road and brief06-alley; earlier depot proof sessions already closed. No other ports or sessions stopped.
+Removed isolated API runtime and its symlinks after preserving data/cache as api-proof-input-cache.tar.gz (verification input; no environment files).
+Removed experimental fixtures:
+tmp/walkqa/CharacterMotorExperimental.ts
+tmp/walkqa/CharacterMotorBeam.ts
+tmp/walkqa/simulate-experiment-06.ts
+tmp/walkqa/simulate-grid-06.ts
+tmp/walkqa/road-trapgrid-plan.json
+tmp/walkqa/experiment-06
+tmp/walkqa/grid-06
+tmp/walkqa/trial-06
+tmp/walkqa/simulation-06
+Generation raw/keyed/normalized temporary frame directories were removed earlier; source videos, manifests, seeds, source/contact sheets and final assets remain. Proof PNG sequences removed by renderer after MP4/log encoding.
+Preserved unrelated API/art/debug-test work, final proof clips, historical regression evidence, source scripts and verification records. No push, merge, deployment or GitHub settings changes.

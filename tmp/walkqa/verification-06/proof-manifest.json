@@ -1,0 +1,506 @@
+[
+  {
+    "clip": "tmp/walkqa/final-06/alley/away-far.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "8b9a4a4f25362bb6cbc52744c7b582be07970ad817eacd0a9395055c7a7bd111"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/away-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "b8c5e38600759b328b1a81f15e4ce869ec452fb6a87fdfa0a9272e1d47fd38de"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/crate-behind.mp4",
+    "frames": 144,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "6939f1aa229d61e51000763213f6462b7cf593a3e6c979964c90b0f174707da5"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/crate-front.mp4",
+    "frames": 144,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "393c8669d4063ff808f592a3dc37aa6ee5f4679c31db717ba4a21ee45a297c38"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-away-left.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "f0c82d609458257f8588f15a0b1c0264ca33f1c66bfc97140897c071ebf442a8"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-away-right.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "3b72086baffffa183d34c33e9c611c7b86c79a4db89610e69f461c25cc738ccf"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-toward-left.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "d6eeba8a69f4443b30ea0d32b266cfd91c10f767dacfe944b1982cf3be0104b4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal-toward-right.mp4",
+    "frames": 116,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "7a8c13e87ba6e5f6ab091de6dd138099093f23813cfef42dae6cf89bfcb65270"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/diagonal.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "3b72086baffffa183d34c33e9c611c7b86c79a4db89610e69f461c25cc738ccf"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/exit.mp4",
+    "frames": 148,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "d1543bd5730e7b73a3ca3f6808992ae0d54a36aedf685daf6ff97865a3b2daa7"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/object-click.mp4",
+    "frames": 144,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "ea4bd60b6399e0aee4461dcc8f73d0de6157516cdf64ac633fa4acb5d95e4539"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/side-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "8cd0d941567ef30b48cca7bc9275e705dce3c8dbfd65671a3e42c59b1c2611e5"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/side-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "27a7b932c178d28064b9a188809542b33af126fd3d960d716a1fa5333d90ce87"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/toward-far.mp4",
+    "frames": 84,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "979788643f7b6a56ba348f975ac745c0cc16dcab11d452dd718577f1aa0264fa"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/alley/toward-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "439d58bb805760f5dd69d05b8994054883c6f14c25b5f425b4c3cceb1d8b8579"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/away-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "746e117f9e032640f78096a1ff46a7f0d72cc69d3a570798f970f1fcc4f16bf4"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/away-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "2f18498a72a61388ac550ce525d25fa33ae7a9200155f58758d708997f0a014a"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/bench-behind.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "7268f4e6cd5df621bca0173589f1932fbc9a7ce329b87e42d6dfad2b7194f392"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/bench-front.mp4",
+    "frames": 144,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "a6d891c546fdd97803382036666e8e84819b9ecf8611c50533fc31e59faab0cd"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-away-left.mp4",
+    "frames": 76,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "1926fdb538b88f6e125dcc52280b99bac15fb3d594930b50547eefd6ba8ab804"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-away-right.mp4",
+    "frames": 92,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "dc4a1ffbf60de180b72d7b438b670b02a3f23c290186e0086772b61f18f71cd5"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-toward-left.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "98cbf0202577f8f1769eaf31c59dfee03e984e5e0ab6431ab4adda07e869eabb"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal-toward-right.mp4",
+    "frames": 108,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "c06cb01016e4434193ddc9128425de6fbce67a72429c936b4857c49a45f97e0e"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/diagonal.mp4",
+    "frames": 92,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "dc4a1ffbf60de180b72d7b438b670b02a3f23c290186e0086772b61f18f71cd5"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/exit.mp4",
+    "frames": 51,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "e2628a4421b2b3995a5b259f9a2f4581e442e076a43f7ec5aa06cab2d006740b"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/object-click.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "a1a343c207a8521e7c74da2c2ecc5a0d589f1ed99fc10f7043107af50dfaf504"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/side-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "b51120c04943f6bd540f1b7a197ae717cf5ea5f2981a0f38594b459428afac6d"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/side-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "855a47a58fc260a8911c4e00a1c8a777dc18ec3bd4ff8be8b054b53f51d92981"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/toward-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "78f4d5fcf48d3d7e3e60d43dd683743dbae9f79831aae9592041231f901886bb"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-inside/toward-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "d1bee4a8c240c27c2680c8a88d82884001538b6d899b3b6ee402897b29b8ed3b"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/away-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "901f50a25218a3b30fa2ccb205334bc3c8bb67609ebbf02aa6eed072ad1bd176"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/away-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "bab0acca607323e307311690abd5ba71e68e12862d49ea0c00ae637a98f69586"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-away-left.mp4",
+    "frames": 76,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "91fa46c7c71c84621789c845bfa8176b1aa7b14b987b817dd05c3aceb86542c9"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-away-right.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "63fd356d8fff2a8c7640de6a575631577de94664991ceb21cbed292a0d38f8e0"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-toward-left.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "0934c1f23cba2c2779f4fef1adb4678cea274376f248170bbd3034f475aef935"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal-toward-right.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "713c29cafbb70cccdb9fe0a32908fac447ea89fad36bdfa4d940f409eb77cac0"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/diagonal.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "63fd356d8fff2a8c7640de6a575631577de94664991ceb21cbed292a0d38f8e0"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/exit.mp4",
+    "frames": 30,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "ad7a66d900904ffb320997f0c648a936c5605f1b38b38851fe32d36980493719"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/object-click.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "1c03e540136e98843b7795e127893759ff57cfa2eb361b299759576bd673ec10"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/post-behind.mp4",
+    "frames": 120,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "55f1d2ee51a2d599088287a1a1e15432e2e6473ad46cd125b648d37970f49a1e"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/post-front.mp4",
+    "frames": 120,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "4cfbc7a4e3f9405289b29f746b75b6b9e075bde275c6cd74ec7f5e41c10709c1"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/side-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "73f773d862a2b139f23e91c3406e2f056ddffb059f3669cefe6a2dd99f9ea5bf"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/side-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "96ee2784beb55f0a78995e3a34f0eb2f1fc9f76931e41acdaaebd78ca0808188"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/toward-far.mp4",
+    "frames": 84,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "4fad39a507128a199b746881e535d71ad9a9ed2e9eaf15c37e3e8b5ab53cfe8a"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/depot-outside/toward-near.mp4",
+    "frames": 84,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "58e7d076b80d48baa112e80a507b87834fc31fdc20c05cbd0ffb997857c8fd7c"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/away-far.mp4",
+    "frames": 120,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "e0b99ab1a6a28fed251dff12a096474d01a6c70320313a88badd7a5e309ff6ac"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/away-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "5892051878b37388bb2d73239a0af87a22138a6c12c6d2ce3e7c6d7060f6bce3"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-away-left.mp4",
+    "frames": 120,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "485414cb0f0892649b2ea8a4d6df18ab2c22ec18f5d14b5b6f01d60112a4afd9"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-away-right.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "99a33342c1f9de4b79ef909769d81420fca0bac1c94a34fc8c0e64519dece78c"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-toward-left.mp4",
+    "frames": 128,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "139f6f6f920806ea2efb854ab2e2c4baa3796c613f68f2cab55f279b75cd70e7"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal-toward-right.mp4",
+    "frames": 92,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "f21556ec7fb9da957bf54045da993da026e38ff268eef0945c131364ea7410c7"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/diagonal.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "99a33342c1f9de4b79ef909769d81420fca0bac1c94a34fc8c0e64519dece78c"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/exit.mp4",
+    "frames": 87,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "ba0b13d6145333b1179c3b87b798f847a6599da577525caabc679c2c03ab2764"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/far-exit.mp4",
+    "frames": 164,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "e8bb8328fbfdd290b4df22d6ac61c4ed70ab9da1f2755e933741037709bf90dc"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/object-click.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "9cca7a960384ed13389cab33d22e9b477ba904248a071d564d47e1faedb78b89"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/side-far.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "f8233ce245d8f37e5440799b6029dc826ac60f5851d93e1ff689c06931a7f6d9"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/side-near.mp4",
+    "frames": 72,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "5fb44e9c0d79de90b8abd51d94de07eae6470a424d618630093ebded1e911bcc"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/toward-far.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "59e7632fe9783f2b0a1c5f74097428820d87622670485372ba79ff9031603612"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/toward-near.mp4",
+    "frames": 96,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "326c4180820a032da2cb55a38c7d2eca9c59409e80fa44dd5ac2d5fa9a1f0e40"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/trap-behind.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "c7f2ee1d341133537ff137e4a213c36caeb89bc380344b39487a960f2f043a1f"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/trap-front.mp4",
+    "frames": 180,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "24aa1d816165c0f4606baf98c0c4e5e156b3a5d8f5e2beeda38d57006ab87f17"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/tree-behind.mp4",
+    "frames": 154,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "9385f6eb376195db1102935bcd9ece9f7e69d486425951d2591e7618a113b596"
+  },
+  {
+    "clip": "tmp/walkqa/final-06/road/tree-front.mp4",
+    "frames": 332,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "sha256": "fbabc5598dec79d814382b90e528c27b0a163cbcc2e6b4556e265651431c8a43"
+  }
+]
