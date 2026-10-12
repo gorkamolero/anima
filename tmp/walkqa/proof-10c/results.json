@@ -1,0 +1,1311 @@
+{
+  "clips": 29,
+  "exitLegs": 16,
+  "maxLockExcursionPx": 0,
+  "offFloor": 0,
+  "objectContacts": 0,
+  "frozenWalkingFrames": 0,
+  "measurableCadenceRange": [
+    1.67,
+    2.09
+  ],
+  "townReplay": {
+    "run": 44,
+    "cachedCalls": 23,
+    "uncachedCalls": 0,
+    "mode": "--replay (saved town connections; original narrative/edit mode retained)"
+  },
+  "budget": {
+    "segmentationDepth": 18,
+    "imageEdits": 0,
+    "generatedVideo": 0
+  },
+  "lockcheck": [
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/net-front-to-behind.mp4",
+      "stances": 8,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          76,
+          86,
+          "toward-right"
+        ],
+        [
+          0.0,
+          65,
+          75,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          54,
+          64,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/net-behind-to-front.mp4",
+      "stances": 6,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          54,
+          64,
+          "away-right"
+        ],
+        [
+          0.0,
+          43,
+          53,
+          "toward-right"
+        ],
+        [
+          0.0,
+          32,
+          42,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/front-kat.mp4",
+      "stances": 6,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          54,
+          64,
+          "away-right"
+        ],
+        [
+          0.0,
+          43,
+          53,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          32,
+          42,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/bench-front-to-behind.mp4",
+      "stances": 3,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          21,
+          31,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          10,
+          20,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          0,
+          9,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/bench-behind-to-front.mp4",
+      "stances": 3,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          21,
+          31,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          10,
+          20,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          0,
+          9,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/pergola-front-to-behind.mp4",
+      "stances": 4,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          32,
+          42,
+          "away-right"
+        ],
+        [
+          0.0,
+          21,
+          31,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          10,
+          20,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/rear-approach.mp4",
+      "stances": 10,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          98,
+          108,
+          "toward-right"
+        ],
+        [
+          0.0,
+          87,
+          97,
+          "away"
+        ],
+        [
+          0.0,
+          76,
+          86,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/pergola-behind-to-front.mp4",
+      "stances": 3,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          21,
+          31,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          10,
+          20,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          0,
+          9,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/depot/front-return.mp4",
+      "stances": 10,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          98,
+          108,
+          "toward"
+        ],
+        [
+          0.0,
+          87,
+          97,
+          "toward"
+        ],
+        [
+          0.0,
+          76,
+          86,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/road/trap-front-to-behind.mp4",
+      "stances": 9,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          87,
+          97,
+          "away"
+        ],
+        [
+          0.0,
+          76,
+          86,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          65,
+          75,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/road/trap-behind-to-front.mp4",
+      "stances": 14,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          141,
+          151,
+          "toward"
+        ],
+        [
+          0.0,
+          130,
+          140,
+          "toward"
+        ],
+        [
+          0.0,
+          119,
+          129,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/road/tree-behind-to-front.mp4",
+      "stances": 12,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          119,
+          129,
+          "toward"
+        ],
+        [
+          0.0,
+          109,
+          118,
+          "toward"
+        ],
+        [
+          0.0,
+          98,
+          108,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/crossings/road/tree-front-to-behind.mp4",
+      "stances": 12,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          120,
+          130,
+          "away-right"
+        ],
+        [
+          0.0,
+          109,
+          119,
+          "away"
+        ],
+        [
+          0.0,
+          98,
+          108,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-far/back.mp4",
+      "stances": 7,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          78,
+          88,
+          "toward-right"
+        ],
+        [
+          0.0,
+          67,
+          77,
+          "toward"
+        ],
+        [
+          0.0,
+          56,
+          66,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-far/out.mp4",
+      "stances": 12,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          145,
+          155,
+          "toward"
+        ],
+        [
+          0.0,
+          134,
+          144,
+          "away"
+        ],
+        [
+          0.0,
+          124,
+          133,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left/back.mp4",
+      "stances": 11,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          123,
+          133,
+          "toward"
+        ],
+        [
+          0.0,
+          112,
+          122,
+          "toward"
+        ],
+        [
+          0.0,
+          101,
+          111,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left/out.mp4",
+      "stances": 17,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          190,
+          200,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          180,
+          189,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          153,
+          162,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside.mp4",
+      "stances": 12,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          130,
+          140,
+          "toward"
+        ],
+        [
+          0.0,
+          120,
+          129,
+          "toward"
+        ],
+        [
+          0.0,
+          98,
+          108,
+          "toward-right"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside.mp4",
+      "stances": 6,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          56,
+          66,
+          "toward"
+        ],
+        [
+          0.0,
+          45,
+          55,
+          "toward"
+        ],
+        [
+          0.0,
+          34,
+          44,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-2/back.mp4",
+      "stances": 11,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          123,
+          133,
+          "toward"
+        ],
+        [
+          0.0,
+          112,
+          122,
+          "toward"
+        ],
+        [
+          0.0,
+          101,
+          111,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-2/out.mp4",
+      "stances": 17,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          186,
+          196,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          176,
+          185,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          153,
+          162,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/alley-far/back.mp4",
+      "stances": 6,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          60,
+          70,
+          "toward"
+        ],
+        [
+          0.0,
+          49,
+          59,
+          "toward"
+        ],
+        [
+          0.0,
+          38,
+          48,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/alley-far/out.mp4",
+      "stances": 13,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          141,
+          151,
+          "toward"
+        ],
+        [
+          0.0,
+          130,
+          140,
+          "away"
+        ],
+        [
+          0.0,
+          120,
+          129,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/outside-right/back.mp4",
+      "stances": 5,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          49,
+          59,
+          "toward-right"
+        ],
+        [
+          0.0,
+          38,
+          48,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          28,
+          37,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/outside-right/out.mp4",
+      "stances": 6,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          70,
+          80,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          60,
+          69,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          32,
+          42,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-1/back.mp4",
+      "stances": 11,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          123,
+          133,
+          "toward"
+        ],
+        [
+          0.0,
+          112,
+          122,
+          "toward"
+        ],
+        [
+          0.0,
+          101,
+          111,
+          "toward"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-1/out.mp4",
+      "stances": 17,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          190,
+          200,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          180,
+          189,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          153,
+          162,
+          "away"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/outside-left/back.mp4",
+      "stances": 15,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          158,
+          168,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          147,
+          157,
+          "toward"
+        ],
+        [
+          0.0,
+          136,
+          146,
+          "eo-transparent-loop"
+        ]
+      ]
+    },
+    {
+      "clip": "tmp/walkqa/proof-10c/exits/outside-left/out.mp4",
+      "stances": 17,
+      "maxExcursion_px": 0.0,
+      "median": 0.0,
+      "worst": [
+        [
+          0.0,
+          189,
+          199,
+          "toward-right"
+        ],
+        [
+          0.0,
+          178,
+          188,
+          "eo-transparent-loop"
+        ],
+        [
+          0.0,
+          167,
+          177,
+          "eo-transparent-loop"
+        ]
+      ]
+    }
+  ],
+  "crossings": [
+    {
+      "object": "nets-2",
+      "switches": [
+        105,
+        595
+      ],
+      "behindOverlapFrames": 82,
+      "frontOverlapFrames": 26,
+      "maximumBehindOverlap": 1422,
+      "frames": [
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0104.png",
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0105.png",
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0106.png",
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0594.png",
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0595.png",
+        "tmp/walkqa/proof-10c/review/nets-2-baseline-0596.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-entry-0322.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-entry-0323.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-entry-0324.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-maximum-0327.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-maximum-0328.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-maximum-0329.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-exit-0410.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-exit-0411.png",
+        "tmp/walkqa/proof-10c/review/nets-2-behind-exit-0412.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-entry-0000.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-entry-0001.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-entry-0002.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-maximum-0010.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-maximum-0011.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-maximum-0012.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-exit-0025.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-exit-0026.png",
+        "tmp/walkqa/proof-10c/review/nets-2-front-exit-0027.png"
+      ]
+    },
+    {
+      "object": "pergola",
+      "switches": [
+        105,
+        595
+      ],
+      "behindOverlapFrames": 221,
+      "frontOverlapFrames": 45,
+      "maximumBehindOverlap": 8291,
+      "frames": [
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0104.png",
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0105.png",
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0106.png",
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0594.png",
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0595.png",
+        "tmp/walkqa/proof-10c/review/pergola-baseline-0596.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-entry-0215.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-entry-0216.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-entry-0217.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-maximum-0459.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-maximum-0460.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-maximum-0461.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-exit-0484.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-exit-0485.png",
+        "tmp/walkqa/proof-10c/review/pergola-behind-exit-0486.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-entry-0007.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-entry-0008.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-entry-0009.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-maximum-0042.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-maximum-0043.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-maximum-0044.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-exit-0051.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-exit-0052.png",
+        "tmp/walkqa/proof-10c/review/pergola-front-exit-0053.png"
+      ]
+    },
+    {
+      "object": "bench",
+      "switches": [
+        137,
+        573
+      ],
+      "behindOverlapFrames": 112,
+      "frontOverlapFrames": 27,
+      "maximumBehindOverlap": 1744,
+      "frames": [
+        "tmp/walkqa/proof-10c/review/bench-baseline-0136.png",
+        "tmp/walkqa/proof-10c/review/bench-baseline-0137.png",
+        "tmp/walkqa/proof-10c/review/bench-baseline-0138.png",
+        "tmp/walkqa/proof-10c/review/bench-baseline-0572.png",
+        "tmp/walkqa/proof-10c/review/bench-baseline-0573.png",
+        "tmp/walkqa/proof-10c/review/bench-baseline-0574.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-entry-0241.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-entry-0242.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-entry-0243.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-maximum-0419.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-maximum-0420.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-maximum-0421.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-exit-0461.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-exit-0462.png",
+        "tmp/walkqa/proof-10c/review/bench-behind-exit-0463.png",
+        "tmp/walkqa/proof-10c/review/bench-front-entry-0018.png",
+        "tmp/walkqa/proof-10c/review/bench-front-entry-0019.png",
+        "tmp/walkqa/proof-10c/review/bench-front-entry-0020.png",
+        "tmp/walkqa/proof-10c/review/bench-front-maximum-0029.png",
+        "tmp/walkqa/proof-10c/review/bench-front-maximum-0030.png",
+        "tmp/walkqa/proof-10c/review/bench-front-maximum-0031.png",
+        "tmp/walkqa/proof-10c/review/bench-front-exit-0044.png",
+        "tmp/walkqa/proof-10c/review/bench-front-exit-0045.png",
+        "tmp/walkqa/proof-10c/review/bench-front-exit-0046.png"
+      ]
+    },
+    {
+      "object": "kat",
+      "switches": [
+        93,
+        606
+      ],
+      "behindOverlapFrames": 54,
+      "frontOverlapFrames": 26,
+      "maximumBehindOverlap": 4395,
+      "frames": [
+        "tmp/walkqa/proof-10c/review/kat-baseline-0092.png",
+        "tmp/walkqa/proof-10c/review/kat-baseline-0093.png",
+        "tmp/walkqa/proof-10c/review/kat-baseline-0094.png",
+        "tmp/walkqa/proof-10c/review/kat-baseline-0605.png",
+        "tmp/walkqa/proof-10c/review/kat-baseline-0606.png",
+        "tmp/walkqa/proof-10c/review/kat-baseline-0607.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-entry-0253.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-entry-0254.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-entry-0255.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-maximum-0443.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-maximum-0444.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-maximum-0445.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-exit-0456.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-exit-0457.png",
+        "tmp/walkqa/proof-10c/review/kat-behind-exit-0458.png",
+        "tmp/walkqa/proof-10c/review/kat-front-entry-0018.png",
+        "tmp/walkqa/proof-10c/review/kat-front-entry-0019.png",
+        "tmp/walkqa/proof-10c/review/kat-front-entry-0020.png",
+        "tmp/walkqa/proof-10c/review/kat-front-maximum-0032.png",
+        "tmp/walkqa/proof-10c/review/kat-front-maximum-0033.png",
+        "tmp/walkqa/proof-10c/review/kat-front-maximum-0034.png",
+        "tmp/walkqa/proof-10c/review/kat-front-exit-0043.png",
+        "tmp/walkqa/proof-10c/review/kat-front-exit-0044.png",
+        "tmp/walkqa/proof-10c/review/kat-front-exit-0045.png"
+      ]
+    }
+  ],
+  "arrivals": [
+    {
+      "exit": "outside-left",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/outside-left/out.mp4",
+      "changes": [
+        112
+      ],
+      "source": "outside",
+      "destination": "place-f2d0a7f7f76225002663",
+      "firstVisible": {
+        "frame": 124,
+        "x": 1913.4069971446288,
+        "y": 772.4117265698102,
+        "scale": 0.1553953338186075
+      },
+      "arrivalWalking": 76,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/outside-left/out-review-0111.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/out-review-0112.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/out-review-0113.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/out-review-0124.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/out-review-0203.png"
+      ]
+    },
+    {
+      "exit": "outside-left",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/outside-left/back.mp4",
+      "changes": [
+        98
+      ],
+      "source": "place-f2d0a7f7f76225002663",
+      "destination": "outside",
+      "firstVisible": {
+        "frame": 104,
+        "x": 10.209588258797815,
+        "y": 737.3633754536281,
+        "scale": 0.24068088712823943
+      },
+      "arrivalWalking": 65,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/outside-left/back-review-0097.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/back-review-0098.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/back-review-0099.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/back-review-0104.png",
+        "tmp/walkqa/proof-10c/exits/outside-left/back-review-0175.png"
+      ]
+    },
+    {
+      "exit": "outside-right",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/outside-right/out.mp4",
+      "changes": [
+        44
+      ],
+      "source": "outside",
+      "destination": "place-2a19481aac649a2e69f1",
+      "firstVisible": {
+        "frame": 60,
+        "x": 22.11582764511768,
+        "y": 1032.2035350519698,
+        "scale": 0.5213192168713863
+      },
+      "arrivalWalking": 21,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/outside-right/out-review-0043.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/out-review-0044.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/out-review-0045.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/out-review-0060.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/out-review-0087.png"
+      ]
+    },
+    {
+      "exit": "outside-right",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/outside-right/back.mp4",
+      "changes": [
+        21
+      ],
+      "source": "place-2a19481aac649a2e69f1",
+      "destination": "outside",
+      "firstVisible": {
+        "frame": 28,
+        "x": 1902.0047466563392,
+        "y": 937.2592011902872,
+        "scale": 0.4241966226434811
+      },
+      "arrivalWalking": 32,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/outside-right/back-review-0020.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/back-review-0021.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/back-review-0022.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/back-review-0028.png",
+        "tmp/walkqa/proof-10c/exits/outside-right/back-review-0063.png"
+      ]
+    },
+    {
+      "exit": "road-left",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left/out.mp4",
+      "changes": [
+        164
+      ],
+      "source": "place-f2d0a7f7f76225002663",
+      "destination": "place-395743b437774b879679",
+      "firstVisible": {
+        "frame": 180,
+        "x": 1899.103878556219,
+        "y": 912.220193682475,
+        "scale": 0.4925671974324129
+      },
+      "arrivalWalking": 21,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left/out-review-0163.png",
+        "tmp/walkqa/proof-10c/exits/road-left/out-review-0164.png",
+        "tmp/walkqa/proof-10c/exits/road-left/out-review-0165.png",
+        "tmp/walkqa/proof-10c/exits/road-left/out-review-0180.png",
+        "tmp/walkqa/proof-10c/exits/road-left/out-review-0207.png"
+      ]
+    },
+    {
+      "exit": "road-left",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left/back.mp4",
+      "changes": [
+        24
+      ],
+      "source": "place-395743b437774b879679",
+      "destination": "place-f2d0a7f7f76225002663",
+      "firstVisible": {
+        "frame": 36,
+        "x": 7.613997786781688,
+        "y": 797.3980410480937,
+        "scale": 0.17948713823856857
+      },
+      "arrivalWalking": 98,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left/back-review-0023.png",
+        "tmp/walkqa/proof-10c/exits/road-left/back-review-0024.png",
+        "tmp/walkqa/proof-10c/exits/road-left/back-review-0025.png",
+        "tmp/walkqa/proof-10c/exits/road-left/back-review-0036.png",
+        "tmp/walkqa/proof-10c/exits/road-left/back-review-0139.png"
+      ]
+    },
+    {
+      "exit": "road-left-1",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-1/out.mp4",
+      "changes": [
+        164
+      ],
+      "source": "place-f2d0a7f7f76225002663",
+      "destination": "place-395743b437774b879679",
+      "firstVisible": {
+        "frame": 180,
+        "x": 1899.103878556219,
+        "y": 912.220193682475,
+        "scale": 0.4925671974324129
+      },
+      "arrivalWalking": 21,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left-1/out-review-0163.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/out-review-0164.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/out-review-0165.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/out-review-0180.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/out-review-0207.png"
+      ]
+    },
+    {
+      "exit": "road-left-1",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-1/back.mp4",
+      "changes": [
+        24
+      ],
+      "source": "place-395743b437774b879679",
+      "destination": "place-f2d0a7f7f76225002663",
+      "firstVisible": {
+        "frame": 36,
+        "x": 7.613997786781688,
+        "y": 797.3980410480937,
+        "scale": 0.17948713823856857
+      },
+      "arrivalWalking": 98,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left-1/back-review-0023.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/back-review-0024.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/back-review-0025.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/back-review-0036.png",
+        "tmp/walkqa/proof-10c/exits/road-left-1/back-review-0139.png"
+      ]
+    },
+    {
+      "exit": "road-left-2",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-2/out.mp4",
+      "changes": [
+        164
+      ],
+      "source": "place-f2d0a7f7f76225002663",
+      "destination": "place-395743b437774b879679",
+      "firstVisible": {
+        "frame": 176,
+        "x": 1899.103878556219,
+        "y": 912.220193682475,
+        "scale": 0.4925671974324129
+      },
+      "arrivalWalking": 21,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left-2/out-review-0163.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/out-review-0164.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/out-review-0165.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/out-review-0176.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/out-review-0203.png"
+      ]
+    },
+    {
+      "exit": "road-left-2",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/road-left-2/back.mp4",
+      "changes": [
+        24
+      ],
+      "source": "place-395743b437774b879679",
+      "destination": "place-f2d0a7f7f76225002663",
+      "firstVisible": {
+        "frame": 36,
+        "x": 7.613997786781688,
+        "y": 797.3980410480937,
+        "scale": 0.17948713823856857
+      },
+      "arrivalWalking": 98,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-left-2/back-review-0023.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/back-review-0024.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/back-review-0025.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/back-review-0036.png",
+        "tmp/walkqa/proof-10c/exits/road-left-2/back-review-0139.png"
+      ]
+    },
+    {
+      "exit": "road-far",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/road-far/out.mp4",
+      "changes": [
+        100
+      ],
+      "source": "place-f2d0a7f7f76225002663",
+      "destination": "place-2635d8cd03bce818a634",
+      "firstVisible": {
+        "frame": 124,
+        "x": 937.7887610719976,
+        "y": 1114.3609022722412,
+        "scale": 0.6252051302610104
+      },
+      "arrivalWalking": 32,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-far/out-review-0099.png",
+        "tmp/walkqa/proof-10c/exits/road-far/out-review-0100.png",
+        "tmp/walkqa/proof-10c/exits/road-far/out-review-0101.png",
+        "tmp/walkqa/proof-10c/exits/road-far/out-review-0124.png",
+        "tmp/walkqa/proof-10c/exits/road-far/out-review-0159.png"
+      ]
+    },
+    {
+      "exit": "road-far",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/road-far/back.mp4",
+      "changes": [
+        12
+      ],
+      "source": "place-2635d8cd03bce818a634",
+      "destination": "place-f2d0a7f7f76225002663",
+      "firstVisible": {
+        "frame": 24,
+        "x": 1017.5382605990658,
+        "y": 736.4149288717479,
+        "scale": 0.1206872214781355
+      },
+      "arrivalWalking": 65,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/road-far/back-review-0011.png",
+        "tmp/walkqa/proof-10c/exits/road-far/back-review-0012.png",
+        "tmp/walkqa/proof-10c/exits/road-far/back-review-0013.png",
+        "tmp/walkqa/proof-10c/exits/road-far/back-review-0024.png",
+        "tmp/walkqa/proof-10c/exits/road-far/back-review-0095.png"
+      ]
+    },
+    {
+      "exit": "alley-far",
+      "leg": "out",
+      "clip": "tmp/walkqa/proof-10c/exits/alley-far/out.mp4",
+      "changes": [
+        108
+      ],
+      "source": "place-2635d8cd03bce818a634",
+      "destination": "place-aa7dd184a5f30fbc1f89",
+      "firstVisible": {
+        "frame": 120,
+        "x": 940.7218502235778,
+        "y": 1106.6438505738934,
+        "scale": 0.5321728053128404
+      },
+      "arrivalWalking": 32,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/alley-far/out-review-0107.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/out-review-0108.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/out-review-0109.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/out-review-0120.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/out-review-0155.png"
+      ]
+    },
+    {
+      "exit": "alley-far",
+      "leg": "back",
+      "clip": "tmp/walkqa/proof-10c/exits/alley-far/back.mp4",
+      "changes": [
+        16
+      ],
+      "source": "place-aa7dd184a5f30fbc1f89",
+      "destination": "place-2635d8cd03bce818a634",
+      "firstVisible": {
+        "frame": 28,
+        "x": 574.5016871294824,
+        "y": 639.8891056276728,
+        "scale": 0.16771942393633643
+      },
+      "arrivalWalking": 43,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/alley-far/back-review-0015.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/back-review-0016.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/back-review-0017.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/back-review-0028.png",
+        "tmp/walkqa/proof-10c/exits/alley-far/back-review-0075.png"
+      ]
+    },
+    {
+      "exit": "depot-door",
+      "leg": "door-outside-to-inside",
+      "clip": "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside.mp4",
+      "changes": [
+        109
+      ],
+      "source": "outside",
+      "destination": "inside",
+      "firstVisible": {
+        "frame": 120,
+        "x": 1384.3178699226128,
+        "y": 906.4826344719032,
+        "scale": 0.4173854652952952
+      },
+      "arrivalWalking": 21,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside-review-0108.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside-review-0109.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside-review-0110.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside-review-0120.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-outside-to-inside-review-0147.png"
+      ]
+    },
+    {
+      "exit": "depot-door",
+      "leg": "door-inside-to-outside",
+      "clip": "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside.mp4",
+      "changes": [
+        18
+      ],
+      "source": "inside",
+      "destination": "outside",
+      "firstVisible": {
+        "frame": 24,
+        "x": 1356.1282852787956,
+        "y": 768.3635755622469,
+        "scale": 0.2691408337183535
+      },
+      "arrivalWalking": 43,
+      "frames": [
+        "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside-review-0017.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside-review-0018.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside-review-0019.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside-review-0024.png",
+        "tmp/walkqa/proof-10c/exits/depot-door/door-inside-to-outside-review-0071.png"
+      ]
+    }
+  ]
+}
