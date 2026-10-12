@@ -99,7 +99,7 @@ Two 5-second Kling v3 Standard silent videos reuse the existing away/toward keyf
 
 Away interval [88,118): 30 frames, support switches 5/20. Toward interval [87,112): 25 frames, support switches 5/18. Contact sheets were inspected frame by frame. The new toward toe seed avoids the rotating landing heel; the away tracking search radius is 64 px because its source advances in larger pose increments. Other cycles retain the default registration radius. No per-frame recentering or root translation was added.
 
-Playback metadata: side 33 fps (2.2 steps/s), away 25 (1.667), toward 24 (1.92), away diagonal 25 (2.083), toward diagonal 26.5 (2.12). These are nominal cycle cadences; measured proof cadence and ground-speed distributions are reported separately.
+Playback metadata: side 33 fps (2.2 steps/s), away 25 (1.667), toward 26 (2.08), away diagonal 25 (2.083), toward diagonal 26.5 (2.12). These are nominal cycle cadences; measured proof cadence and ground-speed distributions are reported separately.
 
 The motor replans at each support handoff, tests every candidate stance body trajectory against the eroded mask and each planted contact against the raw mask, and stops on the held foot when no safe progress step exists. Startup may enter a safe partial stance. The anchor has zero continuous translation, within the maximum one-pixel allowance.
 

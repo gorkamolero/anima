@@ -49,9 +49,13 @@ async function poll(label, fn, predicate, timeout = 240000) {
 }
 const records = [];
 let index = 0;
+const callLedger = resolve(
+	process.argv.find((x) => x.startsWith("--ledger="))?.slice(9) ??
+		resolve(root, "api/data/calls.jsonl"),
+);
 const ledger = () =>
-	existsSync(resolve(root, "api/data/calls.jsonl"))
-		? readFileSync(resolve(root, "api/data/calls.jsonl"), "utf8")
+	existsSync(callLedger)
+		? readFileSync(callLedger, "utf8")
 				.trim()
 				.split("\n")
 				.filter(Boolean)
