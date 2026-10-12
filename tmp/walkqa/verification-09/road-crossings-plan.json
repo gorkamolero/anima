@@ -1,0 +1,1 @@
+{"place":"place-f2d0a7f7f76225002663","beats":[{"name":"tree-front-to-behind","start":[867.5,922.5],"walk":[52.5,812.5],"frames":260},{"name":"tree-behind-to-front","walk":[867.5,922.5],"frames":300},{"name":"trap-front-to-behind","start":[1267.5,1002.5],"walk":[1502.5,827.5],"frames":260},{"name":"trap-behind-to-front","walk":[1267.5,1002.5],"frames":300}]}

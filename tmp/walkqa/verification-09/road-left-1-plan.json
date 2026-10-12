@@ -1,0 +1,1 @@
+{"place": "place-f2d0a7f7f76225002663", "beats": [{"name": "out", "start": [867.5, 922.5], "exit": "edge-left-1", "frames": 260}, {"name": "back", "continueLocation": true, "exit": "edge-right", "frames": 200}]}
