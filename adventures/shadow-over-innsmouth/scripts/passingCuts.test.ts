@@ -19,6 +19,18 @@ describe("passing-pose cut assets", () => {
 		);
 		const cut = data.matchedCut;
 		expect(cut.standing).toContain("hermes-passing-stand-");
+		const idle = JSON.parse(
+			readFileSync(
+				`adventures/shadow-over-innsmouth/public/assets/sprites/hermes/${cut.standing}.json`,
+				"utf8",
+			),
+		);
+		expect(idle.normalization.reference).toBe(name);
+		expect(cut.exitFrames).toEqual([idle.normalization.sourceFrame]);
+		expect(cut.entryFrames).toEqual(cut.exitFrames);
+		expect(cut.metrics[cut.exitFrames[0]].lowerBodyIoU).toBeGreaterThanOrEqual(
+			0.9,
+		);
 		for (const frame of [...cut.exitFrames, ...cut.entryFrames]) {
 			expect(data.reviewedPassingFrames).toContain(frame);
 			const metric = cut.metrics[frame];

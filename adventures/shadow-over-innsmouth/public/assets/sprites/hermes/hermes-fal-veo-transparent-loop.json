@@ -384,8 +384,8 @@
 	"matchedCut": {
 		"standing": "hermes-passing-stand-side",
 		"headings": ["left", "right"],
-		"exitFrames": [11, 29],
-		"entryFrames": [29, 28, 11],
+		"exitFrames": [29],
+		"entryFrames": [29],
 		"metrics": [
 			{
 				"frame": 0,
@@ -808,7 +808,7 @@
 				"remainingSupport": 4
 			}
 		],
-		"method": "reviewed passing poses only; sole aligned lower-body alpha>127 IoU below walk hip at 62% visible height; primary=100*(1-lowerIoU)+freeBootSolePx+0.25*bootSpreadPx; secondary=headPx+torsoPx; reviewed free soles for passing frames, raw tracker for ineligible frames"
+		"method": "single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles"
 	},
 	"reviewedPassingFrames": [11, 28, 29],
 	"reviewedFreeBootSoles": {

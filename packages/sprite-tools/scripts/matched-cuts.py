@@ -2,11 +2,8 @@
 """Measure sole-aligned walk/still matches. Local, deterministic, no image service.
 Head/torso proxies are alpha centroids of the top 23% / 25-62% of each
 silhouette's own visible height. Metrics use sprite pixels, before scaling.
-Lower-body silhouette, free sole displacement and boot spread rank before upper body.
-Only visually reviewed passing poses are eligible. All frames are measured; one minimum-score exit per support and a ranked entry list
-with at least two remaining support frames are selected; runtime chooses the
-best floor-safe candidate on the actual planted foot. Mirroring preserves
-IoU and displacement lengths, so mirrored headings share the measurements.
+The sole eligible entry and exit is the standing edit's recorded source frame.
+Other frames remain diagnostic measurements, never transition candidates.
 """
 import json
 import subprocess
@@ -17,7 +14,7 @@ from scipy.ndimage import shift
 
 ROOT = Path(__file__).resolve().parents[3]
 SPR = ROOT / 'adventures/shadow-over-innsmouth/public/assets/sprites/hermes'
-OUT = ROOT / 'tmp/walkqa/verification-14/matches'
+OUT = ROOT / 'tmp/walkqa/verification-15/matches'
 OUT.mkdir(parents=True, exist_ok=True)
 PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-passing-stand-side', ['left', 'right'])] + [
     ('hermes-walk-'+d, 'hermes-passing-stand-'+d, headings) for d, headings in [
@@ -64,24 +61,11 @@ for walk,stand,headings in PAIRS:
         remaining=1
         while remaining<len(images) and meta['contacts'][(i+remaining)%len(images)]['planted']==foot: remaining+=1
         records.append(dict(frame=i,foot=foot,alphaIoU=round(iou,6),headPx=round(head,3),torsoPx=round(torso,3),lowerBodyIoU=round(lower_iou,6),freeFootPx=round(free_px,3),bootSpreadPx=round(spread,3),passing=passing,lowerBodyScore=round(lower_score,3),score=round(lower_score,3),remainingSupport=remaining))
-    rank=lambda r:(r['lowerBodyScore'],r['headPx']+r['torsoPx'])
-    eligible=[r for r in records if r['passing']]
-    exits=[min((r for r in eligible if r['foot']==f),key=rank)['frame'] for f in ['L','R']]
-    # Cycles may contain more than one stance per anatomical foot. Include
-    # the best cut in every contiguous support, rather than skipping a step.
-    for start in meta['switchFrames']:
-        support=[]; j=start
-        while not support or meta['contacts'][j]['planted']==meta['contacts'][start]['planted']:
-            support.append(records[j]); j=(j+1)%len(images)
-            if j==start: break
-        support=[r for r in support if r['passing']]
-        if not support: continue
-        best=min(support,key=rank)['frame']
-        if best not in exits: exits.append(best)
-    # Never insert a poor coverage frame just to satisfy the half-cycle cap.
-    # The runtime cap and floor-safe fallback remain explicit safety constraints.
-    entries=[r['frame'] for r in sorted(eligible,key=rank) if r['remainingSupport']>=2]
-    meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'reviewed passing poses only; sole aligned lower-body alpha>127 IoU below walk hip at 62% visible height; primary=100*(1-lowerIoU)+freeBootSolePx+0.25*bootSpreadPx; secondary=headPx+torsoPx; reviewed free soles for passing frames, raw tracker for ineligible frames'}
+    source=idle['normalization']['sourceFrame']
+    assert idle['normalization']['reference']==walk
+    assert records[source]['passing'] and records[source]['remainingSupport']>=2
+    exits=entries=[source]
+    meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles'}
     path.write_text(json.dumps(meta,indent='\t')+'\n')
     sheet=Image.new('RGB',(1200,500*len(exits)),'#303038'); draw=ImageDraw.Draw(sheet)
     for row,i in enumerate(exits):
@@ -96,7 +80,7 @@ for walk,stand,headings in PAIRS:
         draw.text((10,row*500+5),f'{walk} {foot}: exit {i}, entry {next(j for j in entries if records[j]["foot"]==foot)}, legs {r["lowerBodyIoU"]} free {r["freeFootPx"]}, head {r["headPx"]} px, torso {r["torsoPx"]} px',fill='white')
         draw.text((10,row*500+25),'WALK                                      SOLE-ALIGNED STANDING                         COMPARISON OVERLAY ONLY',fill='white')
     sheet.save(OUT/(walk+'.png'))
-    summary.append({'cycle':walk,'headings':headings,'exits':[records[i] for i in exits],'entries':[records[next(i for i in entries if records[i]['foot']==f)] for f in ['L','R']]})
+    summary.append({'cycle':walk,'headings':headings,'exits':[records[i] for i in exits],'entries':[records[i] for i in entries]})
 (OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary,indent=2))
 
