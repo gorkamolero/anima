@@ -91,7 +91,7 @@ evaluate(
 );
 if (plan.start)
 	evaluate(
-		`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-matched-stand-side',0).setFlipX(false);s.hermesMotor.place({x:${plan.start[0]},y:${plan.start[1]}});return true})()`,
+		`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-passing-stand-side',0).setFlipX(false);s.hermesMotor.place({x:${plan.start[0]},y:${plan.start[1]}});return true})()`,
 	);
 if (!evaluate("window.__anima.scene.geometryReady"))
 	throw new Error(
@@ -141,7 +141,7 @@ for (const beat of plan.beats) {
 	mkdirSync(dir, { recursive: true });
 	if (beat.start)
 		evaluate(
-			`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-matched-stand-side',0).setFlipX(false);if(${JSON.stringify(beat.facing ?? null)})s.hermesMotor.heading=${JSON.stringify(beat.facing ?? null)};s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
+			`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-passing-stand-side',0).setFlipX(false);if(${JSON.stringify(beat.facing ?? null)})s.hermesMotor.heading=${JSON.stringify(beat.facing ?? null)};s.hermesMotor.place({x:${beat.start[0]},y:${beat.start[1]}});return true})()`,
 		);
 	if (beat.object) {
 		const point = evaluate(
