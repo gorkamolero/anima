@@ -122,6 +122,7 @@ interface GeneratedPlace {
 	background: string;
 	template: "exterior" | "interior";
 	ground: {
+		walkArea?: { scaleClamp: { min: number; max: number } };
 		groundLine: ReviewScene["groundLine"];
 		freeWalkBounds: ReviewScene["freeWalkBounds"];
 		freeWalkRanges: ReviewScene["freeWalkRanges"];
@@ -686,7 +687,9 @@ export class StoryGameScene extends BaseScene {
 						pixelsPerMetre: (ground.baseScale * 1059) / 1.75,
 					},
 					baseScale: ground.baseScale,
-					scaleClamp: { min: 0.18, max: 1.5 },
+					scaleClamp: ("walkArea" in ground
+						? ground.walkArea?.scaleClamp
+						: undefined) ?? { min: 0.18, max: 1.5 },
 				}
 			: walkAreaFromAnchor(scene, {}, 1080);
 		this.visibleFloor = {
