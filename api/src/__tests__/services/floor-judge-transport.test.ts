@@ -66,7 +66,8 @@ it("falls back on rejected image state with the same named questions and preserv
 	const result = await asymmetricFloorJudge("/proof/mask.png");
 	expect(result.pass).toBe(true);
 	expect(result.probabilities?.coverage).toBe(0.1);
-	expect(result.probabilities?.obstacles).toBeCloseTo(0.1);
+	expect(result.probabilities?.obstacles).toBeUndefined();
+	expect(result.probabilities?.environment).toBeCloseTo(0.1);
 	expect(
 		mocks.write.mock.calls.some(([, text]) =>
 			String(text).includes("no water"),
