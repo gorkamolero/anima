@@ -16,10 +16,10 @@ from scipy.ndimage import shift
 
 ROOT = Path(__file__).resolve().parents[3]
 SPR = ROOT / 'adventures/shadow-over-innsmouth/public/assets/sprites/hermes'
-OUT = ROOT / 'tmp/walkqa/verification-12/matches'
+OUT = ROOT / 'tmp/walkqa/verification-13/matches'
 OUT.mkdir(parents=True, exist_ok=True)
-PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-idle-v2-normalized', ['left', 'right'])] + [
-    ('hermes-walk-'+d, 'hermes-stand-'+d, headings) for d, headings in [
+PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-matched-stand-side', ['left', 'right'])] + [
+    ('hermes-walk-'+d, 'hermes-matched-stand-'+d, headings) for d, headings in [
         ('away', ['away']), ('toward', ['toward']),
         ('away-right', ['away-right', 'away-left']),
         ('toward-right', ['toward-right', 'toward-left'])]]
@@ -64,13 +64,8 @@ for walk,stand,headings in PAIRS:
             if j==start: break
         best=min(support,key=lambda r:r['score'])['frame']
         if best not in exits: exits.append(best)
-    # Add the best measurements needed to bound cyclic waiting to half a cycle.
-    while True:
-        ordered=sorted(exits); gaps=[((ordered[(j+1)%len(ordered)]-i)%len(images),i) for j,i in enumerate(ordered)]
-        gap,start=max(gaps)
-        if gap<=len(images)//2: break
-        candidates=[r for r in records if 0<(r['frame']-start)%len(images)<gap and max((r['frame']-start)%len(images),gap-(r['frame']-start)%len(images))<=len(images)//2]
-        exits.append(min(candidates,key=lambda r:r['score'])['frame'])
+    # Never insert a poor coverage frame just to satisfy the half-cycle cap.
+    # The runtime cap and floor-safe fallback remain explicit safety constraints.
     entries=[r['frame'] for r in sorted(records,key=lambda r:r['score']) if r['remainingSupport']>=2]
     meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'sole aligned; alpha>127 IoU; alpha-weighted head 0-23% and torso 25-62% height centroids; score=100*(1-IoU)+headPx+torsoPx'}
     path.write_text(json.dumps(meta,indent='\t')+'\n')
