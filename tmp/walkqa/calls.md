@@ -94,3 +94,42 @@ Limits: 4 image edits, 4 Kling videos, 4 BRIA removals. No Veo.
 | CALL 79 | 2026-10-12T01:17:59.862Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | road segmentation fallback |
 | edit | fal-ai/nano-banana-2/edit | away-right | submission attempted 2026-10-12T01:18:06.188Z |
   Request 01a12db0-3a5e-7060-9644-72c448fa44ab (away-right, edit).
+| edit | fal-ai/nano-banana-2/edit | toward-right | submission attempted 2026-10-12T01:18:13.399Z |
+  Request 01a12db0-5678-76b0-a598-6af2d076d1e4 (toward-right, edit).
+  Completed 01a12db0-3a5e-7060-9644-72c448fa44ab: tmp/hermes-diagonals/away-right-edit.png
+| CALL 80 | 2026-10-12T01:18:23.480Z | 48189753efb7c4cb0946adaf1a08195cad9b53402e3775b0ad9b50ee233ce46e | floor segmentation |
+  Completed 01a12db0-5678-76b0-a598-6af2d076d1e4: tmp/hermes-diagonals/toward-right-edit.png
+| video | fal-ai/kling-video/v3/standard/image-to-video | away-right | submission attempted 2026-10-12T01:19:17.714Z |
+  Request 01a12db1-51b5-7950-93cc-0ac502c5e2d5 (away-right, video).
+| edit | fal-ai/nano-banana-2/edit | toward-right | submission attempted 2026-10-12T01:19:18.058Z |
+  Request 01a12db1-5310-7a92-90e2-6b3d87f3f0e4 (toward-right, edit).
+  Completed 01a12db1-5310-7a92-90e2-6b3d87f3f0e4: tmp/hermes-diagonals/toward-right-edit.png
+| CALL 81 | 2026-10-12T01:19:41.676Z | 039306670c3551a5f9a51e8505875f053d9515f6a126aaa937ab1337629a5e82 | fal-ai/sam2/image: left house |
+| CALL 82 | 2026-10-12T01:19:57.508Z | 12f200e79dd70d710c2911072294b42740c26068fc6a16feb39a60213d12e3f5 | fal-ai/sam2/image: right house |
+| CALL 83 | 2026-10-12T01:20:00.999Z | 99f51acb3e2ef86d725a0c659cfd475c97a7bf6660e3abb12a0b882ddccd827c | fal-ai/sam2/image: lamp post |
+| CALL 84 | 2026-10-12T01:20:04.464Z | bf304a0d4b23cbbf175eb18f74099aa7e0d85db44661851baf0898951907767f | fal-ai/sam2/image: left nets |
+| CALL 85 | 2026-10-12T01:20:08.183Z | 5f163417416479e3d7fdc222a7bb8a964017668ba12474d57f3a618b86308ae2 | fal-ai/sam2/image: right nets |
+  Completed 01a12db1-51b5-7950-93cc-0ac502c5e2d5: tmp/hermes-diagonals/away-right-video.mp4
+| CALL 86 | 2026-10-12T01:20:37.405Z | 507ed2ea02b841c5efb9f5d5673bd220945369f6ed932b49948b2338c80c3ae6 | floor segmentation |
+| CALL 87 | 2026-10-12T01:20:39.145Z | 507ed2ea02b841c5efb9f5d5673bd220945369f6ed932b49948b2338c80c3ae6 | floor segmentation retry |
+| video | fal-ai/kling-video/v3/standard/image-to-video | toward-right | submission attempted 2026-10-12T01:21:16.127Z |
+  Request 01a12db3-2047-7062-a764-dd02d30540d7 (toward-right, video).
+| bria | bria/video/background-removal | away-right | submission attempted 2026-10-12T01:21:23.506Z |
+  Request 01a12db3-3d13-7b50-a8f1-0486482edde2 (away-right, bria).
+  Completed 01a12db3-3d13-7b50-a8f1-0486482edde2: tmp/hermes-diagonals/away-right-bria.webm
+  Completed 01a12db3-2047-7062-a764-dd02d30540d7: tmp/hermes-diagonals/toward-right-video.mp4
+| CALL 88 | 2026-10-12T01:22:18.054Z | a660ce26f8e1f1317cb4c70804d1ecc3fd09887bc444ace2bcd478183fac9b56 | floor segmentation |
+| CALL 89 | 2026-10-12T01:22:24.443Z | a660ce26f8e1f1317cb4c70804d1ecc3fd09887bc444ace2bcd478183fac9b56 | floor segmentation retry |
+| bria | bria/video/background-removal | toward-right | submission attempted 2026-10-12T01:23:22.035Z |
+  Request 01a12db5-0c0c-7682-b205-9aee64b3eac4 (toward-right, bria).
+  Completed 01a12db5-0c0c-7682-b205-9aee64b3eac4: tmp/hermes-diagonals/toward-right-bria.webm
+| CALL 90 | 2026-10-12T01:24:05.569Z | b7044f385f30aa3d9005ac2b7525663d176c0d6d3e7090127fdce376299c3802 | floor segmentation |
+| CALL 91 | 2026-10-12T01:24:07.045Z | b7044f385f30aa3d9005ac2b7525663d176c0d6d3e7090127fdce376299c3802 | floor segmentation retry |
+| CALL 92 | 2026-10-12T01:24:55.732Z | c6fb3592c34d5b3ba865a015b79bea9d5af491e77c631b2fa07185781bc98226 | fal-ai/sam2/image: barrel by counter |
+| CALL 93 | 2026-10-12T01:26:40.921Z | cff924a031b707ba71c525adc63f6904e5d784a9e379f73227eda67d9834e7b1 | fal-ai/sam2/image: right barrels |
+| CALL 94 | 2026-10-12T01:27:13.053Z | d67ad0df76af5ddcebf84951cedfa27fe06b88bd5260eb7a3d1e3980fa665928 | floor segmentation |
+| CALL 95 | 2026-10-12T01:27:13.965Z | d67ad0df76af5ddcebf84951cedfa27fe06b88bd5260eb7a3d1e3980fa665928 | floor segmentation retry |
+| CALL 96 | 2026-10-12T01:27:15.477Z | d67ad0df76af5ddcebf84951cedfa27fe06b88bd5260eb7a3d1e3980fa665928 | road segmentation fallback |
+| CALL 97 | 2026-10-12T01:27:29.639Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | floor segmentation |
+| CALL 98 | 2026-10-12T01:27:30.915Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | floor segmentation retry |
+| CALL 99 | 2026-10-12T01:27:33.022Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | road segmentation fallback |

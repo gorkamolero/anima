@@ -62,14 +62,41 @@ Before is Brief 03 after; pending means no completed measurement.
 
 ## Paid calls
 
-Brief 05: image edits 0/4; Kling videos 0/4; BRIA removals 0/4. No Veo.
+Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rejected for facing left; corrected edit reviewed. Both video 6-fps sheets reviewed, full-body walking accepted for extraction. No Veo.
 
 ## Commits
 
-Pending.
+- 0fa659c: baseline and call ledger.
+- ef10c0c: contact-driven motor, local view heading sectors, tests, adapter and capture telemetry.
+
+- Milestone: physical-foot registration replaces image-half identity; existing side/away/toward contact sheets reviewed frame by frame. Motor uses anchor-relative placement and a single frame clock, view-relative eight-sector headings, switch-only turns, bounded anchor correction, and contact-pose hold. 343 tests pass; engine and game typecheck pass. Pixel proof still pending.
+- Diagonal assets generated with Kling v3 Standard, 5 seconds, audio disabled. Away loop [28,76), toward [60,85), 24fps. Constant normalization matches 1030.5px median side height; no per-frame alignment. Previews and manifests under public/assets/sprites/hermes.
+
+- Milestone: second side trial remains FAIL, 11.24px, worst 28-39 (`tmp/walkqa/trial-05b/side-near-worst.png`). Early profile handoff was rejected because it anchored the still-swinging boot; restored profile switches 3/21. Full capture runs use the later reviewed data.
+- Town replay first attempt stopped at the obsolete 2px arrival assertion. Updated to independently require half-stride distance and a switch frame. Retry pending.
 
 ## Open failures
 
-All proof clips remain unverified for Brief 05. Prior no-stance clips remain unresolved.
+Trial 1 (superseded registration): road side-near 7.75px maximum, worst frames 53-57 (`tmp/walkqa/trial-05/side-near-worst.png`); road diagonal 23.04px maximum, worst frames 13-26 (`tmp/walkqa/trial-05/diagonal-worst.png`). Both FAIL. Diagonal 284 captured frames = 11.83s including hold, versus prior ~64s; still above the ~8s target. Handoffs moved earlier to avoid locking the outgoing toe-off. Seed contacts now initialise on the sole alpha boundary. No checker edits.
+
+Anchor verify:art passes outside and inside. Full proof matrix remains pending. 
+
+### Prior no-stance diagnosis (original clips retained)
+
+All seven representative frames were inspected at full resolution. Height figures
+below are source frame height times scale; these are not tiny sprites.
+
+| Clip | Walking frames | Figure height px | Diagnosis | Frame evidence |
+|---|---:|---:|---|---|
+| road/exit | 38/144 | 211-456 | Walk occurs; scene changes during the clip, invalidating a single-background estimate. | tmp/walkqa/no-stance-05/road-exit-19.png |
+| road/object-click | 3/180 | 328-331 | Starts almost at the object approach, too short for a measured stance. New start is farther away. | tmp/walkqa/no-stance-05/road-object-click-1.png |
+| alley/away-far | 3/72 | 379-382 | Start and target snap to nearly the same reachable floor edge (y837-840). New approach starts farther forward. | tmp/walkqa/no-stance-05/alley-away-far-1.png |
+| alley/crate-behind | 3/144 | 374-377 | Only 2.6 px ground travel after floor snapping; figure is visible. New crossing spans the crate horizontally. | tmp/walkqa/no-stance-05/alley-crate-behind-1.png |
+| alley/crate-front | 12/144 | 376-390 | Only 13 px depth travel. New crossing spans the crate horizontally. | tmp/walkqa/no-stance-05/alley-crate-front-6.png |
+| depot-outside/away-far | 0/72 | 320 | No walking; original start is over the fishing-net area and click yields no walk. New far approach uses the open left dock. | tmp/walkqa/no-stance-05/depot-outside-away-far-36.png |
+| depot-inside/exit | 5/144 | 408-456 | Starts at the door; only five walking frames then scene transition. New approach starts farther from the door. | tmp/walkqa/no-stance-05/depot-inside-exit-2.png |
+
+Raw diagnosis telemetry: `tmp/walkqa/no-stance-05/telemetry.json`. New measurements
+remain required; none of these explanations is counted as a pass.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

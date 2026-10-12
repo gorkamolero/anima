@@ -1,0 +1,81 @@
+{
+	"loop": {
+		"method": "local-frame-similarity",
+		"start_frame": 60,
+		"end_frame": 85,
+		"frame_count": 25,
+		"fps": 24,
+		"start_time": 2.5,
+		"end_time": 3.5416666666666665,
+		"seam_mse": 0.002292740877120582,
+		"candidates": [
+			[0.002292740877120582, 60, 85],
+			[0.002719358113045471, 59, 84],
+			[0.002883726397729268, 61, 86],
+			[0.0031207346282246455, 92, 118],
+			[0.003426757937582178, 62, 87],
+			[0.0034512197984624218, 58, 83],
+			[0.0036036037975844654, 91, 117],
+			[0.004357558668713722, 57, 82]
+		]
+	},
+	"normalization": {
+		"reference": "hermes-fal-veo-transparent-loop",
+		"frameSize": [612, 1059],
+		"alphaThreshold": 127,
+		"referenceHeightMedian": 1030.5,
+		"referenceHeightRange": [1013, 1047],
+		"idleHeightMedian": 1055.0,
+		"inputHeightMedian": 1212,
+		"uniformScale": 0.8502475247524752,
+		"feetAnchor": [0.5, 1],
+		"method": "uniform scale to reference median height; one global center and bottom anchor across the entire loop; preserve foot travel and body bob",
+		"outputHeightRange": [
+			1015, 1023, 1024, 1023, 1023, 1021, 1019, 1018, 1036, 1045, 1042, 1030,
+			1025, 1029, 1036, 1039, 1039, 1038, 1038, 1034, 1032, 1040, 1032, 1023,
+			1018
+		]
+	},
+	"generation": {
+		"model": "fal-ai/kling-video/v3/standard/image-to-video",
+		"input": {
+			"start_image_url": "https://v3b.fal.media/files/b/0aae0567/AAVRZwiEdSQVDDpcyomXd_1791768074473.png",
+			"duration": "5",
+			"generate_audio": false,
+			"prompt": "This exact character walks diagonally toward camera and to screen right, THREE QUARTER FRONT VIEW throughout. Walking IN PLACE for a looping adventure game sprite. Camera tracks with him at exactly his walking speed, so his body stays centered and the SAME SIZE throughout, no shrinking, no enlargement, no drift. Steady natural brisk walking gait from the first frame, alternating heel to toe planted steps, arms swing in opposition, subtle body bob. Full body and shoes always visible, generous margins. Preserve exact orientation, character identity, clothes, satchel, proportions and painterly linework. Never turn, rotate or change direction. Flat uniform gray background, no floor line, no cast shadows, no props or scene. Silent.",
+			"negative_prompt": "cropped feet, turning, rotation, sliding, drifting, shrinking, growing, zoom, running, slow motion, change of view, moving across frame, scene, shadows"
+		},
+		"requestId": "01a12db3-2047-7062-a764-dd02d30540d7",
+		"output": "tmp/hermes-diagonals/toward-right-video.mp4"
+	},
+	"backgroundRemoval": {
+		"model": "bria/video/background-removal",
+		"input": {
+			"video_url": "https://v3b.fal.media/files/b/0aae0573/iL_7OQX9lQ4KJdbiOwfCr_1791768195658.mp4",
+			"background_color": "Transparent",
+			"output_container_and_codec": "webm_vp9",
+			"preserve_audio": false
+		},
+		"requestId": "01a12db5-0c0c-7682-b205-9aee64b3eac4",
+		"output": "tmp/hermes-diagonals/toward-right-bria.webm"
+	},
+	"keyframe": {
+		"model": "fal-ai/nano-banana-2/edit",
+		"input": {
+			"prompt": "Create exactly ONE full-body character turnaround still of Hermes from these references. The second and third images are the authoritative in-game character: match their slim young adult proportions, oversized tousled medium brown hair, thin black round glasses, warm pale skin, narrow chin, brown tweed blazer, cream shirt, dark olive green V-neck sweater, brown trousers and brown lace-up shoes. Same clean hand-inked painterly cartoon rendering, fine fabric texture, same colors, no redesign. His rectangular brown leather satchel with flap and buckles hangs at his LEFT hip, strap across from RIGHT shoulder. THREE-QUARTER FRONT VIEW FACING RIGHT. CRITICAL: his nose must point to the RIGHT EDGE of the image, never left. We see the front of his chest and the left side of his face, his left ear is visible on the LEFT side of his head. Rotate his entire body toward the RIGHT SIDE OF THE IMAGE by 45 degrees from straight front view. His LEFT hip satchel appears on SCREEN LEFT. BOTH shoe toes point toward the lower RIGHT corner of the image. Face and front of jacket visible. Do not copy the facing direction of the reference images. He is about to walk diagonally toward the viewer and toward SCREEN RIGHT. Standing relaxed upright, arms down, feet slightly apart. Full body and all shoes visible. Centered figure occupies 82 percent of portrait image height, generous empty margin. Plain uniform #828282 gray background, no floor, no shadows, no text, no extra figures. Preserve the exact character identity and size proportions from the game sprites.",
+			"image_urls": [
+				"https://v3b.fal.media/files/b/0aae055b/0HqA2hl0rDZ3KvLr-gbIR_1791767955350.jpeg",
+				"https://v3b.fal.media/files/b/0aae055b/4zBwNAOB06JDrSLFiosTB_1791767956516.png",
+				"https://v3b.fal.media/files/b/0aae055b/dLbtfT6QBgZL6Y8ZAtriz_1791767957069.png"
+			],
+			"aspect_ratio": "9:16",
+			"num_images": 1,
+			"output_format": "png",
+			"limit_generations": true
+		},
+		"requestId": "01a12db1-5310-7a92-90e2-6b3d87f3f0e4",
+		"output": "tmp/hermes-diagonals/toward-right-edit.png"
+	},
+	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward-right-preview-3x.mp4",
+	"qcMagenta": "tmp/hermes-diagonals/toward-right-loop-sheet.png"
+}

@@ -23,18 +23,69 @@ removes the foot travel required for walking. `normalize-sheet.py` implements
 this operation after `sprite-factory.py process-alpha` and rebuilds the silent
 three-loop magenta preview. The inherited idle is about 2.4% taller than walking.
 
-## Runtime and verification
+## Brief 05: diagonal cycles
 
-`CharacterMotor` selects the existing cycles from ground-plane velocity, with
-0.35 m path look-ahead and hysteresis (vertical entry ratio 1.15, exit 0.75).
-Positive ground depth selects away, negative depth selects toward; lateral motion
-uses the profile sheet, flipped for right. Away idle holds frame zero. Motion is
-1 m/s in camera-calibrated ground metres and playback cadence follows ground
-speed. Scale is evaluated at the current position every frame, with bounded
-scale factors. Anchor and generated clicks share footprint-aware navigation.
+Two diagonal keyframes use `fal-ai/nano-banana-2/edit` and the same three references
+listed above. The first toward-right edit faced left and was rejected; its corrected
+edit faces right. Total new calls: **3 edits, 2 Kling videos, 2 BRIA removals**.
+No new Veo calls. Full ledger: `tmp/walkqa/calls.md`.
 
-Current real-time verification recordings and 6 fps contact sheets are in
-`tmp/walkarea/`. Walks are driven by `window.__anima.click`, with per-frame
-`window.__anima.snapshot()` ground telemetry. See `docs/OPEN-WORLD.md` for camera
-calibration and navigation details. No AI image or video generation was used for
-the walking-model migration; these source sheets are unchanged.
+Both silent videos use `fal-ai/kling-video/v3/standard/image-to-video`, duration
+`5`, `generate_audio: false`, with prompts for camera-tracked walking in place,
+constant size, no drift, fixed three-quarter orientation, full body, flat gray.
+Model schema: https://fal.ai/models/fal-ai/kling-video/v3/standard/image-to-video/api
+The 6 fps full-video sheets were visually reviewed before BRIA removal.
+
+| Cycle | Source interval at 24 fps | Frames | New keyframe | Mirroring |
+|---|---|---:|---|---|
+| hermes-walk-away-right | [28,76) | 48 | hermes-away-right-keyframe.png | flipX gives away-left |
+| hermes-walk-toward-right | [60,85) | 25 | hermes-toward-right-keyframe.png | flipX gives toward-left |
+
+Adjacent manifests retain request IDs, exact prompts, parameters, references,
+loop candidates, measured height ranges, and the constant normalization transform.
+Both sheets have 612 x 1059 frames, eight columns, 24 fps. Their median visible
+height matches the side walk's 1030.5 px to rounding accuracy. Each has a silent
+`-preview-3x.mp4` magenta preview. No per-frame recentering, crossfade, interpolation,
+or speed multiplier is applied to the drawing.
+
+Extraction was run with `tmp/hermes-diagonals/prepare.py` (BRIA alpha frames and
+local seam search), then `tmp/hermes-diagonals/normalize.py` (constant scale and
+packing). These reuse `sprite-factory.py` extraction/packing/preview functions.
+The selected away interval contains two gait cycles; toward contains one.
+
+## Contact metadata and runtime
+
+`root-motion.py` retains its historical filename but now writes `contacts`, with
+physical `L`/`R` sole points and the planted foot per frame, plus `switchFrames`.
+Reviewed `contactSeeds` are embedded in every JSON, making regeneration reproducible:
+
+```
+tmp/walkqa/tools/venv/bin/python packages/sprite-tools/scripts/root-motion.py <sheet.json> --debug tmp/walkqa/contacts-05
+```
+
+Registration follows a boot-centred patch, predicting from its last displacement.
+The support point is chained throughout the stance, rather than re-selected in an
+image half on every frame. Swing checkpoints help retain foot identity. Debug
+sheets show both contacts and each handoff. **Tracking is still under pixel QA;
+these assets and metadata are not a claim of acceptance.**
+
+The motor owns the animation clock and sprite frame. At handoff it captures the
+incoming sole's screen position. Each frame then solves body position and scale
+from that anchor. Perspective is evaluated at the body's ground point and applied
+about the contact. There is no independent walking speed or visual-root offset.
+Cycle choice uses eight ground sectors relative to the local camera view ray,
+with five degrees of hysteresis. Changes happen at handoff with the same physical
+support foot. Anchor correction totals at most one pixel per stance. Navigation
+starts with a string-pulled path and rounds corners only inside the floor mask.
+Arrival holds a switch pose within half a measured stance displacement, without
+snapping to the requested point. The town replay now checks that rule rather than
+requiring the old two-pixel exact endpoint.
+
+## Verification status
+
+See `tmp/walkqa/reports/05-foot-lock.md`. Initial contact-driven trials still fail
+the independent pixel gate, particularly at toe-off and cycle transitions. Full
+four-scene proofs, including every diagonal, are being recorded. Do not describe
+this walking system as accepted until the report says so.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
