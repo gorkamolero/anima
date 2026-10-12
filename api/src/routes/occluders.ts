@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { cachedFloor, deriveOccluders } from "../services/occluders.js";
@@ -17,7 +18,23 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 		return c.json({ error: "Invalid background path" }, 400);
 	}
 	try {
+		const anchorGround =
+			ANCHORS[key] === image
+				? await readFile(
+						imagePath(image).replace(/\.png$/, ".ground.json"),
+						"utf8",
+					)
+						.then(
+							(text) =>
+								JSON.parse(text) as {
+									floor: NonNullable<Awaited<ReturnType<typeof cachedFloor>>>;
+									horizonY: number;
+								},
+						)
+						.catch(() => undefined)
+				: undefined;
 		const floor =
+			anchorGround?.floor ??
 			place?.ground?.floor ??
 			(await cachedFloor(image)) ??
 			(ANCHORS[key]
@@ -35,6 +52,7 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 			image,
 			(place ? { ...place.ground, template: place.template } : undefined) ?? {
 				floor,
+				horizonY: anchorGround?.horizonY,
 				template: key === "inside" ? "interior" : "exterior",
 			},
 		);
