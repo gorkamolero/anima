@@ -1,0 +1,4 @@
+{"clip": "tmp/walkqa/crossings-final-08/crate-0-55e961/roundtrip.json", "stances": 26, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 290, 301, "toward-right"], [0.0, 278, 289, "toward"], [0.0, 265, 277, "toward"]]}
+{"clip": "tmp/walkqa/crossings-final-08/fishing-net-pile-22c3fb/roundtrip.json", "stances": 23, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 258, 269, "eo-transparent-loop"], [0.0, 245, 257, "toward"], [0.0, 233, 244, "toward"]]}
+{"clip": "tmp/walkqa/crossings-final-08/left-fishing-net-0-55e961/roundtrip.json", "stances": 8, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 92, 102, "toward-right"], [0.0, 81, 91, "eo-transparent-loop"], [0.0, 70, 80, "eo-transparent-loop"]]}
+{"clip": "tmp/walkqa/crossings-final-08/right-lobster-trap-d0a0fc/roundtrip.json", "stances": 31, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 342, 353, "eo-transparent-loop"], [0.0, 331, 341, "toward-right"], [0.0, 319, 330, "toward"]]}

@@ -1,0 +1,100 @@
+{
+  "outside": [
+    {
+      "scene": "outside",
+      "exit": "depot_doors",
+      "kind": "door",
+      "to": "inside",
+      "entry": "bus_platform"
+    },
+    {
+      "scene": "outside",
+      "exit": "edge-left",
+      "kind": "edge-left",
+      "to": "place-f2d0a7f7f76225002663",
+      "entry": "edge-right"
+    },
+    {
+      "scene": "outside",
+      "exit": "edge-right",
+      "kind": "edge-right",
+      "to": "place-2a19481aac649a2e69f1",
+      "entry": "edge-left"
+    }
+  ],
+  "inside": [
+    {
+      "scene": "inside",
+      "exit": "bus_platform",
+      "kind": "door",
+      "to": "outside",
+      "entry": "depot_doors"
+    }
+  ],
+  "place-f2d0a7f7f76225002663": [
+    {
+      "scene": "place-f2d0a7f7f76225002663",
+      "exit": "edge-left",
+      "kind": "edge-left",
+      "to": "place-395743b437774b879679",
+      "entry": "edge-right"
+    },
+    {
+      "scene": "place-f2d0a7f7f76225002663",
+      "exit": "edge-right",
+      "kind": "edge-right",
+      "to": "outside",
+      "entry": "edge-left"
+    },
+    {
+      "scene": "place-f2d0a7f7f76225002663",
+      "exit": "far",
+      "kind": "far",
+      "to": "place-2635d8cd03bce818a634",
+      "entry": "near"
+    }
+  ],
+  "place-2635d8cd03bce818a634": [
+    {
+      "scene": "place-2635d8cd03bce818a634",
+      "exit": "far",
+      "kind": "far",
+      "to": "place-aa7dd184a5f30fbc1f89",
+      "entry": "near"
+    },
+    {
+      "scene": "place-2635d8cd03bce818a634",
+      "exit": "near",
+      "kind": "near",
+      "to": "place-f2d0a7f7f76225002663",
+      "entry": "far"
+    }
+  ],
+  "place-2a19481aac649a2e69f1": [
+    {
+      "scene": "place-2a19481aac649a2e69f1",
+      "exit": "edge-left",
+      "kind": "edge-left",
+      "to": "outside",
+      "entry": "edge-right"
+    }
+  ],
+  "place-aa7dd184a5f30fbc1f89": [
+    {
+      "scene": "place-aa7dd184a5f30fbc1f89",
+      "exit": "near",
+      "kind": "near",
+      "to": "place-2635d8cd03bce818a634",
+      "entry": "far"
+    }
+  ],
+  "place-395743b437774b879679": [
+    {
+      "scene": "place-395743b437774b879679",
+      "exit": "edge-right",
+      "kind": "edge-right",
+      "to": "place-f2d0a7f7f76225002663",
+      "entry": "edge-left"
+    }
+  ]
+}

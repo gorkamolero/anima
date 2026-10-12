@@ -1,0 +1,1 @@
+tmp/walkqa/crossings-final-08/right-lobster-trap-d0a0fc/roundtrip.mp4: frames 367, walking pairs 339, frozen while walking 0 (0%); legacy threshold flags 91

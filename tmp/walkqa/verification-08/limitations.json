@@ -1,0 +1,82 @@
+[
+  {
+    "scene": "road",
+    "object": "left-tree-e55fac",
+    "rearBandCells": {
+      "rawMask": 99,
+      "mask": 12
+    },
+    "crop": "tmp/walkqa/verification-08/road-left-tree-e55fac-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "road",
+    "object": "left-lobster-trap-9a412d",
+    "rearBandCells": {
+      "rawMask": 191,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/road-left-lobster-trap-9a412d-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "road",
+    "object": "right-tree-441021",
+    "rearBandCells": {
+      "rawMask": 0,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/road-right-tree-441021-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "road",
+    "object": "right-lobster-trap-d0a0fc",
+    "rearBandCells": {
+      "rawMask": 142,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/road-right-lobster-trap-d0a0fc-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "alley",
+    "object": "crate-0-55e961",
+    "rearBandCells": {
+      "rawMask": 0,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/alley-crate-0-55e961-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "depot-outside",
+    "object": "bench-a15409",
+    "rearBandCells": {
+      "rawMask": 150,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/depot-outside-bench-a15409-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "depot-outside",
+    "object": "pergola-b60423",
+    "rearBandCells": {
+      "rawMask": 150,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/depot-outside-pergola-b60423-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  },
+  {
+    "scene": "depot-inside",
+    "object": "bench-6b9a9a",
+    "rearBandCells": {
+      "rawMask": 0,
+      "mask": 0
+    },
+    "crop": "tmp/walkqa/verification-08/depot-inside-bench-6b9a9a-support-2x.png",
+    "note": "Band within measured contact span, 15-150 px behind baseline; not by itself proof of impossibility in artwork."
+  }
+]

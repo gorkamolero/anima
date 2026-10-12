@@ -1,0 +1,50 @@
+[
+  {
+    "clip": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front.mp4",
+    "frame": 0,
+    "overlapPixels": 0,
+    "image": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind.mp4",
+    "frame": 42,
+    "overlapPixels": 557,
+    "image": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front.mp4",
+    "frame": 0,
+    "overlapPixels": 0,
+    "image": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind.mp4",
+    "frame": 40,
+    "overlapPixels": 1007,
+    "image": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front.mp4",
+    "frame": 0,
+    "overlapPixels": 1532,
+    "image": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind.mp4",
+    "frame": 35,
+    "overlapPixels": 5013,
+    "image": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front.mp4",
+    "frame": 0,
+    "overlapPixels": 0,
+    "image": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind.mp4",
+    "frame": 0,
+    "overlapPixels": 0,
+    "image": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind-max-overlap.png"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-12T08:46:06.925Z",
+  "reason": "No viable walk-in on left floor; video out.json has zero destination walking frames.",
+  "rows": [
+    {
+      "scene": "outside",
+      "exit": "edge-right",
+      "data": "{\"scene\":\"outside\",\"exit\":\"edge-right\",\"kind\":\"edge-right\",\"to\":\"place-96acfd3d8faaf8f903fe\",\"entry\":\"edge-left\"}"
+    },
+    {
+      "scene": "place-96acfd3d8faaf8f903fe",
+      "exit": "edge-left",
+      "data": "{\"scene\":\"place-96acfd3d8faaf8f903fe\",\"exit\":\"edge-left\",\"kind\":\"edge-left\",\"to\":\"outside\",\"entry\":\"edge-right\"}"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "clip": "tmp/walkqa/limitations-08/pergola-post/rear-approach.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/pergola-post/rear-approach-f0000.png",
+      "tmp/walkqa/limitations-08/pergola-post/rear-approach-f0095.png"
+    ],
+    "walking": 15,
+    "end": [
+      1212.9602555989306,
+      932.0809994641888
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/pergola-post/return.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/pergola-post/return-f0000.png",
+      "tmp/walkqa/limitations-08/pergola-post/return-f0095.png"
+    ],
+    "walking": 5,
+    "end": [
+      1147.8473993707626,
+      952.5820464735062
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/inside-bench/rear-approach.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/inside-bench/rear-approach-f0000.png",
+      "tmp/walkqa/limitations-08/inside-bench/rear-approach-f0095.png"
+    ],
+    "walking": 58,
+    "end": [
+      1036.9978137551502,
+      923.4601579018322
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/inside-bench/return.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/inside-bench/return-f0000.png",
+      "tmp/walkqa/limitations-08/inside-bench/return-f0095.png"
+    ],
+    "walking": 11,
+    "end": [
+      1149.7533345387644,
+      943.784351830552
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/outside-bench/rear-approach.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/outside-bench/rear-approach-f0000.png",
+      "tmp/walkqa/limitations-08/outside-bench/rear-approach-f0095.png"
+    ],
+    "walking": 9,
+    "end": [
+      968.8579000493888,
+      915.9745825679304
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/outside-bench/return.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/outside-bench/return-f0000.png",
+      "tmp/walkqa/limitations-08/outside-bench/return-f0095.png"
+    ],
+    "walking": 17,
+    "end": [
+      952.6044037505204,
+      943.6989117421164
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/left-tree/tree-limit-out.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/left-tree/tree-limit-out-f0000.png",
+      "tmp/walkqa/limitations-08/left-tree/tree-limit-out-f0177.png"
+    ],
+    "walking": 156,
+    "end": [
+      462.2892384513672,
+      806.7487927692923
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/limitations-08/left-tree/tree-limit-back.mp4",
+    "frames": [
+      "tmp/walkqa/limitations-08/left-tree/tree-limit-back-f0000.png",
+      "tmp/walkqa/limitations-08/left-tree/tree-limit-back-f0265.png"
+    ],
+    "walking": 247,
+    "end": [
+      1082.0529720218217,
+      1006.6202152789448
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+inside/depot-door-door-inside-to-outside.json    0.5      73    0/11    2.18 0
+inside/depot-door-door-outside-to-inside.json    0.9      87    0/22    1.09 0
+outside/depot-door-door-inside-to-outside.json    0.9      90    0/22    1.09 0
+outside/depot-door-door-outside-to-inside.json    2.2     475    0/54    1.78 0
+outside/outside-left-back.json                  1.4     100    0/33    1.45 0
+outside/outside-left-out.json                   0.9     259    0/21    1.14 0
+outside/outside-right-back.json                 1.0     137    0/24    1.00 0
+outside/outside-right-out.json                  2.3     269    0/56    2.14 0
+outside/road-edge-left-1-back.json              1.4     100    0/33    1.45 0
+outside/road-edge-left-2-back.json              1.4     100    0/33    1.45 0
+outside/road-left-back.json                     1.4     100    0/33    1.45 0
+place-2635d8cd03bce818a634/alley-far-back.json    4.2      62    0/100   1.92 0
+place-2635d8cd03bce818a634/alley-far-out.json    8.2     195    0/198   2.30 0
+place-2635d8cd03bce818a634/road-far-back.json    3.3     180    0/80    2.10 0
+place-2635d8cd03bce818a634/road-far-out.json    1.1     127    0/27    1.78 0
+place-2a19481aac649a2e69f1/outside-right-back.json    0.5     121    0/13    1.85 0
+place-2a19481aac649a2e69f1/outside-right-out.json    0.4      99    0/9     0.00 0
+place-aa7dd184a5f30fbc1f89/alley-far-back.json    5.5     156    0/132   2.00 0
+place-aa7dd184a5f30fbc1f89/alley-far-out.json    1.1     109    0/27    1.78 0
+place-f2d0a7f7f76225002663/outside-left-back.json    2.8     124    0/66    2.18 0
+place-f2d0a7f7f76225002663/outside-left-out.json    3.1     113    0/75    1.60 0
+place-f2d0a7f7f76225002663/road-edge-left-1-back.json   14.2     923    0/340   2.12 0
+place-f2d0a7f7f76225002663/road-edge-left-1-out.json    6.1     245    0/146   2.47 0
+place-f2d0a7f7f76225002663/road-edge-left-2-back.json   14.2     923    0/340   2.12 0
+place-f2d0a7f7f76225002663/road-edge-left-2-out.json    6.1     245    0/146   2.47 0
+place-f2d0a7f7f76225002663/road-far-back.json    2.5      62    0/60    1.60 0
+place-f2d0a7f7f76225002663/road-far-out.json    3.5     105    0/84    2.00 0
+place-f2d0a7f7f76225002663/road-left-back.json   14.2     923    0/340   2.12 0
+place-f2d0a7f7f76225002663/road-left-out.json    6.1     245    0/146   2.47 0
+
+side                 ground m/s min/median/max 1.19 1.57 1.78 (n=15)
+walk-away            ground m/s min/median/max 1.12 1.75 2.37 (n=13)
+walk-away-right      ground m/s min/median/max 1.53 1.63 1.85 (n=10)
+walk-toward          ground m/s min/median/max 0.92 1.76 3.31 (n=16)
+walk-toward-right    ground m/s min/median/max 1.14 1.46 1.66 (n=6)

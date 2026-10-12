@@ -1,0 +1,1 @@
+tmp/walkqa/crossings-final-08/crate-0-55e961/roundtrip.mp4: frames 420, walking pairs 282, frozen while walking 0 (0%); legacy threshold flags 48

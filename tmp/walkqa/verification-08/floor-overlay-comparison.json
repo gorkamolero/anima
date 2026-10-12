@@ -1,0 +1,38 @@
+[
+  {
+    "scene": "road",
+    "overlays": [
+      {
+        "path": "tmp/walkqa/derivation/road-04c-candidate-overlay.png",
+        "sha256": "0b97c8a4d1451696be87315762de965f88767cdb84c7835ebaf4c9119b272fb1"
+      },
+      {
+        "path": "tmp/walkqa/derivation/road-04c.png",
+        "sha256": "226a2ddd1bfe05c8b8d7a55e361afe5c14c66b4ef7ca87e889cda2780ede0012"
+      },
+      {
+        "path": "tmp/walkqa/derivation/road-08-installed-overlay.png",
+        "sha256": "8a04ab914d73ec1d6b812c3db5481d7ddd5dc182ce32381a206d74726a7a3cbf"
+      }
+    ],
+    "finalOverlayPixelDifference": 0
+  },
+  {
+    "scene": "alley",
+    "overlays": [
+      {
+        "path": "tmp/walkqa/derivation/alley-04c-candidate-overlay.png",
+        "sha256": "d328c8730df76f45536ebe6e9fe0c48cfd25b845dd35fb94ba5cebc8ac385d4f"
+      },
+      {
+        "path": "tmp/walkqa/derivation/alley-04c.png",
+        "sha256": "f85c476ecc4ad2d542af3c264c0d9031e8e5f412ee4beff36d50274201853aee"
+      },
+      {
+        "path": "tmp/walkqa/derivation/alley-08-installed-overlay.png",
+        "sha256": "1672cfcfdcded7ed31598bd143ae267d7ce34b3143880efaa8d8b160203569ae"
+      }
+    ],
+    "finalOverlayPixelDifference": 0
+  }
+]

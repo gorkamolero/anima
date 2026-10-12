@@ -1,0 +1,114 @@
+[
+  {
+    "clip": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front.mp4",
+    "switches": [
+      85
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front-f0084.png",
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front-f0085.png",
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-behind-to-front-f0086.png"
+    ],
+    "locations": [
+      "place-2635d8cd03bce818a634"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind.mp4",
+    "switches": [
+      25
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind-f0024.png",
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind-f0025.png",
+      "tmp/walkqa/occlusion-08/alley/crate-0-55e961/direct-front-to-behind-f0026.png"
+    ],
+    "locations": [
+      "place-2635d8cd03bce818a634"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front.mp4",
+    "switches": [
+      127
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front-f0126.png",
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front-f0127.png",
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-behind-to-front-f0128.png"
+    ],
+    "locations": [
+      "outside"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind.mp4",
+    "switches": [
+      28
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind-f0027.png",
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind-f0028.png",
+      "tmp/walkqa/occlusion-08/depot-outside/fishing-net-pile-22c3fb/direct-front-to-behind-f0029.png"
+    ],
+    "locations": [
+      "outside"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front.mp4",
+    "switches": [
+      44
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front-f0043.png",
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front-f0044.png",
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-behind-to-front-f0045.png"
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind.mp4",
+    "switches": [
+      1
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind-f0000.png",
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind-f0001.png",
+      "tmp/walkqa/occlusion-08/road/left-fishing-net-0-55e961/direct-front-to-behind-f0002.png"
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front.mp4",
+    "switches": [
+      164
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front-f0163.png",
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front-f0164.png",
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-behind-to-front-f0165.png"
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind.mp4",
+    "switches": [
+      30
+    ],
+    "frames": [
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind-f0029.png",
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind-f0030.png",
+      "tmp/walkqa/occlusion-08/road/right-lobster-trap-d0a0fc/direct-front-to-behind-f0031.png"
+    ],
+    "locations": [
+      "place-f2d0a7f7f76225002663"
+    ]
+  }
+]

@@ -1,0 +1,496 @@
+[
+  {
+    "clip": "tmp/walkqa/exits-08/road-edge-left-2/back.mp4",
+    "switches": [
+      340
+    ],
+    "arrivals": [
+      348
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0000.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0339.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0340.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0341.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0347.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0348.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0349.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/back-f0387.png"
+    ],
+    "walking": 373
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-edge-left-2/out.mp4",
+    "switches": [],
+    "arrivals": [],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/road-edge-left-2/out-f0000.png",
+      "tmp/walkqa/exits-08/road-edge-left-2/out-f0195.png"
+    ],
+    "walking": 146
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-far/back.mp4",
+    "switches": [
+      82
+    ],
+    "arrivals": [
+      96
+    ],
+    "from": "place-2635d8cd03bce818a634",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/road-far/back-f0000.png",
+      "tmp/walkqa/exits-08/road-far/back-f0081.png",
+      "tmp/walkqa/exits-08/road-far/back-f0082.png",
+      "tmp/walkqa/exits-08/road-far/back-f0083.png",
+      "tmp/walkqa/exits-08/road-far/back-f0095.png",
+      "tmp/walkqa/exits-08/road-far/back-f0096.png",
+      "tmp/walkqa/exits-08/road-far/back-f0097.png",
+      "tmp/walkqa/exits-08/road-far/back-f0161.png"
+    ],
+    "walking": 140
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-far/roundtrip.mp4",
+    "switches": [
+      86,
+      216
+    ],
+    "arrivals": [
+      100,
+      230
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0000.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0085.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0086.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0087.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0099.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0100.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0101.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0215.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0216.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0217.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0229.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0230.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0231.png",
+      "tmp/walkqa/exits-08/road-far/roundtrip-f0295.png"
+    ],
+    "walking": 251
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-far/out.mp4",
+    "switches": [
+      86
+    ],
+    "arrivals": [
+      100
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "place-2635d8cd03bce818a634",
+    "frames": [
+      "tmp/walkqa/exits-08/road-far/out-f0000.png",
+      "tmp/walkqa/exits-08/road-far/out-f0085.png",
+      "tmp/walkqa/exits-08/road-far/out-f0086.png",
+      "tmp/walkqa/exits-08/road-far/out-f0087.png",
+      "tmp/walkqa/exits-08/road-far/out-f0099.png",
+      "tmp/walkqa/exits-08/road-far/out-f0100.png",
+      "tmp/walkqa/exits-08/road-far/out-f0101.png",
+      "tmp/walkqa/exits-08/road-far/out-f0133.png"
+    ],
+    "walking": 111
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-left/back.mp4",
+    "switches": [
+      340
+    ],
+    "arrivals": [
+      346
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/road-left/back-f0000.png",
+      "tmp/walkqa/exits-08/road-left/back-f0339.png",
+      "tmp/walkqa/exits-08/road-left/back-f0340.png",
+      "tmp/walkqa/exits-08/road-left/back-f0341.png",
+      "tmp/walkqa/exits-08/road-left/back-f0345.png",
+      "tmp/walkqa/exits-08/road-left/back-f0346.png",
+      "tmp/walkqa/exits-08/road-left/back-f0347.png",
+      "tmp/walkqa/exits-08/road-left/back-f0385.png"
+    ],
+    "walking": 373
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-left/out.mp4",
+    "switches": [],
+    "arrivals": [],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/road-left/out-f0000.png",
+      "tmp/walkqa/exits-08/road-left/out-f0193.png"
+    ],
+    "walking": 146
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-left/failed-attempt.mp4",
+    "switches": [
+      534
+    ],
+    "arrivals": [
+      540
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0000.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0533.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0534.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0535.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0539.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0540.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0541.png",
+      "tmp/walkqa/exits-08/road-left/failed-attempt-f0579.png"
+    ],
+    "walking": 519
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/depot-door/roundtrip.mp4",
+    "switches": [
+      54,
+      191
+    ],
+    "arrivals": [
+      64,
+      196
+    ],
+    "from": "outside",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0000.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0053.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0054.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0055.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0063.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0064.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0065.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0190.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0191.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0192.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0195.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0196.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0197.png",
+      "tmp/walkqa/exits-08/depot-door/roundtrip-f0359.png"
+    ],
+    "walking": 109
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/depot-door/door-outside-to-inside.mp4",
+    "switches": [
+      54
+    ],
+    "arrivals": [
+      64
+    ],
+    "from": "outside",
+    "to": "inside",
+    "frames": [
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0000.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0053.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0054.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0055.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0063.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0064.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0065.png",
+      "tmp/walkqa/exits-08/depot-door/door-outside-to-inside-f0179.png"
+    ],
+    "walking": 76
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/depot-door/door-inside-to-outside.mp4",
+    "switches": [
+      11
+    ],
+    "arrivals": [
+      16
+    ],
+    "from": "inside",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0000.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0010.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0011.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0012.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0015.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0016.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0017.png",
+      "tmp/walkqa/exits-08/depot-door/door-inside-to-outside-f0179.png"
+    ],
+    "walking": 33
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-edge-left-1/back.mp4",
+    "switches": [
+      340
+    ],
+    "arrivals": [
+      348
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0000.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0339.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0340.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0341.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0347.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0348.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0349.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/back-f0387.png"
+    ],
+    "walking": 373
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/road-edge-left-1/out.mp4",
+    "switches": [],
+    "arrivals": [],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/road-edge-left-1/out-f0000.png",
+      "tmp/walkqa/exits-08/road-edge-left-1/out-f0195.png"
+    ],
+    "walking": 146
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/alley-far/back.mp4",
+    "switches": [
+      134
+    ],
+    "arrivals": [
+      148
+    ],
+    "from": "place-aa7dd184a5f30fbc1f89",
+    "to": "place-2635d8cd03bce818a634",
+    "frames": [
+      "tmp/walkqa/exits-08/alley-far/back-f0000.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0133.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0134.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0135.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0147.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0148.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0149.png",
+      "tmp/walkqa/exits-08/alley-far/back-f0251.png"
+    ],
+    "walking": 232
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/alley-far/roundtrip.mp4",
+    "switches": [
+      200,
+      378
+    ],
+    "arrivals": [
+      212,
+      392
+    ],
+    "from": "place-2635d8cd03bce818a634",
+    "to": "place-2635d8cd03bce818a634",
+    "frames": [
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0000.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0199.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0200.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0201.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0211.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0212.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0213.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0377.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0378.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0379.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0391.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0392.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0393.png",
+      "tmp/walkqa/exits-08/alley-far/roundtrip-f0495.png"
+    ],
+    "walking": 457
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/alley-far/out.mp4",
+    "switches": [
+      200
+    ],
+    "arrivals": [
+      212
+    ],
+    "from": "place-2635d8cd03bce818a634",
+    "to": "place-aa7dd184a5f30fbc1f89",
+    "frames": [
+      "tmp/walkqa/exits-08/alley-far/out-f0000.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0199.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0200.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0201.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0211.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0212.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0213.png",
+      "tmp/walkqa/exits-08/alley-far/out-f0243.png"
+    ],
+    "walking": 225
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-right/back.mp4",
+    "switches": [
+      13
+    ],
+    "arrivals": [
+      20
+    ],
+    "from": "place-2a19481aac649a2e69f1",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-right/back-f0000.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0012.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0013.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0014.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0019.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0020.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0021.png",
+      "tmp/walkqa/exits-08/outside-right/back-f0129.png"
+    ],
+    "walking": 37
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-right/roundtrip.mp4",
+    "switches": [
+      58,
+      143
+    ],
+    "arrivals": [
+      72,
+      150
+    ],
+    "from": "outside",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0000.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0057.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0058.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0059.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0071.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0072.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0073.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0142.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0143.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0144.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0149.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0150.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0151.png",
+      "tmp/walkqa/exits-08/outside-right/roundtrip-f0259.png"
+    ],
+    "walking": 102
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-right/out.mp4",
+    "switches": [
+      58
+    ],
+    "arrivals": [
+      72
+    ],
+    "from": "outside",
+    "to": "place-2a19481aac649a2e69f1",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-right/out-f0000.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0057.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0058.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0059.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0071.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0072.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0073.png",
+      "tmp/walkqa/exits-08/outside-right/out-f0129.png"
+    ],
+    "walking": 65
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-left/back.mp4",
+    "switches": [
+      66
+    ],
+    "arrivals": [
+      72
+    ],
+    "from": "place-f2d0a7f7f76225002663",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-left/back-f0000.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0065.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0066.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0067.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0071.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0072.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0073.png",
+      "tmp/walkqa/exits-08/outside-left/back-f0111.png"
+    ],
+    "walking": 99
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-left/roundtrip.mp4",
+    "switches": [
+      23,
+      182
+    ],
+    "arrivals": [
+      36,
+      188
+    ],
+    "from": "outside",
+    "to": "outside",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0000.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0022.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0023.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0024.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0035.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0036.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0037.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0181.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0182.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0183.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0187.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0188.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0189.png",
+      "tmp/walkqa/exits-08/outside-left/roundtrip-f0227.png"
+    ],
+    "walking": 195
+  },
+  {
+    "clip": "tmp/walkqa/exits-08/outside-left/out.mp4",
+    "switches": [
+      23
+    ],
+    "arrivals": [
+      36
+    ],
+    "from": "outside",
+    "to": "place-f2d0a7f7f76225002663",
+    "frames": [
+      "tmp/walkqa/exits-08/outside-left/out-f0000.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0022.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0023.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0024.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0035.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0036.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0037.png",
+      "tmp/walkqa/exits-08/outside-left/out-f0115.png"
+    ],
+    "walking": 96
+  }
+]

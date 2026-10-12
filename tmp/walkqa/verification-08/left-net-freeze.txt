@@ -1,0 +1,1 @@
+tmp/walkqa/crossings-final-08/left-fishing-net-0-55e961/roundtrip.mp4: frames 239, walking pairs 88, frozen while walking 0 (0%); legacy threshold flags 18

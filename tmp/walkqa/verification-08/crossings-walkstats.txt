@@ -1,0 +1,11 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+crate-0-55e961/roundtrip.json                  11.8     255    0/284   2.20 0
+fishing-net-pile-22c3fb/roundtrip.json         10.7      69    0/257   2.15 0
+left-fishing-net-0-55e961/roundtrip.json        3.8      88    0/90    2.13 0
+right-lobster-trap-d0a0fc/roundtrip.json       14.2      61    0/341   2.18 0
+
+side                 ground m/s min/median/max 1.38 1.42 1.51 (n=4)
+walk-away            ground m/s min/median/max 1.61 1.74 1.85 (n=3)
+walk-away-right      ground m/s min/median/max 1.25 1.53 1.91 (n=3)
+walk-toward          ground m/s min/median/max 1.72 1.92 2.14 (n=3)
+walk-toward-right    ground m/s min/median/max 1.24 1.52 1.82 (n=4)
