@@ -1,0 +1,202 @@
+diff --git a/packages/engine/src/characters/CharacterMotor.test.ts b/packages/engine/src/characters/CharacterMotor.test.ts
+index 5737bf4..9edf5eb 100644
+--- a/packages/engine/src/characters/CharacterMotor.test.ts
++++ b/packages/engine/src/characters/CharacterMotor.test.ts
+@@ -8,7 +8,7 @@ import {
+ 	lockedPlacement,
+ } from "./footLock";
+ 
+-function setup(standing = false) {
++function setup(standing = false, stopClip = false) {
+ 	const cycle: FootCycle = {
+ 		name: "walk",
+ 		frameWidth: 100,
+@@ -47,6 +47,11 @@ function setup(standing = false) {
+ 	};
+ 	const motor = new CharacterMotor(target, area, () => {}, {
+ 		current: () => shown,
++		stopping: stopClip ? () => ({ cycle: { ...cycle, name: "stop", switchFrames: [], contacts: [
++			{planted:"L", L:{x:70,y:190}, R:{x:30,y:190}},
++			{planted:"L", L:{x:55,y:195}, R:{x:45,y:198}},
++			{planted:"L", L:{x:45,y:200}, R:{x:55,y:200}}
++		]}, frame:0, flipX:false }) : undefined,
+ 		select: (d) => ({ cycle, flipX: d === "left" }),
+ 		standing: standing
+ 			? () => ({
+@@ -78,6 +83,26 @@ function setup(standing = false) {
+ 	};
+ }
+ describe("contact motor", () => {
++	it("plays every stop frame forward and backward while holding the same physical support", () => {
++		const {motor, target, pose, cycle} = setup(true, true);
++		cycle.matchedCut = {standing:"standing",headings:["right"],exitFrames:[0],entryFrames:[0]};
++		motor.place({x:960,y:850});
++		void motor.walk([{x:1400,y:850}], "right");
++		const anchor = {...motor.anchor};
++		const check = () => {
++			const p = contactOnScreen(pose(), "L", target, target.scale);
++			expect(p.x).toBeCloseTo(anchor.x,8);expect(p.y).toBeCloseTo(anchor.y,8);
++		};
++		for (const f of [2,1,0]) {
++			expect(pose().cycle.name).toBe("stop");expect(pose().frame).toBe(f);check();motor.update(1000/24);
++		}
++		expect(pose().cycle.name).toBe("walk");expect(pose().frame).toBe(0);check();
++		motor.stop();motor.update(1000);
++		for (const f of [0,1,2]) {
++			expect(pose().cycle.name).toBe("stop");expect(pose().frame).toBe(f);check();motor.update(1000/24);
++		}
++		expect(motor.walking).toBe(false);expect(pose().cycle.name).toBe("standing");check();
++	});
+ 	it("cuts to standing on a frame boundary, preserving the support", async () => {
+ 		const { motor, target, pose } = setup(true);
+ 		motor.place({ x: 960, y: 850 });
+diff --git a/packages/engine/src/characters/CharacterMotor.ts b/packages/engine/src/characters/CharacterMotor.ts
+index 7a6d40e..6b710d7 100644
+--- a/packages/engine/src/characters/CharacterMotor.ts
++++ b/packages/engine/src/characters/CharacterMotor.ts
+@@ -31,6 +31,8 @@ export interface FootAnimation {
+ 	select(direction: WalkDirection): Omit<FootPose, "frame">;
+ 	show(pose: FootPose): void;
+ 	standing?(direction: WalkDirection): FootPose;
++	/** Source-to-rest clip with one grounded support throughout. */
++	stopping?(direction: WalkDirection): FootPose;
+ }
+ interface PredictedStance {
+ 	start: Point;
+@@ -72,6 +74,11 @@ export class CharacterMotor {
+ 		matched: boolean;
+ 	};
+ 	private transition?: { to: FootPose; remaining: number; frame: number };
++	private playback?: {
++		direction: 1 | -1;
++		to: FootPose;
++		resumeFrameMs: number;
++	};
+ 
+ 	constructor(
+ 		readonly target: MotorTarget,
+@@ -93,6 +100,7 @@ export class CharacterMotor {
+ 	private finish(): void {
+ 		this.walking = false;
+ 		this.transition = undefined;
++		this.playback = undefined;
+ 		if (this.recoverAfterStanding && this.pose) {
+ 			this.recoverAfterStanding = false;
+ 			// Both boots are now grounded. Transfer support without moving either
+@@ -136,7 +144,7 @@ export class CharacterMotor {
+ 	stop(immediate = false): void {
+ 		if (immediate) this.recoverAfterStanding = false;
+ 		this.path = [];
+-		if (this.transition && !immediate) return;
++		if ((this.transition || this.playback) && !immediate) return;
+ 		const standing = this.animation.standing?.(this.heading);
+ 		if (
+ 			this.pose &&
+@@ -292,6 +300,13 @@ export class CharacterMotor {
+ 			if (!this.planStance(true, false, initialHeading))
+ 				return Promise.resolve();
+ 		}
++		const clip = this.animation.stopping?.(this.heading);
++		if (clip && clip.cycle.contacts[0].planted === this.foot) {
++			this.playback = { direction: -1, to: this.pose, resumeFrameMs: this.frameMs };
++			this.pose = { ...clip, frame: clip.cycle.contacts.length - 1 };
++			this.elapsed = 0;
++			this.apply();
++		}
+ 		this.walking = true;
+ 		this.animate("walk", this.heading, 1);
+ 		this.animation.show(this.pose);
+@@ -398,6 +413,7 @@ export class CharacterMotor {
+ 						.planted !== this.foot
+ 				)
+ 					continue;
++				if (starting && this.animation.stopping && !this.canStand(pose, this.anchor, this.foot, this.scale)) continue;
+ 				const predicted = this.predictStance(pose);
+ 				if (!predicted) continue;
+ 				// An arrival must remain escapable too: otherwise the next
+@@ -650,9 +666,12 @@ export class CharacterMotor {
+ 		});
+ 		if (!direction) return true;
+ 		const idle = this.animation.standing(direction);
++		const clip = this.animation.stopping?.(direction);
++		const poses = clip ? clip.cycle.contacts.map((_, frame) => ({...clip, frame})) : [idle];
++		return [...poses, idle].every((candidate) => {
+ 		const placed = lockedPlacement(
+ 			anchor,
+-			idle,
++			candidate,
+ 			foot,
+ 			this.area.perspective,
+ 			this.area.baseScale,
+@@ -663,9 +682,10 @@ export class CharacterMotor {
+ 		return (["L", "R"] as const).every(
+ 			(sole) =>
+ 				raw.data[
+-					cellAt(raw, contactOnScreen(idle, sole, placed, placed.scale))
++					cellAt(raw, contactOnScreen(candidate, sole, placed, placed.scale))
+ 				] > 0,
+ 		);
++		});
+ 	}
+ 	/** Validate every body frame and the next planted landing before committing a stance. */
+ 	private predictStance(
+@@ -929,6 +949,26 @@ export class CharacterMotor {
+ 	update(delta: number): void {
+ 		if (!this.walking || !this.pose || delta <= 0) return;
+ 		this.elapsed += delta;
++		if (this.playback) {
++			const playback = this.playback;
++			const frameMs = 1000 / this.pose.cycle.fps;
++			while (this.playback && this.elapsed + 1e-8 >= frameMs) {
++				this.elapsed -= frameMs;
++				const frame: number = this.pose.frame + playback.direction;
++				if (frame < 0 || frame >= this.pose.cycle.contacts.length) {
++					this.pose = playback.to;
++					this.playback = undefined;
++					this.frameMs = playback.resumeFrameMs;
++					this.elapsed = 0;
++					this.apply();
++					if (playback.direction === 1) this.finish();
++					break;
++				}
++				this.pose = {...this.pose, frame};
++				this.apply();
++			}
++			return;
++		}
+ 		if (this.transition) {
+ 			const t = this.transition;
+ 			while (
+@@ -951,7 +991,8 @@ export class CharacterMotor {
+ 						this.scale,
+ 					);
+ 					const cycleFrames = this.pose.cycle.contacts.length;
+-					this.pose = t.to;
++					const clip = this.animation.stopping?.(this.heading);
++					this.pose = clip ? {...clip, frame: 0} : t.to;
+ 					this.apply();
+ 					this.lastCut = {
+ 						from,
+@@ -960,7 +1001,11 @@ export class CharacterMotor {
+ 						cycleFrames,
+ 						matched: !this.unmatchedCut,
+ 					};
+-					this.finish();
++					if (clip) {
++						this.playback = {direction: 1, to: t.to, resumeFrameMs: this.frameMs};
++						this.transition = undefined;
++						this.elapsed = 0;
++					} else this.finish();
+ 				} else {
+ 					const next: FootPose = {
+ 						...this.pose,
+@@ -1056,7 +1101,8 @@ export class CharacterMotor {
+ 			walking: this.walking,
+ 			cut: this.lastCut,
+ 			unmatchedCut: this.unmatchedCut,
+-			settling: Boolean(this.transition),
++			settling: Boolean(this.transition || this.playback),
++			playback: this.playback ? {direction: this.playback.direction, frame: this.pose?.frame, to: this.playback.to.cycle.name} : undefined,
+ 			transition: this.transition
+ 				? {
+ 						frame: this.transition.frame,

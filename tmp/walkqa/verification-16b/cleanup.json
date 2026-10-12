@@ -1,0 +1,12 @@
+{
+  "taskPorts": [
+    4317,
+    8080
+  ],
+  "remainingListeners": "",
+  "browserSessionsClosed": [
+    "anima",
+    "anima-town"
+  ],
+  "prototypeStash": "Preserved: automatic safety review blocked stash deletion; patch also retained"
+}

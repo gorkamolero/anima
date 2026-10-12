@@ -1,0 +1,195 @@
+
+> anima@0.1.0 test:run /Users/gorkolas/Developer/anima
+> vitest run
+
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+ ✓ api/src/__tests__/services/ground-line.test.ts (2 tests) 14ms
+ ✓ api/src/__tests__/services/floor-judge-transport.test.ts (3 tests) 101ms
+ ✓ api/src/__tests__/routes/scene-image.test.ts (2 tests) 30ms
+ ✓ api/src/__tests__/services/floor-judge.test.ts (7 tests) 14ms
+ ✓ packages/engine/src/__tests__/occlusion-perception.test.ts (10 tests) 24ms
+stderr | api/src/__tests__/services/places-ground.test.ts > accepts conservative coverage and does not rederive existing places after a version change
+[floor-regression] place-58b25bc5092a0cdc2125: Floor refresh lost 100.00% (>15%); previous floor retained pending visual review.
+
+stderr | api/src/__tests__/services/places-ground.test.ts > guards a 16 percent floor loss on refresh and retains review overlays
+[floor-regression] place-58b25bc5092a0cdc2125: Floor refresh lost 16.00% (>15%); previous floor retained pending visual review.
+
+ ✓ api/src/__tests__/services/places-ground.test.ts (7 tests) 60ms
+ ✓ packages/engine/src/__tests__/transitions/IrisTransition.test.ts (32 tests) 42ms
+ ✓ api/src/__tests__/services/ground-regions.test.ts (2 tests) 23ms
+ ✓ api/src/__tests__/services/sessions.test.ts (14 tests) 81ms
+ ✓ api/src/__tests__/routes/world.test.ts (1 test) 12ms
+ ✓ api/src/__tests__/services/connections.test.ts (1 test) 48ms
+ ✓ packages/engine/src/__tests__/audio/SceneSoundManager.test.ts (34 tests) 23ms
+stdout | api/src/__tests__/routes.test.ts > API Routes > GET /api/health > should return health status
+<-- GET /api/health
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > GET /api/health > should return health status
+--> GET /api/health 200 18ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > POST /api/session > should create a new session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > POST /api/session > should create a new session
+--> POST /api/session 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+--> POST /api/session 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+<-- GET /api/session/sess_d1764f19-4c6c-4d0d-9034-f71a5de6236a
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+--> GET /api/session/sess_d1764f19-4c6c-4d0d-9034-f71a5de6236a 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return 404 for non-existent session
+<-- GET /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return 404 for non-existent session
+--> GET /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+--> POST /api/session 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+<-- PATCH /api/session/sess_f1ab6456-be49-4ff6-9b74-4ed806996010
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+--> PATCH /api/session/sess_f1ab6456-be49-4ff6-9b74-4ed806996010 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should return 404 for non-existent session
+<-- PATCH /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should return 404 for non-existent session
+--> PATCH /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> POST /api/session 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- DELETE /api/session/sess_8abb66fe-7dad-45ca-8697-88d2d7e21f45
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> DELETE /api/session/sess_8abb66fe-7dad-45ca-8697-88d2d7e21f45 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- GET /api/session/sess_8abb66fe-7dad-45ca-8697-88d2d7e21f45
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> GET /api/session/sess_8abb66fe-7dad-45ca-8697-88d2d7e21f45 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should return 404 for non-existent session
+<-- DELETE /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should return 404 for non-existent session
+--> DELETE /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return 400 if text is missing
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return 400 if text is missing
+--> POST /api/tts 400 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return audio buffer on success
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return audio buffer on success
+--> POST /api/tts 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should handle TTS service errors
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should handle TTS service errors
+--> POST /api/tts 500 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should return list of voices
+<-- GET /api/voices
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should return list of voices
+--> GET /api/voices 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should handle errors
+<-- GET /api/voices
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should handle errors
+--> GET /api/voices 500 0ms
+
+ ✓ api/src/__tests__/routes.test.ts (13 tests) 35ms
+ ✓ packages/engine/src/__tests__/scenes/ScenePreloadManager.test.ts (26 tests) 249ms
+ ✓ packages/engine/src/characters/CharacterMotor.test.ts (22 tests) 221ms
+ ✓ api/src/__tests__/services/ground.test.ts (8 tests) 10ms
+ ✓ api/src/__tests__/services/tts.test.ts (9 tests) 6ms
+ ✓ packages/engine/src/__tests__/verification/ArtLandmarks.test.ts (7 tests) 3ms
+ ✓ packages/engine/src/occlusion/bridge.test.ts (3 tests) 10ms
+ ✓ api/src/__tests__/services/narrator-voice.test.ts (4 tests) 15ms
+ ✓ api/src/__tests__/routes/narrate.test.ts (8 tests) 49ms
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > pickupItem() returns false for unknown item
+InventoryManager: Cannot pick up unknown item: nonexistent
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > pickupItem() returns false for duplicate
+InventoryManager: Item already in inventory: key
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > removeItem() returns false for non-existent
+InventoryManager: Cannot remove item not in inventory: key
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > money > spendMoney() fails if insufficient (returns false)
+InventoryManager: Insufficient funds to spend: 100
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if no recipe
+InventoryManager: No recipe found for combining: key + coin
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if player doesn't have first item
+InventoryManager: Cannot combine items - missing item(s): rope, hook
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if player doesn't have second item
+InventoryManager: Cannot combine items - missing item(s): rope, hook
+
+ ✓ packages/engine/src/__tests__/inventory/InventoryManager.test.ts (39 tests) 8ms
+ ✓ packages/engine/src/__tests__/ui/UIState.test.ts (32 tests) 6ms
+ ✓ api/src/__tests__/services/exits.test.ts (2 tests) 3ms
+ ✓ packages/engine/src/__tests__/scenes/BaseScene.test.ts (43 tests) 100ms
+ ✓ adventures/shadow-over-innsmouth/scripts/passingCuts.test.ts (5 tests) 11ms
+ ✓ api/src/__tests__/services/occluders.test.ts (2 tests) 4ms
+ ✓ packages/storyscript/src/runtime.test.ts (3 tests) 7ms
+ ✓ api/src/__tests__/services/ground-calibration.test.ts (3 tests) 4ms
+ ✓ api/src/__tests__/services/reviewed-anchor-floor.test.ts (2 tests) 4ms
+ ✓ packages/engine/src/occlusion/arrivals.test.ts (3 tests) 3ms
+ ✓ api/src/__tests__/services/variant-floor.test.ts (2 tests) 2ms
+ ✓ packages/engine/src/__tests__/state/GameState.test.ts (28 tests) 5ms
+ ✓ packages/engine/src/characters/walkHeading.test.ts (4 tests) 3ms
+ ✓ packages/engine/src/__tests__/occlusion.test.ts (7 tests) 3ms
+ ✓ packages/engine/src/walkarea/perspective.test.ts (3 tests) 3ms
+ ✓ packages/engine/src/characters/stanceTiming.test.ts (1 test) 3ms
+ ✓ adventures/shadow-over-innsmouth/src/game/scenes/hermesStanding.test.ts (8 tests) 3ms
+ ✓ packages/engine/src/__tests__/groundline/GroundLine.test.ts (3 tests) 3ms
+ ✓ packages/engine/src/occlusion/exits.test.ts (4 tests) 2ms
+ ✓ packages/engine/src/debug/AgentDebug.test.ts (1 test) 3ms
+ ✓ packages/engine/src/debug/AgentDebugCapture.test.ts (1 test) 3ms
+ ✓ packages/engine/src/walkarea/anchor.test.ts (3 tests) 1050ms
+     ✓ outside preserves authored scales and stops before captions  588ms
+     ✓ inside preserves authored scales and stops before captions  437ms
+ ✓ packages/engine/src/occlusion/footprints.test.ts (4 tests) 1644ms
+     ✓ preserves a bridge behind the support, excludes the base and gives the body clearance  1579ms
+ ✓ packages/engine/src/walkarea/navigation.test.ts (7 tests) 1892ms
+   ✓ dilates physical supports without eroding open floor a second time  1541ms
+   ✓ measures object clearance in ground metres along both axes  333ms
+
+ Test Files  45 passed (45)
+      Tests  425 passed (425)
+Type Errors  no errors
+   Start at  12:21:10
+   Duration  2.37s (transform 2.27s, setup 561ms, import 4.90s, tests 5.84s, environment 8.22s)
+
