@@ -216,3 +216,13 @@ Brief 06 final generation totals: **2/2 Kling videos, 1/2 BRIA removals, 0/2 ima
 | Brief 17 F21 segmentation | 2026-10-12T18:30:09.550031+00:00 | sea | SAM3 text-only, submission attempted |
 
 | Brief 17 interpolation | 2026-10-12T18:40:37.816887+00:00 | side | fal-ai/film, 7 in-betweens, submission attempted |
+
+| Brief 18 side A attempt 1 | 2026-10-12T18:48:34.967808+00:00 | fal-ai/nano-banana-2/edit | submission attempted |
+
+| Brief 18 away-right A attempt 1 | 2026-10-12T18:48:35.958684+00:00 | fal-ai/nano-banana-2/edit | submission attempted |
+
+| Brief 18 side B attempt 1 | 2026-10-12T18:50:10.016063+00:00 | fal-ai/nano-banana-2/edit | submission attempted |
+
+| Brief 18 away-right B attempt 1 | 2026-10-12T18:50:11.534685+00:00 | fal-ai/nano-banana-2/edit | submission attempted |
+
+| Brief 18 side B attempt 2 | 2026-10-12T18:50:51.546743+00:00 | fal-ai/nano-banana-2/edit | submission attempted |
