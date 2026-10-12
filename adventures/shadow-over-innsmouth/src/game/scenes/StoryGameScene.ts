@@ -73,7 +73,7 @@ const HERMES_AWAY_TEXTURE = "hermes-walk-away";
 const HERMES_TOWARD_TEXTURE = "hermes-walk-toward";
 const HERMES_AWAY_DIAGONAL_TEXTURE = "hermes-walk-away-right";
 const HERMES_TOWARD_DIAGONAL_TEXTURE = "hermes-walk-toward-right";
-const HERMES_IDLE_TEXTURE = "hermes-idle-v2-normalized";
+const HERMES_IDLE_TEXTURE = "hermes-matched-stand-side";
 const HERMES_TALK_TEXTURE = "hermes-talk-v1-normalized";
 const KAT_TEXTURE = "kat-fal-veo-transparent-loop";
 const KAT_SEATED_TEXTURE = "kat-seated-talk-loop";
@@ -282,7 +282,6 @@ export class StoryGameScene extends BaseScene {
 		);
 		for (const texture of [
 			HERMES_AWAY_TEXTURE,
-			"hermes-matched-stand-side",
 			"hermes-matched-stand-away",
 			"hermes-matched-stand-away-right",
 			"hermes-matched-stand-toward",
@@ -307,7 +306,7 @@ export class StoryGameScene extends BaseScene {
 			);
 		this.load.spritesheet(
 			HERMES_IDLE_TEXTURE,
-			"assets/sprites/hermes/hermes-idle-v2-normalized.png",
+			"assets/sprites/hermes/hermes-matched-stand-side.png",
 			{ frameWidth: 612, frameHeight: 1059 },
 		);
 		this.load.spritesheet(
@@ -461,7 +460,7 @@ export class StoryGameScene extends BaseScene {
 			idle: {
 				key: `${HERMES_TEXTURE}-idle`,
 				texture: HERMES_IDLE_TEXTURE,
-				frames: { start: 0, end: 5 },
+				frames: { start: 0, end: 0 },
 				frameRate: 12,
 			},
 			talk: {
