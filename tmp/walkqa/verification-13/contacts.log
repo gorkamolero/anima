@@ -1,0 +1,5 @@
+hermes-fal-veo-transparent-loop.json switches [3, 21]
+hermes-walk-away.json switches [5, 20]
+hermes-walk-away-right.json switches [2, 14, 24, 36]
+hermes-walk-toward.json switches [5, 18]
+hermes-walk-toward-right.json switches [12, 24]

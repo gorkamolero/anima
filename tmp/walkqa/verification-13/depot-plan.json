@@ -1,0 +1,146 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "end": {
+        "x": 1307.1654381751607,
+        "y": 938.9404503641572
+      },
+      "frames": 12,
+      "start": [
+        1467.5,
+        927.5
+      ],
+      "texture": "hermes-matched-stand-side",
+      "walk": [
+        1347.5,
+        927.5
+      ],
+      "name": "left",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1614.5469739536818,
+        "y": 938.9404503641572
+      },
+      "frames": 12,
+      "start": [
+        1467.5,
+        927.5
+      ],
+      "texture": "hermes-matched-stand-side",
+      "walk": [
+        1467.5,
+        857.5
+      ],
+      "name": "right",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1575.2524759472308,
+        "y": 926.4437350561864
+      },
+      "frames": 12,
+      "start": [
+        1447.5,
+        967.5
+      ],
+      "texture": "hermes-matched-stand-away",
+      "walk": [
+        1567.5,
+        897.5
+      ],
+      "name": "away",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1340.3256717221664,
+        "y": 895.16152271177
+      },
+      "frames": 12,
+      "start": [
+        1467.5,
+        927.5
+      ],
+      "texture": "hermes-matched-stand-toward",
+      "walk": [
+        1347.5,
+        857.5
+      ],
+      "name": "toward",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1400.285832183853,
+        "y": 939.3809859786874
+      },
+      "frames": 12,
+      "start": [
+        1237.5,
+        977.5
+      ],
+      "texture": "hermes-matched-stand-away-right",
+      "walk": [
+        1357.5,
+        907.5
+      ],
+      "name": "away-left",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1410.584787258955,
+        "y": 888.554877619484
+      },
+      "frames": 12,
+      "start": [
+        1297.5,
+        922.5
+      ],
+      "texture": "hermes-matched-stand-away-right",
+      "walk": [
+        1297.5,
+        852.5
+      ],
+      "name": "away-right",
+      "facing": "away"
+    },
+    {
+      "end": {
+        "x": 1267.3136950552266,
+        "y": 930.8249924827852
+      },
+      "frames": 12,
+      "start": [
+        1467.5,
+        927.5
+      ],
+      "texture": "hermes-matched-stand-toward-right",
+      "walk": [
+        1227.5,
+        857.5
+      ],
+      "name": "toward-left",
+      "facing": "away"
+    },
+    {
+      "facing": "toward-right",
+      "frames": 12,
+      "heading": "toward-right",
+      "n": 19,
+      "name": "toward-right",
+      "start": [
+        1237.5,
+        977.5
+      ],
+      "walk": [
+        1437.5,
+        997.5
+      ]
+    }
+  ]
+}

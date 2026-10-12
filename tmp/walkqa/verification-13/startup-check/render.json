@@ -1,0 +1,29 @@
+{
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "place": "outside",
+  "logs": [
+    {
+      "name": "away",
+      "frames": 22,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "captureStart": true,
+        "facing": "away",
+        "frames": 12,
+        "heading": "away",
+        "name": "away",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1467.5,
+          857.5
+        ]
+      }
+    }
+  ]
+}

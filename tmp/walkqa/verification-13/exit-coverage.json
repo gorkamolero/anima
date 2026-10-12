@@ -1,0 +1,68 @@
+[
+  {
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "exitFrames": [
+      10,
+      24
+    ],
+    "halfCycleCap": 15,
+    "maxWaitFromAnyFrame": 15,
+    "uncoveredFrames": []
+  },
+  {
+    "cycle": "hermes-walk-away",
+    "exitFrames": [
+      3,
+      16
+    ],
+    "halfCycleCap": 15,
+    "maxWaitFromAnyFrame": 16,
+    "uncoveredFrames": [
+      17
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away-right",
+    "exitFrames": [
+      9,
+      18,
+      30,
+      41
+    ],
+    "halfCycleCap": 24,
+    "maxWaitFromAnyFrame": 15,
+    "uncoveredFrames": []
+  },
+  {
+    "cycle": "hermes-walk-toward",
+    "exitFrames": [
+      5,
+      24
+    ],
+    "halfCycleCap": 12,
+    "maxWaitFromAnyFrame": 18,
+    "uncoveredFrames": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward-right",
+    "exitFrames": [
+      2,
+      19
+    ],
+    "halfCycleCap": 12,
+    "maxWaitFromAnyFrame": 16,
+    "uncoveredFrames": [
+      3,
+      4,
+      5,
+      6
+    ]
+  }
+]

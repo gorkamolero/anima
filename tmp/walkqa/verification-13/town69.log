@@ -1,0 +1,13 @@
+start 
+changed-depot You find a moment to mark the old bench. The red spiral now stands out starkly against the weathered wood, a new, unmistakable symbol on the bus platform.
+road The road out of town stretches into the deepening twilight, winding away from the familiar salt air of the harbor. You leave the bus depot and its marked bench behind, the silhouette of fishing boats fading as you head inland.
+road-left 
+road-right 
+road-far 
+road-near 
+alley The alley beside the road calls to you, a narrow gap between the decaying houses. The fog presses in even heavier here, muffling any distant sounds and making the already dim light almost disappear.
+alley-left 
+Error: walk: Could not save return connection: {"error":"Exit already connected"}
+    at poll (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:45:20)
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:299:19)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:474:2

@@ -1,0 +1,6 @@
+start 
+changed-depot You find a moment to mark the old bench. The red spiral now stands out starkly against the weathered wood, a new, unmistakable symbol on the bus platform.
+road The road out of town stretches into the deepening twilight, winding away from the familiar salt air of the harbor. You leave the bus depot and its marked bench behind, the silhouette of fishing boats fading as you head inland.
+Error: left: arrival did not settle into its directional standing pose
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:335:10)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:470:2

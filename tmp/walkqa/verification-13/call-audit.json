@@ -1,0 +1,143 @@
+{
+  "directStandingImageEdits": 10,
+  "directBriaCalls": 0,
+  "videoGenerationCalls": 0,
+  "townRuns": {
+    "68": {
+      "error": "left: arrival did not settle into its directional standing pose",
+      "calls": 20,
+      "uncached": 12,
+      "kinds": [
+        {
+          "kind": "interactables",
+          "cached": true,
+          "count": 4
+        },
+        {
+          "kind": "narrate-options",
+          "cached": true,
+          "count": 3
+        },
+        {
+          "kind": "narrate-options",
+          "cached": false,
+          "count": 7
+        },
+        {
+          "kind": "narrate-resolve",
+          "cached": false,
+          "count": 2
+        },
+        {
+          "kind": "image-attempt",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "image",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "interactables",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "place",
+          "cached": true,
+          "count": 1
+        }
+      ]
+    },
+    "69": {
+      "error": "walk: Could not save return connection: {\"error\":\"Exit already connected\"}",
+      "calls": 37,
+      "uncached": 18,
+      "kinds": [
+        {
+          "kind": "interactables",
+          "cached": true,
+          "count": 7
+        },
+        {
+          "kind": "narrate-options",
+          "cached": true,
+          "count": 8
+        },
+        {
+          "kind": "narrate-resolve",
+          "cached": true,
+          "count": 2
+        },
+        {
+          "kind": "image",
+          "cached": true,
+          "count": 1
+        },
+        {
+          "kind": "narrate-options",
+          "cached": false,
+          "count": 4
+        },
+        {
+          "kind": "place",
+          "cached": true,
+          "count": 1
+        },
+        {
+          "kind": "narrate-resolve",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "image-attempt",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "image",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "interactables",
+          "cached": false,
+          "count": 1
+        },
+        {
+          "kind": "perception-attempt",
+          "cached": false,
+          "count": 9
+        },
+        {
+          "kind": "perception-v3",
+          "cached": false,
+          "count": 1
+        }
+      ]
+    },
+    "70": {
+      "error": null,
+      "calls": 23,
+      "uncached": 0,
+      "kinds": [
+        {
+          "kind": "interactables",
+          "cached": true,
+          "count": 8
+        },
+        {
+          "kind": "narrate-options",
+          "cached": true,
+          "count": 15
+        }
+      ]
+    },
+    "71": {
+      "error": null,
+      "calls": 25,
+      "uncached": 0
+    }
+  }
+}
