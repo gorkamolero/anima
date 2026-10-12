@@ -367,7 +367,7 @@ async function replayExit(id, destination, label) {
 		180000,
 	);
 	if (destination && qa().location !== destination)
-		throw Error(label + ": wrong destination");
+		throw Error(`${label}: wrong destination`);
 	await frame(label);
 }
 async function replayTown() {
@@ -396,7 +396,7 @@ async function replayTown() {
 		.slice(baseline)
 		.filter((c) => !c.cached);
 	if (uncached.length)
-		throw Error("Town replay made " + uncached.length + " uncached calls");
+		throw Error(`Town replay made ${uncached.length} uncached calls`);
 }
 try {
 	browser(["set", "viewport", "1920", "1080"]);

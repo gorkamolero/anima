@@ -3,6 +3,7 @@
 // exits. Keep this entry point on the same live hotspot/scale/arrival checks.
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+
 const result = spawnSync(
 	process.execPath,
 	[
