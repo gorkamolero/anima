@@ -216,7 +216,7 @@ describe("contact motor", () => {
 		void motor.walk([{ x: 1400, y: 850 }]);
 		expect(motor.walking).toBe(false);
 	});
-	it("does not stretch a short support into repeated output poses", () => {
+	it("caps even sparse partial supports at 2.2 steps per second", () => {
 		const { motor, cycle } = setup();
 		cycle.contacts = [
 			cycle.contacts[0],
@@ -227,14 +227,18 @@ describe("contact motor", () => {
 			cycle.contacts[3],
 		];
 		cycle.switchFrames = [0, 4];
-		cycle.fps = 6; // A deliberately sparse fixture must advance every output frame.
+		cycle.fps = 6; // Sparse artwork must not force an unnaturally fast cadence.
 		void motor.walk([{ x: 1800, y: 850 }]);
 		for (let i = 0; i < 24 && motor.snapshot().planted === "L"; i++)
 			motor.update(1000 / 24);
 		expect(motor.snapshot().planted).toBe("R");
-		motor.update(1000 / 24);
-		expect(motor.snapshot().planted).toBe("R");
-		motor.update(1000 / 24);
+		let frames = 0;
+		while (motor.snapshot().planted === "R" && frames < 24) {
+			motor.update(1000 / 24);
+			frames++;
+		}
 		expect(motor.snapshot().planted).toBe("L");
+		expect(frames).toBeGreaterThanOrEqual(10);
+		expect(frames).toBeLessThanOrEqual(13);
 	});
 });

@@ -53,6 +53,7 @@ export class CharacterMotor {
 	private frameMs = 1000 / 24;
 	private path: Point[] = [];
 	private goal?: Point;
+	private visitedSupports = new Set<string>();
 	private resolve?: () => void;
 
 	constructor(
@@ -83,13 +84,13 @@ export class CharacterMotor {
 		this.resolve = undefined;
 		resolve?.();
 	}
-	place(position: Point): void {
+	place(position: Point, snapToFloor = true): void {
 		// Teleport callers may have selected a fresh pose; do not restore the previous walk.
 		this.pose = undefined;
 		this.stop();
 		const cell = nearestCell(this.area.mask, position);
 		if (cell < 0) throw new Error("Walk area has no floor");
-		const p = cellPoint(this.area.mask, cell);
+		const p = snapToFloor ? cellPoint(this.area.mask, cell) : position;
 		this.target.setPosition(p.x, p.y);
 		this.scale =
 			this.area.baseScale *
@@ -103,6 +104,7 @@ export class CharacterMotor {
 	walk(points: readonly Point[]): Promise<void> {
 		this.stop();
 		this.arrival = undefined;
+		this.visitedSupports.clear();
 		this.goal = points[points.length - 1];
 		if (!this.goal) return Promise.resolve();
 		this.pose = this.animation.current();
@@ -353,7 +355,7 @@ export class CharacterMotor {
 			0,
 			Math.min(1, (row - far) / Math.max(1, near - far)),
 		);
-		const cadence = 1.6 + 0.6 * depth;
+		const cadence = 1.8 + 0.2 * depth;
 		const switches = this.pose.cycle.switchFrames;
 		const lengths = switches.map(
 			(frame, i) =>
@@ -367,11 +369,11 @@ export class CharacterMotor {
 				this.foot
 		)
 			supportFrames++;
-		// Give a partial support the available step time, without ever holding
-		// a source pose for more than one 24 fps output frame.
+		// A partial entry or turn must not create a faster-than-natural step.
+		// Keep at least 1/2.2 seconds of support, including exit approaches.
 		this.frameMs = Math.max(
 			stanceFrameMs(lengths, count, cadence),
-			Math.min(1000 / 24, 1000 / (cadence * supportFrames)),
+			1000 / (2.2 * supportFrames),
 		);
 		this.heading = best.heading;
 		this.apply();
@@ -403,7 +405,10 @@ export class CharacterMotor {
 				this.area.scaleClamp,
 				scale,
 			);
-			if (!on(this.area.mask, p) || !lineOfSight(this.area.mask, position, p))
+			if (
+				!on(this.area.clearanceMask ?? this.area.mask, p) ||
+				!lineOfSight(this.area.clearanceMask ?? this.area.mask, position, p)
+			)
 				return;
 			if (i === 0) start = p;
 			position = p;
@@ -425,7 +430,8 @@ export class CharacterMotor {
 				// The incoming cycle may change at this landing. Its old-cycle
 				// first pose is not drawn if a turn is needed for body clearance.
 				const nextBodySafe =
-					on(this.area.mask, end) && lineOfSight(this.area.mask, position, end);
+					on(this.area.clearanceMask ?? this.area.mask, end) &&
+					lineOfSight(this.area.clearanceMask ?? this.area.mask, position, end);
 				return {
 					start,
 					end: nextBodySafe ? end : position,
@@ -543,6 +549,14 @@ export class CharacterMotor {
 			this.stop();
 			return true;
 		}
+		// A route can be connected in pixels but impossible for the drawn
+		// feet. Do not repeat the same support detour indefinitely.
+		const support = `${Math.round(this.anchor.x / 5)},${Math.round(this.anchor.y / 5)},${this.foot},${this.heading}`;
+		if (this.visitedSupports.has(support)) {
+			this.stop();
+			return true;
+		}
+		this.visitedSupports.add(support);
 		return !this.planStance();
 	}
 	update(delta: number): void {
@@ -577,7 +591,13 @@ export class CharacterMotor {
 					this.area.scaleClamp,
 					this.scale,
 				);
-				if (!lineOfSight(this.area.mask, this.target, placement)) {
+				if (
+					!lineOfSight(
+						this.area.clearanceMask ?? this.area.mask,
+						this.target,
+						placement,
+					)
+				) {
 					if (!this.planStance()) {
 						this.pose = previous.pose;
 						this.foot = previous.foot;
