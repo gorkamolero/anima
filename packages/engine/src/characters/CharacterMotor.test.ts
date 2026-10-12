@@ -182,11 +182,11 @@ describe("contact motor", () => {
 		expect(pose().flipX).toBe(true);
 		expect(motor.walking).toBe(false);
 	});
-	it("never draws an unsafe old-cycle pose before replanning an incoming landing", () => {
+	it("rejects a stance whose incoming body has no safe continuation", () => {
 		const { motor, target, cycle, pose } = setup();
 		cycle.contacts[2].R.y = -3000;
 		void motor.walk([{ x: 1400, y: 850 }]);
-		expect(motor.walking).toBe(true);
+		expect(motor.walking).toBe(false);
 		for (let i = 0; i < 12; i++) {
 			motor.update(1000 / 24);
 			expect(target.y).toBeGreaterThanOrEqual(0);
@@ -201,5 +201,26 @@ describe("contact motor", () => {
 		cycle.switchFrames = [0, 1, 2, 3];
 		void motor.walk([{ x: 1400, y: 850 }]);
 		expect(motor.walking).toBe(false);
+	});
+	it("keeps equal support durations when source stances have unequal frame counts", () => {
+		const { motor, cycle } = setup();
+		cycle.contacts = [
+			cycle.contacts[0],
+			cycle.contacts[0],
+			cycle.contacts[1],
+			cycle.contacts[1],
+			cycle.contacts[2],
+			cycle.contacts[3],
+		];
+		cycle.switchFrames = [0, 4];
+		cycle.fps = 6; // Six frames, two steps: each support phase lasts 500 ms.
+		void motor.walk([{ x: 1800, y: 850 }]);
+		for (let i = 0; i < 24 && motor.snapshot().planted === "L"; i++)
+			motor.update(1000 / 24);
+		expect(motor.snapshot().planted).toBe("R");
+		for (let i = 0; i < 11; i++) motor.update(1000 / 24);
+		expect(motor.snapshot().planted).toBe("R");
+		motor.update(1000 / 24);
+		expect(motor.snapshot().planted).toBe("L");
 	});
 });

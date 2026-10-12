@@ -49,6 +49,7 @@ export class CharacterMotor {
 	private foot: Foot = "L";
 	private scale = 1;
 	private elapsed = 0;
+	private frameMs = 1000 / 24;
 	private path: Point[] = [];
 	private goal?: Point;
 	private resolve?: () => void;
@@ -192,6 +193,31 @@ export class CharacterMotor {
 					continue;
 				const predicted = this.predictStance(pose);
 				if (!predicted) continue;
+				// Avoid stepping into a support state with no safe continuation.
+				const terminal =
+					distance(predicted.end, goal) <=
+					Math.max(2, distance(predicted.start, predicted.end) / 2);
+				if (!terminal) {
+					let continuation = false;
+					for (const following of GROUND_SECTORS) {
+						const selected = this.animation.select(following);
+						for (let f = 0; f < selected.cycle.contacts.length; f++) {
+							if (
+								selected.cycle.contacts[f].planted !== predicted.foot ||
+								selected.cycle.contacts[
+									(f + 1) % selected.cycle.contacts.length
+								].planted !== predicted.foot
+							)
+								continue;
+							if (this.predictStance({ ...selected, frame: f }, predicted)) {
+								continuation = true;
+								break;
+							}
+						}
+						if (continuation) break;
+					}
+					if (!continuation) continue;
+				}
 				const score = remaining(
 					starting
 						? {
@@ -235,6 +261,44 @@ export class CharacterMotor {
 						best = { heading: candidate.heading, pose: candidate.pose, score };
 				}
 			}
+		// Bounded lookahead finds a safe detour when a single stance cannot progress.
+		if (!best && alternatives.length) {
+			let beam = alternatives.map((first) => ({
+				first,
+				state: first.predicted,
+				score: remaining(first.predicted.end),
+			}));
+			const visited = new Set<string>();
+			for (let depth = 0; depth < 6 && !best; depth++) {
+				const nextBeam: typeof beam = [];
+				for (const node of beam)
+					for (const direction of GROUND_SECTORS) {
+						const selected = this.animation.select(direction);
+						for (const frame of selected.cycle.switchFrames.filter(
+							(i) => selected.cycle.contacts[i].planted === node.state.foot,
+						)) {
+							const state = this.predictStance(
+								{ ...selected, frame },
+								node.state,
+							);
+							if (!state) continue;
+							const key = `${Math.round(state.anchor.x / 5)},${Math.round(state.anchor.y / 5)},${state.foot}`;
+							if (visited.has(key)) continue;
+							visited.add(key);
+							const score = remaining(state.end);
+							if (score < here - 1 && (!best || score < best.score))
+								best = {
+									heading: node.first.heading,
+									pose: node.first.pose,
+									score,
+								};
+							nextBeam.push({ first: node.first, state, score });
+						}
+					}
+				beam = nextBeam.sort((a, b) => a.score - b.score).slice(0, 12);
+			}
+		}
+
 		if (!best) {
 			// Turning on the held foot can enter a partial stance when a full
 			// landing pose would put the body beyond a boundary.
@@ -243,6 +307,22 @@ export class CharacterMotor {
 			return false;
 		}
 		this.pose = best.pose;
+		// Unequal source stance lengths must not create rushed half-steps.
+		// Preserve nominal cycle cadence while distributing frames within each stance.
+		let count = 1;
+		while (
+			count < this.pose.cycle.contacts.length &&
+			this.pose.cycle.contacts[
+				(this.pose.frame + count) % this.pose.cycle.contacts.length
+			].planted === this.foot
+		)
+			count++;
+		const cadence =
+			(this.pose.cycle.fps * this.pose.cycle.switchFrames.length) /
+			this.pose.cycle.contacts.length;
+		this.frameMs = starting
+			? 1000 / this.pose.cycle.fps
+			: 1000 / (cadence * count);
 		this.heading = best.heading;
 		this.apply();
 		// Zero is within the one-pixel steering allowance. All steering is now discrete.
@@ -416,12 +496,8 @@ export class CharacterMotor {
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
 		this.elapsed += delta;
-		while (
-			this.walking &&
-			this.pose &&
-			this.elapsed + 1e-8 >= 1000 / this.pose.cycle.fps
-		) {
-			this.elapsed -= 1000 / this.pose.cycle.fps;
+		while (this.walking && this.pose && this.elapsed + 1e-8 >= this.frameMs) {
+			this.elapsed -= this.frameMs;
 			const next: FootPose = {
 				...this.pose,
 				frame: (this.pose.frame + 1) % this.pose.cycle.contacts.length,

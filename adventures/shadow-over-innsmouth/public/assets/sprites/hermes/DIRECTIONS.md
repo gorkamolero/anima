@@ -106,3 +106,5 @@ The motor replans at each support handoff, tests every candidate stance body tra
 Brief 05 footcheck verdicts above are superseded by the independent reviewer: planted feet passed lockcheck and stancecam. Brief 06 acceptance remains pending in tmp/walkqa/reports/06-steering-speed.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+Brief 06 final timing: toward FPS 25.5 (2.04 nominal steps/s). The motor distributes each cycle’s nominal step duration over its remaining support frames, so uneven source stance lengths do not rush short half-steps. Startup retains its partial-phase duration. Steering also validates a safe continuation and uses a bounded six-level, twelve-state search when a direct stance cannot make progress.

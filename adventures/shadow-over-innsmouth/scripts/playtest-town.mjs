@@ -189,7 +189,21 @@ async function walkPlace(step) {
 	if (g?.ground !== "derived")
 		throw new Error(`${step} ground is ${g?.ground}`);
 	const line = g.groundLine.points;
-	const floor = g.floor;
+	const floor = evaluate("window.__anima.scene.walkArea.mask");
+	const interior = (p) =>
+		[-16, 0, 16].every((dx) =>
+			[-16, 0, 16].every((dy) => {
+				const x = Math.floor(((p.x + dx) * floor.width) / 1920),
+					y = Math.floor(((p.y + dy) * floor.height) / 1080);
+				return (
+					x >= 0 &&
+					y >= 0 &&
+					x < floor.width &&
+					y < floor.height &&
+					floor.data[y * floor.width + x]
+				);
+			}),
+		);
 	const hotspots = evaluate("window.__anima.snapshot().hotspots");
 	const exits = evaluate("window.__anima.scene.sceneExits").map((e) => ({
 		x: e.region.reduce((s, p) => s + p.x, 0) / e.region.length,
@@ -207,6 +221,7 @@ async function walkPlace(step) {
 		.filter(Boolean)
 		.filter(
 			(p) =>
+				interior(p) &&
 				p.x >= 35 &&
 				p.y < 948 &&
 				exits.every((e) => Math.hypot(e.x - p.x, e.y - p.y) > 90) &&
