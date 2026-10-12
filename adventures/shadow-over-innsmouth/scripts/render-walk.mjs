@@ -175,13 +175,13 @@ for (const beat of plan.beats) {
 		first += 4
 	) {
 		const frames = evaluate(
-			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})();window.__walkBatch={token,promise};return promise})()`,
+			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){let sample;const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png',onFrame:()=>{const s=window.__anima.scene,h=s.hermesSprite;sample={visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth};}});out.push({png,...sample});}return out})();window.__walkBatch={token,promise};return promise})()`,
 			true,
 		);
 		const currentGeometry = areas[frames.at(-1).location]
 			? null
 			: evaluate(
-					`(()=>{const s=window.__anima.scene;return s.geometryReady && !${JSON.stringify(Object.keys(areas))}.includes(s.locationId()) ? {location:s.locationId(),area:s.walkArea} : null})()`,
+					`(()=>{const s=window.__anima.scene;return s.geometryReady && s.hermesSprite.visible && !${JSON.stringify(Object.keys(areas))}.includes(s.locationId()) ? {location:s.locationId(),area:s.walkArea} : null})()`,
 				);
 		if (currentGeometry)
 			areas[currentGeometry.location] = {

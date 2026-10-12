@@ -99,6 +99,8 @@ export interface AgentDebugApi {
 		width?: number;
 		quality?: number;
 		format?: "png" | "jpeg";
+		/** Sample telemetry synchronously with the rendered frame, before async transitions. */
+		onFrame?: () => void;
 	}): Promise<string>;
 	/**
 	 * Visibility oracle: how much of a character the player can actually
@@ -428,6 +430,7 @@ export function installAgentDebug(scene: BaseScene): void {
 						}
 					).snapshot(resolve);
 				});
+				options.onFrame?.();
 			});
 			// Let awaited game logic (walk promises, transitions) progress.
 			for (let i = 0; i < 5; i++) await Promise.resolve();
