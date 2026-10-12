@@ -519,6 +519,9 @@ export class StoryGameScene extends BaseScene {
 				layer.image.setDepth(
 					10 + baselineYAt(layer.data, this.hermesSprite.x) / 20 - 0.001,
 				);
+			// Scene update follows Phaser's normal pre-update depth sort. Flush
+			// changed baselines now so this captured frame uses its own order.
+			this.children.depthSort();
 			const exit = exitAt(this.hermesSprite, this.sceneExits);
 			if (!exit) this.exitLatch = undefined;
 			if (
