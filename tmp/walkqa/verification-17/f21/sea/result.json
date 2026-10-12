@@ -1,0 +1,62 @@
+{
+  "image": {
+    "url": "https://v3b.fal.media/files/b/0aae1d85/E3qHBgXg21GDO3puIIYkk.png",
+    "width": 1376,
+    "height": 768,
+    "content_type": "image/png"
+  },
+  "masks": [
+    {
+      "url": "https://v3b.fal.media/files/b/0aae1d85/E3qHBgXg21GDO3puIIYkk.png",
+      "width": 1376,
+      "height": 768,
+      "content_type": "image/png"
+    },
+    {
+      "url": "https://v3b.fal.media/files/b/0aae1d85/_P0rWJqi8OQJrEYqY-uq7.png",
+      "width": 1376,
+      "height": 768,
+      "content_type": "image/png"
+    }
+  ],
+  "metadata": [
+    {
+      "index": 0,
+      "score": 0.7136179208755493,
+      "box": [
+        0.4990345492612484,
+        0.5710323452949524,
+        0.9959059863589531,
+        0.15444807211558023
+      ]
+    },
+    {
+      "index": 1,
+      "score": 0.6867459416389465,
+      "box": [
+        0.4991772590681564,
+        0.7465944488843282,
+        0.9957114097683929,
+        0.5058130820592245
+      ]
+    }
+  ],
+  "scores": [
+    0.7136179208755493,
+    0.6867459416389465
+  ],
+  "boxes": [
+    [
+      0.4990345492612484,
+      0.5710323452949524,
+      0.9959059863589531,
+      0.15444807211558023
+    ],
+    [
+      0.4991772590681564,
+      0.7465944488843282,
+      0.9957114097683929,
+      0.5058130820592245
+    ]
+  ]
+}

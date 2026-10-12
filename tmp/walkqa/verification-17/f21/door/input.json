@@ -1,0 +1,11 @@
+{
+  "model": "fal-ai/sam-3/image",
+  "image": "adventures/shadow-over-innsmouth/public/generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png",
+  "prompt": "door",
+  "apply_mask": false,
+  "return_multiple_masks": true,
+  "max_masks": 12,
+  "include_scores": true,
+  "include_boxes": true,
+  "output_format": "png"
+}

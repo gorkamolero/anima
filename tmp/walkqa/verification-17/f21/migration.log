@@ -1,0 +1,32 @@
+{
+  "measured": {
+    "horizonY": 0.49609375,
+    "scaleReference": {
+      "label": "semantic-door-opening",
+      "rect": {
+        "x": 0.7347383720930233,
+        "y": 0.3854166666666667,
+        "width": 0.04941860465116279,
+        "height": 0.19010416666666666
+      },
+      "realHeightM": 2.03
+    },
+    "provenance": {
+      "method": "SAM3 text-only door and sea masks",
+      "doorScore": 0.9537917375564575,
+      "horizonSupport": [
+        0.3313953488372093,
+        0.33066860465116277
+      ],
+      "assumedDoorHeightM": 2.03
+    }
+  },
+  "calibration": {
+    "horizonY": 535.78125,
+    "referenceFactor": 0.3342654097880239,
+    "referenceFootY": 0.5755208333333334,
+    "slope": 0.003896718802629056
+  },
+  "at918": 788.6367651215373,
+  "migrated": 6
+}

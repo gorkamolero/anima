@@ -1,0 +1,37 @@
+import { readFile,writeFile,readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
+import { semanticCoastalScale } from '../../../../api/src/services/semantic-scale.js';
+import { calibrateGround,referenceLandmark } from '../../../../api/src/services/ground-calibration.js';
+import { getWorldDb } from '../../../../api/src/services/world.js';
+const root=resolve('tmp/walkqa/verification-17/f21');
+const previous=JSON.parse(await readFile('tmp/walkqa/verification-16b/pier-after.json','utf8'));
+const image=resolve('adventures/shadow-over-innsmouth/public',previous.background.slice(1));
+const bytes=await readFile(image);const measured=await semanticCoastalScale(bytes,'cluttered pier');
+if(!measured) throw Error('No detection');
+const {scaleReference,horizonY}=measured;
+const calibration=calibrateGround({horizonY,scaleReference,referenceFootY:0,referenceHeight:0});
+const place=structuredClone(previous),g=place.ground;
+g.horizonY=calibration.horizonY;g.scaleSlope=calibration.slope;g.scaleReference=scaleReference;g.scaleProvenance=measured.provenance;
+g.walkArea.perspective.horizonY=g.horizonY;g.walkArea.perspective.slope=g.scaleSlope;
+g.walkArea.scaleClamp.max=Math.max(1.5,(g.freeWalkBounds.maxY-g.horizonY)*g.scaleSlope);
+for(const p of g.groundLine.points)p.scaleFactor=Math.max(.05,(p.y-g.horizonY)*g.scaleSlope);
+for(const region of g.regions??[])for(const p of region.scaleAtY)p.scaleFactor=Math.max(.18,(p.y-g.horizonY)*g.scaleSlope);
+g.notes=(g.notes??[]).filter((s:string)=>!s.includes('Brief 16b'));
+g.notes.push('Brief 17: text-only SAM3 door and sea masks; no manual reference. Standard 2.03m door assumption.');
+await writeFile(resolve(root,'measurement.json'),JSON.stringify(measured,null,2));
+await writeFile(resolve(root,'pier-after.json'),JSON.stringify(place,null,2));
+await (await getWorldDb()).execute({sql:'UPDATE places SET data=? WHERE id=?',args:[JSON.stringify(place),place.id]});
+const landmarks={image:previous.background.split('/').at(-1),space:'game',template:place.template,horizonY:g.horizonY,figureCalibration:1,landmarks:[referenceLandmark(scaleReference)],provenance:measured.provenance};
+await writeFile(image.replace(/\.png$/,'.landmarks.json'),JSON.stringify(landmarks,null,2));
+const hash=createHash('sha256').update(bytes).digest('hex'),migration=[];
+for(const file of await readdir('api/data/perception')){
+ if(!file.startsWith(hash+'-floor')||!file.endsWith('.json'))continue;
+ const path=resolve('api/data/perception',file),d=JSON.parse(await readFile(path,'utf8')),guidance=d.guidance??d;
+ if(!('horizonY' in guidance))continue;
+ guidance.horizonY=horizonY;guidance.scaleReference=scaleReference;guidance.provenance=measured.provenance;
+ guidance.referenceFootY=scaleReference.rect.y+scaleReference.rect.height;guidance.referenceHeight=scaleReference.rect.height*1.75/2.03;
+ await writeFile(path,JSON.stringify(d,null,2));migration.push(file);
+}
+await writeFile(resolve(root,'migration.json'),JSON.stringify(migration,null,2));
+console.log(JSON.stringify({measured,calibration,at918:1059*.5*(918-g.horizonY)*g.scaleSlope,migrated:migration.length},null,2));
