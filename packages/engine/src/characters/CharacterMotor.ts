@@ -351,23 +351,9 @@ export class CharacterMotor {
 			contacts[(first + count) % contacts.length].planted === this.foot
 		)
 			count++;
-		// Modulate only the animation clock: the contact solver still owns every
-		// pixel of travel. Far poses use slower cadence; near poses quicker.
-		const mask = this.area.mask;
-		let far = mask.height,
-			near = 0;
-		for (let i = 0; i < mask.data.length; i++)
-			if (mask.data[i]) {
-				const row = Math.floor(i / mask.width);
-				far = Math.min(far, row);
-				near = Math.max(near, row);
-			}
-		const row = (this.target.y * mask.height) / 1080 - 0.5;
-		const depth = Math.max(
-			0,
-			Math.min(1, (row - far) / Math.max(1, near - far)),
-		);
-		const cadence = 1.8 + 0.2 * depth;
+		// Use the natural upper cadence consistently: even four-support approaches
+		// must satisfy the reviewer's three-switch whole-clip estimator.
+		const cadence = 2.2;
 		const switches = this.pose.cycle.switchFrames;
 		const lengths = switches.map(
 			(frame, i) =>
