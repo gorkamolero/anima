@@ -1,0 +1,914 @@
+[
+  {
+    "scene": "road",
+    "clip": "away-left",
+    "heading": "away-left",
+    "cutFrame": 16,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.2915580524335049,
+    "screenHeadPx": 4.595538022456904,
+    "screenTorsoPx": 1.1458231460636743,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1066.6565828945577,
+        "y": 904.2585476003246
+      },
+      "matched": true,
+      "to": {
+        "x": 1066.6565828945577,
+        "y": 904.2585476003246
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "away-right",
+    "heading": "away-right",
+    "cutFrame": 16,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.2406314716086134,
+    "screenHeadPx": 3.7928332554949646,
+    "screenTorsoPx": 0.9456816834218507,
+    "entryHeading": "left",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 983.263530895895,
+        "y": 853.0780289428765
+      },
+      "matched": true,
+      "to": {
+        "x": 983.263530895895,
+        "y": 853.0780289428765
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 1.1368683772161603e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "away",
+    "heading": "away",
+    "cutFrame": 32,
+    "exitFrame": 19,
+    "precomputedExit": true,
+    "match": {
+      "frame": 19,
+      "foot": "L",
+      "alphaIoU": 0.630551,
+      "headPx": 32.893,
+      "torsoPx": 32.0,
+      "score": 101.838,
+      "remainingSupport": 1
+    },
+    "screenScale": 0.32673783916388766,
+    "screenHeadPx": 10.747387743617757,
+    "screenTorsoPx": 10.455610853244405,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1174.9664261092917,
+        "y": 939.2513493586632
+      },
+      "matched": true,
+      "to": {
+        "x": 1174.9664261092917,
+        "y": 939.2513493586632
+      },
+      "waitFrames": 0
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "left",
+    "heading": "left",
+    "cutFrame": 13,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.3244599364405582,
+    "screenHeadPx": 7.269524875950707,
+    "screenTorsoPx": 5.294861702773469,
+    "entryHeading": "left",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 804.5808250097958,
+        "y": 934.9668587947936
+      },
+      "matched": true,
+      "to": {
+        "x": 804.5808250097958,
+        "y": 934.9668587947936
+      },
+      "waitFrames": 8
+    },
+    "maxAnchorError": 1.6077746776921858e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "right",
+    "heading": "right",
+    "cutFrame": 13,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.3244599364405582,
+    "screenHeadPx": 7.269524875950707,
+    "screenTorsoPx": 5.294861702773469,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1078.0964416018444,
+        "y": 934.9668587947936
+      },
+      "matched": true,
+      "to": {
+        "x": 1078.0964416018444,
+        "y": 934.9668587947936
+      },
+      "waitFrames": 4
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "toward-left",
+    "heading": "toward-left",
+    "cutFrame": 25,
+    "exitFrame": 2,
+    "precomputedExit": true,
+    "match": {
+      "frame": 2,
+      "foot": "L",
+      "alphaIoU": 0.57134,
+      "headPx": 19.407,
+      "torsoPx": 3.887,
+      "score": 66.161,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.2749957506565158,
+    "screenHeadPx": 5.336842532991002,
+    "screenTorsoPx": 1.0689084828018771,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1380.5847429348887,
+        "y": 887.3934479908529
+      },
+      "matched": true,
+      "to": {
+        "x": 1380.5847429348887,
+        "y": 887.3934479908529
+      },
+      "waitFrames": 2
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "toward-right",
+    "heading": "toward-right",
+    "cutFrame": 39,
+    "exitFrame": 19,
+    "precomputedExit": true,
+    "match": {
+      "frame": 19,
+      "foot": "R",
+      "alphaIoU": 0.801145,
+      "headPx": 5.59,
+      "torsoPx": 7.346,
+      "score": 32.821,
+      "remainingSupport": 5
+    },
+    "screenScale": 0.3403383204499675,
+    "screenHeadPx": 1.902491211315318,
+    "screenTorsoPx": 2.5001253020254612,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1257.22141725783,
+        "y": 955.2269364823204
+      },
+      "matched": true,
+      "to": {
+        "x": 1257.22141725783,
+        "y": 955.2269364823204
+      },
+      "waitFrames": 11
+    },
+    "maxAnchorError": 2.5421149729252077e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "road",
+    "clip": "toward",
+    "heading": "toward",
+    "cutFrame": 11,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.5033,
+      "headPx": 63.068,
+      "torsoPx": 56.01,
+      "score": 168.748,
+      "remainingSupport": 12
+    },
+    "screenScale": 0.3435585651645584,
+    "screenHeadPx": 21.667551587798368,
+    "screenTorsoPx": 19.242715234866914,
+    "entryHeading": "toward",
+    "entryFrame": 6,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 915.9161204940208,
+        "y": 958.97234898493
+      },
+      "matched": true,
+      "to": {
+        "x": 915.9161204940208,
+        "y": 958.97234898493
+      },
+      "waitFrames": 1
+    },
+    "maxAnchorError": 1.6077746776921858e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "away-left",
+    "heading": "away-left",
+    "cutFrame": 16,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.4374447143259887,
+    "screenHeadPx": 6.895003587206234,
+    "screenTorsoPx": 1.7191577273011356,
+    "entryHeading": "left",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1259.9478650152753,
+        "y": 937.629048998122
+      },
+      "matched": true,
+      "to": {
+        "x": 1259.9478650152753,
+        "y": 937.629048998122
+      },
+      "waitFrames": 0
+    },
+    "maxAnchorError": 2.5421149729252077e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "away-right",
+    "heading": "away-right",
+    "cutFrame": 15,
+    "exitFrame": 41,
+    "precomputedExit": true,
+    "match": {
+      "frame": 41,
+      "foot": "R",
+      "alphaIoU": 0.7173,
+      "headPx": 22.0,
+      "torsoPx": 8.014,
+      "score": 58.284,
+      "remainingSupport": 9
+    },
+    "screenScale": 0.4439147472907837,
+    "screenHeadPx": 9.76612444039724,
+    "screenTorsoPx": 3.5575327847883402,
+    "entryHeading": "away-right",
+    "entryFrame": 27,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1376.2068790815524,
+        "y": 946.4148540304668
+      },
+      "matched": true,
+      "to": {
+        "x": 1376.2068790815524,
+        "y": 946.4148540304668
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 3.410605131648481e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "away",
+    "heading": "away",
+    "cutFrame": 20,
+    "exitFrame": 2,
+    "precomputedExit": true,
+    "match": {
+      "frame": 2,
+      "foot": "R",
+      "alphaIoU": 0.674621,
+      "headPx": 31.507,
+      "torsoPx": 24.076,
+      "score": 88.121,
+      "remainingSupport": 3
+    },
+    "screenScale": 0.4720482575376553,
+    "screenHeadPx": 14.872824450238905,
+    "screenTorsoPx": 11.365033848476589,
+    "entryHeading": "left",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1221.5926021380058,
+        "y": 978.5248304704298
+      },
+      "matched": true,
+      "to": {
+        "x": 1221.5926021380058,
+        "y": 978.5248304704298
+      },
+      "waitFrames": 11
+    },
+    "maxAnchorError": 3.410605131648481e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "left",
+    "heading": "left",
+    "cutFrame": 13,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.4404724079651922,
+    "screenHeadPx": 9.868784300460131,
+    "screenTorsoPx": 7.1880692255839715,
+    "entryHeading": "left",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1259.9478650152753,
+        "y": 937.629048998122
+      },
+      "matched": true,
+      "to": {
+        "x": 1259.9478650152753,
+        "y": 937.629048998122
+      },
+      "waitFrames": 12
+    },
+    "maxAnchorError": 1.1368683772161603e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "right",
+    "heading": "right",
+    "cutFrame": 13,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.4404724079651922,
+    "screenHeadPx": 9.868784300460131,
+    "screenTorsoPx": 7.1880692255839715,
+    "entryHeading": "right",
+    "entryFrame": 9,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1631.0370001615163,
+        "y": 937.629048998122
+      },
+      "matched": true,
+      "to": {
+        "x": 1631.0370001615163,
+        "y": 937.629048998122
+      },
+      "waitFrames": 8
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-left",
+    "heading": "toward-left",
+    "cutFrame": 18,
+    "exitFrame": 19,
+    "precomputedExit": true,
+    "match": {
+      "frame": 19,
+      "foot": "R",
+      "alphaIoU": 0.801145,
+      "headPx": 5.59,
+      "torsoPx": 7.346,
+      "score": 32.821,
+      "remainingSupport": 5
+    },
+    "screenScale": 0.3992262177286904,
+    "screenHeadPx": 2.2316745571033794,
+    "screenTorsoPx": 2.9327157954349596,
+    "entryHeading": "away-right",
+    "entryFrame": 27,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1592.3997041779537,
+        "y": 899.509134935258
+      },
+      "matched": true,
+      "to": {
+        "x": 1592.3997041779537,
+        "y": 899.509134935258
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-right",
+    "heading": "toward-right",
+    "cutFrame": 6,
+    "exitFrame": 7,
+    "precomputedExit": true,
+    "match": {
+      "frame": 7,
+      "foot": "L",
+      "alphaIoU": 0.231985,
+      "headPx": 126.925,
+      "torsoPx": 120.62,
+      "score": 324.347,
+      "remainingSupport": 5
+    },
+    "screenScale": 0.47237701437955376,
+    "screenHeadPx": 59.95645255012486,
+    "screenTorsoPx": 56.978115474461774,
+    "entryHeading": "toward-right",
+    "entryFrame": 3,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1290.9922358619242,
+        "y": 963.2046611058652
+      },
+      "matched": true,
+      "to": {
+        "x": 1290.9922358619242,
+        "y": 963.2046611058652
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 3.2155493553843715e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "depot",
+    "clip": "toward",
+    "heading": "toward",
+    "cutFrame": 11,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.5033,
+      "headPx": 63.068,
+      "torsoPx": 56.01,
+      "score": 168.748,
+      "remainingSupport": 12
+    },
+    "screenScale": 0.4649600544240601,
+    "screenHeadPx": 29.32410071241662,
+    "screenTorsoPx": 26.042412648291602,
+    "entryHeading": "toward",
+    "entryFrame": 6,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1411.1296650634338,
+        "y": 970.0370590640508
+      },
+      "matched": true,
+      "to": {
+        "x": 1411.1296650634338,
+        "y": 970.0370590640508
+      },
+      "waitFrames": 5
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "away-left",
+    "heading": "away-right",
+    "cutFrame": 18,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.4013843609518034,
+    "screenHeadPx": 6.326620297322325,
+    "screenTorsoPx": 1.5774405385405874,
+    "entryHeading": "away-left",
+    "entryFrame": 27,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1312.2879859909688,
+        "y": 899.5091349352581
+      },
+      "matched": true,
+      "to": {
+        "x": 1312.2879859909688,
+        "y": 899.509134935258
+      },
+      "waitFrames": 3
+    },
+    "maxAnchorError": 2.5421149729252077e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "away-right",
+    "heading": "away-left",
+    "cutFrame": 18,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.4013843609518034,
+    "screenHeadPx": 6.326620297322325,
+    "screenTorsoPx": 1.5774405385405874,
+    "entryHeading": "away-right",
+    "entryFrame": 27,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1622.7120140090312,
+        "y": 899.5091349352581
+      },
+      "matched": true,
+      "to": {
+        "x": 1622.7120140090312,
+        "y": 899.509134935258
+      },
+      "waitFrames": 2
+    },
+    "maxAnchorError": 2.5421149729252077e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "away",
+    "heading": "away-right",
+    "cutFrame": 18,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.726969,
+      "headPx": 15.762,
+      "torsoPx": 3.93,
+      "score": 46.996,
+      "remainingSupport": 6
+    },
+    "screenScale": 0.3804878201037838,
+    "screenHeadPx": 5.997249020475841,
+    "screenTorsoPx": 1.4953171330078703,
+    "entryHeading": "away",
+    "entryFrame": 16,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1480.256404475854,
+        "y": 877.419103451876
+      },
+      "matched": true,
+      "to": {
+        "x": 1480.256404475854,
+        "y": 877.419103451876
+      },
+      "waitFrames": 2
+    },
+    "maxAnchorError": 2.2737367544323206e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "left",
+    "heading": "left",
+    "cutFrame": 15,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.4348059037276711,
+    "screenHeadPx": 9.741826273018471,
+    "screenTorsoPx": 7.095597542931864,
+    "entryHeading": "left",
+    "entryFrame": 8,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1264.826245605877,
+        "y": 931.6800812119086
+      },
+      "matched": true,
+      "to": {
+        "x": 1264.826245605877,
+        "y": 931.6800812119086
+      },
+      "waitFrames": 7
+    },
+    "maxAnchorError": 4.547473508864641e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "right",
+    "heading": "right",
+    "cutFrame": 15,
+    "exitFrame": 23,
+    "precomputedExit": true,
+    "match": {
+      "frame": 23,
+      "foot": "R",
+      "alphaIoU": 0.631515,
+      "headPx": 22.405,
+      "torsoPx": 16.319,
+      "score": 75.573,
+      "remainingSupport": 10
+    },
+    "screenScale": 0.4348059037276711,
+    "screenHeadPx": 9.741826273018471,
+    "screenTorsoPx": 7.095597542931864,
+    "entryHeading": "right",
+    "entryFrame": 8,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1670.173754394123,
+        "y": 931.6800812119086
+      },
+      "matched": true,
+      "to": {
+        "x": 1670.173754394123,
+        "y": 931.6800812119086
+      },
+      "waitFrames": 7
+    },
+    "maxAnchorError": 4.547473508864641e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "toward-left",
+    "heading": "toward",
+    "cutFrame": 24,
+    "exitFrame": 5,
+    "precomputedExit": true,
+    "match": {
+      "frame": 5,
+      "foot": "L",
+      "alphaIoU": 0.589805,
+      "headPx": 51.006,
+      "torsoPx": 42.821,
+      "score": 134.847,
+      "remainingSupport": 13
+    },
+    "screenScale": 0.4557569027031201,
+    "screenHeadPx": 23.246336579275344,
+    "screenTorsoPx": 19.515966330650304,
+    "entryHeading": "toward-left",
+    "entryFrame": 2,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1356.497918569967,
+        "y": 952.038914859582
+      },
+      "matched": true,
+      "to": {
+        "x": 1356.497918569967,
+        "y": 952.038914859582
+      },
+      "waitFrames": 4
+    },
+    "maxAnchorError": 3.2155493553843715e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "toward-right",
+    "heading": "toward",
+    "cutFrame": 24,
+    "exitFrame": 5,
+    "precomputedExit": true,
+    "match": {
+      "frame": 5,
+      "foot": "L",
+      "alphaIoU": 0.589805,
+      "headPx": 51.006,
+      "torsoPx": 42.821,
+      "score": 134.847,
+      "remainingSupport": 13
+    },
+    "screenScale": 0.4557569027031201,
+    "screenHeadPx": 23.246336579275344,
+    "screenTorsoPx": 19.515966330650304,
+    "entryHeading": "toward-right",
+    "entryFrame": 2,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1661.84453653873,
+        "y": 952.038914859582
+      },
+      "matched": true,
+      "to": {
+        "x": 1661.84453653873,
+        "y": 952.038914859582
+      },
+      "waitFrames": 4
+    },
+    "maxAnchorError": 3.2155493553843715e-13,
+    "badAlphaFrames": []
+  },
+  {
+    "scene": "starts",
+    "clip": "toward",
+    "heading": "toward",
+    "cutFrame": 13,
+    "exitFrame": 18,
+    "precomputedExit": true,
+    "match": {
+      "frame": 18,
+      "foot": "R",
+      "alphaIoU": 0.5033,
+      "headPx": 63.068,
+      "torsoPx": 56.01,
+      "score": 168.748,
+      "remainingSupport": 12
+    },
+    "screenScale": 0.4649600544240601,
+    "screenHeadPx": 29.32410071241662,
+    "screenTorsoPx": 26.042412648291602,
+    "entryHeading": "toward",
+    "entryFrame": 5,
+    "entryPrecomputed": true,
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1468.0171506368258,
+        "y": 970.0370590640508
+      },
+      "matched": true,
+      "to": {
+        "x": 1468.0171506368258,
+        "y": 970.0370590640508
+      },
+      "waitFrames": 5
+    },
+    "maxAnchorError": 2.5421149729252077e-13,
+    "badAlphaFrames": []
+  }
+]

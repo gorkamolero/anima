@@ -1,0 +1,950 @@
+[
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 12,
+    "ground": {
+      "x": 2.080553660579833,
+      "y": 3.1884689299229834
+    },
+    "heading": "right",
+    "i": 92,
+    "nextExit": 11,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1612.5243639837156,
+    "y": 1039.7342763441884
+  },
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 14,
+    "ground": {
+      "x": 2.15708155834881,
+      "y": 3.1697335551370194
+    },
+    "heading": "right",
+    "i": 93,
+    "nextExit": 9,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1640.524568020218,
+    "y": 1043.0710745522556
+  },
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 15,
+    "ground": {
+      "x": 2.192047039662819,
+      "y": 3.1521475706551416
+    },
+    "heading": "right",
+    "i": 94,
+    "nextExit": 8,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1655.41383787664,
+    "y": 1046.2392548740631
+  },
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 17,
+    "ground": {
+      "x": 2.246362611605607,
+      "y": 3.114706549738773
+    },
+    "heading": "right",
+    "i": 95,
+    "nextExit": 6,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1681.2116376722574,
+    "y": 1053.103558892559
+  },
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 19,
+    "ground": {
+      "x": 2.2727358892044394,
+      "y": 3.0629220817516636
+    },
+    "heading": "right",
+    "i": 96,
+    "nextExit": 4,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1702.0155748476232,
+    "y": 1062.874107259886
+  },
+  {
+    "anchor": {
+      "x": 1575.7633993092743,
+      "y": 1030.7036203148637
+    },
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 20,
+    "ground": {
+      "x": 2.2725784583616355,
+      "y": 3.0170942533712495
+    },
+    "heading": "right",
+    "i": 97,
+    "nextExit": 3,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1713.2341609223165,
+    "y": 1071.8005198507508
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 18,
+    "ground": {
+      "x": 2.686683345552551,
+      "y": 3.093743887858786
+    },
+    "heading": "toward",
+    "i": 98,
+    "nextExit": 0,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1828.424615268342,
+    "y": 1057.019331284659
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 20,
+    "ground": {
+      "x": 2.7062256810081973,
+      "y": 3.120519745188286
+    },
+    "heading": "toward",
+    "i": 99,
+    "nextExit": 10,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1827.2355575320703,
+    "y": 1052.0269862017462
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 21,
+    "ground": {
+      "x": 2.677511349776122,
+      "y": 3.0894773969624785
+    },
+    "heading": "toward",
+    "i": 100,
+    "nextExit": 9,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1826.655102383531,
+    "y": 1057.822809207062
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 22,
+    "ground": {
+      "x": 2.6421542228157464,
+      "y": 3.048667178208255
+    },
+    "heading": "toward",
+    "i": 101,
+    "nextExit": 8,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1826.658794932341,
+    "y": 1065.6219433548945
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 23,
+    "ground": {
+      "x": 2.61085801137468,
+      "y": 3.011421665616703
+    },
+    "heading": "toward",
+    "i": 102,
+    "nextExit": 7,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1826.9851987798615,
+    "y": 1072.924330854006
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 24,
+    "ground": {
+      "x": 2.584686431442996,
+      "y": 2.9803422859968363
+    },
+    "heading": "toward",
+    "i": 103,
+    "nextExit": 6,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1827.244827410317,
+    "y": 1079.1574744341667
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 0,
+    "ground": {
+      "x": 2.5597789132137803,
+      "y": 2.951686857269225
+    },
+    "heading": "toward",
+    "i": 104,
+    "nextExit": 5,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1827.2257719038591,
+    "y": 1085.0207862284158
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 1,
+    "ground": {
+      "x": 2.5267330072014844,
+      "y": 2.914329006769292
+    },
+    "heading": "toward",
+    "i": 105,
+    "nextExit": 4,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1827.003348397688,
+    "y": 1092.8378836497284
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 2,
+    "ground": {
+      "x": 2.491043322070287,
+      "y": 2.8764013514562494
+    },
+    "heading": "toward",
+    "i": 106,
+    "nextExit": 3,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1826.027726210438,
+    "y": 1100.9819337655038
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 3,
+    "ground": {
+      "x": 2.4505227447000357,
+      "y": 2.8347470773843337
+    },
+    "heading": "toward",
+    "i": 107,
+    "nextExit": 2,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1824.4590426604027,
+    "y": 1110.177283991378
+  },
+  {
+    "anchor": {
+      "x": 1803.854026574388,
+      "y": 1043.6657504727275
+    },
+    "cycle": "hermes-walk-toward",
+    "frame": 4,
+    "ground": {
+      "x": 2.4154293050329603,
+      "y": 2.797734175762027
+    },
+    "heading": "toward",
+    "i": 108,
+    "nextExit": 1,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1823.3519674452496,
+    "y": 1118.5777789163008
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 6,
+    "ground": {
+      "x": 2.3922071240988663,
+      "y": 2.6177612930896696
+    },
+    "heading": "away",
+    "i": 109,
+    "nextExit": 13,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1873.8369989707548,
+    "y": 1162.8104420795034
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 7,
+    "ground": {
+      "x": 2.393691069032918,
+      "y": 2.6194148269117083
+    },
+    "heading": "away",
+    "i": 110,
+    "nextExit": 12,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1873.8266472497144,
+    "y": 1162.376380581995
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 9,
+    "ground": {
+      "x": 2.457714151061672,
+      "y": 2.699624219556099
+    },
+    "heading": "away",
+    "i": 111,
+    "nextExit": 10,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1870.3912067679537,
+    "y": 1141.9594648769212
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 10,
+    "ground": {
+      "x": 2.457135196535151,
+      "y": 2.6987478458082617
+    },
+    "heading": "away",
+    "i": 112,
+    "nextExit": 9,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1870.4723141702968,
+    "y": 1142.1759839904232
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 11,
+    "ground": {
+      "x": 2.564257847336785,
+      "y": 2.82475107262594
+    },
+    "heading": "away",
+    "i": 113,
+    "nextExit": 8,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1867.7818828662323,
+    "y": 1112.4242911750407
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 13,
+    "ground": {
+      "x": 2.562312301403183,
+      "y": 2.8223983799887815
+    },
+    "heading": "away",
+    "i": 114,
+    "nextExit": 6,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1867.8492673360192,
+    "y": 1112.9554681019747
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 14,
+    "ground": {
+      "x": 2.635447476212996,
+      "y": 2.903175667474633
+    },
+    "heading": "away",
+    "i": 115,
+    "nextExit": 5,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1867.7809192667544,
+    "y": 1095.210707642006
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 15,
+    "ground": {
+      "x": 2.6367048105569166,
+      "y": 2.904531778154525
+    },
+    "heading": "away",
+    "i": 116,
+    "nextExit": 4,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1867.789968210374,
+    "y": 1094.9212278888133
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 17,
+    "ground": {
+      "x": 2.6879533174309405,
+      "y": 2.9641722800065167
+    },
+    "heading": "away",
+    "i": 117,
+    "nextExit": 2,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1866.8141334298664,
+    "y": 1082.452153372153
+  },
+  {
+    "anchor": {
+      "x": 1855.381953482935,
+      "y": 1064.8279566036297
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 18,
+    "ground": {
+      "x": 2.6859452137139006,
+      "y": 2.9609259306391196
+    },
+    "heading": "away",
+    "i": 118,
+    "nextExit": 1,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1867.1301601705843,
+    "y": 1083.1179426185336
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 20,
+    "ground": {
+      "x": 2.7052547275256833,
+      "y": 2.9353827999966047
+    },
+    "heading": "away",
+    "i": 119,
+    "nextExit": 12,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1881.6020232621152,
+    "y": 1088.4079264081272
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 21,
+    "ground": {
+      "x": 2.702176261852496,
+      "y": 2.931206396229949
+    },
+    "heading": "away",
+    "i": 120,
+    "nextExit": 11,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1881.864889940188,
+    "y": 1089.2816294325503
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 22,
+    "ground": {
+      "x": 2.7015382384517763,
+      "y": 2.9302208769419793
+    },
+    "heading": "away",
+    "i": 121,
+    "nextExit": 10,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1881.9572011483108,
+    "y": 1089.488163108887
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 24,
+    "ground": {
+      "x": 2.829899523532426,
+      "y": 3.060692993708081
+    },
+    "heading": "away",
+    "i": 122,
+    "nextExit": 8,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.594374329571,
+    "y": 1063.3021074966653
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 25,
+    "ground": {
+      "x": 2.831645563703013,
+      "y": 3.0626543980617607
+    },
+    "heading": "away",
+    "i": 123,
+    "nextExit": 7,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.5723466203224,
+    "y": 1062.9254714535057
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 26,
+    "ground": {
+      "x": 2.9286832478326543,
+      "y": 3.168542133887091
+    },
+    "heading": "away",
+    "i": 124,
+    "nextExit": 6,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.2999221979153,
+    "y": 1043.2846029311922
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 28,
+    "ground": {
+      "x": 2.92736076434926,
+      "y": 3.1659674208590016
+    },
+    "heading": "away",
+    "i": 125,
+    "nextExit": 4,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.633887595406,
+    "y": 1043.7465959443189
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 29,
+    "ground": {
+      "x": 2.9951273410545616,
+      "y": 3.2420619422967167
+    },
+    "heading": "away",
+    "i": 126,
+    "nextExit": 3,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1883.834089034331,
+    "y": 1030.402223781344
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 1,
+    "ground": {
+      "x": 3.0415785991368596,
+      "y": 3.288975080722751
+    },
+    "heading": "away",
+    "i": 127,
+    "nextExit": 1,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.7800681020892,
+    "y": 1022.4829546657588
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 2,
+    "ground": {
+      "x": 3.101650511763419,
+      "y": 3.357306433078018
+    },
+    "heading": "away",
+    "i": 128,
+    "nextExit": 0,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1883.8508827208216,
+    "y": 1011.3440892810428
+  },
+  {
+    "anchor": {
+      "x": 1900.7426546865631,
+      "y": 1000.0232460069988
+    },
+    "cycle": "hermes-walk-away",
+    "frame": 3,
+    "ground": {
+      "x": 3.101192932680974,
+      "y": 3.356200728844436
+    },
+    "heading": "away",
+    "i": 129,
+    "nextExit": 1,
+    "planted": "R",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1884.0189080552211,
+    "y": 1011.5207225748244
+  },
+  {
+    "anchor": {
+      "x": 1867.1383891726628,
+      "y": 942.141265617255
+    },
+    "cycle": "hermes-walk-away-right",
+    "frame": 2,
+    "ground": {
+      "x": 3.4876163604430315,
+      "y": 3.6460738985386074
+    },
+    "heading": "away-left",
+    "i": 130,
+    "nextExit": 3,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1916.540228611634,
+    "y": 968.881710818166
+  },
+  {
+    "anchor": {
+      "x": 1867.1383891726628,
+      "y": 942.141265617255
+    },
+    "cycle": "hermes-walk-away-right",
+    "frame": 3,
+    "ground": {
+      "x": 3.4721225784757057,
+      "y": 3.675640569810165
+    },
+    "heading": "away-left",
+    "i": 131,
+    "nextExit": 2,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1904.6306058851203,
+    "y": 964.910559510166
+  },
+  {
+    "anchor": {
+      "x": 1867.1383891726628,
+      "y": 942.141265617255
+    },
+    "cycle": "hermes-walk-away-right",
+    "frame": 4,
+    "ground": {
+      "x": 3.44898911020496,
+      "y": 3.689125556988538
+    },
+    "heading": "away-left",
+    "i": 132,
+    "nextExit": 1,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1894.9069466262345,
+    "y": 963.1205037058576
+  },
+  {
+    "anchor": {
+      "x": 1867.1383891726628,
+      "y": 942.141265617255
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1867.1383891726628,
+        "y": 942.141265617255
+      },
+      "distance": 58.88668381007956,
+      "halfStride": 68.02196150149962,
+      "switchFrame": 5,
+      "target": {
+        "x": 1817,
+        "y": 947
+      }
+    },
+    "cycle": "hermes-walk-away-right",
+    "frame": 5,
+    "ground": {
+      "x": 3.424675715689316,
+      "y": 3.701812491636146
+    },
+    "heading": "away-left",
+    "i": 133,
+    "nextExit": 0,
+    "planted": "L",
+    "settling": true,
+    "transition": {
+      "frame": 0,
+      "remaining": 0,
+      "stopping": true,
+      "to": "hermes-stand-away-right"
+    },
+    "unmatchedCut": false,
+    "walking": true,
+    "x": 1885.134842304144,
+    "y": 961.4482916319804
+  },
+  {
+    "anchor": {
+      "x": 1867.1383891726628,
+      "y": 942.141265617255
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1867.1383891726628,
+        "y": 942.141265617255
+      },
+      "distance": 58.88668381007956,
+      "halfStride": 68.02196150149962,
+      "switchFrame": 5,
+      "target": {
+        "x": 1817,
+        "y": 947
+      }
+    },
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1867.1383891726628,
+        "y": 942.141265617255
+      },
+      "matched": true,
+      "to": {
+        "x": 1867.1383891726628,
+        "y": 942.141265617255
+      },
+      "waitFrames": 0
+    },
+    "cycle": "hermes-stand-away-right",
+    "frame": 0,
+    "ground": {
+      "x": 3.526744377323917,
+      "y": 3.851335553438453
+    },
+    "heading": "away-left",
+    "i": 134,
+    "nextExit": 0,
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": false,
+    "x": 1875.719840140976,
+    "y": 942.5703381656708
+  }
+]

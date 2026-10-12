@@ -1,0 +1,7 @@
+start 
+depot-hotspots-and-kat 
+depot-left 
+Error: right: did not stop within half a drawn stride
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:325:10)
+    at async replayTown (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:390:2)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:443:3

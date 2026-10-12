@@ -1,0 +1,281 @@
+Formatted 5 files in 11ms. Fixed 5 files.
+[
+  {
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "headings": [
+      "left",
+      "right"
+    ],
+    "exits": [
+      {
+        "frame": 8,
+        "foot": "L",
+        "alphaIoU": 0.761204,
+        "headPx": 4.982,
+        "torsoPx": 4.111,
+        "score": 32.972,
+        "remainingSupport": 13
+      },
+      {
+        "frame": 23,
+        "foot": "R",
+        "alphaIoU": 0.631515,
+        "headPx": 22.405,
+        "torsoPx": 16.319,
+        "score": 75.573,
+        "remainingSupport": 10
+      }
+    ],
+    "entries": [
+      {
+        "frame": 8,
+        "foot": "L",
+        "alphaIoU": 0.761204,
+        "headPx": 4.982,
+        "torsoPx": 4.111,
+        "score": 32.972,
+        "remainingSupport": 13
+      },
+      {
+        "frame": 23,
+        "foot": "R",
+        "alphaIoU": 0.631515,
+        "headPx": 22.405,
+        "torsoPx": 16.319,
+        "score": 75.573,
+        "remainingSupport": 10
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away",
+    "headings": [
+      "away"
+    ],
+    "exits": [
+      {
+        "frame": 19,
+        "foot": "L",
+        "alphaIoU": 0.630551,
+        "headPx": 32.893,
+        "torsoPx": 32.0,
+        "score": 101.838,
+        "remainingSupport": 1
+      },
+      {
+        "frame": 2,
+        "foot": "R",
+        "alphaIoU": 0.674621,
+        "headPx": 31.507,
+        "torsoPx": 24.076,
+        "score": 88.121,
+        "remainingSupport": 3
+      },
+      {
+        "frame": 4,
+        "foot": "R",
+        "alphaIoU": 0.673205,
+        "headPx": 31.858,
+        "torsoPx": 23.936,
+        "score": 88.473,
+        "remainingSupport": 1
+      }
+    ],
+    "entries": [
+      {
+        "frame": 18,
+        "foot": "L",
+        "alphaIoU": 0.629793,
+        "headPx": 32.889,
+        "torsoPx": 32.295,
+        "score": 102.204,
+        "remainingSupport": 2
+      },
+      {
+        "frame": 2,
+        "foot": "R",
+        "alphaIoU": 0.674621,
+        "headPx": 31.507,
+        "torsoPx": 24.076,
+        "score": 88.121,
+        "remainingSupport": 3
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward",
+    "headings": [
+      "toward"
+    ],
+    "exits": [
+      {
+        "frame": 5,
+        "foot": "L",
+        "alphaIoU": 0.589805,
+        "headPx": 51.006,
+        "torsoPx": 42.821,
+        "score": 134.847,
+        "remainingSupport": 13
+      },
+      {
+        "frame": 18,
+        "foot": "R",
+        "alphaIoU": 0.5033,
+        "headPx": 63.068,
+        "torsoPx": 56.01,
+        "score": 168.748,
+        "remainingSupport": 12
+      },
+      {
+        "frame": 6,
+        "foot": "L",
+        "alphaIoU": 0.562487,
+        "headPx": 48.128,
+        "torsoPx": 46.115,
+        "score": 137.994,
+        "remainingSupport": 12
+      }
+    ],
+    "entries": [
+      {
+        "frame": 5,
+        "foot": "L",
+        "alphaIoU": 0.589805,
+        "headPx": 51.006,
+        "torsoPx": 42.821,
+        "score": 134.847,
+        "remainingSupport": 13
+      },
+      {
+        "frame": 18,
+        "foot": "R",
+        "alphaIoU": 0.5033,
+        "headPx": 63.068,
+        "torsoPx": 56.01,
+        "score": 168.748,
+        "remainingSupport": 12
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-away-right",
+    "headings": [
+      "away-right",
+      "away-left"
+    ],
+    "exits": [
+      {
+        "frame": 27,
+        "foot": "L",
+        "alphaIoU": 0.700487,
+        "headPx": 18.966,
+        "torsoPx": 5.325,
+        "score": 54.242,
+        "remainingSupport": 9
+      },
+      {
+        "frame": 18,
+        "foot": "R",
+        "alphaIoU": 0.726969,
+        "headPx": 15.762,
+        "torsoPx": 3.93,
+        "score": 46.996,
+        "remainingSupport": 6
+      },
+      {
+        "frame": 5,
+        "foot": "L",
+        "alphaIoU": 0.686985,
+        "headPx": 26.001,
+        "torsoPx": 12.196,
+        "score": 69.499,
+        "remainingSupport": 9
+      },
+      {
+        "frame": 41,
+        "foot": "R",
+        "alphaIoU": 0.7173,
+        "headPx": 22.0,
+        "torsoPx": 8.014,
+        "score": 58.284,
+        "remainingSupport": 9
+      }
+    ],
+    "entries": [
+      {
+        "frame": 27,
+        "foot": "L",
+        "alphaIoU": 0.700487,
+        "headPx": 18.966,
+        "torsoPx": 5.325,
+        "score": 54.242,
+        "remainingSupport": 9
+      },
+      {
+        "frame": 18,
+        "foot": "R",
+        "alphaIoU": 0.726969,
+        "headPx": 15.762,
+        "torsoPx": 3.93,
+        "score": 46.996,
+        "remainingSupport": 6
+      }
+    ]
+  },
+  {
+    "cycle": "hermes-walk-toward-right",
+    "headings": [
+      "toward-right",
+      "toward-left"
+    ],
+    "exits": [
+      {
+        "frame": 2,
+        "foot": "L",
+        "alphaIoU": 0.57134,
+        "headPx": 19.407,
+        "torsoPx": 3.887,
+        "score": 66.161,
+        "remainingSupport": 10
+      },
+      {
+        "frame": 19,
+        "foot": "R",
+        "alphaIoU": 0.801145,
+        "headPx": 5.59,
+        "torsoPx": 7.346,
+        "score": 32.821,
+        "remainingSupport": 5
+      },
+      {
+        "frame": 7,
+        "foot": "L",
+        "alphaIoU": 0.231985,
+        "headPx": 126.925,
+        "torsoPx": 120.62,
+        "score": 324.347,
+        "remainingSupport": 5
+      }
+    ],
+    "entries": [
+      {
+        "frame": 2,
+        "foot": "L",
+        "alphaIoU": 0.57134,
+        "headPx": 19.407,
+        "torsoPx": 3.887,
+        "score": 66.161,
+        "remainingSupport": 10
+      },
+      {
+        "frame": 19,
+        "foot": "R",
+        "alphaIoU": 0.801145,
+        "headPx": 5.59,
+        "torsoPx": 7.346,
+        "score": 32.821,
+        "remainingSupport": 5
+      }
+    ]
+  }
+]

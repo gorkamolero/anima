@@ -1,0 +1,194 @@
+[
+  {
+    "scene": "road",
+    "clip": "toward",
+    "frames": 16,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward"
+  },
+  {
+    "scene": "road",
+    "clip": "toward-left",
+    "frames": 32,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward-left"
+  },
+  {
+    "scene": "road",
+    "clip": "left",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "left"
+  },
+  {
+    "scene": "road",
+    "clip": "away-right",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-right"
+  },
+  {
+    "scene": "road",
+    "clip": "toward-right",
+    "frames": 44,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward-right"
+  },
+  {
+    "scene": "road",
+    "clip": "away",
+    "frames": 36,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away"
+  },
+  {
+    "scene": "road",
+    "clip": "away-left",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-left"
+  },
+  {
+    "scene": "road",
+    "clip": "right",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "right"
+  },
+  {
+    "scene": "depot",
+    "clip": "toward",
+    "frames": 16,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward"
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-left",
+    "frames": 24,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward-left"
+  },
+  {
+    "scene": "depot",
+    "clip": "left",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "left"
+  },
+  {
+    "scene": "depot",
+    "clip": "away-right",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-right"
+  },
+  {
+    "scene": "depot",
+    "clip": "toward-right",
+    "frames": 12,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward-right"
+  },
+  {
+    "scene": "depot",
+    "clip": "away",
+    "frames": 24,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away"
+  },
+  {
+    "scene": "depot",
+    "clip": "away-left",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-left"
+  },
+  {
+    "scene": "depot",
+    "clip": "right",
+    "frames": 20,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "right"
+  },
+  {
+    "scene": "starts",
+    "clip": "toward",
+    "frames": 18,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward"
+  },
+  {
+    "scene": "starts",
+    "clip": "toward-left",
+    "frames": 30,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward"
+  },
+  {
+    "scene": "starts",
+    "clip": "left",
+    "frames": 22,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "left"
+  },
+  {
+    "scene": "starts",
+    "clip": "away-right",
+    "frames": 22,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-left"
+  },
+  {
+    "scene": "starts",
+    "clip": "toward-right",
+    "frames": 30,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "toward"
+  },
+  {
+    "scene": "starts",
+    "clip": "away",
+    "frames": 22,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-right"
+  },
+  {
+    "scene": "starts",
+    "clip": "away-left",
+    "frames": 22,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "away-right"
+  },
+  {
+    "scene": "starts",
+    "clip": "right",
+    "frames": 22,
+    "renderedAlphaEqual": true,
+    "matchedCut": true,
+    "heading": "right"
+  }
+]

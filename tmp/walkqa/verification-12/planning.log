@@ -1,0 +1,122 @@
+road left 8 {
+  end: { x: 838.2841483373455, y: 941.0080205233166 },
+  frames: 14,
+  heading: 'left',
+  start: [ 957.5, 927.5 ],
+  texture: 'hermes-idle-v2-normalized',
+  walk: [ 837.5, 927.5 ]
+}
+road right 3 {
+  end: { x: 1044.3931182742947, y: 941.0080205233166 },
+  frames: 14,
+  heading: 'right',
+  start: [ 957.5, 927.5 ],
+  texture: 'hermes-idle-v2-normalized',
+  walk: [ 1077.5, 927.5 ]
+}
+road away 8 {
+  end: { x: 1191.7444947229649, y: 939.5679166909966 },
+  frames: 33,
+  heading: 'away',
+  start: [ 957.5, 927.5 ],
+  texture: 'hermes-stand-away',
+  walk: [ 1197.5, 927.5 ]
+}
+road toward 14 {
+  end: { x: 948.5955453384686, y: 960.6568554202108 },
+  frames: 13,
+  heading: 'toward',
+  start: [ 957.5, 927.5 ],
+  texture: 'hermes-stand-toward',
+  walk: [ 957.5, 997.5 ]
+}
+road away-left 9 {
+  end: { x: 1077.4027818485256, y: 904.5413423096396 },
+  frames: 18,
+  heading: 'away-left',
+  start: [ 957.5, 897.5 ],
+  texture: 'hermes-stand-away-right',
+  walk: [ 1077.5, 897.5 ]
+}
+road away-right 8 {
+  end: { x: 974.394375518745, y: 853.311427768591 },
+  frames: 18,
+  heading: 'away-right',
+  start: [ 1097.5, 847.5 ],
+  texture: 'hermes-stand-away-right',
+  walk: [ 977.5, 847.5 ]
+}
+road toward-left 2 {
+  end: { x: 1412.4226259405891, y: 895.9018477596177 },
+  frames: 26,
+  heading: 'toward-left',
+  start: [ 1197.5, 877.5 ],
+  texture: 'hermes-stand-toward-right',
+  walk: [ 1437.5, 877.5 ]
+}
+road toward-right 4 {
+  end: { x: 1259.711311207698, y: 955.5589223423028 },
+  frames: 40,
+  heading: 'toward-right',
+  start: [ 957.5, 927.5 ],
+  texture: 'hermes-stand-toward-right',
+  walk: [ 1197.5, 997.5 ]
+}
+depot left 9 {
+  end: { x: 1305.7475866251166, y: 945.8384330602632 },
+  frames: 14,
+  heading: 'left',
+  start: [ 1467.5, 927.5 ],
+  texture: 'hermes-idle-v2-normalized',
+  walk: [ 1347.5, 927.5 ]
+}
+depot right 11 {
+  end: { x: 1585.237278551675, y: 945.8384330602632 },
+  frames: 14,
+  heading: 'right',
+  start: [ 1467.5, 927.5 ],
+  texture: 'hermes-idle-v2-normalized',
+  walk: [ 1587.5, 927.5 ]
+}
+depot away 1 {
+  end: { x: 1197.311067416973, y: 978.9873358936876 },
+  frames: 21,
+  heading: 'away',
+  start: [ 1447.5, 967.5 ],
+  texture: 'hermes-stand-away',
+  walk: [ 1207.5, 1037.5 ]
+}
+depot toward 7 {
+  end: { x: 1455.3988636068066, y: 972.3189765147404 },
+  frames: 12,
+  heading: 'toward',
+  start: [ 1467.5, 927.5 ],
+  texture: 'hermes-stand-toward',
+  walk: [ 1467.5, 997.5 ]
+}
+depot away-left 6 {
+  end: { x: 1276.09506329214, y: 938.0539752685658 },
+  frames: 17,
+  heading: 'away-left',
+  start: [ 1467.5, 927.5 ],
+  texture: 'hermes-stand-away-right',
+  walk: [ 1227.5, 927.5 ]
+}
+depot away-right 13 {
+  end: { x: 1359.7528961505088, y: 946.8478535812836 },
+  frames: 16,
+  heading: 'away-right',
+  start: [ 1237.5, 977.5 ],
+  texture: 'hermes-stand-away-right',
+  walk: [ 1357.5, 907.5 ]
+}
+depot toward-left 9 {
+  end: { x: 1589.475470201727, y: 899.8990327987549 },
+  frames: 19,
+  heading: 'toward-left',
+  start: [ 1467.5, 927.5 ],
+  texture: 'hermes-stand-toward-right',
+  walk: [ 1587.5, 857.5 ]
+}
+depot toward-right 0 undefined
+starts 8
