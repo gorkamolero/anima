@@ -13,6 +13,12 @@ export interface FootCycle {
 	fps: number;
 	contacts: ContactFrame[];
 	switchFrames: number[];
+	matchedCut?: {
+		standing: string;
+		headings: string[];
+		exitFrames: number[];
+		entryFrames: number[];
+	};
 	/** Visually verified passing poses; free-foot tracking alone is ambiguous at overlap. */
 	passingFrames?: number[];
 }

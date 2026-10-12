@@ -78,7 +78,7 @@ function setup(standing = false) {
 	};
 }
 describe("contact motor", () => {
-	it("settles in four frames, preserving the support across the texture change", async () => {
+	it("cuts to standing on a frame boundary, preserving the support", async () => {
 		const { motor, target, pose } = setup(true);
 		motor.place({ x: 960, y: 850 });
 		let resolved = false;
@@ -120,7 +120,7 @@ describe("contact motor", () => {
 			expect(sole.y).toBeCloseTo(anchor.y, 9);
 		}
 	});
-	it("locks the standing support throughout the four starting frames", () => {
+	it("cuts into walking immediately and locks the starting support", () => {
 		const { motor, target, pose } = setup(true);
 		motor.place({ x: 960, y: 850 });
 		const anchor = { ...motor.anchor };
@@ -133,6 +133,46 @@ describe("contact motor", () => {
 		}
 		expect(motor.snapshot().settling).toBe(false);
 		expect(pose().cycle.name).toBe("walk");
+	});
+	it("waits for the measured exit and cuts only on the following boundary", () => {
+		const { motor, cycle, pose } = setup(true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["left"],
+			exitFrames: [1, 3],
+			entryFrames: [0, 2],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(pose().cycle.name).toBe("walk");
+		expect(cycle.matchedCut.entryFrames).toContain(pose().frame);
+		motor.stop();
+		let lastWalk = pose().frame;
+		for (let i = 0; i < 40 && motor.walking; i++) {
+			if (pose().cycle.name === "walk") lastWalk = pose().frame;
+			motor.update(1000 / 24);
+		}
+		expect(cycle.matchedCut.exitFrames).toContain(lastWalk);
+		expect(pose().cycle.name).toBe("standing");
+		expect(motor.walking).toBe(false);
+	});
+	it("renders the selected exit before a cut even after a large update", () => {
+		const { motor, cycle, pose } = setup(true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["left"],
+			exitFrames: [1, 3],
+			entryFrames: [0, 2],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1400, y: 850 }]);
+		motor.stop();
+		motor.update(1000);
+		expect(pose().cycle.name).toBe("walk");
+		expect(cycle.matchedCut.exitFrames).toContain(pose().frame);
+		motor.update(1000);
+		expect(pose().cycle.name).toBe("standing");
+		expect(motor.snapshot().cut?.from).toEqual(motor.snapshot().cut?.to);
 	});
 	it("sorts by the planted sole rather than bobbing sprite origin", () => {
 		const { motor, target } = setup();
