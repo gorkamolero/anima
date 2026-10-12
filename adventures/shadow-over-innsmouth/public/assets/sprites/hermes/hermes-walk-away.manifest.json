@@ -1,36 +1,20 @@
 {
-	"video": "tmp/hermes-directions/away/loop.webm",
-	"pipeline": "fal-alpha-video",
-	"output": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away",
-	"fps": 24,
-	"frameLimit": null,
-	"columns": 8,
-	"trim": true,
-	"globalTrimBox": [126, 18, 606, 1280],
-	"qcMagenta": "tmp/hermes-directions/away-loop-sheet.png",
-	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away-preview-3x.mp4",
-	"previewLoops": 3,
-	"keptWork": false,
-	"createdAt": "2026-10-11T21:26:22.529600+00:00",
-	"command": "packages/sprite-tools/scripts/sprite-factory.py process-alpha --video tmp/hermes-directions/away/loop.webm --output adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away --fps 24 --cols 8 --preview-loops 3 --preview-bg magenta",
 	"loop": {
 		"method": "local-frame-similarity",
-		"start_frame": 35,
-		"end_frame": 68,
-		"frame_count": 33,
+		"start_frame": 88,
+		"end_frame": 118,
+		"frame_count": 30,
 		"fps": 24,
-		"start_time": 1.4583333333333333,
-		"end_time": 2.8333333333333335,
-		"seam_mse": 0.0023901292083522833,
+		"seam_mse": 0.0051961421878971075,
 		"candidates": [
-			[0.0023901292083522833, 35, 68],
-			[0.0024902438796620134, 36, 69],
-			[0.0025470712593790223, 47, 79],
-			[0.0025729688325736807, 37, 69],
-			[0.002586815418150753, 34, 67],
-			[0.0026237883359814984, 61, 92],
-			[0.002655597964796174, 60, 91],
-			[0.002732351559959947, 46, 78]
+			[0.0051961421878971075, 88, 118],
+			[0.005240953459098177, 79, 109],
+			[0.0052943365007068555, 52, 82],
+			[0.005305828197817581, 87, 117],
+			[0.005419382773677629, 37, 67],
+			[0.005421556602175248, 80, 110],
+			[0.0054607118869157145, 67, 97],
+			[0.005470248163674773, 86, 116]
 		]
 	},
 	"normalization": {
@@ -40,56 +24,39 @@
 		"referenceHeightMedian": 1030.5,
 		"referenceHeightRange": [1013, 1047],
 		"idleHeightMedian": 1055.0,
-		"inputHeightMedian": 1226,
-		"uniformScale": 0.8405383360522023,
+		"inputHeightMedian": 1168.0,
+		"uniformScale": 0.882277397260274,
 		"feetAnchor": [0.5, 1],
 		"method": "uniform scale to reference median height; one global center and bottom anchor across the entire loop; preserve foot travel and body bob",
 		"outputHeightRange": [
-			1036, 1031, 1033, 1033, 1036, 1032, 1022, 1011, 1012, 1019, 1026, 1032,
-			1036, 1040, 1041, 1040, 1036, 1028, 1027, 1028, 1031, 1033, 1026, 1013,
-			1003, 1010, 1018, 1024, 1031, 1036, 1036, 1034, 1031
-		],
-		"command": "uv run packages/sprite-tools/scripts/normalize-sheet.py --sheet adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away --reference adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-fal-veo-transparent-loop",
-		"actualBuildCommand": "uv run --with pillow --with numpy --with click python tmp/hermes-directions/normalize.py away"
+			1016, 1017, 1039, 1039, 1039, 1047, 1046, 1046, 1031, 1033, 1035, 1000,
+			1000, 999, 1013, 1014, 1014, 1035, 1034, 1034, 1038, 1036, 1035, 1028,
+			1027, 1027, 986, 986, 986, 1001
+		]
 	},
 	"generation": {
-		"provider": "fal.ai",
-		"endpoint": "fal-ai/veo3.1/fast/image-to-video",
-		"requestId": "01a12cd8-d1dd-7df2-8768-21559847ed1a",
-		"sourceImage": "/Users/gorkolas/Developer/anima/tmp/hermes-directions/away-keyframe.png",
-		"output": "/Users/gorkolas/Developer/anima/packages/sprite-tools/output/hermes-directions/away.mp4",
+		"model": "fal-ai/kling-video/v3/standard/image-to-video",
 		"input": {
-			"image_url": "https://v3b.fal.media/files/b/0aadffd0/g0Jtk_Nm0HAgVh2mmrRyw_away-keyframe.png",
-			"prompt": "This exact character walks steadily directly away from the camera, pure back view throughout. Walking IN PLACE for a looping game sprite. Camera dollies forward with him at exactly the same speed: he stays centered and the SAME SIZE in frame throughout, no shrinking, no enlargement, no lateral drift. Full body visible, shoes always in frame. Natural alternating heel-to-toe walking gait, arms swing in opposition, subtle body bob and satchel movement. Start walking immediately and continue steadily. Preserve identical face, hair, glasses, outfit, satchel and proportions. Never turn or rotate. Flat uniform gray background, no floor line, no shadows, no props, no scene. No audio.",
-			"aspect_ratio": "9:16",
-			"duration": "4s",
-			"resolution": "720p",
+			"start_image_url": "https://v3b.fal.media/files/b/0aae06f8/GKYQ6RLH5in68FqTl5O8E_1791772080841.png",
+			"duration": "5",
 			"generate_audio": false,
-			"auto_fix": false,
-			"safety_tolerance": "4"
-		}
-	},
-	"keyframe": {
-		"model": "fal-ai/nano-banana-2/edit",
-		"requestId": "01a12cd8-0f11-76d1-b0a6-6e0666728b7f",
-		"references": [
-			"docs/art/@hermes.jpeg",
-			"tmp/hermes-directions/side-reference.png",
-			"tmp/hermes-directions/idle-reference.png"
-		],
-		"prompt": "Create exactly ONE full-body character turnaround still of Hermes from these references. The second and third images are the authoritative in-game character: match their slim young adult proportions, oversized tousled medium brown hair, thin black round glasses, warm pale skin, narrow chin, brown tweed blazer, cream shirt, dark olive green V-neck sweater, brown trousers and brown lace-up shoes. Same clean hand-inked painterly cartoon rendering, fine fabric texture, same colors, no redesign. His rectangular brown leather satchel with flap and buckles hangs at his LEFT hip, strap across from RIGHT shoulder. Perfectly straight BACK VIEW, looking directly away from camera, back of head and jacket visible, NO face visible, glasses only temples near ears. Standing relaxed upright, arms down, feet slightly apart. Full body and all shoes visible. Centered figure occupies 82 percent of portrait image height, generous empty margin. Plain uniform #828282 gray background, no floor, no shadows, no text, no extra figures. Preserve the exact character identity and size proportions from the game sprites."
+			"prompt": "This exact character walks directly away from the camera, perfectly straight BACK VIEW throughout. Walking IN PLACE for a looping adventure game sprite. Camera tracks with him at exactly his walking speed, so his body stays centered and the SAME SIZE throughout, no shrinking, no enlargement, no drift. Walking in place with long confident strides. Exaggerated long forward and backward leg extension, clear deep heel-to-toe steps, soles travel a long distance in the image. Brisk purposeful adult walk, about two steps per second, never tiny shuffling steps. Camera slightly elevated so the long depth strides are visible. Alternating planted steps, arms swing in opposition, subtle body bob. Full body and shoes always visible, generous margins. Preserve exact orientation, character identity, clothes, satchel, proportions and painterly linework. Never turn, rotate or change direction. Flat uniform gray background, no floor line, no cast shadows, no props or scene. Silent.",
+			"negative_prompt": "cropped feet, turning, rotation, sliding, drifting, shrinking, growing, zoom, running, slow motion, change of view, moving across frame, scene, shadows"
+		},
+		"requestId": "01a12df0-4233-74f0-b2f1-1ee4048f2400",
+		"output": "tmp/hermes-depth-06/away-video.mp4"
 	},
 	"backgroundRemoval": {
-		"provider": "fal.ai",
-		"endpoint": "bria/video/background-removal",
-		"requestId": "01a12cda-5fd3-7d43-9e94-32ea30fa9f02",
-		"sourceVideo": "/Users/gorkolas/Developer/anima/packages/sprite-tools/output/hermes-directions/away.mp4",
-		"output": "/Users/gorkolas/Developer/anima/packages/sprite-tools/output/hermes-directions/away.webm",
-		"input": {
-			"video_url": "https://v3b.fal.media/files/b/0aadffda/hGwjHeOZLgJ303F6nHznM_away.mp4",
-			"background_color": "Transparent",
-			"output_container_and_codec": "webm_vp9",
-			"preserve_audio": false
-		}
-	}
+		"method": "sprite-factory.chroma_key_frame",
+		"background": "per-frame median of the outer 50 columns",
+		"tolerance": 22,
+		"edgeTolerance": 38,
+		"minBrightness": 90,
+		"reason": "BRIA upload refused exhausted balance; no extra paid calls"
+	},
+	"keyframe": {
+		"reused": "/Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-away-keyframe.png"
+	},
+	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away-preview-3x.mp4",
+	"qcMagenta": "tmp/hermes-depth-06/away-loop-sheet.png"
 }
