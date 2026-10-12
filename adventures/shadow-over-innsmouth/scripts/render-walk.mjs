@@ -84,6 +84,20 @@ evaluate(
 );
 const logs = [];
 for (const beat of plan.beats) {
+	// A crossing can itself enter an exit. Every proof beat belongs to its named scene.
+	if (evaluate("window.__anima.scene.locationId()") !== plan.place) {
+		evaluate(
+			`(()=>{window.__walkReady=false;window.__anima.scene.enterLocation(${JSON.stringify(plan.place)}).then(()=>window.__walkReady=true);return true})()`,
+		);
+		for (let i = 0; i < 600; i++) {
+			if (
+				evaluate("(()=>{window.__anima.step(100);return window.__walkReady})()")
+			)
+				break;
+			if (i === 599) throw new Error("Proof scene restore timed out");
+			await new Promise((r) => setTimeout(r, 100));
+		}
+	}
 	const dir = resolve(out, `${beat.name}-frames`);
 	rmSync(dir, { recursive: true, force: true });
 	mkdirSync(dir, { recursive: true });
@@ -103,12 +117,12 @@ for (const beat of plan.beats) {
 		);
 		beat.click = point;
 	}
+	const sourceLocation = evaluate("window.__anima.scene.locationId()");
 	if (beat.click)
 		evaluate(
 			`(()=>{window.__anima.click(${beat.click[0]},${beat.click[1]});return true})()`,
 		);
 	const log = [];
-	const sourceLocation = evaluate("window.__anima.scene.locationId()");
 	let exitCompleted = !beat.exit;
 	let walkCompleted = false;
 	let idleFrames = 0;

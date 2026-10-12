@@ -8,70 +8,70 @@ Before is Brief 03 after; pending means no completed measurement.
 
 | Clip | Before median / max px | After max px | Status |
 |---|---:|---:|---|
-| road/away-far.mp4 | 5.26 / 5.44 | pending | pending |
-| road/away-near.mp4 | 2.52 / 4.47 | pending | pending |
-| road/diagonal.mp4 | 5.94 / 17.19 | pending | pending |
-| road/exit.mp4 | no stance | pending | pending |
-| road/far-exit.mp4 | 122.04 / 122.04 | pending | pending |
-| road/object-click.mp4 | no stance | pending | pending |
-| road/side-far.mp4 | 1.71 / 4.18 | pending | pending |
-| road/side-near.mp4 | 2.05 / 3.62 | pending | pending |
-| road/toward-far.mp4 | 1.37 / 1.66 | pending | pending |
+| road/away-far.mp4 | 5.26 / 5.44 | 3.44 | FAIL |
+| road/away-near.mp4 | 2.52 / 4.47 | 8.09 | FAIL |
+| road/diagonal.mp4 | 5.94 / 17.19 | 10.55 | FAIL |
+| road/exit.mp4 | no stance | 19.35 | FAIL |
+| road/far-exit.mp4 | 122.04 / 122.04 | 2.4 | FAIL |
+| road/object-click.mp4 | no stance | 2.95 | FAIL |
+| road/side-far.mp4 | 1.71 / 4.18 | 1.87 | FAIL |
+| road/side-near.mp4 | 2.05 / 3.62 | 5.47 | FAIL |
+| road/toward-far.mp4 | 1.37 / 1.66 | 3.14 | FAIL |
 | road/toward-near.mp4 | 1.2 / 2.72 | pending | pending |
 | road/trap-behind.mp4 | 4.55 / 15.04 | pending | pending |
 | road/trap-front.mp4 | 0.44 / 4.5 | pending | pending |
 | road/tree-behind.mp4 | 3.29 / 31.59 | pending | pending |
 | road/tree-front.mp4 | 0.2 / 0.26 | pending | pending |
-| alley/away-far.mp4 | no stance | pending | pending |
-| alley/away-near.mp4 | 3.79 / 8.9 | pending | pending |
-| alley/crate-behind.mp4 | no stance | pending | pending |
-| alley/crate-front.mp4 | no stance | pending | pending |
-| alley/diagonal.mp4 | 10.97 / 30.84 | pending | pending |
-| alley/exit.mp4 | 0.22 / 0.48 | pending | pending |
-| alley/object-click.mp4 | 3.27 / 3.27 | pending | pending |
-| alley/side-far.mp4 | 8.33 / 15.85 | pending | pending |
-| alley/side-near.mp4 | 4.47 / 7.33 | pending | pending |
-| alley/toward-far.mp4 | 0.01 / 0.01 | pending | pending |
-| alley/toward-near.mp4 | 0.59 / 1.07 | pending | pending |
-| depot-outside/away-far.mp4 | no stance | pending | pending |
-| depot-outside/away-near.mp4 | 3.83 / 10.51 | pending | pending |
-| depot-outside/diagonal.mp4 | pending | pending | pending |
-| depot-outside/exit.mp4 | pending | pending | pending |
-| depot-outside/object-click.mp4 | pending | pending | pending |
-| depot-outside/post-behind.mp4 | pending | pending | pending |
-| depot-outside/post-front.mp4 | pending | pending | pending |
-| depot-outside/side-far.mp4 | 2.64 / 8.26 | pending | pending |
-| depot-outside/side-near.mp4 | 5.77 / 7.24 | pending | pending |
-| depot-outside/toward-far.mp4 | 0.01 / 0.01 | pending | pending |
-| depot-outside/toward-near.mp4 | 0.1 / 3.93 | pending | pending |
-| depot-inside/away-far.mp4 | 1.56 / 1.56 | pending | pending |
-| depot-inside/away-near.mp4 | 1.86 / 3.11 | pending | pending |
-| depot-inside/bench-behind.mp4 | 2.62 / 4.71 | pending | pending |
-| depot-inside/bench-front.mp4 | 0.84 / 1.55 | pending | pending |
-| depot-inside/diagonal.mp4 | 16.66 / 29.91 | pending | pending |
-| depot-inside/exit.mp4 | no stance | pending | pending |
-| depot-inside/object-click.mp4 | 1.71 / 5.24 | pending | pending |
-| depot-inside/side-far.mp4 | 2.89 / 5.76 | pending | pending |
-| depot-inside/side-near.mp4 | 3.06 / 9.48 | pending | pending |
-| depot-inside/toward-far.mp4 | 1.56 / 9.41 | pending | pending |
-| depot-inside/toward-near.mp4 | 1.07 / 1.37 | pending | pending |
+| alley/away-far.mp4 | no stance | 6.48 | FAIL |
+| alley/away-near.mp4 | 3.79 / 8.9 | 10.3 | FAIL |
+| alley/crate-behind.mp4 | no stance | 11.78 | FAIL |
+| alley/crate-front.mp4 | no stance | 8.25 | FAIL |
+| alley/diagonal.mp4 | 10.97 / 30.84 | 19.81 | FAIL |
+| alley/exit.mp4 | 0.22 / 0.48 | 10.52 | FAIL |
+| alley/object-click.mp4 | 3.27 / 3.27 | 2.72 | FAIL |
+| alley/side-far.mp4 | 8.33 / 15.85 | 13.29 | FAIL |
+| alley/side-near.mp4 | 4.47 / 7.33 | 11.43 | FAIL |
+| alley/toward-far.mp4 | 0.01 / 0.01 | 6.49 | FAIL |
+| alley/toward-near.mp4 | 0.59 / 1.07 | 8.91 | FAIL |
+| depot-outside/away-far.mp4 | no stance | 8.4 | FAIL |
+| depot-outside/away-near.mp4 | 3.83 / 10.51 | 17.13 | FAIL |
+| depot-outside/diagonal.mp4 | pending | 16.12 | FAIL |
+| depot-outside/exit.mp4 | pending | 6.06 | FAIL |
+| depot-outside/object-click.mp4 | pending | 4.1 | FAIL |
+| depot-outside/post-behind.mp4 | pending | 17.01 | FAIL |
+| depot-outside/post-front.mp4 | pending | 16.12 | FAIL |
+| depot-outside/side-far.mp4 | 2.64 / 8.26 | 7.21 | FAIL |
+| depot-outside/side-near.mp4 | 5.77 / 7.24 | 10.47 | FAIL |
+| depot-outside/toward-far.mp4 | 0.01 / 0.01 | 11.25 | FAIL |
+| depot-outside/toward-near.mp4 | 0.1 / 3.93 | 8.19 | FAIL |
+| depot-inside/away-far.mp4 | 1.56 / 1.56 | 2.59 | FAIL |
+| depot-inside/away-near.mp4 | 1.86 / 3.11 | 5.73 | FAIL |
+| depot-inside/bench-behind.mp4 | 2.62 / 4.71 | 10.53 | FAIL |
+| depot-inside/bench-front.mp4 | 0.84 / 1.55 | 12.97 | FAIL |
+| depot-inside/diagonal.mp4 | 16.66 / 29.91 | 23.26 | FAIL |
+| depot-inside/exit.mp4 | no stance | 7.76 | FAIL |
+| depot-inside/object-click.mp4 | 1.71 / 5.24 | 19.25 | FAIL |
+| depot-inside/side-far.mp4 | 2.89 / 5.76 | 6.48 | FAIL |
+| depot-inside/side-near.mp4 | 3.06 / 9.48 | 7.47 | FAIL |
+| depot-inside/toward-far.mp4 | 1.56 / 9.41 | 7.76 | FAIL |
+| depot-inside/toward-near.mp4 | 1.07 / 1.37 | 14.53 | FAIL |
 
-| road/diagonal-away-right.mp4 | new clip | pending | pending |
-| road/diagonal-away-left.mp4 | new clip | pending | pending |
-| road/diagonal-toward-right.mp4 | new clip | pending | pending |
-| road/diagonal-toward-left.mp4 | new clip | pending | pending |
-| alley/diagonal-away-right.mp4 | new clip | pending | pending |
-| alley/diagonal-away-left.mp4 | new clip | pending | pending |
-| alley/diagonal-toward-right.mp4 | new clip | pending | pending |
-| alley/diagonal-toward-left.mp4 | new clip | pending | pending |
-| depot-outside/diagonal-away-right.mp4 | new clip | pending | pending |
-| depot-outside/diagonal-away-left.mp4 | new clip | pending | pending |
-| depot-outside/diagonal-toward-right.mp4 | new clip | pending | pending |
-| depot-outside/diagonal-toward-left.mp4 | new clip | pending | pending |
-| depot-inside/diagonal-away-right.mp4 | new clip | pending | pending |
-| depot-inside/diagonal-away-left.mp4 | new clip | pending | pending |
-| depot-inside/diagonal-toward-right.mp4 | new clip | pending | pending |
-| depot-inside/diagonal-toward-left.mp4 | new clip | pending | pending |
+| road/diagonal-away-right.mp4 | new clip | 6.68 | FAIL |
+| road/diagonal-away-left.mp4 | new clip | 9.31 | FAIL |
+| road/diagonal-toward-right.mp4 | new clip | 6.45 | FAIL |
+| road/diagonal-toward-left.mp4 | new clip | 8.17 | FAIL |
+| alley/diagonal-away-right.mp4 | new clip | 15.15 | FAIL |
+| alley/diagonal-away-left.mp4 | new clip | 12.1 | FAIL |
+| alley/diagonal-toward-right.mp4 | new clip | 7.32 | FAIL |
+| alley/diagonal-toward-left.mp4 | new clip | 10.09 | FAIL |
+| depot-outside/diagonal-away-right.mp4 | new clip | 13.88 | FAIL |
+| depot-outside/diagonal-away-left.mp4 | new clip | 14.28 | FAIL |
+| depot-outside/diagonal-toward-right.mp4 | new clip | 18.38 | FAIL |
+| depot-outside/diagonal-toward-left.mp4 | new clip | 15.32 | FAIL |
+| depot-inside/diagonal-away-right.mp4 | new clip | 13.28 | FAIL |
+| depot-inside/diagonal-away-left.mp4 | new clip | 13.45 | FAIL |
+| depot-inside/diagonal-toward-right.mp4 | new clip | 12.26 | FAIL |
+| depot-inside/diagonal-toward-left.mp4 | new clip | 13.69 | FAIL |
 
 ## Milestones
 
@@ -84,6 +84,7 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 ## Commits
 
 - 0fa659c: baseline and call ledger.
+- b811a2c: explicit exit completion at a valid held footfall; regression tests.
 - daebd44: half-stride arrival regression assertions and idle sole identity.
 - f0b950e: diagonal assets, physical-foot metadata and call provenance.
 - ef10c0c: contact-driven motor, local view heading sectors, tests, adapter and capture telemetry.
@@ -95,7 +96,14 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 - Town replay first attempt stopped at the obsolete 2px arrival assertion. Updated to independently require half-stride distance and a switch frame. Retry pending.
 
 - Milestone: all three non-road exit retries now complete and release input after the explicit-exit/half-stride integration fix. Source walking clips are separated at the actual scene transition; full uncut videos, full telemetry and destination frames are retained under `tmp/walkqa/transitions-05/`. This prevents a second background from corrupting the checker median. No walking frames are omitted from the source segment.
-- Verification after exit fix: 346 tests pass; engine, game and API typecheck/lint pass. Town replay is now reaching both return exits; final summary pending.
+- Verification after exit fix: 346 tests pass; engine, game and API typecheck/lint pass. Town replay is now reaching both return exits; final replay PASS: 83 cached calls, 0 uncached calls; no TTS requests (`tmp/open-world-demo/run-1.json`, `journey.md`).
+
+
+- Milestone: all 63 full-resolution captures exist. 58 pixel checks have finished; none passes. Every previously unmeasured clip now has a measured stance, but these are failures, not accepted replacements.
+- Telemetry audit: 5,259 walking frames; maximum contact-to-anchor residual 4.69e-13 px, maximum within-stance anchor correction 0.9445 px, maximum perspective scale relative error 4.50e-13, no identical position/texture-frame pairs while walking. These algebraic checks do not establish pixel planting. **747 walking frames lie outside the floor mask**; bounded anchor steering does not yet constrain the entire drawn stance to the navigation corridor. Details: `tmp/walkqa/final-05/telemetry-results.json`.
+- Road original diagonal walking time is 5.292 s. Explicit away-left/right: 5.417 / 6.292 s; toward-left/right: 8.500 / 10.333 s. The latter two fail the approximate 8 s target.
+- Tighter sole-ROI trial [45,18] remains FAIL (near 12.06 px, far 5.32 px). Trial metadata and clips are under `tmp/walkqa/trial-sole-05/`; production metadata restored. Do not substitute this experiment for the main proof matrix.
+- Capture isolation fixed: each beat now reloads its requested scene after any preceding exit and records the source scene before clicking. Road tree-front still starts inside an exit-sensitive region and leaves after one walking frame; it is not a valid front-crossing proof. The floor mask also has no walkable cells at y950 or below, so the foreground-tree crossing is not established by these plans.
 
 ## Open failures
 
