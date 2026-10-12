@@ -149,6 +149,9 @@ export class CharacterMotor {
 			const remaining = matched ?? 0;
 			this.unmatchedCut = matched === undefined;
 			this.transition = { to: standing, remaining, frame: 0 };
+			// A just-reached exit needs its own visible interval. Accumulated
+			// walking time must not immediately consume that drawing.
+			if (remaining === 0 && this.pose.cycle.matchedCut) this.elapsed = 0;
 			this.walking = true;
 			return;
 		}
@@ -859,7 +862,10 @@ export class CharacterMotor {
 		if (this.transition) {
 			const t = this.transition;
 			while (
-				this.elapsed + 1e-8 >= this.frameMs &&
+				this.elapsed + 1e-8 >=
+					(t.remaining === 0
+						? Math.max(this.frameMs, 1000 / 24)
+						: this.frameMs) &&
 				this.transition &&
 				this.pose
 			) {

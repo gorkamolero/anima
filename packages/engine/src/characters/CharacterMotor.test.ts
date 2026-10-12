@@ -174,6 +174,32 @@ describe("contact motor", () => {
 		expect(pose().cycle.name).toBe("standing");
 		expect(motor.snapshot().cut?.from).toEqual(motor.snapshot().cut?.to);
 	});
+	it("exposes an immediate passing exit across subdivided 24fps capture ticks", () => {
+		const { motor, cycle, pose } = setup(true);
+		// A long stance runs faster than 24 source frames/s at natural cadence.
+		cycle.contacts = Array.from({ length: 60 }, (_, i) => ({
+			planted: i < 30 ? "L" : "R",
+			L: { x: i < 30 ? 70 - i : 40 + (i - 30), y: 190 },
+			R: { x: i < 30 ? 40 + i : 70 - (i - 30), y: 190 },
+		}));
+		cycle.switchFrames = [0, 30];
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["left"],
+			exitFrames: [0, 30],
+			entryFrames: [0, 30],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1400, y: 850 }]);
+		motor.stop();
+		const exit = pose().frame;
+		motor.update(1000 / 60);
+		motor.update(1000 / 60);
+		expect(pose().cycle.name).toBe("walk");
+		expect(pose().frame).toBe(exit);
+		motor.update(1000);
+		expect(pose().cycle.name).toBe("standing");
+	});
 	it("sorts by the planted sole rather than bobbing sprite origin", () => {
 		const { motor, target } = setup();
 		void motor.walk([{ x: 1400, y: 850 }]);
