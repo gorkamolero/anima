@@ -87,8 +87,32 @@ walk-toward-right    ground m/s min/median/max 1.04 1.4 2.18 (n=32)
 Motor now replans from the actual pose at each handoff, predicts all stance frames and the incoming sole, and rejects body/boot floor violations. Continuous correction is zero (inside the one-pixel allowance). Exit entry detection now distinguishes walking out of an exit region from entering it. Focused motor tests: 7 pass. Full proof pending.
 
 ## Verification and open failures
-Pending. No acceptance claim. No new paid calls yet.
+Final acceptance pending. Generation totals: 2 Kling, 1 BRIA, 0 image edits, no Veo. See calls.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 
 Generation progress: two Kling videos and one toward BRIA completed. Away BRIA upload blocked before submission by fal.ai exhausted balance. User informed; remaining independent work continues.
+
+## Progress: assets and proof preparation
+- Commits: 6eec882 (ledger), 9845320 (baseline evidence), c511b01 (closed-loop stance safety and entry-sensitive exits).
+- New away/toward Kling cycles extracted with one constant normalization. Toward uses BRIA; away uses local gray keying after the account-balance refusal. Both contact sheets inspected frame by frame. Away source has coarse pose increments; expanded registration search handles these without moving the physical contact between frames.
+- Startup now permits a safe partial stance and evaluates its stride vector independently of the idle-to-walk pose offset.
+- Full test suite: 356 passed. Capture running in four independent muted browsers.
+- Simulation before rendering (not a video acceptance substitute): 0 off-floor walking frames; medians side 1.61, away 1.80, away diagonal 1.55, toward 1.89, toward diagonal 1.60 m/s. Depth ranges remain materially wider than the medians.
+- Every simulation plan walks at least one second. Some naturally blocked boundary approaches remain short of the path endpoint and require proof review.
+
+## Boundary and integration follow-up
+- a35fffe fixes placement restoring the previous pose; a1b15e3 adds the new depth sheets and playback rates.
+- A first real render found two zero-frame road beats: their clicks were below the caption boundary and were rejected before navigation. Their requested clicks are now in the playable viewport. The actual foreground-tree crossing remains unsupported by the floor geometry; proof must distinguish nearest reachable walking from a real foreground crossing.
+- Closed-loop routing now checks a second stance before taking a temporary sideways step and can pivot into a safe partial stance on a heading change. This resolves several boundary dead ends without moving the planted anchor.
+- Half-stride arrival now considers the stride aimed at the remaining target at a turn, rather than only the incoming cycle.
+- Concurrent uncommitted API derivation work invalidated the cached road during the town replay; the failed record created by this replay was recovered from the already-loaded scene. The API proof now uses committed API source in an isolated temporary runtime and a copied database. No unrelated source edits were reverted. The replay ledger path is explicit.
+- Completed pre-fix render: 0 off-floor frames throughout; two rejected caption clicks produced no walking. Its outputs were retained in verification-06/walkstats-first-render.txt. Full final capture is being refreshed after the fixes.
+
+## Latest verification progress
+- dea7c81: validate the incoming handoff before drawing an old-cycle pose that would leave the body mask; ten focused motor tests pass.
+- 1639a1f: an object with no reachable floor in front now falls back to the nearest reachable floor. This fixes a second cause of the empty tree-front beat: the click hit the fishing net and its approach routine returned without walking.
+- f652d05: final generation ledger (2 Kling, 1 BRIA, 0 edits). Concurrent `CALL 04a` entries belong to separate floor work and were preserved without staging them.
+- Latest full suite: 358 tests in 31 files passed. Engine/game/API typechecks and lint pass. Three root-motion registration tests pass. verify:art anchors pass with existing art-consistency warnings.
+- `playtest-town.mjs --run=10 --ledger=tmp/walkqa/api-proof-env/api/data/calls.jsonl`: **FAIL**, `parent timed out`, with all recorded API calls cached. Road/alley cardinal walks and narrative edits completed; return from the edited alley stopped near (374,905), with target (352,942). Evidence: verification-06/town-stop-latest.json and town-switch-clearance.log. This is an open integration failure, not a passed journey.
+- A fresh capture of all four scenes is running at code 1639a1f. Do not treat earlier partial JSON files as proof clips. The final audit will run only after all renderers finish.

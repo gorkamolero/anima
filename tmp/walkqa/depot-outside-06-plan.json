@@ -1,0 +1,179 @@
+{
+  "place": "outside",
+  "beats": [
+    {
+      "name": "away-near",
+      "start": [
+        500,
+        900
+      ],
+      "click": [
+        500,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-near",
+      "start": [
+        500,
+        790
+      ],
+      "click": [
+        500,
+        925
+      ],
+      "frames": 72
+    },
+    {
+      "name": "away-far",
+      "start": [
+        400,
+        885
+      ],
+      "click": [
+        400,
+        785
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-far",
+      "start": [
+        400,
+        790
+      ],
+      "click": [
+        400,
+        915
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-near",
+      "start": [
+        350,
+        880
+      ],
+      "click": [
+        700,
+        880
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-far",
+      "start": [
+        350,
+        820
+      ],
+      "click": [
+        700,
+        820
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal",
+      "start": [
+        350,
+        860
+      ],
+      "click": [
+        700,
+        800
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-right",
+      "start": [
+        350,
+        860
+      ],
+      "click": [
+        700,
+        800
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-left",
+      "start": [
+        650,
+        810
+      ],
+      "click": [
+        300,
+        900
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-left",
+      "start": [
+        680,
+        860
+      ],
+      "click": [
+        300,
+        800
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-right",
+      "start": [
+        350,
+        810
+      ],
+      "click": [
+        700,
+        900
+      ],
+      "frames": 72
+    },
+    {
+      "name": "object-click",
+      "start": [
+        350,
+        850
+      ],
+      "object": "Bench",
+      "frames": 180
+    },
+    {
+      "name": "post-behind",
+      "start": [
+        400,
+        810
+      ],
+      "click": [
+        740,
+        830
+      ],
+      "frames": 120
+    },
+    {
+      "name": "post-front",
+      "start": [
+        300,
+        860
+      ],
+      "click": [
+        740,
+        890
+      ],
+      "frames": 120
+    },
+    {
+      "name": "exit",
+      "start": [
+        1330,
+        800
+      ],
+      "exit": "door",
+      "frames": 144
+    }
+  ]
+}

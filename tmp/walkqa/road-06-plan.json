@@ -1,0 +1,216 @@
+{
+  "place": "place-f2d0a7f7f76225002663",
+  "start": [
+    960,
+    925
+  ],
+  "beats": [
+    {
+      "name": "away-near",
+      "click": [
+        1000,
+        800
+      ],
+      "frames": 72,
+      "start": [
+        1000,
+        925
+      ]
+    },
+    {
+      "name": "toward-near",
+      "start": [
+        1000,
+        790
+      ],
+      "click": [
+        1000,
+        925
+      ],
+      "frames": 72
+    },
+    {
+      "name": "away-far",
+      "start": [
+        1000,
+        860
+      ],
+      "click": [
+        1000,
+        740
+      ],
+      "frames": 72
+    },
+    {
+      "name": "toward-far",
+      "start": [
+        970,
+        755
+      ],
+      "click": [
+        970,
+        870
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-near",
+      "start": [
+        900,
+        890
+      ],
+      "click": [
+        1180,
+        890
+      ],
+      "frames": 72
+    },
+    {
+      "name": "side-far",
+      "start": [
+        750,
+        800
+      ],
+      "click": [
+        1150,
+        800
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal",
+      "start": [
+        840,
+        900
+      ],
+      "click": [
+        1080,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-right",
+      "start": [
+        840,
+        900
+      ],
+      "click": [
+        1080,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-left",
+      "start": [
+        1080,
+        790
+      ],
+      "click": [
+        840,
+        900
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-away-left",
+      "start": [
+        1080,
+        900
+      ],
+      "click": [
+        840,
+        790
+      ],
+      "frames": 72
+    },
+    {
+      "name": "diagonal-toward-right",
+      "start": [
+        840,
+        790
+      ],
+      "click": [
+        1080,
+        900
+      ],
+      "frames": 72
+    },
+    {
+      "name": "object-click",
+      "start": [
+        900,
+        850
+      ],
+      "object": "right lobster trap",
+      "frames": 180
+    },
+    {
+      "name": "trap-behind",
+      "start": [
+        900,
+        850
+      ],
+      "click": [
+        1400,
+        870
+      ],
+      "frames": 180
+    },
+    {
+      "name": "trap-front",
+      "click": [
+        1500,
+        940
+      ],
+      "frames": 180,
+      "start": [
+        950,
+        925
+      ]
+    },
+    {
+      "name": "tree-behind",
+      "start": [
+        1000,
+        810
+      ],
+      "click": [
+        410,
+        810
+      ],
+      "frames": 180
+    },
+    {
+      "name": "tree-front",
+      "click": [
+        400,
+        940
+      ],
+      "frames": 180,
+      "start": [
+        1150,
+        880
+      ]
+    },
+    {
+      "name": "exit",
+      "start": [
+        970,
+        790
+      ],
+      "exit": "edge-left",
+      "frames": 144
+    },
+    {
+      "name": "far-exit",
+      "start": [
+        1000,
+        900
+      ],
+      "exit": "far",
+      "frames": 144
+    }
+  ]
+}
