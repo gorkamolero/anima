@@ -532,7 +532,7 @@ export class StoryGameScene extends BaseScene {
 				!this.openWorldBusy
 			) {
 				this.exitLatch = exit.id;
-				this.hermesMotor.stop();
+				this.hermesMotor?.stop();
 				void this.triggerExit(exit);
 			}
 		}
@@ -656,6 +656,15 @@ export class StoryGameScene extends BaseScene {
 					if (this.hermesSprite) this.hermesSprite.anims.timeScale = rate;
 				},
 			);
+			this.rootFrame = "";
+			this.hermesMotor.presentOffset = (offset) => {
+				const sprite = this.hermesSprite;
+				if (sprite)
+					sprite.setDisplayOrigin(
+						sprite.width / 2 - offset.x / sprite.scaleX,
+						sprite.height - offset.y / sprite.scaleY,
+					);
+			};
 			this.hermesMotor.rootStep = (_direction, tangent) => {
 				const sprite = this.hermesSprite;
 				if (!sprite) return 0;
@@ -666,6 +675,7 @@ export class StoryGameScene extends BaseScene {
 				this.rootFrame = token;
 				const metadata = this.cache.json.get(`${key}-meta`) as {
 					rootMotion?: { dx: number; dy: number }[];
+					visualRoot?: { x: number; y: number }[];
 				};
 				const motion = metadata?.rootMotion?.[frame];
 				if (!motion) return 0;
@@ -698,7 +708,14 @@ export class StoryGameScene extends BaseScene {
 								(nextScale - sprite.scaleX);
 					}
 				}
-				return pixels;
+				const root = metadata.visualRoot?.[frame] ?? { x: 0, y: 0 };
+				const transverse =
+					(root.x * sign * -tangent.y + root.y * tangent.x) * sprite.scaleX;
+				return {
+					distance: pixels,
+					offset: { x: -tangent.y * transverse, y: tangent.x * transverse },
+					cycle: `${key}:${sign}`,
+				};
 			};
 		}
 		this.setSceneBackground(

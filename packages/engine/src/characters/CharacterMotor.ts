@@ -28,7 +28,23 @@ export class CharacterMotor {
 	private start: Point = { x: 0, y: 0 };
 	private resolve?: () => void;
 	/** Optional animation-owned displacement in screen pixels for this update. */
-	rootStep?: (direction: WalkDirection, tangent: Point) => number;
+	rootStep?: (
+		direction: WalkDirection,
+		tangent: Point,
+	) =>
+		| number
+		| {
+				distance: number;
+				offset: Point;
+				cycle: string;
+		  };
+	/** Presentation only: navigation, perspective and depth use target.x/y. */
+	visualOffset: Point = { x: 0, y: 0 };
+	presentOffset?: (offset: Point) => void;
+	private offsetCycle = "";
+	private offsetEase = 0;
+	private offsetFrom: Point = { x: 0, y: 0 };
+	private offsetGoal: Point = { x: 0, y: 0 };
 	constructor(
 		readonly target: MotorTarget,
 		public area: WalkArea,
@@ -47,6 +63,10 @@ export class CharacterMotor {
 	}
 	stop(): void {
 		this.walking = false;
+		this.offsetFrom = { ...this.visualOffset };
+		this.offsetGoal = { x: 0, y: 0 };
+		this.offsetEase = (4 * 1000) / 24;
+		this.offsetCycle = "";
 		this.path = [];
 		this.animate("idle", this.heading, 1);
 		const resolve = this.resolve;
@@ -58,6 +78,9 @@ export class CharacterMotor {
 		const cell = nearestCell(this.area.mask, position);
 		if (cell < 0) throw new Error("Walk area has no floor");
 		const p = cellPoint(this.area.mask, cell);
+		this.visualOffset = { x: 0, y: 0 };
+		this.offsetGoal = { x: 0, y: 0 };
+		this.offsetEase = 0;
 		this.target.setPosition(p.x, p.y);
 		this.applyPresentation();
 	}
@@ -78,8 +101,18 @@ export class CharacterMotor {
 				scaleAt(this.area.perspective, this.target, this.area.scaleClamp),
 		);
 		this.target.setDepth(10 + this.target.y / 20);
+		this.presentOffset?.(this.visualOffset);
 	}
 	update(delta: number): void {
+		if (this.offsetEase > 0) {
+			this.offsetEase = Math.max(0, this.offsetEase - delta);
+			const t = 1 - this.offsetEase / ((4 * 1000) / 24);
+			const eased = t * t * (3 - 2 * t);
+			this.visualOffset = {
+				x: this.offsetFrom.x + (this.offsetGoal.x - this.offsetFrom.x) * eased,
+				y: this.offsetFrom.y + (this.offsetGoal.y - this.offsetFrom.y) * eased,
+			};
+		}
 		if (this.walking && delta > 0) {
 			const p = this.area.perspective;
 			let position = toMetres(p, this.target),
@@ -120,10 +153,20 @@ export class CharacterMotor {
 				);
 				this.animate("walk", this.heading, 1);
 				const length = Math.hypot(next.x - screen.x, next.y - screen.y);
-				let pixels = this.rootStep(this.heading, {
+				const step = this.rootStep(this.heading, {
 					x: (next.x - screen.x) / length,
 					y: (next.y - screen.y) / length,
 				});
+				let pixels = typeof step === "number" ? step : step.distance;
+				if (typeof step !== "number") {
+					if (this.offsetCycle !== step.cycle) {
+						this.offsetFrom = { ...this.visualOffset };
+						this.offsetEase = (4 * 1000) / 24;
+						this.offsetCycle = step.cycle;
+					}
+					this.offsetGoal = step.offset;
+					if (this.offsetEase === 0) this.visualOffset = step.offset;
+				}
 				while (pixels < 0) {
 					const previous =
 						this.index > 0

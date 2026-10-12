@@ -11,7 +11,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 
-def register(previous, current, roi, radius=20, prediction=(0, 0)):
+def register(previous, current, roi, radius=64, prediction=(0, 0)):
     """Integer SSD on premultiplied RGB plus alpha, then a parabola per axis."""
     x0, y0, x1, y1 = roi
     def weighted(image):
@@ -55,15 +55,11 @@ def extract(sheet, axis, travel, debug):
         previous = frames[i-1]
         ys, xs = np.nonzero(previous[:, :, 3] > 127)
         center = w//2
-        top, bottom = max(0, int(ys.max()-.07*(ys.max()-ys.min()))), min(h, int(ys.max()+1))
+        top, bottom = max(0, int(ys.max()-.09*(ys.max()-ys.min()))), min(h, int(ys.max()+1))
         rois = [[max(0, int(xs.min())-6), top, center+4, bottom], [center-4, top, min(w, int(xs.max())+7), bottom]]
         choices = []
         for foot, roi in zip(('left', 'right'), rois):
             result = register(previous, frame, roi)
-            if result['boundary']:
-                # Fast profile feet exceed 20 source pixels/frame. Recenter the
-                # same +/-20 search on its boundary estimate rather than clamp.
-                result = register(previous, frame, roi, prediction=(result['dx'], result['dy']))
             weights = previous[roi[1]:roi[3], roi[0]:roi[2], 3].astype(float)
             yy, xx = np.indices(weights.shape)
             mass = max(1, weights.sum())
@@ -84,7 +80,7 @@ def extract(sheet, axis, travel, debug):
             next_costs, next_paths = [], []
             for k, r in enumerate(pair['candidates']):
                 previous = min((0,1), key=lambda j: costs[j]+(.2 if j != k else 0))
-                next_costs.append(costs[previous]+(.2 if previous != k else 0)+r['residual']+.01*max(0,r['d'+axis]*travel))
+                next_costs.append(costs[previous]+(.2 if previous != k else 0)+r['residual']+.25*max(0,r['d'+axis]*travel))
                 next_paths.append(paths[previous]+[k])
             costs, paths = next_costs, next_paths
         end = min((0,1), key=lambda k: costs[k]+(.2 if k != initial else 0))
@@ -97,7 +93,12 @@ def extract(sheet, axis, travel, debug):
     m['footRegistration'] = pairs
     m['footContacts'] = [{'x': p['chosen']['point']['x']+p['chosen']['dx'], 'y': p['chosen']['point']['y']+p['chosen']['dy']} for p in pairs]
     m['rootMotionAxis'] = axis
-    m['rootMotionMethod'] = 'foot-roi-ssd-v2; body displacement = minus registered foot shift; no smoothing'
+    m['rootMotionMethod'] = 'foot-roi-ssd-v3; 64px search; directional cyclic stance; body displacement = minus registered foot shift'
+    # Periodic, zero-mean displacement relative to average cycle travel.
+    vectors = np.array([[r['dx'], r['dy']] for r in m['rootMotion']])
+    offsets = np.cumsum(vectors - vectors.mean(axis=0), axis=0)
+    offsets -= offsets.mean(axis=0)
+    m['visualRoot'] = [{'x': float(x), 'y': float(y)} for x, y in offsets]
     sheet.write_text(json.dumps(m, indent='\t')+'\n')
     debug.mkdir(parents=True, exist_ok=True)
     canvas = Image.new('RGB', (4*320, ((len(frames)+3)//4)*150), '#777777')

@@ -97,4 +97,23 @@ describe("CharacterMotor", () => {
 		expect(headings[1]).toBe("right");
 		expect(target.x).toBeCloseTo(970);
 	});
+	it("keeps visual sway out of navigation and eases it to zero in four frames", () => {
+		const { motor, target } = setup();
+		motor.rootStep = () => ({
+			distance: 2,
+			offset: { x: 0, y: 6 },
+			cycle: "side",
+		});
+		void motor.walk([{ x: 1100, y: 920 }]);
+		for (let i = 0; i < 6; i++) motor.update(1000 / 24);
+		expect(target.y).toBe(920);
+		expect(motor.visualOffset.y).toBe(6);
+		motor.stop();
+		motor.update(1000 / 24);
+		expect(motor.visualOffset.y).toBeGreaterThan(0);
+		expect(motor.visualOffset.y).toBeLessThan(6);
+		for (let i = 0; i < 4; i++) motor.update(1000 / 24);
+		expect(motor.visualOffset.y).toBe(0);
+		expect(target.y).toBe(920);
+	});
 });
