@@ -1,6 +1,18 @@
-import type { FloorMask } from "@anima/engine";
+import type { Exit, FloorMask } from "@anima/engine";
 
 export type { FloorMask } from "@anima/engine";
+
+/** Narrative travel must not rebind an exit already leading somewhere else. */
+export function narrativeDeparture(
+	exits: readonly Exit[],
+	destination: string,
+	defaultKind: Exit["kind"],
+): Exit | undefined {
+	return (
+		exits.find((exit) => exit.to === destination) ??
+		exits.find((exit) => exit.kind === defaultKind && !exit.to)
+	);
+}
 
 // Clip cached floor geometry above captions after footprint erosion.
 export function clipFloorBelow(mask: FloorMask, maxY: number): FloorMask {

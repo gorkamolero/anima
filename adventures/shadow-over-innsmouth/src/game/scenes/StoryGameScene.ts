@@ -50,7 +50,11 @@ import {
 	type SceneCharacterState,
 	type ScenePoint,
 } from "./standaloneScenes";
-import { clipFloorBelow, type FloorMask } from "./worldGeometry";
+import {
+	clipFloorBelow,
+	type FloorMask,
+	narrativeDeparture as findNarrativeDeparture,
+} from "./worldGeometry";
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
@@ -1852,14 +1856,11 @@ export class StoryGameScene extends BaseScene {
 				const travel = resolution.travel;
 				const narrativeDeparture = !this.travellingExit;
 				if (narrativeDeparture) {
-					const departure =
-						travel.kind === "anchor"
-							? this.sceneExits.find((e) => e.to === travel.to)
-							: this.sceneExits.find(
-									(e) =>
-										e.kind ===
-										(this.locationId() === "outside" ? "edge-left" : "far"),
-								);
+					const departure = findNarrativeDeparture(
+						this.sceneExits,
+						travel.to,
+						this.locationId() === "outside" ? "edge-left" : "far",
+					);
 					if (departure)
 						this.travellingExit = { from: this.locationId(), exit: departure };
 				}
