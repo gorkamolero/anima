@@ -322,7 +322,7 @@ async function walkPlace(step) {
 			arrival.distance > arrival.halfStride + 1e-6 ||
 			!cut ||
 			!cut.matched ||
-			cut.waitFrames > Math.floor(cut.cycleFrames / 2) ||
+			cut.waitFrames >= cut.cycleFrames ||
 			Math.hypot(cut.from.x - cut.to.x, cut.from.y - cut.to.y) > 1
 		)
 			throw new Error(
