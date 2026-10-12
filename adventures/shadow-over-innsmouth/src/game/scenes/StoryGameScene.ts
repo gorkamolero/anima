@@ -1349,11 +1349,12 @@ export class StoryGameScene extends BaseScene {
 					const interior = nearestCell(approachMask, point);
 					if (interior >= 0) {
 						const candidate = cellPoint(approachMask, interior);
-						const end = findPath(
+						const route = findPath(
 							exitMask,
 							this.hermesSprite ?? point,
 							candidate,
-						).at(-1);
+						);
+						const end = route[route.length - 1];
 						if (end && Math.hypot(end.x - candidate.x, end.y - candidate.y) < 1)
 							approach = candidate;
 					}
