@@ -19,9 +19,11 @@ import {
 	nearestCell,
 	nearestReachable,
 	type Occluder,
+	objectFootprints,
 	refineMask,
 	type SceneConfig,
 	scaleAt,
+	subtractFootprints,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
@@ -1293,6 +1295,13 @@ export class StoryGameScene extends BaseScene {
 				data: [...this.visibleFloor.data],
 			};
 			bridgeOccluders(bridged, this.objectLayers);
+			const footprints = objectFootprints(
+				bridged,
+				this.objectLayers,
+				this.walkArea.perspective,
+			);
+			subtractFootprints(bridged, footprints);
+			this.walkArea.objectFootprints = footprints;
 			this.walkArea.rawMask = bridged;
 			this.walkArea.mask = clipFloorBelow(
 				erode(bridged, this.walkArea.perspective),

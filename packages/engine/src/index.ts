@@ -91,6 +91,7 @@ export { InventoryManager } from "./inventory";
 export { bridgeFloor, bridgeOccluders, floorPixel } from "./occlusion/bridge";
 export type { Exit } from "./occlusion/exits";
 export { exitAt, exitAtArrival } from "./occlusion/exits";
+export { objectFootprints, subtractFootprints } from "./occlusion/footprints";
 export type { Occluder } from "./occlusion/occlusion";
 export { baselineYAt, depthForOccluder, isBehind } from "./occlusion/occlusion";
 // Re-export submodules
