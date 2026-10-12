@@ -133,3 +133,8 @@ Limits: 4 image edits, 4 Kling videos, 4 BRIA removals. No Veo.
 | CALL 97 | 2026-10-12T01:27:29.639Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | floor segmentation |
 | CALL 98 | 2026-10-12T01:27:30.915Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | floor segmentation retry |
 | CALL 99 | 2026-10-12T01:27:33.022Z | 9507cfcd87bb8425844ab6d3371e34c4b44f2010427a33918f9cb565cfdbc781 | road segmentation fallback |
+
+# Brief 06 paid-call ledger
+
+Limits: 2 Kling videos, 2 BRIA removals, 2 image edits only if needed. No Veo.
+Current: 0 videos, 0 BRIA, 0 edits.
