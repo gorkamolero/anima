@@ -1,0 +1,12 @@
+{
+  "model": "fal-ai/nano-banana-2/edit",
+  "prompt": "The exact same image. Change only the legs and feet: he now stands still, both feet flat on the ground side by side, knees straight, weight even. Do not change the planted foot's position, or the head, torso, arms, satchel, clothes, framing or size.",
+  "image_urls": [
+    "source.png"
+  ],
+  "aspect_ratio": "auto",
+  "num_images": 1,
+  "output_format": "png",
+  "limit_generations": true,
+  "resolution": "1K"
+}

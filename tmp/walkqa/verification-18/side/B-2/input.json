@@ -1,0 +1,12 @@
+{
+  "model": "fal-ai/nano-banana-2/edit",
+  "prompt": "The exact same image. Change only the legs and feet: he now stands still, both feet flat on the ground side by side, knees straight, weight even. Do not change the planted foot's position, or the head, torso, arms, satchel, clothes, framing or size. Treat all unedited regions as locked pixels. Preserve the exact original face, glasses, hair, bag shape, strap, jacket outline, boot coordinates and character proportions. No redrawing, rescaling, recentering or reframing. Flat RGB 128 grey background. The planted boot is the rear boot on the RIGHT of this image, with its heel at the far right. Keep this entire rightmost boot EXACTLY where and how it is: same outline, orientation, heel and sole height. Straighten the knees above that fixed boot. Bring only the other boot beside it. Do not spread the feet or rotate either foot toward the camera. The upper body must remain at its original pixel coordinates. Preserve the 612 by 1059 composition.",
+  "image_urls": [
+    "source.png"
+  ],
+  "aspect_ratio": "auto",
+  "num_images": 1,
+  "output_format": "png",
+  "limit_generations": true,
+  "resolution": "1K"
+}

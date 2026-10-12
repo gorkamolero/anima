@@ -1,0 +1,50 @@
+{
+  "name": "candidate-side",
+  "image": "stop-sheet.png",
+  "frameWidth": 612,
+  "frameHeight": 1059,
+  "frameCount": 3,
+  "cols": 3,
+  "rows": 1,
+  "fps": 24,
+  "contacts": [
+    {
+      "R": {
+        "x": 356.68832914070987,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 265,
+        "y": 1030
+      }
+    },
+    {
+      "R": {
+        "x": 356.68832914070987,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 265,
+        "y": 1030
+      }
+    },
+    {
+      "R": {
+        "x": 356.68832914070987,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 286,
+        "y": 1011
+      }
+    }
+  ],
+  "switchFrames": [],
+  "status": "REJECTED: planted boot redrawn, upper-body seam exceeds 4px",
+  "sourceFrame": 29,
+  "reference": "hermes-fal-veo-transparent-loop",
+  "contactsValidated": false
+}
