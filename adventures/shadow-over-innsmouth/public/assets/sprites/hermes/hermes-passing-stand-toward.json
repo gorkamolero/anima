@@ -1,0 +1,152 @@
+{
+	"name": "hermes-passing-stand-toward",
+	"image": "hermes-passing-stand-toward.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 24,
+	"contacts": [
+		{
+			"L": {
+				"x": 334.3629385060109,
+				"y": 966.0873976116744
+			},
+			"planted": "L",
+			"R": {
+				"x": 247.86,
+				"y": 980.34
+			}
+		}
+	],
+	"switchFrames": [],
+	"bootSoles": [
+		{
+			"L": {
+				"x": 323.34,
+				"y": 985.32
+			},
+			"R": {
+				"x": 247.86,
+				"y": 986.34
+			}
+		}
+	],
+	"normalization": {
+		"direction": "toward",
+		"reference": "hermes-walk-toward",
+		"sourceFrame": 13,
+		"editAttempt": 2,
+		"sourceCanvas": [612, 1059],
+		"generatedCanvas": [953, 1650],
+		"uniformScale": 1.0199999999999996,
+		"translation": [0, 0],
+		"scaleTrials": [
+			{
+				"scale": 1.0,
+				"objective": 20.333179639848183,
+				"boot": {
+					"dx": -0.34248243338620327,
+					"dy": -15.966288518524788,
+					"residual": 0.0031669135228509036,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.005,
+				"objective": 16.16076052227153,
+				"boot": {
+					"dx": 0.17153311114331257,
+					"dy": -12.925967329105973,
+					"residual": 0.0034338823561054564,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0099999999999998,
+				"objective": 9.412995869408185,
+				"boot": {
+					"dx": -0.3086477379420418,
+					"dy": -7.59063030108132,
+					"residual": 0.0029962356142182248,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0149999999999997,
+				"objective": 4.856553968382732,
+				"boot": {
+					"dx": 0.5823280323482438,
+					"dy": -3.8937772166091253,
+					"residual": 0.0029600440978184194,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0199999999999996,
+				"objective": 1.6040746943757418,
+				"boot": {
+					"dx": -0.16099864459655924,
+					"dy": -0.929942997537946,
+					"residual": 0.0030617685319287015,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0249999999999995,
+				"objective": 3.6981787883214894,
+				"boot": {
+					"dx": 0.6506479710193243,
+					"dy": 2.6185390604003573,
+					"residual": 0.0032043528673771633,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0299999999999994,
+				"objective": 9.083111279795194,
+				"boot": {
+					"dx": 1.5124775370392936,
+					"dy": 7.164670410764347,
+					"residual": 0.003652112755522795,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0349999999999993,
+				"objective": 13.5518667121166,
+				"boot": {
+					"dx": 0.6676901635736815,
+					"dy": 11.072437321132114,
+					"residual": 0.0034365209106199143,
+					"boundary": false
+				}
+			},
+			{
+				"scale": 1.0399999999999991,
+				"objective": 17.69865885975629,
+				"boot": {
+					"dx": 1.5924920164654293,
+					"dy": 14.707039842075357,
+					"residual": 0.003790015203834941,
+					"boundary": false
+				}
+			}
+		],
+		"upperBodyRegistration": {
+			"dx": -0.28499222395023327,
+			"dy": 0.0047056256900246405,
+			"residual": 0.006741316968377958,
+			"boundary": false
+		},
+		"method": "restore full canvas, preserve generated alpha, single whole-image uniform scale plus upper-body translation, scale fitted to preserved planted boot",
+		"plantedBootRegistration": {
+			"dx": -0.16099864459655924,
+			"dy": -0.929942997537946,
+			"residual": 0.0030617685319287015,
+			"boundary": false
+		},
+		"retired": "hermes-matched-stand-toward"
+	}
+}
