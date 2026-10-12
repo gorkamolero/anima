@@ -107,12 +107,9 @@ function report(error) {
 	writeFileSync(resolve(out, "journey.md"), md);
 }
 async function frame(step, extra = {}) {
-	const data = evaluate("window.__anima.captureFrame()");
+	const data = evaluate('window.__anima.captureFrame({format:"png"})');
 	const name = `${String(++index).padStart(2, "0")}-run${run}-${step}.png`;
-	const r = spawnSync("magick", ["jpeg:-", resolve(out, name)], {
-		input: Buffer.from(data.split(",")[1], "base64"),
-	});
-	if (r.status !== 0) throw new Error("Frame conversion failed");
+	writeFileSync(resolve(out, name), Buffer.from(data.split(",")[1], "base64"));
 	records.push({ step, frame: name, ms: 0, ...extra });
 	report();
 	console.log(step, extra.caption ?? "");
