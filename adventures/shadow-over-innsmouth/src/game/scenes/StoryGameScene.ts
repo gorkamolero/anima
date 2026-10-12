@@ -1374,6 +1374,9 @@ export class StoryGameScene extends BaseScene {
 				break;
 			}
 		}
+		// A foreground object can have no floor beyond its baseline. Still walk
+		// to the nearest reachable edge instead of dropping the click entirely.
+		if (!path.length) path = this.previewWalk(x, y);
 		if (!path.length) {
 			this.emitOpenWorldState({
 				status: "error",
