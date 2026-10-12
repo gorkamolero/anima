@@ -1,0 +1,11 @@
+{
+  "model": "alibaba/wan-3.0/image-to-video",
+  "duration": 2,
+  "resolution": "480p",
+  "audio": false,
+  "enable_prompt_expansion": false,
+  "aspect_ratio": "adaptive",
+  "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+  "start_image_url": "away-right-first.png",
+  "end_image_url": "away-right-last.png"
+}
