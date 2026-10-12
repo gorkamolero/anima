@@ -75,7 +75,12 @@
 			"limit_generations": true
 		},
 		"requestId": "01a12db0-3a5e-7060-9644-72c448fa44ab",
-		"output": "tmp/hermes-diagonals/away-right-edit.png"
+		"output": "tmp/hermes-diagonals/away-right-edit.png",
+		"references": [
+			"docs/art/@hermes.jpeg",
+			"tmp/hermes-directions/side-reference.png",
+			"tmp/hermes-directions/idle-reference.png"
+		]
 	},
 	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-away-right-preview-3x.mp4",
 	"qcMagenta": "tmp/hermes-diagonals/away-right-loop-sheet.png"

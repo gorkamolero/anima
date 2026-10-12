@@ -10,6 +10,7 @@ import {
 	type Exit,
 	erode,
 	exitAt,
+	exitAtArrival,
 	type FootCycle,
 	type FootPose,
 	findPath,
@@ -211,6 +212,7 @@ export class StoryGameScene extends BaseScene {
 	}[] = [];
 	private sceneExits: Exit[] = [];
 	private exitLatch?: string;
+	private requestedExit?: string;
 	private approachingObject = false;
 	private visibleFloor?: FloorMask;
 	private geometryGeneration = 0;
@@ -540,7 +542,14 @@ export class StoryGameScene extends BaseScene {
 			// Scene update follows Phaser's normal pre-update depth sort. Flush
 			// changed baselines now so this captured frame uses its own order.
 			this.children.depthSort();
-			const exit = exitAt(this.hermesSprite, this.sceneExits);
+			const exit =
+				exitAt(this.hermesSprite, this.sceneExits) ??
+				exitAtArrival(
+					this.hermesSprite,
+					this.requestedExit,
+					this.hermesMotor?.snapshot().arrival,
+					this.sceneExits,
+				);
 			if (!exit) this.exitLatch = undefined;
 			if (
 				exit &&
@@ -1028,7 +1037,12 @@ export class StoryGameScene extends BaseScene {
 			sprite = this.hermesSprite;
 		if (!area || !sprite || this.inputBlocked) return;
 		const path = this.previewWalk(x, y);
-		await this.walkHermesPath(path);
+		this.requestedExit = exitAt({ x, y }, this.sceneExits)?.id;
+		try {
+			await this.walkHermesPath(path);
+		} finally {
+			this.requestedExit = undefined;
+		}
 	}
 
 	private updateReviewHotspotHover(): void {

@@ -33,3 +33,26 @@ export function exitAt(point: Point, exits: readonly Exit[]): Exit | undefined {
 		return inside;
 	});
 }
+
+/** A specifically requested exit may complete at the nearest valid footfall. */
+export function exitAtArrival(
+	position: Point,
+	requestedId: string | undefined,
+	arrival: { target: Point; halfStride: number } | undefined,
+	exits: readonly Exit[],
+): Exit | undefined {
+	if (
+		!requestedId ||
+		!arrival ||
+		!Number.isFinite(arrival.halfStride) ||
+		arrival.halfStride < 0
+	)
+		return undefined;
+	if (
+		Math.hypot(position.x - arrival.target.x, position.y - arrival.target.y) >
+		arrival.halfStride + 1e-6
+	)
+		return undefined;
+	const exit = exitAt(arrival.target, exits);
+	return exit?.id === requestedId ? exit : undefined;
+}

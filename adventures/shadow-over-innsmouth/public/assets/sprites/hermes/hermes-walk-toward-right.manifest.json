@@ -74,7 +74,12 @@
 			"limit_generations": true
 		},
 		"requestId": "01a12db1-5310-7a92-90e2-6b3d87f3f0e4",
-		"output": "tmp/hermes-diagonals/toward-right-edit.png"
+		"output": "tmp/hermes-diagonals/toward-right-edit.png",
+		"references": [
+			"docs/art/@hermes.jpeg",
+			"tmp/hermes-directions/side-reference.png",
+			"tmp/hermes-directions/idle-reference.png"
+		]
 	},
 	"loopPreview": "adventures/shadow-over-innsmouth/public/assets/sprites/hermes/hermes-walk-toward-right-preview-3x.mp4",
 	"qcMagenta": "tmp/hermes-diagonals/toward-right-loop-sheet.png"

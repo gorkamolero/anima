@@ -84,6 +84,7 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 ## Commits
 
 - 0fa659c: baseline and call ledger.
+- daebd44: half-stride arrival regression assertions and idle sole identity.
 - f0b950e: diagonal assets, physical-foot metadata and call provenance.
 - ef10c0c: contact-driven motor, local view heading sectors, tests, adapter and capture telemetry.
 
@@ -92,6 +93,9 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 
 - Milestone: second side trial remains FAIL, 11.24px, worst 28-39 (`tmp/walkqa/trial-05b/side-near-worst.png`). Early profile handoff was rejected because it anchored the still-swinging boot; restored profile switches 3/21. Full capture runs use the later reviewed data.
 - Town replay first attempt stopped at the obsolete 2px arrival assertion. Updated to independently require half-stride distance and a switch frame. Retry pending.
+
+- Milestone: all three non-road exit retries now complete and release input after the explicit-exit/half-stride integration fix. Source walking clips are separated at the actual scene transition; full uncut videos, full telemetry and destination frames are retained under `tmp/walkqa/transitions-05/`. This prevents a second background from corrupting the checker median. No walking frames are omitted from the source segment.
+- Verification after exit fix: 346 tests pass; engine, game and API typecheck/lint pass. Town replay is now reaching both return exits; final summary pending.
 
 ## Open failures
 
