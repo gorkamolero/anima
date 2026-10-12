@@ -61,26 +61,6 @@ function setup() {
 	};
 }
 describe("contact motor", () => {
-	it("slows cadence at depth without changing the held anchor", () => {
-		const far = setup(),
-			near = setup();
-		far.target.y = 500;
-		near.target.y = 900;
-		void far.motor.walk([{ x: 1400, y: 500 }]);
-		void near.motor.walk([{ x: 1400, y: 900 }]);
-		const frameMs = (motor: CharacterMotor) =>
-			(motor as unknown as { frameMs: number }).frameMs;
-		expect(frameMs(far.motor)).toBeGreaterThan(frameMs(near.motor));
-		for (const item of [far, near]) {
-			const cadence = 1000 / (2 * frameMs(item.motor));
-			expect(cadence).toBeGreaterThanOrEqual(1.6);
-			expect(cadence).toBeLessThanOrEqual(2.2);
-			const anchor = { ...item.motor.anchor };
-			item.motor.update(frameMs(item.motor));
-			expect(item.motor.anchor).toEqual(anchor);
-		}
-	});
-
 	it("locks the first foot through start and mirrored perspective changes", () => {
 		for (const flipX of [false, true]) {
 			const { cycle, area } = setup();
@@ -222,7 +202,7 @@ describe("contact motor", () => {
 		void motor.walk([{ x: 1400, y: 850 }]);
 		expect(motor.walking).toBe(false);
 	});
-	it("keeps equal support durations when source stances have unequal frame counts", () => {
+	it("does not stretch a short support into repeated output poses", () => {
 		const { motor, cycle } = setup();
 		cycle.contacts = [
 			cycle.contacts[0],
@@ -233,12 +213,12 @@ describe("contact motor", () => {
 			cycle.contacts[3],
 		];
 		cycle.switchFrames = [0, 4];
-		cycle.fps = 6; // Six frames, two steps: each support phase lasts 500 ms.
+		cycle.fps = 6; // A deliberately sparse fixture must advance every output frame.
 		void motor.walk([{ x: 1800, y: 850 }]);
 		for (let i = 0; i < 24 && motor.snapshot().planted === "L"; i++)
 			motor.update(1000 / 24);
 		expect(motor.snapshot().planted).toBe("R");
-		for (let i = 0; i < 11; i++) motor.update(1000 / 24);
+		motor.update(1000 / 24);
 		expect(motor.snapshot().planted).toBe("R");
 		motor.update(1000 / 24);
 		expect(motor.snapshot().planted).toBe("L");

@@ -87,6 +87,10 @@ if (plan.start)
 evaluate(
 	`window.__anima.captureFrame({stepMs:0,width:${width},format:'png'}).then(()=>true)`,
 );
+if (!evaluate("window.__anima.scene.geometryReady"))
+	throw new Error(
+		"Scene object/floor geometry failed to load; refusing incomplete proof",
+	);
 const geometry = evaluate(
 	`(()=>{const s=window.__anima.scene;return {area:s.walkArea,location:s.locationId(),exits:s.sceneExits,objects:s.objectLayers.map(l=>l.data)}})()`,
 );

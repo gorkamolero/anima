@@ -18,9 +18,9 @@ describe("anchor walk area", () => {
 				if (area.mask.data[i])
 					expect(cellPoint(area.mask, i).y).toBeLessThanOrEqual(944);
 		});
-	it("does not connect the separated exterior bands", () => {
+	it("uses the full authored floor band before semantic exclusions", () => {
 		const a = walkAreaFromAnchor(REVIEW_SCENES.outside, { horizonY: 470 });
 		const path = findPath(a.mask, { x: 350, y: 900 }, { x: 1400, y: 900 });
-		expect(path[path.length - 1]?.x).toBeLessThan(760);
+		expect(path[path.length - 1]?.x).toBeGreaterThan(1300);
 	});
 });

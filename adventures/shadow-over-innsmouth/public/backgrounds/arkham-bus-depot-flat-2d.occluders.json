@@ -1,31 +1,82 @@
 [
 	{
-		"id": "bus-3bbdfa",
-		"label": "bus",
+		"id": "bench-6b9a9a",
+		"label": "bench",
 		"bbox": {
-			"x": 1470,
-			"y": 381,
-			"w": 192,
-			"h": 333
+			"x": 903,
+			"y": 613,
+			"w": 508,
+			"h": 242
 		},
 		"baseline": [
 			{
-				"x": 1546.5,
-				"y": 706
+				"x": 926.5,
+				"y": 822
+			},
+			{
+				"x": 1323.5,
+				"y": 855
+			},
+			{
+				"x": 1341.5,
+				"y": 850
+			},
+			{
+				"x": 1359.5,
+				"y": 824
+			},
+			{
+				"x": 1388.5,
+				"y": 831
+			},
+			{
+				"x": 1404.5,
+				"y": 828
+			}
+		],
+		"png": "arkham-bus-depot-flat-2d.occluder-bench-6b9a9a.png",
+		"maskCoverage": {
+			"referencePixels": 83719,
+			"retainedPixels": 83719,
+			"fraction": 1
+		}
+	},
+	{
+		"id": "bus-a161f2",
+		"label": "bus",
+		"bbox": {
+			"x": 1483,
+			"y": 472,
+			"w": 243,
+			"h": 304
+		},
+		"baseline": [
+			{
+				"x": 1540.5,
+				"y": 770
+			},
+			{
+				"x": 1544.5,
+				"y": 775
 			},
 			{
 				"x": 1548.5,
-				"y": 713
+				"y": 776
 			},
 			{
-				"x": 1550.5,
-				"y": 713
+				"x": 1552.5,
+				"y": 775
 			},
 			{
-				"x": 1551.5,
-				"y": 712
+				"x": 1555.5,
+				"y": 774
 			}
 		],
-		"png": "arkham-bus-depot-flat-2d.occluder-bus-3bbdfa.png"
+		"png": "arkham-bus-depot-flat-2d.occluder-bus-a161f2.png",
+		"maskCoverage": {
+			"referencePixels": 60656,
+			"retainedPixels": 60656,
+			"fraction": 1
+		}
 	}
 ]

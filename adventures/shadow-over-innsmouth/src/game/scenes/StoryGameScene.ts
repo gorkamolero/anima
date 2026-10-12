@@ -196,6 +196,7 @@ export class StoryGameScene extends BaseScene {
 	private katSeatedSprite?: Phaser.GameObjects.Sprite;
 	private hermesFacing: 1 | -1 = 1;
 	private walkArea?: WalkArea;
+	private geometryReady = false;
 	private hermesWalkDirection: WalkDirection = "left";
 	private hermesMotionState: CharacterAnimationState = "idle";
 	private reviewSceneId: ReviewSceneId = "outside";
@@ -648,6 +649,7 @@ export class StoryGameScene extends BaseScene {
 	private renderReviewScene(): void {
 		const scene = this.activeScene();
 		this.geometryGeneration++;
+		this.geometryReady = false;
 		for (const layer of this.objectLayers) layer.image.destroy();
 		this.objectLayers = [];
 		this.sceneExits = [];
@@ -1047,7 +1049,7 @@ export class StoryGameScene extends BaseScene {
 	public async walkGenerated(x: number, y: number): Promise<void> {
 		const area = this.walkArea,
 			sprite = this.hermesSprite;
-		if (!area || !sprite || this.inputBlocked) return;
+		if (!area || !sprite || this.inputBlocked || !this.geometryReady) return;
 		const exit = exitAt({ x, y }, this.sceneExits);
 		const destination = exit?.approach ?? { x, y };
 		const path = this.previewWalk(destination.x, destination.y);
@@ -1184,6 +1186,7 @@ export class StoryGameScene extends BaseScene {
 			};
 			this.interactables = payload.interactables ?? [];
 			await this.loadObjectGeometry();
+			this.geometryReady = true;
 			this.optionsCache.clear();
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
 			const location = this.locationId();
@@ -1199,6 +1202,13 @@ export class StoryGameScene extends BaseScene {
 					);
 			}, 2000);
 		} catch (error) {
+			this.geometryReady = false;
+			this.hermesMotor?.stop();
+			if (this.walkArea)
+				this.walkArea.mask = {
+					...this.walkArea.mask,
+					data: this.walkArea.mask.data.map(() => 0),
+				};
 			this.emitOpenWorldState({
 				status: "error",
 				message:
@@ -1311,6 +1321,7 @@ export class StoryGameScene extends BaseScene {
 			subtractFootprints(bridged, footprints);
 			this.walkArea.objectFootprints = footprints;
 			this.walkArea.rawMask = bridged;
+			this.visibleFloor = { ...bridged, data: [...bridged.data] };
 			this.walkArea.mask = clipFloorBelow(
 				erode(bridged, this.walkArea.perspective),
 				MAX_FEET_Y,

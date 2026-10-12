@@ -21,9 +21,14 @@ export interface Occluder {
 	bbox: { x: number; y: number; w: number; h: number };
 	baseline: Point[];
 	png: string;
+	maskCoverage?: {
+		referencePixels: number;
+		retainedPixels: number;
+		fraction: number;
+	};
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 18;
+const VERSION = 19;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -69,7 +74,10 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const scope = process.env.DERIVATION_BRIEF === "04a" ? "04a " : "";
+		const scope = ["04a", "07"].includes(process.env.DERIVATION_BRIEF ?? "")
+			? `${process.env.DERIVATION_BRIEF} `
+			: "";
+		const limit = scope === "07 " ? 60 : 120;
 		const count = previous
 			.split("\n")
 			.filter(
@@ -77,8 +85,10 @@ export function reserveSegmentation(key: string, label: string): void {
 					line.startsWith(`| CALL ${scope}`) &&
 					(scope || !line.startsWith("| CALL 04a ")),
 			).length;
-		if (count >= 120)
-			throw new Error("Occluder segmentation budget exhausted (120 calls)");
+		if (count >= limit)
+			throw new Error(
+				`Occluder segmentation budget exhausted (${limit} calls)`,
+			);
 		if (!previous)
 			appendFileSync(
 				ledger,
@@ -162,7 +172,7 @@ export function maskGeometry(
 		const contact = columns.filter(
 			([x, y]) =>
 				y >= Math.max(cutoff, minY + (maxY - minY) * supportFraction) &&
-				[1, 5, 10, 20].some((d) =>
+				[1, 5, 10, 20, 40, 60].some((d) =>
 					floorAt(floor, (x + 0.5) * sx, Math.min(1079, (y + 1) * sy + d)),
 				),
 		);
@@ -204,7 +214,7 @@ export function maskGeometry(
 /** SAM 2 spatial prompts avoid SAM 3's concept-union behavior for this art.
  * A reviewed crop-sheet response can populate the same image+box cache; its
  * response record retains both original and reviewed boxes for provenance. */
-async function segment(
+export async function segment(
 	bytes: Buffer,
 	object: LabelledBox,
 	width: number,
@@ -415,11 +425,11 @@ async function derive(
 			],
 			{ maxBuffer: 8 * 1024 * 1024 },
 		);
-		const cleaned = largestComponent({
+		const cleaned: FloorRaster = {
 			width: 1920,
 			height: 1080,
 			data: Array.from(raster, (v) => (v > 127 ? 1 : 0)),
-		});
+		};
 		const supportFraction = /\b(car|van|bus|truck)(?:s|es)?\b/i.test(
 			object.name,
 		)
@@ -470,7 +480,18 @@ async function derive(
 			"+repage",
 			resolve(source, "..", png),
 		]);
-		occluders.push({ id, label: object.name, ...geometry, png });
+		const referencePixels = cleaned.data.reduce((n, v) => n + v, 0);
+		occluders.push({
+			id,
+			label: object.name,
+			...geometry,
+			png,
+			maskCoverage: {
+				referencePixels,
+				retainedPixels: referencePixels,
+				fraction: 1,
+			},
+		});
 	}
 	await writeFile(
 		`${stem}.occluders.json`,

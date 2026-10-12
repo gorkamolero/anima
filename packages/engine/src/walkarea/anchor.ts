@@ -8,7 +8,12 @@ import type { WalkArea } from "./types";
 export function walkAreaFromAnchor(
 	scene: {
 		groundLine: GroundLineConfig;
-		freeWalkBounds?: { minX: number; maxX: number; minY?: number };
+		freeWalkBounds?: {
+			minX: number;
+			maxX: number;
+			minY?: number;
+			maxY?: number;
+		};
 		freeWalkRanges?: { minX: number; maxX: number }[];
 		characters: { hermes?: { scale: number } };
 	},
@@ -30,7 +35,7 @@ export function walkAreaFromAnchor(
 					y = ((Math.floor(i / width) + 0.5) * 1080) / height;
 				return ranges.some((r) => x >= r.minX && x <= r.maxX) &&
 					y >= (bounds.minY ?? 760) &&
-					y <= Math.min(line.getYAtX(x), maxFeetY)
+					y <= Math.min(bounds.maxY ?? line.getYAtX(x), maxFeetY)
 					? 1
 					: 0;
 			}),

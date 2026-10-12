@@ -13,6 +13,7 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "./footLock";
+import { stanceFrameMs } from "./stanceTiming";
 import { GROUND_SECTORS, type WalkDirection } from "./walkHeading";
 
 export interface MotorTarget extends Point {
@@ -339,7 +340,13 @@ export class CharacterMotor {
 			Math.min(1, (row - far) / Math.max(1, near - far)),
 		);
 		const cadence = 1.6 + 0.6 * depth;
-		this.frameMs = 1000 / (cadence * count);
+		const switches = this.pose.cycle.switchFrames;
+		const lengths = switches.map(
+			(frame, i) =>
+				(switches[(i + 1) % switches.length] - frame + contacts.length) %
+					contacts.length || contacts.length,
+		);
+		this.frameMs = stanceFrameMs(lengths, count, cadence);
 		this.heading = best.heading;
 		this.apply();
 		// Zero is within the one-pixel steering allowance. All steering is now discrete.

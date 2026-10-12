@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { cachedFloor, deriveOccluders } from "../services/occluders.js";
+import { unchangedAnchorFloor } from "../services/variant-floor.js";
 import { getPlace } from "./places.js";
 export const occludersRoutes = new Hono();
 /** Same anchor and ?image resolution as interactables, plus persisted place IDs.
@@ -16,8 +17,12 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 		return c.json({ error: "Invalid background path" }, 400);
 	}
 	try {
-		const geometry = await deriveOccluders(image, place?.ground);
-		const floor = place?.ground?.floor ?? (await cachedFloor(image));
+		const floor =
+			place?.ground?.floor ??
+			(await cachedFloor(image)) ??
+			(ANCHORS[key]
+				? await unchangedAnchorFloor(image, ANCHORS[key])
+				: undefined);
 		if (!floor)
 			return c.json(
 				{
@@ -26,6 +31,13 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 				},
 				409,
 			);
+		const geometry = await deriveOccluders(
+			image,
+			place?.ground ?? {
+				floor,
+				template: key === "inside" ? "interior" : "exterior",
+			},
+		);
 		return c.json({ ...geometry, floor });
 	} catch (error) {
 		if (error instanceof Error && "code" in error && error.code === "ENOENT")

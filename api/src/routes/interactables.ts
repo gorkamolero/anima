@@ -15,7 +15,7 @@ export const interactablesSchema = z.object({
 				bounds: z.array(z.number().min(0).max(1)).length(4),
 			}),
 		)
-		.max(12),
+		.max(32),
 });
 
 export function createInteractablesRoutes(model?: LanguageModel): Hono {
