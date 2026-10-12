@@ -1,0 +1,196 @@
+[
+  {
+    "name": "away-kling25",
+    "frames": 122,
+    "sha256": "7202a7d575b071d26537605f46a698bece4c53caafcdb4243b8dfc2126076689",
+    "input": {
+      "model": "fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+      "duration": "5",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "image_url": "away-first.png",
+      "tail_image_url": "away-last.png"
+    },
+    "requestId": "01a13147-feec-7093-aadb-0ea497474d27"
+  },
+  {
+    "name": "away-kling25-aligned",
+    "frames": 122,
+    "sha256": "c8aae32a7db8c8963b281cc7100a6486a4593809a5ba24b736767dca88bf394e",
+    "input": {
+      "model": "fal-ai/kling-video/v2.5-turbo/pro/image-to-video",
+      "duration": "5",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "image_url": "away-first.png",
+      "tail_image_url": "away-last.png"
+    },
+    "requestId": "01a1314d-5528-7fe2-a4fa-09abb1436748"
+  },
+  {
+    "name": "away-right-wan3",
+    "frames": 48,
+    "sha256": "098889cf3eafa3c475b36f63ce130e6d2fd7e5f1bba671bcb1e04fbc4a20b58a",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "away-right-first.png",
+      "end_image_url": "away-right-last.png"
+    },
+    "requestId": "01a13152-1b1c-7f52-a581-269c15cd69f0"
+  },
+  {
+    "name": "away-veo",
+    "frames": 96,
+    "sha256": "4d581ecec1f3c11352a83800fa17efd1b176d8515540d60d12556ecc419aa758",
+    "input": {
+      "model": "fal-ai/veo3.1/first-last-frame-to-video",
+      "duration": "4s",
+      "resolution": "720p",
+      "generate_audio": false,
+      "aspect_ratio": "auto",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "first_frame_url": "away-first.png",
+      "last_frame_url": "away-last.png"
+    },
+    "requestId": "01a1314c-2b04-75a0-991e-addf8ac60e97"
+  },
+  {
+    "name": "away-veofast",
+    "frames": 96,
+    "sha256": "acef79a2e1dd0c2fd9c028717bd2dc0b45d75541b3ee65a5104a46a832589b21",
+    "input": {
+      "model": "fal-ai/veo3.1/fast/first-last-frame-to-video",
+      "duration": "4s",
+      "resolution": "720p",
+      "generate_audio": false,
+      "aspect_ratio": "auto",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "first_frame_url": "away-first.png",
+      "last_frame_url": "away-last.png"
+    },
+    "requestId": "01a1314a-2f6c-72a1-abf3-b4bc10d6e9fd"
+  },
+  {
+    "name": "away-wan21",
+    "frames": 81,
+    "sha256": "3b0a8f0601c253e09916baea025a38d405fe2b1567fbfc0d82216ec531f550a1",
+    "input": {
+      "model": "fal-ai/wan-flf2v",
+      "num_frames": 81,
+      "frames_per_second": 24,
+      "resolution": "480p",
+      "negative_prompt": "walking, steps, moving support foot, turning, camera movement",
+      "enable_prompt_expansion": false,
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "away-first.png",
+      "end_image_url": "away-last.png"
+    },
+    "requestId": "01a13140-271c-72c0-a99b-798a79827ac2"
+  },
+  {
+    "name": "away-wan3",
+    "frames": 48,
+    "sha256": "220ca0f3db69ff3caa7612b249c0398ec47f2d9376f01c891fadb34949de742c",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "away-first.png",
+      "end_image_url": "away-last.png"
+    },
+    "requestId": "01a1313d-8c43-7c80-a4b6-28da7f32e2be"
+  },
+  {
+    "name": "away-wan3-aligned",
+    "frames": 48,
+    "sha256": "db91d4b7ef19237e20242be78eca5d9fd22d3939326e88fe92976f20e63d5754",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "away-first.png",
+      "end_image_url": "away-last.png"
+    },
+    "requestId": "01a1314f-9529-7220-9385-a25f376b822b"
+  },
+  {
+    "name": "side-wan3",
+    "frames": 48,
+    "sha256": "b60330d2a80989814e91222948816e68aeda802b771bb9886d2cc23b321d5176",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "side-first.png",
+      "end_image_url": "side-last.png"
+    },
+    "requestId": "01a13152-15bc-76d1-9c4d-2695fd24eef5"
+  },
+  {
+    "name": "toward-right-wan3",
+    "frames": 48,
+    "sha256": "37102a83f13b280f6ac3a39ae8539bec3dd0b350cf7c39977e89d7f86b96d295",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "toward-right-first.png",
+      "end_image_url": "toward-right-last.png"
+    },
+    "requestId": "01a13152-2784-7e33-bf64-01b2cc97803f"
+  },
+  {
+    "name": "toward-wan3",
+    "frames": 48,
+    "sha256": "9021d8f981afa0a643018fc6dd938188b750cb1c05f1ef314f1e2f367381b849",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "toward-first.png",
+      "end_image_url": "toward-last.png"
+    },
+    "requestId": "01a13152-214e-76a2-8429-9f92dd695b25"
+  },
+  {
+    "name": "toward-wan3-reroll",
+    "frames": 48,
+    "sha256": "c3a7b9da2554a997470c85766f6aa357895de8f91b57c1985e7e57af586714af",
+    "input": {
+      "model": "alibaba/wan-3.0/image-to-video",
+      "duration": 2,
+      "resolution": "480p",
+      "audio": false,
+      "enable_prompt_expansion": false,
+      "aspect_ratio": "adaptive",
+      "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+      "start_image_url": "toward-first.png",
+      "end_image_url": "toward-last.png"
+    },
+    "requestId": "01a13157-6064-7d41-92c8-4c900e1830b9"
+  }
+]

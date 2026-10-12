@@ -1,0 +1,18 @@
+{
+  "heading": "away",
+  "sourceTemplate": [
+    246,
+    929,
+    294,
+    983
+  ],
+  "restBootDisplacement": [
+    -2,
+    1
+  ],
+  "score": 0.9368886947631836,
+  "correction": [
+    2,
+    -1
+  ]
+}

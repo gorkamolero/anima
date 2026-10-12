@@ -1,0 +1,122 @@
+[
+  {
+    "heading": "side",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 29,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "R": {
+        "x": 356.68832914070987,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 377.6950093121769,
+        "y": 1017.4164740482506
+      }
+    },
+    "restAsset": "hermes-idle-v2-normalized",
+    "restSupportFoot": "L",
+    "restTranslation": [
+      97.68832914070987,
+      -25.315753008963043
+    ]
+  },
+  {
+    "heading": "away",
+    "cycle": "hermes-walk-away",
+    "frame": 11,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 284.8038343190365,
+        "y": 977.6398759059772
+      },
+      "planted": "L",
+      "R": {
+        "x": 353.610952250958,
+        "y": 978.0
+      }
+    },
+    "restAsset": "hermes-passing-stand-away",
+    "restSupportFoot": "L",
+    "restTranslation": [
+      -0.46293470530548575,
+      -0.14237802192269555
+    ]
+  },
+  {
+    "heading": "away-right",
+    "cycle": "hermes-walk-away-right",
+    "frame": 8,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 285.0421939016454,
+        "y": 1024.5084669927626
+      },
+      "planted": "L",
+      "R": {
+        "x": 260.1136362860312,
+        "y": 981.5708121666912
+      }
+    },
+    "restAsset": "hermes-stand-away-right",
+    "restSupportFoot": "L",
+    "restTranslation": [
+      -40.95780609835458,
+      -33.49153300723742
+    ]
+  },
+  {
+    "heading": "toward",
+    "cycle": "hermes-walk-toward",
+    "frame": 13,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 334.5239371506074,
+        "y": 967.0173406092124
+      },
+      "planted": "L",
+      "R": {
+        "x": 266.10878598593314,
+        "y": 953.5520192296881
+      }
+    },
+    "restAsset": "hermes-passing-stand-toward",
+    "restSupportFoot": "L",
+    "restTranslation": [
+      0.1609986445965319,
+      0.929942997537978
+    ]
+  },
+  {
+    "heading": "toward-right",
+    "cycle": "hermes-walk-toward-right",
+    "frame": 8,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 264.86845022155075,
+        "y": 992.3999219127921
+      },
+      "planted": "L",
+      "R": {
+        "x": 254.8764083529468,
+        "y": 993.5849875984122
+      }
+    },
+    "restAsset": "hermes-passing-stand-toward-right",
+    "restSupportFoot": "L",
+    "restTranslation": [
+      0.07552201546104698,
+      1.2437085429248782
+    ]
+  }
+]

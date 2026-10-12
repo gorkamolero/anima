@@ -1,0 +1,58 @@
+[
+  {
+    "heading": "side",
+    "template": [
+      332,
+      963,
+      380,
+      1021
+    ],
+    "displacement": [
+      25,
+      16
+    ],
+    "score": 0.5451734066009521
+  },
+  {
+    "heading": "away-right",
+    "template": [
+      261,
+      969,
+      309,
+      1027
+    ],
+    "displacement": [
+      25,
+      -1
+    ],
+    "score": 0.5471314787864685
+  },
+  {
+    "heading": "toward",
+    "template": [
+      310,
+      912,
+      358,
+      970
+    ],
+    "displacement": [
+      1,
+      0
+    ],
+    "score": 0.9867361783981323
+  },
+  {
+    "heading": "toward-right",
+    "template": [
+      240,
+      937,
+      288,
+      995
+    ],
+    "displacement": [
+      0,
+      0
+    ],
+    "score": 0.8840773701667786
+  }
+]
