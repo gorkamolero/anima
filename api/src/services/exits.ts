@@ -5,7 +5,7 @@ export interface Point {
 }
 export interface Exit {
 	id: string;
-	kind: "edge-left" | "edge-right" | "far" | "door";
+	kind: "edge-left" | "edge-right" | "far" | "near" | "door";
 	region: Point[];
 	label?: string;
 	to?: string;
@@ -141,7 +141,7 @@ export function deriveExits(
 	floor: FloorRaster,
 	objects: readonly LabelledBox[],
 	horizonY?: number,
-	options: { allowFar?: boolean } = {},
+	options: { allowFar?: boolean; allowEdges?: boolean } = {},
 ): Exit[] {
 	const exits: Exit[] = [];
 	const append = (kind: Exit["kind"], polygons: Point[][], label?: string) => {
@@ -181,7 +181,9 @@ export function deriveExits(
 		append("door", polygons, object.name);
 	}
 	// Only the edge-connected portion of a narrow floor strip is an exit.
-	for (const side of ["edge-left", "edge-right"] as const) {
+	for (const side of options.allowEdges === false
+		? []
+		: (["edge-left", "edge-right"] as const)) {
 		const polys = regions(floor, (x) =>
 			side === "edge-left" ? x < 3 : x >= floor.width - 3,
 		);

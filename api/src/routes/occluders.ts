@@ -33,7 +33,7 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 			);
 		const geometry = await deriveOccluders(
 			image,
-			place?.ground ?? {
+			(place ? { ...place.ground, template: place.template } : undefined) ?? {
 				floor,
 				template: key === "inside" ? "interior" : "exterior",
 			},

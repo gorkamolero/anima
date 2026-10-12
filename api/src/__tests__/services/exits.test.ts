@@ -20,3 +20,13 @@ it("does not infer onward travel into the closed end of an interior aisle", () =
 		),
 	).toBe(false);
 });
+
+it("keeps interior floor touching image edges from becoming wall exits", () => {
+	const floor = { width: 40, height: 40, data: Array(1600).fill(1) };
+	expect(
+		deriveExits(floor, [], 100, { allowFar: false, allowEdges: false }),
+	).toEqual([]);
+	expect(deriveExits(floor, [], 100).some((e) => e.kind === "edge-left")).toBe(
+		true,
+	);
+});

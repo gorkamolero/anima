@@ -28,7 +28,7 @@ export interface Occluder {
 	};
 }
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 20;
+const VERSION = 21;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -74,12 +74,13 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const scope = ["04a", "04c", "07"].includes(
+		const scope = ["04a", "04c", "07", "08"].includes(
 			process.env.DERIVATION_BRIEF ?? "",
 		)
 			? `${process.env.DERIVATION_BRIEF} `
 			: "";
-		const limit = scope === "04c " ? 20 : scope === "07 " ? 60 : 120;
+		const limit =
+			scope === "08 " ? 40 : scope === "04c " ? 20 : scope === "07 " ? 60 : 120;
 		const count = previous
 			.split("\n")
 			.filter(
@@ -360,6 +361,7 @@ async function derive(
 	const exits = floor
 		? deriveExits(floor, objects, horizonY, {
 				allowFar: template !== "interior",
+				allowEdges: template !== "interior",
 			})
 		: [];
 	const meta = await readFile(`${stem}.occluders.cache.json`, "utf8").catch(
@@ -399,14 +401,16 @@ async function derive(
 		bounds: [0, 0, 1, 1],
 		maskPath: resolve(cacheRoot, name),
 	}));
-	const represented = semantic.map((s) => s.name.replace(/-\d+$/, ""));
+	const canonical = (name: string) =>
+		name.toLowerCase().replace(/-\d+$/, "").replaceAll("-", " ");
+	const represented = semantic.map((s) => canonical(s.name));
 	const candidates: Array<LabelledBox & { maskPath?: string }> = [
 		...semantic,
 		...objects.filter(
 			(object) =>
 				canOcclude(object) &&
 				!represented.some((label) =>
-					object.name.toLowerCase().includes(label.replace(/s$/, "")),
+					canonical(object.name).includes(label.replace(/s$/, "")),
 				) &&
 				(horizonY === undefined || object.bounds[3] * 1080 >= horizonY + 25),
 		),

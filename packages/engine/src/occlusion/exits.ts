@@ -1,7 +1,7 @@
 import type { Point } from "./occlusion.js";
 export interface Exit {
 	id: string;
-	kind: "edge-left" | "edge-right" | "far" | "door";
+	kind: "edge-left" | "edge-right" | "far" | "near" | "door";
 	region: Point[];
 	approach?: Point;
 	label?: string;
