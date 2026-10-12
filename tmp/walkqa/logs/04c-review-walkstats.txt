@@ -1,0 +1,7 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+alley/away-far.json                             3.7     162    0/88    1.91 0
+road/left-tree-approach.json                    6.0     394    0/143   2.18 0
+
+side                 ground m/s min/median/max 1.47 1.47 1.47 (n=1)
+walk-away            ground m/s min/median/max 2.12 2.13 2.13 (n=2)
+walk-away-right      ground m/s min/median/max 1.63 1.77 1.77 (n=2)

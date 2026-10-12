@@ -1,0 +1,222 @@
+[
+  {
+    "path": "tmp/walkqa/derivation/alley-04c.png",
+    "bytes": 2876193,
+    "sha256": "f85c476ecc4ad2d542af3c264c0d9031e8e5f412ee4beff36d50274201853aee"
+  },
+  {
+    "path": "tmp/walkqa/derivation/church-04c.png",
+    "bytes": 2859542,
+    "sha256": "ab627c4cc843f1a4560366585455487d64a937b45cc3e487eca5b71334fbe606"
+  },
+  {
+    "path": "tmp/walkqa/derivation/depot-inside-04c.png",
+    "bytes": 3066576,
+    "sha256": "02850145c16f190e226a0b15ca52267985f812ae6479bf5cdd84e63529210429"
+  },
+  {
+    "path": "tmp/walkqa/derivation/depot-outside-04c.png",
+    "bytes": 2748605,
+    "sha256": "a7268bdbb83fb7868cfc0d8d94c80ee2cace6ef2e9ea3fc12ae812dd1f9deef9"
+  },
+  {
+    "path": "tmp/walkqa/derivation/grocery-04c.png",
+    "bytes": 2675279,
+    "sha256": "c3d178fd7ad67d35ccba71e5a328b664143e5c526743001598dc7bf97294f69e"
+  },
+  {
+    "path": "tmp/walkqa/derivation/lobby-04c.png",
+    "bytes": 2717425,
+    "sha256": "2103569baf57961c2626d3a4e65f0fb0ae369cc726159d9352870279260c34e2"
+  },
+  {
+    "path": "tmp/walkqa/derivation/pier-04c.png",
+    "bytes": 2947415,
+    "sha256": "d9e25b031d4c815a6f7ab96e0bad185245620ed2e000e4c349e6c3488352211d"
+  },
+  {
+    "path": "tmp/walkqa/derivation/road-04c.png",
+    "bytes": 3143230,
+    "sha256": "226a2ddd1bfe05c8b8d7a55e361afe5c14c66b4ef7ca87e889cda2780ede0012"
+  },
+  {
+    "path": "tmp/walkqa/derivation/square-04c.png",
+    "bytes": 3110071,
+    "sha256": "d80b1ca1fed2ecac2cd437a6285ce470abeaf52256354f3efc2b9faf49f33a9f"
+  },
+  {
+    "path": "tmp/walkqa/derivation/stepped-street-04c.png",
+    "bytes": 2976171,
+    "sha256": "043b39e67deaca86541b83767c1805557e9bfd18a62396a2da7f676551691cbc"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-inside/area.json",
+    "bytes": 499442,
+    "sha256": "19bc870ce7e49c43d8f31ac076385adec7e86341d89864274f6c44984092a313"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-inside/navigation.json",
+    "bytes": 499442,
+    "sha256": "9ae1fbe2e02921438e23458131b241ec6cca3d2da7e122ab16207a9583542570"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-inside/render.json",
+    "bytes": 85,
+    "sha256": "21186f6b5a66051ff38fc678dc51ae17bd5c7766e6857ac8d221281ff748d433"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-outside/area.json",
+    "bytes": 501021,
+    "sha256": "dfb249b40002b82d14f81974cd3295708bb6b26c55f299e81924b45908161e6d"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-outside/navigation.json",
+    "bytes": 501021,
+    "sha256": "09a6e21dce965c771475c5a88b5218fa3a5d69cfa5398b93b1ea9c1c33c23663"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/depot-outside/render.json",
+    "bytes": 86,
+    "sha256": "de318f0c850442a9a018928159996d15a900fdc592887b0a62c67fbdac54c231"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/road/area.json",
+    "bytes": 503149,
+    "sha256": "cdaa5fb8852c88831d953c5500980e67bbe18c99e37b904005dd6bd49bf3bd75"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/road/navigation.json",
+    "bytes": 503149,
+    "sha256": "4a968b95118e90ffe6ac1398b60b9e9b68c997af95dc244a9b3f27a9a87a8be7"
+  },
+  {
+    "path": "tmp/walkqa/final-04c/road/render.json",
+    "bytes": 105,
+    "sha256": "e7362d9bb0cd182b53141266368d172ec0c52379bdb1ef897429adfa456fcdcf"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-art.log",
+    "bytes": 1192,
+    "sha256": "179ea129bd3185f3b0bbb8930287570598621b58e5dfb034316b726d2e3bc7fd"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-guard-tests.log",
+    "bytes": 995,
+    "sha256": "b8f701cfa32a849deb7d312fde952deaf59be197ec8246cf48befaa11e5bb55a"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-lint-final.log",
+    "bytes": 781,
+    "sha256": "4d5325a2da1a5d8bebeb6c55b39eb85bdbe226c340ae17ed56ab9d61edc47655"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-review-freeze.txt",
+    "bytes": 126,
+    "sha256": "84d71f3b8450e8f47a3e6c336fed603145b97f7a841bdb5fac298714f6dd34d1"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-review-lockcheck.txt",
+    "bytes": 412,
+    "sha256": "b9e1df19d24ca2d18135a363a1221e34ce9b61d4554247fd56d3a33860c9a64a"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-review-walkstats.txt",
+    "bytes": 456,
+    "sha256": "e35670613e037aef417cd490ea35d3c206b7e134d5ecc190dd080354f7008597"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-tests-final.log",
+    "bytes": 11186,
+    "sha256": "3b42de418145b32e828282ea1591375168f8620b96444e38a5b6857a880f6a90"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-tree-freeze.txt",
+    "bytes": 137,
+    "sha256": "6531ae1ad7968675367a011c895e1f831b04cb3616ee8e11e5eb38d51aaaf50f"
+  },
+  {
+    "path": "tmp/walkqa/logs/04c-typecheck-final.log",
+    "bytes": 646,
+    "sha256": "420dd5ba807627be9fbe894dcf99cb7f3151965d8445458a2721e6a33c7775bc"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/area.json",
+    "bytes": 501071,
+    "sha256": "620c968e6ec3b3a3fa6c03e96aa7fe5c429cbe91f5cdbcb6411e6057a68ea8e4"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/away-far-sheet.png",
+    "bytes": 486979,
+    "sha256": "c5cbd31ac3bcdfc68163cf4a60a929b63829944e09aaa9889f52bb0aface9e94"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/away-far.json",
+    "bytes": 159378,
+    "sha256": "5a240a9df1aa08584d2e6872a5f1f303abe16e0b2ef61028845fb3f0e1449ce2"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/away-far.mp4",
+    "bytes": 776471,
+    "sha256": "ecd4445e365b52487b1eecc6d3faef4228aecfa693189d51d8ad0fbdc433f0ec"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/navigation.json",
+    "bytes": 501071,
+    "sha256": "411a91da14a6d9ae79e7ba729ab574a3b784cf7138b75fbfe881802743b62b2a"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/alley/render.json",
+    "bytes": 416,
+    "sha256": "346d6d4039971b220f352ce9ddbb62a07bdf572577796096cec448872f5f1715"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/area.json",
+    "bytes": 503144,
+    "sha256": "3532c07318060bb804ccfb6d9695d1309e3801d432aecabd1a76247a820eee65"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/left-tree-approach-sheet.png",
+    "bytes": 865988,
+    "sha256": "0fa8699e589c4955a8b95158aa7b63b3a1be438c87b9b82dad40d5e8b5874b5a"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/left-tree-approach.json",
+    "bytes": 342501,
+    "sha256": "8f3dd6769585eaa48786233dc563f62a24eb33c634a7858b7b005adac1adb13d"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/left-tree-approach.mp4",
+    "bytes": 1455690,
+    "sha256": "f9a92e8abf9c7df38825727c8de5fa1232bd4cb13d5bad9e474cfb3479e93276"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/navigation.json",
+    "bytes": 503144,
+    "sha256": "898d84b522085737f1016778331071473d487d52e67016d558342539abcf2183"
+  },
+  {
+    "path": "tmp/walkqa/review-04c/road/render.json",
+    "bytes": 444,
+    "sha256": "bc8f920a166166dd09b181d7f4326430ef99e499171ebffe11777a41d1941354"
+  },
+  {
+    "path": "tmp/walkqa/verification-04c/place-04c-alley-review.json",
+    "bytes": 84341,
+    "sha256": "dd7dfba1da5e502dab94e60cffe5373fe94a9723dcd8738de79143dee43626a7"
+  },
+  {
+    "path": "tmp/walkqa/verification-04c/place-04c-road-review.json",
+    "bytes": 333248,
+    "sha256": "374bcb226a580ad3dbf8634c869128652c0c9503f65a14dec83c3d4f08cb60ac"
+  },
+  {
+    "path": "tmp/walkqa/verification-04c/places.json",
+    "bytes": 119903,
+    "sha256": "be9896b816ee6bd37079f314d6144c7cd79cb9a1bf8dcfb43afe7b79dfe1a6cd"
+  },
+  {
+    "path": "tmp/walkqa/verification-04c/segmentation-calls.md",
+    "bytes": 1748,
+    "sha256": "829ebeb18cc108925f381bc12b54775011787098aabfd6b7d17cf039981c62a4"
+  }
+]

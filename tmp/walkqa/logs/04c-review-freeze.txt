@@ -1,0 +1,1 @@
+tmp/walkqa/review-04c/alley/away-far.mp4: frames 92, walking pairs 87, frozen while walking 0 (0%); legacy threshold flags 17

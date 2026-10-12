@@ -1,0 +1,2 @@
+{"clip": "tmp/walkqa/review-04c/road/left-tree-approach.mp4", "stances": 13, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 129, 142, "away-right"], [0.0, 117, 128, "away-right"], [0.0, 107, 116, "away-right"]]}
+{"clip": "tmp/walkqa/review-04c/alley/away-far.mp4", "stances": 8, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 74, 87, "away"], [0.0, 60, 73, "away"], [0.0, 50, 59, "away-right"]]}

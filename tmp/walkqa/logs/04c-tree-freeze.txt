@@ -1,0 +1,1 @@
+tmp/walkqa/review-04c/road/left-tree-approach.mp4: frames 148, walking pairs 142, frozen while walking 0 (0%); legacy threshold flags 14
