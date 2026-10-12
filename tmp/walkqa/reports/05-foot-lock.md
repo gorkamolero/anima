@@ -1,10 +1,10 @@
 # Brief 05 — foot locking and diagonal cycles
 
-Status: IN PROGRESS. No acceptance claim.
+Status: **NOT ACCEPTED. 0/63 proof clips pass: 62 measured failures and 1 unresolved no-stance clip.**
 
 ## Baseline and proof matrix
 
-Before is Brief 03 after; pending means no completed measurement.
+Before is Brief 03 after. Five baseline entries were not measured in Brief 03; they are explicitly marked below. New diagonal variants have no baseline.
 
 | Clip | Before median / max px | After max px | Status |
 |---|---:|---:|---|
@@ -17,11 +17,11 @@ Before is Brief 03 after; pending means no completed measurement.
 | road/side-far.mp4 | 1.71 / 4.18 | 1.87 | FAIL |
 | road/side-near.mp4 | 2.05 / 3.62 | 5.47 | FAIL |
 | road/toward-far.mp4 | 1.37 / 1.66 | 3.14 | FAIL |
-| road/toward-near.mp4 | 1.2 / 2.72 | pending | pending |
-| road/trap-behind.mp4 | 4.55 / 15.04 | pending | pending |
-| road/trap-front.mp4 | 0.44 / 4.5 | pending | pending |
-| road/tree-behind.mp4 | 3.29 / 31.59 | pending | pending |
-| road/tree-front.mp4 | 0.2 / 0.26 | pending | pending |
+| road/toward-near.mp4 | 1.2 / 2.72 | 6.45 | FAIL |
+| road/trap-behind.mp4 | 4.55 / 15.04 | 10.71 | FAIL |
+| road/trap-front.mp4 | 0.44 / 4.5 | 11.85 | FAIL |
+| road/tree-behind.mp4 | 3.29 / 31.59 | 6.61 | FAIL |
+| road/tree-front.mp4 | 0.2 / 0.26 | no stance | unresolved (no stance) |
 | alley/away-far.mp4 | no stance | 6.48 | FAIL |
 | alley/away-near.mp4 | 3.79 / 8.9 | 10.3 | FAIL |
 | alley/crate-behind.mp4 | no stance | 11.78 | FAIL |
@@ -35,11 +35,11 @@ Before is Brief 03 after; pending means no completed measurement.
 | alley/toward-near.mp4 | 0.59 / 1.07 | 8.91 | FAIL |
 | depot-outside/away-far.mp4 | no stance | 8.4 | FAIL |
 | depot-outside/away-near.mp4 | 3.83 / 10.51 | 17.13 | FAIL |
-| depot-outside/diagonal.mp4 | pending | 16.12 | FAIL |
-| depot-outside/exit.mp4 | pending | 6.06 | FAIL |
-| depot-outside/object-click.mp4 | pending | 4.1 | FAIL |
-| depot-outside/post-behind.mp4 | pending | 17.01 | FAIL |
-| depot-outside/post-front.mp4 | pending | 16.12 | FAIL |
+| depot-outside/diagonal.mp4 | not measured in 03 | 16.12 | FAIL |
+| depot-outside/exit.mp4 | not measured in 03 | 6.06 | FAIL |
+| depot-outside/object-click.mp4 | not measured in 03 | 4.1 | FAIL |
+| depot-outside/post-behind.mp4 | not measured in 03 | 17.01 | FAIL |
+| depot-outside/post-front.mp4 | not measured in 03 | 16.12 | FAIL |
 | depot-outside/side-far.mp4 | 2.64 / 8.26 | 7.21 | FAIL |
 | depot-outside/side-near.mp4 | 5.77 / 7.24 | 10.47 | FAIL |
 | depot-outside/toward-far.mp4 | 0.01 / 0.01 | 11.25 | FAIL |
@@ -83,6 +83,8 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 
 ## Commits
 
+- d43bd5d: restore the requested scene between proof beats.
+
 - 0fa659c: baseline and call ledger.
 - b811a2c: explicit exit completion at a valid held footfall; regression tests.
 - daebd44: half-stride arrival regression assertions and idle sole identity.
@@ -105,11 +107,13 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 - Tighter sole-ROI trial [45,18] remains FAIL (near 12.06 px, far 5.32 px). Trial metadata and clips are under `tmp/walkqa/trial-sole-05/`; production metadata restored. Do not substitute this experiment for the main proof matrix.
 - Capture isolation fixed: each beat now reloads its requested scene after any preceding exit and records the source scene before clicking. Road tree-front still starts inside an exit-sensitive region and leaves after one walking frame; it is not a valid front-crossing proof. The floor mask also has no walkable cells at y950 or below, so the foreground-tree crossing is not established by these plans.
 
+- Final implementation cleanup: removed unused four-direction heading/lookahead and speed-to-playback helpers, their obsolete tests, and unused `--axis`/`--travel` extractor arguments. Final verification: 340 current tests and 3 Python registration tests pass; engine/game/API typecheck and lint pass. Pixel output is unchanged by this dead-code removal.
+
 ## Open failures
 
 Trial 1 (superseded registration): road side-near 7.75px maximum, worst frames 53-57 (`tmp/walkqa/trial-05/side-near-worst.png`); road diagonal 23.04px maximum, worst frames 13-26 (`tmp/walkqa/trial-05/diagonal-worst.png`). Both FAIL. Diagonal 284 captured frames = 11.83s including hold, versus prior ~64s; still above the ~8s target. Handoffs moved earlier to avoid locking the outgoing toe-off. Seed contacts now initialise on the sole alpha boundary. No checker edits.
 
-Anchor verify:art passes outside and inside. Full proof matrix remains pending. 
+Anchor verify:art passes outside and inside. The full 63-clip pixel matrix is now measured; see the final review below. 
 
 ### Prior no-stance diagnosis (original clips retained)
 
@@ -126,7 +130,6 @@ below are source frame height times scale; these are not tiny sprites.
 | depot-outside/away-far | 0/72 | 320 | No walking; original start is over the fishing-net area and click yields no walk. New far approach uses the open left dock. | tmp/walkqa/no-stance-05/depot-outside-away-far-36.png |
 | depot-inside/exit | 5/144 | 408-456 | Starts at the door; only five walking frames then scene transition. New approach starts farther from the door. | tmp/walkqa/no-stance-05/depot-inside-exit-2.png |
 
-Raw diagnosis telemetry: `tmp/walkqa/no-stance-05/telemetry.json`. New measurements
-remain required; none of these explanations is counted as a pass.
+Raw diagnosis telemetry: `tmp/walkqa/no-stance-05/telemetry.json`. New measurements are included above; all seven formerly unmeasured cases now fail with measurable stances. None of these explanations is counted as a pass.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

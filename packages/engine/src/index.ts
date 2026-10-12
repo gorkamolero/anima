@@ -29,12 +29,7 @@ export type {
 	FootPose,
 } from "./characters/footLock";
 export type { WalkDirection } from "./characters/walkHeading";
-export {
-	groundPathHeading,
-	headingFromGround,
-	walkHeading,
-	walkPlaybackRate,
-} from "./characters/walkHeading";
+export { headingFromGround } from "./characters/walkHeading";
 // Agent debug / playtest API
 export type { AgentDebugApi, AgentSceneSnapshot } from "./debug/AgentDebug";
 export { installAgentDebug } from "./debug/AgentDebug";

@@ -84,7 +84,7 @@ def seed_sole(frame, left):
     return {'x':float(a+np.median(xx[low])),'y':float(top+np.median(yy[low]))}
 
 
-def extract(sheet, axis, travel, debug, seeds=None):
+def extract(sheet, debug, seeds=None):
     m=json.loads(sheet.read_text()); w,h=m['frameWidth'],m['frameHeight']
     image=Image.open(sheet.with_name(m['image'])).convert('RGBA')
     frames=[np.asarray(image.crop(((i%m['cols'])*w,(i//m['cols'])*h,(i%m['cols']+1)*w,(i//m['cols']+1)*h))) for i in range(m['frameCount'])]
@@ -155,9 +155,7 @@ def extract(sheet, axis, travel, debug, seeds=None):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('sheet',type=Path)
-    parser.add_argument('--axis',choices=('x','y'),default='x')
-    parser.add_argument('--travel',type=int,choices=(-1,1),default=-1)
     parser.add_argument('--debug',type=Path,default=Path('tmp/walkqa/contacts-05'))
     parser.add_argument('--seeds',type=Path)
     args=parser.parse_args()
-    extract(args.sheet,args.axis,args.travel,args.debug,json.loads(args.seeds.read_text()) if args.seeds else None)
+    extract(args.sheet,args.debug,json.loads(args.seeds.read_text()) if args.seeds else None)
