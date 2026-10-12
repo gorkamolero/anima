@@ -146,9 +146,17 @@ export class CharacterMotor {
 				this.pose.flipX !== standing.flipX)
 		) {
 			const matched = this.nextExit(this.pose);
-			const remaining = matched ?? 0;
+			if (!matched && this.pose.cycle.matchedCut) {
+				// A blocked source frame is not permission to cut on another pose.
+				// Keep the last safe drawing when no floor-safe approach exists.
+				this.unmatchedCut = true;
+				this.finish();
+				return;
+			}
+			const remaining = matched?.frames ?? 0;
 			this.unmatchedCut = matched === undefined;
 			this.transition = { to: standing, remaining, frame: 0 };
+			if (remaining > 0) this.frameMs = this.cycleFrameMs(this.pose);
 			// A just-reached exit needs its own visible interval. Accumulated
 			// walking time must not immediately consume that drawing.
 			if (remaining === 0 && this.pose.cycle.matchedCut) this.elapsed = 0;
@@ -163,8 +171,15 @@ export class CharacterMotor {
 		this.finish();
 	}
 	/** Simulate safe supports to the next generated exit, without changing the motor. */
-	private nextExit(source: FootPose): number | undefined {
-		// Search no more than half a cycle, simulating each contact transfer.
+	private nextExit(source: FootPose):
+		| {
+				frames: number;
+				position: Point & { scale: number };
+				anchor: Point;
+				foot: Foot;
+		  }
+		| undefined {
+		// Search one full cycle, simulating every contact transfer.
 		// A boundary may prohibit the preferred exit; never walk off-floor to reach it.
 		let pose = source,
 			foot = this.foot,
@@ -173,12 +188,13 @@ export class CharacterMotor {
 		const mask = this.area.clearanceMask ?? this.area.mask;
 		const raw = this.area.rawMask ?? this.area.mask;
 
-		for (let n = 0; n <= Math.floor(pose.cycle.contacts.length / 2); n++) {
+		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
-				this.canStand(pose, anchor, foot, position.scale)
+				this.canStand(pose, anchor, foot, position.scale) &&
+				this.canResume(pose, anchor, foot, position)
 			) {
-				return n;
+				return { frames: n, position, anchor, foot };
 			}
 			const next = {
 				...pose,
@@ -415,29 +431,20 @@ export class CharacterMotor {
 							}
 						: predicted.end,
 				);
-				// Near the destination, score the actual standing endpoint on
-				// this validated support too. A full-stride endpoint alone can
-				// select a turn that carries the matched cut past a narrow exit.
+				// Score the actual source-frame standing endpoint, including any
+				// intervening support transfers. Never assume the current anchor
+				// will still be the support when the cut comes around.
 				if (here < 200 && this.animation.standing && next.cycle.matchedCut) {
-					const hasExit = next.cycle.matchedCut.exitFrames.some(
-						(f) =>
-							(f - frame + next.cycle.contacts.length) %
-								next.cycle.contacts.length <
-							remainingFrames(frame),
-					);
-					if (
-						hasExit &&
-						this.canStand(pose, this.anchor, this.foot, this.scale)
-					) {
-						const idle = this.animation.standing(heading);
+					const exit = this.nextExit(pose);
+					if (exit) {
 						const end = lockedPlacement(
-							this.anchor,
-							idle,
-							this.foot,
+							exit.anchor,
+							this.animation.standing(heading),
+							exit.foot,
 							this.area.perspective,
 							this.area.baseScale,
 							this.area.scaleClamp,
-							this.scale,
+							exit.position.scale,
 						);
 						score = Math.min(score, remaining(end));
 					}
@@ -570,6 +577,64 @@ export class CharacterMotor {
 
 		return true;
 	}
+	/** A stop must leave a usable source-frame entry, not strand the next click. */
+	private canResume(
+		pose: FootPose,
+		anchor: Point,
+		foot: Foot,
+		position: Point & { scale: number },
+	): boolean {
+		if (!pose.cycle.matchedCut) return true;
+		const state = this.predictStance(pose, {
+			start: position,
+			end: position,
+			anchor,
+			foot,
+			pose,
+			scale: position.scale,
+		});
+		if (!state) return false;
+		for (const direction of GROUND_SECTORS) {
+			const selected = this.animation.select(direction);
+			for (let frame = 0; frame < selected.cycle.contacts.length; frame++) {
+				if (
+					selected.cycle.contacts[frame].planted !== state.foot ||
+					selected.cycle.contacts[(frame + 1) % selected.cycle.contacts.length]
+						.planted !== state.foot
+				)
+					continue;
+				if (this.predictStance({ ...selected, frame }, state)) return true;
+			}
+		}
+		return false;
+	}
+
+	/** Resume the source cycle clock after a partial entry; its slower entry
+	 * interval must not stretch every later support in a full-cycle exit. */
+	private cycleFrameMs(pose: FootPose): number {
+		const contacts = pose.cycle.contacts;
+		const switches = pose.cycle.switchFrames;
+		const lengths = switches.map(
+			(frame, i) =>
+				(switches[(i + 1) % switches.length] - frame + contacts.length) %
+					contacts.length || contacts.length,
+		);
+		const foot = contacts[pose.frame].planted;
+		let first = pose.frame;
+		for (let n = 0; n < contacts.length - 1; n++) {
+			const previous = (first + contacts.length - 1) % contacts.length;
+			if (contacts[previous].planted !== foot) break;
+			first = previous;
+		}
+		let count = 1;
+		while (
+			count < contacts.length &&
+			contacts[(first + count) % contacts.length].planted === foot
+		)
+			count++;
+		return stanceFrameMs(lengths, count, 2.2);
+	}
+
 	private canStand(
 		pose: FootPose,
 		anchor: Point,
@@ -674,9 +739,11 @@ export class CharacterMotor {
 						{ x: position.x, y: anchor.y },
 						{ x: end.x, y: landing.y },
 					);
-				// Every landing must also admit the eventual two-foot standing pose.
-				// Otherwise a valid swing can strand the free sole over a wall at stop.
+				// Legacy cycles may stop at any landing. Matched cycles validate
+				// standing only at their source frame through nextExit; the
+				// opposite support is not a possible standing transition.
 				if (
+					!pose.cycle.matchedCut &&
 					this.goal &&
 					Math.hypot(end.x - this.goal.x, end.y - this.goal.y) < 200 &&
 					!this.canStand(pose, landing, incoming, scale)
@@ -737,22 +804,22 @@ export class CharacterMotor {
 			this.scale,
 		);
 		const goal = this.goal;
-		const standing =
-			passingOnly &&
-			this.pose.cycle.matchedCut?.exitFrames.includes(this.pose.frame)
-				? this.animation.standing?.(this.heading)
-				: undefined;
-		const arrivalPosition = standing
-			? lockedPlacement(
-					this.anchor,
-					standing,
-					this.foot,
-					this.area.perspective,
-					this.area.baseScale,
-					this.area.scaleClamp,
-					this.scale,
-				)
-			: this.target;
+		const exit = this.pose.cycle.matchedCut
+			? this.nextExit(this.pose)
+			: undefined;
+		const standing = exit ? this.animation.standing?.(this.heading) : undefined;
+		const arrivalPosition =
+			standing && exit
+				? lockedPlacement(
+						exit.anchor,
+						standing,
+						exit.foot,
+						this.area.perspective,
+						this.area.baseScale,
+						this.area.scaleClamp,
+						exit.position.scale,
+					)
+				: this.target;
 		const distance = Math.hypot(
 			goal.x - arrivalPosition.x,
 			goal.y - arrivalPosition.y,
@@ -822,7 +889,10 @@ export class CharacterMotor {
 				const length = Math.hypot(dx, dy);
 				const dot =
 					(dx * (goal.x - this.target.x) + dy * (goal.y - this.target.y)) /
-					Math.max(1e-9, length * distance);
+					Math.max(
+						1e-9,
+						length * Math.hypot(goal.x - this.target.x, goal.y - this.target.y),
+					);
 				if (dot > alignment) {
 					alignment = dot;
 					halfStride = Math.max(2, (length * dot) / 2);
@@ -832,12 +902,12 @@ export class CharacterMotor {
 		}
 		if (
 			distance <= halfStride &&
-			(!this.pose.cycle.matchedCut || this.nextExit(this.pose) !== undefined) &&
+			(!this.pose.cycle.matchedCut || exit !== undefined) &&
 			this.canStand(this.pose, this.anchor, this.foot, this.scale)
 		) {
 			this.arrival = {
 				target: { ...goal },
-				anchor: { ...this.anchor },
+				anchor: { ...(exit?.anchor ?? this.anchor) },
 				distance,
 				halfStride,
 				switchFrame: this.pose.frame,
@@ -907,6 +977,7 @@ export class CharacterMotor {
 						this.foot = foot;
 					}
 					this.pose = next;
+					this.frameMs = this.cycleFrameMs(next);
 					t.remaining--;
 					t.frame++;
 					this.apply();

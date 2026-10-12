@@ -200,6 +200,95 @@ describe("contact motor", () => {
 		motor.update(1000);
 		expect(pose().cycle.name).toBe("standing");
 	});
+	it("waits beyond half a cycle for the sole source frame, transferring supports", () => {
+		const { motor, cycle, pose, target } = setup(true);
+		cycle.contacts = Array.from({ length: 12 }, (_, i) => ({
+			planted: i < 6 ? "L" : "R",
+			L: { x: i < 6 ? 70 - i * 2 : 40 + (i - 6) * 2, y: 190 },
+			R: { x: i < 6 ? 40 + i * 2 : 70 - (i - 6) * 2, y: 190 },
+		}));
+		cycle.switchFrames = [0, 6];
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [0],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1700, y: 850 }]);
+		motor.update(80);
+		expect(pose().frame).toBe(1);
+		motor.stop();
+		expect(motor.snapshot().transition?.remaining).toBe(11);
+		let last = pose().frame;
+		for (let i = 0; i < 30 && motor.walking; i++) {
+			last = pose().frame;
+			motor.update(1000 / 24);
+			const snap = motor.snapshot();
+			const sole = contactOnScreen(pose(), snap.planted, target, target.scale);
+			expect(sole.x).toBeCloseTo(snap.anchor.x, 9);
+			expect(sole.y).toBeCloseTo(snap.anchor.y, 9);
+		}
+		expect(last).toBe(0);
+		expect(pose().cycle.name).toBe("standing");
+		expect(motor.snapshot().cut?.waitFrames).toBe(11);
+		expect(motor.snapshot().cut?.matched).toBe(true);
+	});
+
+	it("measures arrival at the eventual standing endpoint after support transfers", () => {
+		const { motor, cycle, target, pose } = setup(true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [0],
+		};
+		motor.place({ x: 960, y: 850 });
+		// Choose a reachable source-frame endpoint from an independent traversal.
+		const reference = setup(true);
+		reference.cycle.matchedCut = cycle.matchedCut;
+		reference.motor.place({ x: 960, y: 850 });
+		void reference.motor.walk([{ x: 1700, y: 850 }]);
+		for (let i = 0; i < 15; i++) reference.motor.update(1000 / 24);
+		reference.motor.stop();
+		for (let i = 0; i < 40 && reference.motor.walking; i++)
+			reference.motor.update(1000 / 24);
+		void motor.walk([{ x: reference.target.x, y: reference.target.y }]);
+		for (let i = 0; i < 1000 && motor.walking; i++) motor.update(1000 / 24);
+		const arrival = motor.snapshot().arrival;
+		expect(arrival).toBeDefined();
+		expect(pose().cycle.name).toBe("standing");
+		if (!arrival) throw Error("Missing arrival");
+		expect(
+			Math.hypot(target.x - arrival.target.x, target.y - arrival.target.y),
+		).toBeCloseTo(arrival.distance, 8);
+		expect(arrival.distance).toBeLessThanOrEqual(arrival.halfStride);
+		expect(motor.snapshot().cut?.matched).toBe(true);
+	});
+
+	it("does not substitute an unmatched standing cut when the source is blocked", () => {
+		const { motor, cycle, pose } = setup(true);
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [0],
+		};
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1700, y: 850 }]);
+		motor.update(250);
+		const frame = pose().frame;
+		// The remaining approach would plant the incoming sole outside the room.
+		cycle.contacts[3].L.x = 10000;
+		motor.stop();
+		motor.update(1000);
+		expect(motor.walking).toBe(false);
+		expect(pose().cycle.name).toBe("walk");
+		expect(pose().frame).toBe(frame);
+		expect(motor.snapshot().cut).toBeUndefined();
+		expect(motor.snapshot().unmatchedCut).toBe(true);
+	});
+
 	it("sorts by the planted sole rather than bobbing sprite origin", () => {
 		const { motor, target } = setup();
 		void motor.walk([{ x: 1400, y: 850 }]);
