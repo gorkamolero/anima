@@ -134,7 +134,11 @@ export function buildPerspectiveModel(file: LandmarksFile): PerspectiveModel {
 
 	const ySpread =
 		Math.max(...points.map((p) => p.x)) - Math.min(...points.map((p) => p.x));
-	if (points.length === 1 || ySpread < 100) {
+	if (
+		points.length === 1 ||
+		(ySpread < 100 && file.horizonY === undefined) ||
+		ySpread < 1e-6
+	) {
 		// ponytail: constant ppm when depth range is too small for a line fit
 		const mean = points.reduce((sum, p) => sum + p.y, 0) / points.length || 0;
 		return {

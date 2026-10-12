@@ -44,6 +44,24 @@ const file: LandmarksFile = {
 };
 
 describe("buildPerspectiveModel", () => {
+	it("keeps perspective for a measured object close to an explicit horizon", () => {
+		const model = buildPerspectiveModel({
+			image: "door.png",
+			space: "game",
+			horizonY: 540,
+			landmarks: [
+				{
+					id: "door",
+					kind: "object",
+					rect: { x: 1000, y: 400, width: 70, height: 220 },
+					realHeightM: 2,
+				},
+			],
+		});
+		expect(model.ppmAt(540)).toBeCloseTo(0);
+		expect(model.ppmAt(620)).toBeCloseTo(110);
+		expect(model.ppmAt(940)).toBeCloseTo(550);
+	});
 	it("fits ppm linearly through landmarks and horizon", () => {
 		const model = buildPerspectiveModel(file);
 		expect(model.usable).toBe(true);
