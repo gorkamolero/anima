@@ -1,5 +1,5 @@
 import type { Perspective, Point } from "./perspective";
-import { scaleAt } from "./perspective";
+import { fromMetres, scaleAt, toMetres } from "./perspective";
 import type { FloorMask } from "./types";
 
 export function cellPoint(mask: FloorMask, i: number): Point {
@@ -112,21 +112,51 @@ export function erode(
 				(perspective.pixelsPerMetre ?? 300) *
 				scaleAt(perspective, { x: 960, y: (y + 0.5) * ch }),
 		);
-		const rx = Math.ceil(radius / cw),
-			ry = Math.ceil(radius / ch);
+		const screenY = (y + 0.5) * ch;
+		const projective = perspective.slope > 0 && screenY > perspective.horizonY;
+		const ground = toMetres(perspective, { x: 960, y: screenY });
+		const depthRadius = projective
+			? Math.max(
+					Math.abs(
+						fromMetres(perspective, {
+							x: ground.x,
+							y: ground.y + diameterM / 2,
+						}).y - screenY,
+					),
+					Math.abs(
+						fromMetres(perspective, {
+							x: ground.x,
+							y: ground.y - diameterM / 2,
+						}).y - screenY,
+					),
+				)
+			: radius;
+		const rx = Math.ceil(radius / cw) + 1,
+			ry = Math.max(floorMarginCells, Math.ceil(depthRadius / ch));
 		for (let x = 0; x < mask.width; x++) {
 			const i = y * mask.width + x;
 			if (!data[i]) continue;
 			outer: for (let dy = -ry; dy <= ry; dy++)
 				for (let dx = -rx; dx <= rx; dx++) {
-					if ((dx * cw) ** 2 + (dy * ch) ** 2 > radius ** 2) continue;
+					const rasterMargin =
+						(dx * cw) ** 2 + (dy * ch) ** 2 <=
+						(floorMarginCells * Math.min(cw, ch)) ** 2;
+					const a = toMetres(perspective, { x: (x + 0.5) * cw, y: screenY });
+					const b = toMetres(perspective, {
+						x: (x + dx + 0.5) * cw,
+						y: screenY + dy * ch,
+					});
+					const within = projective
+						? Math.hypot(a.x - b.x, a.y - b.y) <= diameterM / 2
+						: (dx * cw) ** 2 + (dy * ch) ** 2 <= radius ** 2;
+					if (!within && !rasterMargin) continue;
 					if (
 						obstacles
 							? x + dx >= 0 &&
 								y + dy >= 0 &&
 								x + dx < mask.width &&
 								y + dy < mask.height &&
-								(!!obstacles.data[(y + dy) * mask.width + x + dx] ||
+								((within && !!obstacles.data[(y + dy) * mask.width + x + dx]) ||
 									((dx * cw) ** 2 + (dy * ch) ** 2 <=
 										(floorMarginCells * Math.min(cw, ch)) ** 2 &&
 										!mask.data[(y + dy) * mask.width + x + dx]))

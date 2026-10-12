@@ -49,8 +49,8 @@ export function bridgeFloor(
 					}
 				}
 				if (resumes) continue;
-				// Cached floor cells are 10 px wide while object alpha is full
-				// resolution. Allow one source sample from each independent mask at each
+				// Cached floor cells and dark cast shadows disagree with full
+				// resolution alpha. Allow a bounded 20 px shadow gap at each
 				// silhouette edge, still requiring visible floor on both sides.
 				const tolerance = Math.floor(20 / dx);
 				let left = start - 1,
@@ -91,6 +91,15 @@ export function bridgeOccluders(
 		alpha: (x: number, y: number) => boolean;
 	}[],
 ): void {
+	const hidden = (x: number, y: number) => {
+		let covered = false;
+		for (const layer of layers)
+			if (layer.alpha(x, y)) {
+				if (y >= baselineYAt(layer.data, x)) return false;
+				covered = true;
+			}
+		return covered;
+	};
 	bridgeFloor(
 		mask,
 		{
@@ -100,14 +109,39 @@ export function bridgeOccluders(
 			baseline: [{ x: 0, y: 1080 }],
 			png: "",
 		},
-		(x, y) => {
-			let covered = false;
-			for (const layer of layers)
-				if (layer.alpha(x, y)) {
-					if (y >= baselineYAt(layer.data, x)) return false;
-					covered = true;
-				}
-			return covered;
-		},
+		hidden,
 	);
+	// Join neighbouring two-sided strips only inside the occluding silhouette.
+	// Small alpha/floor raster disagreements must not fragment a rear walkway.
+	// Both vertical endpoints already have floor evidence; supports are subtracted
+	// by the caller afterwards. Never extend past an endpoint or across open sky.
+	const before = [...mask.data];
+	const dx = 1920 / mask.width,
+		dy = 1080 / mask.height;
+	for (let col = 0; col < mask.width; col++) {
+		for (let row = 1; row < mask.height; row++) {
+			if (
+				before[row * mask.width + col] ||
+				!before[(row - 1) * mask.width + col]
+			)
+				continue;
+			let end = row;
+			while (
+				end < mask.height &&
+				!before[end * mask.width + col] &&
+				(end - row + 1) * dy <= 80 &&
+				(hidden((col + 0.5) * dx, (end + 0.5) * dy) ||
+					Array.from(
+						{ length: Math.floor(20 / dy) },
+						(_, n) => end + n + 1,
+					).some(
+						(next) =>
+							next < mask.height && hidden((col + 0.5) * dx, (next + 0.5) * dy),
+					))
+			)
+				end++;
+			if (end < mask.height && before[end * mask.width + col])
+				for (let y = row; y < end; y++) mask.data[y * mask.width + col] = 1;
+		}
+	}
 }

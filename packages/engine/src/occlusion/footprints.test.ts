@@ -74,3 +74,14 @@ it("blocks walking through a bench between its legs while preserving a route beh
 		),
 	).toBe(false);
 });
+
+it("joins short hidden gaps between supported strips without extending into sky", () => {
+	const mask = { width: 384, height: 216, data: Array(384 * 216).fill(0) };
+	for (let x = 160; x < 200; x++)
+		for (const y of [130, 136, 156]) mask.data[y * 384 + x] = 1;
+	bridgeOccluders(mask, [layer]);
+	expect(floorPixel(mask, 900, 670)).toBe(true);
+	expect(floorPixel(mask, 900, 740)).toBe(false);
+	expect(floorPixel(mask, 900, 640)).toBe(false);
+	expect(floorPixel(mask, 1050, 670)).toBe(false);
+});

@@ -69,3 +69,25 @@ it("rejects a one-cell floor sliver without applying the physical radius to open
 	expect(cleared.data[100 * 384 + 200]).toBe(0);
 	expect(cleared.data[111 * 384 + 200]).toBe(1);
 });
+
+it("measures object clearance in ground metres along both axes", async () => {
+	const { fromMetres, toMetres } = await import("./perspective");
+	const perspective = { horizonY: 470, slope: 0.002, pixelsPerMetre: 300 };
+	const mask = { width: 384, height: 216, data: Array(384 * 216).fill(1) };
+	const obstacle = { ...mask, data: mask.data.map(() => 0) };
+	const point = { x: 962.5, y: 802.5 };
+	obstacle.data[160 * 384 + 192] = 1;
+	const clear = erode(mask, perspective, 0.3, obstacle, 0);
+	const ground = toMetres(perspective, point);
+	for (const [dx, dz, expected] of [
+		[0.08, 0, 0],
+		[0, 0.08, 0],
+		[0.3, 0, 1],
+		[0, 0.3, 1],
+	]) {
+		const p = fromMetres(perspective, { x: ground.x + dx, y: ground.y + dz });
+		expect(clear.data[Math.floor(p.y / 5) * 384 + Math.floor(p.x / 5)]).toBe(
+			expected,
+		);
+	}
+});

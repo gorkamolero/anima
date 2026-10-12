@@ -1,5 +1,10 @@
 import { cellPoint } from "../walkarea/navigation";
-import { type Perspective, scaleAt } from "../walkarea/perspective";
+import {
+	fromMetres,
+	type Perspective,
+	scaleAt,
+	toMetres,
+} from "../walkarea/perspective";
 import type { FloorMask } from "../walkarea/types";
 import { baselineYAt, type Occluder } from "./occlusion";
 
@@ -22,11 +27,15 @@ export function objectFootprints(
 		const { x, y } = cellPoint(grid, i);
 		return layers.some((layer) => {
 			const baseline = baselineYAt(layer.data, x);
+			const ground = toMetres(perspective, { x, y: baseline });
 			const strip = Math.max(
 				dy,
-				0.15 *
-					(perspective.pixelsPerMetre ?? 300) *
-					scaleAt(perspective, { x, y: baseline }),
+				perspective.slope > 0 && baseline > perspective.horizonY
+					? baseline -
+							fromMetres(perspective, { x: ground.x, y: ground.y + 0.15 }).y
+					: 0.15 *
+							(perspective.pixelsPerMetre ?? 300) *
+							scaleAt(perspective, { x, y: baseline }),
 			);
 			// A bench's seat occupies the space between its supporting legs.
 			// Treating only opaque leg pixels as support lets a route walk through
