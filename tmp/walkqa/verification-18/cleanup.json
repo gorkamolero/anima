@@ -1,0 +1,31 @@
+{
+  "taskListenersBefore": {
+    "4317": [
+      47796
+    ],
+    "8080": [
+      47810
+    ]
+  },
+  "stoppedPids": [
+    47775,
+    47789,
+    47790,
+    47796,
+    47798,
+    47810,
+    47816
+  ],
+  "browserSessionsClosed": {
+    "proof18-road": true,
+    "proof18-depot": true,
+    "proof18-starts": true,
+    "anima": true,
+    "anima-town": true
+  },
+  "taskPortsStillListening": {
+    "4317": false,
+    "8080": false
+  },
+  "ownerPorts": "4410/8090 untouched"
+}

@@ -1,0 +1,194 @@
+[
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "actualDistance": 33.573124637742204,
+    "halfStride": 35.01646303692001,
+    "withinHalfStride": true,
+    "predictionError": 2.1316282072803006e-14
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "actualDistance": 19.987960031306955,
+    "halfStride": 31.81922810581394,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-15
+  },
+  {
+    "scene": "road",
+    "heading": "away",
+    "actualDistance": 14.427699020067898,
+    "halfStride": 21.026150225636822,
+    "withinHalfStride": true,
+    "predictionError": 1.7763568394002505e-15
+  },
+  {
+    "scene": "road",
+    "heading": "left",
+    "actualDistance": 34.65446681700862,
+    "halfStride": 38.04013759811588,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "actualDistance": 40.49686597816617,
+    "halfStride": 52.06156605403103,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-15
+  },
+  {
+    "scene": "road",
+    "heading": "toward-left",
+    "actualDistance": 21.203714120797898,
+    "halfStride": 22.950956310612636,
+    "withinHalfStride": true,
+    "predictionError": 1.0658141036401503e-14
+  },
+  {
+    "scene": "road",
+    "heading": "toward-right",
+    "actualDistance": 18.809214180922268,
+    "halfStride": 27.81933147632115,
+    "withinHalfStride": true,
+    "predictionError": 5.3290705182007514e-14
+  },
+  {
+    "scene": "road",
+    "heading": "toward",
+    "actualDistance": 21.962576382931744,
+    "halfStride": 29.896782156995396,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-15
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "actualDistance": 51.08962914922768,
+    "halfStride": 51.34729836952892,
+    "withinHalfStride": true,
+    "predictionError": 8.526512829121202e-14
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "actualDistance": 21.585313096772467,
+    "halfStride": 48.77802009933687,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-15
+  },
+  {
+    "scene": "depot",
+    "heading": "away",
+    "actualDistance": 15.2137478379414,
+    "halfStride": 31.73407435107613,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "actualDistance": 28.050684963135073,
+    "halfStride": 52.07778298442339,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "actualDistance": 16.492475500896948,
+    "halfStride": 71.38767827672807,
+    "withinHalfStride": true,
+    "predictionError": 9.237055564881302e-14
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-left",
+    "actualDistance": 32.86005981886157,
+    "halfStride": 48.495437241096205,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-15
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-right",
+    "actualDistance": 45.17900392535023,
+    "halfStride": 53.856418585457945,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "depot",
+    "heading": "toward",
+    "actualDistance": 12.682248022963886,
+    "halfStride": 22.724070198872603,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "actualDistance": 38.888149959388635,
+    "halfStride": 57.89782497605807,
+    "withinHalfStride": true,
+    "predictionError": 1.1368683772161603e-13
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "actualDistance": 40.41995401967266,
+    "halfStride": 50.24229768521713,
+    "withinHalfStride": true,
+    "predictionError": 0.0
+  },
+  {
+    "scene": "starts",
+    "heading": "away",
+    "actualDistance": 24.987201274531433,
+    "halfStride": 27.964235407245788,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-15
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "actualDistance": 62.98196935204075,
+    "halfStride": 85.53556535801648,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-14
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "actualDistance": 47.61890571558329,
+    "halfStride": 54.961376062812256,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-15
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-left",
+    "actualDistance": 40.54260185879078,
+    "halfStride": 48.01883861785795,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-14
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-right",
+    "actualDistance": 34.83601036866008,
+    "halfStride": 40.05385619704429,
+    "withinHalfStride": true,
+    "predictionError": 8.526512829121202e-14
+  },
+  {
+    "scene": "starts",
+    "heading": "toward",
+    "actualDistance": 11.727521064821104,
+    "halfStride": 22.46043493149792,
+    "withinHalfStride": true,
+    "predictionError": 8.348877145181177e-14
+  }
+]

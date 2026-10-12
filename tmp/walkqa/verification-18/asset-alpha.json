@@ -1,0 +1,26 @@
+[
+  {
+    "file": "tmp/walkqa/verification-18/side/frame-0.png",
+    "nonopaqueInteriorPixels": 2683
+  },
+  {
+    "file": "tmp/walkqa/verification-18/side/frame-1.png",
+    "nonopaqueInteriorPixels": 0
+  },
+  {
+    "file": "tmp/walkqa/verification-18/side/frame-2.png",
+    "nonopaqueInteriorPixels": 0
+  },
+  {
+    "file": "tmp/walkqa/verification-18/away-right/frame-0.png",
+    "nonopaqueInteriorPixels": 1665
+  },
+  {
+    "file": "tmp/walkqa/verification-18/away-right/frame-1.png",
+    "nonopaqueInteriorPixels": 0
+  },
+  {
+    "file": "tmp/walkqa/verification-18/away-right/frame-2.png",
+    "nonopaqueInteriorPixels": 0
+  }
+]
