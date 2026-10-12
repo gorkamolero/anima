@@ -312,17 +312,22 @@ async function walkPlace(step) {
 		);
 		if (!solesOnFloor)
 			throw new Error(`${label}: standing sole outside floor mask`);
-		const { arrival, anchor } = evaluate(
-			"(()=>{const s=window.__anima.scene;return {arrival:s.hermesMotor.snapshot().arrival,anchor:s.hermesMotor.snapshot().anchor}})()",
+		const { arrival, cut } = evaluate(
+			"(()=>{const s=window.__anima.scene;return {arrival:s.hermesMotor.snapshot().arrival,cut:s.hermesMotor.snapshot().cut}})()",
 		);
 		if (
 			!arrival ||
 			Math.hypot(arrival.target.x - expected.x, arrival.target.y - expected.y) >
 				1.5 ||
 			arrival.distance > arrival.halfStride + 1e-6 ||
-			Math.hypot(anchor.x - arrival.anchor.x, anchor.y - arrival.anchor.y) > 1
+			!cut ||
+			!cut.matched ||
+			cut.waitFrames > Math.floor(cut.cycleFrames / 2) ||
+			Math.hypot(cut.from.x - cut.to.x, cut.from.y - cut.to.y) > 1
 		)
-			throw new Error(`${label}: did not stop within half a drawn stride`);
+			throw new Error(
+				`${label}: did not stop within half a drawn stride: ${JSON.stringify({ expected, arrival, cut })}`,
+			);
 		const standing = evaluate(
 			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,c=s.hermesMotor.snapshot(),d=c.heading;const suffix=d.startsWith('away-')?'away-right':d.startsWith('toward-')?'toward-right':d;const expected=d==='left'||d==='right'?'hermes-idle-v2-normalized':'hermes-stand-'+suffix;return !c.walking&&!c.settling&&h.texture.key===expected&&Number(h.frame.name)===0&&h.flipX===(d==='right'||d.endsWith('-left'));})()",
 		);

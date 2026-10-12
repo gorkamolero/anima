@@ -48,6 +48,11 @@ const evaluate = (source, retryCapture = false) => {
 		}
 	}
 };
+const alphaAudit = process.argv.includes("--alpha-audit")
+	? `const s=window.__anima.scene,h=s.hermesSprite;const histogram=async(sprite)=>{const rt=s.make.renderTexture({width:1920,height:1080,add:false});rt.draw(sprite);return await new Promise(resolve=>rt.snapshot(im=>{const c=document.createElement('canvas');c.width=1920;c.height=1080;const ctx=c.getContext('2d');ctx.drawImage(im,0,0);const data=ctx.getImageData(0,0,1920,1080).data,hist=Array(256).fill(0);for(let i=3;i<data.length;i+=4)hist[data[i]]++;rt.destroy();resolve(hist);}));};const normal=s.make.sprite({key:h.texture.key,frame:h.frame.name,x:h.x,y:h.y,add:false}).setOrigin(h.originX,h.originY).setFlipX(h.flipX).setScale(h.scaleX,h.scaleY).setAlpha(1);sample.alphaAudit={rendered:await histogram(h),normal:await histogram(normal)};normal.destroy();`
+	: "";
+const captureOne = (stepMs) =>
+	`(async()=>{let sample;const png=await window.__anima.captureFrame({stepMs:${stepMs},width:${width},format:'png',onFrame:()=>{const s=window.__anima.scene,h=s.hermesSprite;sample={visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),alpha:h.alpha,blend:s.hermesBlend?.visible?{texture:s.hermesBlend.texture.key,frame:Number(s.hermesBlend.frame.name),x:s.hermesBlend.x,y:s.hermesBlend.y,scale:s.hermesBlend.scaleX,flip:s.hermesBlend.flipX,alpha:s.hermesBlend.alpha}:null,walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth};}});${alphaAudit}return {png,...sample};})()`;
 const captureId = `${Date.now()}:${process.pid}`;
 mkdirSync(out, { recursive: true });
 if (!process.argv.includes("--reuse")) {
@@ -156,7 +161,12 @@ for (const beat of plan.beats) {
 				`window.__anima.scene.sceneExits.find(e=>e.id===${JSON.stringify(beat.exit)}||e.kind===${JSON.stringify(beat.exit)})?.to??null`,
 			)
 		: null;
-	if (beat.walk)
+	const startFrame = beat.captureStart ? evaluate(captureOne(0)) : null;
+	if (beat.heading)
+		evaluate(
+			`(()=>{void window.__anima.scene.hermesMotor.walk([{x:${beat.walk[0]},y:${beat.walk[1]}}],${JSON.stringify(beat.heading)});return true})()`,
+		);
+	else if (beat.walk)
 		evaluate(
 			`(()=>{void window.__anima.scene.walkGenerated(${beat.walk[0]},${beat.walk[1]});return true})()`,
 		);
@@ -165,6 +175,20 @@ for (const beat of plan.beats) {
 			`(()=>{window.__anima.click(${beat.click[0]},${beat.click[1]});return true})()`,
 		);
 	const log = [];
+	if (startFrame) {
+		const { png, ...sample } = startFrame;
+		writeFileSync(
+			resolve(dir, "000000.png"),
+			Buffer.from(png.split(",")[1], "base64"),
+		);
+		log.push(sample);
+		const { png: entryPng, ...entrySample } = evaluate(captureOne(0));
+		writeFileSync(
+			resolve(dir, "000001.png"),
+			Buffer.from(entryPng.split(",")[1], "base64"),
+		);
+		log.push(entrySample);
+	}
 	let exitCompleted = !beat.exit;
 	let walkCompleted = false;
 	let idleFrames = 0;
@@ -175,7 +199,7 @@ for (const beat of plan.beats) {
 		first += 4
 	) {
 		const frames = evaluate(
-			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){let sample;const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png',onFrame:()=>{const s=window.__anima.scene,h=s.hermesSprite;sample={visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),alpha:h.alpha,blend:s.hermesBlend?.visible?{texture:s.hermesBlend.texture.key,frame:Number(s.hermesBlend.frame.name),x:s.hermesBlend.x,y:s.hermesBlend.y,scale:s.hermesBlend.scaleX,flip:s.hermesBlend.flipX,alpha:s.hermesBlend.alpha}:null,walking:s.hermesMotor.walking,contact:s.hermesMotor.snapshot(),location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth};}});out.push({png,...sample});}return out})();window.__walkBatch={token,promise};return promise})()`,
+			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){out.push(await ${captureOne("1000/24")});}return out})();window.__walkBatch={token,promise};return promise})()`,
 			true,
 		);
 		const currentGeometry = areas[frames.at(-1).location]
