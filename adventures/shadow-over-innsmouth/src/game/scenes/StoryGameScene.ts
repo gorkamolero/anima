@@ -38,6 +38,7 @@ import {
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
+import { hermesStanding } from "./hermesStanding";
 import {
 	getReviewAction,
 	REVIEW_SCENES,
@@ -203,6 +204,7 @@ export class StoryGameScene extends BaseScene {
 	> = {};
 	private lastReviewTransition?: ReviewTransitionSnapshot;
 	private hermesMotor?: CharacterMotor;
+	private hermesBlend?: Phaser.GameObjects.Sprite;
 	private objectLayers: {
 		data: Occluder;
 		image: Phaser.GameObjects.Image;
@@ -281,6 +283,10 @@ export class StoryGameScene extends BaseScene {
 		);
 		for (const texture of [
 			HERMES_AWAY_TEXTURE,
+			"hermes-stand-away",
+			"hermes-stand-away-right",
+			"hermes-stand-toward",
+			"hermes-stand-toward-right",
 			HERMES_TOWARD_TEXTURE,
 			HERMES_AWAY_DIAGONAL_TEXTURE,
 			HERMES_TOWARD_DIAGONAL_TEXTURE,
@@ -424,6 +430,10 @@ export class StoryGameScene extends BaseScene {
 
 		for (const texture of [
 			HERMES_AWAY_TEXTURE,
+			"hermes-stand-away",
+			"hermes-stand-away-right",
+			"hermes-stand-toward",
+			"hermes-stand-toward-right",
 			HERMES_TOWARD_TEXTURE,
 			HERMES_AWAY_DIAGONAL_TEXTURE,
 			HERMES_TOWARD_DIAGONAL_TEXTURE,
@@ -568,6 +578,12 @@ export class StoryGameScene extends BaseScene {
 				void this.triggerExit(exit);
 			}
 		}
+		if (this.hermesBlend && this.hermesSprite) {
+			this.hermesBlend.setVisible(
+				this.hermesSprite.visible && this.hermesBlend.alpha > 0,
+			);
+			this.hermesBlend.setDepth(this.hermesSprite.depth);
+		}
 		this.updateReviewHotspotHover();
 		this.refreshPlacementDebugOverlay();
 	}
@@ -685,6 +701,12 @@ export class StoryGameScene extends BaseScene {
 		);
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
+			this.hermesBlend?.destroy();
+			this.hermesBlend = this.add
+				.sprite(0, 0, HERMES_IDLE_TEXTURE, 0)
+				.setAlpha(0)
+				.setOrigin(0.5, 1)
+				.setVisible(false);
 			const cycle = (texture: string) => {
 				const data = this.cache.json.get(`${texture}-meta`) as FootCycle;
 				if (!data?.contacts)
@@ -733,6 +755,23 @@ export class StoryGameScene extends BaseScene {
 							cycle: cycle(texture),
 							flipX: direction === "right" || direction.endsWith("-left"),
 						};
+					},
+					standing: (direction) => {
+						const { texture, flipX } = hermesStanding(direction);
+						return { cycle: cycle(texture), frame: 0, flipX };
+					},
+					blend: (pose, placement, weight) => {
+						const sprite = this.hermesSprite;
+						if (!sprite || !this.hermesBlend) return;
+						sprite.setAlpha(1 - weight);
+						this.hermesBlend
+							.setTexture(pose.cycle.name, pose.frame)
+							.setPosition(placement.x, placement.y)
+							.setScale(placement.scale)
+							.setFlipX(pose.flipX)
+							.setAlpha(weight)
+							.setDepth(sprite.depth)
+							.setVisible(sprite.visible && weight > 0);
 					},
 					show,
 				},
@@ -923,6 +962,7 @@ export class StoryGameScene extends BaseScene {
 			this.hermesSprite
 				?.setVisible(hermes.visible !== false)
 				.setFlipX(hermes.flipX ?? this.hermesFacing === -1);
+			if (this.hermesMotor) this.hermesMotor.heading = "away";
 			this.hermesMotor?.place(hermes);
 			this.setHermesMotionState(hermes.state === "talk" ? "talk" : "idle");
 		} else {
@@ -1611,6 +1651,16 @@ export class StoryGameScene extends BaseScene {
 				)
 				.setFlipX(false);
 		}
+		this.hermesMotor.heading =
+			kind === "near"
+				? "away"
+				: kind === "far"
+					? "toward"
+					: kind === "edge-left"
+						? "right"
+						: kind === "edge-right"
+							? "left"
+							: "toward";
 		if (kind === "near" || kind === "far") this.hermesMotor.placeContact(point);
 		else this.hermesMotor.place(point, !edge);
 		this.exitLatch = entry.id;
@@ -1704,6 +1754,10 @@ export class StoryGameScene extends BaseScene {
 	): Promise<void> {
 		this.openWorldBusy = true;
 		this.selectedInteractable = interactable;
+		if (this.hermesMotor) {
+			const b = interactable.bounds;
+			this.hermesMotor.facePoint({ x: (b[0] + b[2]) * 960, y: b[3] * 1080 });
+		}
 		this.emitOpenWorldState({ status: "loading", object: interactable.name });
 		try {
 			const options = await this.fetchOptions(interactable);
@@ -1916,36 +1970,16 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private setHermesMotionState(state: CharacterAnimationState): void {
-		const previousState = this.hermesMotionState;
 		this.hermesMotionState = state;
 		const sprite = this.hermesSprite;
 		if (!sprite) return;
-		if (state === "idle" && previousState === "walk") {
-			// Arrival must not replace the last contact with unrelated frame zero.
-			sprite.anims.stop();
+		if (this.hermesMotor) {
+			if (state !== "walk") this.hermesMotor.stop();
 			return;
 		}
-		const direction = this.hermesWalkDirection;
-		const texture =
-			direction === "away"
-				? HERMES_AWAY_TEXTURE
-				: direction === "toward"
-					? HERMES_TOWARD_TEXTURE
-					: HERMES_TEXTURE;
-		if (state === "walk") {
-			sprite.playAnimationState(state, `${texture}-walk`);
-			sprite.setFlipX(direction === "right");
-		} else {
-			sprite.anims.timeScale = 1;
-			sprite.playAnimationState(state);
-			if (
-				state === "idle" &&
-				(direction === "away" || direction === "toward")
-			) {
-				sprite.anims.stop();
-				sprite.setTexture(texture, 0).setFlipX(false);
-			} else sprite.setFlipX(direction === "right");
-		}
+		const pose = hermesStanding(this.hermesWalkDirection);
+		sprite.anims.stop();
+		sprite.setTexture(pose.texture, 0).setFlipX(pose.flipX);
 	}
 
 	private async walkHermesTo(
@@ -2214,9 +2248,7 @@ export class StoryGameScene extends BaseScene {
 						motionState: this.hermesMotionState,
 						animationState: this.hermesSprite.getAnimationState(),
 						animationKey: this.hermesSprite.anims.currentAnim?.key ?? null,
-						textureKey:
-							this.hermesSprite.anims.currentFrame?.textureKey ??
-							this.hermesSprite.texture.key,
+						textureKey: this.hermesSprite.texture.key,
 						displayHeight: Math.round(this.hermesSprite.displayHeight),
 						bounds: hermesBounds
 							? {

@@ -5,7 +5,7 @@ export default defineConfig({
 		globals: true,
 		environment: "happy-dom",
 		setupFiles: ["./packages/engine/src/__tests__/setup.ts"],
-		include: ["packages/**/*.test.ts", "api/**/*.test.ts"],
+		include: ["packages/**/*.test.ts", "api/**/*.test.ts", "adventures/**/*.test.ts"],
 		exclude: ["**/node_modules/**", "**/dist/**"],
 		coverage: {
 			provider: "v8",

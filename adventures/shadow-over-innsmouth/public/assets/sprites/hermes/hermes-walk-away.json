@@ -380,5 +380,6 @@
 			}
 		],
 		"searchRadius": 64
-	}
+	},
+	"passingFrames": [3, 17]
 }
