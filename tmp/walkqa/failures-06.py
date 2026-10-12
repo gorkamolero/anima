@@ -10,7 +10,10 @@ for t in targets:
  if duration<1:issues.append(f'walking {duration:.3f}s < 1s')
  if not 1.6<=cadence<=2.2:issues.append(f'cadence {cadence:.3f} outside 1.6–2.2')
  if t['requestedExit'] and not t['exitCompleted']:issues.append('requested exit did not transition')
- if not t['arrival'] and not(t['requestedExit'] and t['exitCompleted']):issues.append(f'natural stop without half-stride arrival; {t["shortfall"]:.1f}px from mask endpoint')
+ if not t['arrival'] and not(t['requestedExit'] and t['exitCompleted']):
+  if t.get('transitioned'):issues.append(f'walk entered a physical exit before the target; {t["shortfall"]:.1f}px from endpoint')
+  elif t['object']:issues.append('object approach ended without a recorded half-stride arrival')
+  else:issues.append(f'natural stop without half-stride arrival; {t["shortfall"]:.1f}px from mask endpoint')
  seg=collections.defaultdict(lambda:[0.,0])
  for a,b in zip(w,w[1:]):
   ga,gb=a['contact'].get('ground'),b['contact'].get('ground')
