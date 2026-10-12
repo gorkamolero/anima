@@ -194,4 +194,12 @@ describe("contact motor", () => {
 			expect(pose().frame).not.toBe(2);
 		}
 	});
+	it("does not enter a one-frame support pivot that can disappear between captures", () => {
+		const { motor, cycle } = setup();
+		cycle.contacts[1].planted = "R";
+		cycle.contacts[2].planted = "L";
+		cycle.switchFrames = [0, 1, 2, 3];
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(motor.walking).toBe(false);
+	});
 });

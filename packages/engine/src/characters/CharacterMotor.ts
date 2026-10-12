@@ -182,6 +182,14 @@ export class CharacterMotor {
 			for (const frame of frames) {
 				if (frame === undefined) continue;
 				const pose = { ...next, frame };
+				// A one-frame pivot can switch support twice between rendered frames.
+				// Require a visible stance instead of hiding a second landing in one tick.
+				if (
+					(starting || turning) &&
+					next.cycle.contacts[(frame + 1) % next.cycle.contacts.length]
+						.planted !== this.foot
+				)
+					continue;
 				const predicted = this.predictStance(pose);
 				if (!predicted) continue;
 				const score = remaining(
