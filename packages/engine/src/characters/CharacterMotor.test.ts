@@ -182,4 +182,16 @@ describe("contact motor", () => {
 		expect(pose().flipX).toBe(true);
 		expect(motor.walking).toBe(false);
 	});
+	it("never draws an unsafe old-cycle pose before replanning an incoming landing", () => {
+		const { motor, target, cycle, pose } = setup();
+		cycle.contacts[2].R.y = -3000;
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(motor.walking).toBe(true);
+		for (let i = 0; i < 12; i++) {
+			motor.update(1000 / 24);
+			expect(target.y).toBeGreaterThanOrEqual(0);
+			expect(target.y).toBeLessThan(1080);
+			expect(pose().frame).not.toBe(2);
+		}
+	});
 });

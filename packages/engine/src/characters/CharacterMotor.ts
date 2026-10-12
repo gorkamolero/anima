@@ -284,18 +284,17 @@ export class CharacterMotor {
 					this.area.scaleClamp,
 					scale,
 				);
-				if (
-					!on(this.area.mask, end) ||
-					!lineOfSight(this.area.mask, position, end)
-				)
-					return;
+				// The incoming cycle may change at this landing. Its old-cycle
+				// first pose is not drawn if a turn is needed for body clearance.
+				const nextBodySafe =
+					on(this.area.mask, end) && lineOfSight(this.area.mask, position, end);
 				return {
 					start,
-					end,
+					end: nextBodySafe ? end : position,
 					anchor: landing,
 					foot: incoming,
 					pose: { ...pose, frame },
-					scale: end.scale,
+					scale: nextBodySafe ? end.scale : scale,
 				};
 			}
 			current = { ...pose, frame };
@@ -421,13 +420,37 @@ export class CharacterMotor {
 			};
 			const foot = next.cycle.contacts[next.frame].planted;
 			const switched = foot !== this.foot;
+			const previous = {
+				pose: this.pose,
+				foot: this.foot,
+				anchor: { ...this.anchor },
+			};
 			if (switched) {
 				// Capture the incoming sole before changing frames: transfer support without snapping.
 				this.anchor = contactOnScreen(this.pose, foot, this.target, this.scale);
 				this.foot = foot;
 			}
 			this.pose = next;
-			this.apply();
+			if (switched) {
+				const placement = lockedPlacement(
+					this.anchor,
+					next,
+					this.foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					this.scale,
+				);
+				if (!lineOfSight(this.area.mask, this.target, placement)) {
+					if (!this.planStance()) {
+						this.pose = previous.pose;
+						this.foot = previous.foot;
+						this.anchor = previous.anchor;
+						this.stop();
+						break;
+					}
+				} else this.apply();
+			} else this.apply();
 			if (switched && this.atSwitch()) break;
 		}
 	}
