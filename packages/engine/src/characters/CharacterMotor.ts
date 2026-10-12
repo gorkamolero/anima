@@ -101,7 +101,16 @@ export class CharacterMotor {
 		this.anchor = contactOnScreen(this.pose, this.foot, p, this.scale);
 		this.target.setDepth(10 + this.anchor.y / 20);
 	}
-	walk(points: readonly Point[]): Promise<void> {
+	/** Spawn with the actual planted sole on a floor boundary, not the sprite origin. */
+	placeContact(position: Point): void {
+		this.place(position, false);
+		this.anchor = { ...position };
+		this.apply();
+	}
+	walk(
+		points: readonly Point[],
+		initialHeading?: WalkDirection,
+	): Promise<void> {
 		this.stop();
 		this.arrival = undefined;
 		this.visitedSupports.clear();
@@ -118,7 +127,7 @@ export class CharacterMotor {
 			this.target,
 			this.scale,
 		);
-		if (!this.planStance(true)) return Promise.resolve();
+		if (!this.planStance(true, false, initialHeading)) return Promise.resolve();
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
 		this.animation.show(this.pose);
@@ -127,7 +136,11 @@ export class CharacterMotor {
 		});
 	}
 	/** Replan from the actual locked body, and evaluate the drawing, not a nominal heading. */
-	private planStance(starting = false, turning = false): boolean {
+	private planStance(
+		starting = false,
+		turning = false,
+		initialHeading?: WalkDirection,
+	): boolean {
 		if (!this.pose || !this.goal) return false;
 		this.path = findPath(this.area.mask, this.target, this.goal);
 		if (!this.path.length) return false;
@@ -152,6 +165,7 @@ export class CharacterMotor {
 			predicted: PredictedStance;
 		}[] = [];
 		for (const heading of GROUND_SECTORS) {
+			if (starting && initialHeading && heading !== initialHeading) continue;
 			const next = this.animation.select(heading);
 			const same =
 				next.cycle.name === this.pose.cycle.name &&
@@ -384,6 +398,12 @@ export class CharacterMotor {
 		pose: FootPose,
 		state?: PredictedStance,
 	): PredictedStance | undefined {
+		if (
+			pose.cycle.contacts.some(
+				(c) => c[c.planted].y < 0 || c[c.planted].y > pose.cycle.frameHeight,
+			)
+		)
+			return;
 		const anchor = state?.anchor ?? this.anchor,
 			foot = state?.foot ?? this.foot;
 		const raw = this.area.rawMask ?? this.area.mask;
@@ -404,8 +424,15 @@ export class CharacterMotor {
 				scale,
 			);
 			if (
-				!on(this.area.clearanceMask ?? this.area.mask, p) ||
-				!lineOfSight(this.area.clearanceMask ?? this.area.mask, position, p)
+				!on(this.area.clearanceMask ?? this.area.mask, {
+					x: p.x,
+					y: anchor.y,
+				}) ||
+				!lineOfSight(
+					this.area.clearanceMask ?? this.area.mask,
+					{ x: position.x, y: anchor.y },
+					{ x: p.x, y: anchor.y },
+				)
 			)
 				return;
 			if (i === 0) start = p;
@@ -428,8 +455,15 @@ export class CharacterMotor {
 				// The incoming cycle may change at this landing. Its old-cycle
 				// first pose is not drawn if a turn is needed for body clearance.
 				const nextBodySafe =
-					on(this.area.clearanceMask ?? this.area.mask, end) &&
-					lineOfSight(this.area.clearanceMask ?? this.area.mask, position, end);
+					on(this.area.clearanceMask ?? this.area.mask, {
+						x: end.x,
+						y: landing.y,
+					}) &&
+					lineOfSight(
+						this.area.clearanceMask ?? this.area.mask,
+						{ x: position.x, y: anchor.y },
+						{ x: end.x, y: landing.y },
+					);
 				return {
 					start,
 					end: nextBodySafe ? end : position,
@@ -592,8 +626,8 @@ export class CharacterMotor {
 				if (
 					!lineOfSight(
 						this.area.clearanceMask ?? this.area.mask,
-						this.target,
-						placement,
+						{ x: this.target.x, y: previous.anchor.y },
+						{ x: placement.x, y: this.anchor.y },
 					)
 				) {
 					if (!this.planStance()) {

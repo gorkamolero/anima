@@ -177,13 +177,13 @@ describe("contact motor", () => {
 		const { motor, area, cycle } = setup();
 		motor.area.rawMask = { ...area.mask, data: [...area.mask.data] };
 		for (let i = 0; i < area.mask.data.length; i++)
-			if (Math.floor(i / area.mask.width) < 82) area.mask.data[i] = 0;
+			if (i % area.mask.width < 90) area.mask.data[i] = 0;
 		for (const c of cycle.contacts) {
-			c.L.y = 50;
-			c.R.y = 50;
+			c.L.x -= 200;
+			c.R.x -= 200;
 		}
 		void motor.walk([{ x: 1400, y: 850 }]);
-		expect(motor.anchor.y).toBeLessThan(820);
+		expect(motor.anchor.x).toBeLessThan(900);
 		expect(motor.walking).toBe(true);
 	});
 	it("places using a freshly selected pose instead of restoring the last walk pose", () => {
