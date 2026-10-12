@@ -1,0 +1,72 @@
+[
+  {
+    "take": "away",
+    "requestId": "01a13132-3a2f-7572-8397-7f6675edd243",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "away-reroll",
+    "requestId": "01a13133-f44d-74e1-b566-0d938bae1b8e",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "away-right",
+    "requestId": "01a13132-3d75-77b3-adbb-284aa4080ee7",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "away-right-reroll",
+    "requestId": "01a13133-f7f1-7801-a5d2-46253803a4eb",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "side",
+    "requestId": "01a13132-36e5-7330-b418-6247292e8944",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "side-reroll",
+    "requestId": "01a13133-ee95-7841-a51d-924e62a10842",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "toward",
+    "requestId": "01a13132-40b1-7362-8110-80f3dac4e487",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "toward-reroll",
+    "requestId": "01a13134-95d9-7ba2-b386-19ee53c9ca81",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "toward-right",
+    "requestId": "01a13132-4409-7a20-83d5-1ab5280c1a1c",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  },
+  {
+    "take": "toward-right-reroll",
+    "requestId": "01a13134-9955-7052-997f-4cd9829b75fc",
+    "frames": 73,
+    "accepted": false,
+    "reason": "Additional walking and support-foot lift before rest; no single stationary support from frame zero to rest."
+  }
+]

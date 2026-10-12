@@ -1,0 +1,92 @@
+[
+  {
+    "heading": "side",
+    "cycle": "hermes-fal-veo-transparent-loop",
+    "frame": 29,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "R": {
+        "x": 356.68832914070987,
+        "y": 1018.684246991037
+      },
+      "planted": "R",
+      "L": {
+        "x": 377.6950093121769,
+        "y": 1017.4164740482506
+      }
+    }
+  },
+  {
+    "heading": "away",
+    "cycle": "hermes-walk-away",
+    "frame": 11,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 284.8038343190365,
+        "y": 977.6398759059772
+      },
+      "planted": "L",
+      "R": {
+        "x": 353.610952250958,
+        "y": 978.0
+      }
+    }
+  },
+  {
+    "heading": "away-right",
+    "cycle": "hermes-walk-away-right",
+    "frame": 8,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 285.0421939016454,
+        "y": 1024.5084669927626
+      },
+      "planted": "L",
+      "R": {
+        "x": 260.1136362860312,
+        "y": 981.5708121666912
+      }
+    }
+  },
+  {
+    "heading": "toward",
+    "cycle": "hermes-walk-toward",
+    "frame": 13,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 334.5239371506074,
+        "y": 967.0173406092124
+      },
+      "planted": "L",
+      "R": {
+        "x": 266.10878598593314,
+        "y": 953.5520192296881
+      }
+    }
+  },
+  {
+    "heading": "toward-right",
+    "cycle": "hermes-walk-toward-right",
+    "frame": 8,
+    "width": 612,
+    "height": 1059,
+    "contact": {
+      "L": {
+        "x": 264.86845022155075,
+        "y": 992.3999219127921
+      },
+      "planted": "L",
+      "R": {
+        "x": 254.8764083529468,
+        "y": 993.5849875984122
+      }
+    }
+  }
+]
