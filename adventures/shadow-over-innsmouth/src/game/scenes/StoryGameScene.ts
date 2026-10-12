@@ -282,10 +282,11 @@ export class StoryGameScene extends BaseScene {
 		);
 		for (const texture of [
 			HERMES_AWAY_TEXTURE,
-			"hermes-stand-away",
-			"hermes-stand-away-right",
-			"hermes-stand-toward",
-			"hermes-stand-toward-right",
+			"hermes-matched-stand-side",
+			"hermes-matched-stand-away",
+			"hermes-matched-stand-away-right",
+			"hermes-matched-stand-toward",
+			"hermes-matched-stand-toward-right",
 			HERMES_TOWARD_TEXTURE,
 			HERMES_AWAY_DIAGONAL_TEXTURE,
 			HERMES_TOWARD_DIAGONAL_TEXTURE,
@@ -429,10 +430,11 @@ export class StoryGameScene extends BaseScene {
 
 		for (const texture of [
 			HERMES_AWAY_TEXTURE,
-			"hermes-stand-away",
-			"hermes-stand-away-right",
-			"hermes-stand-toward",
-			"hermes-stand-toward-right",
+			"hermes-matched-stand-side",
+			"hermes-matched-stand-away",
+			"hermes-matched-stand-away-right",
+			"hermes-matched-stand-toward",
+			"hermes-matched-stand-toward-right",
 			HERMES_TOWARD_TEXTURE,
 			HERMES_AWAY_DIAGONAL_TEXTURE,
 			HERMES_TOWARD_DIAGONAL_TEXTURE,

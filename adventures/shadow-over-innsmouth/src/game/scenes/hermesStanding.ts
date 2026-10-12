@@ -10,8 +10,8 @@ export function hermesStanding(direction: WalkDirection) {
 	return {
 		texture:
 			direction === "left" || direction === "right"
-				? "hermes-idle-v2-normalized"
-				: `hermes-stand-${suffix}`,
+				? "hermes-matched-stand-side"
+				: `hermes-matched-stand-${suffix}`,
 		flipX: direction === "right" || direction.endsWith("-left"),
 	};
 }
