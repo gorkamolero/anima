@@ -73,15 +73,6 @@ export function floorQuestions(
 			false: "No green on water, sky or walls",
 		},
 	};
-	questions.obstacles = {
-		type: "noul",
-		instructions:
-			"Does GREEN cover any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles, including unlabelled ones? Ignore missing floor and intentional clearance margins.",
-		criteria: {
-			true: "Green covers an obstacle itself",
-			false: "Green excludes obstacles",
-		},
-	};
 	questions.coverage = {
 		type: "score",
 		instructions:

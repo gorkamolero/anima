@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { Hono } from "hono";
 import { z } from "zod";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
@@ -44,6 +44,65 @@ export async function getPlace(id: string): Promise<Place | undefined> {
 	return rows.rows.length ? JSON.parse(String(rows.rows[0].data)) : undefined;
 }
 const pending = new Map<string, Promise<Place>>();
+/** Explicit local reviewer replacement; never invoked by GET or automatic derivation.
+ * Keep the exact candidate and disagreement, rather than changing judge answers. */
+export async function replaceReviewedPlace(
+	id: string,
+	candidate: Place,
+	review: {
+		approvedBy: "reviewer";
+		date: string;
+		overlay: string;
+		judgeDisagreement: unknown;
+	},
+): Promise<Place> {
+	if (pending.has(id)) throw new Error("Place derivation already running");
+	const replacement = (async () => {
+		const previous = await getPlace(id);
+		if (!previous) throw new Error("Unknown place");
+		if (
+			candidate.id !== id ||
+			candidate.background !== previous.background ||
+			candidate.template !== previous.template ||
+			review.approvedBy !== "reviewer" ||
+			!Number.isFinite(Date.parse(review.date))
+		)
+			throw new Error("Reviewed replacement identity or approval mismatch");
+		const floor = candidate.ground.floor;
+		if (
+			floor.data.length !== floor.width * floor.height ||
+			!floor.data.some(Boolean) ||
+			candidate.ground.ground === "failed"
+		)
+			throw new Error("Invalid reviewed floor");
+		const overlaySha256 = createHash("sha256")
+			.update(await readFile(review.overlay))
+			.digest("hex");
+		const place = { ...previous, ground: candidate.ground };
+		const audit = `${proofDirectory(id)}/replace-reviewed-${Date.now()}.json`;
+		await mkdir(proofDirectory(id), { recursive: true });
+		const record = {
+			id,
+			...review,
+			overlaySha256,
+			previous,
+			candidate: place,
+		};
+		await writeFile(audit, JSON.stringify({ ...record, status: "started" }));
+		await (await getWorldDb()).execute({
+			sql: "INSERT OR REPLACE INTO places VALUES (?, ?)",
+			args: [id, JSON.stringify(place)],
+		});
+		await writeFile(audit, JSON.stringify({ ...record, status: "complete" }));
+		return place;
+	})();
+	pending.set(id, replacement);
+	try {
+		return await replacement;
+	} finally {
+		pending.delete(id);
+	}
+}
 async function createPlace(
 	input: {
 		parent: string;

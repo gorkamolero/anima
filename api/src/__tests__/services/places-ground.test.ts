@@ -249,3 +249,53 @@ it.each([
 		).toBe(true);
 	}
 });
+
+it("installs an explicit reviewer replacement while preserving judge disagreement", async () => {
+	const { replaceReviewedPlace } = await import("../../routes/places.js");
+	const initial = maskToGround(
+		{ width: 40, height: 40, data: Array(1600).fill(1) },
+		300,
+		0.002,
+	);
+	mocks.derive.mockResolvedValue(initial);
+	const previous = await (await request()).json();
+	const candidate = structuredClone(previous);
+	candidate.ground.floor.data[0] = 0;
+	candidate.ground.verdicts = [
+		{
+			pass: false,
+			why: "Global obstacle disagreement",
+			probabilities: { obstacles: 1, object_0: 0 },
+		},
+	];
+	const review = {
+		approvedBy: "reviewer" as const,
+		date: "2026-10-12",
+		overlay: new URL("./exits.test.ts", import.meta.url).pathname,
+		judgeDisagreement: candidate.ground.verdicts,
+	};
+	await expect(
+		replaceReviewedPlace(
+			previous.id,
+			{ ...candidate, background: "/wrong.png" },
+			review,
+		),
+	).rejects.toThrow("mismatch");
+	await replaceReviewedPlace(previous.id, candidate, review);
+	const loaded = await (
+		await placesRoutes.request(`http://localhost/places/${previous.id}`)
+	).json();
+	expect(loaded.ground).toEqual(candidate.ground);
+	expect(mocks.derive).toHaveBeenCalledTimes(1);
+	const { writeFile } = await import("node:fs/promises");
+	expect(
+		vi
+			.mocked(writeFile)
+			.mock.calls.some(
+				([, body]) =>
+					String(body).includes('"approvedBy":"reviewer"') &&
+					String(body).includes('"status":"complete"') &&
+					String(body).includes('"overlaySha256"'),
+			),
+	).toBe(true);
+});

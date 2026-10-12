@@ -55,6 +55,8 @@ describe("asymmetric floor judge", () => {
 			],
 			ground(),
 		);
+		expect(q.obstacles).toBeUndefined();
+		expect(q.environment).toBeDefined();
 		expect(q.object_0.instructions).toContain("barrel");
 		expect(q.object_1).toBeUndefined();
 	});
