@@ -27,7 +27,6 @@ export interface AgentSceneSnapshot {
 		displayHeight: number;
 		motion?: {
 			ground: { x: number; y: number };
-			speed: number;
 			heading: string;
 			walking: boolean;
 		};

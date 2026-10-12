@@ -243,3 +243,44 @@ export function findPath(
 		path[path.length - 1] = target;
 	return stringPull(mask, path);
 }
+
+/** Round a string-pulled corner only when every replacement segment stays on floor. */
+export function roundCorners(
+	mask: FloorMask,
+	path: readonly Point[],
+	radius = 24,
+): Point[] {
+	if (path.length < 3) return [...path];
+	const out = [path[0]];
+	for (let i = 1; i < path.length - 1; i++) {
+		const a = path[i - 1],
+			b = path[i],
+			c = path[i + 1];
+		const ab = Math.hypot(b.x - a.x, b.y - a.y),
+			bc = Math.hypot(c.x - b.x, c.y - b.y);
+		if (!ab || !bc) continue;
+		const r = Math.min(radius, ab / 3, bc / 3);
+		const entry = {
+			x: b.x + ((a.x - b.x) * r) / ab,
+			y: b.y + ((a.y - b.y) * r) / ab,
+		};
+		const exit = {
+			x: b.x + ((c.x - b.x) * r) / bc,
+			y: b.y + ((c.y - b.y) * r) / bc,
+		};
+		const arc = Array.from({ length: 9 }, (_, j) => {
+			const t = j / 8,
+				u = 1 - t;
+			return {
+				x: u * u * entry.x + 2 * u * t * b.x + t * t * exit.x,
+				y: u * u * entry.y + 2 * u * t * b.y + t * t * exit.y,
+			};
+		});
+		const check = [out[out.length - 1], ...arc, c];
+		if (check.slice(1).every((point, j) => lineOfSight(mask, check[j], point)))
+			out.push(...arc);
+		else out.push(b);
+	}
+	out.push(path[path.length - 1]);
+	return out;
+}

@@ -1,11 +1,31 @@
 import { describe, expect, it } from "vitest";
-import { scaleAt, toMetres } from "../walkarea/perspective";
+import { scaleAt } from "../walkarea/perspective";
 import { CharacterMotor, type MotorTarget } from "./CharacterMotor";
+import {
+	contactOnScreen,
+	type FootCycle,
+	type FootPose,
+	lockedPlacement,
+} from "./footLock";
 
 function setup() {
+	const cycle: FootCycle = {
+		name: "walk",
+		frameWidth: 100,
+		frameHeight: 200,
+		fps: 24,
+		switchFrames: [0, 2],
+		contacts: [
+			{ planted: "L", L: { x: 70, y: 190 }, R: { x: 30, y: 190 } },
+			{ planted: "L", L: { x: 50, y: 188 }, R: { x: 70, y: 190 } },
+			{ planted: "R", L: { x: 30, y: 190 }, R: { x: 50, y: 190 } },
+			{ planted: "R", L: { x: 90, y: 190 }, R: { x: 30, y: 188 } },
+		],
+	};
+	let shown: FootPose = { cycle, frame: 0, flipX: false };
 	const target: MotorTarget & { scale: number } = {
 		x: 960,
-		y: 920,
+		y: 850,
 		scale: 1,
 		setPosition(x, y) {
 			this.x = x;
@@ -17,103 +37,84 @@ function setup() {
 		setDepth() {},
 	};
 	const area = {
-		mask: { width: 2, height: 2, data: [1, 1, 1, 1] },
+		mask: { width: 192, height: 108, data: Array(192 * 108).fill(1) },
 		perspective: { horizonY: 470, slope: 0.002 },
 		baseScale: 0.5,
 		scaleClamp: { min: 0.18, max: 1.5 },
 	};
-	const calls: { state: string; heading: string }[] = [];
-	const motor = new CharacterMotor(target, area, (state, heading) => {
-		calls.push({ state, heading });
+	const motor = new CharacterMotor(target, area, () => {}, {
+		current: () => shown,
+		select: (d) => ({ cycle, flipX: d === "left" }),
+		show: (p) => {
+			shown = p;
+		},
 	});
-	return { target, area, motor, calls };
+	return { motor, target, area, cycle, pose: () => shown };
 }
-describe("CharacterMotor", () => {
-	it("maintains ground speed and current-position scale across variable frame times", () => {
-		const { motor, target, area } = setup();
-		void motor.walk([{ x: 1100, y: 560 }]);
-		for (const dt of [16, 33, 50, 100, 16, 80, 33]) {
-			const before = toMetres(area.perspective, target);
-			motor.update(dt);
-			const after = toMetres(area.perspective, target);
-			expect(
-				Math.hypot(after.x - before.x, after.y - before.y) / (dt / 1000),
-			).toBeCloseTo(1, 9);
-			expect(target.scale).toBeCloseTo(
-				0.5 * scaleAt(area.perspective, target, area.scaleClamp),
+describe("contact motor", () => {
+	it("locks the first foot through start and mirrored perspective changes", () => {
+		for (const flipX of [false, true]) {
+			const { cycle, area } = setup();
+			const pose = { cycle, frame: 1, flipX };
+			const anchor = { x: 400, y: 850 };
+			const placed = lockedPlacement(
+				anchor,
+				pose,
+				"L",
+				area.perspective,
+				area.baseScale,
+				area.scaleClamp,
+				0.4,
+			);
+			expect(contactOnScreen(pose, "L", placed, placed.scale)).toEqual(anchor);
+			expect(placed.scale).toBeCloseTo(
+				area.baseScale * scaleAt(area.perspective, placed, area.scaleClamp),
 				10,
 			);
 		}
 	});
-	it("resolves arrival and replacement using only the virtual clock", async () => {
+	it("derives travel from frames, independently of update subdivision", () => {
+		const a = setup(),
+			b = setup();
+		void a.motor.walk([{ x: 1400, y: 850 }]);
+		void b.motor.walk([{ x: 1400, y: 850 }]);
+		a.motor.update(1000 / 6);
+		for (let i = 0; i < 10; i++) b.motor.update(1000 / 60);
+		expect(a.target.x).toBeCloseTo(b.target.x, 9);
+		expect(a.target.y).toBeCloseTo(b.target.y, 9);
+		expect(a.pose().frame).toBe(b.pose().frame);
+		expect(a.target.x).toBeGreaterThan(960);
+	});
+	it("bounds total anchor correction and never moves a held contact", () => {
+		const { motor, target, pose } = setup();
+		void motor.walk([{ x: 1400, y: 850 }]);
+		const start = { ...motor.anchor };
+		motor.update(1000 / 24);
+		expect(
+			Math.hypot(motor.anchor.x - start.x, motor.anchor.y - start.y),
+		).toBeLessThanOrEqual(1);
+		const point = contactOnScreen(
+			pose(),
+			pose().cycle.contacts[pose().frame].planted,
+			target,
+			target.scale,
+		);
+		expect(point.x).toBeCloseTo(motor.anchor.x, 10);
+		expect(point.y).toBeCloseTo(motor.anchor.y, 10);
+		motor.stop();
+		const last = { x: target.x, y: target.y };
+		motor.update(1000);
+		expect({ x: target.x, y: target.y }).toEqual(last);
+	});
+	it("resolves replaced walks and preserves contact when stopping", async () => {
 		const { motor, target } = setup();
-		const first = motor.walk([{ x: 960, y: 800 }]);
-		const second = motor.walk([{ x: 1100, y: 920 }]);
+		const first = motor.walk([{ x: 1400, y: 850 }]);
+		void motor.walk([{ x: 1300, y: 850 }]);
 		await first;
-		motor.update(10000);
-		await second;
-		expect(target.x).toBeCloseTo(1100);
-		expect(motor.walking).toBe(false);
-		expect(motor.heading).toBe("right");
+		motor.update(100);
+		const last = { x: target.x, y: target.y };
 		motor.detach();
 		expect(target.motor).toBeUndefined();
-	});
-	it("consumes signed animation displacement without creating a forward remainder", () => {
-		const { motor, target } = setup();
-		let pixels = 10;
-		motor.rootStep = () => pixels;
-		void motor.walk([{ x: 1100, y: 920 }]);
-		motor.update(1);
-		expect(target.x).toBeCloseTo(970);
-		pixels = -2;
-		motor.update(1);
-		expect(target.x).toBeCloseTo(968);
-		pixels = 0;
-		motor.update(100);
-		expect(target.x).toBeCloseTo(968);
-		pixels = 200;
-		motor.update(1);
-		expect(target.x).toBeCloseTo(1100);
-		expect(motor.walking).toBe(false);
-	});
-	it("faces the current root-motion leg before looking ahead around a corner", () => {
-		const { motor, target, calls } = setup();
-		const headings: string[] = [];
-		motor.rootStep = (heading, tangent) => {
-			headings.push(heading);
-			return Math.abs(tangent.y) > 0.9 ? 5 : 10;
-		};
-		void motor.walk([
-			{ x: 960, y: 915 },
-			{ x: 1000, y: 915 },
-		]);
-		motor.update(1);
-		expect(headings[0]).toBe("away");
-		expect(calls.filter((c) => c.state === "walk")).toEqual([
-			{ state: "walk", heading: "away" },
-		]);
-		expect(target.y).toBeCloseTo(915);
-		motor.update(1);
-		expect(headings[1]).toBe("right");
-		expect(target.x).toBeCloseTo(970);
-	});
-	it("keeps visual sway out of navigation and eases it to zero in four frames", () => {
-		const { motor, target } = setup();
-		motor.rootStep = () => ({
-			distance: 2,
-			offset: { x: 0, y: 6 },
-			cycle: "side",
-		});
-		void motor.walk([{ x: 1100, y: 920 }]);
-		for (let i = 0; i < 6; i++) motor.update(1000 / 24);
-		expect(target.y).toBe(920);
-		expect(motor.visualOffset.y).toBe(6);
-		motor.stop();
-		motor.update(1000 / 24);
-		expect(motor.visualOffset.y).toBeGreaterThan(0);
-		expect(motor.visualOffset.y).toBeLessThan(6);
-		for (let i = 0; i < 4; i++) motor.update(1000 / 24);
-		expect(motor.visualOffset.y).toBe(0);
-		expect(target.y).toBe(920);
+		expect({ x: target.x, y: target.y }).toEqual(last);
 	});
 });

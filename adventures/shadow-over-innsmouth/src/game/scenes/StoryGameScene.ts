@@ -10,6 +10,8 @@ import {
 	type Exit,
 	erode,
 	exitAt,
+	type FootCycle,
+	type FootPose,
 	findPath,
 	floorPixel,
 	type HotspotVerb,
@@ -69,6 +71,8 @@ const SHOW_DEBUG_OVERLAY =
 const HERMES_TEXTURE = "hermes-fal-veo-transparent-loop";
 const HERMES_AWAY_TEXTURE = "hermes-walk-away";
 const HERMES_TOWARD_TEXTURE = "hermes-walk-toward";
+const HERMES_AWAY_DIAGONAL_TEXTURE = "hermes-walk-away-right";
+const HERMES_TOWARD_DIAGONAL_TEXTURE = "hermes-walk-toward-right";
 const HERMES_IDLE_TEXTURE = "hermes-idle-v2-normalized";
 const HERMES_TALK_TEXTURE = "hermes-talk-v1-normalized";
 const KAT_TEXTURE = "kat-fal-veo-transparent-loop";
@@ -200,7 +204,6 @@ export class StoryGameScene extends BaseScene {
 	> = {};
 	private lastReviewTransition?: ReviewTransitionSnapshot;
 	private hermesMotor?: CharacterMotor;
-	private rootFrame = "";
 	private objectLayers: {
 		data: Occluder;
 		image: Phaser.GameObjects.Image;
@@ -276,7 +279,12 @@ export class StoryGameScene extends BaseScene {
 			`${HERMES_TEXTURE}-meta`,
 			`assets/sprites/hermes/${HERMES_TEXTURE}.json`,
 		);
-		for (const texture of [HERMES_AWAY_TEXTURE, HERMES_TOWARD_TEXTURE]) {
+		for (const texture of [
+			HERMES_AWAY_TEXTURE,
+			HERMES_TOWARD_TEXTURE,
+			HERMES_AWAY_DIAGONAL_TEXTURE,
+			HERMES_TOWARD_DIAGONAL_TEXTURE,
+		]) {
 			this.load.json(
 				`${texture}-meta`,
 				`assets/sprites/hermes/${texture}.json`,
@@ -286,6 +294,11 @@ export class StoryGameScene extends BaseScene {
 				frameHeight: 1059,
 			});
 		}
+		for (const texture of [HERMES_IDLE_TEXTURE, HERMES_TALK_TEXTURE])
+			this.load.json(
+				`${texture}-meta`,
+				`assets/sprites/hermes/${texture}.json`,
+			);
 		this.load.spritesheet(
 			HERMES_IDLE_TEXTURE,
 			"assets/sprites/hermes/hermes-idle-v2-normalized.png",
@@ -413,7 +426,12 @@ export class StoryGameScene extends BaseScene {
 		this.createWalkAnimation(KAT_TEXTURE, 30);
 		this.createSeatedKatAnimations();
 
-		for (const texture of [HERMES_AWAY_TEXTURE, HERMES_TOWARD_TEXTURE]) {
+		for (const texture of [
+			HERMES_AWAY_TEXTURE,
+			HERMES_TOWARD_TEXTURE,
+			HERMES_AWAY_DIAGONAL_TEXTURE,
+			HERMES_TOWARD_DIAGONAL_TEXTURE,
+		]) {
 			const meta = this.cache.json.get(`${texture}-meta`);
 			if (!this.anims.exists(`${texture}-walk`))
 				this.anims.create({
@@ -646,77 +664,58 @@ export class StoryGameScene extends BaseScene {
 		);
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
+			const cycle = (texture: string) => {
+				const data = this.cache.json.get(`${texture}-meta`) as FootCycle;
+				if (!data?.contacts)
+					throw new Error(`Missing sole contacts: ${texture}`);
+				return { ...data, name: texture };
+			};
+			const show = (pose: FootPose) => {
+				const sprite = this.hermesSprite;
+				if (!sprite) return;
+				sprite.anims.stop();
+				sprite
+					.setTexture(pose.cycle.name, pose.frame)
+					.setOrigin(0.5, 1)
+					.setFlipX(pose.flipX);
+			};
 			this.hermesMotor = new CharacterMotor(
 				this.hermesSprite,
 				this.walkArea,
-				(state, heading, rate) => {
+				(state, heading) => {
+					this.hermesMotionState = state;
 					this.hermesWalkDirection = heading;
-					this.hermesFacing = heading === "right" ? 1 : -1;
-					this.setHermesMotionState(state);
-					if (this.hermesSprite) this.hermesSprite.anims.timeScale = rate;
+					this.hermesFacing = heading.endsWith("right") ? 1 : -1;
+					this.hermesSprite?.anims.stop();
+				},
+				{
+					current: () => {
+						const sprite = this.hermesSprite;
+						if (!sprite) throw new Error("Hermes unavailable");
+						return {
+							cycle: cycle(sprite.texture.key),
+							frame: Number(sprite.frame.name),
+							flipX: sprite.flipX,
+						};
+					},
+					select: (direction) => {
+						const texture = direction.startsWith("away-")
+							? HERMES_AWAY_DIAGONAL_TEXTURE
+							: direction.startsWith("toward-")
+								? HERMES_TOWARD_DIAGONAL_TEXTURE
+								: direction === "away"
+									? HERMES_AWAY_TEXTURE
+									: direction === "toward"
+										? HERMES_TOWARD_TEXTURE
+										: HERMES_TEXTURE;
+						return {
+							cycle: cycle(texture),
+							flipX: direction === "right" || direction.endsWith("-left"),
+						};
+					},
+					show,
 				},
 			);
-			this.rootFrame = "";
-			this.hermesMotor.presentOffset = (offset) => {
-				const sprite = this.hermesSprite;
-				if (sprite)
-					sprite.setDisplayOrigin(
-						sprite.width / 2 - offset.x / sprite.scaleX,
-						sprite.height - offset.y / sprite.scaleY,
-					);
-			};
-			this.hermesMotor.rootStep = (_direction, tangent) => {
-				const sprite = this.hermesSprite;
-				if (!sprite) return 0;
-				const key = sprite.texture.key;
-				const frame = Number(sprite.frame.name);
-				const token = `${key}:${frame}`;
-				if (token === this.rootFrame) return 0;
-				this.rootFrame = token;
-				const metadata = this.cache.json.get(`${key}-meta`) as {
-					rootMotion?: { dx: number; dy: number }[];
-					visualRoot?: { x: number; y: number }[];
-				};
-				const motion = metadata?.rootMotion?.[frame];
-				if (!motion) return 0;
-				const sign = sprite.flipX ? -1 : 1;
-				let pixels =
-					(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
-					sprite.scaleX;
-				// Account for the contact's offset from the bottom-centred sprite origin
-				// when perspective changes scale during this very frame.
-				const contact = (
-					metadata as { footContacts?: { x: number; y: number }[] }
-				).footContacts?.[frame];
-				if (contact && this.walkArea) {
-					for (let i = 0; i < 3; i++) {
-						const nextScale =
-							this.walkArea.baseScale *
-							scaleAt(
-								this.walkArea.perspective,
-								{
-									x: sprite.x + tangent.x * pixels,
-									y: sprite.y + tangent.y * pixels,
-								},
-								this.walkArea.scaleClamp,
-							);
-						pixels =
-							(motion.dx * sign * tangent.x + motion.dy * tangent.y) *
-								sprite.scaleX -
-							((contact.x - 306) * sign * tangent.x +
-								(contact.y - 1059) * tangent.y) *
-								(nextScale - sprite.scaleX);
-					}
-				}
-				const root = metadata.visualRoot?.[frame] ?? { x: 0, y: 0 };
-				const transverse =
-					(root.x * sign * -tangent.y + root.y * tangent.x) * sprite.scaleX;
-				return {
-					distance: pixels,
-					offset: { x: -tangent.y * transverse, y: tangent.x * transverse },
-					cycle: `${key}:${sign}`,
-				};
-			};
 		}
 		this.setSceneBackground(
 			this.locationImages.get(this.locationId()) ?? scene.background,

@@ -22,6 +22,12 @@ export type {
 // Characters
 export { Character } from "./characters/Character";
 export { CharacterMotor } from "./characters/CharacterMotor";
+export type {
+	ContactFrame,
+	Foot,
+	FootCycle,
+	FootPose,
+} from "./characters/footLock";
 export type { WalkDirection } from "./characters/walkHeading";
 export {
 	groundPathHeading,
