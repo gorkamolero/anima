@@ -1,0 +1,224 @@
+[
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front.mp4",
+    "object": "left-tree-e55fac",
+    "switches": [
+      214
+    ],
+    "maximumBehindOverlap": {
+      "frame": 23,
+      "behind": true,
+      "overlapPixels": 6487
+    },
+    "firstBehindOverlap": 0,
+    "lastBehindOverlap": 51,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0000.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0001.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0022.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0023.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0024.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0050.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0051.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0052.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0213.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0214.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-behind-to-front-f0215.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind.mp4",
+    "object": "left-tree-e55fac",
+    "switches": [
+      46
+    ],
+    "maximumBehindOverlap": {
+      "frame": 195,
+      "behind": true,
+      "overlapPixels": 9236
+    },
+    "firstBehindOverlap": 168,
+    "lastBehindOverlap": 259,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0045.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0046.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0047.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0167.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0168.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0169.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0194.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0195.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0196.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0258.png",
+      "tmp/walkqa/proof-09/crossings/road/tree-front-to-behind-f0259.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front.mp4",
+    "object": "right-lobster-trap-d0a0fc",
+    "switches": [
+      137
+    ],
+    "maximumBehindOverlap": {
+      "frame": 9,
+      "behind": true,
+      "overlapPixels": 246
+    },
+    "firstBehindOverlap": 0,
+    "lastBehindOverlap": 21,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0000.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0001.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0008.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0009.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0010.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0020.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0021.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0022.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0136.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0137.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-behind-to-front-f0138.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind.mp4",
+    "object": "right-lobster-trap-d0a0fc",
+    "switches": [
+      23
+    ],
+    "maximumBehindOverlap": {
+      "frame": 115,
+      "behind": true,
+      "overlapPixels": 281
+    },
+    "firstBehindOverlap": 68,
+    "lastBehindOverlap": 259,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0022.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0023.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0024.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0067.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0068.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0069.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0114.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0115.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0116.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0258.png",
+      "tmp/walkqa/proof-09/crossings/road/trap-front-to-behind-f0259.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach.mp4",
+    "object": "pergola-b60423",
+    "switches": [
+      33
+    ],
+    "maximumBehindOverlap": {
+      "frame": 0,
+      "overlapPixels": 0
+    },
+    "firstBehindOverlap": null,
+    "lastBehindOverlap": null,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach-f0000.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach-f0001.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach-f0032.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach-f0033.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-approach-f0034.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side.mp4",
+    "object": "pergola-b60423",
+    "switches": [],
+    "maximumBehindOverlap": {
+      "frame": 3,
+      "behind": true,
+      "overlapPixels": 3653
+    },
+    "firstBehindOverlap": 0,
+    "lastBehindOverlap": 15,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0000.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0001.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0002.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0003.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0004.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0014.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0015.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-behind-side-f0016.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-clear.mp4",
+    "object": "pergola-b60423",
+    "switches": [],
+    "maximumBehindOverlap": {
+      "frame": 0,
+      "overlapPixels": 0
+    },
+    "firstBehindOverlap": null,
+    "lastBehindOverlap": null,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-clear-f0000.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-clear-f0001.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind.mp4",
+    "object": "pergola-b60423",
+    "switches": [],
+    "maximumBehindOverlap": {
+      "frame": 22,
+      "behind": true,
+      "overlapPixels": 5201
+    },
+    "firstBehindOverlap": 10,
+    "lastBehindOverlap": 119,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0009.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0010.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0011.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0021.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0022.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0023.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0118.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-front-to-behind-f0119.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front.mp4",
+    "object": "pergola-b60423",
+    "switches": [
+      110
+    ],
+    "maximumBehindOverlap": {
+      "frame": 0,
+      "overlapPixels": 0
+    },
+    "firstBehindOverlap": null,
+    "lastBehindOverlap": null,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front-f0000.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front-f0001.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front-f0109.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front-f0110.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-to-front-f0111.png"
+    ]
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side.mp4",
+    "object": "pergola-b60423",
+    "switches": [],
+    "maximumBehindOverlap": {
+      "frame": 0,
+      "overlapPixels": 0
+    },
+    "firstBehindOverlap": null,
+    "lastBehindOverlap": null,
+    "frames": [
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-f0000.png",
+      "tmp/walkqa/proof-09/crossings/depot-pergola/pergola-side-f0001.png"
+    ]
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "x": 1100,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1150,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1180,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1200,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1240,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1280,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  },
+  {
+    "x": 1320,
+    "rearBandY": [
+      705,
+      720
+    ],
+    "screenDepthPx": 15,
+    "lateralClearanceDiameterPx": 41.8680254238166,
+    "note": "Lateral diameter is NOT a ground-depth measurement; this is a reconstruction/stride limitation, not proven narrow artwork."
+  }
+]

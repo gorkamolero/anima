@@ -1,0 +1,10 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+left-tree-e55fac/roundtrip.json                18.1      22    0/434   1.88 0
+pergola-b60423/roundtrip.json                  18.5      29    0/443   1.95 0
+right-lobster-trap-d0a0fc/roundtrip.json       11.6       7    0/278   1.90 0
+
+side                 ground m/s min/median/max 1.62 1.71 1.72 (n=3)
+walk-away            ground m/s min/median/max 1.21 1.93 2.05 (n=3)
+walk-away-right      ground m/s min/median/max 1.41 1.42 1.51 (n=3)
+walk-toward          ground m/s min/median/max 2.1 2.15 2.19 (n=3)
+walk-toward-right    ground m/s min/median/max 1.65 1.67 1.87 (n=3)

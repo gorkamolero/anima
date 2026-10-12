@@ -1,0 +1,1 @@
+{"clip": "tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt.mp4", "stances": 51, "maxExcursion_px": 0.0, "median": 0.0, "worst": [[0.0, 592, 599, "toward-right"], [0.0, 581, 591, "away-right"], [0.0, 568, 580, "toward"]]}

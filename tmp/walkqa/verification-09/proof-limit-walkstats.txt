@@ -1,0 +1,9 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+dock/rear-traverse-attempt.json                25.0     251    0/600   2.00 0
+dock/rear-traverse-attempt.partial.json        25.0     251    0/600   2.00 0
+
+side                 ground m/s min/median/max 1.59 1.59 1.59 (n=2)
+walk-away            ground m/s min/median/max 1.43 1.43 1.43 (n=2)
+walk-away-right      ground m/s min/median/max 1.12 1.12 1.12 (n=2)
+walk-toward          ground m/s min/median/max 2.53 2.53 2.53 (n=2)
+walk-toward-right    ground m/s min/median/max 1.34 1.34 1.34 (n=2)

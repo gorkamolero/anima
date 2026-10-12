@@ -1,0 +1,14 @@
+[
+  {
+    "clip": "tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt.mp4",
+    "frame": 0,
+    "overlapPixels": 0,
+    "image": "tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt-bench-a15409-max-overlap.png"
+  },
+  {
+    "clip": "tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt.mp4",
+    "frame": 327,
+    "overlapPixels": 954,
+    "image": "tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt-fishing-net-pile-22c3fb-max-overlap.png"
+  }
+]

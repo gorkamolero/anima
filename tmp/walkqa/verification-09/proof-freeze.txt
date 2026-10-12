@@ -1,0 +1,12 @@
+tmp/walkqa/proof-09/roundtrips/pergola-b60423/roundtrip.mp4: frames 1000, walking pairs 437, frozen while walking 0 (0%); legacy threshold flags 91
+tmp/walkqa/proof-09/roundtrips/left-tree-e55fac/roundtrip.mp4: frames 560, walking pairs 432, frozen while walking 0 (0%); legacy threshold flags 72
+tmp/walkqa/proof-09/roundtrips/right-lobster-trap-d0a0fc/roundtrip.mp4: frames 560, walking pairs 276, frozen while walking 0 (0%); legacy threshold flags 86
+tmp/walkqa/proof-09/exits/road-far/roundtrip.mp4: frames 324, walking pairs 279, frozen while walking 0 (0%); legacy threshold flags 56
+tmp/walkqa/proof-09/exits/road-left/roundtrip.mp4: frames 460, walking pairs 332, frozen while walking 0 (0%); legacy threshold flags 68
+tmp/walkqa/proof-09/exits/depot-door/roundtrip.mp4: frames 360, walking pairs 104, frozen while walking 0 (0%); legacy threshold flags 32
+tmp/walkqa/proof-09/exits/road-left-2/roundtrip.mp4: frames 460, walking pairs 331, frozen while walking 0 (0%); legacy threshold flags 65
+tmp/walkqa/proof-09/exits/alley-far/roundtrip.mp4: frames 440, walking pairs 399, frozen while walking 0 (0%); legacy threshold flags 113
+tmp/walkqa/proof-09/exits/outside-right/roundtrip.mp4: frames 260, walking pairs 148, frozen while walking 0 (0%); legacy threshold flags 40
+tmp/walkqa/proof-09/exits/road-left-1/roundtrip.mp4: frames 472, walking pairs 331, frozen while walking 0 (0%); legacy threshold flags 75
+tmp/walkqa/proof-09/exits/outside-left/roundtrip.mp4: frames 296, walking pairs 261, frozen while walking 2 (1%); legacy threshold flags 73
+tmp/walkqa/proof-09/limitations/dock/rear-traverse-attempt.mp4: frames 600, walking pairs 599, frozen while walking 0 (0%); legacy threshold flags 142

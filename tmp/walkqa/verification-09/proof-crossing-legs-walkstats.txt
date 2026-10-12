@@ -1,0 +1,17 @@
+clip                                         walk s  dist px off-floor steps/s object-contacts
+depot-pergola/pergola-approach.json             6.8     262    0/163   1.91 0
+depot-pergola/pergola-behind-side.json          1.5     143    0/35    1.37 0
+depot-pergola/pergola-clear.json                1.6     195    0/39    1.23 0
+depot-pergola/pergola-front-to-behind.json      1.0     136    0/24    1.00 0
+depot-pergola/pergola-side-to-front.json        5.6     251    0/135   1.78 0
+depot-pergola/pergola-side.json                 2.0     240    0/47    1.53 0
+road/trap-behind-to-front.json                  6.8     317    0/162   1.78 0
+road/trap-front-to-behind.json                  4.8     320    0/116   1.86 0
+road/tree-behind-to-front.json                  9.5     856    0/227   1.80 0
+road/tree-front-to-behind.json                  8.6     820    0/207   1.86 0
+
+side                 ground m/s min/median/max 1.19 1.69 1.8 (n=8)
+walk-away            ground m/s min/median/max 1.21 1.93 2.05 (n=3)
+walk-away-right      ground m/s min/median/max 0.79 1.42 1.67 (n=4)
+walk-toward          ground m/s min/median/max 1.69 2.15 2.29 (n=4)
+walk-toward-right    ground m/s min/median/max 1.21 1.65 2.13 (n=5)
