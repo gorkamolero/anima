@@ -24,6 +24,12 @@ export interface FootAnimation {
 export class CharacterMotor {
 	heading: WalkDirection = "left";
 	walking = false;
+	arrival?: {
+		target: Point;
+		distance: number;
+		halfStride: number;
+		switchFrame: number;
+	};
 	anchor: Point = { x: 0, y: 0 };
 	private pose?: FootPose;
 	private foot: Foot = "L";
@@ -79,6 +85,7 @@ export class CharacterMotor {
 	}
 	walk(points: readonly Point[]): Promise<void> {
 		this.stop();
+		this.arrival = undefined;
 		this.path = roundCorners(this.area.mask, [
 			{ x: this.target.x, y: this.target.y },
 			...points,
@@ -219,6 +226,12 @@ export class CharacterMotor {
 			this.index === this.path.length - 1 &&
 			distance <= Math.max(2, stride / 2)
 		) {
+			this.arrival = {
+				target: { ...goal },
+				distance,
+				halfStride: Math.max(2, stride / 2),
+				switchFrame: this.pose.frame,
+			};
 			this.stop();
 			return true;
 		}
@@ -259,6 +272,7 @@ export class CharacterMotor {
 	snapshot() {
 		return {
 			ground: toMetres(this.area.perspective, this.target),
+			arrival: this.arrival,
 			heading: this.heading,
 			walking: this.walking,
 			anchor: { ...this.anchor },

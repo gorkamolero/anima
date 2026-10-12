@@ -56,6 +56,23 @@ Before is Brief 03 after; pending means no completed measurement.
 | depot-inside/toward-far.mp4 | 1.56 / 9.41 | pending | pending |
 | depot-inside/toward-near.mp4 | 1.07 / 1.37 | pending | pending |
 
+| road/diagonal-away-right.mp4 | new clip | pending | pending |
+| road/diagonal-away-left.mp4 | new clip | pending | pending |
+| road/diagonal-toward-right.mp4 | new clip | pending | pending |
+| road/diagonal-toward-left.mp4 | new clip | pending | pending |
+| alley/diagonal-away-right.mp4 | new clip | pending | pending |
+| alley/diagonal-away-left.mp4 | new clip | pending | pending |
+| alley/diagonal-toward-right.mp4 | new clip | pending | pending |
+| alley/diagonal-toward-left.mp4 | new clip | pending | pending |
+| depot-outside/diagonal-away-right.mp4 | new clip | pending | pending |
+| depot-outside/diagonal-away-left.mp4 | new clip | pending | pending |
+| depot-outside/diagonal-toward-right.mp4 | new clip | pending | pending |
+| depot-outside/diagonal-toward-left.mp4 | new clip | pending | pending |
+| depot-inside/diagonal-away-right.mp4 | new clip | pending | pending |
+| depot-inside/diagonal-away-left.mp4 | new clip | pending | pending |
+| depot-inside/diagonal-toward-right.mp4 | new clip | pending | pending |
+| depot-inside/diagonal-toward-left.mp4 | new clip | pending | pending |
+
 ## Milestones
 
 - Read goal, rejected report, last 20 commits, motor, registration, capture script and sprite metadata. Existing untracked AgentDebug.test.ts preserved.
@@ -67,6 +84,7 @@ Brief 05: image edits 3/4; Kling videos 2/4; BRIA removals 2/4. Front edit 1 rej
 ## Commits
 
 - 0fa659c: baseline and call ledger.
+- f0b950e: diagonal assets, physical-foot metadata and call provenance.
 - ef10c0c: contact-driven motor, local view heading sectors, tests, adapter and capture telemetry.
 
 - Milestone: physical-foot registration replaces image-half identity; existing side/away/toward contact sheets reviewed frame by frame. Motor uses anchor-relative placement and a single frame clock, view-relative eight-sector headings, switch-only turns, bounded anchor correction, and contact-pose hold. 343 tests pass; engine and game typecheck pass. Pixel proof still pending.

@@ -275,8 +275,19 @@ async function walkPlace(step) {
 			Math.floor((h.y / 1080) * floor.height) * floor.width +
 			Math.floor((h.x / 1920) * floor.width);
 		if (!floor.data[i]) throw new Error(`${label}: feet outside floor mask`);
-		if (Math.hypot(h.x - expected.x, h.y - expected.y) > 2)
-			throw new Error(`${label}: did not reach requested walk point`);
+		const arrival = evaluate(
+			"window.__anima.scene.hermesMotor.snapshot().arrival",
+		);
+		if (
+			!arrival ||
+			Math.hypot(h.x - expected.x, h.y - expected.y) > arrival.halfStride + 1e-6
+		)
+			throw new Error(`${label}: did not stop within half a drawn stride`);
+		const atSwitch = evaluate(
+			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,m=s.cache.json.get(h.texture.key+'-meta');return m.switchFrames.includes(Number(h.frame.name));})()",
+		);
+		if (!atSwitch)
+			throw new Error(`${label}: arrival did not hold a switch frame`);
 		states.push({ label, ...h });
 		await frame(`${step}-${label}`, { hermes: h });
 	}
