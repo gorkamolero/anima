@@ -1,0 +1,12 @@
+{
+  "model": "fal-ai/nano-banana-2/edit",
+  "prompt": "The exact same image. Change only the arms: both arms hang relaxed at his sides. Do not change the legs, feet, head, torso, satchel, clothes, framing or size.",
+  "image_urls": [
+    "source.png"
+  ],
+  "aspect_ratio": "auto",
+  "num_images": 1,
+  "output_format": "png",
+  "limit_generations": true,
+  "resolution": "1K"
+}

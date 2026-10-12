@@ -1,0 +1,25 @@
+{
+  "heading": "away-right",
+  "step": "B",
+  "attempt": 1,
+  "sourceSize": [
+    612,
+    1059
+  ],
+  "providerSize": [
+    784,
+    1357
+  ],
+  "canvasConversion": "fixed raster resampling to input dimensions; no fitted scaling",
+  "translation": [
+    0,
+    0
+  ],
+  "plantedBootCorrelation": 0.9948922991752625,
+  "headCentroidSourcePx": 0.07465245322835755,
+  "headRgbMAE": 3.0218117914613556,
+  "torsoCentroidSourcePx": 2.215603304246199,
+  "torsoRgbMAE": 3.2174956897246263,
+  "legsCentroidSourcePx": 34.00624322142183,
+  "legsRgbMAE": 10.179146937348191
+}

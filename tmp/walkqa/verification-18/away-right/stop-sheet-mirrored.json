@@ -1,0 +1,50 @@
+{
+  "name": "candidate-away-right",
+  "image": "stop-sheet-mirrored.png",
+  "frameWidth": 612,
+  "frameHeight": 1059,
+  "frameCount": 3,
+  "cols": 3,
+  "rows": 1,
+  "fps": 24,
+  "contacts": [
+    {
+      "L": {
+        "x": 326.9578060983546,
+        "y": 1024.5084669927626
+      },
+      "planted": "L",
+      "R": {
+        "x": 315,
+        "y": 972
+      }
+    },
+    {
+      "L": {
+        "x": 326.9578060983546,
+        "y": 1024.5084669927626
+      },
+      "planted": "L",
+      "R": {
+        "x": 315,
+        "y": 972
+      }
+    },
+    {
+      "L": {
+        "x": 326.9578060983546,
+        "y": 1024.5084669927626
+      },
+      "planted": "L",
+      "R": {
+        "x": 244,
+        "y": 1034
+      }
+    }
+  ],
+  "switchFrames": [],
+  "status": "candidate accepted by eye; runtime verification pending",
+  "sourceFrame": 8,
+  "reference": "hermes-walk-away-right",
+  "mirrorOf": "stop-sheet.png"
+}
