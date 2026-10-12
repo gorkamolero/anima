@@ -533,6 +533,9 @@ export class StoryGameScene extends BaseScene {
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
 		const wasWalking = this.hermesMotor?.walking;
+		const previousExit = this.hermesSprite
+			? exitAt(this.hermesSprite, this.sceneExits)
+			: undefined;
 		this.hermesMotor?.update(delta);
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
@@ -554,6 +557,7 @@ export class StoryGameScene extends BaseScene {
 			if (
 				exit &&
 				exit.id !== this.exitLatch &&
+				(previousExit?.id !== exit.id || this.requestedExit === exit.id) &&
 				wasWalking &&
 				!this.approachingObject &&
 				!this.openWorldBusy
@@ -667,6 +671,7 @@ export class StoryGameScene extends BaseScene {
 			...this.walkArea.mask,
 			data: [...this.walkArea.mask.data],
 		};
+		this.walkArea.rawMask = this.visibleFloor;
 		this.walkArea.mask = clipFloorBelow(
 			erode(this.walkArea.mask, this.walkArea.perspective),
 			MAX_FEET_Y,
@@ -1281,6 +1286,7 @@ export class StoryGameScene extends BaseScene {
 				data: [...this.visibleFloor.data],
 			};
 			bridgeOccluders(bridged, this.objectLayers);
+			this.walkArea.rawMask = bridged;
 			this.walkArea.mask = clipFloorBelow(
 				erode(bridged, this.walkArea.perspective),
 				MAX_FEET_Y,

@@ -1,4 +1,10 @@
-import { cellPoint, nearestCell, roundCorners } from "../walkarea/navigation";
+import {
+	cellAt,
+	cellPoint,
+	findPath,
+	lineOfSight,
+	nearestCell,
+} from "../walkarea/navigation";
 import { type Point, scaleAt, toMetres } from "../walkarea/perspective";
 import type { WalkArea } from "../walkarea/types";
 import {
@@ -7,7 +13,7 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "./footLock";
-import { headingFromGround, type WalkDirection } from "./walkHeading";
+import { GROUND_SECTORS, type WalkDirection } from "./walkHeading";
 
 export interface MotorTarget extends Point {
 	motor?: CharacterMotor;
@@ -36,10 +42,9 @@ export class CharacterMotor {
 	private scale = 1;
 	private elapsed = 0;
 	private path: Point[] = [];
-	private index = 0;
+	private goal?: Point;
 	private resolve?: () => void;
-	private correction: Point = { x: 0, y: 0 };
-	private correctionFrames = 1;
+
 	constructor(
 		readonly target: MotorTarget,
 		public area: WalkArea,
@@ -86,12 +91,8 @@ export class CharacterMotor {
 	walk(points: readonly Point[]): Promise<void> {
 		this.stop();
 		this.arrival = undefined;
-		this.path = roundCorners(this.area.mask, [
-			{ x: this.target.x, y: this.target.y },
-			...points,
-		]);
-		this.index = 1;
-		if (this.path.length < 2) return Promise.resolve();
+		this.goal = points[points.length - 1];
+		if (!this.goal) return Promise.resolve();
 		this.pose = this.animation.current();
 		this.foot = this.pose.cycle.contacts[this.pose.frame].planted;
 		this.scale =
@@ -103,20 +104,114 @@ export class CharacterMotor {
 			this.target,
 			this.scale,
 		);
-		this.heading = this.chooseHeading();
-		this.changeCycle(this.heading, this.foot);
+		if (!this.planStance()) return Promise.resolve();
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
 		this.animation.show(this.pose);
-		this.beginStance();
 		return new Promise((resolve) => {
 			this.resolve = resolve;
 		});
 	}
-	private chooseHeading(): WalkDirection {
-		const p = toMetres(this.area.perspective, this.target),
-			q = toMetres(this.area.perspective, this.path[this.index]);
-		return headingFromGround(q.x - p.x, q.y - p.y, this.heading, p);
+	/** Replan from the actual locked body, and evaluate the drawing, not a nominal heading. */
+	private planStance(): boolean {
+		if (!this.pose || !this.goal) return false;
+		this.path = findPath(this.area.mask, this.target, this.goal);
+		if (!this.path.length) return false;
+		const goal = this.path[this.path.length - 1];
+		this.goal = goal;
+		const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
+		const remaining = (p: Point) => {
+			const route = lineOfSight(this.area.mask, p, goal)
+				? [p, goal]
+				: findPath(this.area.mask, p, goal);
+			return route.length
+				? route.slice(1).reduce((n, q, i) => n + distance(route[i], q), 0)
+				: Infinity;
+		};
+		let best:
+			| { heading: WalkDirection; pose: FootPose; score: number }
+			| undefined;
+		const here = remaining(this.target);
+		for (const heading of GROUND_SECTORS) {
+			const next = this.animation.select(heading);
+			const same =
+				next.cycle.name === this.pose.cycle.name &&
+				next.flipX === this.pose.flipX;
+			const frame = same
+				? this.pose.frame
+				: next.cycle.switchFrames.find(
+						(i) => next.cycle.contacts[i].planted === this.foot,
+					);
+			if (frame === undefined) continue;
+			const pose = { ...next, frame };
+			const predicted = this.predictStance(pose);
+			if (!predicted) continue;
+			const score = remaining(predicted.end);
+			// A non-progressing step would oscillate at a boundary. Hold the current foot instead.
+			if (score >= here - 0.01) continue;
+			if (
+				!best ||
+				score < best.score - 0.01 ||
+				(Math.abs(score - best.score) <= 0.01 && heading === this.heading)
+			)
+				best = { heading, pose, score };
+		}
+		if (!best) {
+			this.stop();
+			return false;
+		}
+		this.pose = best.pose;
+		this.heading = best.heading;
+		this.apply();
+		// Zero is within the one-pixel steering allowance. All steering is now discrete.
+
+		return true;
+	}
+	/** Validate every body frame and the next planted landing before committing a stance. */
+	private predictStance(pose: FootPose): { end: Point } | undefined {
+		const raw = this.area.rawMask ?? this.area.mask;
+		const on = (mask: typeof raw, p: Point) => mask.data[cellAt(mask, p)] > 0;
+		if (!on(raw, this.anchor)) return;
+		let current = pose,
+			scale = this.scale;
+		let position: Point = this.target;
+		for (let i = 0; i < pose.cycle.contacts.length; i++) {
+			const p = lockedPlacement(
+				this.anchor,
+				current,
+				this.foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				scale,
+			);
+			if (!on(this.area.mask, p) || !lineOfSight(this.area.mask, position, p))
+				return;
+			position = p;
+			scale = p.scale;
+			const frame = (current.frame + 1) % pose.cycle.contacts.length;
+			const foot = pose.cycle.contacts[frame].planted;
+			if (foot !== this.foot) {
+				const landing = contactOnScreen(current, foot, position, scale);
+				if (!on(raw, landing)) return;
+				const end = lockedPlacement(
+					landing,
+					{ ...pose, frame },
+					foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					scale,
+				);
+				if (
+					!on(this.area.mask, end) ||
+					!lineOfSight(this.area.mask, position, end)
+				)
+					return;
+				return { end };
+			}
+			current = { ...pose, frame };
+		}
 	}
 	private apply(): void {
 		if (!this.pose) return;
@@ -135,23 +230,6 @@ export class CharacterMotor {
 		this.target.setDepth(10 + p.y / 20);
 		this.animation.show(this.pose);
 	}
-	private changeCycle(heading: WalkDirection, foot: Foot): void {
-		const next = this.animation.select(heading);
-		if (
-			this.pose?.cycle.name === next.cycle.name &&
-			this.pose.flipX === next.flipX
-		)
-			return;
-		const frame =
-			next.cycle.switchFrames.find(
-				(i) => next.cycle.contacts[i].planted === foot,
-			) ?? next.cycle.contacts.findIndex((c) => c.planted === foot);
-		if (frame < 0)
-			throw new Error(`Cycle ${next.cycle.name} lacks foot ${foot}`);
-		this.pose = { ...next, frame };
-		this.foot = foot;
-		this.apply();
-	}
 	private stanceEnd(): FootPose {
 		const pose = this.pose as FootPose,
 			n = pose.cycle.contacts.length;
@@ -163,41 +241,8 @@ export class CharacterMotor {
 			frame = (frame + 1) % n;
 		return { ...pose, frame: (frame + n - 1) % n };
 	}
-	private beginStance(): void {
-		if (!this.pose) return;
-		const end = this.stanceEnd();
-		this.correctionFrames =
-			((end.frame - this.pose.frame + this.pose.cycle.contacts.length) %
-				this.pose.cycle.contacts.length) +
-			1;
-		const predicted = lockedPlacement(
-			this.anchor,
-			end,
-			this.foot,
-			this.area.perspective,
-			this.area.baseScale,
-			this.area.scaleClamp,
-			this.scale,
-		);
-		const target = this.path[this.index],
-			dx = target.x - this.target.x,
-			dy = target.y - this.target.y,
-			length = Math.hypot(dx, dy);
-		const travel = Math.hypot(
-			predicted.x - this.target.x,
-			predicted.y - this.target.y,
-		);
-		const ex =
-				this.target.x + (dx / Math.max(length, 1e-9)) * travel - predicted.x,
-			ey = this.target.y + (dy / Math.max(length, 1e-9)) * travel - predicted.y;
-		const norm = Math.max(1, Math.hypot(ex, ey));
-		this.correction = {
-			x: ex / norm / this.correctionFrames,
-			y: ey / norm / this.correctionFrames,
-		};
-	}
 	private atSwitch(): boolean {
-		if (!this.pose) return false;
+		if (!this.pose || !this.goal) return false;
 		const end = this.stanceEnd();
 		const predicted = lockedPlacement(
 			this.anchor,
@@ -208,24 +253,15 @@ export class CharacterMotor {
 			this.area.scaleClamp,
 			this.scale,
 		);
-		const stride = Math.hypot(
-			predicted.x - this.target.x,
-			predicted.y - this.target.y,
-		);
-		while (
-			this.index < this.path.length - 1 &&
-			Math.hypot(
-				this.path[this.index].x - this.target.x,
-				this.path[this.index].y - this.target.y,
-			) < Math.max(8, stride)
-		)
-			this.index++;
-		const goal = this.path[this.index];
+		const goal = this.goal;
 		const distance = Math.hypot(goal.x - this.target.x, goal.y - this.target.y);
-		if (
-			this.index === this.path.length - 1 &&
-			distance <= Math.max(2, stride / 2)
-		) {
+		const stride = Math.max(
+			0,
+			((predicted.x - this.target.x) * (goal.x - this.target.x) +
+				(predicted.y - this.target.y) * (goal.y - this.target.y)) /
+				Math.max(distance, 1e-9),
+		);
+		if (distance <= Math.max(2, stride / 2)) {
 			this.arrival = {
 				target: { ...goal },
 				distance,
@@ -235,11 +271,7 @@ export class CharacterMotor {
 			this.stop();
 			return true;
 		}
-		const heading = this.chooseHeading();
-		this.changeCycle(heading, this.foot);
-		this.heading = heading;
-		this.beginStance();
-		return false;
+		return !this.planStance();
 	}
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
@@ -260,9 +292,6 @@ export class CharacterMotor {
 				// Capture the incoming sole before changing frames: transfer support without snapping.
 				this.anchor = contactOnScreen(this.pose, foot, this.target, this.scale);
 				this.foot = foot;
-			} else {
-				this.anchor.x += this.correction.x;
-				this.anchor.y += this.correction.y;
 			}
 			this.pose = next;
 			this.apply();

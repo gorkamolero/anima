@@ -84,9 +84,11 @@ walk-toward-right    ground m/s min/median/max 1.04 1.4 2.18 (n=32)
 ```
 
 ## Implementation and commits
-Pending.
+Motor now replans from the actual pose at each handoff, predicts all stance frames and the incoming sole, and rejects body/boot floor violations. Continuous correction is zero (inside the one-pixel allowance). Exit entry detection now distinguishes walking out of an exit region from entering it. Focused motor tests: 7 pass. Full proof pending.
 
 ## Verification and open failures
 Pending. No acceptance claim. No new paid calls yet.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+Generation progress: two Kling videos and one toward BRIA completed. Away BRIA upload blocked before submission by fal.ai exhausted balance. User informed; remaining independent work continues.

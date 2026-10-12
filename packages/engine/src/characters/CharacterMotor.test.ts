@@ -117,4 +117,37 @@ describe("contact motor", () => {
 		expect(target.motor).toBeUndefined();
 		expect({ x: target.x, y: target.y }).toEqual(last);
 	});
+	it("rejects a stance whose incoming boot would land outside the raw floor", () => {
+		const { motor, area, target, cycle } = setup();
+		area.mask.data.fill(1);
+		// Body remains well inside the room, but the incoming sole points outside it.
+		cycle.contacts[1].R.x = 10000;
+		cycle.contacts[3].L.x = 10000;
+		const before = { x: target.x, y: target.y };
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(motor.walking).toBe(false);
+		expect({ x: target.x, y: target.y }).toEqual(before);
+	});
+	it("checks body clearance through the whole stance, not just its endpoint", () => {
+		const { motor, target, cycle } = setup();
+		cycle.contacts[1].L.y = -5000;
+		cycle.contacts[3].R.y = -5000;
+		const before = { x: target.x, y: target.y };
+		void motor.walk([{ x: 1400, y: 850 }]);
+		expect(motor.walking).toBe(false);
+		expect({ x: target.x, y: target.y }).toEqual(before);
+	});
+	it("keeps every accepted stance on the body floor while replanning", () => {
+		const { motor, target, area } = setup();
+		for (let y = 0; y < area.mask.height; y++)
+			for (let x = 115; x < area.mask.width; x++)
+				area.mask.data[y * area.mask.width + x] = 0;
+		void motor.walk([{ x: 1500, y: 850 }]);
+		for (let i = 0; i < 300 && motor.walking; i++) {
+			motor.update(1000 / 24);
+			expect(target.x).toBeLessThan(1150);
+		}
+		expect(motor.walking).toBe(false);
+		expect(target.x).toBeGreaterThan(1050);
+	});
 });

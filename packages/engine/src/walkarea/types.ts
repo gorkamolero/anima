@@ -6,6 +6,8 @@ export interface FloorMask {
 }
 export interface WalkArea {
 	mask: FloorMask;
+	/** Un-eroded floor for physical boot contacts; mask remains body clearance. */
+	rawMask?: FloorMask;
 	perspective: Perspective;
 	baseScale: number;
 	scaleClamp: { min: number; max: number };
