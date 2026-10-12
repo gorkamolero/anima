@@ -1,0 +1,248 @@
+{
+  "pass": true,
+  "why": "No false-walkable probability reaches 0.6; missing floor is allowed.",
+  "rejected": [],
+  "probabilities": {
+    "object_0": 0,
+    "object_4": 0,
+    "object_6": 0,
+    "object_7": 0,
+    "object_9": 0,
+    "object_11": 0,
+    "object_17": 0,
+    "object_18": 0,
+    "environment": 0,
+    "obstacles": 0,
+    "coverage": 0.8
+  },
+  "provider": "google/gemini-2.5-flash",
+  "fallbackReason": "Decision image request failed (HTTP 400)",
+  "evidence": [
+    {
+      "name": "object_0",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The lighthouse is a non-walkable object, but it is not covered in green. The green pixels are on the walkable dock surface, not on the lighthouse itself.",
+      "probability": 0
+    },
+    {
+      "name": "object_4",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The object \"shack\" is not covered in green. The green pixels are on the walkable deck area in front of the shack, which is a standable surface.",
+      "probability": 0
+    },
+    {
+      "name": "object_6",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The bench is not covered in green. The green area is on the walkable deck surface in front of the bench.",
+      "probability": 0
+    },
+    {
+      "name": "object_7",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The crates are not marked with green pixels. The green pixels are on the walkable dock surface around the crates, not on the crates themselves.",
+      "probability": 0
+    },
+    {
+      "name": "object_9",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The object \"net\" is not marked with green pixels. The green pixels are on the walkable dock surface, not on the net itself.",
+      "probability": 0
+    },
+    {
+      "name": "object_11",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The object \"rope\" at normalized bounds [0.222, 0.592, 0.395, 0.709] is not covered in green. The green color is only on the floor around the rope, not on the rope itself.",
+      "probability": 0
+    },
+    {
+      "name": "object_17",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The object \"nets-5\" is a fishing net, which is a non-walkable object. However, there are no green pixels on the net itself. The green pixels are on the walkable dock surface around the net, not on the net.",
+      "probability": 0
+    },
+    {
+      "name": "object_18",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The object 'nets-6' is a fishing net, which is not a walkable surface. However, there are no green pixels covering the net itself. The green pixels are on the dock floor around the net, not on the net.",
+      "probability": 0
+    },
+    {
+      "name": "environment",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "There is no green on water, sky or walls.",
+      "probability": 0
+    },
+    {
+      "name": "obstacles",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The green area is entirely on the standable dock surface. There are no green pixels covering any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles.",
+      "probability": 0
+    },
+    {
+      "name": "coverage",
+      "score": 0.8,
+      "evidence": "The green overlay covers most of the visible standable floor, including the dock and the porch of the house. There are some gaps in the green overlay on the dock, indicating uncovered areas.",
+      "probability": 0.8
+    }
+  ],
+  "questions": {
+    "object_0": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.034,
+        0.444,
+        0.133,
+        0.635
+      ],
+      "instructions": "Is the physical area of the labelled object \"lighthouse\" at normalized bounds [0.034, 0.444, 0.133, 0.635] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_4": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.73,
+        0.169,
+        0.999,
+        0.643
+      ],
+      "instructions": "Is the physical area of the labelled object \"shack\" at normalized bounds [0.73, 0.169, 0.999, 0.643] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_6": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.87,
+        0.567,
+        0.963,
+        0.598
+      ],
+      "instructions": "Is the physical area of the labelled object \"bench\" at normalized bounds [0.87, 0.567, 0.963, 0.598] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_7": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.23,
+        0.603,
+        0.31,
+        0.669
+      ],
+      "instructions": "Is the physical area of the labelled object \"crates\" at normalized bounds [0.23, 0.603, 0.31, 0.669] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_9": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.635,
+        0.627,
+        0.731,
+        0.694
+      ],
+      "instructions": "Is the physical area of the labelled object \"net\" at normalized bounds [0.635, 0.627, 0.731, 0.694] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_11": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.222,
+        0.592,
+        0.395,
+        0.709
+      ],
+      "instructions": "Is the physical area of the labelled object \"rope\" at normalized bounds [0.222, 0.592, 0.395, 0.709] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_17": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.2520833333333333,
+        0.6564814814814814,
+        0.44114583333333335,
+        0.8194444444444444
+      ],
+      "instructions": "Is the physical area of the labelled object \"nets-5\" at normalized bounds [0.2520833333333333, 0.6564814814814814, 0.44114583333333335, 0.8194444444444444] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "object_18": {
+      "advisory": false,
+      "type": "noul",
+      "bounds": [
+        0.21822916666666667,
+        0.6194444444444445,
+        0.2833333333333333,
+        0.6898148148148148
+      ],
+      "instructions": "Is the physical area of the labelled object \"nets-6\" at normalized bounds [0.21822916666666667, 0.6194444444444445, 0.2833333333333333, 0.6898148148148148] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.",
+      "criteria": {
+        "true": "Green covers the non-walkable object itself",
+        "false": "Object itself is excluded, or is a standable floor surface"
+      }
+    },
+    "environment": {
+      "type": "noul",
+      "instructions": "Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.",
+      "criteria": {
+        "true": "Green includes water, sky or wall surfaces",
+        "false": "No green on water, sky or walls"
+      }
+    },
+    "obstacles": {
+      "type": "noul",
+      "instructions": "Does GREEN cover any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles, including unlabelled ones? Ignore missing floor and intentional clearance margins.",
+      "criteria": {
+        "true": "Green covers an obstacle itself",
+        "false": "Green excludes obstacles"
+      }
+    },
+    "coverage": {
+      "type": "score",
+      "instructions": "Estimate the fraction of visible standable floor covered by GREEN, from 0 to 1. Missing floor is a coverage note only and never a rejection.",
+      "criteria": [
+        "All visible standable floor is covered by green"
+      ]
+    }
+  },
+  "question": "{\"object_0\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.034,0.444,0.133,0.635],\"instructions\":\"Is the physical area of the labelled object \\\"lighthouse\\\" at normalized bounds [0.034, 0.444, 0.133, 0.635] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_4\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.73,0.169,0.999,0.643],\"instructions\":\"Is the physical area of the labelled object \\\"shack\\\" at normalized bounds [0.73, 0.169, 0.999, 0.643] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_6\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.87,0.567,0.963,0.598],\"instructions\":\"Is the physical area of the labelled object \\\"bench\\\" at normalized bounds [0.87, 0.567, 0.963, 0.598] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_7\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.23,0.603,0.31,0.669],\"instructions\":\"Is the physical area of the labelled object \\\"crates\\\" at normalized bounds [0.23, 0.603, 0.31, 0.669] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_9\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.635,0.627,0.731,0.694],\"instructions\":\"Is the physical area of the labelled object \\\"net\\\" at normalized bounds [0.635, 0.627, 0.731, 0.694] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_11\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.222,0.592,0.395,0.709],\"instructions\":\"Is the physical area of the labelled object \\\"rope\\\" at normalized bounds [0.222, 0.592, 0.395, 0.709] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_17\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.2520833333333333,0.6564814814814814,0.44114583333333335,0.8194444444444444],\"instructions\":\"Is the physical area of the labelled object \\\"nets-5\\\" at normalized bounds [0.2520833333333333, 0.6564814814814814, 0.44114583333333335, 0.8194444444444444] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"object_18\":{\"advisory\":false,\"type\":\"noul\",\"bounds\":[0.21822916666666667,0.6194444444444445,0.2833333333333333,0.6898148148148148],\"instructions\":\"Is the physical area of the labelled object \\\"nets-6\\\" at normalized bounds [0.21822916666666667, 0.6194444444444445, 0.2833333333333333, 0.6898148148148148] marked walkable in GREEN where a person cannot stand? Judge the object silhouette, not surrounding floor inside its bounding box. Walkable floor, docks, decks, rugs and exposed stair treads are valid. Grey or black pixels are NOT green; floor next to or beneath the object is not object inclusion.\",\"criteria\":{\"true\":\"Green covers the non-walkable object itself\",\"false\":\"Object itself is excluded, or is a standable floor surface\"}},\"environment\":{\"type\":\"noul\",\"instructions\":\"Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.\",\"criteria\":{\"true\":\"Green includes water, sky or wall surfaces\",\"false\":\"No green on water, sky or walls\"}},\"obstacles\":{\"type\":\"noul\",\"instructions\":\"Does GREEN cover any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles, including unlabelled ones? Ignore missing floor and intentional clearance margins.\",\"criteria\":{\"true\":\"Green covers an obstacle itself\",\"false\":\"Green excludes obstacles\"}},\"coverage\":{\"type\":\"score\",\"instructions\":\"Estimate the fraction of visible standable floor covered by GREEN, from 0 to 1. Missing floor is a coverage note only and never a rejection.\",\"criteria\":[\"All visible standable floor is covered by green\"]}}",
+  "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/place-96acfd3d8faaf8f903fe/mask-review-1791778614234.png",
+  "attempt": "asymmetric-floor",
+  "answer": "yes",
+  "reason": "No false-walkable probability reaches 0.6; missing floor is allowed."
+}

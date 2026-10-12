@@ -1,0 +1,90 @@
+[
+  {
+    "key": "pier",
+    "status": 200,
+    "floorCells": 4573,
+    "regions": 5,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 0.8,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "stepped-street",
+    "status": 200,
+    "floorCells": 1300,
+    "regions": 3,
+    "stairs": 2,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "church",
+    "status": 200,
+    "floorCells": 1755,
+    "regions": 3,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "lobby",
+    "status": 200,
+    "floorCells": 4733,
+    "regions": 6,
+    "stairs": 2,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "grocery",
+    "status": 200,
+    "floorCells": 2756,
+    "regions": 4,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 0.5,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "square",
+    "status": 200,
+    "floorCells": 5698,
+    "regions": 6,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "road",
+    "status": 200,
+    "floorCells": 9361,
+    "regions": 0,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  },
+  {
+    "key": "alley",
+    "status": 200,
+    "floorCells": 1916,
+    "regions": 0,
+    "stairs": 0,
+    "maxHazard": 0,
+    "coverage": 1,
+    "lineSamples": 5005,
+    "lineOutside": 0
+  }
+]

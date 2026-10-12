@@ -54,6 +54,14 @@ vi.mock("../../routes/scene-image.js", () => ({
 	},
 }));
 
+vi.mock("../../services/floor-judge.js", () => ({
+	labelledFloorObjects: async () => [],
+	locateFloorHazards: async () => {},
+}));
+vi.mock("../../services/ground-repair.js", () => ({
+	repairGround: vi.fn(() => false),
+}));
+
 import { placesRoutes } from "../../routes/places.js";
 import { maskToGround } from "../../services/ground.js";
 
@@ -102,46 +110,6 @@ describe("place ground failure contract", () => {
 			).json(),
 		).toHaveLength(1);
 	});
-	it("keeps both judge attempts and never substitutes an unrelated anchor line", async () => {
-		const ground = () =>
-			maskToGround(
-				{
-					width: 40,
-					height: 40,
-					data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
-				},
-				300,
-				0.002,
-			);
-		mocks.derive.mockImplementation(async () => ground());
-		mocks.judge
-			.mockResolvedValueOnce([
-				{
-					pass: false,
-					why: "pew",
-					question: "floor?",
-					answer: "no",
-					reason: "pew",
-					overlay: "first.png",
-				},
-			])
-			.mockResolvedValueOnce([
-				{
-					pass: false,
-					why: "desk",
-					question: "floor?",
-					answer: "no",
-					reason: "desk",
-					overlay: "second.png",
-				},
-			]);
-		const place = await (await request()).json();
-		expect(place.ground.ground).toBe("failed");
-		expect(place.ground.groundLine.points).toEqual([]);
-		expect(
-			place.ground.verdicts.map((v: { overlay: string }) => v.overlay),
-		).toEqual(["mask.png", "first.png", "second.png"]);
-	});
 	it("persists incomplete occlusion as failed instead of losing the created place", async () => {
 		mocks.derive.mockResolvedValue(
 			maskToGround(
@@ -162,37 +130,7 @@ describe("place ground failure contract", () => {
 	});
 });
 
-it("retains a challenged mask verdict and accepts a reasoned correction", async () => {
-	mocks.derive.mockResolvedValue(
-		maskToGround(
-			{
-				width: 40,
-				height: 40,
-				data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
-			},
-			300,
-			0.002,
-		),
-	);
-	mocks.floorJudge
-		.mockResolvedValueOnce({
-			pass: false,
-			why: "gap",
-			overlay: "first-mask.png",
-		})
-		.mockResolvedValueOnce({
-			pass: true,
-			why: "gap is water, correctly excluded",
-			overlay: "second-mask.png",
-		});
-	const place = await (await request()).json();
-	expect(place.ground.ground).toBe("derived");
-	expect(
-		place.ground.verdicts.slice(0, 2).map((v: { pass: boolean }) => v.pass),
-	).toEqual([false, true]);
-	expect(mocks.floorJudge).toHaveBeenLastCalledWith("/proof/mask.png", "gap");
-});
-it("never lets passing sprite placements overrule two floor-mask rejections", async () => {
+it("rejects false walkable even when placement checks would pass", async () => {
 	mocks.derive.mockResolvedValue(
 		maskToGround(
 			{
@@ -212,4 +150,30 @@ it("never lets passing sprite placements overrule two floor-mask rejections", as
 	const place = await (await request()).json();
 	expect(place.ground.ground).toBe("failed");
 	expect(place.ground.reason).toContain("water included");
+	expect(place.ground.floor.data.some(Boolean)).toBe(false);
+	expect(place.ground.verdicts).toHaveLength(1);
+});
+it("accepts conservative coverage and does not rederive existing places after a version change", async () => {
+	mocks.derive.mockResolvedValue(
+		maskToGround(
+			{
+				width: 40,
+				height: 40,
+				data: Array.from({ length: 1600 }, (_, i) => (i >= 800 ? 1 : 0)),
+			},
+			300,
+			0.002,
+		),
+	);
+	mocks.floorJudge.mockResolvedValue({
+		pass: true,
+		why: "safe",
+		probabilities: { coverage: 0.2 },
+		overlay: "mask.png",
+	});
+	const place = await (await request()).json();
+	expect(place.ground.ground).toBe("derived");
+	expect(place.ground.notes.join(" ")).toContain("0.2");
+	await request();
+	expect(mocks.derive).toHaveBeenCalledTimes(1);
 });

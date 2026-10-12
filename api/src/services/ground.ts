@@ -1,12 +1,11 @@
 import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { scaleAt as perspectiveScaleAt } from "@anima/engine/walkarea/perspective";
 import type { WalkArea } from "@anima/engine/walkarea/types";
 import { generateObject } from "ai";
 import { z } from "zod";
-import { imagePath, PUBLIC, ROOT } from "../lib/backgrounds.js";
+import { imagePath, PUBLIC } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
 import { safeGroundLine } from "./ground-line.js";
@@ -16,6 +15,10 @@ import {
 	proofDirectory,
 } from "./ground-perception.js";
 import { depthRegions } from "./ground-regions.js";
+import {
+	excludeUnscaledStairs,
+	subtractCachedObstacles,
+} from "./ground-repair.js";
 
 export interface Raster {
 	width: number;
@@ -43,6 +46,7 @@ export interface GroundData {
 	overlays?: string[];
 	derivationVersion?: number;
 	verdicts: GroundVerdict[];
+	notes?: string[];
 }
 export interface GroundVerdict {
 	pass: boolean;
@@ -52,6 +56,10 @@ export interface GroundVerdict {
 	reason?: string;
 	overlay?: string;
 	attempt?: string;
+	probabilities?: Record<string, number>;
+	questions?: import("./floor-judge.js").FloorQuestions;
+	rejected?: string[];
+	hazardBounds?: number[][];
 }
 /** Regions use game coordinates (1920x1080). Intersect polygon AND mask.
  * scaleAtY is piecewise linear, clamped at endpoints; factors multiply baseScale.
@@ -247,11 +255,9 @@ export async function deriveGround(
 	description = "",
 	key = basename(image, ".png"),
 ): Promise<GroundData> {
-	const { mask, depth, guidance, stairMask } = await perceiveFloor(
-		image,
-		description,
-		key,
-	);
+	const perceived = await perceiveFloor(image, description, key);
+	const { depth, guidance, stairMask } = perceived;
+	const mask = await subtractCachedObstacles(image, perceived.mask);
 	const horizonY = guidance.horizonY * 1080;
 	const baseScale = 0.5;
 	const referenceFactor =
@@ -297,75 +303,10 @@ export async function deriveGround(
 		referenceDepth,
 		referenceFactor,
 	);
+	excludeUnscaledStairs(data, stairMask);
 	return data;
 }
-export async function judgeFloorOverlay(
-	overlay: string,
-	previousReason?: string,
-): Promise<GroundVerdict> {
-	const archive = overlay.replace(/\.png$/, `-floor-judge-${Date.now()}.png`);
-	await copyFile(overlay, archive);
-	overlay = archive;
-	const question = [
-		"Review the walkable floor mask in this image. The background is GRAYSCALE. Only the allowed floor is tinted bright GREEN. Judge only the green mask: does it cover the visible walkable passages, rugs and exposed stairs, without covering walls, furniture, pew seats, counters or water? Missing major stairs/passages or any clear forbidden surface is a failure. Only standing-person passages count: do not require floor underneath furniture or tiny slivers narrower than a person. Ignore sub-pixel segmentation edges. Dirt, grass and boards are valid floor; rugs are valid floor. State specific visual evidence.",
-		previousReason
-			? ` A prior reviewer said: ${previousReason}. Re-examine that specific claim against the actual GREEN pixels. The mask intentionally leaves a small safety margin around obstacles and holes. Such margins, gaps showing water, and floor hidden under furniture do not constitute missing major passages. A raised object pedestal need not be walkable. Fail if there is actual furniture/wall/water inclusion or a missing broad traversable passage, and identify where. Do not assume the prior review is correct.`
-			: "",
-	].join(" ");
-	const fingerprint = createHash("sha256")
-		.update(question)
-		.update(
-			execFileSync("magick", [overlay, "-depth", "8", "rgb:-"], {
-				maxBuffer: 12 * 1024 * 1024,
-			}),
-		)
-		.digest("hex");
-	const cache = resolve(
-		ROOT,
-		"api/data/perception",
-		`${fingerprint}-floor-verdict.json`,
-	);
-	await mkdir(resolve(cache, ".."), { recursive: true });
-	const stored = await readFile(cache, "utf8").catch(() => null);
-	// Identical pixels and questions must not change eligibility on a cache replay.
-	const object: { pass: boolean; why: string } = stored
-		? JSON.parse(stored)
-		: (
-				await generateObject({
-					model: getModel(),
-					mode: "json",
-					schema: z.object({ pass: z.boolean(), why: z.string() }),
-					messages: [
-						{
-							role: "user",
-							content: [
-								{ type: "text", text: question },
-								{
-									type: "image",
-									image: await readFile(overlay),
-									mediaType: "image/png",
-								},
-							],
-						},
-					],
-				})
-			).object;
-	if (!stored) await writeFile(cache, JSON.stringify(object));
-	recordCall("floor-mask-judge", 0, !!stored);
-	const verdict = {
-		...object,
-		question,
-		answer: object.pass ? "yes" : "no",
-		reason: object.why,
-		overlay,
-		attempt: "floor-mask",
-	};
-	await writeFile(
-		overlay.replace(/\.png$/, "-verdict.json"),
-		JSON.stringify(verdict, null, 2),
-	);
-	return verdict;
-}
+export { asymmetricFloorJudge as judgeFloorOverlay } from "./floor-judge.js";
 export async function judgeGround(
 	image: string,
 	data: GroundData,

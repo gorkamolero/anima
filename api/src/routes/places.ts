@@ -6,17 +6,18 @@ import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { recordCall } from "../services/costs.js";
 import { derivationError } from "../services/derivation-errors.js";
 import {
+	labelledFloorObjects,
+	locateFloorHazards,
+} from "../services/floor-judge.js";
+import {
 	deriveGround,
 	failedGround,
 	type GroundData,
 	judgeFloorOverlay,
-	judgeGround,
 } from "../services/ground.js";
 import { groundMaskReview, groundOverlay } from "../services/ground-overlay.js";
-import {
-	DERIVATION_VERSION,
-	proofDirectory,
-} from "../services/ground-perception.js";
+import { proofDirectory } from "../services/ground-perception.js";
+import { repairGround } from "../services/ground-repair.js";
 import { deriveOccluders } from "../services/occluders.js";
 import { defaultVisual, getWorldDb } from "../services/world.js";
 import { interactablesRoutes } from "./interactables.js";
@@ -58,11 +59,7 @@ async function createPlace(
 ): Promise<Place> {
 	const id = placeId(input.parent, input.to);
 	const existing = await getPlace(id);
-	if (
-		existing &&
-		existing.ground.derivationVersion === DERIVATION_VERSION &&
-		!input.refresh
-	) {
+	if (existing && !input.refresh) {
 		if (existing.ground.ground === "failed") return existing;
 		const labels = await interactablesRoutes.request(
 			`${origin}/interactables/${input.template === "interior" ? "inside" : "outside"}?image=${encodeURIComponent(existing.background)}`,
@@ -102,6 +99,10 @@ async function createPlace(
 	let ground: GroundData = failedGround("Derivation not completed");
 	let diagnosticGround: GroundData | undefined;
 	try {
+		const labels = await interactablesRoutes.request(
+			`${origin}/interactables/${anchor}?image=${encodeURIComponent(image.url)}`,
+		);
+		if (!labels.ok) throw new Error("Place object perception failed");
 		ground = await deriveGround(
 			image.url,
 			input.template,
@@ -115,48 +116,23 @@ async function createPlace(
 			JSON.stringify(ground),
 		);
 		ground.overlays = [await groundOverlay(image.url, ground, id)];
-		const maskReview = await groundMaskReview(image.url, ground, id);
-		const floorVerdicts = [await judgeFloorOverlay(maskReview)];
-		if (!floorVerdicts[0].pass)
-			floorVerdicts.push(
-				await judgeFloorOverlay(maskReview, floorVerdicts[0].why),
-			);
-		const floorVerdict = floorVerdicts[floorVerdicts.length - 1];
-		const first = [
-			...floorVerdicts,
-			...(await judgeGround(image.url, ground, id)),
-		];
-		ground.verdicts = [...(existing?.ground.verdicts ?? []), ...first];
-		if (
-			!floorVerdict.pass ||
-			first.slice(floorVerdicts.length).some((v) => !v.pass)
-		) {
-			const previousOverlays = ground.overlays;
-			ground = await deriveGround(
-				image.url,
-				input.template,
-				0.65,
-				input.description,
-				id,
-			);
-			ground.overlays = previousOverlays;
-			const second = await judgeGround(image.url, ground, id);
-			ground.verdicts = [
-				...(existing?.ground.verdicts ?? []),
-				...first,
-				...second,
+		const objects = await labelledFloorObjects(image.url);
+		for (let attempt = 0; attempt < 3; attempt++) {
+			const maskReview = await groundMaskReview(image.url, ground, id);
+			const verdict = await judgeFloorOverlay(maskReview, objects, ground);
+			ground.verdicts.push(verdict);
+			ground.notes = [
+				...(ground.notes ?? []),
+				`Visible-floor coverage score: ${verdict.probabilities?.coverage ?? "unknown"}; missing floor does not reject.`,
 			];
-			if (!floorVerdict.pass || second.some((v) => !v.pass))
-				ground = failedGround(
-					!floorVerdict.pass
-						? `Floor mask rejected: ${floorVerdict.why}`
-						: `Placement judge rejected both attempts: ${second
-								.filter((v) => !v.pass)
-								.map((v) => v.why)
-								.join("; ")}`,
-					ground,
-				);
+			if (verdict.pass) break;
+			await locateFloorHazards(verdict);
+			if (attempt === 2 || !repairGround(ground, verdict)) {
+				ground = failedGround(`Floor mask rejected: ${verdict.why}`, ground);
+				break;
+			}
 		}
+		diagnosticGround = ground.ground === "failed" ? diagnosticGround : ground;
 	} catch (error) {
 		ground = failedGround(derivationError(error), ground);
 	}
@@ -177,7 +153,8 @@ async function createPlace(
 		background,
 		ground,
 	};
-	// ponytail: this explicit camera calibration sample checks implementation consistency; the independent vision judge checks plausibility against the art.
+	// This scene-specific reference records the existing scale estimate; floor
+	// eligibility is judged separately and is not a sprite-scale signoff.
 	if (ground.ground !== "failed") {
 		const y =
 			ground.groundLine.points[Math.min(2, ground.groundLine.points.length - 1)]
@@ -200,7 +177,7 @@ async function createPlace(
 							kind: "figure",
 							rect: { x: 960, y: y - height, width: 100, height },
 							realHeightM: 1.75,
-							note: "Scene-specific visual calibration; SAM/depth geometry and independently judged sprite composites.",
+							note: "Scene-specific visual calibration; SAM/depth geometry and asymmetric floor review.",
 						},
 					],
 				},

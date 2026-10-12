@@ -42,7 +42,15 @@ export function depthRegions(
 											depth.width +
 											Math.floor((x * depth.width) / floor.width)
 									];
-								if (Number.isFinite(d)) values.push(d);
+								if (
+									Number.isFinite(d) &&
+									d > 0 &&
+									Number.isFinite(referenceDepth) &&
+									referenceDepth > 0 &&
+									Number.isFinite(referenceFactor) &&
+									referenceFactor > 0
+								)
+									values.push(d);
 							}
 					if (values.length) {
 						values.sort((a, b) => a - b);

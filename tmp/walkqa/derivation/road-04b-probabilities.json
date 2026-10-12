@@ -1,0 +1,64 @@
+{
+  "pass": true,
+  "why": "No false-walkable probability reaches 0.6; missing floor is allowed.",
+  "rejected": [],
+  "probabilities": {
+    "environment": 0,
+    "obstacles": 0,
+    "coverage": 1
+  },
+  "provider": "google/gemini-2.5-flash",
+  "fallbackReason": "Decision image request failed (HTTP 400)",
+  "evidence": [
+    {
+      "name": "environment",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "There is no green on water, sky or walls.",
+      "probability": 0
+    },
+    {
+      "name": "obstacles",
+      "yes": false,
+      "confidence": 1,
+      "evidence": "The green area is only on the ground and does not cover any obstacles.",
+      "probability": 0
+    },
+    {
+      "name": "coverage",
+      "score": 1,
+      "evidence": "The entire visible standable floor is covered by green.",
+      "probability": 1
+    }
+  ],
+  "questions": {
+    "environment": {
+      "type": "noul",
+      "instructions": "Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.",
+      "criteria": {
+        "true": "Green includes water, sky or wall surfaces",
+        "false": "No green on water, sky or walls"
+      }
+    },
+    "obstacles": {
+      "type": "noul",
+      "instructions": "Does GREEN cover any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles, including unlabelled ones? Ignore missing floor and intentional clearance margins.",
+      "criteria": {
+        "true": "Green covers an obstacle itself",
+        "false": "Green excludes obstacles"
+      }
+    },
+    "coverage": {
+      "type": "score",
+      "instructions": "Estimate the fraction of visible standable floor covered by GREEN, from 0 to 1. Missing floor is a coverage note only and never a rejection.",
+      "criteria": [
+        "All visible standable floor is covered by green"
+      ]
+    }
+  },
+  "question": "{\"environment\":{\"type\":\"noul\",\"instructions\":\"Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.\",\"criteria\":{\"true\":\"Green includes water, sky or wall surfaces\",\"false\":\"No green on water, sky or walls\"}},\"obstacles\":{\"type\":\"noul\",\"instructions\":\"Does GREEN cover any non-standable furniture, counters, pews, crates, barrels, nets, fences, posts, railings or other obstacles, including unlabelled ones? Ignore missing floor and intentional clearance margins.\",\"criteria\":{\"true\":\"Green covers an obstacle itself\",\"false\":\"Green excludes obstacles\"}},\"coverage\":{\"type\":\"score\",\"instructions\":\"Estimate the fraction of visible standable floor covered by GREEN, from 0 to 1. Missing floor is a coverage note only and never a rejection.\",\"criteria\":[\"All visible standable floor is covered by green\"]}}",
+  "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/road-04b-final/mask-review-1791778721656.png",
+  "attempt": "asymmetric-floor",
+  "answer": "yes",
+  "reason": "No false-walkable probability reaches 0.6; missing floor is allowed."
+}
