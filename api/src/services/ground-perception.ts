@@ -12,6 +12,7 @@ import { derivationError } from "./derivation-errors.js";
 import { fitPlane, type Raster } from "./ground.js";
 import { scaleReferenceSchema } from "./ground-calibration.js";
 import { reserveSegmentation } from "./occluders.js";
+import { semanticCoastalScale } from "./semantic-scale.js";
 
 export const DERIVATION_VERSION = 7;
 const cacheRoot = resolve(ROOT, "api/data/perception");
@@ -241,6 +242,7 @@ export async function perceiveFloor(
 ) {
 	const bytes = await readFile(imagePath(image));
 	const hash = createHash("sha256").update(bytes).digest("hex");
+	const semanticScale = await semanticCoastalScale(bytes, description);
 	const out = proofDirectory(key);
 	await mkdir(out, { recursive: true });
 	await mkdir(cacheRoot, { recursive: true });
@@ -260,6 +262,10 @@ export async function perceiveFloor(
 			stairMask?: Raster;
 			artifactsDirectory?: string;
 		};
+		if (semanticScale) {
+			Object.assign(result.guidance, semanticScale);
+			await writeFile(cache, JSON.stringify(result));
+		}
 		if (result.artifactsDirectory && result.artifactsDirectory !== out)
 			await cp(result.artifactsDirectory, out, { recursive: true });
 		await saveRaster(resolve(out, "final-mask.png"), result.mask);
@@ -290,6 +296,7 @@ export async function perceiveFloor(
 		await writeFile(guidancePath, JSON.stringify(guidance, null, 2));
 		await writeFile(resolve(out, "guidance-question.txt"), question);
 	}
+	if (semanticScale) Object.assign(guidance, semanticScale);
 	await writeFile(
 		resolve(out, "guidance.json"),
 		JSON.stringify(guidance, null, 2),
