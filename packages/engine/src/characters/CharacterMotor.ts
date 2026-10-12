@@ -95,10 +95,10 @@ export class CharacterMotor {
 			this.area.baseScale *
 			scaleAt(this.area.perspective, p, this.area.scaleClamp);
 		this.target.setScale(this.scale);
-		this.target.setDepth(10 + p.y / 20);
 		this.pose = this.animation.current();
 		this.foot = this.pose.cycle.contacts[this.pose.frame].planted;
 		this.anchor = contactOnScreen(this.pose, this.foot, p, this.scale);
+		this.target.setDepth(10 + this.anchor.y / 20);
 	}
 	walk(points: readonly Point[]): Promise<void> {
 		this.stop();
@@ -426,7 +426,9 @@ export class CharacterMotor {
 		this.scale = p.scale;
 		this.target.setPosition(p.x, p.y);
 		this.target.setScale(p.scale);
-		this.target.setDepth(10 + p.y / 20);
+		// The planted sole is the floor contact; sprite-origin bob must not
+		// repeatedly flip occlusion while a foot is stationary.
+		this.target.setDepth(10 + this.anchor.y / 20);
 		this.animation.show(this.pose);
 	}
 	private stanceEnd(): FootPose {

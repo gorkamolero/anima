@@ -27,7 +27,7 @@
 				"width": 170,
 				"height": 450
 			},
-			"realHeightM": 3.0,
+			"realHeightM": 3,
 			"use": false,
 			"note": "INTENTIONAL stylization (owner ruling 2026-07-13): painted under strict perspective scale so the frame isn't dominated. Do not repaint. Kept use:false so it stays out of the model."
 		},
@@ -80,5 +80,6 @@
 			"hotspotId": "bus",
 			"note": "car + bus group at the right edge"
 		}
-	]
+	],
+	"template": "exterior"
 }

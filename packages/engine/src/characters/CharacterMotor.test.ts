@@ -23,10 +23,11 @@ function setup() {
 		],
 	};
 	let shown: FootPose = { cycle, frame: 0, flipX: false };
-	const target: MotorTarget & { scale: number } = {
+	const target: MotorTarget & { scale: number; depth: number } = {
 		x: 960,
 		y: 850,
 		scale: 1,
+		depth: 0,
 		setPosition(x, y) {
 			this.x = x;
 			this.y = y;
@@ -34,7 +35,9 @@ function setup() {
 		setScale(s) {
 			this.scale = s;
 		},
-		setDepth() {},
+		setDepth(depth) {
+			this.depth = depth;
+		},
 	};
 	const area = {
 		mask: { width: 192, height: 108, data: Array(192 * 108).fill(1) },
@@ -61,6 +64,17 @@ function setup() {
 	};
 }
 describe("contact motor", () => {
+	it("sorts by the planted sole rather than bobbing sprite origin", () => {
+		const { motor, target } = setup();
+		void motor.walk([{ x: 1400, y: 850 }]);
+		const anchor = { ...motor.anchor },
+			depth = target.depth;
+		motor.update(1000 / 24);
+		expect(motor.anchor).toEqual(anchor);
+		expect(target.depth).toBe(depth);
+		expect(target.depth).toBeCloseTo(10 + anchor.y / 20, 10);
+	});
+
 	it("locks the first foot through start and mirrored perspective changes", () => {
 		for (const flipX of [false, true]) {
 			const { cycle, area } = setup();

@@ -544,7 +544,13 @@ export class StoryGameScene extends BaseScene {
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
 				layer.image.setDepth(
-					10 + baselineYAt(layer.data, this.hermesSprite.x) / 20 - 0.001,
+					10 +
+						baselineYAt(
+							layer.data,
+							this.hermesMotor?.anchor.x ?? this.hermesSprite.x,
+						) /
+							20 -
+						0.001,
 				);
 			// Scene update follows Phaser's normal pre-update depth sort. Flush
 			// changed baselines now so this captured frame uses its own order.
@@ -1398,6 +1404,27 @@ export class StoryGameScene extends BaseScene {
 					],
 				};
 			});
+		// Geometry may shrink after perception loads. Enter on an interior floor
+		// cell, away from travel gates, instead of spawning on a clipped edge.
+		if (this.hermesSprite && this.hermesMotor && exitMask) {
+			const spawnMask = approachMask?.data.some(Boolean)
+				? approachMask
+				: exitMask;
+			const safe = {
+				...spawnMask,
+				data: spawnMask.data.map((value, i) => {
+					if (!value) return 0;
+					const p = cellPoint(spawnMask, i);
+					return this.sceneExits.some((e) =>
+						e.region.some((q) => Math.hypot(p.x - q.x, p.y - q.y) < 60),
+					)
+						? 0
+						: 1;
+				}),
+			};
+			const cell = nearestCell(safe, this.hermesSprite);
+			if (cell >= 0) this.hermesMotor.place(cellPoint(safe, cell));
+		}
 		this.exitLatch = this.hermesSprite
 			? exitAt(this.hermesSprite, this.sceneExits)?.id
 			: undefined;
@@ -1452,6 +1479,7 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private async triggerExit(exit: Exit): Promise<void> {
+		const from = this.locationId();
 		try {
 			if (exit.to) {
 				await this.enterLocation(exit.to);
@@ -1476,6 +1504,29 @@ export class StoryGameScene extends BaseScene {
 			}
 		} catch (error) {
 			this.emitOpenWorldState({ status: "error", message: String(error) });
+		} finally {
+			if (this.locationId() !== from && this.hermesMotor && this.walkArea) {
+				const opposite =
+					exit.kind === "edge-left"
+						? "edge-right"
+						: exit.kind === "edge-right"
+							? "edge-left"
+							: undefined;
+				const entry =
+					this.sceneExits.find((e) => e.to === from) ??
+					this.sceneExits.find((e) => e.kind === opposite);
+				if (entry) {
+					const point = entry.approach ?? {
+						x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
+						y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
+					};
+					this.hermesMotor.place({
+						x: point.x + (point.x > 960 ? -60 : 60),
+						y: Math.min(point.y + 25, MAX_FEET_Y),
+					});
+					this.exitLatch = entry.id;
+				}
+			}
 		}
 	}
 

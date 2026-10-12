@@ -321,7 +321,11 @@ async function derive(
 		(landmarks
 			? (JSON.parse(landmarks) as { template?: string }).template
 			: undefined);
-	if (ground?.template && landmarks)
+	if (
+		ground?.template &&
+		landmarks &&
+		JSON.parse(landmarks).template !== ground.template
+	)
 		await writeFile(
 			`${stem}.landmarks.json`,
 			JSON.stringify(

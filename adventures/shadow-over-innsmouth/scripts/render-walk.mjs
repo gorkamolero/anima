@@ -108,7 +108,10 @@ writeFileSync(
 const logs = [];
 for (const beat of plan.beats) {
 	// A crossing can itself enter an exit. Every proof beat belongs to its named scene.
-	if (evaluate("window.__anima.scene.locationId()") !== plan.place) {
+	if (
+		!beat.continueLocation &&
+		evaluate("window.__anima.scene.locationId()") !== plan.place
+	) {
 		evaluate(
 			`(()=>{window.__walkReady=false;window.__anima.scene.enterLocation(${JSON.stringify(plan.place)}).then(()=>window.__walkReady=true);return true})()`,
 		);
@@ -141,6 +144,10 @@ for (const beat of plan.beats) {
 		beat.click = point;
 	}
 	const sourceLocation = evaluate("window.__anima.scene.locationId()");
+	if (beat.walk)
+		evaluate(
+			`(()=>{void window.__anima.scene.walkGenerated(${beat.walk[0]},${beat.walk[1]});return true})()`,
+		);
 	if (beat.click)
 		evaluate(
 			`(()=>{window.__anima.click(${beat.click[0]},${beat.click[1]});return true})()`,
