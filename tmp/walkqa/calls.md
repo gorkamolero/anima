@@ -151,3 +151,28 @@ Current: 0 videos, 0 BRIA, 0 edits.
 Away BRIA: upload rejected before submission (HTTP 403: exhausted fal.ai balance). No BRIA request ID or paid invocation for this attempt. Brief 06 totals so far: 2 Kling videos, 1 BRIA, 0 image edits.
 
 Brief 06 final generation totals: **2/2 Kling videos, 1/2 BRIA removals, 0/2 image edits; no Veo**. Away extracted locally with sprite-factory gray-background keying after the rejected upload, with no additional paid submission. Source, local matte settings, loops and reviewed seeds: tmp/hermes-depth-06/.
+
+
+## Brief 16 — stop animations
+
+10/10 Kling generations completed (five first takes and one re-roll each); 0 BRIA removals; 0 image edits. All takes rejected for additional walking/support-foot lift. Request IDs and exact inputs: `verification-16/*/{request,input}.json`.
+
+| Brief 16 Kling attempt 1 | 2026-10-12T17:38:55.900534+00:00 | side | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 2 | 2026-10-12T17:38:56.944100+00:00 | away | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 3 | 2026-10-12T17:38:57.768806+00:00 | away-right | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 4 | 2026-10-12T17:38:58.617006+00:00 | toward | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 5 | 2026-10-12T17:38:59.446477+00:00 | toward-right | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 6 | 2026-10-12T17:40:48.559773+00:00 | side-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 7 | 2026-10-12T17:40:50.069304+00:00 | away-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 8 | 2026-10-12T17:40:50.973078+00:00 | away-right-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 9 | 2026-10-12T17:41:31.346557+00:00 | toward-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+| Brief 16 Kling attempt 10 | 2026-10-12T17:41:32.324052+00:00 | toward-right-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
