@@ -31,7 +31,24 @@ function run(command, args, input) {
 }
 const browser = (args, input) =>
 	run("agent-browser", ["--session", session, ...args], input);
-const evaluate = (source) => JSON.parse(browser(["eval", "--stdin"], source));
+const evaluate = (source, retryCapture = false) => {
+	for (let attempt = 0; ; attempt++) {
+		try {
+			return JSON.parse(browser(["eval", "--stdin"], source));
+		} catch (error) {
+			if (
+				!retryCapture ||
+				attempt >= 4 ||
+				!/Resource temporarily unavailable|daemon may be busy/.test(
+					String(error),
+				)
+			)
+				throw error;
+			Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 500);
+		}
+	}
+};
+const captureId = `${Date.now()}:${process.pid}`;
 mkdirSync(out, { recursive: true });
 if (!process.argv.includes("--reuse")) {
 	browser(["open", `http://localhost:8080/?mute=1&walkqa=${Date.now()}`]);
@@ -99,10 +116,11 @@ for (const beat of plan.beats) {
 		let first = 0;
 		first < beat.frames ||
 		((!exitCompleted || !walkCompleted) && first < beat.frames + 2400);
-		first += 12
+		first += 4
 	) {
 		const frames = evaluate(
-			`(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(12, beat.frames - first) : 12};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,visualOffset:s.hermesMotor.visualOffset,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})()`,
+			`(()=>{const token=${JSON.stringify(`${captureId}:${beat.name}:${first}`)};if(window.__walkBatch?.token===token)return window.__walkBatch.promise;const promise=(async()=>{const out=[];for(let i=0;i<${first < beat.frames ? Math.min(4, beat.frames - first) : 4};i++){const png=await window.__anima.captureFrame({stepMs:1000/24,width:${width},format:'png'});const s=window.__anima.scene,h=s.hermesSprite;out.push({png,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:s.hermesMotor.walking,visualOffset:s.hermesMotor.visualOffset,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,object:s.selectedInteractable?.name,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline})),depth:h.depth});}return out})();window.__walkBatch={token,promise};return promise})()`,
+			true,
 		);
 		exitCompleted ||=
 			frames.at(-1).location !== sourceLocation &&
@@ -118,6 +136,10 @@ for (const beat of plan.beats) {
 			idleFrames = sample.walking ? 0 : idleFrames + 1;
 			walkCompleted = idleFrames >= 4;
 		}
+		writeFileSync(
+			resolve(out, `${beat.name}.partial.json`),
+			JSON.stringify(log),
+		);
 	}
 	writeFileSync(resolve(out, `${beat.name}.json`), JSON.stringify(log));
 	run("ffmpeg", [
@@ -153,6 +175,7 @@ for (const beat of plan.beats) {
 	if (!walkCompleted) throw new Error(`Walk ${beat.name} did not finish`);
 	if (!exitCompleted)
 		throw new Error(`Exit ${beat.exit} did not finish and release input`);
+	rmSync(resolve(out, `${beat.name}.partial.json`), { force: true });
 	logs.push({ name: beat.name, frames: log.length });
 	// Keep the full PNG sequence only on request. Videos and telemetry remain.
 	if (!process.argv.includes("--keep-frames")) rmSync(dir, { recursive: true });
