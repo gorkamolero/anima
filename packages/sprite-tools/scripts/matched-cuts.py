@@ -2,7 +2,8 @@
 """Measure sole-aligned walk/still matches. Local, deterministic, no image service.
 Head/torso proxies are alpha centroids of the top 23% / 25-62% of each
 silhouette's own visible height. Metrics use sprite pixels, before scaling.
-All frames are measured; one minimum-score exit per support and a ranked entry list
+Lower-body silhouette, free sole displacement and boot spread rank before upper body.
+Only visually reviewed passing poses are eligible. All frames are measured; one minimum-score exit per support and a ranked entry list
 with at least two remaining support frames are selected; runtime chooses the
 best floor-safe candidate on the actual planted foot. Mirroring preserves
 IoU and displacement lengths, so mirrored headings share the measurements.
@@ -16,10 +17,10 @@ from scipy.ndimage import shift
 
 ROOT = Path(__file__).resolve().parents[3]
 SPR = ROOT / 'adventures/shadow-over-innsmouth/public/assets/sprites/hermes'
-OUT = ROOT / 'tmp/walkqa/verification-13/matches'
+OUT = ROOT / 'tmp/walkqa/verification-14/matches'
 OUT.mkdir(parents=True, exist_ok=True)
-PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-matched-stand-side', ['left', 'right'])] + [
-    ('hermes-walk-'+d, 'hermes-matched-stand-'+d, headings) for d, headings in [
+PAIRS = [('hermes-fal-veo-transparent-loop', 'hermes-passing-stand-side', ['left', 'right'])] + [
+    ('hermes-walk-'+d, 'hermes-passing-stand-'+d, headings) for d, headings in [
         ('away', ['away']), ('toward', ['toward']),
         ('away-right', ['away-right', 'away-left']),
         ('toward-right', ['toward-right', 'toward-left'])]]
@@ -49,12 +50,23 @@ for walk,stand,headings in PAIRS:
         aa=shift(np.pad(a,pad), (delta[1],delta[0]),order=1,mode='constant')>127
         bb=np.pad(b,pad)>127
         iou=float((aa&bb).sum()/(aa|bb).sum())
+        hip=int(np.where(b>127)[0].min()+.62*(np.where(b>127)[0].max()+1-np.where(b>127)[0].min()))+pad
+        lower_iou=float((aa[hip:]&bb[hip:]).sum()/max(1,(aa[hip:]|bb[hip:]).sum()))
+        free='R' if foot=='L' else 'L'
+        source_free=meta.get('reviewedFreeBootSoles',{}).get(str(i),{}).get(free,meta['contacts'][i][free])
+        still_free=idle['bootSoles'][0][free]
+        free_px=float(np.linalg.norm(np.array([still_free['x'],still_free['y']])+delta-np.array([source_free['x'],source_free['y']])))
+        spread=float(np.linalg.norm(np.array([source_free['x'],source_free['y']])-np.array([c['x'],c['y']])))
+        lower_score=(1-lower_iou)*100+free_px+.25*spread
+        passing=i in meta['reviewedPassingFrames']
         head=float(np.linalg.norm(centroid(a,0,.23)+delta-centroid(b,0,.23)))
         torso=float(np.linalg.norm(centroid(a,.25,.62)+delta-centroid(b,.25,.62)))
         remaining=1
         while remaining<len(images) and meta['contacts'][(i+remaining)%len(images)]['planted']==foot: remaining+=1
-        records.append(dict(frame=i,foot=foot,alphaIoU=round(iou,6),headPx=round(head,3),torsoPx=round(torso,3),score=round((1-iou)*100+head+torso,3),remainingSupport=remaining))
-    exits=[min((r for r in records if r['foot']==f),key=lambda r:r['score'])['frame'] for f in ['L','R']]
+        records.append(dict(frame=i,foot=foot,alphaIoU=round(iou,6),headPx=round(head,3),torsoPx=round(torso,3),lowerBodyIoU=round(lower_iou,6),freeFootPx=round(free_px,3),bootSpreadPx=round(spread,3),passing=passing,lowerBodyScore=round(lower_score,3),score=round(lower_score,3),remainingSupport=remaining))
+    rank=lambda r:(r['lowerBodyScore'],r['headPx']+r['torsoPx'])
+    eligible=[r for r in records if r['passing']]
+    exits=[min((r for r in eligible if r['foot']==f),key=rank)['frame'] for f in ['L','R']]
     # Cycles may contain more than one stance per anatomical foot. Include
     # the best cut in every contiguous support, rather than skipping a step.
     for start in meta['switchFrames']:
@@ -62,12 +74,14 @@ for walk,stand,headings in PAIRS:
         while not support or meta['contacts'][j]['planted']==meta['contacts'][start]['planted']:
             support.append(records[j]); j=(j+1)%len(images)
             if j==start: break
-        best=min(support,key=lambda r:r['score'])['frame']
+        support=[r for r in support if r['passing']]
+        if not support: continue
+        best=min(support,key=rank)['frame']
         if best not in exits: exits.append(best)
     # Never insert a poor coverage frame just to satisfy the half-cycle cap.
     # The runtime cap and floor-safe fallback remain explicit safety constraints.
-    entries=[r['frame'] for r in sorted(records,key=lambda r:r['score']) if r['remainingSupport']>=2]
-    meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'sole aligned; alpha>127 IoU; alpha-weighted head 0-23% and torso 25-62% height centroids; score=100*(1-IoU)+headPx+torsoPx'}
+    entries=[r['frame'] for r in sorted(eligible,key=rank) if r['remainingSupport']>=2]
+    meta['matchedCut']={'standing':stand,'headings':headings,'exitFrames':exits,'entryFrames':entries,'metrics':records,'method':'reviewed passing poses only; sole aligned lower-body alpha>127 IoU below walk hip at 62% visible height; primary=100*(1-lowerIoU)+freeBootSolePx+0.25*bootSpreadPx; secondary=headPx+torsoPx; reviewed free soles for passing frames, raw tracker for ineligible frames'}
     path.write_text(json.dumps(meta,indent='\t')+'\n')
     sheet=Image.new('RGB',(1200,500*len(exits)),'#303038'); draw=ImageDraw.Draw(sheet)
     for row,i in enumerate(exits):
@@ -79,7 +93,7 @@ for walk,stand,headings in PAIRS:
         for col,im in enumerate([*layers,overlay]):
             bg=Image.new('RGBA',im.size,'#505058'); bg.alpha_composite(im)
             sheet.paste(bg.convert('RGB').resize((350,450)),(col*400,row*500+45))
-        draw.text((10,row*500+5),f'{walk} {foot}: exit {i}, entry {next(j for j in entries if records[j]["foot"]==foot)}, IoU {r["alphaIoU"]}, head {r["headPx"]} px, torso {r["torsoPx"]} px',fill='white')
+        draw.text((10,row*500+5),f'{walk} {foot}: exit {i}, entry {next(j for j in entries if records[j]["foot"]==foot)}, legs {r["lowerBodyIoU"]} free {r["freeFootPx"]}, head {r["headPx"]} px, torso {r["torsoPx"]} px',fill='white')
         draw.text((10,row*500+25),'WALK                                      SOLE-ALIGNED STANDING                         COMPARISON OVERLAY ONLY',fill='white')
     sheet.save(OUT/(walk+'.png'))
     summary.append({'cycle':walk,'headings':headings,'exits':[records[i] for i in exits],'entries':[records[next(i for i in entries if records[i]['foot']==f)] for f in ['L','R']]})
