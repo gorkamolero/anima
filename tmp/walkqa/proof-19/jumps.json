@@ -1,0 +1,1362 @@
+[
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "seam": 0,
+    "frames": [
+      34,
+      35
+    ],
+    "before": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.2669530513019805,
+    "torsoScreenPx": 0.1755544493777981,
+    "freeFootScreenPx": 1.5463081705019526e-12,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.1372305354952914,
+      0.2289797190301215
+    ],
+    "torsoDelta": [
+      -0.07563539039210809,
+      0.15842554218488658
+    ],
+    "scale": 0.2693509046107383,
+    "headAtTypical042": 0.41626101723647924,
+    "torsoAtTypical042": 0.27374279230742804,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "seam": 1,
+    "frames": [
+      36,
+      37
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "headScreenPx": 0.19777946637238647,
+    "torsoScreenPx": 0.38405873517852357,
+    "freeFootScreenPx": 25.389091135819104,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.0035836682392300645,
+      0.19774699653976313
+    ],
+    "torsoDelta": [
+      0.34500976064407496,
+      0.16872870866347967
+    ],
+    "scale": 0.2693509046107383,
+    "headAtTypical042": 0.3083983549134538,
+    "torsoAtTypical042": 0.5988644033258209,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "seam": 0,
+    "frames": [
+      51,
+      52
+    ],
+    "before": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.18556235089104095,
+    "torsoScreenPx": 0.12203005800843461,
+    "freeFootScreenPx": 1.1196854986560656e-12,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.09539063388251634,
+      0.15916662035647278
+    ],
+    "torsoDelta": [
+      0.052575090575828654,
+      0.11012354384274659
+    ],
+    "scale": 0.187229128232215,
+    "headAtTypical042": 0.4162610172364588,
+    "torsoAtTypical042": 0.27374279230727044,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "seam": 1,
+    "frames": [
+      53,
+      54
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "headScreenPx": 0.13747894080639042,
+    "torsoScreenPx": 0.2669639527712786,
+    "freeFootScreenPx": 17.648269668288215,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.0024910518911838153,
+      0.13745637062618243
+    ],
+    "torsoDelta": [
+      -0.2398205300639802,
+      0.11728540164529022
+    ],
+    "scale": 0.187229128232215,
+    "headAtTypical042": 0.3083983549133939,
+    "torsoAtTypical042": 0.5988644033254896,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "away",
+    "seam": 0,
+    "frames": [
+      32,
+      33
+    ],
+    "before": [
+      "hermes-walk-away",
+      11
+    ],
+    "after": [
+      "hermes-passing-stand-away",
+      0
+    ],
+    "headScreenPx": 0.5408941444547175,
+    "torsoScreenPx": 1.2177458314724399,
+    "freeFootScreenPx": 4.688131128081406,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.05205905908439945,
+      -0.538383069823567
+    ],
+    "torsoDelta": [
+      0.029103200745566937,
+      -1.2173980095986963
+    ],
+    "scale": 0.25082223452075,
+    "headAtTypical042": 0.9057232948468434,
+    "torsoAtTypical042": 2.03910650184449,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "left",
+    "seam": 0,
+    "frames": [
+      25,
+      26
+    ],
+    "before": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 0.17924471484512883,
+    "torsoScreenPx": 0.6617849103917833,
+    "freeFootScreenPx": 2.2737367544323206e-13,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.17818208360381504,
+      0.01948878863640857
+    ],
+    "torsoDelta": [
+      0.5249864922540155,
+      0.4029248696383547
+    ],
+    "scale": 0.2720813009459512,
+    "headAtTypical042": 0.27669222388020337,
+    "torsoAtTypical042": 1.0215684113468848,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "left",
+    "seam": 1,
+    "frames": [
+      27,
+      28
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "headScreenPx": 4.466186033833998,
+    "torsoScreenPx": 4.392773799969947,
+    "freeFootScreenPx": 9.73427654914757,
+    "within4px": false,
+    "withinLimit": true,
+    "headDelta": [
+      -3.2474789808196647,
+      -3.066055765629244
+    ],
+    "torsoDelta": [
+      -2.9264906179844274,
+      -3.275990586151238
+    ],
+    "scale": 0.2720813009459512,
+    "headAtTypical042": 6.894255973081022,
+    "torsoAtTypical042": 6.780932719642792,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "seam": 0,
+    "frames": [
+      46,
+      47
+    ],
+    "before": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 0.17128780229395546,
+    "torsoScreenPx": 0.6324073933780426,
+    "freeFootScreenPx": 6.821210263296962e-13,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.17027234267425229,
+      0.01862365525119003
+    ],
+    "torsoDelta": [
+      -0.5016816399279378,
+      0.3850384959434905
+    ],
+    "scale": 0.2600032482100167,
+    "headAtTypical042": 0.2766922238808005,
+    "torsoAtTypical042": 1.0215684113462746,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "seam": 1,
+    "frames": [
+      48,
+      49
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "headScreenPx": 4.267926064267442,
+    "torsoScreenPx": 4.197772697620785,
+    "freeFootScreenPx": 9.302158997893494,
+    "within4px": false,
+    "withinLimit": true,
+    "headDelta": [
+      3.103319046811521,
+      -2.929949450715867
+    ],
+    "torsoDelta": [
+      2.796579786580878,
+      -3.130564983861177
+    ],
+    "scale": 0.2600032482100167,
+    "headAtTypical042": 6.894255973080831,
+    "torsoAtTypical042": 6.780932719642873,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-left",
+    "seam": 0,
+    "frames": [
+      57,
+      58
+    ],
+    "before": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "headScreenPx": 0.20276489895825098,
+    "torsoScreenPx": 0.1441021129893911,
+    "freeFootScreenPx": 0.06974616482650194,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.11551094121773531,
+      0.16664581215422913
+    ],
+    "torsoDelta": [
+      -0.024851627467569415,
+      0.1419430011667373
+    ],
+    "scale": 0.18062287710033256,
+    "headAtTypical042": 0.47148655214455454,
+    "torsoAtTypical042": 0.3350787476490309,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-right",
+    "seam": 0,
+    "frames": [
+      35,
+      36
+    ],
+    "before": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "headScreenPx": 0.2377573794688439,
+    "torsoScreenPx": 0.16897076829534105,
+    "freeFootScreenPx": 0.08178272207068871,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.13544542879458277,
+      0.19540498281912733
+    ],
+    "torsoDelta": [
+      0.029140437287765053,
+      0.1664390442564354
+    ],
+    "scale": 0.2117941623632374,
+    "headAtTypical042": 0.471486552144213,
+    "torsoAtTypical042": 0.3350787476490032,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward",
+    "seam": 0,
+    "frames": [
+      28,
+      29
+    ],
+    "before": [
+      "hermes-walk-toward",
+      13
+    ],
+    "after": [
+      "hermes-passing-stand-toward",
+      0
+    ],
+    "headScreenPx": 0.9199310487384077,
+    "torsoScreenPx": 1.1854599221633835,
+    "freeFootScreenPx": 4.236166520871301,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.12745255911079312,
+      -0.9110592624023184
+    ],
+    "torsoDelta": [
+      0.08324138204227438,
+      -1.1825337624657095
+    ],
+    "scale": 0.35312974027835825,
+    "headAtTypical042": 1.094133391782777,
+    "torsoAtTypical042": 1.4099440248678898,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "seam": 0,
+    "frames": [
+      34,
+      35
+    ],
+    "before": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.39148820054786315,
+    "torsoScreenPx": 0.2574516198631281,
+    "freeFootScreenPx": 1.3830600733622803e-12,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.20124937752484584,
+      0.3358000881686394
+    ],
+    "torsoDelta": [
+      -0.11091973940324351,
+      0.23233197795582328
+    ],
+    "scale": 0.3950046663650339,
+    "headAtTypical042": 0.41626101722594117,
+    "torsoAtTypical042": 0.27374279230055576,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "seam": 1,
+    "frames": [
+      36,
+      37
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "headScreenPx": 0.29004473640515677,
+    "torsoScreenPx": 0.5632243662705104,
+    "freeFootScreenPx": 37.233249644767696,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.005255470291558595,
+      0.289997119206987
+    ],
+    "torsoDelta": [
+      0.505958818266663,
+      0.24744163145885523
+    ],
+    "scale": 0.39500466636503384,
+    "headAtTypical042": 0.30839835491358475,
+    "torsoAtTypical042": 0.5988644033258296,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "seam": 0,
+    "frames": [
+      34,
+      35
+    ],
+    "before": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.3718992025159294,
+    "torsoScreenPx": 0.24456944546349152,
+    "freeFootScreenPx": 1.3830600733622803e-12,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.1911794095035475,
+      0.31899757085886904
+    ],
+    "torsoDelta": [
+      0.10536961923639865,
+      0.22070672168354122
+    ],
+    "scale": 0.3752397140083893,
+    "headAtTypical042": 0.4162610172259064,
+    "torsoAtTypical042": 0.2737427923004171,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "seam": 1,
+    "frames": [
+      36,
+      37
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "headScreenPx": 0.27553169166286984,
+    "torsoScreenPx": 0.5350421605565567,
+    "freeFootScreenPx": 35.370199741879155,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.00499250094276249,
+      0.2754864570989639
+    ],
+    "torsoDelta": [
+      -0.48064202383602606,
+      0.2350603294812572
+    ],
+    "scale": 0.3752397140083893,
+    "headAtTypical042": 0.3083983549135156,
+    "torsoAtTypical042": 0.5988644033257359,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away",
+    "seam": 0,
+    "frames": [
+      32,
+      33
+    ],
+    "before": [
+      "hermes-walk-away",
+      11
+    ],
+    "after": [
+      "hermes-passing-stand-away",
+      0
+    ],
+    "headScreenPx": 0.8287093006073757,
+    "torsoScreenPx": 1.861742114102074,
+    "freeFootScreenPx": 7.161316026297952,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.07945473410882187,
+      -0.8248915384102702
+    ],
+    "torsoDelta": [
+      0.04446287651126113,
+      -1.8612110981921433
+    ],
+    "scale": 0.38313190166655026,
+    "headAtTypical042": 0.9084545159019979,
+    "torsoAtTypical042": 2.0408942312598306,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "seam": 0,
+    "frames": [
+      25,
+      26
+    ],
+    "before": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 0.2454915108025657,
+    "torsoScreenPx": 0.9063730421216429,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.24403614321136047,
+      0.026691621956160816
+    ],
+    "torsoDelta": [
+      0.7190154936822637,
+      0.5518412917947444
+    ],
+    "scale": 0.37263943702884467,
+    "headAtTypical042": 0.27669222388047054,
+    "torsoAtTypical042": 1.0215684113477856,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "seam": 1,
+    "frames": [
+      27,
+      28
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "headScreenPx": 6.116837296527545,
+    "torsoScreenPx": 6.016292740900376,
+    "freeFootScreenPx": 13.331953796700033,
+    "within4px": false,
+    "withinLimit": true,
+    "headDelta": [
+      -4.447710059339897,
+      -4.199234899387875
+    ],
+    "torsoDelta": [
+      -4.008088069869018,
+      -4.486759227815128
+    ],
+    "scale": 0.37263943702884467,
+    "headAtTypical042": 6.8942559730807735,
+    "torsoAtTypical042": 6.780932719642779,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "seam": 0,
+    "frames": [
+      68,
+      69
+    ],
+    "before": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 0.3365171861881474,
+    "torsoScreenPx": 1.2424466523280215,
+    "freeFootScreenPx": 2.5421149729252077e-13,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.3345221835704706,
+      0.03658859520714941
+    ],
+    "torsoDelta": [
+      -0.985618891539616,
+      0.7564582503491692
+    ],
+    "scale": 0.5108102288415945,
+    "headAtTypical042": 0.27669222388037074,
+    "torsoAtTypical042": 1.0215684113475163,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "seam": 1,
+    "frames": [
+      70,
+      71
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "headScreenPx": 8.384896360242921,
+    "torsoScreenPx": 8.247070938762498,
+    "freeFootScreenPx": 18.27530232467248,
+    "within4px": false,
+    "withinLimit": false,
+    "headDelta": [
+      6.096874263624159,
+      -5.756267122499821
+    ],
+    "torsoDelta": [
+      5.49424505498223,
+      -6.150402453887409
+    ],
+    "scale": 0.5108102288415945,
+    "headAtTypical042": 6.894255973080982,
+    "torsoAtTypical042": 6.780932719642906,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-left",
+    "seam": 0,
+    "frames": [
+      35,
+      36
+    ],
+    "before": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "headScreenPx": 0.44628289614203803,
+    "torsoScreenPx": 0.31746556885898425,
+    "freeFootScreenPx": 0.1478506922342981,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.2446267567634095,
+      0.37326421374723395
+    ],
+    "torsoDelta": [
+      -0.05205147052288339,
+      0.31316933411073933
+    ],
+    "scale": 0.3811369328356842,
+    "headAtTypical042": 0.49178864662917515,
+    "torsoAtTypical042": 0.34983631192272047,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-right",
+    "seam": 0,
+    "frames": [
+      35,
+      36
+    ],
+    "before": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "after": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "headScreenPx": 0.49561772879081323,
+    "torsoScreenPx": 0.35256014865767166,
+    "freeFootScreenPx": 0.16419500930634628,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.27166929012196306,
+      0.4145271159965205
+    ],
+    "torsoDelta": [
+      0.05780555746969185,
+      0.347788981923145
+    ],
+    "scale": 0.4232701334586871,
+    "headAtTypical042": 0.4917886466290416,
+    "torsoAtTypical042": 0.34983631192271414,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward",
+    "seam": 0,
+    "frames": [
+      23,
+      24
+    ],
+    "before": [
+      "hermes-walk-toward",
+      13
+    ],
+    "after": [
+      "hermes-passing-stand-toward",
+      0
+    ],
+    "headScreenPx": 1.2222802117628713,
+    "torsoScreenPx": 1.5887585511888076,
+    "freeFootScreenPx": 5.723599052904465,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.17135641000618307,
+      -1.2102090302162196
+    ],
+    "torsoDelta": [
+      0.11321323410493278,
+      -1.5847196905443752
+    ],
+    "scale": 0.4771692118463133,
+    "headAtTypical042": 1.075839924696877,
+    "torsoAtTypical042": 1.3984108256217844,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "seam": 0,
+    "frames": [
+      2,
+      3
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.30490105954114777,
+    "torsoScreenPx": 0.5920731683109617,
+    "freeFootScreenPx": 39.14036643987275,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.005524659678940225,
+      -0.3048510033520415
+    ],
+    "torsoDelta": [
+      -0.5318744331848393,
+      -0.26011578952090986
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.30839835491346584,
+    "torsoAtTypical042": 0.5988644033257687,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "seam": 1,
+    "frames": [
+      4,
+      5
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      2
+    ],
+    "headScreenPx": 0.4115405389462892,
+    "torsoScreenPx": 0.27063849751447283,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.2115575314353464,
+      -0.35300003695351734
+    ],
+    "torsoDelta": [
+      0.11660113707739583,
+      -0.24423220747712548
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.41626101720420067,
+    "torsoAtTypical042": 0.2737427922858747,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "seam": 2,
+    "frames": [
+      6,
+      7
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      2
+    ],
+    "after": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "headScreenPx": 0.0,
+    "torsoScreenPx": 0.0,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.0,
+      0.0
+    ],
+    "torsoDelta": [
+      0.0,
+      0.0
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.0,
+    "torsoAtTypical042": 0.0,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "seam": 0,
+    "frames": [
+      2,
+      3
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      0
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "headScreenPx": 0.30490105954114777,
+    "torsoScreenPx": 0.5920731683109617,
+    "freeFootScreenPx": 39.14036643987275,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.005524659678940225,
+      -0.3048510033520415
+    ],
+    "torsoDelta": [
+      0.5318744331848393,
+      -0.26011578952090986
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.30839835491346584,
+    "torsoAtTypical042": 0.5988644033257687,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "seam": 1,
+    "frames": [
+      4,
+      5
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-away-right",
+      2
+    ],
+    "headScreenPx": 0.4115405389462892,
+    "torsoScreenPx": 0.27063849751447283,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.2115575314353464,
+      -0.35300003695351734
+    ],
+    "torsoDelta": [
+      -0.11660113707739583,
+      -0.24423220747712548
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.41626101720420067,
+    "torsoAtTypical042": 0.2737427922858747,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "seam": 2,
+    "frames": [
+      6,
+      7
+    ],
+    "before": [
+      "hermes-passing-stand-away-right",
+      2
+    ],
+    "after": [
+      "hermes-walk-away-right",
+      8
+    ],
+    "headScreenPx": 0.0,
+    "torsoScreenPx": 0.0,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.0,
+      0.0
+    ],
+    "torsoDelta": [
+      0.0,
+      0.0
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.0,
+    "torsoAtTypical042": 0.0,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away",
+    "seam": 0,
+    "frames": [
+      0,
+      1
+    ],
+    "before": [
+      "hermes-passing-stand-away",
+      0
+    ],
+    "after": [
+      "hermes-walk-away",
+      11
+    ],
+    "headScreenPx": 0.8981524707658778,
+    "torsoScreenPx": 2.0177501066715293,
+    "freeFootScreenPx": 7.7614112429895945,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.08611278490616314,
+      0.894014792393591
+    ],
+    "torsoDelta": [
+      -0.048188722350005264,
+      2.017174593338723
+    ],
+    "scale": 0.41529577839476567,
+    "headAtTypical042": 0.9083262035066793,
+    "torsoAtTypical042": 2.0406059702260713,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "seam": 0,
+    "frames": [
+      2,
+      3
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 6.816073813137049,
+    "torsoScreenPx": 6.704035666715759,
+    "freeFootScreenPx": 14.855974868454622,
+    "within4px": false,
+    "withinLimit": true,
+    "headDelta": [
+      4.956142953336894,
+      4.6792637510853865
+    ],
+    "torsoDelta": [
+      4.466266276085207,
+      4.999655965334114
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 6.894255973080791,
+    "torsoAtTypical042": 6.780932719642845,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "seam": 1,
+    "frames": [
+      4,
+      5
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      2
+    ],
+    "headScreenPx": 0.2735544819997467,
+    "torsoScreenPx": 1.009983633347829,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.27193274637920695,
+      -0.02974283222579288
+    ],
+    "torsoDelta": [
+      -0.8012086050594007,
+      -0.6149241504521115
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.2766922238803894,
+    "torsoAtTypical042": 1.021568411348732,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "seam": 2,
+    "frames": [
+      6,
+      7
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      2
+    ],
+    "after": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "headScreenPx": 0.0,
+    "torsoScreenPx": 0.0,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.0,
+      0.0
+    ],
+    "torsoDelta": [
+      0.0,
+      0.0
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.0,
+    "torsoAtTypical042": 0.0,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "seam": 0,
+    "frames": [
+      2,
+      3
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      0
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "headScreenPx": 6.816073813137049,
+    "torsoScreenPx": 6.704035666715759,
+    "freeFootScreenPx": 14.855974868454622,
+    "within4px": false,
+    "withinLimit": true,
+    "headDelta": [
+      -4.956142953336894,
+      4.6792637510853865
+    ],
+    "torsoDelta": [
+      -4.466266276085207,
+      4.999655965334114
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 6.894255973080791,
+    "torsoAtTypical042": 6.780932719642845,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "seam": 1,
+    "frames": [
+      4,
+      5
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      1
+    ],
+    "after": [
+      "hermes-passing-stand-side",
+      2
+    ],
+    "headScreenPx": 0.2735544819997467,
+    "torsoScreenPx": 1.009983633347829,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.27193274637920695,
+      -0.02974283222579288
+    ],
+    "torsoDelta": [
+      0.8012086050594007,
+      -0.6149241504521115
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.2766922238803894,
+    "torsoAtTypical042": 1.021568411348732,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "seam": 2,
+    "frames": [
+      6,
+      7
+    ],
+    "before": [
+      "hermes-passing-stand-side",
+      2
+    ],
+    "after": [
+      "hermes-fal-veo-transparent-loop",
+      29
+    ],
+    "headScreenPx": 0.0,
+    "torsoScreenPx": 0.0,
+    "freeFootScreenPx": 0.0,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.0,
+      0.0
+    ],
+    "torsoDelta": [
+      0.0,
+      0.0
+    ],
+    "scale": 0.4152371209736649,
+    "headAtTypical042": 0.0,
+    "torsoAtTypical042": 0.0,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-left",
+    "seam": 0,
+    "frames": [
+      0,
+      1
+    ],
+    "before": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "after": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "headScreenPx": 0.4862116708789848,
+    "torsoScreenPx": 0.34586910234730966,
+    "freeFootScreenPx": 0.16107884198210176,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      -0.2665134271730949,
+      -0.40666003250305494
+    ],
+    "torsoDelta": [
+      0.05670849739271944,
+      -0.341188484978602
+    ],
+    "scale": 0.41473212866247944,
+    "headAtTypical042": 0.49238746568237185,
+    "torsoAtTypical042": 0.35026228484962824,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-right",
+    "seam": 0,
+    "frames": [
+      0,
+      1
+    ],
+    "before": [
+      "hermes-passing-stand-toward-right",
+      0
+    ],
+    "after": [
+      "hermes-walk-toward-right",
+      8
+    ],
+    "headScreenPx": 0.4862116708789848,
+    "torsoScreenPx": 0.34586910234730966,
+    "freeFootScreenPx": 0.16107884198210176,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.2665134271730949,
+      -0.40666003250305494
+    ],
+    "torsoDelta": [
+      -0.05670849739271944,
+      -0.341188484978602
+    ],
+    "scale": 0.41473212866247944,
+    "headAtTypical042": 0.49238746568237185,
+    "torsoAtTypical042": 0.35026228484962824,
+    "withinReviewerTypicalLimit": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward",
+    "seam": 0,
+    "frames": [
+      0,
+      1
+    ],
+    "before": [
+      "hermes-passing-stand-toward",
+      0
+    ],
+    "after": [
+      "hermes-walk-toward",
+      13
+    ],
+    "headScreenPx": 1.0636396974521205,
+    "torsoScreenPx": 1.3825525836923662,
+    "freeFootScreenPx": 4.98072954694357,
+    "within4px": true,
+    "withinLimit": true,
+    "headDelta": [
+      0.14911595422199753,
+      1.053135242118742
+    ],
+    "torsoDelta": [
+      -0.09851921754375326,
+      1.3790379293003525
+    ],
+    "scale": 0.4148499187948416,
+    "headAtTypical042": 1.0768440650239446,
+    "torsoAtTypical042": 1.399716039086312,
+    "withinReviewerTypicalLimit": true
+  }
+]

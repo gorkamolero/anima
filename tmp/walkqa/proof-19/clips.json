@@ -1,0 +1,194 @@
+[
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "finalHeading": "away-left",
+    "seams": 2,
+    "frames": 44,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "finalHeading": "away-right",
+    "seams": 2,
+    "frames": 60,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "away",
+    "finalHeading": "away",
+    "seams": 1,
+    "frames": 40,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "left",
+    "finalHeading": "left",
+    "seams": 2,
+    "frames": 32,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "finalHeading": "right",
+    "seams": 2,
+    "frames": 56,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-left",
+    "finalHeading": "toward-left",
+    "seams": 1,
+    "frames": 64,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward-right",
+    "finalHeading": "toward-right",
+    "seams": 1,
+    "frames": 40,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "road",
+    "heading": "toward",
+    "finalHeading": "toward",
+    "seams": 1,
+    "frames": 36,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "finalHeading": "away-left",
+    "seams": 2,
+    "frames": 44,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "finalHeading": "away-right",
+    "seams": 2,
+    "frames": 44,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "away",
+    "finalHeading": "away",
+    "seams": 1,
+    "frames": 40,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "finalHeading": "left",
+    "seams": 2,
+    "frames": 32,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "finalHeading": "right",
+    "seams": 2,
+    "frames": 76,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-left",
+    "finalHeading": "toward-left",
+    "seams": 1,
+    "frames": 40,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-right",
+    "finalHeading": "toward-right",
+    "seams": 1,
+    "frames": 40,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "depot",
+    "heading": "toward",
+    "finalHeading": "toward",
+    "seams": 1,
+    "frames": 28,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "finalHeading": "right",
+    "seams": 3,
+    "frames": 78,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "finalHeading": "toward-left",
+    "seams": 3,
+    "frames": 86,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "away",
+    "finalHeading": "away",
+    "seams": 1,
+    "frames": 30,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "finalHeading": "toward-left",
+    "seams": 3,
+    "frames": 34,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "finalHeading": "left",
+    "seams": 3,
+    "frames": 46,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-left",
+    "finalHeading": "toward",
+    "seams": 1,
+    "frames": 58,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-right",
+    "finalHeading": "toward",
+    "seams": 1,
+    "frames": 58,
+    "endsAtRestByEye": true
+  },
+  {
+    "scene": "starts",
+    "heading": "toward",
+    "finalHeading": "toward",
+    "seams": 1,
+    "frames": 30,
+    "endsAtRestByEye": true
+  }
+]
