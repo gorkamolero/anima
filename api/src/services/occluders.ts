@@ -95,7 +95,7 @@ export async function replaceReviewedAnchorFloor(
 /** Semantic shortlist only; SAM, never an LLM, supplies the pixels. */
 export function canOcclude(object: LabelledBox): boolean {
 	return (
-		/\b(tree|post|pole|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile|pew|pillar|column|fountain|desk|counter|shelf|shelves|pulpit)(?:s|es)?\b/i.test(
+		/\b(tree|post|pole|suitcase|crate|lamp|bench|car|van|bus|truck|corner|fence|gazebo|pergola|trap|net|fishnet|basket|barrel|statue|gargoyle|house|building|rock|boulder|pile|pew|pillar|column|fountain|desk|counter|shelf|shelves|pulpit)(?:s|es)?\b/i.test(
 			object.name,
 		) &&
 		!/\b(sky|floor|ground|road|distant|horizon|window|sign)\b/i.test(
@@ -119,13 +119,13 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const scope = ["04a", "04c", "07", "08"].includes(
+		const scope = ["04a", "04c", "07", "08", "09", "10", "10c"].includes(
 			process.env.DERIVATION_BRIEF ?? "",
 		)
-			? `${process.env.DERIVATION_BRIEF} `
+			? `${process.env.DERIVATION_BRIEF === "10c" ? "10" : process.env.DERIVATION_BRIEF} `
 			: "";
 		const limit =
-			scope === "09 "
+			scope === "10 " || scope === "09 "
 				? 30
 				: scope === "08 "
 					? 40
@@ -138,7 +138,7 @@ export function reserveSegmentation(key: string, label: string): void {
 			.split("\n")
 			.filter(
 				(line) =>
-					line.startsWith(`| CALL ${scope}`) &&
+					new RegExp(`^\\| CALL ${scope}\\d+ \\|`).test(line) &&
 					(scope || !line.startsWith("| CALL 04a ")),
 			).length;
 		if (count >= limit)

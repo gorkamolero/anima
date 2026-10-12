@@ -22,6 +22,15 @@ export function reserveCall(kind: "image" | "perception"): void {
 		: [];
 	if (
 		kind === "image" &&
+		["10", "10c"].includes(process.env.DERIVATION_BRIEF ?? "") &&
+		entries.filter(
+			(e) =>
+				e.kind === "image-attempt" && ["10", "10c"].includes(e.brief ?? ""),
+		).length >= 2
+	)
+		throw new Error("Brief 10/10c image budget exhausted (2 edits)");
+	if (
+		kind === "image" &&
 		process.env.DERIVATION_BRIEF === "08" &&
 		entries.filter((e) => e.kind === "image-attempt" && e.brief === "08")
 			.length >= 4
