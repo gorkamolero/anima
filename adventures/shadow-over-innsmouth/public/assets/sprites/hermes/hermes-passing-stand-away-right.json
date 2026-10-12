@@ -3,55 +3,118 @@
 	"image": "hermes-passing-stand-away-right.png",
 	"frameWidth": 612,
 	"frameHeight": 1059,
-	"frameCount": 1,
-	"cols": 1,
+	"frameCount": 3,
+	"cols": 3,
 	"rows": 1,
 	"fps": 24,
 	"contacts": [
 		{
 			"L": {
-				"x": 286.2452846818876,
-				"y": 1023.3500540121604
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
 			},
+			"planted": "L",
 			"R": {
-				"x": 297.1421193729984,
-				"y": 970.8729432269758
-			},
-			"planted": "L"
-		}
-	],
-	"switchFrames": [],
-	"bootSoles": [
+				"x": 368,
+				"y": 1034
+			}
+		},
 		{
 			"L": {
-				"x": 286.2452846818876,
-				"y": 1023.3500540121604
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
 			},
+			"planted": "L",
 			"R": {
-				"x": 297.1421193729984,
-				"y": 970.8729432269758
+				"x": 297,
+				"y": 972
+			}
+		},
+		{
+			"L": {
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
+			},
+			"planted": "L",
+			"R": {
+				"x": 297,
+				"y": 972
 			}
 		}
 	],
+	"switchFrames": [],
+	"sourceFrame": 8,
+	"reference": "hermes-walk-away-right",
+	"bootSoles": [
+		{
+			"L": {
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
+			},
+			"R": {
+				"x": 368,
+				"y": 1034
+			}
+		},
+		{
+			"L": {
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
+			},
+			"R": {
+				"x": 297,
+				"y": 972
+			}
+		},
+		{
+			"L": {
+				"x": 285.0421939016454,
+				"y": 1024.5084669927626
+			},
+			"R": {
+				"x": 297,
+				"y": 972
+			}
+		}
+	],
+	"settleFrames": [2, 1, 0],
 	"normalization": {
-		"direction": "away-right",
 		"reference": "hermes-walk-away-right",
 		"sourceFrame": 8,
-		"editAttempt": 1,
-		"uniformScale": 1.0208761747786628,
-		"translation": [2.25481866322525, -0.0693565651892043],
-		"plantedBootRegistration": {
-			"dx": 1.2030907802421749,
-			"dy": -1.1584129806021326,
-			"residual": 0.0038162823608392927,
-			"boundary": false
-		},
-		"freeBootRegistration": {
-			"dx": 0.14211937299844132,
-			"dy": -1.127056773024099,
-			"residual": 0.0037046024347894093,
-			"boundary": false
-		},
-		"method": "single whole-image uniform scale and translation, generated alpha preserved"
+		"method": "fixed provider raster to walk-canvas conversion, integer translation only; local grey key",
+		"registration": [
+			{
+				"heading": "away-right",
+				"step": "A",
+				"attempt": 1,
+				"sourceSize": [612, 1059],
+				"providerSize": [784, 1357],
+				"canvasConversion": "fixed raster resampling to input dimensions; no fitted scaling",
+				"translation": [0, 0],
+				"plantedBootCorrelation": 0.9977896809577942,
+				"headCentroidSourcePx": 0.14989429558972217,
+				"headRgbMAE": 3.425409977559123,
+				"torsoCentroidSourcePx": 0.38345603194976885,
+				"torsoRgbMAE": 5.859863373199512,
+				"legsCentroidSourcePx": 0.010052992099816343,
+				"legsRgbMAE": 3.419262874426465
+			},
+			{
+				"heading": "away-right",
+				"step": "B",
+				"attempt": 1,
+				"sourceSize": [612, 1059],
+				"providerSize": [784, 1357],
+				"canvasConversion": "fixed raster resampling to input dimensions; no fitted scaling",
+				"translation": [0, 0],
+				"plantedBootCorrelation": 0.9948922991752625,
+				"headCentroidSourcePx": 0.07465245322835755,
+				"headRgbMAE": 3.0218117914613556,
+				"torsoCentroidSourcePx": 2.215603304246199,
+				"torsoRgbMAE": 3.2174956897246263,
+				"legsCentroidSourcePx": 34.00624322142183,
+				"legsRgbMAE": 10.179146937348191
+			}
+		]
 	}
 }
