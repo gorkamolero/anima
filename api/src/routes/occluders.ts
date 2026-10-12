@@ -71,7 +71,6 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 						? { ...place.ground, template: place.template }
 						: undefined) ?? {
 						floor,
-						horizonY: anchorGround?.horizonY,
 						template: key === "inside" ? "interior" : "exterior",
 					},
 				);
