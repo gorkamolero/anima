@@ -329,7 +329,7 @@ async function walkPlace(step) {
 				`${label}: did not stop within half a drawn stride: ${JSON.stringify({ expected, arrival, cut })}`,
 			);
 		const standing = evaluate(
-			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,c=s.hermesMotor.snapshot(),d=c.heading;const suffix=d.startsWith('away-')?'away-right':d.startsWith('toward-')?'toward-right':d;const expected=d==='left'||d==='right'?'hermes-idle-v2-normalized':'hermes-stand-'+suffix;return !c.walking&&!c.settling&&h.texture.key===expected&&Number(h.frame.name)===0&&h.flipX===(d==='right'||d.endsWith('-left'));})()",
+			"(()=>{const s=window.__anima.scene,h=s.hermesSprite,c=s.hermesMotor.snapshot(),d=c.heading;const suffix=d.startsWith('away-')?'away-right':d.startsWith('toward-')?'toward-right':d;const expected=d==='left'||d==='right'?'hermes-matched-stand-side':'hermes-matched-stand-'+suffix;return !c.walking&&!c.settling&&h.texture.key===expected&&Number(h.frame.name)===0&&h.flipX===(d==='right'||d.endsWith('-left'));})()",
 		);
 		if (!standing)
 			throw new Error(
