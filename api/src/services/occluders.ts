@@ -47,6 +47,51 @@ export async function cachedFloor(
 		? (JSON.parse(cached) as { mask: FloorRaster }).mask
 		: undefined;
 }
+/** Explicit reviewed replacement for an anchor's cached floor, with immutable evidence. */
+export async function replaceReviewedAnchorFloor(
+	image: string,
+	floor: FloorRaster,
+	review: {
+		approvedBy: "reviewer";
+		date: string;
+		overlays: string[];
+		judgeDisagreement: unknown;
+	},
+): Promise<string> {
+	if (
+		review.approvedBy !== "reviewer" ||
+		!Number.isFinite(Date.parse(review.date)) ||
+		!review.overlays.length ||
+		floor.data.length !== floor.width * floor.height ||
+		!floor.data.some(Boolean)
+	)
+		throw new Error("Invalid reviewed anchor floor");
+	const previous = await cachedFloor(image);
+	if (!previous) throw new Error("Missing previous anchor floor");
+	const hash = hashOf(await readFile(imagePath(image)));
+	const overlays = await Promise.all(
+		review.overlays.map(async (path) => ({
+			path,
+			sha256: hashOf(await readFile(path)),
+		})),
+	);
+	const audit = resolve(
+		proofRoot,
+		`derivation/anchor-${hash}/replace-reviewed-${Date.now()}.json`,
+	);
+	await mkdir(resolve(proofRoot, `derivation/anchor-${hash}`), {
+		recursive: true,
+	});
+	const record = { image, ...review, overlays, previous, candidate: floor };
+	await writeFile(audit, JSON.stringify({ ...record, status: "started" }));
+	await writeFile(
+		resolve(cacheRoot, `${hash}-floor-v${DERIVATION_VERSION}.json`),
+		JSON.stringify({ mask: floor, previous, review, audit }),
+	);
+	await writeFile(audit, JSON.stringify({ ...record, status: "complete" }));
+	return audit;
+}
+
 /** Semantic shortlist only; SAM, never an LLM, supplies the pixels. */
 export function canOcclude(object: LabelledBox): boolean {
 	return (
@@ -80,7 +125,15 @@ export function reserveSegmentation(key: string, label: string): void {
 			? `${process.env.DERIVATION_BRIEF} `
 			: "";
 		const limit =
-			scope === "08 " ? 40 : scope === "04c " ? 20 : scope === "07 " ? 60 : 120;
+			scope === "09 "
+				? 30
+				: scope === "08 "
+					? 40
+					: scope === "04c "
+						? 20
+						: scope === "07 "
+							? 60
+							: 120;
 		const count = previous
 			.split("\n")
 			.filter(
