@@ -1,0 +1,12 @@
+{
+  "status": "IN_QUEUE",
+  "request_id": "01a13152-214e-76a2-8429-9f92dd695b25",
+  "response_url": "https://queue.fal.run/alibaba/wan-3.0/requests/01a13152-214e-76a2-8429-9f92dd695b25",
+  "status_url": "https://queue.fal.run/alibaba/wan-3.0/requests/01a13152-214e-76a2-8429-9f92dd695b25/status",
+  "cancel_url": "https://queue.fal.run/alibaba/wan-3.0/requests/01a13152-214e-76a2-8429-9f92dd695b25/cancel",
+  "logs": null,
+  "metrics": {},
+  "queue_position": 0,
+  "user_queue_position": 0,
+  "user_queued_count": 1
+}
