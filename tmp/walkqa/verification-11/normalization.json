@@ -1,0 +1,172 @@
+{
+  "heights": [
+    1017,
+    1014,
+    1018,
+    1023,
+    1026,
+    1028,
+    1034,
+    1040,
+    1042,
+    1046,
+    1047,
+    1047,
+    1047,
+    1044,
+    1042,
+    1038,
+    1035,
+    1031,
+    1030,
+    1033,
+    1031,
+    1021,
+    1013,
+    1016,
+    1017,
+    1017,
+    1016,
+    1022,
+    1030,
+    1031
+  ],
+  "sprites": [
+    {
+      "name": "hermes-stand-away",
+      "image": "hermes-stand-away.png",
+      "frameWidth": 612,
+      "frameHeight": 1059,
+      "frameCount": 1,
+      "cols": 1,
+      "rows": 1,
+      "fps": 24,
+      "contacts": [
+        {
+          "L": {
+            "x": 253.0,
+            "y": 1058.0
+          },
+          "R": {
+            "x": 358.5,
+            "y": 1058.0
+          },
+          "planted": "L"
+        }
+      ],
+      "switchFrames": [],
+      "normalization": {
+        "reference": "hermes-fal-veo-transparent-loop",
+        "alphaThreshold": 127,
+        "referenceHeightMedian": 1030.5,
+        "visibleHeight": 1030,
+        "origin": [
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "name": "hermes-stand-away-right",
+      "image": "hermes-stand-away-right.png",
+      "frameWidth": 612,
+      "frameHeight": 1059,
+      "frameCount": 1,
+      "cols": 1,
+      "rows": 1,
+      "fps": 24,
+      "contacts": [
+        {
+          "L": {
+            "x": 326.0,
+            "y": 1058.0
+          },
+          "R": {
+            "x": 344.0,
+            "y": 1058.0
+          },
+          "planted": "L"
+        }
+      ],
+      "switchFrames": [],
+      "normalization": {
+        "reference": "hermes-fal-veo-transparent-loop",
+        "alphaThreshold": 127,
+        "referenceHeightMedian": 1030.5,
+        "visibleHeight": 1030,
+        "origin": [
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "name": "hermes-stand-toward",
+      "image": "hermes-stand-toward.png",
+      "frameWidth": 612,
+      "frameHeight": 1059,
+      "frameCount": 1,
+      "cols": 1,
+      "rows": 1,
+      "fps": 24,
+      "contacts": [
+        {
+          "L": {
+            "x": 390.0,
+            "y": 1058.0
+          },
+          "R": {
+            "x": 209.0,
+            "y": 1054.0
+          },
+          "planted": "L"
+        }
+      ],
+      "switchFrames": [],
+      "normalization": {
+        "reference": "hermes-fal-veo-transparent-loop",
+        "alphaThreshold": 127,
+        "referenceHeightMedian": 1030.5,
+        "visibleHeight": 1030,
+        "origin": [
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "name": "hermes-stand-toward-right",
+      "image": "hermes-stand-toward-right.png",
+      "frameWidth": 612,
+      "frameHeight": 1059,
+      "frameCount": 1,
+      "cols": 1,
+      "rows": 1,
+      "fps": 24,
+      "contacts": [
+        {
+          "L": {
+            "x": 422.0,
+            "y": 1028.0
+          },
+          "R": {
+            "x": 298.5,
+            "y": 1058.0
+          },
+          "planted": "L"
+        }
+      ],
+      "switchFrames": [],
+      "normalization": {
+        "reference": "hermes-fal-veo-transparent-loop",
+        "alphaThreshold": 127,
+        "referenceHeightMedian": 1030.5,
+        "visibleHeight": 1030,
+        "origin": [
+          0.5,
+          1
+        ]
+      }
+    }
+  ]
+}

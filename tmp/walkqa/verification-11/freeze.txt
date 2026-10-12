@@ -1,0 +1,16 @@
+tmp/walkqa/proof-11/road/away-left.mp4: frames 32, walking pairs 25, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/road/away-right.mp4: frames 56, walking pairs 50, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/road/away.mp4: frames 56, walking pairs 49, frozen while walking 0 (0%); legacy threshold flags 8
+tmp/walkqa/proof-11/road/left.mp4: frames 40, walking pairs 32, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/road/right.mp4: frames 40, walking pairs 32, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/road/toward-left.mp4: frames 48, walking pairs 43, frozen while walking 0 (0%); legacy threshold flags 3
+tmp/walkqa/proof-11/road/toward-right.mp4: frames 32, walking pairs 24, frozen while walking 0 (0%); legacy threshold flags 12
+tmp/walkqa/proof-11/road/toward.mp4: frames 40, walking pairs 35, frozen while walking 0 (0%); legacy threshold flags 9
+tmp/walkqa/proof-11/depot/away-left.mp4: frames 32, walking pairs 25, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/depot/away-right.mp4: frames 32, walking pairs 25, frozen while walking 0 (0%); legacy threshold flags 11
+tmp/walkqa/proof-11/depot/away.mp4: frames 76, walking pairs 71, frozen while walking 0 (0%); legacy threshold flags 23
+tmp/walkqa/proof-11/depot/left.mp4: frames 28, walking pairs 21, frozen while walking 0 (0%); legacy threshold flags 5
+tmp/walkqa/proof-11/depot/right.mp4: frames 28, walking pairs 21, frozen while walking 0 (0%); legacy threshold flags 5
+tmp/walkqa/proof-11/depot/toward-left.mp4: frames 32, walking pairs 24, frozen while walking 0 (0%); legacy threshold flags 6
+tmp/walkqa/proof-11/depot/toward-right.mp4: frames 64, walking pairs 58, frozen while walking 0 (0%); legacy threshold flags 13
+tmp/walkqa/proof-11/depot/toward.mp4: frames 32, walking pairs 26, frozen while walking 0 (0%); legacy threshold flags 15

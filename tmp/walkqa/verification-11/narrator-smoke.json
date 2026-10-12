@@ -1,0 +1,15 @@
+{
+  "bounds": [
+    0.03,
+    0.28,
+    0.42,
+    0.81
+  ],
+  "flip": false,
+  "heading": "left",
+  "method": "Actual narrator-opening method with in-memory options response; no network call",
+  "object": "left house",
+  "settling": false,
+  "texture": "hermes-idle-v2-normalized",
+  "walking": false
+}

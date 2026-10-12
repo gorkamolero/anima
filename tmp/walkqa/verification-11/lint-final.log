@@ -1,0 +1,24 @@
+
+> anima@0.1.0 lint /Users/gorkolas/Developer/anima
+> pnpm --filter @anima/storyscript lint && pnpm --filter @anima/engine lint && pnpm --filter @anima/shadow-over-innsmouth lint && pnpm --filter api lint
+
+
+> @anima/storyscript@0.1.0 lint /Users/gorkolas/Developer/anima/packages/storyscript
+> biome check .
+
+Checked 7 files in 7ms. No fixes applied.
+
+> @anima/engine@0.1.0 lint /Users/gorkolas/Developer/anima/packages/engine
+> biome check .
+
+Checked 95 files in 14ms. No fixes applied.
+
+> @anima/shadow-over-innsmouth@0.1.0 lint /Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth
+> biome check .
+
+Checked 80 files in 78ms. No fixes applied.
+
+> @anima/api@0.1.0 lint /Users/gorkolas/Developer/anima/api
+> biome check src
+
+Checked 45 files in 11ms. No fixes applied.
