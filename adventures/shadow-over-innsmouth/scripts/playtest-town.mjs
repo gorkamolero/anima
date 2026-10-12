@@ -291,12 +291,15 @@ async function walkPlace(step) {
 			Math.floor((h.y / 1080) * floor.height) * floor.width +
 			Math.floor((h.x / 1920) * floor.width);
 		if (!floor.data[i]) throw new Error(`${label}: feet outside floor mask`);
-		const arrival = evaluate(
-			"window.__anima.scene.hermesMotor.snapshot().arrival",
+		const { arrival, position } = evaluate(
+			"(()=>{const s=window.__anima.scene;return {arrival:s.hermesMotor.snapshot().arrival,position:{x:s.hermesSprite.x,y:s.hermesSprite.y}}})()",
 		);
 		if (
 			!arrival ||
-			Math.hypot(h.x - expected.x, h.y - expected.y) > arrival.halfStride + 1e-6
+			Math.hypot(arrival.target.x - expected.x, arrival.target.y - expected.y) >
+				1.5 ||
+			Math.hypot(position.x - arrival.target.x, position.y - arrival.target.y) >
+				arrival.halfStride + 1e-6
 		)
 			throw new Error(`${label}: did not stop within half a drawn stride`);
 		const atSwitch = evaluate(
@@ -380,7 +383,7 @@ try {
 	for (let i = 0; i < 3 && qa().location !== "outside"; i++) {
 		const sourceLocation = qa().location;
 		evaluate(
-			"(()=>{const e=window.__anima.scene.sceneExits.find(e=>e.kind==='edge-left');if(!e)throw new Error('Missing return exit');const x=e.region.reduce((s,p)=>s+p.x,0)/e.region.length,y=e.region.reduce((s,p)=>s+p.y,0)/e.region.length;window.__anima.click(x,y);return true})()",
+			"(()=>{const s=window.__anima.scene,e=s.sceneExits.find(e=>e.to===s.generatedPlace?.parent);if(!e)throw new Error('Missing return exit');const x=e.region.reduce((s,p)=>s+p.x,0)/e.region.length,y=e.region.reduce((s,p)=>s+p.y,0)/e.region.length;window.__anima.click(x,y);return true})()",
 		);
 		await poll(
 			"parent",

@@ -79,14 +79,15 @@ for (let i = 0; i < 600; i++) {
 	if (i === 599) throw new Error("Place load timeout");
 	await new Promise((r) => setTimeout(r, 100));
 }
-if (plan.start)
-	evaluate(
-		`(()=>{const s=window.__anima.scene;s.hermesMotor.place({x:${plan.start[0]},y:${plan.start[1]}});return true})()`,
-	);
-// First capture freezes RAF before any walk is started.
+// Freeze RAF before choosing the initial pose, so a proof always starts on
+// the requested idle frame rather than whichever frame a live RAF reached.
 evaluate(
 	`window.__anima.captureFrame({stepMs:0,width:${width},format:'png'}).then(()=>true)`,
 );
+if (plan.start)
+	evaluate(
+		`(()=>{const s=window.__anima.scene;s.hermesSprite.setTexture('hermes-idle-v2-normalized',0).setFlipX(false);s.hermesMotor.place({x:${plan.start[0]},y:${plan.start[1]}});return true})()`,
+	);
 if (!evaluate("window.__anima.scene.geometryReady"))
 	throw new Error(
 		"Scene object/floor geometry failed to load; refusing incomplete proof",
