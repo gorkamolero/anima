@@ -176,3 +176,37 @@ Brief 06 final generation totals: **2/2 Kling videos, 1/2 BRIA removals, 0/2 ima
 | Brief 16 Kling attempt 9 | 2026-10-12T17:41:31.346557+00:00 | toward-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
 
 | Brief 16 Kling attempt 10 | 2026-10-12T17:41:32.324052+00:00 | toward-right-reroll | fal-ai/kling-video/v3/turbo/standard/image-to-video, 3s, submission attempted |
+
+## Brief 16b — first/last-frame stop animations
+
+12/12 first-last videos completed; 0 BRIA; 0 image edits. Three additional F21 vision calls are recorded below. One away motion candidate; four headings rejected. No stop set installed.
+
+| Brief 16b first-last attempt 1 | 2026-10-12T17:51:18.426123+00:00 | away-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b F21 calibration | 2026-10-12T17:53:06.664257+00:00 | pier visible door measurement | google/gemini-2.5-flash, one vision call |
+
+| Brief 16b first-last attempt 2 | 2026-10-12T17:54:09.232346+00:00 | away-wan21 | fal-ai/wan-flf2v, submission attempted |
+
+| Brief 16b F21 calibration | 2026-10-12T17:54:26.312388+00:00 | pier visible door measurement | google/gemini-2.5-pro, one vision call |
+
+| Brief 16b F21 calibration | 2026-10-12T17:55:14.515339+00:00 | pier visible door measurement | openai/gpt-4.1, one vision call |
+
+| Brief 16b first-last attempt 3 | 2026-10-12T18:02:43.320383+00:00 | away-kling25 | fal-ai/kling-video/v2.5-turbo/pro/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 4 | 2026-10-12T18:05:06.671548+00:00 | away-veofast | fal-ai/veo3.1/fast/first-last-frame-to-video, submission attempted |
+
+| Brief 16b first-last attempt 5 | 2026-10-12T18:07:16.719947+00:00 | away-veo | fal-ai/veo3.1/first-last-frame-to-video, submission attempted |
+
+| Brief 16b first-last attempt 6 | 2026-10-12T18:08:32.993385+00:00 | away-kling25-aligned | fal-ai/kling-video/v2.5-turbo/pro/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 7 | 2026-10-12T18:10:59.740595+00:00 | away-wan3-aligned | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 8 | 2026-10-12T18:13:44.293200+00:00 | side-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 9 | 2026-10-12T18:13:45.664314+00:00 | away-right-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 10 | 2026-10-12T18:13:47.030178+00:00 | toward-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 11 | 2026-10-12T18:13:48.610227+00:00 | toward-right-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 16b first-last attempt 12 | 2026-10-12T18:19:31.233427+00:00 | toward-wan3-reroll | alibaba/wan-3.0/image-to-video, submission attempted |
