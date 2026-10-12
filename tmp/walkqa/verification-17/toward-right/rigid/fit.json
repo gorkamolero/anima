@@ -1,0 +1,13 @@
+{
+  "heading": "toward-right",
+  "upperIoU": 0.9812170667727158,
+  "upperMethod": "common opaque interior crossfade",
+  "rigidAngleTranslation": [
+    -0.06188186936610662,
+    0.15922082218960298,
+    0.1190436927238192
+  ],
+  "swingEndpointIoU": 0.9549290372075182,
+  "plantedPixels": "unchanged source visible pixels",
+  "status": "candidate, endpoint mismatch requires visual rejection or acceptance"
+}
