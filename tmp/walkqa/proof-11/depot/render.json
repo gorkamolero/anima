@@ -1,0 +1,160 @@
+{
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "place": "outside",
+  "logs": [
+    {
+      "name": "left",
+      "frames": 28,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "left",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1347.5,
+          927.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "right",
+      "frames": 28,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "right",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1587.5,
+          927.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away",
+      "frames": 76,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "away",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1467.5,
+          857.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "toward",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1467.5,
+          997.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away-left",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "away-left",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1227.5,
+          857.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "away-right",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "away-right",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1347.5,
+          857.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward-left",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "toward-left",
+        "start": [
+          1467.5,
+          927.5
+        ],
+        "walk": [
+          1227.5,
+          997.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    },
+    {
+      "name": "toward-right",
+      "frames": 64,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "toward-right",
+        "start": [
+          1237.5,
+          977.5
+        ],
+        "walk": [
+          1237.5,
+          857.5
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    }
+  ]
+}
