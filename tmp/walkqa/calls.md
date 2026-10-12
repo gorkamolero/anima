@@ -210,3 +210,9 @@ Brief 06 final generation totals: **2/2 Kling videos, 1/2 BRIA removals, 0/2 ima
 | Brief 16b first-last attempt 11 | 2026-10-12T18:13:48.610227+00:00 | toward-right-wan3 | alibaba/wan-3.0/image-to-video, submission attempted |
 
 | Brief 16b first-last attempt 12 | 2026-10-12T18:19:31.233427+00:00 | toward-wan3-reroll | alibaba/wan-3.0/image-to-video, submission attempted |
+
+| Brief 17 F21 segmentation | 2026-10-12T18:30:06.484387+00:00 | door | SAM3 text-only, submission attempted |
+
+| Brief 17 F21 segmentation | 2026-10-12T18:30:09.550031+00:00 | sea | SAM3 text-only, submission attempted |
+
+| Brief 17 interpolation | 2026-10-12T18:40:37.816887+00:00 | side | fal-ai/film, 7 in-betweens, submission attempted |
