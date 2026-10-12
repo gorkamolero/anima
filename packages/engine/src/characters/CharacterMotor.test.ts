@@ -8,7 +8,7 @@ import {
 	lockedPlacement,
 } from "./footLock";
 
-function setup() {
+function setup(standing = false) {
 	const cycle: FootCycle = {
 		name: "walk",
 		frameWidth: 100,
@@ -48,6 +48,20 @@ function setup() {
 	const motor = new CharacterMotor(target, area, () => {}, {
 		current: () => shown,
 		select: (d) => ({ cycle, flipX: d === "left" }),
+		standing: standing
+			? () => ({
+					cycle: {
+						...cycle,
+						name: "standing",
+						contacts: [
+							{ planted: "L", L: { x: 45, y: 200 }, R: { x: 55, y: 200 } },
+						],
+						switchFrames: [],
+					},
+					frame: 0,
+					flipX: false,
+				})
+			: undefined,
 		show: (p) => {
 			shown = p;
 		},
@@ -64,6 +78,62 @@ function setup() {
 	};
 }
 describe("contact motor", () => {
+	it("settles in four frames, preserving the support across the texture change", async () => {
+		const { motor, target, pose } = setup(true);
+		motor.place({ x: 960, y: 850 });
+		let resolved = false;
+		const walk = motor.walk([{ x: 1400, y: 850 }]).then(() => {
+			resolved = true;
+		});
+		for (let i = 0; i < 8; i++) motor.update(1000 / 24);
+		const anchor = { ...motor.anchor };
+		const foot = motor.snapshot().planted;
+		motor.stop();
+		for (let i = 0; i < 4; i++) {
+			expect(resolved).toBe(false);
+			motor.update(1000 / 24);
+			const sole = contactOnScreen(pose(), foot, target, target.scale);
+			expect(sole.x).toBeCloseTo(anchor.x, 9);
+			expect(sole.y).toBeCloseTo(anchor.y, 9);
+		}
+		await walk;
+		expect(resolved).toBe(true);
+		expect(motor.walking).toBe(false);
+		expect(pose().cycle.name).toBe("standing");
+	});
+	it("restarts on the actual right support instead of the standing sheet default", () => {
+		const { motor, target, pose } = setup(true);
+		motor.place({ x: 960, y: 850 });
+		void motor.walk([{ x: 1700, y: 850 }]);
+		for (let i = 0; i < 100 && motor.snapshot().planted !== "R"; i++)
+			motor.update(1000 / 24);
+		expect(motor.snapshot().planted).toBe("R");
+		motor.stop();
+		for (let i = 0; i < 4; i++) motor.update(1000 / 24);
+		const anchor = { ...motor.anchor };
+		void motor.walk([{ x: 1700, y: 850 }]);
+		expect(motor.snapshot().planted).toBe("R");
+		for (let i = 0; i < 4; i++) {
+			motor.update(1000 / 24);
+			const sole = contactOnScreen(pose(), "R", target, target.scale);
+			expect(sole.x).toBeCloseTo(anchor.x, 9);
+			expect(sole.y).toBeCloseTo(anchor.y, 9);
+		}
+	});
+	it("locks the standing support throughout the four starting frames", () => {
+		const { motor, target, pose } = setup(true);
+		motor.place({ x: 960, y: 850 });
+		const anchor = { ...motor.anchor };
+		void motor.walk([{ x: 1400, y: 850 }]);
+		for (let i = 0; i < 4; i++) {
+			motor.update(1000 / 24);
+			const sole = contactOnScreen(pose(), "L", target, target.scale);
+			expect(sole.x).toBeCloseTo(anchor.x, 9);
+			expect(sole.y).toBeCloseTo(anchor.y, 9);
+		}
+		expect(motor.snapshot().settling).toBe(false);
+		expect(pose().cycle.name).toBe("walk");
+	});
 	it("sorts by the planted sole rather than bobbing sprite origin", () => {
 		const { motor, target } = setup();
 		void motor.walk([{ x: 1400, y: 850 }]);
