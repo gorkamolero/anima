@@ -1,0 +1,27 @@
+{
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "place": "place-f2d0a7f7f76225002663",
+  "logs": [
+    {
+      "name": "toward-right",
+      "frames": 32,
+      "exitCompleted": true,
+      "walkCompleted": true,
+      "requested": {
+        "name": "toward-right",
+        "start": [
+          960,
+          900
+        ],
+        "walk": [
+          960,
+          960
+        ],
+        "frames": 12,
+        "facing": "away"
+      }
+    }
+  ]
+}
