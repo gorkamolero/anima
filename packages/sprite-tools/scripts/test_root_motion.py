@@ -21,6 +21,17 @@ class RegistrationTests(unittest.TestCase):
         self.assertAlmostEqual(r['dy'], 4, delta=.1)
         self.assertLess(r['residual'], 1e-5)
 
+    def test_profile_stride_beyond_twenty_pixels(self):
+        rng = np.random.default_rng(17)
+        a = np.zeros((180,240,4), dtype=np.uint8)
+        a[90:125,80:110,:3] = rng.integers(0,255,(35,30,3),dtype=np.uint8)
+        a[90:125,80:110,3] = 255
+        b = np.roll(a, (3, 47), axis=(0, 1))
+        r = module.register(a, b, [65,80,125,140])
+        self.assertAlmostEqual(r['dx'],47,delta=.1)
+        self.assertAlmostEqual(r['dy'],3,delta=.1)
+        self.assertFalse(r['boundary'])
+
     def test_fractional_translation(self):
         from PIL import Image
         a = np.zeros((120,120,4), dtype=np.uint8)

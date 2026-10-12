@@ -23,8 +23,8 @@ def register(previous, current, roi, radius=64, prediction=(0, 0), masked=False)
     b = np.pad(b, ((pad, pad), (pad, pad), (0, 0)))
     template = a[y0:y1, x0:x1]
     search = b[y0+pad+py-radius:y1+pad+py+radius, x0+pad+px-radius:x1+pad+px+radius]
-    # FFT correlation and integral-image window energy give exact SSD at all
-    # 41 x 41 integer offsets without an optional native vision dependency.
+    # FFT correlations evaluate weighted SSD over the entire search window
+    # without an optional native vision dependency.
     th, tw = template.shape[:2]
     sh, sw = search.shape[:2]
     shape = (1 << (sh+th-2).bit_length(), 1 << (sw+tw-2).bit_length())
@@ -57,7 +57,7 @@ def extract(sheet, axis, travel, debug):
     for i, frame in enumerate(frames):
         previous = frames[i-1]
         ys, xs = np.nonzero(previous[:, :, 3] > 127)
-        center = (int(xs.min()) + int(xs.max()))//2
+        center = w//2
         top, bottom = max(0, int(ys.max()-.09*(ys.max()-ys.min()))), min(h, int(ys.max()+1))
         rois = [[max(0, int(xs.min())-6), top, center+4, bottom], [center-4, top, min(w, int(xs.max())+7), bottom]]
         choices = []
@@ -67,7 +67,8 @@ def extract(sheet, axis, travel, debug):
             # using silhouette + colour first, then refine only locally.
             refined = register(previous, frame, roi, radius=2,
                                prediction=(result['dx'], result['dy']), masked=True)
-            result['dx'], result['dy'] = refined['dx'], refined['dy']
+            if not refined['boundary']:
+                result['dx'], result['dy'] = refined['dx'], refined['dy']
             weights = previous[roi[1]:roi[3], roi[0]:roi[2], 3].astype(float)
             yy, xx = np.indices(weights.shape)
             mass = max(1, weights.sum())
@@ -101,14 +102,15 @@ def extract(sheet, axis, travel, debug):
     m['footRegistration'] = pairs
     m['footContacts'] = [{'x': p['chosen']['point']['x']+p['chosen']['dx'], 'y': p['chosen']['point']['y']+p['chosen']['dy']} for p in pairs]
     m['rootMotionAxis'] = axis
-    m['rootMotionMethod'] = 'foot-roi-ssd-v5; 64px silhouette search then 2px masked refinement; directional cyclic stance; body displacement = minus registered foot shift'
+    m['rootMotionMethod'] = 'foot-roi-ssd-v6; 64px silhouette search then 2px masked refinement; directional cyclic stance; body displacement = minus registered foot shift'
     # Periodic, zero-mean displacement relative to average cycle travel.
     vectors = np.array([[r['dx'], r['dy']] for r in m['rootMotion']])
     # Recover net transverse drift at contact handoffs, where the old foot
     # is swinging, rather than leaking the recovery through every stance.
     switches = np.array([pairs[i]['chosen']['foot'] != pairs[i-1]['chosen']['foot'] for i in range(len(pairs))], dtype=float)
     if not switches.sum(): switches[:] = 1
-    offsets = np.cumsum(vectors - switches[:, None] / switches.sum() * vectors.sum(axis=0), axis=0)
+    recovery = sum(np.roll(switches, j) for j in range(4)) / 4
+    offsets = np.cumsum(vectors - recovery[:, None] / recovery.sum() * vectors.sum(axis=0), axis=0)
     offsets -= offsets.mean(axis=0)
     m['visualRoot'] = [{'x': float(x), 'y': float(y)} for x, y in offsets]
     sheet.write_text(json.dumps(m, indent='\t')+'\n')
