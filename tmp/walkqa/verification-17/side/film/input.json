@@ -1,0 +1,10 @@
+{
+  "model": "fal-ai/film",
+  "num_frames": 7,
+  "include_start": true,
+  "include_end": true,
+  "output_type": "images",
+  "image_format": "png",
+  "start_image_url": "first.png",
+  "end_image_url": "last.png"
+}

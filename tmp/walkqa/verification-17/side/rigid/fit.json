@@ -1,0 +1,13 @@
+{
+  "heading": "side",
+  "upperIoU": 0.6027652200672621,
+  "upperMethod": "midpoint cut",
+  "rigidAngleTranslation": [
+    -12.158277797000896,
+    48.83815638863581,
+    -9.235525543991374
+  ],
+  "swingEndpointIoU": 0.549157463281339,
+  "plantedPixels": "unchanged source visible pixels",
+  "status": "candidate, endpoint mismatch requires visual rejection or acceptance"
+}
