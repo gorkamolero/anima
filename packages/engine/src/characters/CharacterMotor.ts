@@ -74,6 +74,8 @@ export class CharacterMotor {
 		resolve?.();
 	}
 	place(position: Point): void {
+		// Teleport callers may have selected a fresh pose; do not restore the previous walk.
+		this.pose = undefined;
 		this.stop();
 		const cell = nearestCell(this.area.mask, position);
 		if (cell < 0) throw new Error("Walk area has no floor");

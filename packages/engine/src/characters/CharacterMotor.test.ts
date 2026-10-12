@@ -49,7 +49,16 @@ function setup() {
 			shown = p;
 		},
 	});
-	return { motor, target, area, cycle, pose: () => shown };
+	return {
+		motor,
+		target,
+		area,
+		cycle,
+		pose: () => shown,
+		setPose: (p: FootPose) => {
+			shown = p;
+		},
+	};
 }
 describe("contact motor", () => {
 	it("locks the first foot through start and mirrored perspective changes", () => {
@@ -162,5 +171,15 @@ describe("contact motor", () => {
 		void motor.walk([{ x: 1400, y: 850 }]);
 		expect(motor.anchor.y).toBeLessThan(820);
 		expect(motor.walking).toBe(true);
+	});
+	it("places using a freshly selected pose instead of restoring the last walk pose", () => {
+		const { motor, cycle, pose, setPose } = setup();
+		void motor.walk([{ x: 1400, y: 850 }]);
+		motor.update(1000 / 24);
+		setPose({ cycle, frame: 3, flipX: true });
+		motor.place({ x: 800, y: 850 });
+		expect(pose().frame).toBe(3);
+		expect(pose().flipX).toBe(true);
+		expect(motor.walking).toBe(false);
 	});
 });
