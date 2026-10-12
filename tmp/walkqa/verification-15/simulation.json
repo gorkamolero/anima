@@ -1,0 +1,1175 @@
+[
+  {
+    "anchor": {
+      "x": 854.4900197209895,
+      "y": 882.4609908495518
+    },
+    "arrival": {
+      "anchor": {
+        "x": 854.4900197209895,
+        "y": 882.4609908495518
+      },
+      "distance": 34.65446681700862,
+      "halfStride": 38.04013759811588,
+      "switchFrame": 22,
+      "target": {
+        "x": 837.5,
+        "y": 927.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 854.4900197209895,
+        "y": 882.4609908495518
+      },
+      "matched": true,
+      "to": {
+        "x": 854.4900197209895,
+        "y": 882.4609908495518
+      },
+      "waitFrames": 7
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": -0.7291311725763293,
+      "y": 6.083968963634142
+    },
+    "heading": "left",
+    "n": 20,
+    "name": "left",
+    "planted": "R",
+    "position": [
+      840.1553431757159,
+      892.947413657002
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.3333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1217.1729806518924,
+      "y": 870.4214251512333
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1217.1729806518924,
+        "y": 870.4214251512333
+      },
+      "distance": 40.49686597816618,
+      "halfStride": 52.06156605403103,
+      "switchFrame": 4,
+      "target": {
+        "x": 1197.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1217.1729806518924,
+        "y": 870.4214251512333
+      },
+      "matched": true,
+      "to": {
+        "x": 1217.1729806518924,
+        "y": 870.4214251512333
+      },
+      "waitFrames": 25
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": 1.7245267634096124,
+      "y": 6.366590425067602
+    },
+    "heading": "right",
+    "n": 41,
+    "name": "right",
+    "planted": "R",
+    "position": [
+      1230.8713217391082,
+      880.4423416293646
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.75,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 836.2309800217411,
+      "y": 851.0105377107893
+    },
+    "arrival": {
+      "anchor": {
+        "x": 836.2309800217411,
+        "y": 851.0105377107893
+      },
+      "distance": 14.427699020067896,
+      "halfStride": 21.026150225636822,
+      "switchFrame": 21,
+      "target": {
+        "x": 837.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 836.2309800217411,
+        "y": 851.0105377107893
+      },
+      "matched": true,
+      "to": {
+        "x": 836.2309800217411,
+        "y": 851.0105377107893
+      },
+      "waitFrames": 20
+    },
+    "cycle": "hermes-passing-stand-away",
+    "frame": 0,
+    "ground": {
+      "x": -0.7811707707084885,
+      "y": 6.588340797917862
+    },
+    "heading": "away",
+    "n": 28,
+    "name": "away",
+    "planted": "L",
+    "position": [
+      841.4313353438904,
+      871.3817542633324
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.6666666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 958.4676505495232,
+      "y": 944.6776554046525
+    },
+    "arrival": {
+      "anchor": {
+        "x": 958.4676505495232,
+        "y": 944.6776554046525
+      },
+      "distance": 21.96257638293174,
+      "halfStride": 29.896782156995396,
+      "switchFrame": 4,
+      "target": {
+        "x": 957.5,
+        "y": 997.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 958.4676505495232,
+        "y": 944.6776554046525
+      },
+      "matched": true,
+      "to": {
+        "x": 958.4676505495232,
+        "y": 944.6776554046525
+      },
+      "waitFrames": 9
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": -0.054040589826887,
+      "y": 4.679589885051897
+    },
+    "heading": "toward",
+    "n": 30,
+    "name": "toward",
+    "planted": "L",
+    "position": [
+      948.4518534413646,
+      977.4878585546282
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.375,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 968.7710123751784,
+      "y": 881.3080539212995
+    },
+    "arrival": {
+      "anchor": {
+        "x": 968.7710123751784,
+        "y": 881.3080539212995
+      },
+      "distance": 33.9459439029755,
+      "halfStride": 35.01646303692001,
+      "switchFrame": 3,
+      "target": {
+        "x": 957.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 968.7710123751784,
+        "y": 881.3080539212995
+      },
+      "matched": true,
+      "to": {
+        "x": 968.7710123751784,
+        "y": 881.3080539212995
+      },
+      "waitFrames": 5
+    },
+    "cycle": "hermes-passing-stand-away-right",
+    "frame": 0,
+    "ground": {
+      "x": 0.02110440094591996,
+      "y": 6.128039996444507
+    },
+    "heading": "away-left",
+    "n": 29,
+    "name": "away-left",
+    "planted": "L",
+    "position": [
+      963.443907180463,
+      890.921506173331
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.25,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1453.456310274784,
+      "y": 798.9696654839016
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1453.456310274784,
+        "y": 798.9696654839016
+      },
+      "distance": 19.74590422567901,
+      "halfStride": 31.81922810581394,
+      "switchFrame": 9,
+      "target": {
+        "x": 1437.5,
+        "y": 807.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1453.456310274784,
+        "y": 798.9696654839016
+      },
+      "matched": true,
+      "to": {
+        "x": 1453.456310274784,
+        "y": 798.9696654839016
+      },
+      "waitFrames": 47
+    },
+    "cycle": "hermes-passing-stand-away-right",
+    "frame": 0,
+    "ground": {
+      "x": 4.382905790806053,
+      "y": 8.815899171874204
+    },
+    "heading": "away-right",
+    "n": 46,
+    "name": "away-right",
+    "planted": "L",
+    "position": [
+      1457.1592466471318,
+      805.6520944404745
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 1.8333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 987.2671312570664,
+      "y": 786.3218090805653
+    },
+    "arrival": {
+      "anchor": {
+        "x": 987.2671312570664,
+        "y": 786.3218090805653
+      },
+      "distance": 21.203714120797887,
+      "halfStride": 22.950956310612636,
+      "switchFrame": 13,
+      "target": {
+        "x": 977.5,
+        "y": 777.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 987.2671312570664,
+        "y": 786.3218090805653
+      },
+      "matched": true,
+      "to": {
+        "x": 987.2671312570664,
+        "y": 786.3218090805653
+      },
+      "waitFrames": 20
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 0.18136973345670657,
+      "y": 9.148909524897451
+    },
+    "heading": "toward-left",
+    "n": 53,
+    "name": "toward-left",
+    "planted": "L",
+    "position": [
+      979.8241913927704,
+      798.575949015081
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.7916666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 959.9193778817888,
+      "y": 816.5356820217455
+    },
+    "arrival": {
+      "anchor": {
+        "x": 959.9193778817888,
+        "y": 816.5356820217455
+      },
+      "distance": 18.80921418092232,
+      "halfStride": 27.81933147632115,
+      "switchFrame": 0,
+      "target": {
+        "x": 977.5,
+        "y": 847.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 959.9193778817888,
+        "y": 816.5356820217455
+      },
+      "matched": true,
+      "to": {
+        "x": 959.9193778817888,
+        "y": 816.5356820217455
+      },
+      "waitFrames": 8
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 0.06746573755928734,
+      "y": 7.802398056106441
+    },
+    "heading": "toward-right",
+    "n": 31,
+    "name": "toward-right",
+    "planted": "L",
+    "position": [
+      968.646795135822,
+      830.9045999826246
+    ],
+    "scene": "road",
+    "settling": false,
+    "settlingSeconds": 0.3333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1590.9915847137547,
+      "y": 866.0769289892796
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1590.9915847137547,
+        "y": 866.0769289892796
+      },
+      "distance": 28.050684963135073,
+      "halfStride": 52.07778298442339,
+      "switchFrame": 22,
+      "target": {
+        "x": 1587.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1590.9915847137547,
+        "y": 866.0769289892796
+      },
+      "matched": true,
+      "to": {
+        "x": 1590.9915847137547,
+        "y": 866.0769289892796
+      },
+      "waitFrames": 7
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": 2.715532805369429,
+      "y": 4.441809685696609
+    },
+    "heading": "left",
+    "n": 20,
+    "name": "left",
+    "planted": "R",
+    "position": [
+      1571.3573064856678,
+      880.4402348070674
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.3333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1675.6104823067762,
+      "y": 1011.009991389769
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1675.6104823067762,
+        "y": 1011.009991389769
+      },
+      "distance": 16.49247550089704,
+      "halfStride": 71.38767827672807,
+      "switchFrame": 22,
+      "target": {
+        "x": 1687.5,
+        "y": 1037.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1675.6104823067762,
+        "y": 1011.009991389769
+      },
+      "matched": true,
+      "to": {
+        "x": 1675.6104823067762,
+        "y": 1011.0099913897689
+      },
+      "waitFrames": 7
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": 2.4060254936899304,
+      "y": 3.240329514193303
+    },
+    "heading": "right",
+    "n": 63,
+    "name": "right",
+    "planted": "R",
+    "position": [
+      1702.5249448091772,
+      1030.6990602392857
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.2916666666666667,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1346.8486546844156,
+      "y": 861.4120510450035
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1346.8486546844156,
+        "y": 861.4120510450035
+      },
+      "distance": 15.2137478379414,
+      "halfStride": 31.73407435107613,
+      "switchFrame": 21,
+      "target": {
+        "x": 1357.5,
+        "y": 907.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1346.8486546844156,
+        "y": 861.4120510450035
+      },
+      "matched": true,
+      "to": {
+        "x": 1346.8486546844156,
+        "y": 861.4120510450035
+      },
+      "waitFrames": 20
+    },
+    "cycle": "hermes-passing-stand-away",
+    "frame": 0,
+    "ground": {
+      "x": 1.702794958017262,
+      "y": 4.313142167305298
+    },
+    "heading": "away",
+    "n": 28,
+    "name": "away",
+    "planted": "L",
+    "position": [
+      1354.7922168958112,
+      892.5291605466782
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.6666666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1468.608637334541,
+      "y": 950.624939102892
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1468.608637334541,
+        "y": 950.624939102892
+      },
+      "distance": 12.682248022963886,
+      "halfStride": 22.724070198872603,
+      "switchFrame": 14,
+      "target": {
+        "x": 1467.5,
+        "y": 997.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1468.608637334541,
+        "y": 950.624939102892
+      },
+      "matched": true,
+      "to": {
+        "x": 1468.608637334541,
+        "y": 950.624939102892
+      },
+      "waitFrames": 24
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": 1.714511576067871,
+      "y": 3.4631370165807502
+    },
+    "heading": "toward",
+    "n": 25,
+    "name": "toward",
+    "planted": "L",
+    "position": [
+      1455.0747163219824,
+      994.959972355119
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.9166666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1702.072203024108,
+      "y": 870.9899457859628
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1702.072203024108,
+        "y": 870.9899457859628
+      },
+      "distance": 22.08755838213495,
+      "halfStride": 48.77802009933687,
+      "switchFrame": 3,
+      "target": {
+        "x": 1712.5,
+        "y": 862.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 48,
+      "from": {
+        "x": 1702.072203024108,
+        "y": 870.9899457859628
+      },
+      "matched": true,
+      "to": {
+        "x": 1702.072203024108,
+        "y": 870.9899457859628
+      },
+      "waitFrames": 5
+    },
+    "cycle": "hermes-passing-stand-away-right",
+    "frame": 0,
+    "ground": {
+      "x": 3.297036100173847,
+      "y": 4.399021245065166
+    },
+    "heading": "away-right",
+    "n": 29,
+    "name": "away-right",
+    "planted": "L",
+    "position": [
+      1709.4931068751876,
+      884.3819292801201
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.25,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1482.6971248672744,
+      "y": 864.4983537497714
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1482.6971248672744,
+        "y": 864.4983537497714
+      },
+      "distance": 32.860059818861565,
+      "halfStride": 48.495437241096205,
+      "switchFrame": 13,
+      "target": {
+        "x": 1467.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1482.6971248672744,
+        "y": 864.4983537497714
+      },
+      "matched": true,
+      "to": {
+        "x": 1482.6971248672744,
+        "y": 864.4983537497714
+      },
+      "waitFrames": 20
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 2.1981726873232534,
+      "y": 4.335718263834744
+    },
+    "heading": "toward-left",
+    "n": 31,
+    "name": "toward-left",
+    "planted": "L",
+    "position": [
+      1466.9915879126036,
+      890.3561264979387
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.7916666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1494.9090872929607,
+      "y": 907.5337676066996
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1494.9090872929607,
+        "y": 907.5337676066996
+      },
+      "distance": 45.17900392535023,
+      "halfStride": 53.856418585457945,
+      "switchFrame": 13,
+      "target": {
+        "x": 1477.5,
+        "y": 907.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1494.9090872929607,
+        "y": 907.5337676066996
+      },
+      "matched": true,
+      "to": {
+        "x": 1494.9090872929607,
+        "y": 907.5337676066996
+      },
+      "waitFrames": 20
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 2.156450326715693,
+      "y": 3.904131735481694
+    },
+    "heading": "toward-right",
+    "n": 31,
+    "name": "toward-right",
+    "planted": "L",
+    "position": [
+      1512.3508100706108,
+      936.2500162279784
+    ],
+    "scene": "depot",
+    "settling": false,
+    "settlingSeconds": 0.7916666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1365.4341731975333,
+      "y": 916.95226718102
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1365.4341731975333,
+        "y": 916.95226718102
+      },
+      "distance": 62.981969352040785,
+      "halfStride": 85.53556535801648,
+      "switchFrame": 0,
+      "target": {
+        "x": 1287.5,
+        "y": 927.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1365.4341731975333,
+        "y": 916.95226718102
+      },
+      "matched": true,
+      "to": {
+        "x": 1365.4341731975333,
+        "y": 916.95226718102
+      },
+      "waitFrames": 8
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 1.481025661339704,
+      "y": 3.820892631077372
+    },
+    "heading": "toward-left",
+    "n": 20,
+    "name": "left",
+    "planted": "L",
+    "position": [
+      1347.6124781140738,
+      946.2941064817244
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.3333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1708.981156778705,
+      "y": 887.720131567095
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1708.981156778705,
+        "y": 887.720131567095
+      },
+      "distance": 47.618905715583296,
+      "halfStride": 54.961376062812256,
+      "switchFrame": 22,
+      "target": {
+        "x": 1647.5,
+        "y": 927.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1708.981156778705,
+        "y": 887.720131567095
+      },
+      "matched": true,
+      "to": {
+        "x": 1708.981156778705,
+        "y": 887.720131567095
+      },
+      "waitFrames": 7
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": 3.065075108682305,
+      "y": 4.208766545536555
+    },
+    "heading": "left",
+    "n": 31,
+    "name": "right",
+    "planted": "R",
+    "position": [
+      1688.25971113386,
+      902.8787463797252
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.2916666666666667,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1467.2366564609222,
+      "y": 806.6804090949821
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1467.2366564609222,
+        "y": 806.6804090949821
+      },
+      "distance": 24.98720127453143,
+      "halfStride": 27.964235407245788,
+      "switchFrame": 12,
+      "target": {
+        "x": 1467.5,
+        "y": 857.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1467.2366564609222,
+        "y": 806.6804090949821
+      },
+      "matched": true,
+      "to": {
+        "x": 1467.2366564609222,
+        "y": 806.6804090949821
+      },
+      "waitFrames": 29
+    },
+    "cycle": "hermes-passing-stand-away",
+    "frame": 0,
+    "ground": {
+      "x": 2.5832765267056472,
+      "y": 5.025296932122336
+    },
+    "heading": "away",
+    "n": 24,
+    "name": "away",
+    "planted": "L",
+    "position": [
+      1474.0545049573122,
+      833.3877895600898
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.9166666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1488.8824469871242,
+      "y": 945.1092555197982
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1488.8824469871242,
+        "y": 945.1092555197982
+      },
+      "distance": 11.72752106482102,
+      "halfStride": 22.46043493149792,
+      "switchFrame": 14,
+      "target": {
+        "x": 1467.5,
+        "y": 997.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1488.8824469871242,
+        "y": 945.1092555197982
+      },
+      "matched": true,
+      "to": {
+        "x": 1488.8824469871242,
+        "y": 945.1092555197982
+      },
+      "waitFrames": 24
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": 1.8062213544368773,
+      "y": 3.50378649893076
+    },
+    "heading": "toward",
+    "n": 25,
+    "name": "toward",
+    "planted": "L",
+    "position": [
+      1475.5055409306692,
+      988.9299320461736
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.9166666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1268.267921809461,
+      "y": 909.2827884133138
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1268.267921809461,
+        "y": 909.2827884133138
+      },
+      "distance": 38.45782098567174,
+      "halfStride": 57.83423777585491,
+      "switchFrame": 22,
+      "target": {
+        "x": 1297.5,
+        "y": 887.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 30,
+      "from": {
+        "x": 1268.267921809461,
+        "y": 909.2827884133138
+      },
+      "matched": true,
+      "to": {
+        "x": 1268.267921809461,
+        "y": 909.2827884133138
+      },
+      "waitFrames": 7
+    },
+    "cycle": "hermes-passing-stand-side",
+    "frame": 0,
+    "ground": {
+      "x": 1.3201909342675944,
+      "y": 3.999700000652402
+    },
+    "heading": "right",
+    "n": 63,
+    "name": "away-left",
+    "planted": "R",
+    "position": [
+      1290.0724889497349,
+      925.2337524580336
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.2916666666666667,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1695.8918424866115,
+      "y": 865.3016428847963
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1695.8918424866115,
+        "y": 865.3016428847963
+      },
+      "distance": 40.3555770047519,
+      "halfStride": 50.18711828870447,
+      "switchFrame": 0,
+      "target": {
+        "x": 1647.5,
+        "y": 867.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1695.8918424866115,
+        "y": 865.3016428847963
+      },
+      "matched": true,
+      "to": {
+        "x": 1695.8918424866115,
+        "y": 865.3016428847963
+      },
+      "waitFrames": 8
+    },
+    "cycle": "hermes-passing-stand-toward-right",
+    "frame": 0,
+    "ground": {
+      "x": 3.1159548609744605,
+      "y": 4.326790243567738
+    },
+    "heading": "toward-left",
+    "n": 75,
+    "name": "away-right",
+    "planted": "L",
+    "position": [
+      1680.1538982867678,
+      891.2127712860366
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.3333333333333333,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1271.068629786594,
+      "y": 977.1483884132148
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1271.068629786594,
+        "y": 977.1483884132148
+      },
+      "distance": 40.54260185879085,
+      "halfStride": 48.01883861785795,
+      "switchFrame": 14,
+      "target": {
+        "x": 1287.5,
+        "y": 997.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1271.068629786594,
+        "y": 977.1483884132148
+      },
+      "matched": true,
+      "to": {
+        "x": 1271.068629786594,
+        "y": 977.1483884132148
+      },
+      "waitFrames": 24
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": 0.9734792777053972,
+      "y": 3.280141431308813
+    },
+    "heading": "toward",
+    "n": 52,
+    "name": "toward-left",
+    "planted": "L",
+    "position": [
+      1256.7796657831818,
+      1023.9568257938744
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.9166666666666666,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  {
+    "anchor": {
+      "x": 1684.4513554773491,
+      "y": 977.1483884132148
+    },
+    "arrival": {
+      "anchor": {
+        "x": 1684.4513554773491,
+        "y": 977.1483884132148
+      },
+      "distance": 34.83601036866016,
+      "halfStride": 40.05385619704429,
+      "switchFrame": 16,
+      "target": {
+        "x": 1647.5,
+        "y": 997.5
+      }
+    },
+    "cut": {
+      "cycleFrames": 25,
+      "from": {
+        "x": 1684.4513554773491,
+        "y": 977.1483884132148
+      },
+      "matched": true,
+      "to": {
+        "x": 1684.4513554773491,
+        "y": 977.1483884132148
+      },
+      "waitFrames": 22
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": 2.3294330832310095,
+      "y": 3.280141431308813
+    },
+    "heading": "toward",
+    "n": 52,
+    "name": "toward-right",
+    "planted": "L",
+    "position": [
+      1670.162391473937,
+      1023.9568257938744
+    ],
+    "scene": "starts",
+    "settling": false,
+    "settlingSeconds": 0.8333333333333334,
+    "unmatchedCut": false,
+    "walking": false
+  }
+]

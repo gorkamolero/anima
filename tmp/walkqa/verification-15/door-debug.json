@@ -1,0 +1,24 @@
+{
+  "last": {
+    "anchor": {
+      "x": 549.4805684607107,
+      "y": 896.8861158886343
+    },
+    "cycle": "hermes-passing-stand-toward",
+    "frame": 0,
+    "ground": {
+      "x": -1.6497315197446425,
+      "y": 3.9044721729650096
+    },
+    "heading": "toward",
+    "planted": "L",
+    "settling": false,
+    "unmatchedCut": false,
+    "walking": false
+  },
+  "pos": [
+    537.4764304462041,
+    936.2098165030848
+  ],
+  "trace": []
+}

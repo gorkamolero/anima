@@ -1,0 +1,19 @@
+
+> anima@0.1.0 typecheck /Users/gorkolas/Developer/anima
+> pnpm --filter @anima/storyscript typecheck && pnpm --filter @anima/engine typecheck && pnpm --filter @anima/shadow-over-innsmouth typecheck && pnpm --filter api typecheck
+
+
+> @anima/storyscript@0.1.0 typecheck /Users/gorkolas/Developer/anima/packages/storyscript
+> tsc --noEmit
+
+
+> @anima/engine@0.1.0 typecheck /Users/gorkolas/Developer/anima/packages/engine
+> tsc --noEmit
+
+
+> @anima/shadow-over-innsmouth@0.1.0 typecheck /Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth
+> tsc --noEmit
+
+
+> @anima/api@0.1.0 typecheck /Users/gorkolas/Developer/anima/api
+> tsc --noEmit

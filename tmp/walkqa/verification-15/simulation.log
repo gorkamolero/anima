@@ -1,0 +1,232 @@
+[
+  {
+    scene: 'road',
+    name: 'left',
+    h: 'left',
+    arrival: 34.65446681700862,
+    half: 38.04013759811588,
+    matched: true,
+    settling: 0.3333333333333333,
+    n: 20
+  },
+  {
+    scene: 'road',
+    name: 'right',
+    h: 'right',
+    arrival: 40.49686597816618,
+    half: 52.06156605403103,
+    matched: true,
+    settling: 0.75,
+    n: 41
+  },
+  {
+    scene: 'road',
+    name: 'away',
+    h: 'away',
+    arrival: 14.427699020067896,
+    half: 21.026150225636822,
+    matched: true,
+    settling: 0.6666666666666666,
+    n: 28
+  },
+  {
+    scene: 'road',
+    name: 'toward',
+    h: 'toward',
+    arrival: 21.96257638293174,
+    half: 29.896782156995396,
+    matched: true,
+    settling: 0.375,
+    n: 30
+  },
+  {
+    scene: 'road',
+    name: 'away-left',
+    h: 'away-left',
+    arrival: 33.9459439029755,
+    half: 35.01646303692001,
+    matched: true,
+    settling: 0.25,
+    n: 29
+  },
+  {
+    scene: 'road',
+    name: 'away-right',
+    h: 'away-right',
+    arrival: 19.74590422567901,
+    half: 31.81922810581394,
+    matched: true,
+    settling: 1.8333333333333333,
+    n: 46
+  },
+  {
+    scene: 'road',
+    name: 'toward-left',
+    h: 'toward-left',
+    arrival: 21.203714120797887,
+    half: 22.950956310612636,
+    matched: true,
+    settling: 0.7916666666666666,
+    n: 53
+  },
+  {
+    scene: 'road',
+    name: 'toward-right',
+    h: 'toward-right',
+    arrival: 18.80921418092232,
+    half: 27.81933147632115,
+    matched: true,
+    settling: 0.3333333333333333,
+    n: 31
+  },
+  {
+    scene: 'depot',
+    name: 'left',
+    h: 'left',
+    arrival: 28.050684963135073,
+    half: 52.07778298442339,
+    matched: true,
+    settling: 0.3333333333333333,
+    n: 20
+  },
+  {
+    scene: 'depot',
+    name: 'right',
+    h: 'right',
+    arrival: 16.49247550089704,
+    half: 71.38767827672807,
+    matched: true,
+    settling: 0.2916666666666667,
+    n: 63
+  },
+  {
+    scene: 'depot',
+    name: 'away',
+    h: 'away',
+    arrival: 15.2137478379414,
+    half: 31.73407435107613,
+    matched: true,
+    settling: 0.6666666666666666,
+    n: 28
+  },
+  {
+    scene: 'depot',
+    name: 'toward',
+    h: 'toward',
+    arrival: 12.682248022963886,
+    half: 22.724070198872603,
+    matched: true,
+    settling: 0.9166666666666666,
+    n: 25
+  },
+  {
+    scene: 'depot',
+    name: 'away-right',
+    h: 'away-right',
+    arrival: 22.08755838213495,
+    half: 48.77802009933687,
+    matched: true,
+    settling: 0.25,
+    n: 29
+  },
+  {
+    scene: 'depot',
+    name: 'toward-left',
+    h: 'toward-left',
+    arrival: 32.860059818861565,
+    half: 48.495437241096205,
+    matched: true,
+    settling: 0.7916666666666666,
+    n: 31
+  },
+  {
+    scene: 'depot',
+    name: 'toward-right',
+    h: 'toward-right',
+    arrival: 45.17900392535023,
+    half: 53.856418585457945,
+    matched: true,
+    settling: 0.7916666666666666,
+    n: 31
+  },
+  {
+    scene: 'starts',
+    name: 'left',
+    h: 'toward-left',
+    arrival: 62.981969352040785,
+    half: 85.53556535801648,
+    matched: true,
+    settling: 0.3333333333333333,
+    n: 20
+  },
+  {
+    scene: 'starts',
+    name: 'right',
+    h: 'left',
+    arrival: 47.618905715583296,
+    half: 54.961376062812256,
+    matched: true,
+    settling: 0.2916666666666667,
+    n: 31
+  },
+  {
+    scene: 'starts',
+    name: 'away',
+    h: 'away',
+    arrival: 24.98720127453143,
+    half: 27.964235407245788,
+    matched: true,
+    settling: 0.9166666666666666,
+    n: 24
+  },
+  {
+    scene: 'starts',
+    name: 'toward',
+    h: 'toward',
+    arrival: 11.72752106482102,
+    half: 22.46043493149792,
+    matched: true,
+    settling: 0.9166666666666666,
+    n: 25
+  },
+  {
+    scene: 'starts',
+    name: 'away-left',
+    h: 'right',
+    arrival: 38.45782098567174,
+    half: 57.83423777585491,
+    matched: true,
+    settling: 0.2916666666666667,
+    n: 63
+  },
+  {
+    scene: 'starts',
+    name: 'away-right',
+    h: 'toward-left',
+    arrival: 40.3555770047519,
+    half: 50.18711828870447,
+    matched: true,
+    settling: 0.3333333333333333,
+    n: 75
+  },
+  {
+    scene: 'starts',
+    name: 'toward-left',
+    h: 'toward',
+    arrival: 40.54260185879085,
+    half: 48.01883861785795,
+    matched: true,
+    settling: 0.9166666666666666,
+    n: 52
+  },
+  {
+    scene: 'starts',
+    name: 'toward-right',
+    h: 'toward',
+    arrival: 34.83601036866016,
+    half: 40.05385619704429,
+    matched: true,
+    settling: 0.8333333333333334,
+    n: 52
+  }
+]

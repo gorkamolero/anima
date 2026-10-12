@@ -1,0 +1,554 @@
+[
+  {
+    "scene": "road",
+    "heading": "left",
+    "actualFinalPosition": [
+      840.1553431757159,
+      892.947413657002
+    ],
+    "target": {
+      "x": 837.5,
+      "y": 927.5
+    },
+    "actualDistance": 34.65446681700862,
+    "reportedDistance": 34.65446681700862,
+    "halfStride": 38.04013759811588,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 7,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.3333333333333333,
+    "matched": true,
+    "finalHeading": "left"
+  },
+  {
+    "scene": "road",
+    "heading": "right",
+    "actualFinalPosition": [
+      1230.8713217391082,
+      880.4423416293646
+    ],
+    "target": {
+      "x": 1197.5,
+      "y": 857.5
+    },
+    "actualDistance": 40.49686597816618,
+    "reportedDistance": 40.49686597816618,
+    "halfStride": 52.06156605403103,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 25,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.75,
+    "matched": true,
+    "finalHeading": "right"
+  },
+  {
+    "scene": "road",
+    "heading": "away",
+    "actualFinalPosition": [
+      841.4313353438904,
+      871.3817542633324
+    ],
+    "target": {
+      "x": 837.5,
+      "y": 857.5
+    },
+    "actualDistance": 14.427699020067896,
+    "reportedDistance": 14.427699020067896,
+    "halfStride": 21.026150225636822,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 20,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.6666666666666666,
+    "matched": true,
+    "finalHeading": "away"
+  },
+  {
+    "scene": "road",
+    "heading": "toward",
+    "actualFinalPosition": [
+      948.4518534413646,
+      977.4878585546282
+    ],
+    "target": {
+      "x": 957.5,
+      "y": 997.5
+    },
+    "actualDistance": 21.96257638293174,
+    "reportedDistance": 21.96257638293174,
+    "halfStride": 29.896782156995396,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 9,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.375,
+    "matched": true,
+    "finalHeading": "toward"
+  },
+  {
+    "scene": "road",
+    "heading": "away-left",
+    "actualFinalPosition": [
+      963.443907180463,
+      890.921506173331
+    ],
+    "target": {
+      "x": 957.5,
+      "y": 857.5
+    },
+    "actualDistance": 33.9459439029755,
+    "reportedDistance": 33.9459439029755,
+    "halfStride": 35.01646303692001,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 5,
+    "cycleFrames": 48,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.25,
+    "matched": true,
+    "finalHeading": "away-left"
+  },
+  {
+    "scene": "road",
+    "heading": "away-right",
+    "actualFinalPosition": [
+      1457.1592466471318,
+      805.6520944404745
+    ],
+    "target": {
+      "x": 1437.5,
+      "y": 807.5
+    },
+    "actualDistance": 19.745904225679006,
+    "reportedDistance": 19.74590422567901,
+    "halfStride": 31.81922810581394,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-15,
+    "waitFrames": 47,
+    "cycleFrames": 48,
+    "withinOneCycle": true,
+    "settlingSeconds": 1.8333333333333333,
+    "matched": true,
+    "finalHeading": "away-right"
+  },
+  {
+    "scene": "road",
+    "heading": "toward-left",
+    "actualFinalPosition": [
+      979.8241913927704,
+      798.575949015081
+    ],
+    "target": {
+      "x": 977.5,
+      "y": 777.5
+    },
+    "actualDistance": 21.203714120797898,
+    "reportedDistance": 21.203714120797887,
+    "halfStride": 22.950956310612636,
+    "withinHalfStride": true,
+    "predictionError": 1.0658141036401503e-14,
+    "waitFrames": 20,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.7916666666666666,
+    "matched": true,
+    "finalHeading": "toward-left"
+  },
+  {
+    "scene": "road",
+    "heading": "toward-right",
+    "actualFinalPosition": [
+      968.646795135822,
+      830.9045999826246
+    ],
+    "target": {
+      "x": 977.5,
+      "y": 847.5
+    },
+    "actualDistance": 18.809214180922265,
+    "reportedDistance": 18.80921418092232,
+    "halfStride": 27.81933147632115,
+    "withinHalfStride": true,
+    "predictionError": 5.684341886080802e-14,
+    "waitFrames": 8,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.3333333333333333,
+    "matched": true,
+    "finalHeading": "toward-right"
+  },
+  {
+    "scene": "depot",
+    "heading": "left",
+    "actualFinalPosition": [
+      1571.3573064856678,
+      880.4402348070674
+    ],
+    "target": {
+      "x": 1587.5,
+      "y": 857.5
+    },
+    "actualDistance": 28.050684963135073,
+    "reportedDistance": 28.050684963135073,
+    "halfStride": 52.07778298442339,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 7,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.3333333333333333,
+    "matched": true,
+    "finalHeading": "left"
+  },
+  {
+    "scene": "depot",
+    "heading": "right",
+    "actualFinalPosition": [
+      1702.5249448091772,
+      1030.6990602392857
+    ],
+    "target": {
+      "x": 1687.5,
+      "y": 1037.5
+    },
+    "actualDistance": 16.492475500896948,
+    "reportedDistance": 16.49247550089704,
+    "halfStride": 71.38767827672807,
+    "withinHalfStride": true,
+    "predictionError": 9.237055564881302e-14,
+    "waitFrames": 7,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.2916666666666667,
+    "matched": true,
+    "finalHeading": "right"
+  },
+  {
+    "scene": "depot",
+    "heading": "away",
+    "actualFinalPosition": [
+      1354.7922168958112,
+      892.5291605466782
+    ],
+    "target": {
+      "x": 1357.5,
+      "y": 907.5
+    },
+    "actualDistance": 15.2137478379414,
+    "reportedDistance": 15.2137478379414,
+    "halfStride": 31.73407435107613,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 20,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.6666666666666666,
+    "matched": true,
+    "finalHeading": "away"
+  },
+  {
+    "scene": "depot",
+    "heading": "toward",
+    "actualFinalPosition": [
+      1455.0747163219824,
+      994.959972355119
+    ],
+    "target": {
+      "x": 1467.5,
+      "y": 997.5
+    },
+    "actualDistance": 12.682248022963886,
+    "reportedDistance": 12.682248022963886,
+    "halfStride": 22.724070198872603,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 24,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.9166666666666666,
+    "matched": true,
+    "finalHeading": "toward"
+  },
+  {
+    "scene": "depot",
+    "heading": "away-right",
+    "actualFinalPosition": [
+      1709.4931068751876,
+      884.3819292801201
+    ],
+    "target": {
+      "x": 1712.5,
+      "y": 862.5
+    },
+    "actualDistance": 22.087558382134954,
+    "reportedDistance": 22.08755838213495,
+    "halfStride": 48.77802009933687,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-15,
+    "waitFrames": 5,
+    "cycleFrames": 48,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.25,
+    "matched": true,
+    "finalHeading": "away-right"
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-left",
+    "actualFinalPosition": [
+      1466.9915879126036,
+      890.3561264979387
+    ],
+    "target": {
+      "x": 1467.5,
+      "y": 857.5
+    },
+    "actualDistance": 32.860059818861565,
+    "reportedDistance": 32.860059818861565,
+    "halfStride": 48.495437241096205,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 20,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.7916666666666666,
+    "matched": true,
+    "finalHeading": "toward-left"
+  },
+  {
+    "scene": "depot",
+    "heading": "toward-right",
+    "actualFinalPosition": [
+      1512.3508100706108,
+      936.2500162279784
+    ],
+    "target": {
+      "x": 1477.5,
+      "y": 907.5
+    },
+    "actualDistance": 45.17900392535023,
+    "reportedDistance": 45.17900392535023,
+    "halfStride": 53.856418585457945,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 20,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.7916666666666666,
+    "matched": true,
+    "finalHeading": "toward-right"
+  },
+  {
+    "scene": "depot",
+    "heading": "away-left",
+    "actualFinalPosition": [
+      1441.6856451519625,
+      905.4616543000152
+    ],
+    "target": {
+      "x": 1407.5,
+      "y": 867.5
+    },
+    "actualDistance": 51.085668554397515,
+    "reportedDistance": 51.085668554397515,
+    "halfStride": 51.29090538857219,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 5,
+    "cycleFrames": 48,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.25,
+    "matched": true,
+    "finalHeading": "away-left"
+  },
+  {
+    "scene": "starts",
+    "heading": "left",
+    "actualFinalPosition": [
+      1347.6124781140738,
+      946.2941064817244
+    ],
+    "target": {
+      "x": 1287.5,
+      "y": 927.5
+    },
+    "actualDistance": 62.98196935204075,
+    "reportedDistance": 62.981969352040785,
+    "halfStride": 85.53556535801648,
+    "withinHalfStride": true,
+    "predictionError": 3.552713678800501e-14,
+    "waitFrames": 8,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.3333333333333333,
+    "matched": true,
+    "finalHeading": "toward-left"
+  },
+  {
+    "scene": "starts",
+    "heading": "right",
+    "actualFinalPosition": [
+      1688.25971113386,
+      902.8787463797252
+    ],
+    "target": {
+      "x": 1647.5,
+      "y": 927.5
+    },
+    "actualDistance": 47.618905715583296,
+    "reportedDistance": 47.618905715583296,
+    "halfStride": 54.961376062812256,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 7,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.2916666666666667,
+    "matched": true,
+    "finalHeading": "left"
+  },
+  {
+    "scene": "starts",
+    "heading": "away",
+    "actualFinalPosition": [
+      1474.0545049573122,
+      833.3877895600898
+    ],
+    "target": {
+      "x": 1467.5,
+      "y": 857.5
+    },
+    "actualDistance": 24.98720127453143,
+    "reportedDistance": 24.98720127453143,
+    "halfStride": 27.964235407245788,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 29,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.9166666666666666,
+    "matched": true,
+    "finalHeading": "away"
+  },
+  {
+    "scene": "starts",
+    "heading": "toward",
+    "actualFinalPosition": [
+      1475.5055409306692,
+      988.9299320461736
+    ],
+    "target": {
+      "x": 1467.5,
+      "y": 997.5
+    },
+    "actualDistance": 11.727521064821104,
+    "reportedDistance": 11.72752106482102,
+    "halfStride": 22.46043493149792,
+    "withinHalfStride": true,
+    "predictionError": 8.348877145181177e-14,
+    "waitFrames": 24,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.9166666666666666,
+    "matched": true,
+    "finalHeading": "toward"
+  },
+  {
+    "scene": "starts",
+    "heading": "away-left",
+    "actualFinalPosition": [
+      1290.0724889497349,
+      925.2337524580336
+    ],
+    "target": {
+      "x": 1297.5,
+      "y": 887.5
+    },
+    "actualDistance": 38.457820985671624,
+    "reportedDistance": 38.45782098567174,
+    "halfStride": 57.83423777585491,
+    "withinHalfStride": true,
+    "predictionError": 1.1368683772161603e-13,
+    "waitFrames": 7,
+    "cycleFrames": 30,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.2916666666666667,
+    "matched": true,
+    "finalHeading": "right"
+  },
+  {
+    "scene": "starts",
+    "heading": "away-right",
+    "actualFinalPosition": [
+      1680.1538982867678,
+      891.2127712860366
+    ],
+    "target": {
+      "x": 1647.5,
+      "y": 867.5
+    },
+    "actualDistance": 40.3555770047519,
+    "reportedDistance": 40.3555770047519,
+    "halfStride": 50.18711828870447,
+    "withinHalfStride": true,
+    "predictionError": 0.0,
+    "waitFrames": 8,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.3333333333333333,
+    "matched": true,
+    "finalHeading": "toward-left"
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-left",
+    "actualFinalPosition": [
+      1256.7796657831818,
+      1023.9568257938744
+    ],
+    "target": {
+      "x": 1287.5,
+      "y": 997.5
+    },
+    "actualDistance": 40.54260185879078,
+    "reportedDistance": 40.54260185879085,
+    "halfStride": 48.01883861785795,
+    "withinHalfStride": true,
+    "predictionError": 7.105427357601002e-14,
+    "waitFrames": 24,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.9166666666666666,
+    "matched": true,
+    "finalHeading": "toward"
+  },
+  {
+    "scene": "starts",
+    "heading": "toward-right",
+    "actualFinalPosition": [
+      1670.162391473937,
+      1023.9568257938744
+    ],
+    "target": {
+      "x": 1647.5,
+      "y": 997.5
+    },
+    "actualDistance": 34.83601036866008,
+    "reportedDistance": 34.83601036866016,
+    "halfStride": 40.05385619704429,
+    "withinHalfStride": true,
+    "predictionError": 8.526512829121202e-14,
+    "waitFrames": 22,
+    "cycleFrames": 25,
+    "withinOneCycle": true,
+    "settlingSeconds": 0.8333333333333334,
+    "matched": true,
+    "finalHeading": "toward"
+  }
+]

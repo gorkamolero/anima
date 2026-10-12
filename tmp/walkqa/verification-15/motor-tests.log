@@ -1,0 +1,16 @@
+
+> anima@0.1.0 test:run /Users/gorkolas/Developer/anima
+> vitest run packages/engine/src/characters/CharacterMotor.test.ts
+
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+ ✓ packages/engine/src/characters/CharacterMotor.test.ts (21 tests) 142ms
+
+ Test Files  1 passed (1)
+      Tests  21 passed (21)
+Type Errors  no errors
+   Start at  11:14:18
+   Duration  443ms (transform 66ms, setup 25ms, import 57ms, tests 142ms, environment 123ms)

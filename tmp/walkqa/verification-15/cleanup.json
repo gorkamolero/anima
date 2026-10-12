@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-12T17:34:52.137232+00:00",
+  "ports4317And8080HaveNoListeners": true,
+  "browsers": {
+    "walkqa15": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "walkqa15-depot": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "walkqa15-starts": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "walkqa15-road-final": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "walkqa15-starts-final": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "walkqa15-depot-final": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    },
+    "anima-town": {
+      "exitCode": 0,
+      "output": "\u2713 Browser closed",
+      "error": ""
+    }
+  },
+  "ownerPortsUntouched": true
+}

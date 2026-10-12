@@ -1,0 +1,74 @@
+[
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 51.085668554397515,
+      halfStride: 51.29090538857219,
+      switchFrame: 3,
+      target: [Object]
+    },
+    frames: 29,
+    start: [ 1497.5, 967.5 ],
+    walk: [ 1407.5, 867.5 ]
+  },
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 13.692565158091629,
+      halfStride: 49.92580096065547,
+      switchFrame: 0,
+      target: [Object]
+    },
+    frames: 45,
+    start: [ 1697.5, 917.5 ],
+    walk: [ 1517.5, 817.5 ]
+  },
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 38.56887160752452,
+      halfStride: 50.8130990095291,
+      switchFrame: 3,
+      target: [Object]
+    },
+    frames: 51,
+    start: [ 1697.5, 917.5 ],
+    walk: [ 1607.5, 867.5 ]
+  },
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 33.26154645326191,
+      halfStride: 55.49177785620463,
+      switchFrame: 3,
+      target: [Object]
+    },
+    frames: 29,
+    start: [ 1697.5, 967.5 ],
+    walk: [ 1397.5, 917.5 ]
+  },
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 16.94621018359503,
+      halfStride: 48.758811598397635,
+      switchFrame: 3,
+      target: [Object]
+    },
+    frames: 29,
+    start: [ 1697.5, 967.5 ],
+    walk: [ 1517.5, 867.5 ]
+  },
+  {
+    arrival: {
+      anchor: [Object],
+      distance: 51.085668554397515,
+      halfStride: 51.29090538857219,
+      switchFrame: 3,
+      target: [Object]
+    },
+    frames: 29,
+    start: [ 1697.5, 967.5 ],
+    walk: [ 1607.5, 867.5 ]
+  }
+]
