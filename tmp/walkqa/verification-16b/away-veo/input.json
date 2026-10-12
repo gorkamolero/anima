@@ -1,0 +1,10 @@
+{
+  "model": "fal-ai/veo3.1/first-last-frame-to-video",
+  "duration": "4s",
+  "resolution": "720p",
+  "generate_audio": false,
+  "aspect_ratio": "auto",
+  "prompt": "Static camera. The character stops walking and settles into a relaxed stand: the planted foot stays exactly where it is, the other foot comes down beside it, arms relax to his sides. No turning, no camera motion, flat grey background.",
+  "first_frame_url": "away-first.png",
+  "last_frame_url": "away-last.png"
+}
