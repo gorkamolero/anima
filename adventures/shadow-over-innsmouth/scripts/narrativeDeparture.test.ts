@@ -1,4 +1,4 @@
-import type { Exit } from "@anima/engine";
+import type { Exit } from "@anima/footfall";
 import { describe, expect, it } from "vitest";
 import { narrativeDeparture } from "../src/game/scenes/worldGeometry";
 

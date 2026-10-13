@@ -1,12 +1,12 @@
-import type { Scene } from "phaser";
-import { GroundLine } from "./GroundLine";
-import { GroundLineRenderer } from "./GroundLineRenderer";
+import { GroundLine } from "@anima/footfall/core/groundline/GroundLine";
 import type {
 	GroundLineCallbacks,
 	GroundLineConfig,
 	GroundLinePoint,
 	PositionUpdateCallback,
-} from "./types";
+} from "@anima/footfall/core/groundline/types";
+import type { Scene } from "phaser";
+import { GroundLineRenderer } from "./GroundLineRenderer";
 
 /**
  * Registered character info

@@ -66,6 +66,9 @@ importers:
       '@anima/engine':
         specifier: workspace:*
         version: link:../../packages/engine
+      '@anima/footfall':
+        specifier: workspace:*
+        version: link:../../packages/footfall
       '@anima/storyscript':
         specifier: workspace:*
         version: link:../../packages/storyscript
@@ -106,6 +109,9 @@ importers:
       '@anima/engine':
         specifier: workspace:*
         version: link:../packages/engine
+      '@anima/footfall':
+        specifier: workspace:*
+        version: link:../packages/footfall
       '@fal-ai/client':
         specifier: ^1.10.0
         version: 1.10.0
@@ -143,6 +149,9 @@ importers:
 
   packages/engine:
     dependencies:
+      '@anima/footfall':
+        specifier: workspace:*
+        version: link:../footfall
       inkjs:
         specifier: ^2.3.2
         version: 2.3.2
@@ -165,6 +174,18 @@ importers:
       react-dom:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
+      typescript:
+        specifier: ~5.7.2
+        version: 5.7.3
+
+  packages/footfall:
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^2.3.9
+        version: 2.3.10
+      phaser:
+        specifier: ^3.90.0
+        version: 3.90.0
       typescript:
         specifier: ~5.7.2
         version: 5.7.3

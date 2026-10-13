@@ -1,4 +1,4 @@
-import type { WalkDirection } from "@anima/engine";
+import type { WalkDirection } from "@anima/footfall";
 
 /** Side artwork faces left; the diagonal originals face right. */
 export function hermesStanding(direction: WalkDirection) {

@@ -1,4 +1,4 @@
-import type { Point } from "./occlusion.js";
+import type { Point } from "./occlusion.ts";
 export interface Exit {
 	id: string;
 	kind: "edge-left" | "edge-right" | "far" | "near" | "door";

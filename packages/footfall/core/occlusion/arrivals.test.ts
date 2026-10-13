@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CharacterMotor } from "../characters/CharacterMotor";
+import { CharacterMotor } from "../../phaser/CharacterMotor";
 import { cellAt } from "../walkarea/navigation";
 import { beginArrival, passageArrival } from "./arrivals";
 

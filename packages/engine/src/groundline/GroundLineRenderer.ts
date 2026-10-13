@@ -1,5 +1,5 @@
+import type { GroundLine } from "@anima/footfall/core/groundline/GroundLine";
 import type { Scene } from "phaser";
-import type { GroundLine } from "./GroundLine";
 
 /**
  * Renders ground line for debug/editor visualization.

@@ -6,8 +6,8 @@ import { basename, resolve } from "node:path";
 import {
 	baselineYAt,
 	classifyOccluder,
-} from "@anima/engine/occlusion/occlusion";
-import type { Perspective } from "@anima/engine/walkarea/perspective";
+} from "@anima/footfall/core/occlusion/occlusion";
+import type { Perspective } from "@anima/footfall/core/walkarea/perspective";
 import { fal } from "@fal-ai/client";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { interactablesSchema } from "../routes/interactables.js";

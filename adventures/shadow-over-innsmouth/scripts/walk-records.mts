@@ -5,19 +5,16 @@ import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
-import { narrationCacheInput } from "../../../api/src/lib/narrationCacheInput.ts";
-import { deriveExits } from "../../../api/src/services/exits.ts";
-import { classifyOccluder } from "../../../packages/engine/src/occlusion/occlusion.ts";
-import { walkAreaFromAnchor } from "../../../packages/engine/src/walkarea/anchor.ts";
-import {
-	erode,
-	refineMask,
-} from "../../../packages/engine/src/walkarea/navigation.ts";
+import { classifyOccluder } from "@anima/footfall/core/occlusion/occlusion";
+import { walkAreaFromAnchor } from "@anima/footfall/core/walkarea/anchor";
+import { erode, refineMask } from "@anima/footfall/core/walkarea/navigation";
 import {
 	applySceneFootprints,
 	sceneExitApproaches,
-} from "../../../packages/engine/src/walkarea/sceneGeometry.ts";
-import type { WalkArea } from "../../../packages/engine/src/walkarea/types.ts";
+} from "@anima/footfall/core/walkarea/sceneGeometry";
+import type { WalkArea } from "@anima/footfall/core/walkarea/types";
+import { narrationCacheInput } from "../../../api/src/lib/narrationCacheInput.ts";
+import { deriveExits } from "../../../api/src/services/exits.ts";
 
 const require = createRequire(import.meta.url);
 const { REVIEW_SCENES } = require("../src/game/scenes/standaloneScenes.ts");

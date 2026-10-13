@@ -1,4 +1,4 @@
-import { fitLinear, scaleAt } from "../walkarea/perspective";
+import { fitLinear, scaleAt } from "@anima/footfall/core/walkarea/perspective";
 /**
  * Art landmarks: backgrounds describe their own geometry so scene data
  * (scale curves, hotspot bounds, character sizes) can be DERIVED and

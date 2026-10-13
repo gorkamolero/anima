@@ -1,8 +1,8 @@
 import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
-import { scaleAt as perspectiveScaleAt } from "@anima/engine/walkarea/perspective";
-import type { WalkArea } from "@anima/engine/walkarea/types";
+import { scaleAt as perspectiveScaleAt } from "@anima/footfall/core/walkarea/perspective";
+import type { WalkArea } from "@anima/footfall/core/walkarea/types";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, PUBLIC } from "../lib/backgrounds.js";

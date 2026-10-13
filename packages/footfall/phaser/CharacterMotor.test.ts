@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
-import { scaleAt } from "../walkarea/perspective";
-import { CharacterMotor, type MotorTarget } from "./CharacterMotor";
 import {
 	contactOnScreen,
 	type FootCycle,
 	type FootPose,
 	lockedPlacement,
-} from "./footLock";
+} from "../core/characters/footLock";
+import { scaleAt } from "../core/walkarea/perspective";
+import { CharacterMotor, type MotorTarget } from "./CharacterMotor";
 
 function setup(standing = false, drawn = false) {
 	const cycle: FootCycle = {

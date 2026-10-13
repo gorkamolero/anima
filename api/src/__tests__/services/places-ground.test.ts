@@ -62,7 +62,7 @@ vi.mock("../../services/ground-repair.js", () => ({
 	repairGround: vi.fn(() => false),
 }));
 
-import { findPath } from "../../../../packages/engine/src/walkarea/navigation";
+import { findPath } from "@anima/footfall/core/walkarea/navigation";
 import { placesRoutes } from "../../routes/places.js";
 import { maskToGround } from "../../services/ground.js";
 

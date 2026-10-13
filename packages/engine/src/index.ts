@@ -2,6 +2,72 @@
 // ===================================================
 
 export type {
+	ContactFrame,
+	Foot,
+	FootCycle,
+	FootPose,
+} from "@anima/footfall/core/characters/footLock";
+export type { WalkDirection } from "@anima/footfall/core/characters/walkHeading";
+export { headingFromGround } from "@anima/footfall/core/characters/walkHeading";
+export {
+	beginArrival,
+	passageArrival,
+	resolveReturnExit,
+} from "@anima/footfall/core/occlusion/arrivals";
+export {
+	bridgeFloor,
+	bridgeOccluders,
+	floorPixel,
+} from "@anima/footfall/core/occlusion/bridge";
+export type { Exit } from "@anima/footfall/core/occlusion/exits";
+export {
+	exitAt,
+	exitAtArrival,
+	exitForFrame,
+} from "@anima/footfall/core/occlusion/exits";
+export {
+	objectFootprints,
+	subtractFootprints,
+} from "@anima/footfall/core/occlusion/footprints";
+export type { Occluder } from "@anima/footfall/core/occlusion/occlusion";
+export {
+	baselineYAt,
+	depthForOccluder,
+	isBehind,
+} from "@anima/footfall/core/occlusion/occlusion";
+export { walkAreaFromAnchor } from "@anima/footfall/core/walkarea/anchor";
+export {
+	cellPoint,
+	erode,
+	findPath,
+	lineOfSight,
+	nearestCell,
+	nearestReachable,
+	refineMask,
+} from "@anima/footfall/core/walkarea/navigation";
+export {
+	objectApproach,
+	objectFacingPoint,
+} from "@anima/footfall/core/walkarea/objectApproach";
+export { objectAtPoint } from "@anima/footfall/core/walkarea/objectHit";
+export type { Perspective } from "@anima/footfall/core/walkarea/perspective";
+export {
+	fitFromLine,
+	fitLinear,
+	fromGround,
+	fromMetres,
+	scaleAt,
+	toGround,
+	toMetres,
+} from "@anima/footfall/core/walkarea/perspective";
+export {
+	applySceneFootprints,
+	sceneExitApproaches,
+} from "@anima/footfall/core/walkarea/sceneGeometry";
+export type { FloorMask, WalkArea } from "@anima/footfall/core/walkarea/types";
+export type { FootAnimation } from "@anima/footfall/phaser/CharacterMotor";
+export { CharacterMotor } from "@anima/footfall/phaser/CharacterMotor";
+export type {
 	ActiveSound,
 	AmbientSoundConfig,
 	HoverSoundConfig,
@@ -21,16 +87,6 @@ export type {
 } from "./characters/Character";
 // Characters
 export { Character } from "./characters/Character";
-export type { FootAnimation } from "./characters/CharacterMotor";
-export { CharacterMotor } from "./characters/CharacterMotor";
-export type {
-	ContactFrame,
-	Foot,
-	FootCycle,
-	FootPose,
-} from "./characters/footLock";
-export type { WalkDirection } from "./characters/walkHeading";
-export { headingFromGround } from "./characters/walkHeading";
 // Agent debug / playtest API
 export type { AgentDebugApi, AgentSceneSnapshot } from "./debug/AgentDebug";
 export { installAgentDebug } from "./debug/AgentDebug";
@@ -89,17 +145,6 @@ export type {
 // Inventory
 export * as inventory from "./inventory";
 export { InventoryManager } from "./inventory";
-export {
-	beginArrival,
-	passageArrival,
-	resolveReturnExit,
-} from "./occlusion/arrivals";
-export { bridgeFloor, bridgeOccluders, floorPixel } from "./occlusion/bridge";
-export type { Exit } from "./occlusion/exits";
-export { exitAt, exitAtArrival, exitForFrame } from "./occlusion/exits";
-export { objectFootprints, subtractFootprints } from "./occlusion/footprints";
-export type { Occluder } from "./occlusion/occlusion";
-export { baselineYAt, depthForOccluder, isBehind } from "./occlusion/occlusion";
 // Re-export submodules
 export * as scenes from "./scenes";
 export type {
@@ -143,30 +188,3 @@ export {
 	checkHotspotBounds,
 	verifySceneArt,
 } from "./verification/ArtLandmarks";
-export { walkAreaFromAnchor } from "./walkarea/anchor";
-export {
-	cellPoint,
-	erode,
-	findPath,
-	lineOfSight,
-	nearestCell,
-	nearestReachable,
-	refineMask,
-} from "./walkarea/navigation";
-export { objectApproach, objectFacingPoint } from "./walkarea/objectApproach";
-export { objectAtPoint } from "./walkarea/objectHit";
-export type { Perspective } from "./walkarea/perspective";
-export {
-	fitFromLine,
-	fitLinear,
-	fromGround,
-	fromMetres,
-	scaleAt,
-	toGround,
-	toMetres,
-} from "./walkarea/perspective";
-export {
-	applySceneFootprints,
-	sceneExitApproaches,
-} from "./walkarea/sceneGeometry";
-export type { FloorMask, WalkArea } from "./walkarea/types";

@@ -1,4 +1,4 @@
-import type { FootAnimation, FootCycle, FootPose } from "@anima/engine";
+import type { FootAnimation, FootCycle, FootPose } from "@anima/footfall";
 import { hermesStanding } from "./hermesStanding";
 
 /** The renderer supplies only asset lookup and pose display. */

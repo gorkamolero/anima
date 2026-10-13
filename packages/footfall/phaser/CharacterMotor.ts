@@ -1,27 +1,30 @@
-import { cellAt, cellPoint, nearestCell } from "../walkarea/navigation";
-import { type Point, scaleAt, toMetres } from "../walkarea/perspective";
-import type { WalkArea } from "../walkarea/types";
-import { clearanceRoute, routeCorners } from "./clearanceRoute";
+import {
+	clearanceRoute,
+	routeCorners,
+} from "../core/characters/clearanceRoute";
 import {
 	contactOnScreen,
 	type Foot,
 	type FootPose,
 	lockedPlacement,
-} from "./footLock";
+} from "../core/characters/footLock";
 import {
 	type PlannedStep,
 	planFootsteps,
 	type SearchOptions,
-} from "./footstepPlan";
-import { stanceSweep } from "./stanceSweep";
-import { stanceFrameMs } from "./stanceTiming";
-import { strideSweep } from "./strideSweep";
+} from "../core/characters/footstepPlan";
+import { stanceSweep } from "../core/characters/stanceSweep";
+import { stanceFrameMs } from "../core/characters/stanceTiming";
+import { strideSweep } from "../core/characters/strideSweep";
 import {
 	GROUND_SECTORS,
 	headingFromGround,
 	stanceFacesHeading,
 	type WalkDirection,
-} from "./walkHeading";
+} from "../core/characters/walkHeading";
+import { cellAt, cellPoint, nearestCell } from "../core/walkarea/navigation";
+import { type Point, scaleAt, toMetres } from "../core/walkarea/perspective";
+import type { WalkArea } from "../core/walkarea/types";
 
 export interface MotorTarget extends Point {
 	motor?: CharacterMotor;

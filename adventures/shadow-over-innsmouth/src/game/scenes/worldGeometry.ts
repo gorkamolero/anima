@@ -1,4 +1,4 @@
-import type { Exit, FloorMask } from "@anima/engine";
+import type { Exit, FloorMask } from "@anima/footfall";
 
 export type { FloorMask } from "@anima/engine";
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GroundLine } from "../../groundline";
+import { GroundLine } from "./GroundLine";
 
 describe("GroundLine", () => {
 	it("keeps existing linear interpolation behavior", () => {

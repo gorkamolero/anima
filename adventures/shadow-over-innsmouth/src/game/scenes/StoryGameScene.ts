@@ -1,10 +1,14 @@
 import {
-	applySceneFootprints,
 	BaseScene,
-	beginArrival,
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
+	type HotspotVerb,
+	type SceneConfig,
+} from "@anima/engine";
+import {
+	applySceneFootprints,
+	beginArrival,
 	CharacterMotor,
 	cellPoint,
 	depthForOccluder,
@@ -16,7 +20,6 @@ import {
 	type FootPose,
 	findPath,
 	floorPixel,
-	type HotspotVerb,
 	nearestCell,
 	type Occluder,
 	objectApproach,
@@ -24,13 +27,12 @@ import {
 	objectFacingPoint,
 	refineMask,
 	resolveReturnExit,
-	type SceneConfig,
 	scaleAt,
 	sceneExitApproaches,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
-} from "@anima/engine";
+} from "@anima/footfall";
 import {
 	parseStoryScript,
 	StoryRuntime,

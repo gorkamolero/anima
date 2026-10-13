@@ -6,27 +6,24 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolve } from "node:path";
-import { CharacterMotor } from "../../../packages/engine/src/characters/CharacterMotor.ts";
 import type {
 	FootCycle,
 	FootPose,
-} from "../../../packages/engine/src/characters/footLock.ts";
-import { captureSteps } from "../../../packages/engine/src/debug/captureClock.ts";
+} from "@anima/footfall/core/characters/footLock";
 import {
 	beginArrival,
 	resolveReturnExit,
-} from "../../../packages/engine/src/occlusion/arrivals.ts";
-import {
-	exitAt,
-	exitForFrame,
-} from "../../../packages/engine/src/occlusion/exits.ts";
-import { depthForOccluder } from "../../../packages/engine/src/occlusion/occlusion.ts";
-import { findPath } from "../../../packages/engine/src/walkarea/navigation.ts";
+} from "@anima/footfall/core/occlusion/arrivals";
+import { exitAt, exitForFrame } from "@anima/footfall/core/occlusion/exits";
+import { depthForOccluder } from "@anima/footfall/core/occlusion/occlusion";
+import { findPath } from "@anima/footfall/core/walkarea/navigation";
 import {
 	objectApproach,
 	objectFacingPoint,
-} from "../../../packages/engine/src/walkarea/objectApproach.ts";
-import { objectAtPoint } from "../../../packages/engine/src/walkarea/objectHit.ts";
+} from "@anima/footfall/core/walkarea/objectApproach";
+import { objectAtPoint } from "@anima/footfall/core/walkarea/objectHit";
+import { CharacterMotor } from "@anima/footfall/phaser/CharacterMotor";
+import { captureSteps } from "@anima/footfall/sim/captureClock";
 import { loadWalkRecords, storedOptions } from "./walk-records.mts";
 
 const { hermesFootAnimation } = createRequire(import.meta.url)(

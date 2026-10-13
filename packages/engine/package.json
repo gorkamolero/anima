@@ -17,10 +17,7 @@
 		"./inventory": "./src/inventory/index.ts",
 		"./audio": "./src/audio/index.ts",
 		"./transitions": "./src/transitions/index.ts",
-		"./groundline": "./src/groundline/index.ts",
-		"./walkarea/perspective": "./src/walkarea/perspective.ts",
-		"./walkarea/types": "./src/walkarea/types.ts",
-		"./occlusion/occlusion": "./src/occlusion/occlusion.ts"
+		"./groundline": "./src/groundline/index.ts"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",
@@ -33,7 +30,8 @@
 		"react-dom": "^19.0.0"
 	},
 	"dependencies": {
-		"inkjs": "^2.3.2"
+		"inkjs": "^2.3.2",
+		"@anima/footfall": "workspace:*"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.9",

@@ -1,4 +1,13 @@
-import type { CharacterMotor } from "../characters/CharacterMotor";
+import type { WalkDirection } from "../characters/walkHeading";
+import type { Point } from "../walkarea/perspective";
+
+export interface ArrivalMotor {
+	heading: WalkDirection;
+	target: Point;
+	placeContact(point: Point): void;
+	inwardStop(point: Point): Point | undefined;
+}
+
 import { cellPoint, findPath, nearestCell } from "../walkarea/navigation";
 import type { WalkArea } from "../walkarea/types";
 import type { Exit } from "./exits";
@@ -76,7 +85,7 @@ export function resolveReturnExit(
 
 /** Place at the actual return threshold and compute the inward walk. */
 export function beginArrival(
-	motor: CharacterMotor,
+	motor: ArrivalMotor,
 	area: WalkArea,
 	entry: Exit,
 	kind: Exit["kind"],

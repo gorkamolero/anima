@@ -1,10 +1,10 @@
+import type { CharacterMotor } from "@anima/footfall/phaser/CharacterMotor";
 import { GameObjects, type Scene } from "phaser";
 import { registerWithEditor } from "../editor";
 import {
 	type PositionUpdateCallback,
 	registerWithGroundLine,
 } from "../groundline";
-import type { CharacterMotor } from "./CharacterMotor";
 
 /**
  * Animation configuration for a character

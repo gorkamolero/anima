@@ -1,12 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { type Exit, exitAt } from "../occlusion/exits.js";
+import { type Exit, exitAt } from "@anima/footfall/core/occlusion/exits";
 import {
 	baselineYAt,
 	depthFor,
 	depthForOccluder,
 	isBehind,
 	type Occluder,
-} from "../occlusion/occlusion.js";
+} from "@anima/footfall/core/occlusion/occlusion";
+import { describe, expect, it } from "vitest";
 
 const prop: Occluder = {
 	id: "bench",

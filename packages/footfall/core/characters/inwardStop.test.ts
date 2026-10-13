@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { CharacterMotor } from "./CharacterMotor";
+import { CharacterMotor } from "../../phaser/CharacterMotor";
 import type { FootPose } from "./footLock";
 
 it("chooses a supported inward stop without moving the live character", async () => {

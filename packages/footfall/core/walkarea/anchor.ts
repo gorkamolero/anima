@@ -1,6 +1,5 @@
 import { GroundLine } from "../groundline/GroundLine";
 import type { GroundLineConfig } from "../groundline/types";
-import type { LandmarksFile } from "../verification/ArtLandmarks";
 import { fitFromLine } from "./perspective";
 import type { WalkArea } from "./types";
 
@@ -17,7 +16,7 @@ export function walkAreaFromAnchor(
 		freeWalkRanges?: { minX: number; maxX: number }[];
 		characters: { hermes?: { scale: number } };
 	},
-	landmarks: Pick<LandmarksFile, "horizonY">,
+	landmarks: { horizonY?: number },
 	maxFeetY = 944,
 ): WalkArea {
 	const line = new GroundLine(scene.groundLine),

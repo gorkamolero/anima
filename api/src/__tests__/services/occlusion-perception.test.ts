@@ -1,4 +1,6 @@
 // @vitest-environment node
+
+import { exitAt } from "@anima/footfall/core/occlusion/exits";
 import { describe, expect, it } from "vitest";
 import {
 	deriveExits,
@@ -9,7 +11,6 @@ import {
 	largestComponent,
 	maskGeometry,
 } from "../../../../api/src/services/occluders.js";
-import { exitAt } from "../occlusion/exits.js";
 
 function raster(
 	w: number,

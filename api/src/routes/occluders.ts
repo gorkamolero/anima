@@ -2,8 +2,8 @@ import { readFile } from "node:fs/promises";
 import {
 	classifyOccluder,
 	type Occluder,
-} from "@anima/engine/occlusion/occlusion";
-import type { Perspective } from "@anima/engine/walkarea/perspective";
+} from "@anima/footfall/core/occlusion/occlusion";
+import type { Perspective } from "@anima/footfall/core/walkarea/perspective";
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { cachedFloor, deriveOccluders } from "../services/occluders.js";

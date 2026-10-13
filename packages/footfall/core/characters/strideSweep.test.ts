@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
+import { CharacterMotor } from "../../phaser/CharacterMotor";
 import type { WalkArea } from "../walkarea/types";
-import { CharacterMotor } from "./CharacterMotor";
 import type { FootPose } from "./footLock";
 import { strideSweep } from "./strideSweep";
 

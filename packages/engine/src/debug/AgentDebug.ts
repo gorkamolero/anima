@@ -1,3 +1,4 @@
+import { captureSteps } from "@anima/footfall/sim/captureClock";
 import { GameObjects, Geom } from "phaser";
 import { Character } from "../characters/Character";
 import type { BaseScene } from "../scenes/BaseScene";
@@ -6,7 +7,6 @@ import {
 	type LandmarksFile,
 	verifySceneArt,
 } from "../verification/ArtLandmarks";
-import { captureSteps } from "./captureClock";
 
 /**
  * Snapshot of everything an agent needs to reason about a running scene.
