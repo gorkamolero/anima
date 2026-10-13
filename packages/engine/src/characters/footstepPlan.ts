@@ -281,19 +281,25 @@ export function planFootsteps<State, Pose>(
 		}
 	}
 	if (!sim.offset) return first;
-	const corrections = legs.map((leg, i) => {
-		const steps = first.steps.filter((s) => s.leg === i);
-		if (steps.length < 2) return { x: 0, y: 0 };
-		const last = steps[steps.length - 1];
-		const p = last.stop
-			? (sim.rest(last.state, last.pose, last.heading) ??
-				sim.position(last.state))
-			: sim.position(last.state);
-		const dx = (leg.to.x - p.x) / steps.length,
-			dy = (leg.to.y - p.y) / steps.length;
-		const factor = Math.min(1, 0.9 / Math.hypot(dx, dy));
-		return { x: dx * factor, y: dy * factor };
-	});
-	const corrected = simulatePlan(legs, initial, sim, corrections);
-	return corrected.distance <= first.distance ? corrected : first;
+	let corrections = legs.map(() => ({ x: 0, y: 0 }));
+	for (let pass = 0; pass < 3; pass++) {
+		const proposed = legs.map((leg, i) => {
+			const steps = first.steps.filter((s) => s.leg === i);
+			if (steps.length < 2) return corrections[i];
+			const last = steps[steps.length - 1];
+			const p = last.stop
+				? (sim.rest(last.state, last.pose, last.heading) ??
+					sim.position(last.state))
+				: sim.position(last.state);
+			const dx = corrections[i].x + (leg.to.x - p.x) / steps.length;
+			const dy = corrections[i].y + (leg.to.y - p.y) / steps.length;
+			const factor = Math.min(1, 0.9 / Math.hypot(dx, dy));
+			return { x: dx * factor, y: dy * factor };
+		});
+		const corrected = simulatePlan(legs, initial, sim, proposed);
+		if (corrected.distance >= first.distance) break;
+		first = corrected;
+		corrections = proposed;
+	}
+	return first;
 }
