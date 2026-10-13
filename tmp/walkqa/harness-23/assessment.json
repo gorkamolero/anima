@@ -1,0 +1,7 @@
+{
+  "openRequirements": [
+    "Acceptance failed: zero of 139 walks pass all goal bars.",
+    "L1 native-stride arrival; L2 turns/path; L3 exit integration; L4 drawn silhouette; L5 floor/mask geometry; L6 semantic harness coverage.",
+    "Two targeted repairs are not established for each generated exit mapping or newly isolated mask boundary."
+  ]
+}

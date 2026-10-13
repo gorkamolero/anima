@@ -1,0 +1,3362 @@
+{
+  "20": {
+    "walks": [
+      {
+        "scene": "alley",
+        "walk": "unreachable",
+        "cycleChanges": 19,
+        "headingChanges": 18,
+        "reversals": 12,
+        "sourceCycleChanges": 19
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-far",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 1,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "alley",
+        "walk": "near-left",
+        "cycleChanges": 14,
+        "headingChanges": 12,
+        "reversals": 5,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-behind",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "alley",
+        "walk": "deepest",
+        "cycleChanges": 11,
+        "headingChanges": 10,
+        "reversals": 1,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "alley",
+        "walk": "far-right",
+        "cycleChanges": 17,
+        "headingChanges": 16,
+        "reversals": 5,
+        "sourceCycleChanges": 17
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "alley",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-toward",
+        "cycleChanges": 22,
+        "headingChanges": 20,
+        "reversals": 6,
+        "sourceCycleChanges": 22
+      },
+      {
+        "scene": "alley",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-away",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "far-left",
+        "cycleChanges": 11,
+        "headingChanges": 10,
+        "reversals": 3,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-near",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "alley",
+        "walk": "object",
+        "cycleChanges": 21,
+        "headingChanges": 20,
+        "reversals": 11,
+        "sourceCycleChanges": 21
+      },
+      {
+        "scene": "square",
+        "walk": "unreachable",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "exit-edge-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-behind",
+        "cycleChanges": 13,
+        "headingChanges": 11,
+        "reversals": 4,
+        "sourceCycleChanges": 13
+      },
+      {
+        "scene": "square",
+        "walk": "deepest",
+        "cycleChanges": 13,
+        "headingChanges": 12,
+        "reversals": 5,
+        "sourceCycleChanges": 13
+      },
+      {
+        "scene": "square",
+        "walk": "far-right",
+        "cycleChanges": 9,
+        "headingChanges": 7,
+        "reversals": 1,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-back",
+        "cycleChanges": 41,
+        "headingChanges": 39,
+        "reversals": 26,
+        "sourceCycleChanges": 41
+      },
+      {
+        "scene": "square",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 2,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-toward",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 2,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "square",
+        "walk": "near-right",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-away",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "square",
+        "walk": "far-left",
+        "cycleChanges": 12,
+        "headingChanges": 11,
+        "reversals": 3,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "square",
+        "walk": "object",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "church",
+        "walk": "unreachable",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 4,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "church",
+        "walk": "near-left",
+        "cycleChanges": 21,
+        "headingChanges": 20,
+        "reversals": 10,
+        "sourceCycleChanges": 21
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-behind",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 3,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "church",
+        "walk": "deepest",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 5,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "church",
+        "walk": "far-right",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 2,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-back",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 2,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "church",
+        "walk": "near-right",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 2,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-away",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 3,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "church",
+        "walk": "far-left",
+        "cycleChanges": 45,
+        "headingChanges": 44,
+        "reversals": 23,
+        "sourceCycleChanges": 45
+      },
+      {
+        "scene": "church",
+        "walk": "object",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 2,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "lobby",
+        "walk": "unreachable",
+        "cycleChanges": 9,
+        "headingChanges": 7,
+        "reversals": 4,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 3,
+        "reversals": 3,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-behind",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 3,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "lobby",
+        "walk": "deepest",
+        "cycleChanges": 13,
+        "headingChanges": 12,
+        "reversals": 4,
+        "sourceCycleChanges": 13
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-back",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "lobby",
+        "walk": "narrow-gap",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 4,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-toward",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-right",
+        "cycleChanges": 14,
+        "headingChanges": 14,
+        "reversals": 5,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-away",
+        "cycleChanges": 15,
+        "headingChanges": 15,
+        "reversals": 4,
+        "sourceCycleChanges": 15
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "object",
+        "cycleChanges": 14,
+        "headingChanges": 13,
+        "reversals": 1,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "road",
+        "walk": "unreachable",
+        "cycleChanges": 10,
+        "headingChanges": 8,
+        "reversals": 2,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left",
+        "cycleChanges": 9,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "exit-far",
+        "cycleChanges": 10,
+        "headingChanges": 7,
+        "reversals": 0,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "road",
+        "walk": "near-left",
+        "cycleChanges": 15,
+        "headingChanges": 14,
+        "reversals": 5,
+        "sourceCycleChanges": 15
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-right",
+        "cycleChanges": 16,
+        "headingChanges": 6,
+        "reversals": 0,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-behind",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 2,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "road",
+        "walk": "deepest",
+        "cycleChanges": 14,
+        "headingChanges": 13,
+        "reversals": 3,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "road",
+        "walk": "far-right",
+        "cycleChanges": 17,
+        "headingChanges": 15,
+        "reversals": 3,
+        "sourceCycleChanges": 17
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-back",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "road",
+        "walk": "narrow-gap",
+        "cycleChanges": 26,
+        "headingChanges": 25,
+        "reversals": 16,
+        "sourceCycleChanges": 26
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-toward",
+        "cycleChanges": 11,
+        "headingChanges": 10,
+        "reversals": 0,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "road",
+        "walk": "near-right",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 1,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-away",
+        "cycleChanges": 17,
+        "headingChanges": 8,
+        "reversals": 1,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "road",
+        "walk": "far-left",
+        "cycleChanges": 21,
+        "headingChanges": 17,
+        "reversals": 3,
+        "sourceCycleChanges": 18
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-2",
+        "cycleChanges": 9,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 9,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "object",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 1,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "outside",
+        "walk": "unreachable",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 5,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left",
+        "cycleChanges": 11,
+        "headingChanges": 6,
+        "reversals": 3,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-far",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 5,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "outside",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-right",
+        "cycleChanges": 26,
+        "headingChanges": 21,
+        "reversals": 7,
+        "sourceCycleChanges": 22
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-behind",
+        "cycleChanges": 11,
+        "headingChanges": 9,
+        "reversals": 3,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "outside",
+        "walk": "deepest",
+        "cycleChanges": 14,
+        "headingChanges": 12,
+        "reversals": 4,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "outside",
+        "walk": "far-right",
+        "cycleChanges": 27,
+        "headingChanges": 21,
+        "reversals": 4,
+        "sourceCycleChanges": 22
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-depot_doors",
+        "cycleChanges": 65,
+        "headingChanges": 63,
+        "reversals": 36,
+        "sourceCycleChanges": 64
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-back",
+        "cycleChanges": 79,
+        "headingChanges": 78,
+        "reversals": 38,
+        "sourceCycleChanges": 79
+      },
+      {
+        "scene": "outside",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 15,
+        "headingChanges": 14,
+        "reversals": 1,
+        "sourceCycleChanges": 15
+      },
+      {
+        "scene": "outside",
+        "walk": "near-right",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-away",
+        "cycleChanges": 9,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "outside",
+        "walk": "far-left",
+        "cycleChanges": 35,
+        "headingChanges": 33,
+        "reversals": 12,
+        "sourceCycleChanges": 35
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 11,
+        "headingChanges": 6,
+        "reversals": 3,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "outside",
+        "walk": "object",
+        "cycleChanges": 23,
+        "headingChanges": 21,
+        "reversals": 9,
+        "sourceCycleChanges": 23
+      },
+      {
+        "scene": "inside",
+        "walk": "unreachable",
+        "cycleChanges": 69,
+        "headingChanges": 68,
+        "reversals": 52,
+        "sourceCycleChanges": 69
+      },
+      {
+        "scene": "inside",
+        "walk": "exit-bus_platform",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "near-left",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 6,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-behind",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 3,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "inside",
+        "walk": "deepest",
+        "cycleChanges": 83,
+        "headingChanges": 81,
+        "reversals": 47,
+        "sourceCycleChanges": 83
+      },
+      {
+        "scene": "inside",
+        "walk": "far-right",
+        "cycleChanges": 9,
+        "headingChanges": 7,
+        "reversals": 4,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-back",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "inside",
+        "walk": "narrow-gap",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 2,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "inside",
+        "walk": "near-right",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-away",
+        "cycleChanges": 15,
+        "headingChanges": 14,
+        "reversals": 9,
+        "sourceCycleChanges": 15
+      },
+      {
+        "scene": "inside",
+        "walk": "far-left",
+        "cycleChanges": 15,
+        "headingChanges": 14,
+        "reversals": 5,
+        "sourceCycleChanges": 15
+      },
+      {
+        "scene": "inside",
+        "walk": "object",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 0,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "grocery",
+        "walk": "unreachable",
+        "cycleChanges": 23,
+        "headingChanges": 22,
+        "reversals": 18,
+        "sourceCycleChanges": 23
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-left",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 2,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-behind",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 6,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "grocery",
+        "walk": "deepest",
+        "cycleChanges": 22,
+        "headingChanges": 21,
+        "reversals": 15,
+        "sourceCycleChanges": 22
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-right",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-back",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 3,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "grocery",
+        "walk": "narrow-gap",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 2,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-toward",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-right",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 1,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-away",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-left",
+        "cycleChanges": 14,
+        "headingChanges": 13,
+        "reversals": 6,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "grocery",
+        "walk": "object",
+        "cycleChanges": 20,
+        "headingChanges": 19,
+        "reversals": 9,
+        "sourceCycleChanges": 20
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "unreachable",
+        "cycleChanges": 14,
+        "headingChanges": 12,
+        "reversals": 6,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-left",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 1,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-far",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 5,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-left",
+        "cycleChanges": 18,
+        "headingChanges": 17,
+        "reversals": 7,
+        "sourceCycleChanges": 18
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-right",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-behind",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 6,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "deepest",
+        "cycleChanges": 17,
+        "headingChanges": 15,
+        "reversals": 7,
+        "sourceCycleChanges": 17
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-right",
+        "cycleChanges": 18,
+        "headingChanges": 17,
+        "reversals": 9,
+        "sourceCycleChanges": 18
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-back",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-toward",
+        "cycleChanges": 12,
+        "headingChanges": 11,
+        "reversals": 4,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-away",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "object",
+        "cycleChanges": 11,
+        "headingChanges": 9,
+        "reversals": 0,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "pier",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-left",
+        "cycleChanges": 22,
+        "headingChanges": 22,
+        "reversals": 16,
+        "sourceCycleChanges": 22
+      },
+      {
+        "scene": "pier",
+        "walk": "near-left",
+        "cycleChanges": 12,
+        "headingChanges": 11,
+        "reversals": 6,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-behind",
+        "cycleChanges": 1,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "pier",
+        "walk": "deepest",
+        "cycleChanges": 16,
+        "headingChanges": 15,
+        "reversals": 10,
+        "sourceCycleChanges": 16
+      },
+      {
+        "scene": "pier",
+        "walk": "far-right",
+        "cycleChanges": 16,
+        "headingChanges": 15,
+        "reversals": 8,
+        "sourceCycleChanges": 16
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-back",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "pier",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-toward",
+        "cycleChanges": 12,
+        "headingChanges": 11,
+        "reversals": 6,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "pier",
+        "walk": "near-right",
+        "cycleChanges": 8,
+        "headingChanges": 8,
+        "reversals": 5,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-away",
+        "cycleChanges": 8,
+        "headingChanges": 8,
+        "reversals": 5,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "pier",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "object",
+        "cycleChanges": 30,
+        "headingChanges": 30,
+        "reversals": 23,
+        "sourceCycleChanges": 30
+      }
+    ],
+    "medianCycleChanges": 9,
+    "medianHeadingChanges": 7,
+    "walksWithReversal": 106,
+    "maxCycleChanges": 83
+  },
+  "21": {
+    "walks": [
+      {
+        "scene": "alley",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-far",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-behind",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "alley",
+        "walk": "deepest",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "alley",
+        "walk": "narrow-gap",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "near-right",
+        "cycleChanges": 3,
+        "headingChanges": 3,
+        "reversals": 2,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-away",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "alley",
+        "walk": "far-left",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-near",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "alley",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "exit-edge-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-behind",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "deepest",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-back",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "near-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-away",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "square",
+        "walk": "far-left",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "object",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "church",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "deepest",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "church",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "church",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "near-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-away",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-behind",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "deepest",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-toward",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-right",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-away",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "road",
+        "walk": "exit-far",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-behind",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "deepest",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "far-right",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-toward",
+        "cycleChanges": 6,
+        "headingChanges": 4,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-away",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "far-left",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-2",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "road",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "unreachable",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-far",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-right",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-behind",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "deepest",
+        "cycleChanges": 6,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "outside",
+        "walk": "far-right",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-depot_doors",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-back",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "outside",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "outside",
+        "walk": "near-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-away",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "object",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "inside",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "exit-bus_platform",
+        "cycleChanges": 1,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "inside",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "deepest",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "inside",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "near-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-away",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "object",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "deepest",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-back",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-right",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-away",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-far",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-right",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-behind",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "deepest",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-away",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "object",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "pier",
+        "walk": "unreachable",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "deepest",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "far-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-toward",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-away",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "object",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 2
+      }
+    ],
+    "medianCycleChanges": 2,
+    "medianHeadingChanges": 0,
+    "walksWithReversal": 10,
+    "maxCycleChanges": 7
+  },
+  "22": {
+    "walks": [
+      {
+        "scene": "alley",
+        "walk": "unreachable",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-far",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "alley",
+        "walk": "near-left",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "deepest",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "far-right",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "alley",
+        "walk": "occluder-back",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 2,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "alley",
+        "walk": "diagonal-away",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 1,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "alley",
+        "walk": "far-left",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "alley",
+        "walk": "exit-near",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "alley",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "unreachable",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "exit-edge-left",
+        "cycleChanges": 7,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "square",
+        "walk": "near-left",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-behind",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 6,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "square",
+        "walk": "deepest",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "square",
+        "walk": "far-right",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 1,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "square",
+        "walk": "occluder-back",
+        "cycleChanges": 10,
+        "headingChanges": 9,
+        "reversals": 3,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "square",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-toward",
+        "cycleChanges": 8,
+        "headingChanges": 6,
+        "reversals": 0,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "square",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "square",
+        "walk": "diagonal-away",
+        "cycleChanges": 8,
+        "headingChanges": 6,
+        "reversals": 2,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "square",
+        "walk": "far-left",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "square",
+        "walk": "object",
+        "cycleChanges": 8,
+        "headingChanges": 6,
+        "reversals": 1,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "church",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "near-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "deepest",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "far-right",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "church",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "church",
+        "walk": "narrow-gap",
+        "cycleChanges": 2,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "church",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "diagonal-away",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "church",
+        "walk": "far-left",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "church",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "unreachable",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-left",
+        "cycleChanges": 7,
+        "headingChanges": 7,
+        "reversals": 1,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-behind",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "deepest",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "occluder-back",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "lobby",
+        "walk": "narrow-gap",
+        "cycleChanges": 12,
+        "headingChanges": 10,
+        "reversals": 2,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-toward",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "near-right",
+        "cycleChanges": 5,
+        "headingChanges": 5,
+        "reversals": 1,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "lobby",
+        "walk": "diagonal-away",
+        "cycleChanges": 14,
+        "headingChanges": 14,
+        "reversals": 5,
+        "sourceCycleChanges": 14
+      },
+      {
+        "scene": "lobby",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "lobby",
+        "walk": "object",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "road",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left",
+        "cycleChanges": 6,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "exit-far",
+        "cycleChanges": 2,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "road",
+        "walk": "near-left",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-right",
+        "cycleChanges": 10,
+        "headingChanges": 5,
+        "reversals": 0,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-behind",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "deepest",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "far-right",
+        "cycleChanges": 11,
+        "headingChanges": 10,
+        "reversals": 1,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "road",
+        "walk": "occluder-back",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-toward",
+        "cycleChanges": 10,
+        "headingChanges": 8,
+        "reversals": 1,
+        "sourceCycleChanges": 10
+      },
+      {
+        "scene": "road",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "diagonal-away",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "road",
+        "walk": "far-left",
+        "cycleChanges": 12,
+        "headingChanges": 10,
+        "reversals": 2,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-2",
+        "cycleChanges": 6,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 6,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "road",
+        "walk": "object",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "unreachable",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 1,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left",
+        "cycleChanges": 8,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-far",
+        "cycleChanges": 7,
+        "headingChanges": 6,
+        "reversals": 1,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "outside",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-right",
+        "cycleChanges": 14,
+        "headingChanges": 11,
+        "reversals": 1,
+        "sourceCycleChanges": 12
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-behind",
+        "cycleChanges": 11,
+        "headingChanges": 10,
+        "reversals": 3,
+        "sourceCycleChanges": 11
+      },
+      {
+        "scene": "outside",
+        "walk": "deepest",
+        "cycleChanges": 13,
+        "headingChanges": 12,
+        "reversals": 3,
+        "sourceCycleChanges": 13
+      },
+      {
+        "scene": "outside",
+        "walk": "far-right",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 0,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-depot_doors",
+        "cycleChanges": 16,
+        "headingChanges": 15,
+        "reversals": 1,
+        "sourceCycleChanges": 16
+      },
+      {
+        "scene": "outside",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "outside",
+        "walk": "narrow-gap",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 9,
+        "headingChanges": 7,
+        "reversals": 1,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "outside",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "diagonal-away",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "outside",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "outside",
+        "walk": "exit-edge-left-1",
+        "cycleChanges": 8,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "outside",
+        "walk": "object",
+        "cycleChanges": 7,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 7
+      },
+      {
+        "scene": "inside",
+        "walk": "unreachable",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "inside",
+        "walk": "exit-bus_platform",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "inside",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-behind",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "inside",
+        "walk": "deepest",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 4,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "inside",
+        "walk": "far-right",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "inside",
+        "walk": "occluder-back",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "inside",
+        "walk": "narrow-gap",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-toward",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "inside",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "inside",
+        "walk": "diagonal-away",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "inside",
+        "walk": "far-left",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "inside",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "grocery",
+        "walk": "unreachable",
+        "cycleChanges": 4,
+        "headingChanges": 4,
+        "reversals": 3,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "deepest",
+        "cycleChanges": 6,
+        "headingChanges": 4,
+        "reversals": 0,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-right",
+        "cycleChanges": 6,
+        "headingChanges": 4,
+        "reversals": 1,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "grocery",
+        "walk": "occluder-back",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "grocery",
+        "walk": "narrow-gap",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "grocery",
+        "walk": "near-right",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 0,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "grocery",
+        "walk": "diagonal-away",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "grocery",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "grocery",
+        "walk": "object",
+        "cycleChanges": 4,
+        "headingChanges": 3,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "unreachable",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-left",
+        "cycleChanges": 6,
+        "headingChanges": 5,
+        "reversals": 2,
+        "sourceCycleChanges": 6
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-far",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-left",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "exit-edge-right",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-behind",
+        "cycleChanges": 5,
+        "headingChanges": 3,
+        "reversals": 2,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "deepest",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-right",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "occluder-back",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 1,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "narrow-gap",
+        "cycleChanges": 5,
+        "headingChanges": 4,
+        "reversals": 2,
+        "sourceCycleChanges": 5
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-toward",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "diagonal-away",
+        "cycleChanges": 1,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 1
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "far-left",
+        "cycleChanges": 2,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "stepped-street",
+        "walk": "object",
+        "cycleChanges": 8,
+        "headingChanges": 6,
+        "reversals": 1,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "pier",
+        "walk": "unreachable",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-left",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "near-left",
+        "cycleChanges": 8,
+        "headingChanges": 7,
+        "reversals": 5,
+        "sourceCycleChanges": 8
+      },
+      {
+        "scene": "pier",
+        "walk": "exit-edge-right",
+        "cycleChanges": 9,
+        "headingChanges": 8,
+        "reversals": 2,
+        "sourceCycleChanges": 9
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-behind",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "deepest",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "pier",
+        "walk": "far-right",
+        "cycleChanges": 4,
+        "headingChanges": 2,
+        "reversals": 1,
+        "sourceCycleChanges": 4
+      },
+      {
+        "scene": "pier",
+        "walk": "occluder-back",
+        "cycleChanges": 2,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 2
+      },
+      {
+        "scene": "pier",
+        "walk": "narrow-gap",
+        "cycleChanges": 3,
+        "headingChanges": 1,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-toward",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      },
+      {
+        "scene": "pier",
+        "walk": "near-right",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "diagonal-away",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "far-left",
+        "cycleChanges": 0,
+        "headingChanges": 0,
+        "reversals": 0,
+        "sourceCycleChanges": 0
+      },
+      {
+        "scene": "pier",
+        "walk": "object",
+        "cycleChanges": 3,
+        "headingChanges": 2,
+        "reversals": 0,
+        "sourceCycleChanges": 3
+      }
+    ],
+    "medianCycleChanges": 4,
+    "medianHeadingChanges": 2,
+    "walksWithReversal": 54,
+    "maxCycleChanges": 16
+  }
+}
