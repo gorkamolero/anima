@@ -1030,5 +1030,5 @@ it("a click plan contains standing pivots only at its first action and one final
 		true,
 	);
 	expect(internal.planned.filter((step) => step.stop)).toHaveLength(1);
-	expect(internal.planned.at(-1)?.stop).toBe(true);
+	expect(internal.planned[internal.planned.length - 1]?.stop).toBe(true);
 });

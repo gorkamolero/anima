@@ -338,22 +338,21 @@ export class CharacterMotor {
 		let samples: { pose: FootPose; position: Point & { scale: number } }[] = [
 			{ pose, position },
 		];
-		let firstStance = source.firstStance ?? false;
-		const facing = (last = false) =>
+		const facing = () =>
 			!heading ||
 			stanceFacesHeading(
 				stanceStart,
 				this.groundPoint(position),
 				heading,
 				this.area.perspective.constant === undefined,
-				firstStance || last ? 35 : 30,
+				30,
 			);
 
 		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
 				this.canStand(pose, anchor, foot, position.scale) &&
-				facing(true)
+				facing()
 			) {
 				const absorption = absorb
 					? this.stopAbsorption(samples, anchor, foot)
@@ -383,7 +382,6 @@ export class CharacterMotor {
 			const previousAnchorY = anchor.y;
 			if (incoming !== foot) {
 				if (!facing()) return this.reject("facing-invalid");
-				firstStance = false;
 				const previous = this.groundPoint(anchor);
 				anchor = contactOnScreen(pose, incoming, position, position.scale);
 				const nextGround = this.groundPoint(anchor);
@@ -644,7 +642,7 @@ export class CharacterMotor {
 		options = {
 			now: () => 0,
 			timeBudgetMs: Infinity,
-			nodeBudget: 4000,
+			nodeBudget: 12000,
 			resolution: 0.005,
 			stopWeight: 32,
 			turnCost: 1.2,
@@ -754,7 +752,7 @@ export class CharacterMotor {
 									s.foot,
 									s.scale,
 									direction,
-									starting ? 35 : 30,
+									30,
 								)) &&
 							(!starting ||
 								this.canStand(
