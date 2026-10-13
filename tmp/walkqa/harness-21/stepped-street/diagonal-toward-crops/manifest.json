@@ -1,0 +1,31 @@
+{
+  "flagged": [
+    8,
+    11,
+    14
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Boardwalk fragment slices through both legs throughout walk and stop.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/diagonal-toward-sheet.png": "ae5db906d9b368d71b2d3db666ff99ce88af022a2115ad009ea3a694f92e6187",
+    "tmp/walkqa/harness-21/stepped-street/diagonal-toward-crops/feet-review-000.png": "ef64d3fe7600b672dabb758d726ca1eaad090ffdc5b841e355e6f51fbe595c1f",
+    "tmp/walkqa/harness-21/stepped-street/diagonal-toward-crops/stop-review-000.png": "1885c12b79d1e0b2e7e668f581700b0c599c2d0c71853c4ea5fb9323d2878554"
+  }
+}

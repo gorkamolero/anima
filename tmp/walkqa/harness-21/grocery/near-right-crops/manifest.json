@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    53,
+    54,
+    55,
+    56,
+    57,
+    58
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt right-to-toward cycle change before settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/near-right-sheet.png": "b8e4289ed8adf6b8b24aaf9ed8f4fc872114e4c70241f7d7bc260507b29f7652",
+    "tmp/walkqa/harness-21/grocery/near-right-crops/feet-review-000.png": "b949e253196de2b6520cfb8def5909f928b02e455559f1b455a51d16aa3b95ee",
+    "tmp/walkqa/harness-21/grocery/near-right-crops/stop-review-000.png": "71684a169f0c32c68d8933c2c5974f179e95c3a29343d92e74f380b4a6146ae4"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    24,
+    25,
+    26,
+    27,
+    28,
+    34,
+    37,
+    38,
+    39,
+    40,
+    46,
+    47,
+    48
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Consistent rightward motion and straight standing stop.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/diagonal-toward-sheet.png": "5d1a3281029dee78cb38f4caa7c3257dfe51d9d888b3a85796b8d044805b3069",
+    "tmp/walkqa/harness-21/grocery/diagonal-toward-crops/feet-review-000.png": "9c8a0ea065bbbdb1d8a8146a8fc0c69d0fc64a913c5014e63aae61da2d2e13b9",
+    "tmp/walkqa/harness-21/grocery/diagonal-toward-crops/stop-review-000.png": "1c2e26262b904dfaecdfd0e624ec8a07b6f94ea487af86bac6b94e37dcf55179"
+  }
+}

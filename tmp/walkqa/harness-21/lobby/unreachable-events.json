@@ -1,0 +1,69 @@
+{
+  "captureSource": {
+    "packages/engine/src/characters/CharacterMotor.ts": "aa9d1098f50d7187225c7b02d7df34a263670c2127bf737243404fac242fc8f5",
+    "packages/engine/src/characters/footstepPlan.ts": "f37e5088a7ef685deb67c5446c0d7f6a99acb38e12f833bb9e3a02f0622f17f4",
+    "api/src/services/occluders.ts": "c1e1a62cb36ac96cd21005315547de032202937bd2598fc7cfc70b9ee4f1bde1",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "8da84a1614d3f6bb012617a898893a36e621147d4bea0e4d82ad8b2e8054ae55"
+  },
+  "beat": {
+    "name": "unreachable",
+    "start": [
+      957.5,
+      822.5
+    ],
+    "click": [
+      960,
+      522.5
+    ]
+  },
+  "setup": {
+    "click": [
+      960,
+      522.5
+    ],
+    "preview": [
+      {
+        "x": 957.5,
+        "y": 822.5
+      },
+      {
+        "x": 967.5,
+        "y": 757.5
+      }
+    ],
+    "start": {
+      "x": 957.5,
+      "y": 822.5
+    },
+    "exits": []
+  },
+  "events": [
+    {
+      "frame": 1,
+      "type": "emitOpenWorldState",
+      "data": {
+        "status": "loading",
+        "object": "stairs"
+      },
+      "location": "place-7672fad03a2b6c668284",
+      "walking": false
+    },
+    {
+      "frame": 3,
+      "type": "emitOpenWorldState",
+      "data": {
+        "status": "options",
+        "object": "stairs",
+        "options": [
+          "Ascend the stairs.",
+          "Examine the staircase more closely.",
+          "Look underneath the stairs."
+        ]
+      },
+      "location": "place-7672fad03a2b6c668284",
+      "walking": false
+    }
+  ],
+  "completed": true,
+  "timedOut": false
+}

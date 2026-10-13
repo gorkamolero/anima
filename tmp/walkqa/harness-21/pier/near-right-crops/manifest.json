@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Walks toward camera instead of across pier; oversized sprite clipped by screen.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/pier/near-right-sheet.png": "1df7dce97bd7bbc5f1ceda7efed4751674db0208accd0881d8142b71825a396c",
+    "tmp/walkqa/harness-21/pier/near-right-crops/feet-review-000.png": "311dc452f9ae05093ee9914f84d97f811c7fbe5aa0395559135bb207965dae6d",
+    "tmp/walkqa/harness-21/pier/near-right-crops/stop-review-000.png": "9c70b20b2b8c6ae5d659d2f385b5ac94532fa29f31e69575af564328d148a36c"
+  }
+}

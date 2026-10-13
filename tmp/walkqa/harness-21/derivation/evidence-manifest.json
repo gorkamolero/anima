@@ -1,0 +1,200 @@
+{
+  "note": "Full masks and overlays remain local; installed derived assets are committed separately. This manifest identifies the retained derivation evidence.",
+  "files": [
+    {
+      "path": "tmp/walkqa/harness-21/derivation/alley-layer-overlay.png",
+      "bytes": 3083006,
+      "sha256": "eaaf4a2856015f6c00e0e812e91beb2195757f5eca16acaad3d90dcd8d9fc74b"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/alley-layers-attempt1.json",
+      "bytes": 6465,
+      "sha256": "9f98ee7837b4d277f7f77746a5fda3a79d0e954c566de0e0f683610af00413b3"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/alley-layers.json",
+      "bytes": 8586,
+      "sha256": "3c4823b2a4e9e77b571a25f4bc30ad8d3aa3636a1ea6ea0c2ded01ca39cee385"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/alley.json",
+      "bytes": 1044325,
+      "sha256": "879ff376f930ba3e7c2c9a711992bbc198bdbd2f32a5a9d7ad0f6d376e2463b0"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/church-layer-overlay-2.png",
+      "bytes": 2880560,
+      "sha256": "77837b442c93f20860d96b5069788a6ba82c53ba2c787c4dee8139c86267f8f2"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/church-layer-overlay.png",
+      "bytes": 2880481,
+      "sha256": "e9ce616e5bbc51a86175888bfec163fac7030e78cdaad66edc7c886ea4f538a4"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/church-layers-attempt1.json",
+      "bytes": 14907,
+      "sha256": "57150f85dad06b18386504a65b5c1a7f2ded479fb01978fbff88ebb44f9995cc"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/church-layers.json",
+      "bytes": 18669,
+      "sha256": "c8cdaae14e9685098062100a983080ad798d7379324511af62afbff473d61662"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/church.json",
+      "bytes": 2916710,
+      "sha256": "0c325e1db464f4aee2414feb5e55b1022e29785b6f026fdc1bbc3cef8680c3f1"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/grocery-layers-attempt1.json",
+      "bytes": 12772,
+      "sha256": "71be368dfe9578735c0ac2dff939a930baacc0d3db7740bf3ce31f0e5387930e"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/grocery-layers.json",
+      "bytes": 16952,
+      "sha256": "665ee7485fb6ffab3b8f45f90642ace11de0fccbc1963709b2ad3e46deb2af3f"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/grocery.json",
+      "bytes": 4168653,
+      "sha256": "57758eced274173ccaf25c5bac4e8630b2b99e4c8e0cf06d1589077c7272d5da"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/inside-layers-attempt1.json",
+      "bytes": 2408,
+      "sha256": "21ab88201277ce7cd8f260f1e0d21d324e7d7949759fbbf74a60218ddae7e829"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/inside-layers.json",
+      "bytes": 3318,
+      "sha256": "939b20bc6146d1cdaa1d2ea9792e1569ccca8ab2fe65d9b21e9be87066379e20"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/inside.json",
+      "bytes": 10457045,
+      "sha256": "5ddf02a0dd9123a7ee4be70f4c72f82e3184818fe3c2764c94c2b38c334a62b0"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/layer-summary.json",
+      "bytes": 160744,
+      "sha256": "910ae85b4b9828b9602fcec057b4fe3e4c0bf524917f1f30c65257e93f8e2983"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/lobby-desk-mask.png",
+      "bytes": 586361,
+      "sha256": "a688ab65ed3c19785161a7d88bf09b5caf35a6c8f41ffdb36d62f243628d89b3"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/lobby-layer-overlay-2.png",
+      "bytes": 3015212,
+      "sha256": "660d2c87e32885a15d74c30316671bfe6a938ce351c517c66511624d4afcee83"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/lobby-layers-attempt1.json",
+      "bytes": 4846,
+      "sha256": "ee766d96d890a16f337a10a95fecc6c9632a064f3a2141fb0a05f8fb737f7da7"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/lobby-layers.json",
+      "bytes": 5678,
+      "sha256": "ecc62baa07ca09e8d9456f4313c328aac042cd79a5f6294c9c1256cf7a9e0125"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/lobby.json",
+      "bytes": 4156012,
+      "sha256": "16e62e9353e8e7b7267e1d7e6ac1abe486f2521a468ffe723ef9ea18fe61affc"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/outside-layers-attempt1.json",
+      "bytes": 16152,
+      "sha256": "13c74a82109d2b96d3c69ceb2e8c9e73fd0263e6ddf8d4066e3a69dfbe3545b6"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/outside-layers.json",
+      "bytes": 22269,
+      "sha256": "f8e1eec07d4f522e1bd6fa6c08869ab7b697738c78fa61b048361f278cc3c5cd"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/outside.json",
+      "bytes": 4017670,
+      "sha256": "f8c09b8d8d659f794f49ff5af034dfaa2490a0a67f1d23c2a243ec94daf01aa3"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/overlays.png",
+      "bytes": 5701522,
+      "sha256": "91635056e4f845faba82c4e1592000bf6f6fefd8ab39088ee8639209715b4bad"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/pier-layers-attempt1.json",
+      "bytes": 26343,
+      "sha256": "ebfc9e9435d158550fd6908be636e9aab55031374ea30ab7a21fa1f95e91a0fb"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/pier-layers.json",
+      "bytes": 35639,
+      "sha256": "f62d51e2093ff12ac928231e450bac6e21a1b85e74210aa4297ffdd4ca92af7f"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/pier.json",
+      "bytes": 4213141,
+      "sha256": "5b8a9f4770321c337546d0076e93717b0723abb54962ec388557d98a03fa0df2"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/refined-overlays.png",
+      "bytes": 5704222,
+      "sha256": "91d67021a0b14dc122b8fb9983fb132ff383af73964188b8f15fa1657d8a1601"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/road-layers-attempt1.json",
+      "bytes": 9965,
+      "sha256": "ab5f9d48badb220f2f28765b3f1c7f8503ec30931891ff91026646895f2d3318"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/road-layers.json",
+      "bytes": 12114,
+      "sha256": "7f440a849d67a69febd82ef22a18f2d6c542c791713328ef88a99a5ce03f7815"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/road.json",
+      "bytes": 4038255,
+      "sha256": "040079fa69f77b7074c06441e0b7c1eb1ede9dbe43d74f2081dd790a1db645b4"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/square-layers-attempt1.json",
+      "bytes": 8420,
+      "sha256": "c11f7d327ee1fd395aa615f5860ba663a9640b922df8aa85068d454d13e5f51e"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/square-layers.json",
+      "bytes": 8655,
+      "sha256": "6b59f5c6b7b92e19ed933d761d5467316729c36288cf57dff750f0f7d07023a0"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/square.json",
+      "bytes": 4806430,
+      "sha256": "5bfc5f26a19bc14b114297a9b590a12296027f22ebd03a79ae1b430c6458d0a6"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/stepped-street-layers-attempt1.json",
+      "bytes": 10981,
+      "sha256": "1f8d923e9cd828e332bcc9e5fe5de02a10df38b7143ca2c55367d02541b7933d"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/stepped-street-layers.json",
+      "bytes": 14518,
+      "sha256": "704c5309efb08169dfc37550f68e80376f4ab17f0578372c36f192e202ac254c"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/stepped-street.json",
+      "bytes": 4791329,
+      "sha256": "ae1852e5ebd822a5be637bde7133543a5aa6dc7e42b669a28c702bfa4e080ce1"
+    },
+    {
+      "path": "tmp/walkqa/harness-21/derivation/summary.json",
+      "bytes": 3249,
+      "sha256": "e66dde529a64e9cfa067b18753baafdf1824eedb3371b2c62e8f978962921cfa"
+    }
+  ]
+}

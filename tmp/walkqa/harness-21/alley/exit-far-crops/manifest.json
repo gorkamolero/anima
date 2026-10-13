@@ -1,0 +1,33 @@
+{
+  "flagged": [
+    14,
+    16,
+    17,
+    25,
+    26
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Single consistent heading, intact boots and straight standing settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/alley/exit-far-sheet.png": "5bf741d2f368a3f29a2acc5813eace5a3abb37645f870cdd87f57ad9c9f25512",
+    "tmp/walkqa/harness-21/alley/exit-far-crops/feet-review-000.png": "8fc73d101a32b85c69efc9ebbaa4d5b81ffde0d7eba07e6c8b85eb371b220b0d",
+    "tmp/walkqa/harness-21/alley/exit-far-crops/stop-review-000.png": "b8fa283d071880ae198d225ba39d1cebed558715b70a92e600e2d77274f25803"
+  }
+}

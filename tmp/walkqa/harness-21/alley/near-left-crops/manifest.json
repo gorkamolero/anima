@@ -1,0 +1,53 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    36,
+    37,
+    38,
+    46,
+    47,
+    48,
+    61,
+    62,
+    63,
+    64,
+    67,
+    69,
+    70
+  ],
+  "random": [
+    92,
+    87,
+    100,
+    98,
+    19
+  ],
+  "stop": [
+    97,
+    98,
+    99,
+    100,
+    101,
+    102
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Boots stay above flat debris, but final pose is bent-kneed; visible abrupt changes between planned cycle legs.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/alley/near-left-sheet.png": "f3e583fb5e012986f2b54046186108d3a8268729d406383a72713eb8a89ccaf5",
+    "tmp/walkqa/harness-21/alley/near-left-crops/feet-review-000.png": "b8d353b6e83c302e27852f1705b4a69eaa4aaf67a23bbf70527b5eb72bc037b8",
+    "tmp/walkqa/harness-21/alley/near-left-crops/stop-review-000.png": "efa31657358927cca7ad84ffbbeaf7dd260da418b0a50f85869abd135a622996"
+  }
+}

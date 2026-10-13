@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    14,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short motion followed by abrupt facing change into rest; soles remain outside stair risers.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/lobby/narrow-gap-sheet.png": "bf127983719bc4df570df340b8cc00a94bd19c4b58f9c03927b2be9a514ccf69",
+    "tmp/walkqa/harness-21/lobby/narrow-gap-crops/feet-review-000.png": "58d68302510917e70d4fb1eec946d6fb5ff0615fd514ed0db6a736b4754ed55e",
+    "tmp/walkqa/harness-21/lobby/narrow-gap-crops/stop-review-000.png": "c95800fd7d0e731b17d94ce0e03661edb4abc5cdee3ac88227c9818f58ea145b"
+  }
+}

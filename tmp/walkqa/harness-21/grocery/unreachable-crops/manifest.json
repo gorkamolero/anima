@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Stationary at start; no meaningful traversal.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/unreachable-sheet.png": "a0a5b7574025e4766de214ad89a42395ec3f2078c30179aa80c6ab9dde452142",
+    "tmp/walkqa/harness-21/grocery/unreachable-crops/feet-review-000.png": "a5de57bfb3dab8d5e2b5c6e3420476342acfc0358fad45bf562f3db3e36f63a7",
+    "tmp/walkqa/harness-21/grocery/unreachable-crops/stop-review-000.png": "e11129b756a8b77fbe4a0fd9881ab771d16cc5f3f71ce443238b8ccf6d2625e1"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "flagged": [
+    14
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt left-to-away-left change at final approach.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/alley/object-sheet.png": "2f20d1f3e288d193760df67ade396e5b4e92add2b4af3fbd5a18c3e5dcbf1881",
+    "tmp/walkqa/harness-21/alley/object-crops/feet-review-000.png": "95243c6a6c52e60eb127be68c079bf88db1d609fdbf645cab43717457e2be451",
+    "tmp/walkqa/harness-21/alley/object-crops/stop-review-000.png": "743aa62890c48783bec78db2ab76f4918e2345aba14c9c58c4df1271efeacfc9"
+  }
+}

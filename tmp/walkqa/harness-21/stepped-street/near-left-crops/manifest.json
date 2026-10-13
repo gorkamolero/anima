@@ -1,0 +1,37 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Single lateral heading across lowest landing, intact soles and upright stop; no visible stair ascent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/near-left-sheet.png": "7685ab23329a8485fe9d2ef7c548b63d93edf22ddd4aef33a677cfe4f21d920a",
+    "tmp/walkqa/harness-21/stepped-street/near-left-crops/feet-review-000.png": "d0913557a2d7d799404e596e4b8f44c999a5242fd8c2c91a3a82f507ac9ab462",
+    "tmp/walkqa/harness-21/stepped-street/near-left-crops/stop-review-000.png": "bf05fd4ddbb03674e8655a20c2cc2edf2700470be96b34931bb2f0f7c9365cf3"
+  }
+}

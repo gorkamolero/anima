@@ -1,0 +1,31 @@
+{
+  "flagged": [
+    8,
+    11,
+    14
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Short leftward sequence and clean standing settle; endpoint failure is recorded separately.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/inside/far-left-sheet.png": "31743142c152e502d280776185237f162c5146c1797029b1a7e56f3d403edae1",
+    "tmp/walkqa/harness-21/inside/far-left-crops/feet-review-000.png": "ddb51ddce25d407b65041b4d24af12e2bdedd1e32020258b3e29457a0eeacbb0",
+    "tmp/walkqa/harness-21/inside/far-left-crops/stop-review-000.png": "377ff7a45b7eb032148adc6e8ed2c51034e9c563537fe776e98b4934379e8eac"
+  }
+}

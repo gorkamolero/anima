@@ -1,0 +1,31 @@
+{
+  "brief": 21,
+  "source": "api/data/calls.jsonl",
+  "firstAt": "2026-10-13T04:00:48.437Z",
+  "lastAt": "2026-10-13T04:58:11.927Z",
+  "calls": [
+    {
+      "kind": "interactables",
+      "cached": true,
+      "count": 615
+    },
+    {
+      "kind": "narrate-options",
+      "cached": true,
+      "count": 962
+    },
+    {
+      "kind": "narrate-options",
+      "cached": false,
+      "count": 25
+    },
+    {
+      "kind": "narrate-resolve",
+      "cached": false,
+      "count": 1
+    }
+  ],
+  "segmentationCalls": 0,
+  "generatedImages": 0,
+  "generatedVideos": 0
+}

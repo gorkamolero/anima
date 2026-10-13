@@ -1,0 +1,36 @@
+{
+  "flagged": [
+    10,
+    11,
+    21,
+    22,
+    32,
+    33,
+    43,
+    44
+  ],
+  "random": [
+    87,
+    19,
+    33,
+    86,
+    81
+  ],
+  "stop": [
+    84,
+    85,
+    86,
+    87,
+    88,
+    89
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Approach changes from toward to left then away-left abruptly; standing settle is clean but turns are not.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/church/object-sheet.png": "65eb35bfc1b2d3aa9fa159db29f58ec5f9b2ff70679184d71e8aa1e53a584d2c",
+    "tmp/walkqa/harness-21/church/object-crops/feet-review-000.png": "796e7d9f1e74b766a05ad1ba285cc4f97d8ca77e7ea636823935f8bb9f21d254",
+    "tmp/walkqa/harness-21/church/object-crops/stop-review-000.png": "6710ca1a5acab7ae758a04f92af5122ef15b30fddfa47f5a841af7b7b35b3618"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Immediate settle beside stairs, no walk-to completion demonstrated.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/lobby/object-sheet.png": "e3ac7b3b54bce233902cd15d3a061085b16ffb8cbf7ce6e1e7ccf14a9679a7bd",
+    "tmp/walkqa/harness-21/lobby/object-crops/feet-review-000.png": "ceea4357f9122626c1626e6f13f95d7963391e31fdfc874798ba2173bd336739",
+    "tmp/walkqa/harness-21/lobby/object-crops/stop-review-000.png": "9f69ea1a5cc20b05241565f32a127d99acc000b74482fb8d175e940835a96fb5"
+  }
+}

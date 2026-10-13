@@ -1,0 +1,106 @@
+{
+  "captureSource": {
+    "packages/engine/src/characters/CharacterMotor.ts": "aa9d1098f50d7187225c7b02d7df34a263670c2127bf737243404fac242fc8f5",
+    "packages/engine/src/characters/footstepPlan.ts": "f37e5088a7ef685deb67c5446c0d7f6a99acb38e12f833bb9e3a02f0622f17f4",
+    "api/src/services/occluders.ts": "c1e1a62cb36ac96cd21005315547de032202937bd2598fc7cfc70b9ee4f1bde1",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "8da84a1614d3f6bb012617a898893a36e621147d4bea0e4d82ad8b2e8054ae55"
+  },
+  "beat": {
+    "name": "exit-far",
+    "start": [
+      987.5,
+      802.5
+    ],
+    "click": [
+      570,
+      635
+    ],
+    "exit": "far",
+    "expectedDestination": "place-aa7dd184a5f30fbc1f89",
+    "exitKind": "far"
+  },
+  "setup": {
+    "click": [
+      570,
+      635
+    ],
+    "preview": [
+      {
+        "x": 977.5,
+        "y": 812.5
+      },
+      {
+        "x": 767.5,
+        "y": 737.5
+      },
+      {
+        "x": 567.5,
+        "y": 632.5
+      }
+    ],
+    "start": {
+      "x": 977.5,
+      "y": 812.5
+    },
+    "exits": [
+      {
+        "id": "far",
+        "kind": "far",
+        "region": [
+          {
+            "x": 540,
+            "y": 620
+          },
+          {
+            "x": 600,
+            "y": 620
+          },
+          {
+            "x": 600,
+            "y": 650
+          },
+          {
+            "x": 540,
+            "y": 650
+          }
+        ],
+        "label": "Continue into the distance",
+        "to": "place-aa7dd184a5f30fbc1f89",
+        "approach": {
+          "x": 567.5,
+          "y": 632.5
+        }
+      },
+      {
+        "id": "near",
+        "kind": "near",
+        "region": [
+          {
+            "x": 900,
+            "y": 1048
+          },
+          {
+            "x": 1020,
+            "y": 1048
+          },
+          {
+            "x": 1020,
+            "y": 1064
+          },
+          {
+            "x": 900,
+            "y": 1064
+          }
+        ],
+        "to": "place-f2d0a7f7f76225002663",
+        "approach": {
+          "x": 957.5,
+          "y": 1032.5
+        }
+      }
+    ]
+  },
+  "events": [],
+  "completed": true,
+  "timedOut": false
+}

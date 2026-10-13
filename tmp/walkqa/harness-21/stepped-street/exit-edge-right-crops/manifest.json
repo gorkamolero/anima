@@ -1,0 +1,30 @@
+{
+  "flagged": [
+    11,
+    14
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Feet cross visible stepped surface without tread placement; first leg partly sliced by building fragment.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-right-sheet.png": "ba4a5ef2857dbc330e5bf579296e3348a7b19bd48dd1d1c2b96076409ce33b17",
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-right-crops/feet-review-000.png": "874ae63146c0d57c7ddcecf406f00821483f8811e0171ca6d6dcd7687e515fd9",
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-right-crops/stop-review-000.png": "29bf09e62dc59409c8140f8d5a8075d11ec7d95c439632c48cf1b24d3c5944a4"
+  }
+}

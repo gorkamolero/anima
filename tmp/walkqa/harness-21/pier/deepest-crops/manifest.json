@@ -1,0 +1,37 @@
+{
+  "flagged": [
+    0,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    10
+  ],
+  "stop": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt left-to-away change and oversized sprite.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/pier/deepest-sheet.png": "7d377d9df8e8031394f178e28d4ee0adcaf5094394fdd8795794b6da6f968a89",
+    "tmp/walkqa/harness-21/pier/deepest-crops/feet-review-000.png": "868806a084845e8643a9720a342d30ca23771432066867393d15482819c5e573",
+    "tmp/walkqa/harness-21/pier/deepest-crops/stop-review-000.png": "7bc73415adfbceb7824b909167b0e20e62e74733ee85b9586a5b8b47547df0c6"
+  }
+}

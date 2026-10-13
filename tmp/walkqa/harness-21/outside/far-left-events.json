@@ -1,0 +1,228 @@
+{
+  "captureSource": {
+    "packages/engine/src/characters/CharacterMotor.ts": "aa9d1098f50d7187225c7b02d7df34a263670c2127bf737243404fac242fc8f5",
+    "packages/engine/src/characters/footstepPlan.ts": "f37e5088a7ef685deb67c5446c0d7f6a99acb38e12f833bb9e3a02f0622f17f4",
+    "api/src/services/occluders.ts": "c1e1a62cb36ac96cd21005315547de032202937bd2598fc7cfc70b9ee4f1bde1",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "8da84a1614d3f6bb012617a898893a36e621147d4bea0e4d82ad8b2e8054ae55"
+  },
+  "beat": {
+    "name": "far-left",
+    "start": [
+      1852.5,
+      817.5
+    ],
+    "click": [
+      67.5,
+      727.5
+    ]
+  },
+  "setup": {
+    "click": [
+      67.5,
+      727.5
+    ],
+    "preview": [
+      {
+        "x": 1852.5,
+        "y": 827.5
+      },
+      {
+        "x": 1702.5,
+        "y": 867.5
+      },
+      {
+        "x": 1067.5,
+        "y": 942.5
+      },
+      {
+        "x": 547.5,
+        "y": 947.5
+      },
+      {
+        "x": 517.5,
+        "y": 942.5
+      },
+      {
+        "x": 267.5,
+        "y": 817.5
+      },
+      {
+        "x": 237.5,
+        "y": 787.5
+      },
+      {
+        "x": 67.5,
+        "y": 727.5
+      }
+    ],
+    "start": {
+      "x": 1852.5,
+      "y": 827.5
+    },
+    "exits": [
+      {
+        "id": "depot_doors",
+        "kind": "door",
+        "label": "Depot Doors",
+        "to": "inside",
+        "region": [
+          {
+            "x": 1370,
+            "y": 740
+          },
+          {
+            "x": 1390,
+            "y": 740
+          },
+          {
+            "x": 1390,
+            "y": 760
+          },
+          {
+            "x": 1370,
+            "y": 760
+          }
+        ],
+        "approach": {
+          "x": 1377.5,
+          "y": 762.5
+        }
+      },
+      {
+        "id": "edge-left",
+        "kind": "edge-left",
+        "region": [
+          {
+            "x": 0,
+            "y": 715.0000000000001
+          },
+          {
+            "x": 15,
+            "y": 715.0000000000001
+          },
+          {
+            "x": 15,
+            "y": 795
+          },
+          {
+            "x": 0,
+            "y": 795
+          }
+        ],
+        "to": "place-f2d0a7f7f76225002663",
+        "approach": {
+          "x": 27.5,
+          "y": 737.5
+        }
+      },
+      {
+        "id": "edge-left-1",
+        "kind": "edge-left",
+        "region": [
+          {
+            "x": 5,
+            "y": 800
+          },
+          {
+            "x": 15,
+            "y": 800
+          },
+          {
+            "x": 15,
+            "y": 1075
+          },
+          {
+            "x": 0,
+            "y": 1075
+          },
+          {
+            "x": 0,
+            "y": 845
+          },
+          {
+            "x": 5,
+            "y": 845
+          },
+          {
+            "x": 5,
+            "y": 830
+          },
+          {
+            "x": 0,
+            "y": 830
+          },
+          {
+            "x": 0,
+            "y": 805
+          },
+          {
+            "x": 5,
+            "y": 805
+          }
+        ],
+        "to": "place-f2d0a7f7f76225002663",
+        "approach": {
+          "x": 27.5,
+          "y": 737.5
+        }
+      },
+      {
+        "id": "edge-right",
+        "kind": "edge-right",
+        "region": [
+          {
+            "x": 1905,
+            "y": 805
+          },
+          {
+            "x": 1920,
+            "y": 805
+          },
+          {
+            "x": 1920,
+            "y": 1075
+          },
+          {
+            "x": 1905,
+            "y": 1075
+          }
+        ],
+        "to": "place-2a19481aac649a2e69f1",
+        "approach": {
+          "x": 1872.5,
+          "y": 937.5
+        }
+      },
+      {
+        "id": "far",
+        "kind": "far",
+        "region": [
+          {
+            "x": 1090,
+            "y": 650
+          },
+          {
+            "x": 1130,
+            "y": 650
+          },
+          {
+            "x": 1130,
+            "y": 665
+          },
+          {
+            "x": 1090,
+            "y": 665
+          }
+        ],
+        "label": "Continue into the distance",
+        "approach": {
+          "x": 1112.5,
+          "y": 662.5
+        }
+      }
+    ]
+  },
+  "events": [],
+  "completed": true,
+  "timedOut": false
+}

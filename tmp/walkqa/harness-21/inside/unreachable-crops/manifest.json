@@ -1,0 +1,41 @@
+{
+  "flagged": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    10
+  ],
+  "stop": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt left-to-away switch after the short entry; clean final stance but turn remains discontinuous.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/inside/unreachable-sheet.png": "6f6370a188d3dc817e791605f05948c53bd80f9580d1a955a9e9d5341d3adb9e",
+    "tmp/walkqa/harness-21/inside/unreachable-crops/feet-review-000.png": "b83c76232f6317fb67a5fc10e1f4d9cce19bbca19113d2825f790b10e09b7ea8",
+    "tmp/walkqa/harness-21/inside/unreachable-crops/stop-review-000.png": "7094c125c9cbbc1bd9d9dcf4cd05c588ac180cc2ae5bc6cb978a4f1ab9491cef"
+  }
+}

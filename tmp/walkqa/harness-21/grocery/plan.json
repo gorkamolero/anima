@@ -1,0 +1,146 @@
+{
+  "place": "place-045884673aa9e212d400",
+  "method": "largest eroded connected component; extrema, local clearance ridges, baseline rear strips",
+  "beats": [
+    {
+      "name": "near-left",
+      "start": [
+        1837.5,
+        847.5
+      ],
+      "click": [
+        762.5,
+        922.5
+      ]
+    },
+    {
+      "name": "near-right",
+      "start": [
+        762.5,
+        922.5
+      ],
+      "click": [
+        1837.5,
+        847.5
+      ]
+    },
+    {
+      "name": "deepest",
+      "start": [
+        1312.5,
+        937.5
+      ],
+      "click": [
+        962.5,
+        622.5
+      ]
+    },
+    {
+      "name": "far-left",
+      "start": [
+        1857.5,
+        672.5
+      ],
+      "click": [
+        862.5,
+        762.5
+      ]
+    },
+    {
+      "name": "far-right",
+      "start": [
+        862.5,
+        762.5
+      ],
+      "click": [
+        1857.5,
+        672.5
+      ]
+    },
+    {
+      "name": "diagonal-away",
+      "start": [
+        762.5,
+        922.5
+      ],
+      "click": [
+        1857.5,
+        672.5
+      ]
+    },
+    {
+      "name": "diagonal-toward",
+      "start": [
+        862.5,
+        762.5
+      ],
+      "click": [
+        1837.5,
+        847.5
+      ]
+    },
+    {
+      "name": "occluder-behind",
+      "start": [
+        1312.5,
+        782.5
+      ],
+      "click": [
+        962.5,
+        622.5
+      ],
+      "coverageFailure": "No reachable rear strip found"
+    },
+    {
+      "name": "occluder-back",
+      "start": [
+        962.5,
+        622.5
+      ],
+      "click": [
+        1312.5,
+        782.5
+      ],
+      "coverageFailure": "No reachable rear strip found"
+    },
+    {
+      "name": "narrow-gap",
+      "start": [
+        1812.5,
+        797.5
+      ],
+      "click": [
+        1662.5,
+        847.5
+      ],
+      "gapCentre": [
+        1737.5,
+        822.5
+      ],
+      "clearanceDiameter": 20
+    },
+    {
+      "name": "unreachable",
+      "start": [
+        1312.5,
+        782.5
+      ],
+      "click": [
+        1315,
+        442.5
+      ]
+    },
+    {
+      "name": "object",
+      "start": [
+        1312.5,
+        782.5
+      ],
+      "click": [
+        1312.5,
+        782.5
+      ],
+      "object": "left window"
+    }
+  ]
+}

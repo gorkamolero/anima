@@ -1,0 +1,619 @@
+{
+  "path": [],
+  "goal": {
+    "x": 1182.5,
+    "y": 667.5
+  },
+  "pose": {
+    "cycle": {
+      "name": "hermes-passing-stand-side",
+      "image": "hermes-passing-stand-side.png",
+      "frameWidth": 612,
+      "frameHeight": 1059,
+      "frameCount": 3,
+      "cols": 3,
+      "rows": 1,
+      "fps": 24,
+      "contacts": [
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "planted": "R",
+          "L": {
+            "x": 249,
+            "y": 998
+          }
+        },
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "planted": "R",
+          "L": {
+            "x": 265,
+            "y": 1030
+          }
+        },
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "planted": "R",
+          "L": {
+            "x": 265,
+            "y": 1030
+          }
+        }
+      ],
+      "bootSoles": [
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "L": {
+            "x": 249,
+            "y": 998
+          }
+        },
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "L": {
+            "x": 265,
+            "y": 1030
+          }
+        },
+        {
+          "R": {
+            "x": 356.68832914070987,
+            "y": 1018.684246991037
+          },
+          "L": {
+            "x": 265,
+            "y": 1030
+          }
+        }
+      ],
+      "switchFrames": [],
+      "settleFrames": [
+        2,
+        1,
+        0
+      ],
+      "sourceFrame": 29,
+      "reference": "hermes-fal-veo-transparent-loop",
+      "normalization": {
+        "reference": "hermes-fal-veo-transparent-loop",
+        "sourceFrame": 29,
+        "method": "existing provider raster restored to source canvas; planted-boot masked integer translation; B1 planted boot restored from A with <=2px feather",
+        "registration": [
+          {
+            "candidate": 1,
+            "translation": [
+              -12,
+              -12
+            ],
+            "maskedCorrelation": 0.8832335472106934
+          },
+          {
+            "candidate": 2,
+            "translation": [
+              13,
+              -7
+            ],
+            "maskedCorrelation": 0.9126200675964355
+          }
+        ],
+        "selected": "B1"
+      }
+    },
+    "frame": 0,
+    "flipX": false
+  },
+  "anchor": {
+    "x": 934.3582595514997,
+    "y": 954.0938558651372
+  },
+  "plan": [],
+  "calls": [
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 29,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 934.3582595514997,
+        "y": 954.0938558651372
+      },
+      "end": {
+        "x": 957.5,
+        "y": 972.5
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 29,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 934.3582595514997,
+        "y": 954.0938558651372
+      },
+      "end": {
+        "x": 957.5,
+        "y": 972.5
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 798.264717903797,
+        "y": 960.1131764829532
+      },
+      "end": {
+        "x": 866.4105104435746,
+        "y": 973.3764515410307
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 798.264717903797,
+        "y": 960.1131764829532
+      },
+      "end": {
+        "x": 866.4105104435746,
+        "y": 973.3764515410307
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 599.158633715859,
+        "y": 971.4281481212524
+      },
+      "end": {
+        "x": 667.5215756175438,
+        "y": 992.3168248134339
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 599.158633715859,
+        "y": 971.4281481212524
+      },
+      "end": {
+        "x": 667.5215756175438,
+        "y": 992.3168248134339
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 251.82594706264157,
+        "y": 989.3898814780216
+      },
+      "end": {
+        "x": 322.6633897329171,
+        "y": 1011.0346556272725
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 251.82594706264157,
+        "y": 989.3898814780216
+      },
+      "end": {
+        "x": 322.6633897329171,
+        "y": 1011.0346556272725
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812,
+        "scale": 0.4739089480308176
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812,
+        "scale": 0.4739089480308176
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 20,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 496.7941687590495,
+        "y": 922.4404871194764
+      },
+      "end": {
+        "x": 480.48302898546996,
+        "y": 997.7595737210054
+      },
+      "success": false
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 20,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 496.7941687590495,
+        "y": 922.4404871194764
+      },
+      "end": {
+        "x": 480.48302898546996,
+        "y": 997.7595737210054,
+        "scale": 0.4797394051052803
+      },
+      "success": false
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 29,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 934.3582595514997,
+        "y": 954.0938558651372
+      },
+      "end": {
+        "x": 957.5,
+        "y": 972.5
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 29,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 934.3582595514997,
+        "y": 954.0938558651372
+      },
+      "end": {
+        "x": 957.5,
+        "y": 972.5
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 798.264717903797,
+        "y": 960.1131764829532
+      },
+      "end": {
+        "x": 866.4105104435746,
+        "y": 973.3764515410307
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 798.264717903797,
+        "y": 960.1131764829532
+      },
+      "end": {
+        "x": 866.4105104435746,
+        "y": 973.3764515410307
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 599.158633715859,
+        "y": 971.4281481212524
+      },
+      "end": {
+        "x": 667.5215756175438,
+        "y": 992.3168248134339
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 599.158633715859,
+        "y": 971.4281481212524
+      },
+      "end": {
+        "x": 667.5215756175438,
+        "y": 992.3168248134339
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 3,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 251.82594706264157,
+        "y": 989.3898814780216
+      },
+      "end": {
+        "x": 322.6633897329171,
+        "y": 1011.0346556272725
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 21,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 251.82594706264157,
+        "y": 989.3898814780216
+      },
+      "end": {
+        "x": 322.6633897329171,
+        "y": 1011.0346556272725
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812,
+        "scale": 0.4739089480308176
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812,
+        "scale": 0.4739089480308176
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 5,
+      "flip": false,
+      "foot": "L",
+      "anchor": {
+        "x": 458.13897911807607,
+        "y": 977.6653472135876
+      },
+      "end": {
+        "x": 528.7514123746679,
+        "y": 991.4087067064812
+      },
+      "success": true
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 20,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 496.7941687590495,
+        "y": 922.4404871194764
+      },
+      "end": {
+        "x": 480.48302898546996,
+        "y": 997.7595737210054
+      },
+      "success": false
+    },
+    {
+      "cycle": "hermes-walk-away",
+      "frame": 20,
+      "flip": false,
+      "foot": "R",
+      "anchor": {
+        "x": 496.7941687590495,
+        "y": 922.4404871194764
+      },
+      "end": {
+        "x": 480.48302898546996,
+        "y": 997.7595737210054,
+        "scale": 0.4797394051052803
+      },
+      "success": false
+    },
+    {
+      "cycle": "hermes-fal-veo-transparent-loop",
+      "frame": 29,
+      "flip": false,
+      "success": true
+    }
+  ]
+}

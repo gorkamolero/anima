@@ -1,0 +1,32 @@
+{
+  "flagged": [
+    10,
+    11,
+    21,
+    22
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    50,
+    51,
+    52,
+    53,
+    54,
+    55
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt toward-to-left cycle change before standing settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/far-left-sheet.png": "4484dac6bd4e62825b52641e95f0fb541a247a5bcb9718a6640eb097c3ae7340",
+    "tmp/walkqa/harness-21/grocery/far-left-crops/feet-review-000.png": "0794cc343ecce9ace994e0bac9b94b80fc516148521ae066e9b2b2c515c41297",
+    "tmp/walkqa/harness-21/grocery/far-left-crops/stop-review-000.png": "568269e6c5d11208e5b155e76a9e798bfbb640929a116a23e10423d9f48bee9b"
+  }
+}

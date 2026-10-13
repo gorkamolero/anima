@@ -1,0 +1,72 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    39,
+    49,
+    50,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    73
+  ],
+  "stop": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80
+  ],
+  "crossings": [
+    {
+      "frame": 38,
+      "occluder": "middle-left-building-53e883-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt right to toward change frame 38 at lamp; stops short after approach.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/square/far-right-sheet.png": "de1e499b582a0a37df6f8954bf3280c53edefd8c56a7517eeb5846f372dcbf6c",
+    "tmp/walkqa/harness-21/square/far-right-crops/crossing-review-000.png": "c8cc05bbe3d2d475a47cec84350a1ccfdec8a13091c77d2f763b5f08dd458ed4",
+    "tmp/walkqa/harness-21/square/far-right-crops/feet-review-000.png": "a2f36de11fe150ecb6e0507552eb2fab708197ec777f2bf57de3c0873fdfb24a",
+    "tmp/walkqa/harness-21/square/far-right-crops/stop-review-000.png": "dcb95805dd26aae34dd4063d6af95cc3a5ebf897d863c0cbbccb5b4e7be4897c"
+  }
+}

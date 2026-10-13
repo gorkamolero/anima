@@ -1,0 +1,130 @@
+[
+  {
+    "name": "outside",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-outside-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  },
+  {
+    "name": "inside",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-inside-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  },
+  {
+    "name": "road",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-road-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  },
+  {
+    "name": "alley",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-alley-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  },
+  {
+    "name": "pier",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-pier-overlay.png",
+    "decals": [
+      {
+        "id": "barrels-3-55e961",
+        "height": 0.08104063966270618,
+        "obstacle": true
+      },
+      {
+        "id": "posts-11-55e961",
+        "height": 0.08104063966270618,
+        "obstacle": true
+      }
+    ],
+    "removedStairCells": 0
+  },
+  {
+    "name": "stepped-street",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-stepped-street-overlay.png",
+    "decals": [
+      {
+        "id": "nets-5-55e961",
+        "height": 0.17994588093806377,
+        "obstacle": true
+      }
+    ],
+    "removedStairCells": 329
+  },
+  {
+    "name": "church",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-church-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  },
+  {
+    "name": "lobby",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-lobby-overlay.png",
+    "decals": [],
+    "removedStairCells": 75
+  },
+  {
+    "name": "grocery",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-grocery-overlay.png",
+    "decals": [
+      {
+        "id": "barrels-4-55e961",
+        "height": 0.24527591003941573,
+        "obstacle": true
+      },
+      {
+        "id": "barrels-5-55e961",
+        "height": 0.22973744292237447,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-0-55e961",
+        "height": 0.18566591422121898,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-1-55e961",
+        "height": 0.15294715447154472,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-2-55e961",
+        "height": 0.18716577540106955,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-3-55e961",
+        "height": 0.1544117647058824,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-4-55e961",
+        "height": 0.13449074074074074,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-5-55e961",
+        "height": 0.16295546558704457,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-6-55e961",
+        "height": 0.16659195190127105,
+        "obstacle": true
+      },
+      {
+        "id": "sacks-7-55e961",
+        "height": 0.15071070234113712,
+        "obstacle": true
+      }
+    ],
+    "removedStairCells": 0
+  },
+  {
+    "name": "square",
+    "overlay": "/Users/gorkolas/Developer/anima/tmp/walkqa/derivation/brief21-square-overlay.png",
+    "decals": [],
+    "removedStairCells": 0
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    10,
+    11,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Short straight toward-camera cycle, intact boots and straight standing settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/church/narrow-gap-sheet.png": "feb1cf6e454ae3dd8667f8ba305df1bfa9e6fb2b84a3c79e566cb55c21251443",
+    "tmp/walkqa/harness-21/church/narrow-gap-crops/feet-review-000.png": "70681f9908e12722895b5c0d55a7a29a019c832a97e2f6851104423f517d11dc",
+    "tmp/walkqa/harness-21/church/narrow-gap-crops/stop-review-000.png": "0bb8b9122257bcbaeb49d99fa2906e8e6c1b3a4bded41916a00936d854e86a28"
+  }
+}

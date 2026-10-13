@@ -1,0 +1,55 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    32,
+    33,
+    37,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    56
+  ],
+  "stop": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt cycle change at aisle corner; standing final pose and intact feet.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/occluder-behind-sheet.png": "a319fe36175e7700ff230e94342faaa132486a0695480f9aea594d4de22dabaa",
+    "tmp/walkqa/harness-21/grocery/occluder-behind-crops/feet-review-000.png": "b423c115658705cffc0ff2fef809b5c27d54325c4620566382a0d0f763cfc1dd",
+    "tmp/walkqa/harness-21/grocery/occluder-behind-crops/stop-review-000.png": "36731b81b87a3821fa43b4e76fcd89bd48727be6d81dd034311de0675b4ee657"
+  }
+}

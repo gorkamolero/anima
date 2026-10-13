@@ -1,0 +1,8 @@
+PASS: 20% scale corruption rejected
+PASS: wrong-cycle frames rejected
+PASS: inverted depth and raised floor decal rejected
+PASS: doctored route through wall rejected by checker
+PASS: doctored rendered silhouette 20% short rejected
+PASS: dropped floor click rejected
+PASS: off-floor frame rejected
+PASS: missing frame, wrong timestamps and wrong dimensions rejected

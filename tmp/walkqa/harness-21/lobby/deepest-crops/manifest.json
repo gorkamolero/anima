@@ -1,0 +1,31 @@
+{
+  "flagged": [
+    16,
+    17,
+    26
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short motion followed by abrupt facing change into rest; soles remain outside stair risers.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/lobby/deepest-sheet.png": "c27cff9beaac4d57ece36c583726ac9344694b5cd37412effb319bc991e19f55",
+    "tmp/walkqa/harness-21/lobby/deepest-crops/feet-review-000.png": "0367ceeddb9a454b2ba9cf4fddaf817b331bf5f9f41773e6c36140a6d1890464",
+    "tmp/walkqa/harness-21/lobby/deepest-crops/stop-review-000.png": "6af477c3135e2e7a7dcddd47b70bcd80316d283e925c6bec4111c6a70b2d9211"
+  }
+}

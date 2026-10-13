@@ -1,0 +1,54 @@
+{
+  "flagged": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Stationary at start; no meaningful traversal.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/narrow-gap-sheet.png": "5066d2b876aaa33f48f741b4d2cceb0bef92df2616ad5caff61a49536e9f8917",
+    "tmp/walkqa/harness-21/grocery/narrow-gap-crops/feet-review-000.png": "ecbef889312d149d403538c4346654972eab4dfd45f26a3ecbb838b6e25ca2d2",
+    "tmp/walkqa/harness-21/grocery/narrow-gap-crops/stop-review-000.png": "c40f700c77305036b65d522945e58aa8353a4900c87ad7512aad46a3e88e39f6"
+  }
+}

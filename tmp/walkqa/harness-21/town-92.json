@@ -1,0 +1,83 @@
+{
+  "run": 92,
+  "muted": true,
+  "records": [
+    {
+      "step": "start",
+      "frame": "01-run92-start.png",
+      "ms": 0
+    },
+    {
+      "step": "depot-hotspots-and-kat",
+      "frame": "02-run92-depot-hotspots-and-kat.png",
+      "ms": 0,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 361,
+            "width": 425,
+            "x": 1495,
+            "y": 492
+          },
+          "id": "bus",
+          "name": "Innsmouth Bus",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 186,
+            "width": 312,
+            "x": 753,
+            "y": 698
+          },
+          "id": "waiting_bench",
+          "name": "Waiting Bench",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 225,
+            "width": 105,
+            "x": 1329,
+            "y": 465
+          },
+          "id": "depot_doors",
+          "name": "Depot Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "kat": {
+        "depth": 56.22395341517155,
+        "scale": 0.3753016472563215,
+        "x": 920,
+        "y": 924.479068303431
+      }
+    }
+  ],
+  "calls": [
+    {
+      "at": "2026-10-13T04:33:40.907Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true,
+      "brief": "21"
+    },
+    {
+      "at": "2026-10-13T04:33:43.181Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true,
+      "brief": "21"
+    }
+  ],
+  "error": "left: did not stop within half a drawn stride: {\"expected\":{\"x\":102.5,\"y\":942.5},\"arrival\":{\"anchor\":{\"x\":348.5101071597127,\"y\":912.2841267588695},\"distance\":248.29471612254648,\"halfStride\":34.600185904308496,\"switchFrame\":8,\"target\":{\"x\":102,\"y\":942}},\"cut\":{\"cycleFrames\":48,\"from\":{\"x\":348.5101071597127,\"y\":912.2841267588695},\"matched\":true,\"to\":{\"x\":348.5101071597127,\"y\":912.2841267588695},\"waitFrames\":0}}"
+}

@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "No meaningful walk: stationary or immediate entry-to-rest. Soles remain visible above floor clutter, but requested route is not executed.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/alley/occluder-back-sheet.png": "ef72a952c93dd68038e65fcb62625ad15e125b1305f7b387feb3e73bfcfce046",
+    "tmp/walkqa/harness-21/alley/occluder-back-crops/feet-review-000.png": "7dd8684ce9c1b08de3d7ba12f95a28a58079a3e5607e35fd3b5f298ae1b79a19",
+    "tmp/walkqa/harness-21/alley/occluder-back-crops/stop-review-000.png": "c84d93fab76ab05cecd5d3495c202f8915e9df2f67f474c044984d5c163107a2"
+  }
+}

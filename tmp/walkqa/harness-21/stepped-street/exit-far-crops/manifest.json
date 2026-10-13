@@ -1,0 +1,49 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    22,
+    23,
+    24,
+    25,
+    26,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt right to away at stop, feet overlap visible stepped surface without tread support.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/exit-far-sheet.png": "ae2840f8d8908ec17cedb74b0015db5c80cfd310d3ea3728fb1ddc011e63c059",
+    "tmp/walkqa/harness-21/stepped-street/exit-far-crops/feet-review-000.png": "044b2f5fcbca4a8dbe2cc419b5a002d7ba45ed190f40365e8da0c055d724c3b5",
+    "tmp/walkqa/harness-21/stepped-street/exit-far-crops/stop-review-000.png": "392daeb91cb7e3dfd389759b72ca4f99eda21b00e21857fade5b104a6f5061d1"
+  }
+}

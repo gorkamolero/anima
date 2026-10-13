@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-13T06:15:44.765906+00:00",
+  "stoppedTaskPids": [
+    9124,
+    9128,
+    69533,
+    69539
+  ],
+  "browserSessionClosed": "anima-town",
+  "ports": {
+    "4317": {
+      "listening": false,
+      "processes": ""
+    },
+    "8080": {
+      "listening": false,
+      "processes": ""
+    },
+    "4410": {
+      "listening": true,
+      "processes": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)"
+    },
+    "8090": {
+      "listening": true,
+      "processes": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)"
+    }
+  },
+  "ownerPortsModified": false
+}

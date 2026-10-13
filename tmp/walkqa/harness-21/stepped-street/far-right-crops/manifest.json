@@ -1,0 +1,68 @@
+{
+  "flagged": [
+    6,
+    7,
+    10,
+    11,
+    21,
+    22,
+    32,
+    33,
+    43,
+    44,
+    54,
+    55,
+    65,
+    66,
+    76,
+    77,
+    87,
+    88,
+    98,
+    99,
+    114,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128
+  ],
+  "random": [
+    38,
+    66,
+    25,
+    83,
+    43
+  ],
+  "stop": [
+    123,
+    124,
+    125,
+    126,
+    127,
+    128
+  ],
+  "crossings": [
+    {
+      "frame": 76,
+      "occluder": "left-house-eba894-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Fragmented boardwalk mask slices legs through frame 75; bent-knee final pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/far-right-sheet.png": "64d57668906919397e8922a7a7183df92dee55db49a1c0737e5e959403fb5a1d",
+    "tmp/walkqa/harness-21/stepped-street/far-right-crops/crossing-review-000.png": "c85ffb3cf28e6b84fbee0798d8932c9e6ffb95d6438e068c73a6e687420d318b",
+    "tmp/walkqa/harness-21/stepped-street/far-right-crops/feet-review-000.png": "bb3f7c54bb53cf1f7daf11f410052187822e7650b079db1125452abb5b51f562",
+    "tmp/walkqa/harness-21/stepped-street/far-right-crops/stop-review-000.png": "f2e9871b249531a6ffa509696ac5763989b02be5511d7d1e10fc547313513dd1"
+  }
+}

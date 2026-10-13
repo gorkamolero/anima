@@ -1,0 +1,50 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    60,
+    61,
+    71,
+    72,
+    82,
+    83
+  ],
+  "random": [
+    115,
+    92,
+    87,
+    100,
+    98
+  ],
+  "stop": [
+    119,
+    120,
+    121,
+    122,
+    123,
+    124
+  ],
+  "crossings": [
+    {
+      "frame": 27,
+      "occluder": "left-house-eba894-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Unmodeled stair descent followed by abrupt toward to diagonal change and bent-knee final pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-left-sheet.png": "b246db72452d57896049cfcb7ca9fd1ed2773b56f85dab05d0b545fb4910939b",
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-left-crops/crossing-review-000.png": "5234ae87cc88469c362791087f2b4af16746b73107356476d19d52fec02f5501",
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-left-crops/feet-review-000.png": "c019914ed652f20b68c07f3b4c881be8fdff1c1533e2a51bc0b5c46e4ea8f79a",
+    "tmp/walkqa/harness-21/stepped-street/exit-edge-left-crops/stop-review-000.png": "0a501cdd9c2f56124b36121afeed50244158628b6a65541085f08b504a01347d"
+  }
+}

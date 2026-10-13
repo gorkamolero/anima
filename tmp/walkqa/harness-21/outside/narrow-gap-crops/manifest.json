@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Stationary hidden behind post, no narrow-gap traversal.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/outside/narrow-gap-sheet.png": "de89d0f80112fda985e91a8ba126061deaa0f6dfe79e10f62e7b4b5f092a2b95",
+    "tmp/walkqa/harness-21/outside/narrow-gap-crops/feet-review-000.png": "e5fce5b570ad819776a5b668aafab2e37bd578269dd441946d51927e87f8a890",
+    "tmp/walkqa/harness-21/outside/narrow-gap-crops/stop-review-000.png": "64047876d640eea1e711e2b994f3d4b3167639148dac8bd5b806af1d81aeba78"
+  }
+}

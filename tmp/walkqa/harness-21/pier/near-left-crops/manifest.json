@@ -1,0 +1,33 @@
+{
+  "flagged": [
+    7,
+    9,
+    11,
+    13,
+    15
+  ],
+  "random": [
+    46,
+    43,
+    9,
+    16,
+    40
+  ],
+  "stop": [
+    43,
+    44,
+    45,
+    46,
+    47,
+    48
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Abrupt diagonal change and bent-knee final pose; oversized relative to hut.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/pier/near-left-sheet.png": "e8f28a4d1ece2ea2089c43499b8b1dc8b8985c0afd3ffef7786f22890ae4671a",
+    "tmp/walkqa/harness-21/pier/near-left-crops/feet-review-000.png": "22fb49bf1ed2706dc2f5d75867265f560c72ebe6350e596ca76cc450ed796472",
+    "tmp/walkqa/harness-21/pier/near-left-crops/stop-review-000.png": "eb7a5b5e2578c7d9766d67f73d543f47fa4e8374b1ac03932b4498bbce9c493d"
+  }
+}

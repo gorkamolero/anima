@@ -1,0 +1,34 @@
+{
+  "flagged": [
+    16,
+    17,
+    26,
+    38,
+    39,
+    40
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Clean fixed rightward motion, intact feet, settled straight-legged pose without corrective reversals.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/inside/deepest-sheet.png": "ddb201eed0b08dc12ac97cc26be22cb5b47c6dbd8d764dd2c86aecdcd115d7dd",
+    "tmp/walkqa/harness-21/inside/deepest-crops/feet-review-000.png": "12a0c4996b21f175cdea3c9e44073853b3289fadb95fb00905f8790252a6a12f",
+    "tmp/walkqa/harness-21/inside/deepest-crops/stop-review-000.png": "102ad35a1228962ff11aaacaa5dcf189993f5823eb31ec3cc39ac4d52129483c"
+  }
+}

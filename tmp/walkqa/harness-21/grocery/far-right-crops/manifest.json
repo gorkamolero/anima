@@ -1,0 +1,39 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    24,
+    25,
+    26,
+    27,
+    28,
+    34,
+    37
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Consistent rightward walk and straight standing settle; boots remain intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/far-right-sheet.png": "3ff6802a634e177227e406e71388eec47658057d2d336a173707a8842b500d8d",
+    "tmp/walkqa/harness-21/grocery/far-right-crops/feet-review-000.png": "5430535f40dad34c6114dfa74d6bec36aa1a5b0fb79653043fe464a90b122ef9",
+    "tmp/walkqa/harness-21/grocery/far-right-crops/stop-review-000.png": "7b91f18dea004e37c2b8526322279acca733fe06bfe25c8d5a03e3e302402d2c"
+  }
+}

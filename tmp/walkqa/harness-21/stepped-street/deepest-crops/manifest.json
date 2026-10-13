@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    6,
+    8,
+    9,
+    15,
+    16,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "crossings": [
+    {
+      "frame": 21,
+      "occluder": "left-house-eba894-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Away stride overlaps visible stair risers despite conservative stair mask; no tread-aware ascent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/deepest-sheet.png": "fa04fea2d724bab14d221eec0b70eda72accaada97aa9abff97251c83ec8c432",
+    "tmp/walkqa/harness-21/stepped-street/deepest-crops/crossing-review-000.png": "8dfc62a2db68853be005bbe7139ac08f36a7e394db2dfc809bc0fe5b637286f5",
+    "tmp/walkqa/harness-21/stepped-street/deepest-crops/feet-review-000.png": "01f99d3dbd0fc50fed4d220df56a9d504f38cfdd6cbb4b7cf94e6f114960c271",
+    "tmp/walkqa/harness-21/stepped-street/deepest-crops/stop-review-000.png": "4a5113d49c83e49f9f6b1fffedd6748f153ac7bccdf79f577620dfa9bae4ed40"
+  }
+}

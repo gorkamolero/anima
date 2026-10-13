@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Immediate entry-to-rest, requested route is not traversed.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/church/far-right-sheet.png": "2e746c1161c4e4dc9825efd95f9d1973a36cbb5115ea9a459703b81b3de80dc6",
+    "tmp/walkqa/harness-21/church/far-right-crops/feet-review-000.png": "47cb86a1681df4338371f97644eace851d641db715fa000eef23c0729090097f",
+    "tmp/walkqa/harness-21/church/far-right-crops/stop-review-000.png": "0658642f5409f51f1466275ca1822bacbabacfee1e9572bd5d8a7c92089cf4db"
+  }
+}

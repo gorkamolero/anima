@@ -1,0 +1,42 @@
+{
+  "flagged": [
+    10,
+    11,
+    12,
+    21,
+    22,
+    29,
+    32,
+    33,
+    34,
+    43,
+    44,
+    54,
+    55,
+    56
+  ],
+  "random": [
+    19,
+    33,
+    86,
+    81,
+    12
+  ],
+  "stop": [
+    81,
+    82,
+    83,
+    84,
+    85,
+    86
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Final toward-right rest has visibly bent knees and raised-looking heel; unacceptable held pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/outside/diagonal-toward-sheet.png": "ed883bfb4d913ebd6159992e613c413b9d5df4da69b19adc1422523088367498",
+    "tmp/walkqa/harness-21/outside/diagonal-toward-crops/feet-review-000.png": "7e9214e4456d22ea6df2afebc7ee86d7378197de370868d1b18cbcc04d3767c6",
+    "tmp/walkqa/harness-21/outside/diagonal-toward-crops/stop-review-000.png": "13f489c07881500f9dda4fa74e34f44e744f7dbbcaca6a19f8be739211f276bc"
+  }
+}

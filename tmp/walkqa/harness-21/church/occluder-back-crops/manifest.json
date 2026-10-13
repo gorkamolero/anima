@@ -1,0 +1,49 @@
+{
+  "flagged": [
+    10,
+    11,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [
+    {
+      "frame": 10,
+      "occluder": "pews-3-55e961-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Crossing frame 9 shows pew-mask fragments slicing the trouser leg; short forward motion otherwise stable.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/church/occluder-back-sheet.png": "8f4a3de81175c56a8227b85c4af80144ca248ad16e1b337f00b7eb851bd93568",
+    "tmp/walkqa/harness-21/church/occluder-back-crops/crossing-review-000.png": "dc944784f7378c9851cf9d303efda1c583655a8584e7025a67846e2968a3a5a8",
+    "tmp/walkqa/harness-21/church/occluder-back-crops/feet-review-000.png": "1d02cc260da0bb0105c7e8c35fc7d64ee3d75d013258f8632a3a22cdbc3c2f34",
+    "tmp/walkqa/harness-21/church/occluder-back-crops/stop-review-000.png": "70968a008351d07863567239cb13aadedef640e4ebd9ff679ff75ef9ae26c64d"
+  }
+}

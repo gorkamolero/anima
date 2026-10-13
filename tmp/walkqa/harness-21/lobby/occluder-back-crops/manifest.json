@@ -1,0 +1,49 @@
+{
+  "flagged": [
+    10,
+    11,
+    21,
+    22,
+    27,
+    32,
+    33,
+    49,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Straight forward walk away from desk; full front stays behind character, intact feet, straight standing settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/lobby/occluder-back-sheet.png": "6e5b283041d83b589edcde1b9e5894d2b67674706b65bd0d1bee4ad8a25fe187",
+    "tmp/walkqa/harness-21/lobby/occluder-back-crops/feet-review-000.png": "050159c46ca394aa8faa743142f98aa41f7767fdd8ef9e5c588539b70d3279b9",
+    "tmp/walkqa/harness-21/lobby/occluder-back-crops/stop-review-000.png": "eedc21036af81374560025869c064b3efb5812dda3296d9535110a9c88535b0d"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    16,
+    17,
+    26,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    56
+  ],
+  "stop": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Consistent rightward approach, authorized scene transition, standing rest at destination; no oscillation visible.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/inside/exit-bus_platform-sheet.png": "422ab3243ccae6d644ebb9131b096b67ddea62816110b1564c73da90854fba87",
+    "tmp/walkqa/harness-21/inside/exit-bus_platform-crops/feet-review-000.png": "bb46252221e2f36db9326203b2dea58efb3a3459710c402134b326bfd398ea8b",
+    "tmp/walkqa/harness-21/inside/exit-bus_platform-crops/stop-review-000.png": "c196ce8ce4d5718352986a0ce8f88cfaf965e365924918bd49e8767ca8e0a90f"
+  }
+}

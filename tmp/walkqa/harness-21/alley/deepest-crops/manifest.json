@@ -1,0 +1,39 @@
+{
+  "flagged": [
+    9,
+    27,
+    37,
+    49,
+    52
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    66,
+    67,
+    68,
+    69,
+    70,
+    71
+  ],
+  "crossings": [
+    {
+      "frame": 50,
+      "occluder": "crate-0-55e961-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Flat net apron slices boots at crossing 50 through final frame 71.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/alley/deepest-sheet.png": "cc2221bef3b26319b6da66afb627ae05e7b05ce78685e65d6d4cbad4c69974ed",
+    "tmp/walkqa/harness-21/alley/deepest-crops/crossing-review-000.png": "e4e41e0cf7e023e5150bc23f1b55709f6b338a6b8a07477971a4bc35aa6bf46e",
+    "tmp/walkqa/harness-21/alley/deepest-crops/feet-review-000.png": "a2203b338eddf5a3fcb38fa80acc0e18426281eb221dcfd34bc7186264100c9b",
+    "tmp/walkqa/harness-21/alley/deepest-crops/stop-review-000.png": "e370e7139c20ebe7f0dc20e0245590b0a81b24cff51596fed73958e4a9d82537"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    20,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Short consistent away walk, no reversals, straight-legged settled pose and intact boots.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/church/deepest-sheet.png": "e76f5085ee90de8aa7091733951ccbdde5709585e9c31ade138c53b267b11d16",
+    "tmp/walkqa/harness-21/church/deepest-crops/feet-review-000.png": "f4419c05347bde4d5d0e89dd437dd5e031711d07e757c1a70f598380705b14eb",
+    "tmp/walkqa/harness-21/church/deepest-crops/stop-review-000.png": "9ed503bb091d3c4f3d589beafb5ec1679318ea4384c6cd67ccc4d9272421892a"
+  }
+}

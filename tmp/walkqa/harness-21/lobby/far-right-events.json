@@ -1,0 +1,83 @@
+{
+  "captureSource": {
+    "packages/engine/src/characters/CharacterMotor.ts": "aa9d1098f50d7187225c7b02d7df34a263670c2127bf737243404fac242fc8f5",
+    "packages/engine/src/characters/footstepPlan.ts": "f37e5088a7ef685deb67c5446c0d7f6a99acb38e12f833bb9e3a02f0622f17f4",
+    "api/src/services/occluders.ts": "c1e1a62cb36ac96cd21005315547de032202937bd2598fc7cfc70b9ee4f1bde1",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "8da84a1614d3f6bb012617a898893a36e621147d4bea0e4d82ad8b2e8054ae55"
+  },
+  "beat": {
+    "name": "far-right",
+    "start": [
+      32.5,
+      852.5
+    ],
+    "click": [
+      1817.5,
+      742.5
+    ]
+  },
+  "setup": {
+    "click": [
+      1817.5,
+      742.5
+    ],
+    "preview": [
+      {
+        "x": 32.5,
+        "y": 852.5
+      },
+      {
+        "x": 42.5,
+        "y": 932.5
+      },
+      {
+        "x": 67.5,
+        "y": 957.5
+      },
+      {
+        "x": 92.5,
+        "y": 967.5
+      },
+      {
+        "x": 377.5,
+        "y": 1027.5
+      },
+      {
+        "x": 1702.5,
+        "y": 1022.5
+      },
+      {
+        "x": 1712.5,
+        "y": 1027.5
+      },
+      {
+        "x": 1752.5,
+        "y": 1027.5
+      },
+      {
+        "x": 1782.5,
+        "y": 1007.5
+      },
+      {
+        "x": 1807.5,
+        "y": 982.5
+      },
+      {
+        "x": 1812.5,
+        "y": 747.5
+      },
+      {
+        "x": 1817.5,
+        "y": 742.5
+      }
+    ],
+    "start": {
+      "x": 32.5,
+      "y": 852.5
+    },
+    "exits": []
+  },
+  "events": [],
+  "completed": true,
+  "timedOut": false
+}

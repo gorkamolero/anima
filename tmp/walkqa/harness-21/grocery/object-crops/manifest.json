@@ -1,0 +1,36 @@
+{
+  "flagged": [
+    11,
+    14,
+    17,
+    18,
+    27,
+    28,
+    29,
+    44
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    56
+  ],
+  "stop": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Repeated cycle changes and visibly bent-knee final pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/grocery/object-sheet.png": "f7b8ffce119e984fd3d644a6c779696da6b7e81312eb8b414d8d5b50c702420f",
+    "tmp/walkqa/harness-21/grocery/object-crops/feet-review-000.png": "ccf4003ab54ea3aa47447ef3c891a2196e2f7c3d14c654c2f4c09a893bae06c6",
+    "tmp/walkqa/harness-21/grocery/object-crops/stop-review-000.png": "ff957ec2133c3d8c62e5682f3a54b9ea52acefdd09f23486a5309e4608776590"
+  }
+}

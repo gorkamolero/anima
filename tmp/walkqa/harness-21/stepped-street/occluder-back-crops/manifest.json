@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    10,
+    11,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Toward stride crosses visible risers without elevation handling, despite safe numeric floor mask.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/occluder-back-sheet.png": "9bf62a2e926c4d888674b6c13056f0b81bc04a27b7e919ebabf1fab764e189c4",
+    "tmp/walkqa/harness-21/stepped-street/occluder-back-crops/feet-review-000.png": "7c6805ef1ea00916eca964eb18d0c0e9d863ab7d88de193e9e4c307bf99a8e01",
+    "tmp/walkqa/harness-21/stepped-street/occluder-back-crops/stop-review-000.png": "f1d1ff3e43ede693f267389b7248d29dc0cce8b3c67bea644305f625ab2a2a3d"
+  }
+}

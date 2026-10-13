@@ -1,0 +1,78 @@
+{
+  "captureSource": {
+    "packages/engine/src/characters/CharacterMotor.ts": "aa9d1098f50d7187225c7b02d7df34a263670c2127bf737243404fac242fc8f5",
+    "packages/engine/src/characters/footstepPlan.ts": "f37e5088a7ef685deb67c5446c0d7f6a99acb38e12f833bb9e3a02f0622f17f4",
+    "api/src/services/occluders.ts": "c1e1a62cb36ac96cd21005315547de032202937bd2598fc7cfc70b9ee4f1bde1",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "8da84a1614d3f6bb012617a898893a36e621147d4bea0e4d82ad8b2e8054ae55"
+  },
+  "beat": {
+    "name": "object",
+    "start": [
+      1312.5,
+      782.5
+    ],
+    "click": [
+      1312.5,
+      782.5
+    ],
+    "object": "left window"
+  },
+  "setup": {
+    "click": [
+      15,
+      70
+    ],
+    "preview": [
+      {
+        "x": 1312.5,
+        "y": 782.5
+      },
+      {
+        "x": 787.5,
+        "y": 857.5
+      },
+      {
+        "x": 747.5,
+        "y": 857.5
+      },
+      {
+        "x": 737.5,
+        "y": 852.5
+      }
+    ],
+    "start": {
+      "x": 1312.5,
+      "y": 782.5
+    },
+    "exits": []
+  },
+  "events": [
+    {
+      "frame": 44,
+      "type": "emitOpenWorldState",
+      "data": {
+        "status": "loading",
+        "object": "left window"
+      },
+      "location": "place-045884673aa9e212d400",
+      "walking": true
+    },
+    {
+      "frame": 44,
+      "type": "emitOpenWorldState",
+      "data": {
+        "status": "options",
+        "object": "left window",
+        "options": [
+          "Look more closely at the left window",
+          "Look at the right window",
+          "Approach the front counter"
+        ]
+      },
+      "location": "place-045884673aa9e212d400",
+      "walking": true
+    }
+  ],
+  "completed": true,
+  "timedOut": false
+}

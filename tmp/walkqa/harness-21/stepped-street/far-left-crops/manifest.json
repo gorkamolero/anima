@@ -1,0 +1,40 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    36,
+    37
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Lateral walk crosses multiple visible step levels without stepping up or down; upright stop alone does not validate tread support.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/stepped-street/far-left-sheet.png": "855b3dae64fbfb6d28a81bbce2baf5264c5b60297d467b27080611bab1a5e577",
+    "tmp/walkqa/harness-21/stepped-street/far-left-crops/feet-review-000.png": "f3c95cd480f328d6fb44a205afd462a2a381066278bf3788df0c7893a530fec9",
+    "tmp/walkqa/harness-21/stepped-street/far-left-crops/stop-review-000.png": "9ef77482293996c97f67304a81ae8eb38bd892ae221b7693629cb5172c793c8c"
+  }
+}

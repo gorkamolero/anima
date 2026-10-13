@@ -1,0 +1,29 @@
+{
+  "flagged": [
+    14
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Awning mask cuts across torso at stop while head and feet remain visible.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-21/square/narrow-gap-sheet.png": "518f674d51de57207e4f341c27403df594267f85b0a49539830223241e4f3111",
+    "tmp/walkqa/harness-21/square/narrow-gap-crops/feet-review-000.png": "88ec0315c11fef7bf9746b94041bf64efb06cdbc4280705c81eef273b7cb2375",
+    "tmp/walkqa/harness-21/square/narrow-gap-crops/stop-review-000.png": "ff1f1ce7ca58003d24450ee729ad4ad6e62b8612b01404bbc078d1703318be05"
+  }
+}

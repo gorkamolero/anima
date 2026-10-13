@@ -1,0 +1,10 @@
+{
+  "openRequirements": [
+    "Target approach regresses: only 3/139 behavior checks pass; town replay fails at first depot walk on both attempts.",
+    "Final fixed-source sweep is complete, but 0/139 walks satisfy every acceptance bar.",
+    "Conservative stair exclusion follows derived regions and misses visible stepped-street risers; no tread-aware walking.",
+    "Floor-layer refinement leaves net apron and fragment slicing visible after two derivation attempts.",
+    "Facing, silhouette height, blocked plans and diagonal rest poses remain unresolved; see per-walk evidence.",
+    "Inherited narrow-gap and nearest-reachable coverage are not independently proven."
+  ]
+}
