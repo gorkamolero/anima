@@ -719,8 +719,9 @@ export class CharacterMotor {
 				} else stance.last = ground;
 			}
 			finish();
+			const mask = this.area.clearanceMask ?? this.area.mask;
 			const corners =
-				first && last
+				first && last && mask.data[cellAt(mask, first)] && mask.data[cellAt(mask, last)]
 					? routeCorners(
 							clearanceRoute(
 								this.area.clearanceMask ?? this.area.mask,
@@ -777,7 +778,6 @@ export class CharacterMotor {
 			const checked = quality(candidate);
 			if (
 				checked.clean &&
-				checked.boundarySafe &&
 				(!accepted.clean || candidate.distance < best.distance)
 			) {
 				best = candidate;
