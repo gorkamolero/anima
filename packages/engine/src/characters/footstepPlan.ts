@@ -137,7 +137,12 @@ function simulatePlan<State, Pose>(
 					const next =
 						pose === undefined ? undefined : sim.advance(branch.state, pose);
 					if (!next) return [];
-					const p = ground(sim.position(next));
+					const continuation = sim.entry(next, heading, false);
+					const landing =
+						continuation === undefined
+							? undefined
+							: sim.advance(next, continuation);
+					const p = ground(sim.position(landing ?? next));
 					const angle = Math.atan2(p.y - g.y, p.x - g.x);
 					const error = Math.atan2(
 						Math.sin(angle - desired),
@@ -244,7 +249,35 @@ export function planFootsteps<State, Pose>(
 	initial: State,
 	sim: StepSimulation<State, Pose>,
 ) {
-	const first = simulatePlan(legs, initial, sim);
+	let first = simulatePlan(legs, initial, sim);
+	const last = first.steps[first.steps.length - 1];
+	const before = first.steps[first.steps.length - 2];
+	const halfStride =
+		last && before
+			? Math.hypot(
+					sim.position(last.state).x - sim.position(before.state).x,
+					sim.position(last.state).y - sim.position(before.state).y,
+				) / 2
+			: 0;
+	// If neither dogleg order fits, split each corridor leg and search again.
+	// Every candidate still uses the same footprint/settle validation.
+	if (first.distance > Math.max(2, halfStride)) {
+		const split = legs.flatMap((leg) => {
+			const midpoint = {
+				x: (leg.from.x + leg.to.x) / 2,
+				y: (leg.from.y + leg.to.y) / 2,
+			};
+			return [
+				{ ...leg, to: midpoint },
+				{ ...leg, from: midpoint, corner: true },
+			];
+		});
+		const alternative = simulatePlan(split, initial, sim);
+		if (alternative.distance < first.distance) {
+			legs = split;
+			first = alternative;
+		}
+	}
 	if (!sim.offset) return first;
 	const corrections = legs.map((leg, i) => {
 		const steps = first.steps.filter((s) => s.leg === i);

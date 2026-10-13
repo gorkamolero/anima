@@ -396,7 +396,7 @@ export class CharacterMotor {
 			scale: this.scale,
 		};
 		const result = planFootsteps(legs, initial, {
-			position: (s) => s.end,
+			position: (s) => s.anchor,
 			ground: (p) =>
 				this.area.perspective.constant === undefined
 					? toMetres(this.area.perspective, p)
