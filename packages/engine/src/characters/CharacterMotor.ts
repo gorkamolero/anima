@@ -371,19 +371,8 @@ export class CharacterMotor {
 			this.target,
 			this.scale,
 		);
-		const from = this.pose;
 		this.buildPlan();
-		if (!this.planStance()) {
-			if (!this.animation.standing || !from) return Promise.resolve();
-			// Standing is double support: if the held boot cannot start a safe
-			// stride, try the other grounded boot without moving the sprite.
-			this.stop(true);
-			this.pose = from;
-			this.foot = this.foot === "L" ? "R" : "L";
-			this.anchor = contactOnScreen(from, this.foot, this.target, this.scale);
-			this.buildPlan();
-			if (!this.planStance()) return Promise.resolve();
-		}
+		if (!this.planStance()) return Promise.resolve();
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
 		const idle = this.animation.standing?.(this.heading);
@@ -428,10 +417,34 @@ export class CharacterMotor {
 			scale: this.scale,
 		};
 		const result = planFootsteps(this.goal, initial, {
+			starts: (s) => {
+				if (
+					this.animation.standing?.(this.heading)?.cycle.name !==
+					s.pose.cycle.name
+				)
+					return [];
+				const foot: Foot = s.foot === "L" ? "R" : "L";
+				return [
+					{ ...s, foot, anchor: contactOnScreen(s.pose, foot, s.end, s.scale) },
+				];
+			},
+			offset: (s, slide) => ({
+				...s,
+				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
+				end: { x: s.end.x + slide.x, y: s.end.y + slide.y },
+			}),
 			position: (s) => s.anchor,
 			ground: (p) => this.groundPoint(p),
 			support: (s) => `${s.foot}:${s.pose.frame}`,
 			entry: (s, direction, starting) => {
+				const idle = this.animation.standing?.(direction);
+				// Reverse settle must lock the support actually drawn in that sheet.
+				if (
+					starting &&
+					idle &&
+					idle.cycle.contacts[idle.frame].planted !== s.foot
+				)
+					return;
 				const selected = this.animation.select(direction);
 				const same =
 					selected.cycle.name === s.pose.cycle.name &&
@@ -474,6 +487,11 @@ export class CharacterMotor {
 			},
 		});
 		this.planned = result.steps;
+		const start = result.steps[0]?.state;
+		if (start) {
+			this.foot = start.foot;
+			this.anchor = { ...start.anchor };
+		}
 		this.planDistance = result.distance;
 		this.planSearch = result.stats;
 		this.planComplete = result.complete;

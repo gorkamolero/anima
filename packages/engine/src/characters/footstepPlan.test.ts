@@ -157,3 +157,60 @@ describe("state-lattice A*", () => {
 		expect(result.stats.expanded).toBeLessThanOrEqual(5);
 	});
 });
+
+it("searches both grounded starting supports even when the first has a safe partial stop", () => {
+	const initial: State = { x: 0, y: 0, foot: "L" };
+	const result = planFootsteps(
+		{ x: 2, y: 0 },
+		initial,
+		{
+			position: (s) => s,
+			support: (s) => s.foot,
+			starts: (s): State[] => [{ ...s, foot: "R" }],
+			entry: (_s, h) => (h === "right" ? h : undefined),
+			advance: (s) =>
+				s.foot === "L"
+					? s.x === 0
+						? { ...s, x: 0.1 }
+						: undefined
+					: { ...s, x: s.x + 0.25 },
+			rest: (s) => s,
+		},
+		{ timeBudgetMs: 1000, maxStride: 0.25 },
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps[0].state.foot).toBe("R");
+	expect(result.distance).toBe(0);
+});
+
+for (const allowSlide of [true, false])
+	it(`validates bounded anchor refinement (${allowSlide}) without changing the searched headings`, () => {
+		const result = planFootsteps(
+			{ x: 110, y: 6 },
+			{ x: 0, y: 0 },
+			{
+				position: (s) => s,
+				ground: (p) => ({ x: p.x / 100, y: p.y / 100 }),
+				offset: (s, d) => ({ x: s.x + d.x, y: s.y + d.y }),
+				entry: (_s, h) => (h === "right" ? h : undefined),
+				advance: (s) =>
+					s.x >= 160 || (!allowSlide && s.y !== 0)
+						? undefined
+						: { ...s, x: s.x + 20 },
+				rest: (s) => (allowSlide || s.y === 0 ? s : undefined),
+			},
+			{ timeBudgetMs: 1000, maxStride: 0.2 },
+		);
+		expect(result.complete).toBe(allowSlide);
+		expect(result.steps.every((s) => s.heading === "right")).toBe(true);
+		expect(
+			result.steps.every(
+				(s) => Math.hypot(s.slide.x, s.slide.y) <= 0.99 + 1e-9,
+			),
+		).toBe(true);
+		if (allowSlide) expect(result.distance).toBeLessThanOrEqual(10);
+		else
+			expect(
+				result.steps.every((s) => s.slide.x === 0 && s.slide.y === 0),
+			).toBe(true);
+	});

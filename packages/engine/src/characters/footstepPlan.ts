@@ -10,6 +10,9 @@ export interface PlannedStep<State, Pose> {
 }
 export interface StepSimulation<State, Pose> {
 	position(state: State): Point;
+	/** Additional zero-motion support choices, only at the standing start. */
+	starts?(state: State): readonly State[];
+	offset?(state: State, slide: Point): State;
 	ground?(point: Point): Point;
 	/** Support and phase are part of the lattice, never inferred from position. */
 	support?(state: State): string;
@@ -128,8 +131,20 @@ export function planFootsteps<State, Pose>(
 	};
 	open.push(start);
 	const costs = new Map([[start.key, 0]]);
-	let expanded = 0,
-		generated = 1;
+	let generated = 1;
+	for (const state of sim.starts?.(initial) ?? []) {
+		const alternative = {
+			...start,
+			state,
+			key: key(state),
+			f: heuristic(ground(sim.position(state))),
+		};
+		if (costs.has(alternative.key)) continue;
+		open.push(alternative);
+		costs.set(alternative.key, 0);
+		generated++;
+	}
+	let expanded = 0;
 	let reason: SearchStats["reason"] = "exhausted";
 	let best:
 		| {
@@ -162,7 +177,10 @@ export function planFootsteps<State, Pose>(
 			reason = "node-budget";
 			break;
 		}
-		if (now() - started >= (options.timeBudgetMs ?? 30)) {
+		if (
+			now() - started >=
+			(options.timeBudgetMs ?? 30) - (sim.offset ? 3 : 0)
+		) {
 			reason = "time-budget";
 			break;
 		}
@@ -248,13 +266,80 @@ export function planFootsteps<State, Pose>(
 		steps.reverse();
 	}
 	if (best?.complete && reason === "exhausted") reason = "goal";
-	const last = best
+	let last = best
 		? sim.rest(best.node.state, best.step.pose, best.step.heading)
 		: undefined;
+	let complete = best?.complete ?? false;
+	let correction = { x: 0, y: 0 };
+	// Refine only the allowed subpixel anchor slide on the fixed search result.
+	// No heading, stance count or route is changed. Re-simulate every support
+	// and settle before accepting a correction; playback consumes these poses.
+	if (!complete && last && sim.offset && steps.length > 1) {
+		const original = steps.slice();
+		for (
+			let pass = 0;
+			pass < 3 && now() - started < (options.timeBudgetMs ?? 30);
+			pass++
+		) {
+			const proposed = {
+				x: correction.x + (target.x - last.x) / (steps.length - 1),
+				y: correction.y + (target.y - last.y) / (steps.length - 1),
+			};
+			const factor = Math.min(1, 0.99 / Math.hypot(proposed.x, proposed.y));
+			const slide = { x: proposed.x * factor, y: proposed.y * factor };
+			const trial: PlannedStep<State, Pose>[] = [];
+			let state = original[0].state,
+				rest: Point | undefined,
+				stride = 0,
+				valid = true;
+			for (let i = 0; i < original.length; i++) {
+				const delta = i ? slide : { x: 0, y: 0 };
+				state = sim.offset(state, delta);
+				const previous = original[i],
+					pose = sim.entry(state, previous.heading, i === 0);
+				if (pose === undefined) {
+					valid = false;
+					break;
+				}
+				trial.push({ ...previous, state, pose, slide: delta });
+				const next = sim.advance(state, pose);
+				if (next)
+					stride = distance(
+						ground(sim.position(state)),
+						ground(sim.position(next)),
+					);
+				if (previous.stop) {
+					rest = sim.rest(state, pose, previous.heading);
+					break;
+				}
+				if (!next) {
+					valid = false;
+					break;
+				}
+				state = next;
+			}
+			if (
+				!valid ||
+				!rest ||
+				distance(ground(rest), goal) >= distance(ground(last), goal)
+			)
+				break;
+			steps.splice(0, steps.length, ...trial);
+			last = rest;
+			correction = slide;
+			const final = trial[trial.length - 1];
+			complete =
+				distance(ground(rest), goal) <=
+					Math.min(stride, maxStride) / 2 + 1e-8 &&
+				(sim.acceptRest?.(final.state, final.pose, rest, target) ?? true);
+			if (complete) break;
+		}
+	}
+
 	return {
 		steps,
 		distance: last ? distance(last, target) : Infinity,
-		complete: best?.complete ?? false,
+		complete,
 		stats: {
 			expanded,
 			generated,

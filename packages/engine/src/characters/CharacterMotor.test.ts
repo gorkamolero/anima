@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { scaleAt } from "../walkarea/perspective";
 import { CharacterMotor, type MotorTarget } from "./CharacterMotor";
 import {
@@ -432,8 +432,11 @@ describe("contact motor", () => {
 	it("derives travel from frames, independently of update subdivision", () => {
 		const a = setup(),
 			b = setup();
+		// Compare execution of the same search result, not two wall-time cutoffs.
+		const clock = vi.spyOn(performance, "now").mockReturnValue(0);
 		void a.motor.walk([{ x: 1400, y: 850 }]);
 		void b.motor.walk([{ x: 1400, y: 850 }]);
+		clock.mockRestore();
 		a.motor.update(500);
 		for (let i = 0; i < 30; i++) b.motor.update(1000 / 60);
 		expect(a.target.x).toBeCloseTo(b.target.x, 9);
