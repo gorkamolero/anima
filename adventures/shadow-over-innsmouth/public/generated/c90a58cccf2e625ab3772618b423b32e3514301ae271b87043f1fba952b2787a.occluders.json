@@ -1,0 +1,272 @@
+[
+	{
+		"id": "desk-0-55e961-upright",
+		"label": "desk-0",
+		"bbox": {
+			"x": 187,
+			"y": 565,
+			"w": 523,
+			"h": 343
+		},
+		"baseline": [
+			{
+				"x": 231.5,
+				"y": 904
+			},
+			{
+				"x": 319.5,
+				"y": 890
+			},
+			{
+				"x": 407.5,
+				"y": 872
+			},
+			{
+				"x": 495.5,
+				"y": 857
+			},
+			{
+				"x": 583.5,
+				"y": 840
+			},
+			{
+				"x": 668.5,
+				"y": 830
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-desk-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 145528,
+			"retainedPixels": 145528,
+			"fraction": 1
+		},
+		"heightMetres": 1.6962245552519886,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "railing-0-55e961-upright",
+		"label": "railing-0",
+		"bbox": {
+			"x": 800,
+			"y": 273,
+			"w": 266,
+			"h": 486
+		},
+		"baseline": [
+			{
+				"x": 999.5,
+				"y": 666
+			},
+			{
+				"x": 1008.5,
+				"y": 668
+			},
+			{
+				"x": 1034.5,
+				"y": 756
+			},
+			{
+				"x": 1043.5,
+				"y": 759
+			},
+			{
+				"x": 1052.5,
+				"y": 759
+			},
+			{
+				"x": 1061.5,
+				"y": 757
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 34495,
+			"retainedPixels": 34495,
+			"fraction": 1
+		},
+		"heightMetres": 3.9520063086854456,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "railing-1-55e961-upright",
+		"label": "railing-1",
+		"bbox": {
+			"x": 1567,
+			"y": 579,
+			"w": 63,
+			"h": 124
+		},
+		"baseline": [
+			{
+				"x": 1590.5,
+				"y": 703
+			},
+			{
+				"x": 1595.5,
+				"y": 703
+			},
+			{
+				"x": 1600.5,
+				"y": 703
+			},
+			{
+				"x": 1605.5,
+				"y": 703
+			},
+			{
+				"x": 1610.5,
+				"y": 703
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-1-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 4795,
+			"retainedPixels": 4795,
+			"fraction": 1
+		},
+		"heightMetres": 1.0892643540669857,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "railing-2-55e961-upright",
+		"label": "railing-2",
+		"bbox": {
+			"x": 1494,
+			"y": 574,
+			"w": 63,
+			"h": 146
+		},
+		"baseline": [
+			{
+				"x": 1498.5,
+				"y": 718
+			},
+			{
+				"x": 1501.5,
+				"y": 719
+			},
+			{
+				"x": 1504.5,
+				"y": 719
+			},
+			{
+				"x": 1507.5,
+				"y": 719
+			},
+			{
+				"x": 1510.5,
+				"y": 717
+			},
+			{
+				"x": 1513.5,
+				"y": 717
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-2-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 7072,
+			"retainedPixels": 7072,
+			"fraction": 1
+		},
+		"heightMetres": 1.19880850456621,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "railing-3-55e961-upright",
+		"label": "railing-3",
+		"bbox": {
+			"x": 1493,
+			"y": 574,
+			"w": 137,
+			"h": 146
+		},
+		"baseline": [
+			{
+				"x": 1498.5,
+				"y": 719
+			},
+			{
+				"x": 1503.5,
+				"y": 720
+			},
+			{
+				"x": 1508.5,
+				"y": 719
+			},
+			{
+				"x": 1513.5,
+				"y": 717
+			},
+			{
+				"x": 1518.5,
+				"y": 716
+			},
+			{
+				"x": 1523.5,
+				"y": 716
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-3-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 12879,
+			"retainedPixels": 12879,
+			"fraction": 1
+		},
+		"heightMetres": 1.1943205988219896,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "railing-4-55e961-upright",
+		"label": "railing-4",
+		"bbox": {
+			"x": 818,
+			"y": 264,
+			"w": 220,
+			"h": 135
+		},
+		"baseline": [
+			{
+				"x": 1008.5,
+				"y": 377
+			},
+			{
+				"x": 1014.5,
+				"y": 382
+			},
+			{
+				"x": 1020.5,
+				"y": 388
+			},
+			{
+				"x": 1026.5,
+				"y": 395
+			},
+			{
+				"x": 1032.5,
+				"y": 399
+			},
+			{
+				"x": 1036.5,
+				"y": 398
+			}
+		],
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-4-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 5378,
+			"retainedPixels": 5378,
+			"fraction": 1
+		},
+		"obstacle": true,
+		"layerDerivation": 21
+	}
+]

@@ -1,0 +1,408 @@
+[
+	{
+		"id": "crate-0-55e961-upright",
+		"label": "crate-0",
+		"bbox": {
+			"x": 311,
+			"y": 689,
+			"w": 258,
+			"h": 138
+		},
+		"baseline": [
+			{
+				"x": 327.5,
+				"y": 821
+			},
+			{
+				"x": 358.5,
+				"y": 821
+			},
+			{
+				"x": 368.5,
+				"y": 822
+			},
+			{
+				"x": 378.5,
+				"y": 827
+			},
+			{
+				"x": 388.5,
+				"y": 827
+			},
+			{
+				"x": 398.5,
+				"y": 823
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-crate-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 18072,
+			"retainedPixels": 18072,
+			"fraction": 1
+		},
+		"heightMetres": 0.6431932309798906,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "debris-0-55e961-flat",
+		"label": "debris-0",
+		"bbox": {
+			"x": 406,
+			"y": 966,
+			"w": 350,
+			"h": 111
+		},
+		"baseline": [
+			{
+				"x": 510.5,
+				"y": 1073
+			},
+			{
+				"x": 527.5,
+				"y": 1074
+			},
+			{
+				"x": 544.5,
+				"y": 1074
+			},
+			{
+				"x": 596.5,
+				"y": 1076
+			},
+			{
+				"x": 613.5,
+				"y": 1076
+			},
+			{
+				"x": 628.5,
+				"y": 1074
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-debris-0-55e961-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 23540,
+			"retainedPixels": 23540,
+			"fraction": 1
+		},
+		"heightMetres": 0.3076531074648864,
+		"floorDecal": true,
+		"obstacle": false,
+		"layerDerivation": 21
+	},
+	{
+		"id": "fish-basket-0-55e961-upright",
+		"label": "fish-basket-0",
+		"bbox": {
+			"x": 767,
+			"y": 633,
+			"w": 141,
+			"h": 117
+		},
+		"baseline": [
+			{
+				"x": 850.5,
+				"y": 745
+			},
+			{
+				"x": 859.5,
+				"y": 750
+			},
+			{
+				"x": 868.5,
+				"y": 747
+			},
+			{
+				"x": 877.5,
+				"y": 745
+			},
+			{
+				"x": 895.5,
+				"y": 745
+			},
+			{
+				"x": 904.5,
+				"y": 747
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 11144,
+			"retainedPixels": 11144,
+			"fraction": 1
+		},
+		"heightMetres": 0.6878585067141123,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "fish-basket-0-55e961-flat",
+		"label": "fish-basket-0",
+		"bbox": {
+			"x": 909,
+			"y": 731,
+			"w": 17,
+			"h": 6
+		},
+		"baseline": [
+			{
+				"x": 910.5,
+				"y": 737
+			},
+			{
+				"x": 912.5,
+				"y": 737
+			},
+			{
+				"x": 924.5,
+				"y": 737
+			},
+			{
+				"x": 925.5,
+				"y": 737
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-fish-basket-0-55e961-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 15,
+			"retainedPixels": 15,
+			"fraction": 1
+		},
+		"heightMetres": 0.037937141629585835,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "gargoyle-0-55e961-upright",
+		"label": "gargoyle-0",
+		"bbox": {
+			"x": 419,
+			"y": 550,
+			"w": 152,
+			"h": 167
+		},
+		"baseline": [
+			{
+				"x": 423.5,
+				"y": 714
+			},
+			{
+				"x": 429.5,
+				"y": 716
+			},
+			{
+				"x": 435.5,
+				"y": 717
+			},
+			{
+				"x": 441.5,
+				"y": 712
+			},
+			{
+				"x": 470.5,
+				"y": 710
+			},
+			{
+				"x": 476.5,
+				"y": 710
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-gargoyle-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 14124,
+			"retainedPixels": 14124,
+			"fraction": 1
+		},
+		"heightMetres": 1.123576348734778,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "left-fishnet-0-55e961-upright",
+		"label": "left-fishnet-0",
+		"bbox": {
+			"x": 91,
+			"y": 691,
+			"w": 154,
+			"h": 389
+		},
+		"baseline": [
+			{
+				"x": 133.5,
+				"y": 1080
+			},
+			{
+				"x": 139.5,
+				"y": 1080
+			},
+			{
+				"x": 179.5,
+				"y": 1080
+			},
+			{
+				"x": 185.5,
+				"y": 1080
+			},
+			{
+				"x": 191.5,
+				"y": 1080
+			},
+			{
+				"x": 197.5,
+				"y": 1080
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 36505,
+			"retainedPixels": 36505,
+			"fraction": 1
+		},
+		"heightMetres": 1.0857140157745293,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "left-fishnet-0-55e961-flat",
+		"label": "left-fishnet-0",
+		"bbox": {
+			"x": 89,
+			"y": 916,
+			"w": 324,
+			"h": 164
+		},
+		"baseline": [
+			{
+				"x": 313.5,
+				"y": 1080
+			},
+			{
+				"x": 319.5,
+				"y": 1080
+			},
+			{
+				"x": 336.5,
+				"y": 1080
+			},
+			{
+				"x": 342.5,
+				"y": 1080
+			},
+			{
+				"x": 348.5,
+				"y": 1080
+			},
+			{
+				"x": 354.5,
+				"y": 1080
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-left-fishnet-0-55e961-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 10855,
+			"retainedPixels": 10855,
+			"fraction": 1
+		},
+		"heightMetres": 0.45773033055789925,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "right-fishnet-0-55e961-upright",
+		"label": "right-fishnet-0",
+		"bbox": {
+			"x": 1713,
+			"y": 745,
+			"w": 207,
+			"h": 335
+		},
+		"baseline": [
+			{
+				"x": 1881.5,
+				"y": 1076
+			},
+			{
+				"x": 1889.5,
+				"y": 1077
+			},
+			{
+				"x": 1897.5,
+				"y": 1077
+			},
+			{
+				"x": 1905.5,
+				"y": 1080
+			},
+			{
+				"x": 1913.5,
+				"y": 1080
+			},
+			{
+				"x": 1918.5,
+				"y": 1080
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 46722,
+			"retainedPixels": 46722,
+			"fraction": 1
+		},
+		"heightMetres": 0.9298911312447816,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "right-fishnet-0-55e961-flat",
+		"label": "right-fishnet-0",
+		"bbox": {
+			"x": 1635,
+			"y": 963,
+			"w": 78,
+			"h": 84
+		},
+		"baseline": [
+			{
+				"x": 1698.5,
+				"y": 1045
+			},
+			{
+				"x": 1701.5,
+				"y": 1045
+			},
+			{
+				"x": 1704.5,
+				"y": 1045
+			},
+			{
+				"x": 1707.5,
+				"y": 1045
+			},
+			{
+				"x": 1710.5,
+				"y": 1046
+			},
+			{
+				"x": 1712.5,
+				"y": 1047
+			}
+		],
+		"png": "1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.occluder-right-fishnet-0-55e961-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 3656,
+			"retainedPixels": 3656,
+			"fraction": 1
+		},
+		"heightMetres": 0.24269847069793335,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
+	}
+]

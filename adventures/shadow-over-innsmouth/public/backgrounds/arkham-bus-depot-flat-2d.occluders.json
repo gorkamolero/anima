@@ -1,6 +1,6 @@
 [
 	{
-		"id": "bench-6b9a9a",
+		"id": "bench-6b9a9a-upright",
 		"label": "bench",
 		"bbox": {
 			"x": 903,
@@ -34,49 +34,129 @@
 				"y": 828
 			}
 		],
-		"png": "arkham-bus-depot-flat-2d.occluder-bench-6b9a9a.png",
+		"png": "arkham-bus-depot-flat-2d.occluder-bench-6b9a9a-upright-21.png",
 		"maskCoverage": {
-			"referencePixels": 83719,
-			"retainedPixels": 83719,
+			"referencePixels": 83555,
+			"retainedPixels": 83555,
 			"fraction": 1
-		}
+		},
+		"heightMetres": 1.0234036277435665,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
 	},
 	{
-		"id": "bus-a161f2",
+		"id": "bench-6b9a9a-flat",
+		"label": "bench",
+		"bbox": {
+			"x": 1087,
+			"y": 795,
+			"w": 185,
+			"h": 17
+		},
+		"baseline": [
+			{
+				"x": 1271.5,
+				"y": 812
+			}
+		],
+		"png": "arkham-bus-depot-flat-2d.occluder-bench-6b9a9a-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 164,
+			"retainedPixels": 164,
+			"fraction": 1
+		},
+		"heightMetres": 0.08094763669816789,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "bus-a161f2-upright",
 		"label": "bus",
 		"bbox": {
 			"x": 1483,
 			"y": 472,
 			"w": 243,
-			"h": 304
+			"h": 287
 		},
 		"baseline": [
 			{
-				"x": 1540.5,
-				"y": 770
+				"x": 1535.5,
+				"y": 758
 			},
 			{
-				"x": 1544.5,
+				"x": 1562.5,
+				"y": 759
+			},
+			{
+				"x": 1571.5,
+				"y": 759
+			},
+			{
+				"x": 1580.5,
+				"y": 759
+			},
+			{
+				"x": 1589.5,
+				"y": 759
+			},
+			{
+				"x": 1596.5,
+				"y": 757
+			}
+		],
+		"png": "arkham-bus-depot-flat-2d.occluder-bus-a161f2-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 60413,
+			"retainedPixels": 60413,
+			"fraction": 1
+		},
+		"heightMetres": 1.5308569081937355,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "bus-a161f2-flat",
+		"label": "bus",
+		"bbox": {
+			"x": 1538,
+			"y": 759,
+			"w": 19,
+			"h": 17
+		},
+		"baseline": [
+			{
+				"x": 1545.5,
 				"y": 775
 			},
 			{
-				"x": 1548.5,
+				"x": 1547.5,
+				"y": 775
+			},
+			{
+				"x": 1549.5,
 				"y": 776
 			},
 			{
-				"x": 1552.5,
+				"x": 1551.5,
 				"y": 775
 			},
 			{
-				"x": 1555.5,
-				"y": 774
+				"x": 1553.5,
+				"y": 775
 			}
 		],
-		"png": "arkham-bus-depot-flat-2d.occluder-bus-a161f2.png",
+		"png": "arkham-bus-depot-flat-2d.occluder-bus-a161f2-flat-21.png",
 		"maskCoverage": {
-			"referencePixels": 60656,
-			"retainedPixels": 60656,
+			"referencePixels": 243,
+			"retainedPixels": 243,
 			"fraction": 1
-		}
+		},
+		"heightMetres": 0.08233256477105969,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
 	}
 ]

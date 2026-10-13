@@ -1,0 +1,408 @@
+[
+	{
+		"id": "fountain-0-55e961-upright",
+		"label": "fountain-0",
+		"bbox": {
+			"x": 613,
+			"y": 397,
+			"w": 697,
+			"h": 488
+		},
+		"baseline": [
+			{
+				"x": 899.5,
+				"y": 885
+			},
+			{
+				"x": 925.5,
+				"y": 885
+			},
+			{
+				"x": 951.5,
+				"y": 885
+			},
+			{
+				"x": 977.5,
+				"y": 885
+			},
+			{
+				"x": 1003.5,
+				"y": 885
+			},
+			{
+				"x": 1026.5,
+				"y": 883
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-fountain-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 166570,
+			"retainedPixels": 166570,
+			"fraction": 1
+		},
+		"heightMetres": 1.5159763313609467,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "lamp-post-0-55e961-upright",
+		"label": "lamp-post-0",
+		"bbox": {
+			"x": 465,
+			"y": 225,
+			"w": 100,
+			"h": 638
+		},
+		"baseline": [
+			{
+				"x": 497.5,
+				"y": 862
+			},
+			{
+				"x": 504.5,
+				"y": 862
+			},
+			{
+				"x": 511.5,
+				"y": 863
+			},
+			{
+				"x": 518.5,
+				"y": 863
+			},
+			{
+				"x": 525.5,
+				"y": 862
+			},
+			{
+				"x": 531.5,
+				"y": 862
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-0-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 23728,
+			"retainedPixels": 23728,
+			"fraction": 1
+		},
+		"heightMetres": 2.0718556701030932,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "lamp-post-1-55e961-upright",
+		"label": "lamp-post-1",
+		"bbox": {
+			"x": 1217,
+			"y": 300,
+			"w": 68,
+			"h": 413
+		},
+		"baseline": [
+			{
+				"x": 1250.5,
+				"y": 713
+			},
+			{
+				"x": 1253.5,
+				"y": 713
+			},
+			{
+				"x": 1256.5,
+				"y": 713
+			},
+			{
+				"x": 1259.5,
+				"y": 713
+			},
+			{
+				"x": 1262.5,
+				"y": 713
+			},
+			{
+				"x": 1264.5,
+				"y": 713
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-1-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 9521,
+			"retainedPixels": 9521,
+			"fraction": 1
+		},
+		"heightMetres": 1.9417164179104476,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "lamp-post-2-55e961-upright",
+		"label": "lamp-post-2",
+		"bbox": {
+			"x": 1386,
+			"y": 225,
+			"w": 99,
+			"h": 638
+		},
+		"baseline": [
+			{
+				"x": 1424.5,
+				"y": 863
+			},
+			{
+				"x": 1429.5,
+				"y": 863
+			},
+			{
+				"x": 1434.5,
+				"y": 863
+			},
+			{
+				"x": 1439.5,
+				"y": 863
+			},
+			{
+				"x": 1444.5,
+				"y": 863
+			},
+			{
+				"x": 1448.5,
+				"y": 863
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-2-55e961-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 23710,
+			"retainedPixels": 23710,
+			"fraction": 1
+		},
+		"heightMetres": 2.0718556701030932,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "left-building-52db90-upright",
+		"label": "left building",
+		"bbox": {
+			"x": 0,
+			"y": 212,
+			"w": 501,
+			"h": 514
+		},
+		"baseline": [
+			{
+				"x": 8.5,
+				"y": 724
+			},
+			{
+				"x": 25.5,
+				"y": 724
+			},
+			{
+				"x": 42.5,
+				"y": 717
+			},
+			{
+				"x": 59.5,
+				"y": 713
+			},
+			{
+				"x": 76.5,
+				"y": 706
+			},
+			{
+				"x": 93.5,
+				"y": 699
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-left-building-52db90-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 147157,
+			"retainedPixels": 147157,
+			"fraction": 1
+		},
+		"heightMetres": 2.3894859813084115,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "middle-left-building-53e883-upright",
+		"label": "middle left building",
+		"bbox": {
+			"x": 465,
+			"y": 225,
+			"w": 364,
+			"h": 527
+		},
+		"baseline": [
+			{
+				"x": 507.5,
+				"y": 748
+			},
+			{
+				"x": 512.5,
+				"y": 751
+			},
+			{
+				"x": 517.5,
+				"y": 752
+			},
+			{
+				"x": 522.5,
+				"y": 752
+			},
+			{
+				"x": 527.5,
+				"y": 751
+			},
+			{
+				"x": 531.5,
+				"y": 748
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 19306,
+			"retainedPixels": 19306,
+			"fraction": 1
+		},
+		"heightMetres": 2.2262837837837837,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "middle-left-building-53e883-flat",
+		"label": "middle left building",
+		"bbox": {
+			"x": 512,
+			"y": 755,
+			"w": 18,
+			"h": 3
+		},
+		"baseline": [
+			{
+				"x": 513.5,
+				"y": 758
+			},
+			{
+				"x": 515.5,
+				"y": 758
+			},
+			{
+				"x": 527.5,
+				"y": 758
+			},
+			{
+				"x": 529.5,
+				"y": 758
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-flat-21.png",
+		"maskCoverage": {
+			"referencePixels": 20,
+			"retainedPixels": 20,
+			"fraction": 1
+		},
+		"heightMetres": 0.012434210526315789,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "middle-right-building-7d65d0-upright",
+		"label": "middle right building",
+		"bbox": {
+			"x": 1218,
+			"y": 229,
+			"w": 267,
+			"h": 525
+		},
+		"baseline": [
+			{
+				"x": 1418.5,
+				"y": 750
+			},
+			{
+				"x": 1424.5,
+				"y": 752
+			},
+			{
+				"x": 1430.5,
+				"y": 751
+			},
+			{
+				"x": 1436.5,
+				"y": 754
+			},
+			{
+				"x": 1442.5,
+				"y": 750
+			},
+			{
+				"x": 1447.5,
+				"y": 748
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-right-building-7d65d0-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 24894,
+			"retainedPixels": 24894,
+			"fraction": 1
+		},
+		"heightMetres": 2.205846774193548,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	},
+	{
+		"id": "right-building-66ec1d-upright",
+		"label": "right building",
+		"bbox": {
+			"x": 1658,
+			"y": 257,
+			"w": 262,
+			"h": 469
+		},
+		"baseline": [
+			{
+				"x": 1868.5,
+				"y": 716
+			},
+			{
+				"x": 1878.5,
+				"y": 717
+			},
+			{
+				"x": 1888.5,
+				"y": 716
+			},
+			{
+				"x": 1898.5,
+				"y": 720
+			},
+			{
+				"x": 1908.5,
+				"y": 726
+			},
+			{
+				"x": 1916.5,
+				"y": 726
+			}
+		],
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-right-building-66ec1d-upright-21.png",
+		"maskCoverage": {
+			"referencePixels": 90720,
+			"retainedPixels": 90720,
+			"fraction": 1
+		},
+		"heightMetres": 2.1388313609467455,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 21
+	}
+]
