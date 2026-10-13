@@ -1,0 +1,38 @@
+[
+  {
+    "name": "rocky-beach",
+    "id": "place-a53d08124ed6c715c32e",
+    "ground": "failed",
+    "derivationFailure": "Occluder segmentation budget exhausted (120 calls)",
+    "planFailure": "Error: Cannot generate walks for an empty walk area",
+    "walks": 0,
+    "simulation": "not runnable",
+    "reviewerChecks": "not runnable: no frame logs",
+    "browser": "not runnable",
+    "compositor": "not runnable"
+  },
+  {
+    "name": "cramped-cellar",
+    "id": "place-675c8639872575208930",
+    "ground": "failed",
+    "derivationFailure": "Occluder segmentation budget exhausted (120 calls)",
+    "planFailure": "Error: Cannot generate walks for an empty walk area",
+    "walks": 0,
+    "simulation": "not runnable",
+    "reviewerChecks": "not runnable: no frame logs",
+    "browser": "not runnable",
+    "compositor": "not runnable"
+  },
+  {
+    "name": "fog-graveyard",
+    "id": "place-a3da054dbc2afb584327",
+    "ground": "failed",
+    "derivationFailure": "perception budget exhausted",
+    "planFailure": "Error: Cannot generate walks for an empty walk area",
+    "walks": 0,
+    "simulation": "not runnable",
+    "reviewerChecks": "not runnable: no frame logs",
+    "browser": "not runnable",
+    "compositor": "not runnable"
+  }
+]

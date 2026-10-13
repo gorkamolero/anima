@@ -1,0 +1,23 @@
+[
+  {
+    "key": "rocky-beach",
+    "parent": "outside",
+    "to": "brief34_rocky_tidepool_beach",
+    "template": "exterior",
+    "description": "A wild rocky beach at low tide, with irregular tide pools full of dark seawater, scattered large boulders on wet shingle, and a rough dry path between the rocks. The sea meets a foggy horizon. No buildings, docks, vehicles or people."
+  },
+  {
+    "key": "cramped-cellar",
+    "parent": "inside",
+    "to": "brief34_cramped_cellar",
+    "template": "interior",
+    "description": "A cramped low-ceilinged stone cellar, rough damp floor, stacks of wooden crates crowding both sides, a wooden ladder leading to an open ceiling hatch, low beams and a single hanging oil lamp. A narrow route runs between crates. No reception desk, pews, shop shelves, vehicles or people."
+  },
+  {
+    "key": "fog-graveyard",
+    "parent": "outside",
+    "to": "brief34_fog_graveyard",
+    "template": "exterior",
+    "description": "A fog-bound old graveyard, crooked weathered headstones scattered over uneven bare earth, a tall wrought iron fence enclosing the cemetery, an open iron gate, and a winding dirt path between graves disappearing into thick fog. No fountain, houses, vehicles or people."
+  }
+]

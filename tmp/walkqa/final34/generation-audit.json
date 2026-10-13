@@ -1,0 +1,36 @@
+{
+  "paidQueueSubmissions": {
+    "image": 3,
+    "geometry": 2
+  },
+  "calls": [
+    {
+      "kind": "image-attempt",
+      "cached": false,
+      "count": 3
+    },
+    {
+      "kind": "image",
+      "cached": false,
+      "count": 3
+    },
+    {
+      "kind": "interactables",
+      "cached": false,
+      "count": 3
+    },
+    {
+      "kind": "perception-attempt",
+      "cached": false,
+      "count": 35
+    },
+    {
+      "kind": "interactables",
+      "cached": true,
+      "count": 3
+    }
+  ],
+  "priorGlobalPerceptionAttempts": 165,
+  "currentGlobalPerceptionAttempts": 200,
+  "note": "Cumulative application counters were not reset. No retries, rederivations or generated video."
+}
