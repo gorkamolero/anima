@@ -50,7 +50,7 @@ writeFileSync(out+'/area.json',JSON.stringify({...geo,area:areas[place],areas}))
 if(process.argv.includes('--probe')){console.log(name,geo.area.mask.data.filter(Boolean).length,geo.exits.length,geo.interactables.length);continue;}
 const plan=JSON.parse(readFileSync(planRoot+'/'+name+'/plan.json'));writeFileSync(out+'/plan.json',JSON.stringify(plan,null,2));
 for(const beat of plan.beats){
-if(selectedWalk&&beat.name!==selectedWalk)continue;
+if(selectedWalk&&!selectedWalk.split(",").includes(beat.name))continue;
 if(existsSync(out+'/'+beat.name+'-events.json')&&!process.argv.includes('--redo'))continue;
 await page.reload();await page.waitForFunction(()=>window.__anima?.scene.world&&!window.__anima.scene.openWorldBusy);await initQa();
 await enter(place);
@@ -60,8 +60,13 @@ let setup;try{setup=await page.evaluate(beat=>{
  const on=(mask,x,y)=>{const ix=Math.floor(x*mask.width/1920),iy=Math.floor(y*mask.height/1080);return ix>=0&&iy>=0&&ix<mask.width&&iy<mask.height&&mask.data[iy*mask.width+ix]>0;};
  const ground=p=>{const v=a.perspective,ppm=v.pixelsPerMetre??300;if(v.constant!==undefined)return{x:p.x/(ppm*v.constant),y:-p.y/(ppm*v.constant)};const z=1/(v.slope*(p.y-v.horizonY));return{x:(p.x-(v.cx??960))*z/ppm,y:z*(v.focalLength??1000)/ppm}};
  const metres=(p,q)=>{p=ground(p);q=ground(q);return Math.hypot(p.x-q.x,p.y-q.y)};
- let click=beat.click;
+ let click=beat.click;let clickRepair;
+ if(beat.name==='unreachable'&&s.findInteractableAtPoint(...click)){const choices=[];for(let y=65;y<1064;y+=5)for(let x=5;x<1915;x+=5)if(!on(raw,x,y)&&!s.findInteractableAtPoint(x,y))choices.push({x,y,d:(x-click[0])**2+(y-click[1])**2});choices.sort((a,b)=>a.d-b.d);if(!choices.length)throw Error('No unintercepted unreachable pixel');clickRepair={oldClick:click,reason:'Avoid object interception for unreachable floor test'};click=[choices[0].x,choices[0].y];}
  if(beat.object){click=null;let best=Infinity;for(let y=70;y<1064;y+=5)for(let x=0;x<1920;x+=5)if(s.findInteractableAtPoint(x,y)?.name===beat.object){const score=beat.objectClick?(x-beat.objectClick[0])**2+(y-beat.objectClick[1])**2:y*1920+x;if(score<best){best=score;click=[x,y];}}if(!click)throw Error('No object hit pixel');}
+ if(!beat.object&&!beat.exit&&beat.name!=='unreachable'&&s.findInteractableAtPoint(...click)){
+  const floor=[];for(let i=0;i<a.mask.data.length;i++)if(a.mask.data[i]){const x=(i%a.mask.width+.5)*1920/a.mask.width,y=(Math.floor(i/a.mask.width)+.5)*1080/a.mask.height;if(y>=65&&y<=1064&&!s.findInteractableAtPoint(x,y))floor.push({x,y,d:(x-click[0])**2+(y-click[1])**2});}
+  floor.sort((p,q)=>p.d-q.d);if(!floor.length)throw Error('No unintercepted floor click');clickRepair={oldClick:click,reason:'Avoid object interception for ordinary floor test'};click=[floor[0].x,floor[0].y];
+ }
  let desired={x:click[0],y:click[1]};
  if(beat.exit)desired=s.sceneExits.find(e=>e.id===beat.exit)?.approach??desired;
  if(beat.object){const object=s.interactables.find(o=>o.name===beat.object),layer=s.objectLayers.find(l=>l.data.label.toLowerCase()===object.name.toLowerCase());
@@ -70,32 +75,38 @@ let setup;try{setup=await page.evaluate(beat=>{
   const candidates=[];for(let i=0;i<a.mask.data.length;i++)if(a.mask.data[i]){const p={x:(i%a.mask.width+.5)*1920/a.mask.width,y:(Math.floor(i/a.mask.width)+.5)*1080/a.mask.height};if(!layer||p.y>=by(p.x))candidates.push(p);}
   candidates.sort((p,q)=>Math.hypot(p.x-desired.x,p.y-desired.y)-Math.hypot(q.x-desired.x,q.y-desired.y));for(const p of candidates.slice(0,128)){const route=s.previewWalk(p.x,p.y),end=route.at(-1);if(end&&Math.hypot(end.x-p.x,end.y-p.y)<1){desired=p;break;}}
  }
+ const startDistance=target=>{const h=s.hermesSprite,meta=m.pose.cycle,c=meta.contacts[m.pose.frame];return Math.min(...['L','R'].map(f=>metres({x:h.x+(c[f].x-meta.frameWidth/2)*h.scaleX*(h.flipX?-1:1),y:h.y+(c[f].y-meta.frameHeight)*h.scaleX},target)))};
  const candidates=[];for(let i=0;i<a.mask.data.length;i++)if(a.mask.data[i]){const x=(i%a.mask.width+.5)*1920/a.mask.width,y=(Math.floor(i/a.mask.width)+.5)*1080/a.mask.height;candidates.push({x,y,d:(x-beat.start[0])**2+(y-beat.start[1])**2});}
  candidates.sort((p,q)=>p.d-q.d);
  let preview,valid=false;
  for(const p of candidates){if(beat.name!=='unreachable'&&metres(p,desired)<1.8)continue;m.place(p);const h=s.hermesSprite,meta=m.pose.cycle,c=meta.contacts[m.pose.frame];
   valid=['L','R'].every(f=>{const x=h.x+(c[f].x-meta.frameWidth/2)*h.scaleX*(h.flipX?-1:1),y=h.y+(c[f].y-meta.frameHeight)*h.scaleX;return on(raw,x,y)&&on(clear,x,y)});
-  if(!valid)continue;preview=s.previewWalk(desired.x,desired.y).map(p=>({x:p.x,y:p.y}));const end=preview.at(-1);valid=!!end&&(beat.name==='unreachable'||metres(m.anchor,end)>=2);if(valid)break;
+  if(!valid)continue;preview=s.previewWalk(desired.x,desired.y).map(p=>({x:p.x,y:p.y}));const end=preview.at(-1);valid=!!end&&(beat.name==='unreachable'||startDistance(end)>=2.02);if(valid)break;
  }
  let targetRepair;
  if(!valid&&!beat.object&&!beat.exit){
   const safe=[];
   for(const p of candidates){m.place(p);const h=s.hermesSprite,meta=m.pose.cycle,c=meta.contacts[m.pose.frame];if(['L','R'].every(f=>{const x=h.x+(c[f].x-meta.frameWidth/2)*h.scaleX*(h.flipX?-1:1),y=h.y+(c[f].y-meta.frameHeight)*h.scaleX;return on(raw,x,y)&&on(clear,x,y)}))safe.push({point:p,anchor:{...m.anchor}})}
   const extremes=[];for(const axis of ['x','y'])for(const sign of [-1,1]){const sorted=[...safe].sort((a,b)=>sign*(ground(a.anchor)[axis]-ground(b.anchor)[axis]));extremes.push(...sorted.slice(0,30));}
-  const targets=[...candidates].filter(p=>p.y>=65&&p.y<=1064).sort((p,q)=>(p.x-desired.x)**2+(p.y-desired.y)**2-((q.x-desired.x)**2+(q.y-desired.y)**2));
-  outer:for(const t of targets)for(const start of extremes){if(metres(start.anchor,t)<2.02)continue;m.place(start.point);const route=s.previewWalk(t.x,t.y).map(p=>({x:p.x,y:p.y}));if(route.length&&metres(m.anchor,route.at(-1))>=2){targetRepair={oldClick:click,reason:'Second attempt uses physically safe standing extrema, not floor-cell centres'};click=[t.x,t.y];desired=t;preview=route;valid=true;break outer;}}
+  const targets=[...candidates].filter(p=>p.y>=65&&p.y<=1064&&!s.findInteractableAtPoint(p.x,p.y)).sort((p,q)=>(p.x-desired.x)**2+(p.y-desired.y)**2-((q.x-desired.x)**2+(q.y-desired.y)**2));
+  outer:for(const t of targets)for(const start of extremes){if(metres(start.anchor,t)<2.02)continue;m.place(start.point);const route=s.previewWalk(t.x,t.y).map(p=>({x:p.x,y:p.y}));if(route.length&&startDistance(route.at(-1))>=2.02){targetRepair={oldClick:click,reason:'Second attempt uses physically safe standing extrema, not floor-cell centres'};click=[t.x,t.y];desired=t;preview=route;valid=true;break outer;}}
  }
  if(!valid)throw Error('No physically safe standing start >=2 ground metres for '+beat.name);
  window.qaFrame=-1;window.qaEvents=[];
- return {targetRepair,click,preview,start:{x:s.hermesSprite.x,y:s.hermesSprite.y},startAnchor:{...m.anchor},target:{x:click[0],y:click[1]},reachableTarget:preview.at(-1),groundDistance:metres(m.anchor,preview.at(-1)),exits:s.sceneExits};
+ return {targetRepair,clickRepair,click,preview,start:{x:s.hermesSprite.x,y:s.hermesSprite.y},startAnchor:{...m.anchor},target:{x:click[0],y:click[1]},reachableTarget:preview.at(-1),groundDistance:metres(m.anchor,preview.at(-1)),minimumSupportDistance:startDistance(preview.at(-1)),exits:s.sceneExits};
 },beat);}catch(error){if(!process.argv.includes('--diagnose'))throw error;writeFileSync(out+'/'+beat.name+'-plan-failure.json',JSON.stringify({beat,error:String(error)},null,2));console.log(name,beat.name,'PLAN-FAIL',String(error));continue;}
-if(setup.targetRepair){beat.targetRepair=setup.targetRepair;beat.click=setup.click;}beat.start=[setup.start.x,setup.start.y];beat.target=[setup.target.x,setup.target.y];beat.reachableTarget=[setup.reachableTarget.x,setup.reachableTarget.y];beat.groundDistance=setup.groundDistance;beat.distanceStatus='live standing sole and reachable target verified before click';
+beat.click=setup.click;if(setup.clickRepair)beat.clickRepair=setup.clickRepair;if(setup.targetRepair)beat.targetRepair=setup.targetRepair;beat.start=[setup.start.x,setup.start.y];beat.target=[setup.target.x,setup.target.y];beat.reachableTarget=[setup.reachableTarget.x,setup.reachableTarget.y];beat.groundDistance=setup.groundDistance;beat.minimumSupportDistance=setup.minimumSupportDistance;beat.distanceStatus='live standing sole and reachable target verified before click';
 writeFileSync(out+'/plan.json',JSON.stringify(plan,null,2));
 if(process.argv.includes('--plans-only')){console.log(name,beat.name,setup.groundDistance);continue;}
 
 const frames=[],events=[];let idle=0;const maxFrames=Number(process.argv.find(a=>a.startsWith('--max-frames='))?.split('=')[1]??2400);let timedOut=false;
 const encoder=spawn('ffmpeg',['-y','-v','error','-f','image2pipe','-framerate','24','-i','-','-c:v','libx264','-preset','fast','-crf','16','-pix_fmt','yuv420p',out+'/'+beat.name+'.mp4']);let encerr='';encoder.stderr.on('data',d=>encerr+=d);
 await page.evaluate(click=>window.__anima.click(...click),setup.click);
+const actual=await page.evaluate(()=>{const m=window.__anima.scene.hermesMotor;return {startAnchor:{...m.anchor},reachableTarget:m.goal?{...m.goal}:null}});
+setup.actualStartAnchor=actual.startAnchor;setup.actualReachableTarget=actual.reachableTarget;
+setup.actualGroundDistance=await page.evaluate(({startAnchor,reachableTarget})=>{if(!reachableTarget)return 0;const v=window.__anima.scene.walkArea.perspective,ppm=v.pixelsPerMetre??300;const g=p=>{if(v.constant!==undefined)return{x:p.x/(ppm*v.constant),y:-p.y/(ppm*v.constant)};const z=1/(v.slope*(p.y-v.horizonY));return{x:(p.x-(v.cx??960))*z/ppm,y:z*(v.focalLength??1000)/ppm}};const p=g(startAnchor),q=g(reachableTarget);return Math.hypot(p.x-q.x,p.y-q.y)},actual);
+if(beat.name!=='unreachable'&&setup.actualGroundDistance<2){encoder.stdin.end();await once(encoder,'close');throw Error('Actual clicked goal is below 2m: '+name+'/'+beat.name+' '+setup.actualGroundDistance);}
+
 for(let i=0;i<maxFrames+12;i++){
 if(i===maxFrames){timedOut=true;await page.evaluate(()=>{window.qaEvents.push({type:"capture-timeout",frame:window.qaFrame});window.__anima.scene.hermesMotor.stop(true);});}
 let frameTimer;const {png,...row}=await Promise.race([page.evaluate(async i=>{window.qaFrame=i;let row;const a=window.__anima;const png=await a.captureFrame({stepMs:1000/24,width:1920,format:'png',onFrame:()=>{const s=a.scene,h=s.hermesSprite,m=s.hermesMotor;row={t:i/24,visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:m.walking,contact:m.snapshot(),path:m.path.map(p=>({x:p.x,y:p.y})),target:m.goal?{x:m.goal.x,y:m.goal.y}:null,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,arriving:s.arrivingExit,object:s.selectedInteractable?.name,depth:h.depth,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,floorDecal:l.data.floorDecal,baseline:l.data.baseline,bounds:(()=>{const b=l.image.getBounds();return {x:b.x,y:b.y,width:b.width,height:b.height}})()})).concat([s.katSprite,s.katSeatedSprite].filter(k=>k?.visible).map(k=>{const b=k.getBounds(),f=k.frame;return {id:k.texture.key,depth:k.depth,baseline:[{x:b.x,y:k.y},{x:b.right,y:k.y}],bounds:{x:b.x,y:b.y,width:b.width,height:b.height},sprite:{texture:k.texture.key,cutX:f.cutX,cutY:f.cutY,width:f.cutWidth,height:f.cutHeight,flip:k.flipX}};}))};}});return {png,...row};},i),new Promise((_,reject)=>{frameTimer=setTimeout(()=>reject(Error('Capture snapshot timeout at '+name+'/'+beat.name+' frame '+i)),30000);})]);clearTimeout(frameTimer);
