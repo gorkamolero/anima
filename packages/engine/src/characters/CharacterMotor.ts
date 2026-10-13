@@ -637,13 +637,14 @@ export class CharacterMotor {
 		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
+	/** Plan bounded stand-and-pivot continuations before any playback begins. */
 	private buildPlan(options: SearchOptions = {}) {
 		const result = this.buildSegment(options);
 		if (!result) return;
 		let planner: CharacterMotor = this;
 		let segment = result;
 		for (let attempt = 0; attempt < 8 && !segment.complete; attempt++) {
-			const last = segment.steps.at(-1);
+			const last = segment.steps[segment.steps.length - 1];
 			const first = segment.steps[0];
 			if (!last || !first) break;
 			const exit = planner.nextExit(last.pose, last.state, last.heading, true);
@@ -683,18 +684,21 @@ export class CharacterMotor {
 			planner.heading = last.heading;
 			planner.goal = this.goal;
 			const next = planner.buildSegment(options);
-			if (!next?.steps.length || next.distance >= segment.distance - 5) break;
+			if (!next) break;
+			// Include rejected continuation searches as well as the accepted path.
+			result.stats.expanded += next.stats.expanded;
+			result.stats.generated += next.stats.generated;
+			result.stats.optimal = false;
+			result.stats.rejections ??= {};
+			const rejections = result.stats.rejections;
+			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
+				rejections[reason] = (rejections[reason] ?? 0) + count;
+			if (!next.steps.length || next.distance >= segment.distance - 5) break;
 			result.steps.push(...next.steps);
 			result.distance = next.distance;
 			result.complete = next.complete;
 			result.arrivalKind = next.arrivalKind;
-			result.stats.expanded += next.stats.expanded;
-			result.stats.generated += next.stats.generated;
 			result.stats.reason = next.stats.reason;
-			result.stats.optimal = false;
-			const rejections = (result.stats.rejections ??= {});
-			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
-				rejections[reason] = (rejections[reason] ?? 0) + count;
 			segment = next;
 		}
 		this.planned = result.steps;
@@ -1171,12 +1175,13 @@ export class CharacterMotor {
 		if (this.startMask) return this.startMask;
 		const raw = this.area.rawMask ?? this.area.mask;
 		const objects = this.area.objectFootprints;
-		return (this.startMask = {
+		this.startMask = {
 			...raw,
 			data: raw.data.map((_, i) =>
 				objects?.data[cellAt(objects, cellPoint(raw, i))] ? 0 : 1,
 			),
-		});
+		};
+		return this.startMask;
 	}
 	/** Boots use raw floor, never the body erosion, and may not land on props. */
 	private soleFits(point: Point): boolean {

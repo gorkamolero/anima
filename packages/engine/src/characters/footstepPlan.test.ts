@@ -270,7 +270,7 @@ it("scores a partial rest by the route around an obstacle, while arrival stays g
 		},
 		{ turnCost: 0, costBound: 10 },
 	);
-	expect(result.steps.at(-1)?.state).toEqual({ x: 0, y: 1 });
+	expect(result.steps[result.steps.length - 1]?.state).toEqual({ x: 0, y: 1 });
 	expect(result.complete).toBe(false);
 	expect(result.distance).toBeCloseTo(Math.SQRT2);
 	expect(result.stats.optimal).toBe(false);
