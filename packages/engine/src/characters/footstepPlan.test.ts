@@ -1,11 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { findPath } from "../walkarea/navigation";
 import type { Point } from "../walkarea/perspective";
-import {
-	planFootsteps,
-	type SearchOptions,
-	type WalkLeg,
-} from "./footstepPlan";
+import { planFootsteps, type SearchOptions } from "./footstepPlan";
 import { GROUND_SECTORS } from "./walkHeading";
 
 type State = Point & { foot: "L" | "R" };
@@ -17,11 +13,8 @@ function search(
 	restSafe = safe,
 ) {
 	const start: State = { x: 0, y: 0, foot: "L" };
-	const legs: WalkLeg[] = [
-		{ from: start, to: target, heading: "right", corner: false },
-	];
 	return planFootsteps(
-		legs,
+		target,
 		start,
 		{
 			position: (s) => s,

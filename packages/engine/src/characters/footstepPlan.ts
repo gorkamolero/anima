@@ -1,75 +1,11 @@
-import {
-	type Perspective,
-	type Point,
-	toMetres,
-} from "../walkarea/perspective";
-import {
-	GROUND_SECTORS,
-	headingFromGround,
-	type WalkDirection,
-} from "./walkHeading";
-
-export interface WalkLeg {
-	from: Point;
-	to: Point;
-	heading: WalkDirection;
-	corner: boolean;
-}
-/** Choose directions once from the string-pulled route, never from pose offsets. */
-export function walkLegs(
-	path: readonly Point[],
-	perspective: Perspective,
-): WalkLeg[] {
-	const legs: WalkLeg[] = [];
-	let previousAngle: number | undefined;
-	for (let i = 1; i < path.length; i++) {
-		const from = path[i - 1],
-			to = path[i];
-		if (Math.hypot(to.x - from.x, to.y - from.y) < 1e-6) continue;
-		const a =
-			perspective.constant === undefined
-				? toMetres(perspective, from)
-				: { x: from.x, y: -from.y };
-		const b =
-			perspective.constant === undefined
-				? toMetres(perspective, to)
-				: { x: to.x, y: -to.y };
-		const angle = Math.atan2(b.y - a.y, b.x - a.x);
-		const turn =
-			previousAngle === undefined
-				? 0
-				: Math.abs(
-						Math.atan2(
-							Math.sin(angle - previousAngle),
-							Math.cos(angle - previousAngle),
-						),
-					);
-		const corner = turn > (25 * Math.PI) / 180;
-		const previous = legs[legs.length - 1];
-		const heading =
-			previous && !corner
-				? previous.heading
-				: headingFromGround(
-						b.x - a.x,
-						b.y - a.y,
-						previous?.heading,
-						perspective.constant === undefined
-							? { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
-							: { x: 0, y: 1 },
-						0,
-					);
-		legs.push({ from, to, heading, corner });
-		previousAngle = angle;
-	}
-	return legs;
-}
+import type { Point } from "../walkarea/perspective";
+import { GROUND_SECTORS, type WalkDirection } from "./walkHeading";
 
 export interface PlannedStep<State, Pose> {
 	heading: WalkDirection;
 	pose: Pose;
 	state: State;
 	stop: boolean;
-	leg: number;
 	slide: Point;
 }
 export interface StepSimulation<State, Pose> {
@@ -84,7 +20,12 @@ export interface StepSimulation<State, Pose> {
 	): Pose | undefined;
 	advance(state: State, pose: Pose): State | undefined;
 	/** Validate the complete exit and settle; return the final planted sole. */
-	rest(state: State, pose: Pose, heading: WalkDirection): Point | undefined;
+	rest(
+		state: State,
+		pose: Pose,
+		heading: WalkDirection,
+	): (Point & { travel?: number }) | undefined;
+	acceptRest?(state: State, pose: Pose, rest: Point, target: Point): boolean;
 }
 export interface SearchOptions {
 	nodeBudget?: number;
@@ -92,7 +33,7 @@ export interface SearchOptions {
 	resolution?: number;
 	turnCost?: number;
 	stepCost?: number;
-	/** Conservative bound on any support displacement, including a stop. */
+	/** Stride cap used for the goal radius. A larger drawn stride does not enlarge the goal set. */
 	maxStride?: number;
 	now?: () => number;
 }
@@ -141,9 +82,9 @@ class Heap<T extends { f: number }> {
 
 /** A* on 3 cm support cells × foot/phase × heading. Positions are only
  * quantised for duplicate detection: playback retains exact simulated poses.
- * The route supplies a reachable target, not a sequence of steering legs. */
+ * The caller supplies a target projected onto the reachable walk area. */
 export function planFootsteps<State, Pose>(
-	legs: readonly WalkLeg[],
+	target: Point,
 	initial: State,
 	sim: StepSimulation<State, Pose>,
 	options: SearchOptions = {},
@@ -151,17 +92,16 @@ export function planFootsteps<State, Pose>(
 	const now = options.now ?? (() => performance.now());
 	const started = now();
 	const ground = sim.ground ?? ((p: Point) => p);
-	const target = legs[legs.length - 1]?.to ?? sim.position(initial);
 	const goal = ground(target);
 	const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 	const resolution = options.resolution ?? 0.03;
 	const turnCost = options.turnCost ?? 0.6;
 	const stepCost = options.stepCost ?? 0.02;
 	const maxStride = options.maxStride ?? 0.6;
-	// Distance is a lower bound on all distance+turn+step costs. Subtract
-	// the stop's maximum travel and goal radius so h=0 throughout the goal set.
+	// Distance is a lower bound on distance+turn+step costs, including the
+	// stop edge. Subtract only the maximum goal radius, not the stop travel.
 	const heuristic = (p: Point) =>
-		Math.max(0, distance(p, goal) - maxStride * 2.5);
+		Math.max(0, distance(p, goal) - maxStride / 2);
 	type Node = {
 		state: State;
 		heading?: WalkDirection;
@@ -208,7 +148,6 @@ export function planFootsteps<State, Pose>(
 		pose,
 		state: node.state,
 		stop,
-		leg: 0,
 		slide: { x: 0, y: 0 },
 	});
 	for (let node = open.pop(); node; node = open.pop()) {
@@ -246,18 +185,17 @@ export function planFootsteps<State, Pose>(
 			const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
 			// Stopping is an edge, including all exit-frame motion. It cannot evade
 			// the turn cost or introduce a heading reversal at the final drawing.
-			const remainingBeforeStop = distance(p, goal);
-			const rest =
-				!best ||
-				remainingBeforeStop <= best.distance + maxStride * 2 ||
-				remainingBeforeStop <= maxStride * 2.5
-					? sim.rest(node.state, pose, heading)
-					: undefined;
+			const rest = sim.rest(node.state, pose, heading);
 			if (rest && (node.parent || next)) {
 				const remaining = distance(ground(rest), goal);
-				const complete = remaining <= stride / 2 + 1e-8;
+				const complete =
+					remaining <= Math.min(stride, maxStride) / 2 + 1e-8 &&
+					(sim.acceptRest?.(node.state, pose, rest, target) ?? true);
 				const cost =
-					node.g + distance(p, ground(rest)) + turnPenalty + stepCost;
+					node.g +
+					(rest.travel ?? distance(p, ground(rest))) +
+					turnPenalty +
+					stepCost;
 				if (
 					!best ||
 					(complete && !best.complete) ||

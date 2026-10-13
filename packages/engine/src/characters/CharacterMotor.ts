@@ -13,7 +13,7 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "./footLock";
-import { type PlannedStep, planFootsteps, walkLegs } from "./footstepPlan";
+import { type PlannedStep, planFootsteps } from "./footstepPlan";
 import { stanceFrameMs } from "./stanceTiming";
 import {
 	GROUND_SECTORS,
@@ -62,11 +62,21 @@ export class CharacterMotor {
 	private goal?: Point;
 	private lastStrideLength = 0;
 	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
+	private stanceCache = new Map<
+		string,
+		{
+			samples: (Point & { scale: number })[];
+			landing: Point;
+			end: Point & { scale: number };
+			frame: number;
+			incoming: Foot;
+		}
+	>();
 	private planDistance?: number;
+	private planComplete = false;
 	private planSearch?: ReturnType<typeof planFootsteps>["stats"];
 	private resolve?: () => void;
 
-	private recoverAfterStanding = false;
 	private unmatchedCut = false;
 	private lastCut?: {
 		from: Point;
@@ -103,23 +113,6 @@ export class CharacterMotor {
 		this.walking = false;
 		this.transition = undefined;
 		this.drawn = undefined;
-		if (this.recoverAfterStanding && this.pose) {
-			this.recoverAfterStanding = false;
-			// Both boots are now grounded. Transfer support without moving either
-			// drawing, then leave the boundary pocket on the other foot.
-			this.foot = this.foot === "L" ? "R" : "L";
-			this.anchor = contactOnScreen(
-				this.pose,
-				this.foot,
-				this.target,
-				this.scale,
-			);
-			if (this.planStance(true)) {
-				this.walking = true;
-				this.animate("walk", this.heading, 1);
-				return;
-			}
-		}
 		this.animate("idle", this.heading, 1);
 		const resolve = this.resolve;
 		this.resolve = undefined;
@@ -166,7 +159,6 @@ export class CharacterMotor {
 			this.drawn = undefined;
 			this.planned = [];
 		}
-		if (immediate) this.recoverAfterStanding = false;
 		this.path = [];
 		if (this.transition && !immediate) return;
 		const standing = this.animation.standing?.(this.heading);
@@ -182,9 +174,6 @@ export class CharacterMotor {
 				// A blocked source frame is not permission to cut on another pose.
 				// Keep the last safe drawing when no floor-safe approach exists.
 				this.unmatchedCut = true;
-				// Recovery may transfer support only after reaching a standing pose.
-				// Here the other boot can still be in the air.
-				this.recoverAfterStanding = false;
 				this.finish();
 				return;
 			}
@@ -212,11 +201,13 @@ export class CharacterMotor {
 	):
 		| {
 				frames: number;
+				travel: number;
 				position: Point & { scale: number };
 				anchor: Point;
 				foot: Foot;
 		  }
 		| undefined {
+		let travel = 0;
 		// Search one full cycle, simulating every contact transfer.
 		// A boundary may prohibit the preferred exit; never walk off-floor to reach it.
 		let pose = source,
@@ -255,15 +246,22 @@ export class CharacterMotor {
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
 				this.canStand(pose, anchor, foot, position.scale)
 			) {
-				return { frames: n, position, anchor, foot };
+				return { frames: n, position, anchor, foot, travel };
 			}
 			const next = {
 				...pose,
 				frame: (pose.frame + 1) % pose.cycle.contacts.length,
 			};
 			const incoming = next.cycle.contacts[next.frame].planted;
+			const previousAnchorY = anchor.y;
 			if (incoming !== foot) {
+				const previous = this.groundPoint(anchor);
 				anchor = contactOnScreen(pose, incoming, position, position.scale);
+				const nextGround = this.groundPoint(anchor);
+				travel += Math.hypot(
+					nextGround.x - previous.x,
+					nextGround.y - previous.y,
+				);
 				foot = incoming;
 			}
 			const p = lockedPlacement(
@@ -280,7 +278,7 @@ export class CharacterMotor {
 				!mask.data[cellAt(mask, { x: p.x, y: anchor.y })] ||
 				!lineOfSight(
 					mask,
-					{ x: position.x, y: anchor.y },
+					{ x: position.x, y: previousAnchorY },
 					{ x: p.x, y: anchor.y },
 				)
 			)
@@ -318,7 +316,7 @@ export class CharacterMotor {
 	}
 	walk(
 		points: readonly Point[],
-		initialHeading?: WalkDirection,
+		_initialHeading?: WalkDirection,
 	): Promise<void> {
 		this.stop(true);
 		this.arrival = undefined;
@@ -343,8 +341,8 @@ export class CharacterMotor {
 			this.scale,
 		);
 		const from = this.pose;
-		this.buildPlan(initialHeading);
-		if (!this.planStance(true, false, initialHeading)) {
+		this.buildPlan();
+		if (!this.planStance()) {
 			if (!this.animation.standing || !from) return Promise.resolve();
 			// Standing is double support: if the held boot cannot start a safe
 			// stride, try the other grounded boot without moving the sprite.
@@ -352,9 +350,8 @@ export class CharacterMotor {
 			this.pose = from;
 			this.foot = this.foot === "L" ? "R" : "L";
 			this.anchor = contactOnScreen(from, this.foot, this.target, this.scale);
-			this.buildPlan(initialHeading);
-			if (!this.planStance(true, false, initialHeading))
-				return Promise.resolve();
+			this.buildPlan();
+			if (!this.planStance()) return Promise.resolve();
 		}
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
@@ -377,19 +374,20 @@ export class CharacterMotor {
 			this.resolve = resolve;
 		});
 	}
-	private buildPlan(initialHeading?: WalkDirection): void {
+	private groundPoint(p: Point): Point {
+		const perspective = this.area.perspective;
+		if (perspective.constant === undefined) return toMetres(perspective, p);
+		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
+		return { x: p.x / ppm, y: -p.y / ppm };
+	}
+	private buildPlan(): void {
+		this.stanceCache.clear();
 		if (!this.pose || !this.goal) return;
 		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
 			x: p.x,
 			y: p.y,
 		}));
 		this.goal = this.path[this.path.length - 1] ?? this.goal;
-		const legs = walkLegs(this.path, this.area.perspective);
-		if (initialHeading && legs[0]) {
-			legs[0].heading = initialHeading;
-			for (let i = 1; i < legs.length && !legs[i].corner; i++)
-				legs[i].heading = initialHeading;
-		}
 		const initial: PredictedStance = {
 			start: { x: this.target.x, y: this.target.y },
 			end: { x: this.target.x, y: this.target.y },
@@ -398,21 +396,9 @@ export class CharacterMotor {
 			pose: this.pose,
 			scale: this.scale,
 		};
-		const result = planFootsteps(legs, initial, {
+		const result = planFootsteps(this.goal, initial, {
 			position: (s) => s.anchor,
-			ground: (p) =>
-				this.area.perspective.constant === undefined
-					? toMetres(this.area.perspective, p)
-					: {
-							x:
-								p.x /
-								((this.area.perspective.pixelsPerMetre ?? 300) *
-									(this.area.perspective.constant ?? 1)),
-							y:
-								-p.y /
-								((this.area.perspective.pixelsPerMetre ?? 300) *
-									(this.area.perspective.constant ?? 1)),
-						},
+			ground: (p) => this.groundPoint(p),
 			support: (s) => `${s.foot}:${s.pose.frame}`,
 			entry: (s, direction, starting) => {
 				const selected = this.animation.select(direction);
@@ -438,32 +424,27 @@ export class CharacterMotor {
 					);
 			},
 			advance: (s, pose) => this.predictStance(pose, s),
-			rest: (s, pose, direction) => {
-				const exit = this.nextExit(pose, s);
-				if (!exit) return;
-				const idle = this.animation.standing?.(direction);
-				if (!idle) return exit.anchor;
-				const rest = {
-					...idle,
-					frame:
-						idle.cycle.settleFrames?.[idle.cycle.settleFrames.length - 1] ??
-						idle.frame,
-				};
-				const placed = lockedPlacement(
-					exit.anchor,
-					rest,
-					exit.foot,
-					this.area.perspective,
-					this.area.baseScale,
-					this.area.scaleClamp,
-					exit.position.scale,
+			acceptRest: (s, pose, rest, target) => {
+				const stride = this.predictStance(pose, s);
+				return (
+					!!stride &&
+					Math.hypot(rest.x - target.x, rest.y - target.y) <=
+						Math.hypot(
+							stride.anchor.x - s.anchor.x,
+							stride.anchor.y - s.anchor.y,
+						) /
+							2
 				);
-				return contactOnScreen(rest, exit.foot, placed, placed.scale);
+			},
+			rest: (s, pose) => {
+				const exit = this.nextExit(pose, s);
+				return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
 			},
 		});
 		this.planned = result.steps;
 		this.planDistance = result.distance;
 		this.planSearch = result.stats;
+		this.planComplete = result.complete;
 		if (!result.complete || result.stats.reason.endsWith("budget"))
 			console.warn("Footstep search partial/budget", result.stats, {
 				target: this.goal,
@@ -472,11 +453,7 @@ export class CharacterMotor {
 			});
 	}
 	/** Consume a prevalidated stance. Only a new click calls buildPlan. */
-	private planStance(
-		_starting = false,
-		_turning = false,
-		_initialHeading?: WalkDirection,
-	): boolean {
+	private planStance(): boolean {
 		const step = this.planned.shift();
 		if (!step) return false;
 		this.anchor = {
@@ -510,8 +487,8 @@ export class CharacterMotor {
 				const stride = this.predictStance(step.pose);
 				const halfStride = stride
 					? Math.hypot(
-							stride.end.x - stride.start.x,
-							stride.end.y - stride.start.y,
+							stride.anchor.x - this.anchor.x,
+							stride.anchor.y - this.anchor.y,
 						) / 2
 					: this.lastStrideLength / 2;
 				this.arrival = {
@@ -576,7 +553,8 @@ export class CharacterMotor {
 			...idle,
 			frame,
 		}));
-		return poses.every((rest, index) => {
+		let previous: Point | undefined;
+		return poses.every((rest) => {
 			const placed = lockedPlacement(
 				anchor,
 				rest,
@@ -596,42 +574,47 @@ export class CharacterMotor {
 				]
 			)
 				return false;
-			return (
-				index < poses.length - 1 ||
-				(["L", "R"] as const).every(
-					(sole) =>
-						raw.data[
-							cellAt(raw, contactOnScreen(rest, sole, placed, placed.scale))
-						] > 0,
-				)
+			const body = { x: placed.x, y: anchor.y };
+			if (
+				previous &&
+				!lineOfSight(this.area.clearanceMask ?? this.area.mask, previous, body)
+			)
+				return false;
+			previous = body;
+			return (["L", "R"] as const).every(
+				(sole) =>
+					raw.data[
+						cellAt(raw, contactOnScreen(rest, sole, placed, placed.scale))
+					] > 0,
 			);
 		});
 	}
-	/** Validate every body frame and the next planted landing before committing a stance. */
-	private predictStance(
+	/** Cache exact-depth sheet simulation independently of scene collisions.
+	 * No quantised displacement reaches playback. Without lateral residuals,
+	 * translation in x is exact, so all supports at a depth share the samples. */
+	private stanceSamples(
 		pose: FootPose,
-		state?: PredictedStance,
-		validate = true,
-	): PredictedStance | undefined {
+		anchor: Point,
+		foot: Foot,
+		scale: number,
+	) {
+		const lateral = Boolean(this.area.perspective.residual?.length);
+		const originX = lateral ? anchor.x : 0;
+		const key = `${pose.cycle.name}:${pose.flipX}:${pose.frame}:${foot}:${originX}:${anchor.y}:${lateral ? scale : 0}`;
+		const cached = this.stanceCache.get(key);
+		if (cached) return cached;
 		if (
 			pose.cycle.contacts.some(
 				(c) => c[c.planted].y < 0 || c[c.planted].y > pose.cycle.frameHeight,
 			)
 		)
 			return;
-		const anchor = state?.anchor ?? this.anchor,
-			foot = state?.foot ?? this.foot;
-		const raw = this.area.rawMask ?? this.area.mask;
-		const on = (mask: typeof raw, p: Point) => mask.data[cellAt(mask, p)] > 0;
-		if (validate && !on(raw, anchor)) return;
-
-		let current = pose,
-			scale = state?.scale ?? this.scale;
-		let position: Point = state?.end ?? this.target;
-		let start: Point = position;
+		const origin = { x: originX, y: anchor.y };
+		const samples: (Point & { scale: number })[] = [];
+		let current = pose;
 		for (let i = 0; i < pose.cycle.contacts.length; i++) {
 			const p = lockedPlacement(
-				anchor,
+				origin,
 				current,
 				foot,
 				this.area.perspective,
@@ -639,27 +622,12 @@ export class CharacterMotor {
 				this.area.scaleClamp,
 				scale,
 			);
-			if (
-				validate &&
-				(!on(this.area.clearanceMask ?? this.area.mask, {
-					x: p.x,
-					y: anchor.y,
-				}) ||
-					!lineOfSight(
-						this.area.clearanceMask ?? this.area.mask,
-						{ x: position.x, y: anchor.y },
-						{ x: p.x, y: anchor.y },
-					))
-			)
-				return;
-			if (i === 0) start = p;
-			position = p;
+			samples.push(p);
 			scale = p.scale;
 			const frame = (current.frame + 1) % pose.cycle.contacts.length;
 			const incoming = pose.cycle.contacts[frame].planted;
 			if (incoming !== foot) {
-				const landing = contactOnScreen(current, incoming, position, scale);
-				if (validate && !on(raw, landing)) return;
+				const landing = contactOnScreen(current, incoming, p, scale);
 				const end = lockedPlacement(
 					landing,
 					{ ...pose, frame },
@@ -669,42 +637,73 @@ export class CharacterMotor {
 					this.area.scaleClamp,
 					scale,
 				);
-				// The incoming cycle may change at this landing. Its old-cycle
-				// first pose is not drawn if a turn is needed for body clearance.
-				const nextBodySafe =
-					!validate ||
-					(on(this.area.clearanceMask ?? this.area.mask, {
-						x: end.x,
-						y: landing.y,
-					}) &&
-						lineOfSight(
-							this.area.clearanceMask ?? this.area.mask,
-							{ x: position.x, y: anchor.y },
-							{ x: end.x, y: landing.y },
-						));
-				// Legacy cycles may stop at any landing. Matched cycles validate
-				// standing only at their source frame through nextExit; the
-				// opposite support is not a possible standing transition.
-				if (
-					validate &&
-					!pose.cycle.matchedCut &&
-					this.goal &&
-					Math.hypot(end.x - this.goal.x, end.y - this.goal.y) < 200 &&
-					!this.canStand(pose, landing, incoming, scale)
-				)
-					return;
-				return {
-					start,
-					end: nextBodySafe ? end : position,
-					anchor: landing,
-					foot: incoming,
-					pose: { ...pose, frame },
-					scale: nextBodySafe ? end.scale : scale,
-				};
+				const result = { samples, landing, end, frame, incoming };
+				if (this.stanceCache.size < 12000) this.stanceCache.set(key, result);
+				return result;
 			}
 			current = { ...pose, frame };
 		}
 	}
+	/** Validate the planted and landing soles, every body sample and swept segment. */
+	private predictStance(
+		pose: FootPose,
+		state?: PredictedStance,
+	): PredictedStance | undefined {
+		const anchor = state?.anchor ?? this.anchor,
+			foot = state?.foot ?? this.foot;
+		const raw = this.area.rawMask ?? this.area.mask,
+			mask = this.area.clearanceMask ?? this.area.mask;
+		const on = (m: typeof raw, p: Point) => m.data[cellAt(m, p)] > 0;
+		if (!on(raw, anchor)) return;
+		const sampled = this.stanceSamples(
+			pose,
+			anchor,
+			foot,
+			state?.scale ?? this.scale,
+		);
+		if (!sampled) return;
+		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
+		const previous = state?.end ?? this.target;
+		let minX = previous.x,
+			maxX = previous.x;
+		for (const p of sampled.samples) {
+			minX = Math.min(minX, p.x + shift);
+			maxX = Math.max(maxX, p.x + shift);
+		}
+		// While this foot is planted the body ground depth is constant. The union
+		// of all per-frame swept intervals is exactly [minX,maxX], including entry.
+		if (!lineOfSight(mask, { x: minX, y: anchor.y }, { x: maxX, y: anchor.y }))
+			return;
+		const last = sampled.samples[sampled.samples.length - 1];
+		const position = { ...last, x: last.x + shift };
+		const landing = { ...sampled.landing, x: sampled.landing.x + shift };
+		if (!on(raw, landing)) return;
+		const end = { ...sampled.end, x: sampled.end.x + shift };
+		const nextBodySafe =
+			on(mask, { x: end.x, y: landing.y }) &&
+			lineOfSight(
+				mask,
+				{ x: position.x, y: anchor.y },
+				{ x: end.x, y: landing.y },
+			);
+		const scale = last.scale;
+		if (
+			!pose.cycle.matchedCut &&
+			this.goal &&
+			Math.hypot(end.x - this.goal.x, end.y - this.goal.y) < 200 &&
+			!this.canStand(pose, landing, sampled.incoming, scale)
+		)
+			return;
+		return {
+			start: { ...sampled.samples[0], x: sampled.samples[0].x + shift },
+			end: nextBodySafe ? end : position,
+			anchor: landing,
+			foot: sampled.incoming,
+			pose: { ...pose, frame: sampled.frame },
+			scale: nextBodySafe ? end.scale : scale,
+		};
+	}
+
 	private apply(): void {
 		if (!this.pose) return;
 		const p = lockedPlacement(
@@ -861,6 +860,7 @@ export class CharacterMotor {
 				remaining: this.planned.length,
 				distance: this.planDistance,
 				search: this.planSearch,
+				complete: this.planComplete,
 			},
 			arrival: this.arrival,
 			heading: this.heading,

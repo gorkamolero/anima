@@ -575,3 +575,38 @@ describe("contact motor", () => {
 		expect(frames).toBeLessThanOrEqual(13);
 	});
 });
+
+it("executes cached lattice supports exactly without runtime replanning", async () => {
+	const { motor, cycle } = setup(true, true);
+	cycle.matchedCut = {
+		standing: "standing",
+		headings: ["right"],
+		exitFrames: [0],
+		entryFrames: [0],
+	};
+	motor.place({ x: 960, y: 850 });
+	const internal = motor as unknown as {
+		planned: { state: { anchor: { x: number; y: number } } }[];
+		buildPlan: () => void;
+	};
+	const walk = motor.walk([{ x: 1400, y: 850 }]);
+	const expected = internal.planned.map((s) => ({ ...s.state.anchor }));
+	let consumed = 0,
+		remaining = internal.planned.length;
+	internal.buildPlan = () => {
+		throw Error("Playback must not replan");
+	};
+	for (let i = 0; i < 2000 && motor.walking; i++) {
+		motor.update(1000 / 24);
+		const next = internal.planned.length;
+		if (next < remaining && next > 0) {
+			expect(motor.anchor.x).toBeCloseTo(expected[consumed].x, 7);
+			expect(motor.anchor.y).toBeCloseTo(expected[consumed].y, 7);
+			consumed++;
+		}
+		remaining = next;
+	}
+	await walk;
+	expect(consumed).toBeGreaterThan(0);
+	expect(motor.walking).toBe(false);
+});
