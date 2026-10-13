@@ -50,6 +50,7 @@ export interface RouteState {
 export interface SearchOptions {
 	entryPhases?: "authored" | "all";
 	searchWeight?: number;
+	startPhases?: boolean;
 	/** Preserve the complete click's route rules across a grounded restart. */
 	initialRoute?: RouteState;
 	nodeBudget?: number;

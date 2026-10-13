@@ -455,8 +455,9 @@ it("a grounded restart preserves the previous run and the whole-click turn budge
 });
 
 it("goal-biased ordering preserves the cost and route constraints", () => {
-	const result = search({ x: 3, y: 1 }, 0.3, () => true, {
+	const result = search({ x: 3, y: 0.9 }, 0.3, () => true, {
 		searchWeight: 4,
+		stopWeight: 128,
 		maxHeadingChanges: 2,
 		minHeadingRun: 2,
 		nodeBudget: 1000,

@@ -760,6 +760,8 @@ export class CharacterMotor {
 			{ searchWeight: 4 },
 			{ searchWeight: 4, entryPhases: "authored" },
 			{ searchWeight: 4, entryPhases: "all" },
+			{ stopWeight: 128, searchWeight: 4, entryPhases: "authored" },
+			{ stopWeight: 128, searchWeight: 4, entryPhases: "all", startPhases: true },
 		];
 		for (const alternative of alternatives) {
 			if (accepted.clean && accepted.arrived) break;
@@ -990,7 +992,7 @@ export class CharacterMotor {
 							...(selected.cycle.matchedCut?.entryFrames ?? []),
 							...selected.cycle.switchFrames,
 						];
-				if (options.entryPhases === "all" && !starting)
+				if (options.entryPhases === "all" && (!starting || options.startPhases))
 					frames.push(
 						...selected.cycle.contacts
 							.map((_, i) => i)
