@@ -758,3 +758,28 @@ it("absorbs a one-pixel stop error smoothly within the final stance", () => {
 		true,
 	);
 });
+
+it("rejects a boot on an object footprint even when raw floor and body are clear", () => {
+	const { motor, area, cycle } = setup();
+	motor.area.objectFootprints = {
+		...area.mask,
+		data: area.mask.data.map(() => 0),
+	};
+	motor.place({ x: 960, y: 850 }, false);
+	const state = motor as unknown as {
+		predictStance(
+			pose: FootPose,
+		): { anchor: { x: number; y: number } } | undefined;
+	};
+	const pose = { cycle, frame: 0, flipX: false };
+	const next = state.predictStance(pose);
+	expect(next).toBeDefined();
+	if (!next) throw new Error("Expected an unobstructed baseline stance");
+	const landing = next.anchor;
+	const m = motor.area.objectFootprints;
+	m.data[
+		Math.floor((landing.y * m.height) / 1080) * m.width +
+			Math.floor((landing.x * m.width) / 1920)
+	] = 1;
+	expect(state.predictStance(pose)).toBeUndefined();
+});

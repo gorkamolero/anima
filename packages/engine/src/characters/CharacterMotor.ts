@@ -2,7 +2,6 @@ import {
 	cellAt,
 	cellPoint,
 	findPath,
-	lineOfSight,
 	nearestCell,
 } from "../walkarea/navigation";
 import { type Point, scaleAt, toMetres } from "../walkarea/perspective";
@@ -18,6 +17,7 @@ import {
 	planFootsteps,
 	type SearchOptions,
 } from "./footstepPlan";
+import { stanceSweep } from "./stanceSweep";
 import { stanceFrameMs } from "./stanceTiming";
 import {
 	GROUND_SECTORS,
@@ -290,7 +290,6 @@ export class CharacterMotor {
 			scale: state?.scale ?? this.scale,
 		};
 		const mask = this.area.clearanceMask ?? this.area.mask;
-		const raw = this.area.rawMask ?? this.area.mask;
 		const entry = lockedPlacement(
 			anchor,
 			source,
@@ -300,11 +299,11 @@ export class CharacterMotor {
 			this.area.scaleClamp,
 			position.scale,
 		);
-		if (!raw.data[cellAt(raw, anchor)]) return this.reject("sole-off-floor");
+		if (!this.soleFits(anchor)) return;
 		if (!mask.data[cellAt(mask, { x: entry.x, y: anchor.y })])
 			return this.reject("body-off-clearance");
 		if (
-			!lineOfSight(
+			!stanceSweep(
 				mask,
 				{ x: position.x, y: anchor.y },
 				{ x: entry.x, y: anchor.y },
@@ -380,11 +379,11 @@ export class CharacterMotor {
 				this.area.scaleClamp,
 				position.scale,
 			);
-			if (!raw.data[cellAt(raw, anchor)]) return this.reject("sole-off-floor");
+			if (!this.soleFits(anchor)) return;
 			if (!mask.data[cellAt(mask, { x: p.x, y: anchor.y })])
 				return this.reject("body-off-clearance");
 			if (
-				!lineOfSight(
+				!stanceSweep(
 					mask,
 					{ x: position.x, y: previousAnchorY },
 					{ x: p.x, y: anchor.y },
@@ -444,7 +443,7 @@ export class CharacterMotor {
 			if (
 				!raw.data[cellAt(raw, a)] ||
 				!mask.data[cellAt(mask, { x: p.x, y: a.y })] ||
-				!lineOfSight(mask, { x: previous.x, y: anchor.y }, { x: p.x, y: a.y })
+				!stanceSweep(mask, { x: previous.x, y: anchor.y }, { x: p.x, y: a.y })
 			)
 				return;
 			previous = p;
@@ -916,7 +915,6 @@ export class CharacterMotor {
 		if (!direction) return true;
 		const idle = this.animation.standing(direction);
 		if (!idle) return true;
-		const raw = this.area.rawMask ?? this.area.mask;
 		const poses = (idle.cycle.settleFrames ?? [idle.frame]).map((frame) => ({
 			...idle,
 			frame,
@@ -933,7 +931,7 @@ export class CharacterMotor {
 				scale,
 			);
 			if (
-				!raw.data[cellAt(raw, anchor)] ||
+				!this.soleFits(anchor) ||
 				!(this.area.clearanceMask ?? this.area.mask).data[
 					cellAt(this.area.clearanceMask ?? this.area.mask, {
 						x: placed.x,
@@ -945,17 +943,28 @@ export class CharacterMotor {
 			const body = { x: placed.x, y: anchor.y };
 			if (
 				previous &&
-				!lineOfSight(this.area.clearanceMask ?? this.area.mask, previous, body)
+				!stanceSweep(this.area.clearanceMask ?? this.area.mask, previous, body)
 			)
 				return false;
 			previous = body;
-			return (["L", "R"] as const).every(
-				(sole) =>
-					raw.data[
-						cellAt(raw, contactOnScreen(rest, sole, placed, placed.scale))
-					] > 0,
+			return (["L", "R"] as const).every((sole) =>
+				this.soleFits(contactOnScreen(rest, sole, placed, placed.scale)),
 			);
 		});
+	}
+	/** Boots use raw floor, never the body erosion, and may not land on props. */
+	private soleFits(point: Point): boolean {
+		const raw = this.area.rawMask ?? this.area.mask;
+		if (!raw.data[cellAt(raw, point)]) {
+			this.rejectionReason = "sole-off-floor";
+			return false;
+		}
+		const objects = this.area.objectFootprints;
+		if (objects?.data[cellAt(objects, point)]) {
+			this.rejectionReason = "sole-on-object-footprint";
+			return false;
+		}
+		return true;
 	}
 	private validFacing(
 		pose: FootPose,
@@ -1045,7 +1054,7 @@ export class CharacterMotor {
 		const raw = this.area.rawMask ?? this.area.mask,
 			mask = this.area.clearanceMask ?? this.area.mask;
 		const on = (m: typeof raw, p: Point) => m.data[cellAt(m, p)] > 0;
-		if (!on(raw, anchor)) return this.reject("sole-off-floor");
+		if (!this.soleFits(anchor)) return;
 		const sampled = this.stanceSamples(
 			pose,
 			anchor,
@@ -1068,16 +1077,16 @@ export class CharacterMotor {
 			!on(mask, { x: maxX, y: anchor.y })
 		)
 			return this.reject("body-off-clearance");
-		if (!lineOfSight(mask, { x: minX, y: anchor.y }, { x: maxX, y: anchor.y }))
+		if (!stanceSweep(mask, { x: minX, y: anchor.y }, { x: maxX, y: anchor.y }))
 			return this.reject("swept-segment-blocked");
 		const last = sampled.samples[sampled.samples.length - 1];
 		const position = { ...last, x: last.x + shift };
 		const landing = { ...sampled.landing, x: sampled.landing.x + shift };
-		if (!on(raw, landing)) return this.reject("sole-off-floor");
+		if (!this.soleFits(landing)) return;
 		const end = { ...sampled.end, x: sampled.end.x + shift };
 		const nextBodySafe =
 			on(mask, { x: end.x, y: landing.y }) &&
-			lineOfSight(
+			stanceSweep(
 				mask,
 				{ x: position.x, y: anchor.y },
 				{ x: end.x, y: landing.y },
