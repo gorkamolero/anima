@@ -724,7 +724,8 @@ export class CharacterMotor {
 											s.foot,
 											s.scale,
 											this.startingClearance({ x: s.end.x, y: s.anchor.y }),
-										)),
+										)) &&
+									(stopping || !!this.predictStance(p, s)),
 							);
 					};
 					const pose = entry();

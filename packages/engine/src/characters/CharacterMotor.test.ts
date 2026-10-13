@@ -813,3 +813,40 @@ it("allows an initial marginal body cell to escape inward, but not a later stanc
 		state.predictStance({ cycle, frame: 0, flipX: false, firstStance: true }),
 	).toBeUndefined();
 });
+
+it("tries the next compatible entry when the first phase clips the clearance edge", () => {
+	const { motor, area, cycle, pose } = setup(true);
+	cycle.contacts = [
+		{ planted: "L", L: { x: 100, y: 190 }, R: { x: 30, y: 190 } },
+		{ planted: "L", L: { x: 50, y: 190 }, R: { x: 70, y: 190 } },
+		{ planted: "L", L: { x: 30, y: 190 }, R: { x: 90, y: 190 } },
+		{ planted: "R", L: { x: 30, y: 190 }, R: { x: 50, y: 190 } },
+		{ planted: "R", L: { x: 70, y: 190 }, R: { x: 30, y: 190 } },
+		{ planted: "R", L: { x: 90, y: 190 }, R: { x: 10, y: 190 } },
+	];
+	cycle.switchFrames = [0, 1, 3];
+	motor.area.clearanceMask = {
+		...area.mask,
+		data: area.mask.data.map((v, i) => (i % area.mask.width === 94 ? 0 : v)),
+	};
+	motor.place({ x: 960, y: 850 }, false);
+	const internal = motor as unknown as {
+		animation: { select: (direction: string) => Omit<FootPose, "frame"> };
+	};
+	const invalid = {
+		...cycle,
+		name: "invalid",
+		contacts: cycle.contacts.map((c) => ({
+			...c,
+			L: { x: 0, y: -1 },
+			R: { x: 0, y: -1 },
+		})),
+	};
+	internal.animation.select = (direction) => ({
+		cycle: direction === "right" ? cycle : invalid,
+		flipX: false,
+	});
+	void motor.walk([{ x: 1400, y: 850 }], "right");
+	expect(motor.walking).toBe(true);
+	expect(pose().frame).toBe(1);
+});
