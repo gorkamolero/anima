@@ -655,7 +655,7 @@ export class CharacterMotor {
 				Math.hypot(
 					exit.anchor.x - first.state.anchor.x,
 					exit.anchor.y - first.state.anchor.y,
-				) <= 20
+				) <= 0.5
 			)
 				break;
 			const placed = lockedPlacement(
@@ -693,7 +693,7 @@ export class CharacterMotor {
 			const rejections = result.stats.rejections;
 			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
 				rejections[reason] = (rejections[reason] ?? 0) + count;
-			if (!next.steps.length || next.distance >= segment.distance - 5) break;
+			if (!next.steps.length || next.distance >= segment.distance - 0.5) break;
 			result.steps.push(...next.steps);
 			result.distance = next.distance;
 			result.complete = next.complete;

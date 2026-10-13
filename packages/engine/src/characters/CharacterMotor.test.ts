@@ -970,3 +970,34 @@ it("holds a standing pivot and cancels it without starting the queued stride", (
 	expect(internal.planned).toHaveLength(0);
 	expect(pose().cycle.name).toBe("standing");
 });
+
+it("steps inward from the caption boundary while keeping both supports on raw floor", () => {
+	const { motor, area, cycle } = setup();
+	motor.area.rawMask = { ...area.mask, data: [...area.mask.data] };
+	motor.area.clearanceMask = {
+		...area.mask,
+		data: area.mask.data.map((_, i) =>
+			Math.floor(i / area.mask.width) < 85 ? 1 : 0,
+		),
+	};
+	cycle.contacts[1].L.y = 198;
+	cycle.contacts[1].R.y = 160;
+	motor.place({ x: 960, y: 860 }, false);
+	const internal = motor as unknown as {
+		predictStance(
+			pose: FootPose,
+		): { anchor: { x: number; y: number } } | undefined;
+	};
+	expect(motor.anchor.y).toBeGreaterThan(850);
+	expect(
+		internal.predictStance({ cycle, frame: 0, flipX: false }),
+	).toBeUndefined();
+	const inward = internal.predictStance({
+		cycle,
+		frame: 0,
+		flipX: false,
+		firstStance: true,
+	});
+	expect(inward).toBeDefined();
+	expect(inward?.anchor.y).toBeLessThan(850);
+});
