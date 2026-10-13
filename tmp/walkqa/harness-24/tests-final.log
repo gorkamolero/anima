@@ -1,0 +1,488 @@
+
+> anima@0.1.0 test:run /Users/gorkolas/Developer/anima
+> vitest run
+
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+ ✓ api/src/__tests__/services/ground-regions.test.ts (2 tests) 17ms
+ ✓ api/src/__tests__/services/floor-judge-transport.test.ts (3 tests) 86ms
+ ✓ api/src/__tests__/routes/scene-image.test.ts (2 tests) 20ms
+ ✓ api/src/__tests__/routes/world.test.ts (1 test) 9ms
+ ✓ packages/engine/src/__tests__/transitions/IrisTransition.test.ts (32 tests) 31ms
+ ✓ api/src/__tests__/services/sessions.test.ts (14 tests) 77ms
+ ✓ api/src/__tests__/services/connections.test.ts (1 test) 19ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > holds drawn stop poses for two ticks and starts them in reverse on the locked boot
+Footstep search partial/budget {
+  expanded: 4483,
+  generated: 4888,
+  elapsedMs: 27.345416,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 9.458435127831741,
+  complete: true
+}
+
+stderr | api/src/__tests__/services/places-ground.test.ts > accepts conservative coverage and does not rederive existing places after a version change
+[floor-regression] place-58b25bc5092a0cdc2125: Floor refresh lost 100.00% (>15%); previous floor retained pending visual review.
+
+stderr | api/src/__tests__/services/places-ground.test.ts > guards a 16 percent floor loss on refresh and retains review overlays
+[floor-regression] place-58b25bc5092a0cdc2125: Floor refresh lost 16.00% (>15%); previous floor retained pending visual review.
+
+ ✓ api/src/__tests__/services/places-ground.test.ts (7 tests) 45ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > cancels pending drawn frames on teleport
+Footstep search partial/budget {
+  expanded: 3071,
+  generated: 3483,
+  elapsedMs: 27.520832999999982,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 0.4473399395885573,
+  complete: true
+}
+
+ ✓ api/src/__tests__/routes/narrate.test.ts (8 tests) 23ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > settles back to rest when stopped during reverse playback
+Footstep search partial/budget {
+  expanded: 7665,
+  generated: 8080,
+  elapsedMs: 27.385250000000042,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 0.4473399395885573,
+  complete: true
+}
+
+ ✓ api/src/__tests__/services/occluders.test.ts (4 tests) 108ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > cuts to standing on a frame boundary, preserving the support
+Footstep search partial/budget {
+  expanded: 5778,
+  generated: 6244,
+  elapsedMs: 27.163291000000015,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 2.1849279857161465,
+  complete: true
+}
+
+ ✓ api/src/__tests__/services/floor-judge.test.ts (7 tests) 10ms
+ ✓ packages/engine/src/__tests__/audio/SceneSoundManager.test.ts (34 tests) 29ms
+ ✓ packages/engine/src/__tests__/scenes/ScenePreloadManager.test.ts (26 tests) 245ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > restarts on the actual right support instead of the standing sheet default
+Footstep search partial/budget {
+  expanded: 4413,
+  generated: 4800,
+  elapsedMs: 27.514542000000006,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 0.5256398401506724,
+  complete: true
+}
+Footstep search partial/budget {
+  expanded: 1,
+  generated: 1,
+  elapsedMs: 0.07329200000003766,
+  reason: 'exhausted'
+} { target: { x: 1695, y: 845 }, distance: Infinity, complete: false }
+
+ ✓ api/src/__tests__/services/ground-line.test.ts (2 tests) 8ms
+ ✓ packages/engine/src/__tests__/scenes/BaseScene.test.ts (43 tests) 75ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > cuts into walking immediately and locks the starting support
+Footstep search partial/budget {
+  expanded: 5624,
+  generated: 6086,
+  elapsedMs: 27.244540999999913,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 2.1849279857161465,
+  complete: true
+}
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > GET /api/health > should return health status
+<-- GET /api/health
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > GET /api/health > should return health status
+--> GET /api/health 200 3ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > POST /api/session > should create a new session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > POST /api/session > should create a new session
+--> POST /api/session 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+--> POST /api/session 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+<-- GET /api/session/sess_0edd091d-1417-4713-8f98-29e52207cbcc
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return session info for valid session
+--> GET /api/session/sess_0edd091d-1417-4713-8f98-29e52207cbcc 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return 404 for non-existent session
+<-- GET /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > GET /api/session/:id > should return 404 for non-existent session
+--> GET /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+--> POST /api/session 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+<-- PATCH /api/session/sess_bc78d9f7-3c3f-43d1-98c2-2d5fb7b8ecab
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should update session data
+--> PATCH /api/session/sess_bc78d9f7-3c3f-43d1-98c2-2d5fb7b8ecab 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should return 404 for non-existent session
+<-- PATCH /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > PATCH /api/session/:id > should return 404 for non-existent session
+--> PATCH /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- POST /api/session
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> POST /api/session 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- DELETE /api/session/sess_8cc44c38-90e6-4dfe-8e14-810f9c2a4262
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> DELETE /api/session/sess_8cc44c38-90e6-4dfe-8e14-810f9c2a4262 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+<-- GET /api/session/sess_8cc44c38-90e6-4dfe-8e14-810f9c2a4262
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should delete existing session
+--> GET /api/session/sess_8cc44c38-90e6-4dfe-8e14-810f9c2a4262 404 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should return 404 for non-existent session
+<-- DELETE /api/session/sess_00000000-0000-0000-0000-000000000000
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > Session Routes > DELETE /api/session/:id > should return 404 for non-existent session
+--> DELETE /api/session/sess_00000000-0000-0000-0000-000000000000 404 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return 400 if text is missing
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return 400 if text is missing
+--> POST /api/tts 400 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return audio buffer on success
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should return audio buffer on success
+--> POST /api/tts 200 1ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should handle TTS service errors
+<-- POST /api/tts
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > POST /api/tts > should handle TTS service errors
+--> POST /api/tts 500 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should return list of voices
+<-- GET /api/voices
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should return list of voices
+--> GET /api/voices 200 0ms
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should handle errors
+<-- GET /api/voices
+
+stdout | api/src/__tests__/routes.test.ts > API Routes > TTS Routes > GET /api/voices > should handle errors
+--> GET /api/voices 500 0ms
+
+ ✓ packages/engine/src/characters/footstepPlan.test.ts (24 tests) 243ms
+ ✓ api/src/__tests__/routes.test.ts (13 tests) 15ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > waits for the measured exit and cuts only on the following boundary
+Footstep search partial/budget {
+  expanded: 5134,
+  generated: 5581,
+  elapsedMs: 27.158041000000026,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 2.1849279857161465,
+  complete: true
+}
+
+ ✓ api/src/__tests__/services/ground.test.ts (8 tests) 10ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > renders the selected exit before a cut even after a large update
+Footstep search partial/budget {
+  expanded: 5746,
+  generated: 6212,
+  elapsedMs: 27.17566700000009,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 2.1849279857161465,
+  complete: true
+}
+
+ ✓ api/src/__tests__/services/tts.test.ts (9 tests) 5ms
+ ✓ packages/engine/src/__tests__/occlusion-perception.test.ts (10 tests) 12ms
+ ✓ packages/engine/src/occlusion/bridge.test.ts (3 tests) 18ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > measures arrival at the eventual planted sole after support transfers
+Footstep search partial/budget {
+  expanded: 3381,
+  generated: 3758,
+  elapsedMs: 27.236374999999953,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 11.071547323258292,
+  complete: true
+}
+
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > does not substitute an unmatched standing cut when the source is blocked
+Footstep search partial/budget {
+  expanded: 5198,
+  generated: 5589,
+  elapsedMs: 30.68820800000003,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 69.19696734904767,
+  complete: false
+}
+
+ ✓ api/src/__tests__/services/exits.test.ts (2 tests) 3ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > sorts by the planted sole rather than bobbing sprite origin
+Footstep search partial/budget {
+  expanded: 7987,
+  generated: 8437,
+  elapsedMs: 27.456999999999994,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+
+ ✓ packages/engine/src/__tests__/state/GameState.test.ts (28 tests) 3ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > does not transfer to a swinging foot when boundary recovery cannot settle
+Footstep search partial/budget {
+  expanded: 6942,
+  generated: 7339,
+  elapsedMs: 27.191416000000004,
+  reason: 'time-budget'
+} {
+  target: { x: 1695, y: 845 },
+  distance: 11.071547323258292,
+  complete: true
+}
+
+ ✓ api/src/__tests__/services/reviewed-anchor-floor.test.ts (2 tests) 5ms
+ ✓ api/src/__tests__/services/narrator-voice.test.ts (4 tests) 6ms
+stderr | api/src/__tests__/services/semantic-scale.test.ts
+The fal credentials are exposed in the browser's environment. That's not recommended for production use cases.
+
+ ✓ packages/engine/src/walkarea/perspective.test.ts (3 tests) 3ms
+ ✓ adventures/shadow-over-innsmouth/scripts/passingCuts.test.ts (5 tests) 7ms
+ ✓ packages/storyscript/src/runtime.test.ts (3 tests) 5ms
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > pickupItem() returns false for unknown item
+InventoryManager: Cannot pick up unknown item: nonexistent
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > pickupItem() returns false for duplicate
+InventoryManager: Item already in inventory: key
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > pickup and remove > removeItem() returns false for non-existent
+InventoryManager: Cannot remove item not in inventory: key
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > money > spendMoney() fails if insufficient (returns false)
+InventoryManager: Insufficient funds to spend: 100
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if no recipe
+InventoryManager: No recipe found for combining: key + coin
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if player doesn't have first item
+InventoryManager: Cannot combine items - missing item(s): rope, hook
+
+stderr | packages/engine/src/__tests__/inventory/InventoryManager.test.ts > InventoryManager > combinations > combineItems() returns null if player doesn't have second item
+InventoryManager: Cannot combine items - missing item(s): rope, hook
+
+ ✓ packages/engine/src/__tests__/inventory/InventoryManager.test.ts (39 tests) 12ms
+ ✓ packages/engine/src/__tests__/ui/UIState.test.ts (32 tests) 7ms
+ ✓ packages/engine/src/occlusion/arrivals.test.ts (3 tests) 3ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > derives travel from frames, independently of update subdivision
+Footstep search partial/budget {
+  expanded: 12000,
+  generated: 12470,
+  elapsedMs: 0,
+  reason: 'node-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+Footstep search partial/budget {
+  expanded: 12000,
+  generated: 12470,
+  elapsedMs: 0,
+  reason: 'node-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+
+ ✓ packages/engine/src/occlusion/classification.test.ts (4 tests) 6ms
+ ✓ api/src/__tests__/services/ground-calibration.test.ts (3 tests) 2ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > bounds total anchor correction and never moves a held contact
+Footstep search partial/budget {
+  expanded: 4885,
+  generated: 5330,
+  elapsedMs: 27.10420899999997,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+
+ ✓ packages/engine/src/__tests__/verification/ArtLandmarks.test.ts (7 tests) 3ms
+ ✓ api/src/__tests__/services/variant-floor.test.ts (2 tests) 2ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > resolves replaced walks and preserves contact when stopping
+Footstep search partial/budget {
+  expanded: 8213,
+  generated: 8667,
+  elapsedMs: 27.10291600000005,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+Footstep search partial/budget {
+  expanded: 7790,
+  generated: 8315,
+  elapsedMs: 27.092750000000024,
+  reason: 'time-budget'
+} {
+  target: { x: 1295, y: 845 },
+  distance: 0.5007854059821377,
+  complete: true
+}
+
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > rejects a stance whose incoming boot would land outside the raw floor
+Footstep search partial/budget {
+  expanded: 1,
+  generated: 1,
+  elapsedMs: 0.06904200000008132,
+  reason: 'exhausted'
+} { target: { x: 1395, y: 845 }, distance: Infinity, complete: false }
+
+ ✓ api/src/__tests__/services/semantic-scale.test.ts (3 tests) 5ms
+ ✓ packages/engine/src/__tests__/occlusion.test.ts (7 tests) 3ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > checks body clearance through the whole stance, not just its endpoint
+Footstep search partial/budget {
+  expanded: 1,
+  generated: 1,
+  elapsedMs: 0.05749999999989086,
+  reason: 'exhausted'
+} { target: { x: 1395, y: 845 }, distance: Infinity, complete: false }
+
+ ✓ packages/engine/src/walkarea/anchor.test.ts (3 tests) 697ms
+     ✓ outside preserves authored scales and stops before captions  316ms
+     ✓ inside preserves authored scales and stops before captions  357ms
+ ✓ adventures/shadow-over-innsmouth/src/game/scenes/hermesStanding.test.ts (8 tests) 2ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > keeps every accepted stance on the body floor while replanning
+Footstep search partial/budget {
+  expanded: 8365,
+  generated: 8465,
+  elapsedMs: 28.184958999999935,
+  reason: 'time-budget'
+} {
+  target: { x: 1145, y: 845 },
+  distance: 0.00039581697924649846,
+  complete: false
+}
+
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > places using a freshly selected pose instead of restoring the last walk pose
+Footstep search partial/budget {
+  expanded: 9161,
+  generated: 9621,
+  elapsedMs: 27.13458400000013,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 0.36476902817328377,
+  complete: true
+}
+
+ ✓ packages/engine/src/debug/AgentDebug.test.ts (1 test) 3ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > rejects a stance whose incoming body has no safe continuation
+Footstep search partial/budget {
+  expanded: 1,
+  generated: 1,
+  elapsedMs: 0.01587500000005093,
+  reason: 'exhausted'
+} { target: { x: 1395, y: 845 }, distance: Infinity, complete: false }
+
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > does not enter a one-frame support pivot that can disappear between captures
+Footstep search partial/budget {
+  expanded: 1,
+  generated: 1,
+  elapsedMs: 0.03537499999993088,
+  reason: 'exhausted'
+} { target: { x: 1395, y: 845 }, distance: Infinity, complete: false }
+
+ ✓ packages/engine/src/debug/AgentDebugCapture.test.ts (1 test) 2ms
+ ✓ packages/engine/src/characters/stanceTiming.test.ts (1 test) 2ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > contact motor > caps even sparse partial supports at 2.2 steps per second
+Footstep search partial/budget {
+  expanded: 9015,
+  generated: 9461,
+  elapsedMs: 27.299834000000146,
+  reason: 'time-budget'
+} {
+  target: { x: 1795, y: 845 },
+  distance: 3.848490599481379,
+  complete: false
+}
+
+ ✓ packages/engine/src/__tests__/groundline/GroundLine.test.ts (3 tests) 2ms
+ ✓ packages/engine/src/occlusion/exits.test.ts (4 tests) 1ms
+ ✓ packages/engine/src/characters/walkHeading.test.ts (4 tests) 2ms
+ ✓ adventures/shadow-over-innsmouth/scripts/narrativeDeparture.test.ts (3 tests) 1ms
+ ✓ packages/engine/src/characters/facingValidity.test.ts (2 tests) 1ms
+stderr | packages/engine/src/characters/CharacterMotor.test.ts > executes cached lattice supports exactly without runtime replanning
+Footstep search partial/budget {
+  expanded: 11694,
+  generated: 12164,
+  elapsedMs: 27.05925000000002,
+  reason: 'time-budget'
+} {
+  target: { x: 1395, y: 845 },
+  distance: 10.518520791736734,
+  complete: true
+}
+
+ ✓ packages/engine/src/characters/CharacterMotor.test.ts (28 tests) 825ms
+ ✓ packages/engine/src/occlusion/footprints.test.ts (4 tests) 1111ms
+     ✓ preserves a bridge behind the support, excludes the base and gives the body clearance  1067ms
+ ✓ packages/engine/src/walkarea/navigation.test.ts (7 tests) 1292ms
+   ✓ dilates physical supports without eroding open floor a second time  1054ms
+
+ Test Files  50 passed (50)
+      Tests  469 passed (469)
+Type Errors  no errors
+   Start at  08:32:04
+   Duration  1.63s (transform 1.95s, setup 470ms, import 3.72s, tests 5.12s, environment 5.83s)
+

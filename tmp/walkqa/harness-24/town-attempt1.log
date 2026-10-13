@@ -1,0 +1,6 @@
+start 
+depot-hotspots-and-kat 
+Error: left: did not stop within half a drawn stride: {"expected":{"x":102.5,"y":942.5},"arrival":{"anchor":{"x":257.82999933606425,"y":919.1529401774444},"distance":157.49595815643403,"halfStride":29.779704043555288,"switchFrame":5,"target":{"x":102,"y":942}},"cut":{"cycleFrames":30,"from":{"x":257.82999933606425,"y":919.1529401774444},"matched":true,"to":{"x":257.82999933606425,"y":919.1529401774444},"waitFrames":6}}
+    at walkPlace (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:328:10)
+    at async replayTown (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:395:2)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-town.mjs:448:3
