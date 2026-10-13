@@ -746,14 +746,12 @@ export class CharacterMotor {
 					);
 					return Math.min(d, 8 - d) <= 2;
 				});
-			return {
-				clean,
-				boundarySafe:
-					runs.length === 1 ||
-					(runs[0]?.count >= 2 && runs[runs.length - 1]?.count >= 2),
-				arrived:
-					!!trial.arrival && trial.arrival.distance <= trial.arrival.halfStride,
-			};
+			const goal = this.goal ?? trial.anchor;
+			const cell = nearestCell(mask, goal);
+			const standable = cell < 0 ? goal : cellPoint(mask, cell);
+			const distance = trial.arrival ? Math.max(trial.arrival.distance,
+				Math.hypot(trial.arrival.anchor.x - standable.x, trial.arrival.anchor.y - standable.y)) : Infinity;
+			return { clean, distance, arrived: distance <= (trial.arrival?.halfStride ?? -1) };
 		};
 		let accepted = quality(best);
 		const totals = { ...best.stats, rejections: { ...best.stats.rejections } };
@@ -782,7 +780,7 @@ export class CharacterMotor {
 			const checked = quality(candidate);
 			if (
 				checked.clean &&
-				(!accepted.clean || candidate.distance < best.distance)
+				(!accepted.clean || (checked.arrived && !accepted.arrived) || checked.distance < accepted.distance)
 			) {
 				best = candidate;
 				accepted = checked;
