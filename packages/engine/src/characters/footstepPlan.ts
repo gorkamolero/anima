@@ -40,7 +40,16 @@ export interface StepSimulation<State, Pose> {
 	restCandidates?(state: State, pose: Pose): readonly Point[];
 	acceptRest?(state: State, pose: Pose, rest: Point, target: Point): boolean;
 }
+export interface RouteState {
+	heading?: WalkDirection;
+	changes: number;
+	run: number;
+	history: number;
+	corner: number;
+}
 export interface SearchOptions {
+	/** Preserve the complete click's route rules across a grounded restart. */
+	initialRoute?: RouteState;
 	nodeBudget?: number;
 	timeBudgetMs?: number;
 	/** Maximum path cost, including turns and the exit edge. */
@@ -175,7 +184,16 @@ export function planFootsteps<State, Pose>(
 		run: 0,
 		history: 0,
 		corner: 0,
+		...options.initialRoute,
 	};
+	start.key = key(
+		initial,
+		start.heading,
+		start.changes,
+		start.run,
+		start.history,
+		start.corner,
+	);
 	open.push(start);
 	const costs = new Map([[start.key, 0]]);
 	let generated = 1;
@@ -183,7 +201,14 @@ export function planFootsteps<State, Pose>(
 		const alternative = {
 			...start,
 			state,
-			key: key(state),
+			key: key(
+				state,
+				start.heading,
+				start.changes,
+				start.run,
+				start.history,
+				start.corner,
+			),
 			f: heuristic(sim.position(state)),
 		};
 		if (costs.has(alternative.key)) continue;
@@ -205,6 +230,7 @@ export function planFootsteps<State, Pose>(
 				distance: number;
 				cost: number;
 				complete: boolean;
+				routeState: RouteState;
 		  }
 		| undefined;
 	const stepFor = (
@@ -290,11 +316,11 @@ export function planFootsteps<State, Pose>(
 			const poses = sim.entries?.(
 				node.state,
 				heading,
-				node.heading === undefined,
-			) ?? [sim.entry(node.state, heading, node.heading === undefined)];
+				node.step === undefined,
+			) ?? [sim.entry(node.state, heading, node.step === undefined)];
 			for (const pose of poses.length ? poses : [undefined]) {
 				const stopPose =
-					pose ?? sim.entry(node.state, heading, node.heading === undefined, true);
+					pose ?? sim.entry(node.state, heading, node.step === undefined, true);
 				if (pose === undefined && stopPose === undefined) continue;
 				const p = ground(sim.position(node.state));
 				const next =
@@ -342,6 +368,7 @@ export function planFootsteps<State, Pose>(
 							distance: remaining,
 							cost,
 							complete,
+							routeState: { heading, changes, run, history, corner },
 						};
 					}
 				}
@@ -396,6 +423,7 @@ export function planFootsteps<State, Pose>(
 
 	return {
 		steps,
+		routeState: best?.routeState,
 		distance: distance(last ?? sim.position(initial), target),
 		arrivalKind: complete ? ("exact" as const) : ("nearest-reachable" as const),
 		complete,

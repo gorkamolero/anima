@@ -322,9 +322,7 @@ it("bounds accumulated turns even when each consecutive turn is legal", () => {
 		"away-left",
 	]);
 	expect(result.steps).toEqual([]);
-	expect(
-		result.stats.rejections?.["search:turn-limit"],
-	).toBeGreaterThan(0);
+	expect(result.stats.rejections?.["search:turn-limit"]).toBeGreaterThan(0);
 });
 it("releases extra heading changes only near a route corner, once", () => {
 	const route: (typeof GROUND_SECTORS)[number][] = [
@@ -416,4 +414,42 @@ it("searches alternative entry phases when the first valid phase leads to a dead
 	);
 	expect(result.complete).toBe(true);
 	expect(result.steps[0].pose).toBe("full");
+});
+
+it("a grounded restart preserves the previous run and the whole-click turn budget", () => {
+	const resume = (
+		heading: (typeof GROUND_SECTORS)[number],
+		changes: number,
+		run: number,
+	) => {
+		const starting: boolean[] = [];
+		const result = planFootsteps(
+			{ x: 1, y: 0 },
+			{ x: 0, y: 0 },
+			{
+				position: (s) => s,
+				entry: (_s, h, first) => {
+					starting.push(first);
+					return h === heading ? h : undefined;
+				},
+				advance: (s) => ({ x: s.x + 0.25, y: 0 }),
+				rest: (s) => s,
+			},
+			{
+				now: () => 0,
+				maxHeadingChanges: 2,
+				minHeadingRun: 2,
+				initialRoute: { heading: "right", changes, run, corner: 0, history: 1 },
+			},
+		);
+		return { result, starting };
+	};
+	expect(resume("left", 0, 4).result.steps).toEqual([]);
+	expect(resume("away", 2, 4).result.steps).toEqual([]);
+	expect(resume("away", 1, 1).result.steps).toEqual([]);
+	const legal = resume("away", 1, 2);
+	expect(legal.result.complete).toBe(true);
+	expect(legal.result.routeState?.changes).toBe(2);
+	expect(legal.starting).toContain(true);
+	expect(legal.starting).toContain(false);
 });

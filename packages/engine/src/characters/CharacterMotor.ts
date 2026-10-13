@@ -631,9 +631,96 @@ export class CharacterMotor {
 		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
-	/** One search owns the entire click; standing pivots cannot restart mid-walk. */
+	/** Plan bounded stand-and-pivot continuations before any playback begins. */
 	private buildPlan(options: SearchOptions = {}) {
-		return this.buildSegment(options);
+		const result = this.buildSegment(options);
+		if (!result) return;
+		const screenCorners = routeCorners(this.path);
+		const shared = {
+			...options,
+			maxHeadingChanges: 2 + 2 * screenCorners.length,
+			routeCorners: screenCorners.map((p) => this.groundPoint(p)),
+			cornerHeadings: screenCorners.map((p) => {
+				const i = this.path.indexOf(p),
+					a = this.groundPoint(p),
+					b = this.groundPoint(this.path[i + 1]);
+				return headingFromGround(
+					b.x - a.x,
+					b.y - a.y,
+					this.heading,
+					this.area.perspective.constant === undefined ? a : undefined,
+					0,
+				);
+			}),
+		};
+		let planner: CharacterMotor = this;
+		let segment = result;
+		for (let attempt = 0; attempt < 8 && !segment.complete; attempt++) {
+			const last = segment.steps[segment.steps.length - 1];
+			const first = segment.steps[0];
+			if (!last || !first) break;
+			const exit = planner.nextExit(last.pose, last.state, last.heading, true);
+			const idle = this.animation.standing?.(last.heading);
+			if (
+				!exit ||
+				!idle ||
+				Math.hypot(
+					exit.anchor.x - first.state.anchor.x,
+					exit.anchor.y - first.state.anchor.y,
+				) <= 0.5
+			)
+				break;
+			const placed = lockedPlacement(
+				exit.anchor,
+				idle,
+				exit.foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				exit.position.scale,
+			);
+			const target: MotorTarget = {
+				...placed,
+				setPosition(x, y) {
+					this.x = x;
+					this.y = y;
+				},
+				setScale() {},
+				setDepth() {},
+			};
+			planner = new CharacterMotor(target, this.area, () => {}, this.animation);
+			planner.pose = idle;
+			planner.anchor = { ...exit.anchor };
+			planner.foot = exit.foot;
+			planner.scale = placed.scale;
+			planner.heading = last.heading;
+			planner.goal = this.goal;
+			const next = planner.buildSegment({
+				...shared,
+				initialRoute: segment.routeState,
+			});
+			if (!next) break;
+			// Include rejected continuation searches as well as the accepted path.
+			result.stats.expanded += next.stats.expanded;
+			result.stats.generated += next.stats.generated;
+			result.stats.optimal = false;
+			result.stats.rejections ??= {};
+			const rejections = result.stats.rejections;
+			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
+				rejections[reason] = (rejections[reason] ?? 0) + count;
+			if (!next.steps.length || next.distance >= segment.distance - 0.5) break;
+			result.steps.push(...next.steps);
+			result.distance = next.distance;
+			result.complete = next.complete;
+			result.arrivalKind = next.arrivalKind;
+			result.stats.reason = next.stats.reason;
+			segment = next;
+		}
+		this.planned = result.steps;
+		this.planDistance = result.distance;
+		this.planComplete = result.complete;
+		this.planSearch = result.stats;
+		return result;
 	}
 	private buildSegment(options: SearchOptions = {}) {
 		// Fixed work budget makes worker and Node route selection identical.
@@ -671,9 +758,9 @@ export class CharacterMotor {
 
 		options = {
 			...options,
-			maxHeadingChanges: 2 + 2 * corners.length,
-			routeCorners: corners,
-			cornerHeadings,
+			maxHeadingChanges: options.maxHeadingChanges ?? 2 + 2 * corners.length,
+			routeCorners: options.routeCorners ?? corners,
+			cornerHeadings: options.cornerHeadings ?? cornerHeadings,
 			cornerRadius: 0.6,
 			minHeadingRun: 2,
 		};
