@@ -339,10 +339,7 @@
 			}
 		}
 	],
-	"switchFrames": [
-		3,
-		21
-	],
+	"switchFrames": [3, 21],
 	"contactMethod": "physical-foot stance seeds; chained 48px boot SSD with local masked refinement; swing tracked backwards from landing",
 	"contactSeeds": {
 		"switches": [
@@ -363,10 +360,7 @@
 				}
 			}
 		],
-		"patch": [
-			64,
-			58
-		],
+		"patch": [64, 58],
 		"swing": [
 			{
 				"frame": 25,
@@ -386,22 +380,12 @@
 			}
 		]
 	},
-	"passingFrames": [
-		10,
-		28
-	],
+	"passingFrames": [10, 28],
 	"matchedCut": {
 		"standing": "hermes-passing-stand-side",
-		"headings": [
-			"left",
-			"right"
-		],
-		"exitFrames": [
-			29
-		],
-		"entryFrames": [
-			29
-		],
+		"headings": ["left", "right"],
+		"exitFrames": [29],
+		"entryFrames": [29],
 		"metrics": [
 			{
 				"frame": 0,
@@ -826,11 +810,7 @@
 		],
 		"method": "single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles"
 	},
-	"reviewedPassingFrames": [
-		11,
-		28,
-		29
-	],
+	"reviewedPassingFrames": [11, 28, 29],
 	"reviewedFreeBootSoles": {
 		"11": {
 			"R": {
@@ -851,130 +831,56 @@
 			}
 		}
 	},
+	"frameDurationsMs": [
+		37.878787878787875, 37.878787878787875, 37.878787878787875,
+		36.44313478690371, 36.44313478690371, 36.44313478690371, 36.44313478690371,
+		36.44313478690371, 36.44313478690371, 36.44313478690371, 36.44313478690371,
+		36.44313478690371, 36.44313478690371, 36.44313478690371, 36.44313478690371,
+		36.44313478690371, 36.44313478690371, 36.44313478690371, 36.44313478690371,
+		36.44313478690371, 36.44313478690371, 37.878787878787875,
+		37.878787878787875, 37.878787878787875, 37.878787878787875,
+		37.878787878787875, 37.878787878787875, 37.878787878787875,
+		37.878787878787875, 37.878787878787875
+	],
+	"retiming": {
+		"method": "preserve all source poses; allocate stance time proportional to measured horizontal distance",
+		"stanceLengths": [399.99040989518846, 277.1651776310968],
+		"cadence": 1.8009550597254544
+	},
 	"sourceCorrection": {
 		"method": "integer linear cross-axis translation per stance; residual bob retained",
 		"sourceCommit": "83e5099",
 		"offsets": [
-			[
-				0,
-				24
-			],
-			[
-				0,
-				25
-			],
-			[
-				0,
-				26
-			],
-			[
-				0,
-				0
-			],
-			[
-				0,
-				3
-			],
-			[
-				0,
-				5
-			],
-			[
-				0,
-				8
-			],
-			[
-				0,
-				11
-			],
-			[
-				0,
-				14
-			],
-			[
-				0,
-				16
-			],
-			[
-				0,
-				19
-			],
-			[
-				0,
-				22
-			],
-			[
-				0,
-				24
-			],
-			[
-				0,
-				27
-			],
-			[
-				0,
-				30
-			],
-			[
-				0,
-				32
-			],
-			[
-				0,
-				35
-			],
-			[
-				0,
-				38
-			],
-			[
-				0,
-				41
-			],
-			[
-				0,
-				43
-			],
-			[
-				0,
-				46
-			],
-			[
-				0,
-				16
-			],
-			[
-				0,
-				17
-			],
-			[
-				0,
-				18
-			],
-			[
-				0,
-				19
-			],
-			[
-				0,
-				20
-			],
-			[
-				0,
-				20
-			],
-			[
-				0,
-				21
-			],
-			[
-				0,
-				22
-			],
-			[
-				0,
-				23
-			]
+			[0, 24],
+			[0, 25],
+			[0, 26],
+			[0, 0],
+			[0, 3],
+			[0, 5],
+			[0, 8],
+			[0, 11],
+			[0, 14],
+			[0, 16],
+			[0, 19],
+			[0, 22],
+			[0, 24],
+			[0, 27],
+			[0, 30],
+			[0, 32],
+			[0, 35],
+			[0, 38],
+			[0, 41],
+			[0, 43],
+			[0, 46],
+			[0, 16],
+			[0, 17],
+			[0, 18],
+			[0, 19],
+			[0, 20],
+			[0, 20],
+			[0, 21],
+			[0, 22],
+			[0, 23]
 		]
 	}
 }

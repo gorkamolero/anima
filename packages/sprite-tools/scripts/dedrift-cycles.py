@@ -33,6 +33,15 @@ for name,axis in [('hermes-fal-veo-transparent-loop',1),('hermes-walk-away',0),(
  for group in ['switches','swing']:
   for seed in m['contactSeeds'].get(group,[]):
    dx,dy=offsets[seed['frame']];seed['point']['x']+=int(dx);seed['point']['y']+=int(dy)
+ if name=='hermes-fal-veo-transparent-loop':
+  lengths=[]
+  for stance in stances:
+   run=stance['frames'];foot=stance['foot'];a=m['contacts'][run[0]][foot];b=m['contacts'][run[-1]][foot];lengths.append(abs(b['x']-a['x']))
+  durations=[0.]*n
+  for stance,length in zip(stances,lengths):
+   for i in stance['frames']:durations[i]=(1000/2.2)*(length/min(lengths))/len(stance['frames'])
+  m['frameDurationsMs']=durations
+  m['retiming']={'method':'preserve all source poses; allocate stance time proportional to measured horizontal distance','stanceLengths':lengths,'cadence':2000/sum(durations)}
  m['frameWidth'],m['frameHeight']=nw,nh
  m['sourceCorrection']=dict(method='integer linear cross-axis translation per stance; residual bob retained',sourceCommit=BASE,offsets=offsets.tolist())
  canvas.save(ROOT/m['image']);path.write_text(json.dumps(m,indent='\t')+'\n')

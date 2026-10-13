@@ -284,10 +284,7 @@
 			}
 		}
 	],
-	"switchFrames": [
-		5,
-		18
-	],
+	"switchFrames": [5, 18],
 	"contactMethod": "physical-foot stance seeds; chained 48px boot SSD with local masked refinement; swing tracked backwards from landing",
 	"contactSeeds": {
 		"switches": [
@@ -308,10 +305,7 @@
 				}
 			}
 		],
-		"patch": [
-			35,
-			18
-		],
+		"patch": [35, 18],
 		"swing": [
 			{
 				"frame": 11,
@@ -331,21 +325,12 @@
 			}
 		]
 	},
-	"passingFrames": [
-		0,
-		13
-	],
+	"passingFrames": [0, 13],
 	"matchedCut": {
 		"standing": "hermes-passing-stand-toward",
-		"headings": [
-			"toward"
-		],
-		"exitFrames": [
-			13
-		],
-		"entryFrames": [
-			13
-		],
+		"headings": ["toward"],
+		"exitFrames": [13],
+		"entryFrames": [13],
 		"metrics": [
 			{
 				"frame": 0,
@@ -700,12 +685,7 @@
 		],
 		"method": "single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles"
 	},
-	"reviewedPassingFrames": [
-		0,
-		12,
-		13,
-		24
-	],
+	"reviewedPassingFrames": [0, 12, 13, 24],
 	"reviewedFreeBootSoles": {
 		"0": {
 			"L": {
@@ -736,106 +716,31 @@
 		"method": "integer linear cross-axis translation per stance; residual bob retained",
 		"sourceCommit": "83e5099",
 		"offsets": [
-			[
-				12,
-				0
-			],
-			[
-				11,
-				0
-			],
-			[
-				10,
-				0
-			],
-			[
-				9,
-				0
-			],
-			[
-				8,
-				0
-			],
-			[
-				0,
-				0
-			],
-			[
-				1,
-				0
-			],
-			[
-				3,
-				0
-			],
-			[
-				5,
-				0
-			],
-			[
-				7,
-				0
-			],
-			[
-				9,
-				0
-			],
-			[
-				10,
-				0
-			],
-			[
-				12,
-				0
-			],
-			[
-				14,
-				0
-			],
-			[
-				16,
-				0
-			],
-			[
-				18,
-				0
-			],
-			[
-				19,
-				0
-			],
-			[
-				21,
-				0
-			],
-			[
-				20,
-				0
-			],
-			[
-				19,
-				0
-			],
-			[
-				18,
-				0
-			],
-			[
-				17,
-				0
-			],
-			[
-				16,
-				0
-			],
-			[
-				15,
-				0
-			],
-			[
-				13,
-				0
-			]
+			[12, 0],
+			[11, 0],
+			[10, 0],
+			[9, 0],
+			[8, 0],
+			[0, 0],
+			[1, 0],
+			[3, 0],
+			[5, 0],
+			[7, 0],
+			[9, 0],
+			[10, 0],
+			[12, 0],
+			[14, 0],
+			[16, 0],
+			[18, 0],
+			[19, 0],
+			[21, 0],
+			[20, 0],
+			[19, 0],
+			[18, 0],
+			[17, 0],
+			[16, 0],
+			[15, 0],
+			[13, 0]
 		]
 	}
 }

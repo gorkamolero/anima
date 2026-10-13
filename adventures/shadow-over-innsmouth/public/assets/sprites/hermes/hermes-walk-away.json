@@ -339,10 +339,7 @@
 			}
 		}
 	],
-	"switchFrames": [
-		5,
-		20
-	],
+	"switchFrames": [5, 20],
 	"contactMethod": "physical-foot stance seeds; chained 48px boot SSD with local masked refinement; swing tracked backwards from landing",
 	"contactSeeds": {
 		"switches": [
@@ -363,10 +360,7 @@
 				}
 			}
 		],
-		"patch": [
-			25,
-			24
-		],
+		"patch": [25, 24],
 		"swing": [
 			{
 				"frame": 10,
@@ -387,21 +381,12 @@
 		],
 		"searchRadius": 64
 	},
-	"passingFrames": [
-		3,
-		17
-	],
+	"passingFrames": [3, 17],
 	"matchedCut": {
 		"standing": "hermes-passing-stand-away",
-		"headings": [
-			"away"
-		],
-		"exitFrames": [
-			11
-		],
-		"entryFrames": [
-			11
-		],
+		"headings": ["away"],
+		"exitFrames": [11],
+		"entryFrames": [11],
 		"metrics": [
 			{
 				"frame": 0,
@@ -826,12 +811,7 @@
 		],
 		"method": "single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles"
 	},
-	"reviewedPassingFrames": [
-		0,
-		1,
-		11,
-		12
-	],
+	"reviewedPassingFrames": [0, 1, 11, 12],
 	"reviewedFreeBootSoles": {
 		"0": {
 			"L": {
@@ -862,126 +842,36 @@
 		"method": "integer linear cross-axis translation per stance; residual bob retained",
 		"sourceCommit": "83e5099",
 		"offsets": [
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				7,
-				0
-			],
-			[
-				7,
-				0
-			],
-			[
-				6,
-				0
-			],
-			[
-				6,
-				0
-			],
-			[
-				5,
-				0
-			],
-			[
-				5,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				3,
-				0
-			],
-			[
-				3,
-				0
-			],
-			[
-				2,
-				0
-			],
-			[
-				2,
-				0
-			],
-			[
-				1,
-				0
-			],
-			[
-				1,
-				0
-			],
-			[
-				0,
-				0
-			],
-			[
-				0,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			],
-			[
-				4,
-				0
-			]
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[7, 0],
+			[7, 0],
+			[6, 0],
+			[6, 0],
+			[5, 0],
+			[5, 0],
+			[4, 0],
+			[3, 0],
+			[3, 0],
+			[2, 0],
+			[2, 0],
+			[1, 0],
+			[1, 0],
+			[0, 0],
+			[0, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0],
+			[4, 0]
 		]
 	}
 }
