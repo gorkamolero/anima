@@ -301,8 +301,7 @@ export function planFootsteps<State, Pose>(
 			) ?? [sim.entry(node.state, heading, node.heading === undefined)];
 			for (const pose of poses.length ? poses : [undefined]) {
 				const stopPose =
-					sim.entry(node.state, heading, node.heading === undefined, true) ??
-					pose;
+					pose ?? sim.entry(node.state, heading, node.heading === undefined, true);
 				if (pose === undefined && stopPose === undefined) continue;
 				const p = ground(sim.position(node.state));
 				const next =
