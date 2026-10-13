@@ -783,3 +783,33 @@ it("rejects a boot on an object footprint even when raw floor and body are clear
 	] = 1;
 	expect(state.predictStance(pose)).toBeUndefined();
 });
+
+it("allows an initial marginal body cell to escape inward, but not a later stance", () => {
+	const { motor, area, cycle } = setup();
+	motor.area.rawMask = { ...area.mask, data: [...area.mask.data] };
+	motor.area.clearanceMask = {
+		...area.mask,
+		data: area.mask.data.map((_, i) => (i % area.mask.width < 90 ? 0 : 1)),
+	};
+	motor.place({ x: 899, y: 850 }, false);
+	const state = motor as unknown as {
+		predictStance(
+			pose: FootPose,
+		): { end: { x: number; y: number } } | undefined;
+	};
+	expect(
+		state.predictStance({ cycle, frame: 0, flipX: false }),
+	).toBeUndefined();
+	const inward = state.predictStance({
+		cycle,
+		frame: 0,
+		flipX: false,
+		firstStance: true,
+	});
+	expect(inward).toBeDefined();
+	expect(inward?.end.x).toBeGreaterThanOrEqual(900);
+	motor.place({ x: 879, y: 850 }, false);
+	expect(
+		state.predictStance({ cycle, frame: 0, flipX: false, firstStance: true }),
+	).toBeUndefined();
+});

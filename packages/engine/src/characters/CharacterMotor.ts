@@ -717,7 +717,14 @@ export class CharacterMotor {
 											direction,
 											starting ? 35 : 30,
 										)) &&
-									(!starting || this.canStand(p, s.anchor, s.foot, s.scale)),
+									(!starting ||
+										this.canStand(
+											p,
+											s.anchor,
+											s.foot,
+											s.scale,
+											this.startingClearance({ x: s.end.x, y: s.anchor.y }),
+										)),
 							);
 					};
 					const pose = entry();
@@ -903,6 +910,7 @@ export class CharacterMotor {
 		anchor: Point,
 		foot: Foot,
 		scale: number,
+		mask = this.area.clearanceMask ?? this.area.mask,
 	): boolean {
 		this.rejectionReason = "settle-does-not-fit";
 		if (!this.animation.standing) return true;
@@ -932,8 +940,8 @@ export class CharacterMotor {
 			);
 			if (
 				!this.soleFits(anchor) ||
-				!(this.area.clearanceMask ?? this.area.mask).data[
-					cellAt(this.area.clearanceMask ?? this.area.mask, {
+				!mask.data[
+					cellAt(mask, {
 						x: placed.x,
 						y: anchor.y,
 					})
@@ -941,16 +949,38 @@ export class CharacterMotor {
 			)
 				return false;
 			const body = { x: placed.x, y: anchor.y };
-			if (
-				previous &&
-				!stanceSweep(this.area.clearanceMask ?? this.area.mask, previous, body)
-			)
-				return false;
+			if (previous && !stanceSweep(mask, previous, body)) return false;
 			previous = body;
 			return (["L", "R"] as const).every((sole) =>
 				this.soleFits(contactOnScreen(rest, sole, placed, placed.scale)),
 			);
 		});
+	}
+	/** A marginal spawn may leave its one boundary cell, but cannot cross a
+	 * second blocked cell or stop there. Sole and object checks stay strict. */
+	private startingClearance(point: Point) {
+		const mask = this.area.clearanceMask ?? this.area.mask;
+		const i = cellAt(mask, point);
+		if (i < 0 || mask.data[i] || !this.soleFits(point)) return mask;
+		const x = i % mask.width,
+			y = Math.floor(i / mask.width);
+		const adjacent = [
+			[x - 1, y],
+			[x + 1, y],
+			[x, y - 1],
+			[x, y + 1],
+		].some(
+			([cx, cy]) =>
+				cx >= 0 &&
+				cy >= 0 &&
+				cx < mask.width &&
+				cy < mask.height &&
+				mask.data[cy * mask.width + cx],
+		);
+		if (!adjacent) return mask;
+		const data = mask.data.slice();
+		data[i] = 1;
+		return { ...mask, data };
 	}
 	/** Boots use raw floor, never the body erosion, and may not land on props. */
 	private soleFits(point: Point): boolean {
@@ -1052,7 +1082,13 @@ export class CharacterMotor {
 		const anchor = state?.anchor ?? this.anchor,
 			foot = state?.foot ?? this.foot;
 		const raw = this.area.rawMask ?? this.area.mask,
-			mask = this.area.clearanceMask ?? this.area.mask;
+			clearance = this.area.clearanceMask ?? this.area.mask;
+		const mask = pose.firstStance
+			? this.startingClearance({
+					x: state?.end.x ?? this.target.x,
+					y: anchor.y,
+				})
+			: clearance;
 		const on = (m: typeof raw, p: Point) => m.data[cellAt(m, p)] > 0;
 		if (!this.soleFits(anchor)) return;
 		const sampled = this.stanceSamples(
@@ -1085,12 +1121,14 @@ export class CharacterMotor {
 		if (!this.soleFits(landing)) return;
 		const end = { ...sampled.end, x: sampled.end.x + shift };
 		const nextBodySafe =
-			on(mask, { x: end.x, y: landing.y }) &&
+			on(clearance, { x: end.x, y: landing.y }) &&
 			stanceSweep(
 				mask,
 				{ x: position.x, y: anchor.y },
 				{ x: end.x, y: landing.y },
 			);
+		if (mask !== clearance && !nextBodySafe)
+			return this.reject("boundary-start-not-inward");
 		const scale = last.scale;
 		if (
 			!pose.cycle.matchedCut &&
