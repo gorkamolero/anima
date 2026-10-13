@@ -569,7 +569,7 @@ export class StoryGameScene extends BaseScene {
 					this.sceneExits,
 				) ??
 				exitAtArrival(
-					this.hermesSprite,
+					this.hermesMotor?.anchor ?? this.hermesSprite,
 					this.requestedExit,
 					this.hermesMotor?.snapshot().arrival,
 					this.sceneExits,

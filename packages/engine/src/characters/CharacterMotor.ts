@@ -60,6 +60,7 @@ export class CharacterMotor {
 	private frameMs = 1000 / 24;
 	private path: Point[] = [];
 	private goal?: Point;
+	private lastStrideLength = 0;
 	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
 	private planDistance?: number;
 	private resolve?: () => void;
@@ -320,6 +321,7 @@ export class CharacterMotor {
 	): Promise<void> {
 		this.stop(true);
 		this.arrival = undefined;
+		this.lastStrideLength = 0;
 		this.lastCut = undefined;
 		this.unmatchedCut = false;
 
@@ -486,6 +488,12 @@ export class CharacterMotor {
 			1000 / (2.2 * supportFrames),
 		);
 		this.apply();
+		const nextStep = this.planned[0];
+		if (!step.stop && nextStep)
+			this.lastStrideLength = Math.hypot(
+				nextStep.state.anchor.x - step.state.anchor.x,
+				nextStep.state.anchor.y - step.state.anchor.y,
+			);
 		if (step.stop) {
 			const exit = this.nextExit(step.pose);
 			if (exit && this.goal) {
@@ -495,7 +503,7 @@ export class CharacterMotor {
 							stride.end.x - stride.start.x,
 							stride.end.y - stride.start.y,
 						) / 2
-					: 2;
+					: this.lastStrideLength / 2;
 				this.arrival = {
 					target: { ...this.goal },
 					anchor: { ...exit.anchor },

@@ -165,7 +165,9 @@ function simulatePlan<State, Pose>(
 							[low.heading, high.heading],
 							[high.heading, low.heading],
 						]
-					: [[leg.heading]];
+					: directions
+							.filter((d) => Math.abs(d.error) < Math.PI / 2)
+							.map((d) => [d.heading]);
 			const run = (
 				state: State,
 				prefix: PlannedStep<State, Pose>[],
