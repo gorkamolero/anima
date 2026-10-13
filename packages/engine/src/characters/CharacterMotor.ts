@@ -150,6 +150,17 @@ export class CharacterMotor {
 	}
 	/** Idle turns share the same sole anchor as walking arrivals. */
 	face(heading: WalkDirection): void {
+		const idle = this.animation.standing?.(heading);
+		if (!this.walking && this.pose && idle) {
+			// Both boots are down at rest. Pivot on the support drawn by the
+			// incoming settle, rather than locking its animated free boot.
+			const foot = idle.cycle.contacts[idle.frame].planted;
+			const anchor = contactOnScreen(this.pose, foot, this.target, this.scale);
+			const selected = { ...this.animation.select(heading), frame: 0 };
+			if (!this.canStand(selected, anchor, foot, this.scale)) return;
+			this.foot = foot;
+			this.anchor = anchor;
+		}
 		this.heading = heading;
 		this.stop();
 	}

@@ -850,3 +850,55 @@ it("tries the next compatible entry when the first phase clips the clearance edg
 	expect(motor.walking).toBe(true);
 	expect(pose().frame).toBe(1);
 });
+
+it("uses the drawn support through an idle turn's settle frames", () => {
+	const { motor, target, area } = setup();
+	const source: FootCycle = {
+		name: "source-idle",
+		frameWidth: 100,
+		frameHeight: 200,
+		fps: 24,
+		switchFrames: [],
+		contacts: [{ planted: "R", L: { x: 50, y: 190 }, R: { x: 70, y: 190 } }],
+	};
+	const destination: FootCycle = {
+		...source,
+		name: "destination-idle",
+		settleFrames: [2, 1, 0],
+		contacts: [90, 50, 30].map((x) => ({
+			planted: "L",
+			L: { x: 50, y: 190 },
+			R: { x, y: 190 },
+		})),
+	};
+	let pose: FootPose = { cycle: source, frame: 0, flipX: false };
+	const animation = {
+		current: () => pose,
+		show: (p: FootPose) => {
+			pose = p;
+		},
+		select: (h: string) => ({
+			cycle: h === "right" ? source : destination,
+			flipX: false,
+		}),
+		standing: (h: string) => ({
+			cycle: h === "right" ? source : destination,
+			frame: 0,
+			flipX: false,
+		}),
+	};
+	motor.detach();
+	const turning = new CharacterMotor(target, area, () => {}, animation);
+	turning.heading = "right";
+	turning.place({ x: 960, y: 850 }, false);
+	const support = contactOnScreen(pose, "L", target, target.scale);
+	turning.face("left");
+	for (let i = 0; i < 8; i++) {
+		turning.update(1000 / 24);
+		const sole = contactOnScreen(pose, "L", target, target.scale);
+		expect(
+			Math.hypot(sole.x - support.x, sole.y - support.y),
+		).toBeLessThanOrEqual(1.5);
+	}
+	expect(pose.cycle.name).toBe("destination-idle");
+});
