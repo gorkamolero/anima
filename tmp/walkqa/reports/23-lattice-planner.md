@@ -1,0 +1,25 @@
+# Brief 23: state-lattice footstep search
+
+Status: implementation and verification in progress; no acceptance claim.
+
+Baseline read: goal (octilinear amendment d781796), brief 22, findings, last 20 commits. Branch open-world-mvp. Existing changes to calls.md, tools/walkstats.py and untracked AgentDebug.test.ts are preserved. Reviewer tools are not edited. Owner ports 4410/8090 are protected; QA uses 4317/8080 with mute=1.
+
+Budget: 0/10 segmentation calls; no image edits or generated video.
+
+## Work log
+
+- Confirmed old planner marks any safe stopping prefix complete and restricts reversals only within doglegs. Replacing it with bounded A* over physical support states, validated by the motor's actual sheet simulator.
+- Harness baseline has 139 cases, including short/degenerate walks; plans will be regenerated with ground-distance evidence before capture.
+- Attempt 1 synthetic regressions: eliminated no-motion fallback; 44 planner/motor tests now pass. New suite covers 0/20/45/70/90 degrees at two stride scales, L corridor, pillar, wide/narrow gap, unreachable projection, blocked settle, and deterministic budget exhaustion.
+- First real-sheet browser probe reaches node/time budgets (~670–1007 expansions in 30 ms); exterior deepest and diagonal-toward are partial, so this is not a passing implementation. Optimising simulation and stop evaluation before capture.
+- Search repair: admissible distance-to-goal-region heuristic (stop displacement is paid as an edge); final goal radius is capped as well as limited to half the simulated support stride. Removed unused leg decomposition and recovery code. Both sole contacts are now validated throughout the settle, with body sweeps also checked across support transfers.
+- Exact-depth stance cache reuses real sheet samples; positions are quantised only for the search closed set. Direct fixed-point placement is used where perspective has no lateral residual. No anchor correction is currently needed/used (zero slide).
+- Plans regenerated for all 139 retained cases. A live preflight checks physical standing feasibility and measures planted-sole-to-reachable-target ground distance >=2 m. Church's previous targets were too central (maximum available distance 1.3–1.93 m for several cases); target repairs are recorded, not silently retained as useful tests. An old stepped-street exit is absent from live geometry and retains a coverage failure.
+- Attempt 1 captured exterior diagonal-toward: 279 frames, 10.60 m start distance, complete goal found within the 30 ms budget. Viewed its full trajectory: no heading reversal, but 4 cycle changes against a limit of 2, with a deep foreground detour and a body-origin hook at the first major corner. This remains a visual/turn-count failure. Evidence: `harness-23/attempt1/outside/diagonal-toward-trajectory.png`.
+- Optimisation attempt 2 checks the exact union of the stance's horizontal body sweeps in one segment (same coverage as checking every frame separately). Real-sheet probe near-left: 258 expansions, 8.9 ms; deeper/diagonal probes still hit the time budget. Extended-budget diagnostic solved the old diagonal in 82.4 ms and exhausted 12,000 nodes for deepest; it is diagnostic only, not the production budget.
+- Town replay 105 failed alley-left: ground-space goal alone was insufficient for the legacy screen-space half-stride gate. Added the screen-space condition as an additional goal constraint; replay 106 passed, 0 uncached.
+- Accounting for the full stop travel and evaluating every possible stop regressed replay 107 at depot-far due to time-budget exhaustion (21.90 px error versus 19.92 px half-stride). Replaced distance-based stop pruning with exact, collision-independent exit-anchor candidates. This is conservative: all possible exits are considered before discarding collision checks. Replay **108 passes, 0 uncached calls**. All 50 character/planner tests pass, including exact support playback with replanning disabled.
+- Full regression before final stop-pruning optimisation: 460 tests, typecheck, lint and all art checks pass. Final rerun pending. Frozen-source capture begins after the exact-exit-anchor commit.
+- Church object plan attempts 1–2 failed the physical 2 m start requirement for the old left-window click and the first altar-window hit pixel. A third attempt selects an actual altar-window hit near (1080,450), and live preflight verifies 2.000044 m to its reachable approach. This changes the object click within the same scene, not the floor or scale. All selected starts and target repairs remain in plan.json.
+- Final source at `2bb295f`: 460 tests, typecheck, lint pass; art verification all scenes passes. Town replay 108 (same source) passes with 0 uncached calls. Full captures and unchanged reviewer checks are running. Early complete captures still fail some path/facing/pixel-height gates; no pass claim.
+- Additional controlled real-sheet simulator comparison is evaluating turn penalties 0.6/0.9/1.2 without editing production source or reviewer tools.
