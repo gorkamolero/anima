@@ -122,8 +122,11 @@ export function beginArrival(
 					: kind === "edge-right"
 						? "left"
 						: "toward";
-	if (edge || kind === "near" || kind === "far") motor.placeContact(point);
-	else motor.place(point, !edge);
+	// A doorway approach is a floor contact too, not the sprite origin.
+	// Snapping the origin leaves an elevated drawn boot above the threshold.
+	if (!edge && kind !== "near" && kind !== "far")
+		Object.assign(point, cellPoint(area.mask, nearestCell(area.mask, point)));
+	motor.placeContact(point);
 
 	const desired = {
 		x:

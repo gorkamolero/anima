@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { passageArrival } from "./arrivals";
+import { CharacterMotor } from "../characters/CharacterMotor";
+import { cellAt } from "../walkarea/navigation";
+import { beginArrival, passageArrival } from "./arrivals";
 
 const area = {
 	mask: {
@@ -34,4 +36,54 @@ describe("perspective passage arrivals", () => {
 			),
 		).toThrow();
 	});
+});
+
+it("puts a door arrival's sole on floor when the threshold is the first floor row", () => {
+	const area = {
+		mask: {
+			width: 384,
+			height: 216,
+			data: Array.from({ length: 384 * 216 }, (_, i) =>
+				Math.floor(i / 384) >= 67 ? 1 : 0,
+			),
+		},
+		perspective: { horizonY: 0, slope: 0.001 },
+		baseScale: 1,
+		scaleClamp: { min: 0, max: 2 },
+	};
+	const cycle = {
+		name: "idle",
+		frameWidth: 100,
+		frameHeight: 100,
+		fps: 24,
+		switchFrames: [],
+		contacts: [
+			{ planted: "L" as const, L: { x: 50, y: 80 }, R: { x: 60, y: 80 } },
+		],
+	};
+	const pose = { cycle, frame: 0, flipX: false };
+	const target = {
+		x: 0,
+		y: 0,
+		setPosition(x: number, y: number) {
+			this.x = x;
+			this.y = y;
+		},
+		setScale() {},
+		setDepth() {},
+	};
+	const motor = new CharacterMotor(target, area, () => {}, {
+		current: () => pose,
+		select: () => pose,
+		show: () => {},
+		standing: () => pose,
+	});
+	beginArrival(
+		motor,
+		area,
+		{ id: "door", kind: "door", approach: { x: 840, y: 338 }, region: [] },
+		"door",
+		1064,
+	);
+	expect(area.mask.data[cellAt(area.mask, motor.anchor)]).toBe(1);
 });
