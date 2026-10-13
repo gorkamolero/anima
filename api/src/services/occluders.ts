@@ -681,7 +681,7 @@ export function splitFloorClutter(
 			mark(pixels);
 			continue;
 		}
-		if (/net|fishnet/i.test(label)) {
+		if (/net|fishnet|crate|basket/i.test(label)) {
 			const columns = new Map<number, number[]>();
 			for (const i of pixels) {
 				const x = i % w;
@@ -711,7 +711,7 @@ export async function refineCachedOccluders(
 	const original = JSON.parse(
 		await readFile(`${stem}.occluders.json`, "utf8"),
 	) as (Occluder & { layerDerivation?: number })[];
-	if (original.every((o) => o.layerDerivation === 21)) return original;
+	if (original.every((o) => o.layerDerivation === 22)) return original;
 	const result: (Occluder & { layerDerivation: number })[] = [];
 	for (const o of original) {
 		const bytes = execFileSync(
@@ -749,7 +749,7 @@ export async function refineCachedOccluders(
 			);
 			if (!geometry) continue;
 			const { x, y, w, h } = geometry.bbox;
-			const png = `${basename(stem)}.occluder-${o.id}-${kind}-21.png`;
+			const png = `${basename(stem)}.occluder-${o.id}-${kind}-22.png`;
 			execFileSync(
 				"magick",
 				[
@@ -787,7 +787,7 @@ export async function refineCachedOccluders(
 				obstacle:
 					kind !== "flat" ||
 					!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(o.label),
-				layerDerivation: 21,
+				layerDerivation: 22,
 				maskCoverage: {
 					referencePixels: count,
 					retainedPixels: count,
