@@ -26,7 +26,7 @@ near-left, near-right, deepest reachable point, far-left, far-right, both diagon
 | size | within 3% of the perspective prediction; flat floors within 1% | telemetry + pixel tracking from video |
 | facing | cycle matches ground heading ≥ 95% of walking frames; ≤ 1 switch per 300 px | telemetry |
 | draw order | correct at 100% of frames where the sprite overlaps an occluder | telemetry vs baseline polylines, plus crossing frames by eye |
-| path | ≤ 1.05× shortest path on the walk area; never through walls or narrower-than-body gaps | navigation check |
+| path | ≤ 1.05× the shortest **octilinear** path on the walk area, in ground space; never through walls or narrower-than-body gaps. (Amended 2026-10-13: with 8 drawn stride directions and planted feet, an octilinear path is the shortest achievable one; the Euclidean optimum is still reported.) | navigation check |
 | clicks | floor click always walks; object click walks to it, then narrator; unreachable → nearest reachable | scripted clicks |
 | exits | each fires exactly once, to the right destination | scripted walks |
 | video | frame-perfect, 0 frozen frames while walking | freeze.py |
