@@ -193,6 +193,10 @@ it("flips the dogleg order when the first corner cuts an obstacle", () => {
 	const safe = (p: Point) => !(p.x < 60 && p.y < -5) && p.y >= -50;
 	const result = planFootsteps(walkLegs([start, end], perspective), start, {
 		position: (p) => p,
+		native: (p, h) => {
+			const a = (names.indexOf(h) * Math.PI) / 4;
+			return { x: p.x + 40 * Math.cos(a), y: p.y - 40 * Math.sin(a) };
+		},
 		entry: (_p, h) => h,
 		advance: (p, h) => {
 			const a = (names.indexOf(h) * Math.PI) / 4;

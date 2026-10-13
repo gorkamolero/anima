@@ -75,6 +75,7 @@ export interface PlannedStep<State, Pose> {
 export interface StepSimulation<State, Pose> {
 	position(state: State): Point;
 	ground?(point: Point): Point;
+	native?(state: State, heading: WalkDirection): Point | undefined;
 	headings?(leg: WalkLeg): readonly WalkDirection[];
 	offset?(state: State, slide: Point): State;
 	entry(
@@ -129,20 +130,24 @@ function simulatePlan<State, Pose>(
 			// Measure the native direction from actual locked-foot landings.
 			const directions = (sim.headings?.(leg) ?? GROUND_SECTORS).flatMap(
 				(heading) => {
-					const pose = sim.entry(
-						branch.state,
-						heading,
-						branch.steps.length === 0,
-					);
-					const next =
-						pose === undefined ? undefined : sim.advance(branch.state, pose);
-					if (!next) return [];
-					const continuation = sim.entry(next, heading, false);
-					const landing =
-						continuation === undefined
-							? undefined
-							: sim.advance(next, continuation);
-					const p = ground(sim.position(landing ?? next));
+					let endpoint = sim.native?.(branch.state, heading);
+					if (!endpoint) {
+						const pose = sim.entry(
+							branch.state,
+							heading,
+							branch.steps.length === 0,
+						);
+						const next =
+							pose === undefined ? undefined : sim.advance(branch.state, pose);
+						if (!next) return [];
+						const continuation = sim.entry(next, heading, false);
+						const landing =
+							continuation === undefined
+								? undefined
+								: sim.advance(next, continuation);
+						endpoint = sim.position(landing ?? next);
+					}
+					const p = ground(endpoint);
 					const angle = Math.atan2(p.y - g.y, p.x - g.x);
 					const error = Math.atan2(
 						Math.sin(angle - desired),

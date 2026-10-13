@@ -404,6 +404,18 @@ export class CharacterMotor {
 					? toMetres(this.area.perspective, p)
 					: p,
 			headings: () => GROUND_SECTORS,
+			native: (s, direction) => {
+				const selected = this.animation.select(direction);
+				const frame = selected.cycle.switchFrames.find(
+					(f) => selected.cycle.contacts[f].planted === s.foot,
+				);
+				if (frame === undefined) return;
+				const first = this.predictStance({ ...selected, frame }, s, false);
+				if (!first) return;
+				return (
+					this.predictStance(first.pose, first, false)?.anchor ?? first.anchor
+				);
+			},
 			offset: (s, slide) => ({
 				...s,
 				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
@@ -601,6 +613,7 @@ export class CharacterMotor {
 	private predictStance(
 		pose: FootPose,
 		state?: PredictedStance,
+		validate = true,
 	): PredictedStance | undefined {
 		if (
 			pose.cycle.contacts.some(
@@ -612,7 +625,7 @@ export class CharacterMotor {
 			foot = state?.foot ?? this.foot;
 		const raw = this.area.rawMask ?? this.area.mask;
 		const on = (mask: typeof raw, p: Point) => mask.data[cellAt(mask, p)] > 0;
-		if (!on(raw, anchor)) return;
+		if (validate && !on(raw, anchor)) return;
 
 		let current = pose,
 			scale = state?.scale ?? this.scale;
@@ -629,15 +642,16 @@ export class CharacterMotor {
 				scale,
 			);
 			if (
-				!on(this.area.clearanceMask ?? this.area.mask, {
+				validate &&
+				(!on(this.area.clearanceMask ?? this.area.mask, {
 					x: p.x,
 					y: anchor.y,
 				}) ||
-				!lineOfSight(
-					this.area.clearanceMask ?? this.area.mask,
-					{ x: position.x, y: anchor.y },
-					{ x: p.x, y: anchor.y },
-				)
+					!lineOfSight(
+						this.area.clearanceMask ?? this.area.mask,
+						{ x: position.x, y: anchor.y },
+						{ x: p.x, y: anchor.y },
+					))
 			)
 				return;
 			if (i === 0) start = p;
@@ -647,7 +661,7 @@ export class CharacterMotor {
 			const incoming = pose.cycle.contacts[frame].planted;
 			if (incoming !== foot) {
 				const landing = contactOnScreen(current, incoming, position, scale);
-				if (!on(raw, landing)) return;
+				if (validate && !on(raw, landing)) return;
 				const end = lockedPlacement(
 					landing,
 					{ ...pose, frame },
@@ -660,19 +674,21 @@ export class CharacterMotor {
 				// The incoming cycle may change at this landing. Its old-cycle
 				// first pose is not drawn if a turn is needed for body clearance.
 				const nextBodySafe =
-					on(this.area.clearanceMask ?? this.area.mask, {
+					!validate ||
+					(on(this.area.clearanceMask ?? this.area.mask, {
 						x: end.x,
 						y: landing.y,
 					}) &&
-					lineOfSight(
-						this.area.clearanceMask ?? this.area.mask,
-						{ x: position.x, y: anchor.y },
-						{ x: end.x, y: landing.y },
-					);
+						lineOfSight(
+							this.area.clearanceMask ?? this.area.mask,
+							{ x: position.x, y: anchor.y },
+							{ x: end.x, y: landing.y },
+						));
 				// Legacy cycles may stop at any landing. Matched cycles validate
 				// standing only at their source frame through nextExit; the
 				// opposite support is not a possible standing transition.
 				if (
+					validate &&
 					!pose.cycle.matchedCut &&
 					this.goal &&
 					Math.hypot(end.x - this.goal.x, end.y - this.goal.y) < 200 &&
