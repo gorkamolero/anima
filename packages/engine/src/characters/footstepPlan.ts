@@ -59,6 +59,8 @@ export interface RouteState {
 }
 export interface SearchOptions {
 	entryPhases?: "authored" | "all";
+	/** Try a lower bound that does not require continuous floor between steps. */
+	directHeuristic?: boolean;
 	searchWeight?: number;
 	startPhases?: boolean;
 	stopPhases?: boolean;
@@ -365,21 +367,23 @@ export function planFootsteps<State, Pose>(
 			let history = node.history;
 			let corner = node.corner;
 			const at = ground(sim.position(node.state));
-			const routeCorner = options.routeCorners?.[corner];
-			const outgoing = options.cornerHeadings?.[corner];
-			const outgoingDelta =
-				outgoing === undefined
-					? 0
-					: Math.abs(
-							GROUND_SECTORS.indexOf(outgoing) -
-								GROUND_SECTORS.indexOf(heading),
-						);
-			if (
-				turn &&
-				routeCorner &&
-				Math.min(outgoingDelta, 8 - outgoingDelta) <= 1 &&
-				distance(at, routeCorner) <= (options.cornerRadius ?? maxStride)
-			) {
+			// One authored stride can round several adjacent raster bends. Consume
+			// each compatible corner once, rather than leaving the next bend behind.
+			while (turn && options.routeCorners?.[corner]) {
+				const routeCorner = options.routeCorners[corner];
+				const outgoing = options.cornerHeadings?.[corner];
+				const delta =
+					outgoing === undefined
+						? 0
+						: Math.abs(
+								GROUND_SECTORS.indexOf(outgoing) -
+									GROUND_SECTORS.indexOf(heading),
+							);
+				if (
+					Math.min(delta, 8 - delta) > 1 ||
+					distance(at, routeCorner) > (options.cornerRadius ?? maxStride)
+				)
+					break;
 				history = 0;
 				corner++;
 			}

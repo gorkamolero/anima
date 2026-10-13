@@ -366,6 +366,43 @@ it("applies the heading-change budget to the complete plan including the stop ed
 		}).complete,
 	).toBe(true);
 });
+
+it("rounds adjacent compatible route bends within the same stride", () => {
+	const route: (typeof GROUND_SECTORS)[number][] = [
+		"right",
+		"away",
+		"away",
+		"left",
+		"left",
+		"toward",
+		"toward",
+		"right",
+		"right",
+		"away",
+		"away",
+		"left",
+	];
+	expect(
+		forcedRoute(route, {
+			routeCorners: [
+				{ x: 1, y: 0 },
+				{ x: 1.05, y: 0 },
+			],
+			cornerHeadings: ["away", "away"],
+			cornerRadius: 0.1,
+		}).complete,
+	).toBe(true);
+	expect(
+		forcedRoute(route, {
+			routeCorners: [
+				{ x: 1, y: 0 },
+				{ x: 1.05, y: 0 },
+			],
+			cornerHeadings: ["away", "toward"],
+			cornerRadius: 0.1,
+		}).complete,
+	).toBe(false);
+});
 it("offers standing pivots only before the first stance", () => {
 	const startingFlags: boolean[] = [];
 	let starts = 0;

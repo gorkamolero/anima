@@ -135,6 +135,7 @@ export function beginArrival(
 			point.y +
 			(edge ? 80 : kind === "near" ? -80 : kind === "far" ? 230 : 100),
 	};
-	const path = findPath(area.mask, motor.target, desired);
+	const destination = edge ? (motor.inwardStop(desired) ?? desired) : desired;
+	const path = findPath(area.mask, motor.target, destination);
 	return path;
 }

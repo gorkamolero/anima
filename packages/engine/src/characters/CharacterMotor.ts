@@ -15,6 +15,7 @@ import {
 } from "./footstepPlan";
 import { stanceSweep } from "./stanceSweep";
 import { stanceFrameMs } from "./stanceTiming";
+import { strideSweep } from "./strideSweep";
 import {
 	GROUND_SECTORS,
 	headingFromGround,
@@ -385,7 +386,15 @@ export class CharacterMotor {
 			if (incoming !== foot) {
 				if (!facing()) return this.reject("facing-invalid");
 				const previous = this.groundPoint(anchor);
-				anchor = contactOnScreen(pose, incoming, position, position.scale);
+				const landing = contactOnScreen(
+					pose,
+					incoming,
+					position,
+					position.scale,
+				);
+				if (!strideSweep(this.area, [anchor, landing], []))
+					return this.reject("sole-stride-blocked");
+				anchor = landing;
 				const nextGround = this.groundPoint(anchor);
 				travel += Math.hypot(
 					nextGround.x - previous.x,
@@ -502,6 +511,46 @@ export class CharacterMotor {
 		this.thresholdStart = true;
 		this.anchor = { ...position };
 		this.apply();
+	}
+	/** A scene entrance needs an inward, planted stop, not an arbitrary extra
+	 * turn to hit a screen-space offset. Find a supported single-heading finish
+	 * near that offset before choosing the entrance's actual destination. */
+	inwardStop(preferred: Point): Point | undefined {
+		if (!this.pose) return;
+		const target: MotorTarget = {
+			x: this.target.x,
+			y: this.target.y,
+			setPosition(x, y) {
+				this.x = x;
+				this.y = y;
+			},
+			setScale() {},
+			setDepth() {},
+		};
+		const pose = this.pose;
+		const trial = new CharacterMotor(target, this.area, () => {}, {
+			...this.animation,
+			current: () => pose,
+			show() {},
+		});
+		trial.pose = pose;
+		trial.anchor = { ...this.anchor };
+		trial.foot = this.foot;
+		trial.scale = this.scale;
+		trial.heading = this.heading;
+		trial.goal = preferred;
+		const plan = trial.buildSegment({ maxHeadingChanges: 0, costScale: 2 });
+		const last = plan?.steps[plan.steps.length - 1];
+		if (!last || (plan?.steps.length ?? 0) < 3) return;
+		const exit = trial.nextExit(last.pose, last.state, last.heading, true);
+		if (
+			!exit ||
+			Math.hypot(exit.anchor.x - this.anchor.x, exit.anchor.y - this.anchor.y) <
+				200 ||
+			Math.hypot(exit.anchor.x - preferred.x, exit.anchor.y - preferred.y) > 180
+		)
+			return;
+		return exit.anchor;
 	}
 	walk(
 		points: readonly Point[],
@@ -826,6 +875,27 @@ export class CharacterMotor {
 			},
 			{ costScale: 2 },
 			{ costScale: 2, entryPhases: "authored" },
+			{
+				cornerRadius: 1.2,
+				costScale: 2,
+				entryPhases: "all",
+				startPhases: true,
+				stopPhases: true,
+				searchWeight: 4,
+				stopWeight: 128,
+				nodeBudget: 24000,
+			},
+			{
+				directHeuristic: true,
+				cornerRadius: 1.2,
+				costScale: 2,
+				entryPhases: "all",
+				startPhases: true,
+				stopPhases: true,
+				searchWeight: 4,
+				stopWeight: 128,
+				nodeBudget: 24000,
+			},
 		];
 		for (const alternative of alternatives) {
 			// A threshold walk continues through the doorway; do not finish it
@@ -844,6 +914,9 @@ export class CharacterMotor {
 			const checked = quality(candidate);
 			if (
 				checked.clean &&
+				// Refinement must preserve an arrival already achieved, including a
+				// planted finish with no measurable walking stance.
+				(!accepted.arrived || checked.arrived) &&
 				(!accepted.clean ||
 					(checked.arrived && !accepted.arrived) ||
 					checked.distance < accepted.distance)
@@ -996,7 +1069,7 @@ export class CharacterMotor {
 			maxHeadingChanges: options.maxHeadingChanges ?? 2 + 2 * corners.length,
 			routeCorners: options.routeCorners ?? corners,
 			cornerHeadings: options.cornerHeadings ?? cornerHeadings,
-			cornerRadius: 0.6,
+			cornerRadius: options.cornerRadius ?? 0.6,
 			minHeadingRun: 2,
 		};
 		const route = this.path;
@@ -1010,6 +1083,10 @@ export class CharacterMotor {
 				);
 		const remaining = (p: Point) => {
 			const g = this.groundPoint(p);
+			if (options.directHeuristic) {
+				const goal = this.groundPoint(standableGoal);
+				return Math.hypot(g.x - goal.x, g.y - goal.y);
+			}
 			for (let i = route.length - 1; i >= 0; i--) {
 				if (stanceSweep(this.area.clearanceMask ?? this.area.mask, p, route[i]))
 					return Math.hypot(g.x - points[i].x, g.y - points[i].y) + tail[i];
@@ -1614,27 +1691,38 @@ export class CharacterMotor {
 			minX = Math.min(minX, p.x + shift);
 			maxX = Math.max(maxX, p.x + shift);
 		}
-		// While this foot is planted the body ground depth is constant. The union
-		// of all per-frame swept intervals is exactly [minX,maxX], including entry.
-		if (
-			!on(mask, { x: minX, y: anchor.y }) ||
-			!on(mask, { x: maxX, y: anchor.y })
-		)
-			return this.reject("body-off-clearance");
-		if (!stanceSweep(mask, { x: minX, y: anchor.y }, { x: maxX, y: anchor.y }))
-			return this.reject("swept-segment-blocked");
 		const last = sampled.samples[sampled.samples.length - 1];
 		const position = { ...last, x: last.x + shift };
 		const landing = { ...sampled.landing, x: sampled.landing.x + shift };
 		if (!this.soleFits(landing)) return;
+		if (!strideSweep(this.area, [anchor, landing], []))
+			return this.reject("sole-stride-blocked");
 		const end = { ...sampled.end, x: sampled.end.x + shift };
-		const nextBodySafe =
+		const bodyStart = { x: minX, y: anchor.y };
+		const bodyEnd = { x: maxX, y: anchor.y };
+		const bodySafe = stanceSweep(mask, bodyStart, bodyEnd);
+		let nextBodySafe =
 			on(clearance, { x: end.x, y: landing.y }) &&
 			stanceSweep(
 				mask,
 				{ x: position.x, y: anchor.y },
 				{ x: end.x, y: landing.y },
 			);
+		// Keep raw soles and solid props. A complete stance may bridge a narrow
+		// unsupported interval; its body still needs clearance everywhere else.
+		if (!bodySafe || !nextBodySafe) {
+			const gapSafe = strideSweep(
+				this.area,
+				[anchor, landing],
+				[
+					{ x: previous.x, y: anchor.y },
+					...sampled.samples.map((p) => ({ x: p.x + shift, y: anchor.y })),
+					{ x: end.x, y: landing.y },
+				],
+			);
+			if (gapSafe) nextBodySafe = true;
+			else if (!bodySafe) return this.reject("swept-segment-blocked");
+		}
 		if (mask !== clearance && !nextBodySafe)
 			return this.reject("boundary-start-not-inward");
 		const scale = last.scale;
