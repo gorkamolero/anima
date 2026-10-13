@@ -69,6 +69,8 @@ export interface SearchOptions {
 	timeBudgetMs?: number;
 	/** Maximum path cost, including turns and the exit edge. */
 	costBound?: number;
+	/** Geometric search allowance, independent of the route turn limits. */
+	costScale?: number;
 	stopWeight?: number;
 	resolution?: number;
 	turnCost?: number;
@@ -156,7 +158,9 @@ export function planFootsteps<State, Pose>(
 	// L corridor can exhaust its budget before its only valid corner.
 	const costBound =
 		options.costBound ??
-		1.5 * initialDistance + 2 + 3 * turnCost * (options.maxHeadingChanges ?? 2);
+		(options.costScale ?? 1.5) * initialDistance +
+			2 +
+			3 * turnCost * (options.maxHeadingChanges ?? 2);
 	// For w >= 1, movement plus w * residual is at least straight distance.
 	// With bounded remaining cost B, residual is at least max(0, d - B).
 	const heuristic = (p: Point, g = 0) => {

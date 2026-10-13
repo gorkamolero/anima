@@ -821,6 +821,8 @@ export class CharacterMotor {
 				searchWeight: 4,
 				stopWeight: 128,
 			},
+			{ costScale: 2 },
+			{ costScale: 2, entryPhases: "authored" },
 		];
 		for (const alternative of alternatives) {
 			// A threshold walk continues through the doorway; do not finish it

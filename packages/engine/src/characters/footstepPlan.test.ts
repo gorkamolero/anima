@@ -545,3 +545,48 @@ it.each([
 	});
 	expect(finish(0.1).complete).toBe(false);
 });
+
+it("funds a necessary detour without relaxing the heading-change limit", () => {
+	const points = [
+		{ x: 0, y: 0 },
+		{ x: 0, y: 1 },
+		{ x: 0, y: 2 },
+		{ x: 1, y: 2 },
+		{ x: 2, y: 2 },
+		{ x: 2, y: 1 },
+		{ x: 2, y: 0 },
+	];
+	const headings = [
+		"away",
+		"away",
+		"right",
+		"right",
+		"toward",
+		"toward",
+		"toward",
+	] as const;
+	const run = (options: SearchOptions) =>
+		planFootsteps(
+			points[6],
+			0,
+			{
+				position: (i) => points[i],
+				entry: (i, h) => (h === headings[i] ? h : undefined),
+				advance: (i) => (i < 6 ? i + 1 : undefined),
+				rest: (i) => (i === 6 ? points[i] : undefined),
+			},
+			{
+				now: () => 0,
+				turnCost: 0,
+				stepCost: 0,
+				maxStride: 1,
+				maxHeadingChanges: 2,
+				minHeadingRun: 2,
+				...options,
+			},
+		);
+	expect(run({}).complete).toBe(false);
+	expect(run({ costScale: 2 }).complete).toBe(true);
+	expect(run({ costScale: 2, maxHeadingChanges: 1 }).complete).toBe(false);
+	expect(run({ costScale: 2, costBound: 4 }).complete).toBe(false);
+});
