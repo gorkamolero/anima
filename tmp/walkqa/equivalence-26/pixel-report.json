@@ -1,0 +1,245 @@
+{
+  "note": "PIL visual aid, not pixel-identical GPU rendering. Full difference includes game text/UI absent from the compositor; belowUi compares y>=172. No pixel tolerance was used as a numeric walk gate.",
+  "frames": [
+    {
+      "scene": "alley",
+      "walk": "near-left",
+      "frame": 0,
+      "renderMs": 51.53870800859295,
+      "fullMeanAbsoluteError": 6.848473508230453,
+      "belowUiMeanAbsoluteError": 0.15734195270435633,
+      "belowUiMaxChannelError": 19,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-left-composite-000000.png"
+    },
+    {
+      "scene": "alley",
+      "walk": "near-left",
+      "frame": 14,
+      "renderMs": 15.242458990542218,
+      "fullMeanAbsoluteError": 6.848473508230453,
+      "belowUiMeanAbsoluteError": 0.15734195270435633,
+      "belowUiMaxChannelError": 19,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-left-composite-000014.png"
+    },
+    {
+      "scene": "alley",
+      "walk": "near-left",
+      "frame": 27,
+      "renderMs": 15.120832991669886,
+      "fullMeanAbsoluteError": 6.848473508230453,
+      "belowUiMeanAbsoluteError": 0.15734195270435633,
+      "belowUiMaxChannelError": 19,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-left-composite-000027.png"
+    },
+    {
+      "scene": "alley",
+      "walk": "near-right",
+      "frame": 0,
+      "renderMs": 138.55099999636877,
+      "fullMeanAbsoluteError": 6.84742734053498,
+      "belowUiMeanAbsoluteError": 0.1560976122736172,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-right-composite-000000.png"
+    },
+    {
+      "scene": "alley",
+      "walk": "near-right",
+      "frame": 55,
+      "renderMs": 138.1636250007432,
+      "fullMeanAbsoluteError": 6.8473728459362135,
+      "belowUiMeanAbsoluteError": 0.1560327949094469,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-right-composite-000055.png"
+    },
+    {
+      "scene": "alley",
+      "walk": "near-right",
+      "frame": 109,
+      "renderMs": 15.02987499407027,
+      "fullMeanAbsoluteError": 6.850099504886831,
+      "belowUiMeanAbsoluteError": 0.15927595753793442,
+      "belowUiMaxChannelError": 6,
+      "composite": "tmp/walkqa/equivalence-26/alley/near-right-composite-000109.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-left",
+      "frame": 0,
+      "renderMs": 75.39304099918809,
+      "fullMeanAbsoluteError": 14.111473926183129,
+      "belowUiMeanAbsoluteError": 1.0922209602912385,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-left-composite-000000.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-left",
+      "frame": 14,
+      "renderMs": 20.978667002054863,
+      "fullMeanAbsoluteError": 14.111473926183129,
+      "belowUiMeanAbsoluteError": 1.0922209602912385,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-left-composite-000014.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-left",
+      "frame": 27,
+      "renderMs": 20.956374995876104,
+      "fullMeanAbsoluteError": 14.111473926183129,
+      "belowUiMeanAbsoluteError": 1.0922209602912385,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-left-composite-000027.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-right",
+      "frame": 0,
+      "renderMs": 19.742165997740813,
+      "fullMeanAbsoluteError": 14.11086741255144,
+      "belowUiMeanAbsoluteError": 1.091499556412139,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-right-composite-000000.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-right",
+      "frame": 68,
+      "renderMs": 21.93341701058671,
+      "fullMeanAbsoluteError": 14.092834362139918,
+      "belowUiMeanAbsoluteError": 1.0700505537200196,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-right-composite-000068.png"
+    },
+    {
+      "scene": "inside",
+      "walk": "near-right",
+      "frame": 135,
+      "renderMs": 20.51987498998642,
+      "fullMeanAbsoluteError": 14.114158950617286,
+      "belowUiMeanAbsoluteError": 1.0954146016886932,
+      "belowUiMaxChannelError": 47,
+      "composite": "tmp/walkqa/equivalence-26/inside/near-right-composite-000135.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-left",
+      "frame": 0,
+      "renderMs": 96.70583400293253,
+      "fullMeanAbsoluteError": 7.409713702417695,
+      "belowUiMeanAbsoluteError": 0.3904831283651493,
+      "belowUiMaxChannelError": 25,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-left-composite-000000.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-left",
+      "frame": 70,
+      "renderMs": 33.81391700531822,
+      "fullMeanAbsoluteError": 7.405595904063786,
+      "belowUiMeanAbsoluteError": 0.38558530653450807,
+      "belowUiMaxChannelError": 25,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-left-composite-000070.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-left",
+      "frame": 140,
+      "renderMs": 33.085000002756715,
+      "fullMeanAbsoluteError": 7.399556809413579,
+      "belowUiMeanAbsoluteError": 0.37840224241311793,
+      "belowUiMaxChannelError": 55,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-left-composite-000140.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-right",
+      "frame": 0,
+      "renderMs": 33.31570798764005,
+      "fullMeanAbsoluteError": 7.4021238425925935,
+      "belowUiMeanAbsoluteError": 0.38145554178903573,
+      "belowUiMaxChannelError": 25,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-right-composite-000000.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-right",
+      "frame": 68,
+      "renderMs": 34.69791600946337,
+      "fullMeanAbsoluteError": 7.401864711934156,
+      "belowUiMeanAbsoluteError": 0.38114732470631424,
+      "belowUiMaxChannelError": 25,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-right-composite-000068.png"
+    },
+    {
+      "scene": "outside",
+      "walk": "near-right",
+      "frame": 135,
+      "renderMs": 33.92458299640566,
+      "fullMeanAbsoluteError": 7.405886702674898,
+      "belowUiMeanAbsoluteError": 0.3859311903450808,
+      "belowUiMaxChannelError": 25,
+      "composite": "tmp/walkqa/equivalence-26/outside/near-right-composite-000135.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-left",
+      "frame": 0,
+      "renderMs": 85.93950000067707,
+      "fullMeanAbsoluteError": 9.241097125771605,
+      "belowUiMeanAbsoluteError": 0.08686310725648556,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-left-composite-000000.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-left",
+      "frame": 160,
+      "renderMs": 160.11233399331104,
+      "fullMeanAbsoluteError": 9.242978073559671,
+      "belowUiMeanAbsoluteError": 0.08910035792951543,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-left-composite-000160.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-left",
+      "frame": 319,
+      "renderMs": 52.6711249985965,
+      "fullMeanAbsoluteError": 9.244095293209876,
+      "belowUiMeanAbsoluteError": 0.09042920949583945,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-left-composite-000319.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-right",
+      "frame": 0,
+      "renderMs": 38.14595799485687,
+      "fullMeanAbsoluteError": 9.241517328960905,
+      "belowUiMeanAbsoluteError": 0.08736290840675477,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-right-composite-000000.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-right",
+      "frame": 14,
+      "renderMs": 39.87141700054053,
+      "fullMeanAbsoluteError": 9.241517328960905,
+      "belowUiMeanAbsoluteError": 0.08736290840675477,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-right-composite-000014.png"
+    },
+    {
+      "scene": "road",
+      "walk": "near-right",
+      "frame": 27,
+      "renderMs": 37.570916989352554,
+      "fullMeanAbsoluteError": 9.241517328960905,
+      "belowUiMeanAbsoluteError": 0.08736290840675477,
+      "belowUiMaxChannelError": 2,
+      "composite": "tmp/walkqa/equivalence-26/road/near-right-composite-000027.png"
+    }
+  ]
+}

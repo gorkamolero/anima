@@ -1,0 +1,69 @@
+{
+  "equal": true,
+  "walks": [
+    {
+      "browser": "tmp/walkqa/equivalence-26/alley/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/alley/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/alley/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/alley/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/road/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/road/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/road/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/road/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/outside/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/outside/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/outside/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/outside/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/inside/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/inside/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/equivalence-26/inside/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-equivalence/inside/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    }
+  ]
+}
