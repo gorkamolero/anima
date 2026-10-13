@@ -41,3 +41,24 @@ export function headingFromGround(
 	if (Math.abs(difference) <= Math.PI / 8 + hysteresis) return previous;
 	return GROUND_SECTORS[(Math.round(angle / (Math.PI / 4)) + 8) % 8];
 }
+
+/** Same per-stance ground/view-ray convention as the independent facing gate. */
+export function stanceFacesHeading(
+	start: WalkPoint,
+	end: WalkPoint,
+	heading: WalkDirection,
+	perspective = true,
+): boolean {
+	const dx = end.x - start.x,
+		dz = end.y - start.y;
+	if (Math.hypot(dx, dz) < 0.05) return true;
+	const angle =
+		Math.atan2(dz, dx) + (perspective ? Math.atan2(end.x, end.y) : 0);
+	const expected = (GROUND_SECTORS.indexOf(heading) * Math.PI) / 4;
+	return (
+		Math.abs(
+			Math.atan2(Math.sin(angle - expected), Math.cos(angle - expected)),
+		) <=
+		Math.PI / 6
+	);
+}

@@ -11,6 +11,8 @@ export interface FootCycle {
 	frameWidth: number;
 	frameHeight: number;
 	fps: number;
+	/** Authored deterministic retiming; preserves source poses and support paths. */
+	frameDurationsMs?: number[];
 	contacts: ContactFrame[];
 	switchFrames: number[];
 	/** Drawn stop poses in exit-to-rest order; each intermediate holds two 24 fps ticks. */

@@ -13,11 +13,16 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "./footLock";
-import { type PlannedStep, planFootsteps } from "./footstepPlan";
+import {
+	type PlannedStep,
+	planFootsteps,
+	type SearchOptions,
+} from "./footstepPlan";
 import { stanceFrameMs } from "./stanceTiming";
 import {
 	GROUND_SECTORS,
 	headingFromGround,
+	stanceFacesHeading,
 	type WalkDirection,
 } from "./walkHeading";
 
@@ -31,7 +36,7 @@ export interface FootAnimation {
 	current(): FootPose;
 	select(direction: WalkDirection): Omit<FootPose, "frame">;
 	show(pose: FootPose): void;
-	standing?(direction: WalkDirection): FootPose;
+	standing?(direction: WalkDirection): FootPose | undefined;
 }
 interface PredictedStance {
 	start: Point;
@@ -40,6 +45,18 @@ interface PredictedStance {
 	foot: Foot;
 	pose: FootPose;
 	scale: number;
+}
+export interface MotorPlanRequest {
+	area: WalkArea;
+	position: Point;
+	goal: Point;
+	anchor: Point;
+	foot: Foot;
+	scale: number;
+	heading: WalkDirection;
+	pose: FootPose;
+	cycles: Record<WalkDirection, Omit<FootPose, "frame">>;
+	standing: Partial<Record<WalkDirection, FootPose>>;
 }
 /** The animation clock and contact anchor are the only owners of walking motion. */
 export class CharacterMotor {
@@ -76,6 +93,8 @@ export class CharacterMotor {
 	private planComplete = false;
 	private planSearch?: ReturnType<typeof planFootsteps>["stats"];
 	private resolve?: () => void;
+	private plannerWorker?: Worker;
+	private pendingPlan = false;
 
 	private unmatchedCut = false;
 	private lastCut?: {
@@ -110,6 +129,9 @@ export class CharacterMotor {
 		if (this.target.motor === this) this.target.motor = undefined;
 	}
 	private finish(): void {
+		this.plannerWorker?.terminate();
+		this.plannerWorker = undefined;
+		this.pendingPlan = false;
 		this.walking = false;
 		this.transition = undefined;
 		this.drawn = undefined;
@@ -137,6 +159,10 @@ export class CharacterMotor {
 		);
 	}
 	stop(immediate = false): void {
+		if (this.pendingPlan) {
+			this.finish();
+			return;
+		}
 		this.planned = [];
 		if (this.drawn && !immediate) {
 			this.path = [];
@@ -229,6 +255,7 @@ export class CharacterMotor {
 	private nextExit(
 		source: FootPose,
 		state?: PredictedStance,
+		heading?: WalkDirection,
 	):
 		| {
 				frames: number;
@@ -271,11 +298,21 @@ export class CharacterMotor {
 		)
 			return;
 		position = entry;
+		let stanceStart = this.groundPoint(entry);
+		const facing = () =>
+			!heading ||
+			stanceFacesHeading(
+				stanceStart,
+				this.groundPoint(position),
+				heading,
+				this.area.perspective.constant === undefined,
+			);
 
 		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
-				this.canStand(pose, anchor, foot, position.scale)
+				this.canStand(pose, anchor, foot, position.scale) &&
+				facing()
 			) {
 				return { frames: n, position, anchor, foot, travel };
 			}
@@ -286,6 +323,7 @@ export class CharacterMotor {
 			const incoming = next.cycle.contacts[next.frame].planted;
 			const previousAnchorY = anchor.y;
 			if (incoming !== foot) {
+				if (!facing()) return;
 				const previous = this.groundPoint(anchor);
 				anchor = contactOnScreen(pose, incoming, position, position.scale);
 				const nextGround = this.groundPoint(anchor);
@@ -314,6 +352,8 @@ export class CharacterMotor {
 				)
 			)
 				break;
+			if (incoming !== pose.cycle.contacts[pose.frame].planted)
+				stanceStart = this.groundPoint(p);
 			pose = next;
 			position = p;
 		}
@@ -371,8 +411,74 @@ export class CharacterMotor {
 			this.target,
 			this.scale,
 		);
+		if (typeof Worker !== "undefined") {
+			const promise = new Promise<void>((resolve) => {
+				this.resolve = resolve;
+			});
+			this.pendingPlan = true;
+			this.walking = false;
+			this.planComplete = false;
+			this.planSearch = undefined;
+			const worker = new Worker(
+				new URL("./footstep.worker.ts", import.meta.url),
+				{ type: "module" },
+			);
+			this.plannerWorker = worker;
+			worker.onmessage = (
+				event: MessageEvent<ReturnType<typeof CharacterMotor.computePlan>>,
+			) => {
+				if (this.plannerWorker !== worker) return;
+				worker.terminate();
+				this.plannerWorker = undefined;
+				this.pendingPlan = false;
+				const result = event.data;
+				this.path = result.path;
+				this.goal = result.goal;
+				this.planned = result.steps;
+				this.planDistance = result.distance;
+				this.planComplete = result.complete;
+				this.planSearch = result.stats;
+				const start = this.planned[0]?.state;
+				if (start) {
+					this.foot = start.foot;
+					this.anchor = { ...start.anchor };
+				}
+				this.beginWalk();
+			};
+			worker.onerror = (event) => {
+				console.error("Footstep worker failed", event.message);
+				this.finish();
+			};
+			worker.postMessage({
+				area: this.area,
+				position: { x: this.target.x, y: this.target.y },
+				goal: this.goal,
+				anchor: this.anchor,
+				foot: this.foot,
+				scale: this.scale,
+				heading: this.heading,
+				pose: this.pose,
+				cycles: Object.fromEntries(
+					GROUND_SECTORS.map((h) => [h, this.animation.select(h)]),
+				) as MotorPlanRequest["cycles"],
+				standing: Object.fromEntries(
+					GROUND_SECTORS.map((h) => [h, this.animation.standing?.(h)]),
+				),
+			} satisfies MotorPlanRequest);
+			return promise;
+		}
 		this.buildPlan();
-		if (!this.planStance()) return Promise.resolve();
+		const promise = new Promise<void>((resolve) => {
+			this.resolve = resolve;
+		});
+		this.beginWalk();
+		return promise;
+	}
+	private beginWalk(): void {
+		if (!this.planStance() || !this.pose) {
+			this.finish();
+			return;
+		}
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
 		const idle = this.animation.standing?.(this.heading);
@@ -389,10 +495,6 @@ export class CharacterMotor {
 			this.apply();
 		}
 		this.animation.show(this.pose);
-
-		return new Promise((resolve) => {
-			this.resolve = resolve;
-		});
 	}
 	private groundPoint(p: Point): Point {
 		const perspective = this.area.perspective;
@@ -400,7 +502,7 @@ export class CharacterMotor {
 		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
-	private buildPlan(): void {
+	private buildPlan(options: SearchOptions = {}) {
 		this.stanceCache.clear();
 		if (!this.pose || !this.goal) return;
 		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
@@ -408,6 +510,25 @@ export class CharacterMotor {
 			y: p.y,
 		}));
 		this.goal = this.path[this.path.length - 1] ?? this.goal;
+		const points = this.path.map((p) => this.groundPoint(p));
+		let corners = 0;
+		for (let i = 1; i + 1 < points.length; i++) {
+			const a = points[i - 1],
+				b = points[i],
+				c = points[i + 1];
+			const turn =
+				Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(b.y - a.y, b.x - a.x);
+			if (
+				Math.abs(Math.atan2(Math.sin(turn), Math.cos(turn))) >
+				(25 * Math.PI) / 180
+			)
+				corners++;
+		}
+		options = {
+			...options,
+			maxHeadingChanges: 1 + 2 * corners,
+			minHeadingRun: 2,
+		};
 		const initial: PredictedStance = {
 			start: { x: this.target.x, y: this.target.y },
 			end: { x: this.target.x, y: this.target.y },
@@ -416,76 +537,88 @@ export class CharacterMotor {
 			pose: this.pose,
 			scale: this.scale,
 		};
-		const result = planFootsteps(this.goal, initial, {
-			starts: (s) => {
-				if (
-					this.animation.standing?.(this.heading)?.cycle.name !==
-					s.pose.cycle.name
-				)
-					return [];
-				const foot: Foot = s.foot === "L" ? "R" : "L";
-				return [
-					{ ...s, foot, anchor: contactOnScreen(s.pose, foot, s.end, s.scale) },
-				];
-			},
-			offset: (s, slide) => ({
-				...s,
-				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
-				end: { x: s.end.x + slide.x, y: s.end.y + slide.y },
-			}),
-			position: (s) => s.anchor,
-			ground: (p) => this.groundPoint(p),
-			support: (s) => `${s.foot}:${s.pose.frame}`,
-			entry: (s, direction, starting) => {
-				const idle = this.animation.standing?.(direction);
-				// Reverse settle must lock the support actually drawn in that sheet.
-				if (
-					starting &&
-					idle &&
-					idle.cycle.contacts[idle.frame].planted !== s.foot
-				)
-					return;
-				const selected = this.animation.select(direction);
-				const same =
-					selected.cycle.name === s.pose.cycle.name &&
-					selected.flipX === s.pose.flipX;
-				const frames = same
-					? [s.pose.frame]
-					: starting
-						? (selected.cycle.matchedCut?.entryFrames ??
-							selected.cycle.switchFrames)
-						: selected.cycle.switchFrames;
-				return frames
-					.filter(
-						(f) =>
-							selected.cycle.contacts[f].planted === s.foot &&
-							selected.cycle.contacts[(f + 1) % selected.cycle.contacts.length]
-								.planted === s.foot,
+		const result = planFootsteps(
+			this.goal,
+			initial,
+			{
+				starts: (s) => {
+					if (
+						this.animation.standing?.(this.heading)?.cycle.name !==
+						s.pose.cycle.name
 					)
-					.map((frame) => ({ ...selected, frame }))
-					.find(
-						(p) => !starting || this.canStand(p, s.anchor, s.foot, s.scale),
+						return [];
+					const foot: Foot = s.foot === "L" ? "R" : "L";
+					return [
+						{
+							...s,
+							foot,
+							anchor: contactOnScreen(s.pose, foot, s.end, s.scale),
+						},
+					];
+				},
+				offset: (s, slide) => ({
+					...s,
+					anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
+					end: { x: s.end.x + slide.x, y: s.end.y + slide.y },
+				}),
+				position: (s) => s.anchor,
+				ground: (p) => this.groundPoint(p),
+				support: (s) => `${s.foot}:${s.pose.frame}`,
+				entry: (s, direction, starting) => {
+					const idle = this.animation.standing?.(direction);
+					// Reverse settle must lock the support actually drawn in that sheet.
+					if (
+						starting &&
+						idle &&
+						idle.cycle.contacts[idle.frame].planted !== s.foot
+					)
+						return;
+					const selected = this.animation.select(direction);
+					const same =
+						selected.cycle.name === s.pose.cycle.name &&
+						selected.flipX === s.pose.flipX;
+					const frames = same
+						? [s.pose.frame]
+						: starting
+							? (selected.cycle.matchedCut?.entryFrames ??
+								selected.cycle.switchFrames)
+							: selected.cycle.switchFrames;
+					return frames
+						.filter(
+							(f) =>
+								selected.cycle.contacts[f].planted === s.foot &&
+								selected.cycle.contacts[
+									(f + 1) % selected.cycle.contacts.length
+								].planted === s.foot,
+						)
+						.map((frame) => ({ ...selected, frame }))
+						.find(
+							(p) =>
+								this.validFacing(p, s.anchor, s.foot, s.scale, direction) &&
+								(!starting || this.canStand(p, s.anchor, s.foot, s.scale)),
+						);
+				},
+				advance: (s, pose) => this.predictStance(pose, s),
+				restCandidates: (s, pose) => this.exitAnchors(pose, s),
+				acceptRest: (s, pose, rest, target) => {
+					const stride = this.predictStance(pose, s);
+					return (
+						!!stride &&
+						Math.hypot(rest.x - target.x, rest.y - target.y) <=
+							Math.hypot(
+								stride.anchor.x - s.anchor.x,
+								stride.anchor.y - s.anchor.y,
+							) /
+								2
 					);
+				},
+				rest: (s, pose, heading) => {
+					const exit = this.nextExit(pose, s, heading);
+					return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
+				},
 			},
-			advance: (s, pose) => this.predictStance(pose, s),
-			restCandidates: (s, pose) => this.exitAnchors(pose, s),
-			acceptRest: (s, pose, rest, target) => {
-				const stride = this.predictStance(pose, s);
-				return (
-					!!stride &&
-					Math.hypot(rest.x - target.x, rest.y - target.y) <=
-						Math.hypot(
-							stride.anchor.x - s.anchor.x,
-							stride.anchor.y - s.anchor.y,
-						) /
-							2
-				);
-			},
-			rest: (s, pose) => {
-				const exit = this.nextExit(pose, s);
-				return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
-			},
-		});
+			options,
+		);
 		this.planned = result.steps;
 		const start = result.steps[0]?.state;
 		if (start) {
@@ -501,6 +634,38 @@ export class CharacterMotor {
 				distance: result.distance,
 				complete: result.complete,
 			});
+		return result;
+	}
+	/** Worker entry: only data and the exact production simulator, no Phaser. */
+	static computePlan(request: MotorPlanRequest) {
+		const target: MotorTarget = {
+			...request.position,
+			setPosition(x, y) {
+				this.x = x;
+				this.y = y;
+			},
+			setScale() {},
+			setDepth() {},
+		};
+		const motor = new CharacterMotor(target, request.area, () => {}, {
+			current: () => request.pose,
+			select: (h) => request.cycles[h],
+			show: () => {},
+			standing: (h) => request.standing[h],
+		});
+		motor.pose = request.pose;
+		motor.goal = request.goal;
+		motor.anchor = request.anchor;
+		motor.foot = request.foot;
+		motor.scale = request.scale;
+		motor.heading = request.heading;
+		const result = motor.buildPlan({
+			timeBudgetMs: 5000,
+			nodeBudget: 250000,
+			turnCost: 1.2,
+		});
+		if (!result) throw new Error("Missing planning state");
+		return { ...result, path: motor.path, goal: motor.goal };
 	}
 	/** Consume a prevalidated stance. Only a new click calls buildPlan. */
 	private planStance(): boolean {
@@ -560,6 +725,8 @@ export class CharacterMotor {
 	/** Resume the source cycle clock after a partial entry; its slower entry
 	 * interval must not stretch every later support in a full-cycle exit. */
 	private cycleFrameMs(pose: FootPose): number {
+		const authored = pose.cycle.frameDurationsMs?.[pose.frame];
+		if (authored !== undefined) return authored;
 		const contacts = pose.cycle.contacts;
 		const switches = pose.cycle.switchFrames;
 		const lengths = switches.map(
@@ -598,6 +765,7 @@ export class CharacterMotor {
 		});
 		if (!direction) return true;
 		const idle = this.animation.standing(direction);
+		if (!idle) return true;
 		const raw = this.area.rawMask ?? this.area.mask;
 		const poses = (idle.cycle.settleFrames ?? [idle.frame]).map((frame) => ({
 			...idle,
@@ -638,6 +806,25 @@ export class CharacterMotor {
 					] > 0,
 			);
 		});
+	}
+	private validFacing(
+		pose: FootPose,
+		anchor: Point,
+		foot: Foot,
+		scale: number,
+		heading: WalkDirection,
+	): boolean {
+		const sampled = this.stanceSamples(pose, anchor, foot, scale);
+		if (!sampled) return false;
+		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
+		const first = sampled.samples[0],
+			last = sampled.samples[sampled.samples.length - 1];
+		return stanceFacesHeading(
+			this.groundPoint({ x: first.x + shift, y: first.y }),
+			this.groundPoint({ x: last.x + shift, y: last.y }),
+			heading,
+			this.area.perspective.constant === undefined,
+		);
 	}
 	/** Cache exact-depth sheet simulation independently of scene collisions.
 	 * No quantised displacement reaches playback. Without lateral residuals,
@@ -780,7 +967,7 @@ export class CharacterMotor {
 		return true;
 	}
 	update(delta: number): void {
-		if (!this.walking || !this.pose || delta <= 0) return;
+		if (!this.walking || this.pendingPlan || !this.pose || delta <= 0) return;
 		this.elapsed += delta;
 		if (this.drawn) {
 			// Never skip a drawn pose even if the caller advances a large time step.
@@ -907,6 +1094,7 @@ export class CharacterMotor {
 		return {
 			ground: toMetres(this.area.perspective, this.target),
 			plan: {
+				pending: this.pendingPlan,
 				remaining: this.planned.length,
 				distance: this.planDistance,
 				search: this.planSearch,

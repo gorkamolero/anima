@@ -613,3 +613,36 @@ it("executes cached lattice supports exactly without runtime replanning", async 
 	expect(consumed).toBeGreaterThan(0);
 	expect(motor.walking).toBe(false);
 });
+
+it("cancels an in-flight worker and ignores its stale reply", async () => {
+	class FakeWorker {
+		static current: FakeWorker;
+		onmessage?: (event: unknown) => void;
+		onerror?: (event: unknown) => void;
+		terminate = vi.fn();
+		postMessage = vi.fn();
+		constructor() {
+			FakeWorker.current = this;
+		}
+	}
+	vi.stubGlobal("Worker", FakeWorker);
+	try {
+		const { motor, target } = setup();
+		motor.place({ x: 960, y: 850 });
+		const start = { x: target.x, y: target.y };
+		const promise = motor.walk([{ x: 1300, y: 850 }]);
+		expect(motor.snapshot().plan.pending).toBe(true);
+		expect(motor.walking).toBe(false);
+		motor.update(1000);
+		expect({ x: target.x, y: target.y }).toEqual(start);
+		const worker = FakeWorker.current;
+		motor.stop(true);
+		await promise;
+		expect(worker.terminate).toHaveBeenCalledOnce();
+		worker.onmessage?.({ data: {} });
+		expect(motor.snapshot().plan.pending).toBe(false);
+		expect(motor.walking).toBe(false);
+	} finally {
+		vi.unstubAllGlobals();
+	}
+});

@@ -38,6 +38,8 @@ export interface SearchOptions {
 	resolution?: number;
 	turnCost?: number;
 	stepCost?: number;
+	maxHeadingChanges?: number;
+	minHeadingRun?: number;
 	/** Stride cap used for the goal radius. A larger drawn stride does not enlarge the goal set. */
 	maxStride?: number;
 	now?: () => number;
@@ -46,7 +48,7 @@ export interface SearchStats {
 	expanded: number;
 	generated: number;
 	elapsedMs: number;
-	reason: "goal" | "exhausted" | "node-budget" | "time-budget";
+	reason: "complete" | "exhausted" | "node-budget" | "time-budget";
 }
 
 class Heap<T extends { f: number }> {
@@ -116,10 +118,12 @@ export function planFootsteps<State, Pose>(
 		f: number;
 		key: string;
 		stride: number;
+		changes: number;
+		run: number;
 	};
-	const key = (state: State, heading?: WalkDirection) => {
+	const key = (state: State, heading?: WalkDirection, changes = 0, run = 0) => {
 		const p = ground(sim.position(state));
-		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}`;
+		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? 0 : changes}:${Math.min(run, options.minHeadingRun ?? 0)}`;
 	};
 	const open = new Heap<Node>();
 	const start: Node = {
@@ -128,6 +132,8 @@ export function planFootsteps<State, Pose>(
 		f: heuristic(ground(sim.position(initial))),
 		key: key(initial),
 		stride: 0,
+		changes: 0,
+		run: 0,
 	};
 	open.push(start);
 	const costs = new Map([[start.key, 0]]);
@@ -170,7 +176,7 @@ export function planFootsteps<State, Pose>(
 	for (let node = open.pop(); node; node = open.pop()) {
 		if (node.g !== costs.get(node.key)) continue;
 		if (best?.complete && node.f >= best.cost) {
-			reason = "goal";
+			reason = "complete";
 			break;
 		}
 		if (expanded >= (options.nodeBudget ?? 12000)) {
@@ -195,6 +201,11 @@ export function planFootsteps<State, Pose>(
 						);
 			const turn = Math.min(delta, 8 - delta);
 			if (turn > 2) continue;
+			const changes = node.changes + (turn ? 1 : 0);
+			if (changes > (options.maxHeadingChanges ?? Infinity)) continue;
+			if (turn && node.changes > 0 && node.run < (options.minHeadingRun ?? 0))
+				continue;
+			const run = turn ? 1 : node.run + 1;
 			const pose = sim.entry(node.state, heading, node.heading === undefined);
 			if (pose === undefined) continue;
 			const p = ground(sim.position(node.state));
@@ -242,7 +253,7 @@ export function planFootsteps<State, Pose>(
 			}
 			if (!next || stride < 1e-8) continue;
 			const g = node.g + stride + turnPenalty + stepCost;
-			const nextKey = key(next, heading);
+			const nextKey = key(next, heading, changes, run);
 			if (g >= (costs.get(nextKey) ?? Infinity)) continue;
 			costs.set(nextKey, g);
 			open.push({
@@ -254,6 +265,8 @@ export function planFootsteps<State, Pose>(
 				f: g + heuristic(ground(sim.position(next))),
 				key: nextKey,
 				stride,
+				changes,
+				run,
 			});
 			generated++;
 		}
@@ -265,7 +278,7 @@ export function planFootsteps<State, Pose>(
 			steps.push(n.step);
 		steps.reverse();
 	}
-	if (best?.complete && reason === "exhausted") reason = "goal";
+	if (best?.complete && reason === "exhausted") reason = "complete";
 	let last = best
 		? sim.rest(best.node.state, best.step.pose, best.step.heading)
 		: undefined;

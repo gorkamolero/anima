@@ -214,3 +214,16 @@ for (const allowSlide of [true, false])
 				result.steps.every((s) => s.slide.x === 0 && s.slide.y === 0),
 			).toBe(true);
 	});
+
+it.each([
+	0.2, 0.3, 0.45,
+])("a zero-corner walk at stride %s never weaves", (stride) => {
+	const result = search({ x: 3, y: 0 }, stride, () => true, {
+		maxHeadingChanges: 1,
+		minHeadingRun: 2,
+		turnCost: 1.2,
+	});
+	expect(result.complete).toBe(true);
+	expect(result.stats.reason).toBe("complete");
+	expect(changes(result).length).toBeLessThanOrEqual(1);
+});
