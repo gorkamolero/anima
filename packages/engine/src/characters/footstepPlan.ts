@@ -173,6 +173,22 @@ function simulatePlan<State, Pose>(
 					: directions
 							.filter((d) => Math.abs(d.error) < Math.PI / 2)
 							.map((d) => [d.heading]);
+			if (
+				!orders.some(
+					([heading]) =>
+						sim.entry(branch.state, heading, branch.steps.length === 0) !==
+						undefined,
+				)
+			) {
+				// A standing drawing can be blocked even when the route centre fits.
+				// Use a forward native departure; the midpoint search plans its turn.
+				orders.push(
+					...directions
+						.filter((d) => Math.abs(d.error) < Math.PI / 2)
+						.map((d) => [d.heading]),
+				);
+			}
+
 			const run = (
 				state: State,
 				prefix: PlannedStep<State, Pose>[],
@@ -298,7 +314,7 @@ export function planFootsteps<State, Pose>(
 				: sim.position(last.state);
 			const dx = corrections[i].x + (leg.to.x - p.x) / steps.length;
 			const dy = corrections[i].y + (leg.to.y - p.y) / steps.length;
-			const factor = Math.min(1, 0.9 / Math.hypot(dx, dy));
+			const factor = Math.min(1, 0.99 / Math.hypot(dx, dy));
 			return { x: dx * factor, y: dy * factor };
 		});
 		const corrected = simulatePlan(legs, initial, sim, proposed);
