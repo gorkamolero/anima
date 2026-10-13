@@ -359,9 +359,13 @@ export class CharacterMotor {
 		this.path = findPath(this.area.mask, this.target, this.goal);
 		this.goal = this.path[this.path.length - 1] ?? this.goal;
 		const legs = walkLegs(this.path, this.area.perspective);
-		if (initialHeading && legs[0]) legs[0].heading = initialHeading;
+		if (initialHeading && legs[0]) {
+			legs[0].heading = initialHeading;
+			for (let i = 1; i < legs.length && !legs[i].corner; i++)
+				legs[i].heading = initialHeading;
+		}
 		const initial: PredictedStance = {
-			start: this.target,
+			start: { x: this.target.x, y: this.target.y },
 			end: { x: this.target.x, y: this.target.y },
 			anchor: { ...this.anchor },
 			foot: this.foot,

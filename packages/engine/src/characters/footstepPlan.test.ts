@@ -97,3 +97,33 @@ describe("whole-walk footstep planning", () => {
 		expect(p.steps.every((s) => s.state.x < 150)).toBe(true);
 	});
 });
+
+it("plans beyond the first safe corner stance before committing a turn", () => {
+	const legs = walkLegs(
+		[
+			{ x: 0, y: 100 },
+			{ x: 100, y: 100 },
+			{ x: 100, y: 0 },
+		],
+		perspective,
+	);
+	const p = planFootsteps(
+		legs,
+		{ x: 0, y: 100 },
+		{
+			position: (p) => p,
+			entry: (_p, heading) => heading,
+			advance: (p, heading) => {
+				const d = deltas[heading];
+				if (!d) return;
+				const next = { x: p.x + d.x, y: p.y + d.y };
+				if (next.y < 0 || next.x > 100 || (next.x === 100 && next.y < 80))
+					return;
+				return next;
+			},
+			rest: (p) => p,
+		},
+	);
+	expect(p.steps[p.steps.length - 1].state).toEqual({ x: 80, y: 0 });
+	expect(p.distance).toBe(20);
+});

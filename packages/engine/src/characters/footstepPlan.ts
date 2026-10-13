@@ -89,73 +89,84 @@ function simulatePlan<State, Pose>(
 	sim: StepSimulation<State, Pose>,
 	corrections: readonly Point[] = [],
 ) {
-	const steps: PlannedStep<State, Pose>[] = [];
-	let state = initial;
-	let bestStop:
-		| { steps: PlannedStep<State, Pose>[]; distance: number }
-		| undefined;
 	const target = legs[legs.length - 1]?.to;
-	if (!target) return { steps, distance: 0, complete: true };
+	if (!target)
+		return {
+			steps: [] as PlannedStep<State, Pose>[],
+			distance: 0,
+			complete: true,
+		};
+	type Branch = {
+		state: State;
+		steps: PlannedStep<State, Pose>[];
+		distance: number;
+	};
+	let beam: Branch[] = [{ state: initial, steps: [], distance: 0 }];
+	let bestStop:
+		| { steps: PlannedStep<State, Pose>[]; distance: number; remaining: number }
+		| undefined;
 	for (let legIndex = 0; legIndex < legs.length; legIndex++) {
 		const leg = legs[legIndex];
-		const candidates: {
-			state: State;
-			steps: PlannedStep<State, Pose>[];
-			distance: number;
-		}[] = [];
-		let previousDistance = Infinity;
-		for (let stride = 0; stride < 256; stride++) {
-			const slide = steps.length
-				? (corrections[legIndex] ?? { x: 0, y: 0 })
-				: { x: 0, y: 0 };
-			if (sim.offset) state = sim.offset(state, slide);
-			const pose = sim.entry(state, leg.heading, steps.length === 0);
-			if (!pose) break;
-			const node = {
-				heading: leg.heading,
-				pose,
-				state,
-				stop: false,
-				leg: legIndex,
-				slide,
-			};
-			const rest = sim.rest(state, pose, leg.heading);
-			if (rest) {
-				const distance = Math.hypot(rest.x - target.x, rest.y - target.y);
-				if (!bestStop || distance < bestStop.distance)
-					bestStop = { steps: [...steps, { ...node, stop: true }], distance };
+		const tail = legs
+			.slice(legIndex + 1)
+			.reduce(
+				(sum, l) => sum + Math.hypot(l.to.x - l.from.x, l.to.y - l.from.y),
+				0,
+			);
+		const candidates: Branch[] = [];
+		for (const branch of beam) {
+			let state = branch.state;
+			const steps = [...branch.steps];
+			let previousDistance = Infinity,
+				growing = 0;
+			for (let stride = 0; stride < 256; stride++) {
+				const slide = steps.length
+					? (corrections[legIndex] ?? { x: 0, y: 0 })
+					: { x: 0, y: 0 };
+				if (sim.offset) state = sim.offset(state, slide);
+				const pose = sim.entry(state, leg.heading, steps.length === 0);
+				if (!pose) break;
+				const node = {
+					heading: leg.heading,
+					pose,
+					state,
+					stop: false,
+					leg: legIndex,
+					slide,
+				};
+				const rest = sim.rest(state, pose, leg.heading);
+				if (rest) {
+					const distance = Math.hypot(rest.x - target.x, rest.y - target.y);
+					const remaining =
+						Math.hypot(rest.x - leg.to.x, rest.y - leg.to.y) + tail;
+					if (!bestStop || remaining < bestStop.remaining)
+						bestStop = {
+							steps: [...steps, { ...node, stop: true }],
+							distance,
+							remaining,
+						};
+				}
+				const next = sim.advance(state, pose);
+				if (!next) break;
+				const p = sim.position(next);
+				const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
+				steps.push(node);
+				if (legIndex < legs.length - 1) {
+					const entry = sim.entry(next, legs[legIndex + 1].heading, false);
+					if (entry !== undefined && sim.advance(next, entry) !== undefined)
+						candidates.push({ state: next, steps: [...steps], distance });
+				}
+				state = next;
+				growing = distance > previousDistance ? growing + 1 : 0;
+				if (growing >= 2) break;
+				previousDistance = distance;
 			}
-			const next = sim.advance(state, pose);
-			if (!next) break;
-			const p = sim.position(next),
-				before = sim.position(state);
-			const progress =
-				(p.x - before.x) * (leg.to.x - leg.from.x) +
-				(p.y - before.y) * (leg.to.y - leg.from.y);
-			if (steps.length > 0 && progress <= 1e-6) break;
-			const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
-			steps.push(node);
-			candidates.push({ state: next, steps: [...steps], distance });
-			state = next;
-			// Include the first overshooting stride so both adjacent whole strides
-			// compete. Never execute a reverse stride to recover from the overshoot.
-			if (distance > previousDistance) break;
-			previousDistance = distance;
 		}
-		if (legIndex < legs.length - 1) {
-			const nextHeading = legs[legIndex + 1].heading;
-			const selected = candidates
-				.sort((a, b) => a.distance - b.distance)
-				.find((c) => {
-					const entry = sim.entry(c.state, nextHeading, false);
-					return (
-						entry !== undefined && sim.advance(c.state, entry) !== undefined
-					);
-				});
-			if (!selected) break;
-			state = selected.state;
-			steps.splice(0, steps.length, ...selected.steps);
-		}
+		// Retain several whole-stride corners: the closest drawing may have no
+		// safe next settle even though its first stance fits. Search ahead now,
+		// never after the character has arrived at that corner.
+		beam = candidates.sort((a, b) => a.distance - b.distance).slice(0, 12);
+		if (!beam.length) break;
 	}
 	return {
 		steps: bestStop?.steps ?? [],
