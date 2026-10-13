@@ -814,7 +814,7 @@ it("allows an initial marginal body cell to escape inward, but not a later stanc
 	).toBeUndefined();
 });
 
-it("tries the next compatible entry when the first phase clips the clearance edge", () => {
+it("tries the next compatible entry when the first phase clips an object footprint", () => {
 	const { motor, area, cycle, pose } = setup(true);
 	cycle.contacts = [
 		{ planted: "L", L: { x: 100, y: 190 }, R: { x: 30, y: 190 } },
@@ -828,6 +828,10 @@ it("tries the next compatible entry when the first phase clips the clearance edg
 	motor.area.clearanceMask = {
 		...area.mask,
 		data: area.mask.data.map((v, i) => (i % area.mask.width === 94 ? 0 : v)),
+	};
+	motor.area.objectFootprints = {
+		...area.mask,
+		data: area.mask.data.map((_, i) => (i % area.mask.width === 94 ? 1 : 0)),
 	};
 	motor.place({ x: 960, y: 850 }, false);
 	const internal = motor as unknown as {
@@ -901,4 +905,68 @@ it("uses the drawn support through an idle turn's settle frames", () => {
 		).toBeLessThanOrEqual(1.5);
 	}
 	expect(pose.cycle.name).toBe("destination-idle");
+});
+
+it("measures first-stance clearance from the cut pose, not the old standing origin", () => {
+	const { motor, area, cycle, target } = setup();
+	motor.area.rawMask = { ...area.mask, data: [...area.mask.data] };
+	motor.area.clearanceMask = {
+		...area.mask,
+		data: area.mask.data.map((_, i) => (i % area.mask.width < 90 ? 0 : 1)),
+	};
+	motor.place({ x: 920, y: 850 }, false);
+	const state = {
+		start: { x: 879, y: 850 },
+		end: { x: 879, y: 850 },
+		anchor: { ...motor.anchor },
+		foot: "L",
+		pose: { cycle, frame: 0, flipX: false },
+		scale: target.scale,
+	};
+	const internal = motor as unknown as {
+		predictStance(pose: FootPose, state: unknown): unknown;
+	};
+	expect(internal.predictStance(state.pose, state)).toBeUndefined();
+	expect(
+		internal.predictStance({ ...state.pose, firstStance: true }, state),
+	).toBeDefined();
+});
+
+it("holds a standing pivot and cancels it without starting the queued stride", () => {
+	const { motor, target, cycle, pose } = setup(true);
+	motor.place({ x: 960, y: 850 });
+	const resting = pose();
+	const anchor = contactOnScreen(resting, "L", target, target.scale);
+	const internal = motor as unknown as {
+		planned: unknown[];
+		beginWalk(): void;
+	};
+	internal.planned = [
+		{
+			heading: "right",
+			pose: { cycle, frame: 0, flipX: false },
+			state: {
+				start: { x: target.x, y: target.y },
+				end: { x: target.x, y: target.y },
+				pose: resting,
+				foot: "L",
+				anchor,
+				scale: target.scale,
+				pivot: { pose: resting, foot: "L", anchor },
+			},
+			stop: false,
+			slide: { x: 0, y: 0 },
+		},
+	];
+	internal.beginWalk();
+	expect(motor.walking).toBe(true);
+	expect(pose().cycle.name).toBe("standing");
+	const sole = contactOnScreen(pose(), "L", target, target.scale);
+	motor.update(1000 / 24);
+	expect(contactOnScreen(pose(), "L", target, target.scale)).toEqual(sole);
+	motor.stop();
+	motor.update(1000);
+	expect(motor.walking).toBe(false);
+	expect(internal.planned).toHaveLength(0);
+	expect(pose().cycle.name).toBe("standing");
 });

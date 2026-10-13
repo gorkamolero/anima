@@ -39,6 +39,7 @@ export interface FootAnimation {
 	standing?(direction: WalkDirection): FootPose | undefined;
 }
 interface PredictedStance {
+	pivot?: { pose: FootPose; foot: Foot; anchor: Point; via?: FootPose };
 	start: Point;
 	end: Point;
 	anchor: Point;
@@ -114,6 +115,7 @@ export class CharacterMotor {
 	private absorption?: { delta: Point; frames: number; applied: number };
 	private transition?: { to: FootPose; remaining: number; frame: number };
 	private drawn?: {
+		resumeStart?: PredictedStance;
 		poses: FootPose[];
 		resume?: FootPose;
 		resumeFrameMs: number;
@@ -137,6 +139,15 @@ export class CharacterMotor {
 		if (this.target.motor === this) this.target.motor = undefined;
 	}
 	private finish(): void {
+		if (this.walking && this.planned.length) {
+			const start = this.planned[0].state;
+			this.foot = start.foot;
+			this.anchor = { ...start.anchor };
+			this.transition = undefined;
+			this.drawn = undefined;
+			this.beginWalk();
+			return;
+		}
 		this.plannerWorker?.terminate();
 		this.plannerWorker = undefined;
 		this.pendingPlan = false;
@@ -186,6 +197,11 @@ export class CharacterMotor {
 		this.planned = [];
 		if (this.drawn && !immediate) {
 			this.path = [];
+			if (this.drawn.resumeStart) {
+				this.drawn.resumeStart = undefined;
+				if (!this.drawn.poses.length) this.finish();
+				return;
+			}
 			if (!this.drawn.resume) return;
 			// A stop during reverse playback must settle back, not later resume walking.
 			const idle = this.animation.standing?.(this.heading);
@@ -579,6 +595,21 @@ export class CharacterMotor {
 		return promise;
 	}
 	private beginWalk(): void {
+		const start = this.planned[0]?.state;
+		if (start?.pivot) {
+			const pivot = start.pivot;
+			delete start.pivot;
+			this.foot = pivot.foot;
+			this.anchor = { ...pivot.anchor };
+			const poses = [...(pivot.via ? [pivot.via] : []), pivot.pose];
+			this.pose = poses.shift() as FootPose;
+			this.drawn = { poses, resumeStart: start, resumeFrameMs: this.frameMs };
+			this.walking = true;
+			this.elapsed = 0;
+			this.apply();
+			this.animation.show(this.pose);
+			return;
+		}
 		if (!this.planStance() || !this.pose) {
 			this.finish();
 			return;
@@ -607,6 +638,72 @@ export class CharacterMotor {
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
 	private buildPlan(options: SearchOptions = {}) {
+		const result = this.buildSegment(options);
+		if (!result) return;
+		let planner: CharacterMotor = this;
+		let segment = result;
+		for (let attempt = 0; attempt < 8 && !segment.complete; attempt++) {
+			const last = segment.steps.at(-1);
+			const first = segment.steps[0];
+			if (!last || !first) break;
+			const exit = planner.nextExit(last.pose, last.state, last.heading, true);
+			const idle = this.animation.standing?.(last.heading);
+			if (
+				!exit ||
+				!idle ||
+				Math.hypot(
+					exit.anchor.x - first.state.anchor.x,
+					exit.anchor.y - first.state.anchor.y,
+				) <= 20
+			)
+				break;
+			const placed = lockedPlacement(
+				exit.anchor,
+				idle,
+				exit.foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				exit.position.scale,
+			);
+			const target: MotorTarget = {
+				...placed,
+				setPosition(x, y) {
+					this.x = x;
+					this.y = y;
+				},
+				setScale() {},
+				setDepth() {},
+			};
+			planner = new CharacterMotor(target, this.area, () => {}, this.animation);
+			planner.pose = idle;
+			planner.anchor = { ...exit.anchor };
+			planner.foot = exit.foot;
+			planner.scale = placed.scale;
+			planner.heading = last.heading;
+			planner.goal = this.goal;
+			const next = planner.buildSegment(options);
+			if (!next?.steps.length || next.distance >= segment.distance - 5) break;
+			result.steps.push(...next.steps);
+			result.distance = next.distance;
+			result.complete = next.complete;
+			result.arrivalKind = next.arrivalKind;
+			result.stats.expanded += next.stats.expanded;
+			result.stats.generated += next.stats.generated;
+			result.stats.reason = next.stats.reason;
+			result.stats.optimal = false;
+			const rejections = (result.stats.rejections ??= {});
+			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
+				rejections[reason] = (rejections[reason] ?? 0) + count;
+			segment = next;
+		}
+		this.planned = result.steps;
+		this.planDistance = result.distance;
+		this.planComplete = result.complete;
+		this.planSearch = result.stats;
+		return result;
+	}
+	private buildSegment(options: SearchOptions = {}) {
 		// Fixed work budget makes worker and Node route selection identical.
 		// elapsedMs belongs to the virtual planning clock; measure wall time at
 		// the caller, outside frame telemetry.
@@ -620,6 +717,7 @@ export class CharacterMotor {
 			...options,
 		};
 		this.stanceCache.clear();
+		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
 		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
 			x: p.x,
@@ -669,13 +767,86 @@ export class CharacterMotor {
 					)
 						return [];
 					const foot: Foot = s.foot === "L" ? "R" : "L";
-					return [
+					const starts: PredictedStance[] = [
 						{
 							...s,
 							foot,
 							anchor: contactOnScreen(s.pose, foot, s.end, s.scale),
 						},
 					];
+					for (const direction of GROUND_SECTORS) {
+						const idle = this.animation.standing?.(direction);
+						if (
+							!idle ||
+							(idle.cycle.name === s.pose.cycle.name &&
+								idle.flipX === s.pose.flipX)
+						)
+							continue;
+						for (const support of ["L", "R"] as const) {
+							const anchor = contactOnScreen(s.pose, support, s.end, s.scale);
+							if (
+								!this.canStand(
+									{ ...this.animation.select(direction), frame: 0 },
+									anchor,
+									support,
+									s.scale,
+									this.startingFloor(),
+									true,
+								)
+							) {
+								count("pivot");
+								continue;
+							}
+							let via: FootPose | undefined;
+							const previousSupport =
+								s.pose.cycle.contacts[s.pose.frame].planted;
+							if (
+								support !== previousSupport &&
+								idle.cycle.contacts[idle.frame].planted === previousSupport
+							) {
+								// Show the weight transfer before pivoting the old drawn support.
+								for (const heading of GROUND_SECTORS) {
+									const candidate = this.animation.standing?.(heading);
+									if (
+										candidate?.cycle.contacts[candidate.frame].planted ===
+											support &&
+										this.canStand(
+											{ ...this.animation.select(heading), frame: 0 },
+											anchor,
+											support,
+											s.scale,
+											this.startingFloor(),
+											true,
+										)
+									) {
+										via = candidate;
+										break;
+									}
+								}
+								if (!via) continue;
+							}
+							const end = lockedPlacement(
+								anchor,
+								idle,
+								support,
+								this.area.perspective,
+								this.area.baseScale,
+								this.area.scaleClamp,
+								s.scale,
+							);
+							for (const foot of ["L", "R"] as const)
+								starts.push({
+									...s,
+									end,
+									pose: idle,
+									scale: end.scale,
+									foot,
+									anchor: contactOnScreen(idle, foot, end, end.scale),
+									pivot: { pose: idle, foot: support, anchor, via },
+								});
+						}
+					}
+					return starts;
 				},
 				offset: (s, slide) => ({
 					...s,
@@ -684,7 +855,8 @@ export class CharacterMotor {
 				}),
 				position: (s) => s.anchor,
 				ground: (p) => this.groundPoint(p),
-				support: (s) => `${s.foot}:${s.pose.frame}`,
+				support: (s) =>
+					`${s.foot}:${s.pose.cycle.name}:${s.pose.flipX}:${s.pose.frame}`,
 				entry: (s, direction, starting, stopping) => {
 					this.rejectionReason = "no-entry-frame";
 					const entry = () => {
@@ -734,7 +906,7 @@ export class CharacterMotor {
 											s.anchor,
 											s.foot,
 											s.scale,
-											this.startingClearance({ x: s.end.x, y: s.anchor.y }),
+											this.startingFloor(),
 										)) &&
 									(stopping || !!this.predictStance(p, s)),
 							);
@@ -884,7 +1056,9 @@ export class CharacterMotor {
 						: 0,
 				};
 			}
+			const remaining = this.planned;
 			this.stop(false, true);
+			this.planned = remaining;
 		}
 		return true;
 	}
@@ -923,6 +1097,7 @@ export class CharacterMotor {
 		foot: Foot,
 		scale: number,
 		mask = this.area.clearanceMask ?? this.area.mask,
+		standingOnly = false,
 	): boolean {
 		this.rejectionReason = "settle-does-not-fit";
 		if (!this.animation.standing) return true;
@@ -935,7 +1110,9 @@ export class CharacterMotor {
 		if (!direction) return true;
 		const idle = this.animation.standing(direction);
 		if (!idle) return true;
-		const poses = (idle.cycle.settleFrames ?? [idle.frame]).map((frame) => ({
+		const poses = (
+			standingOnly ? [idle.frame] : (idle.cycle.settleFrames ?? [idle.frame])
+		).map((frame) => ({
 			...idle,
 			frame,
 		}));
@@ -968,31 +1145,20 @@ export class CharacterMotor {
 			);
 		});
 	}
-	/** A marginal spawn may leave its one boundary cell, but cannot cross a
-	 * second blocked cell or stop there. Sole and object checks stay strict. */
-	private startingClearance(point: Point) {
-		const mask = this.area.clearanceMask ?? this.area.mask;
-		const i = cellAt(mask, point);
-		if (i < 0 || mask.data[i] || !this.soleFits(point)) return mask;
-		const x = i % mask.width,
-			y = Math.floor(i / mask.width);
-		const adjacent = [
-			[x - 1, y],
-			[x + 1, y],
-			[x, y - 1],
-			[x, y + 1],
-		].some(
-			([cx, cy]) =>
-				cx >= 0 &&
-				cy >= 0 &&
-				cx < mask.width &&
-				cy < mask.height &&
-				mask.data[cy * mask.width + cx],
-		);
-		if (!adjacent) return mask;
-		const data = mask.data.slice();
-		data[i] = 1;
-		return { ...mask, data };
+	private startMask?: WalkArea["mask"];
+	/** At rest the real soles define floor support. The first body's projection
+	 * may straddle a floor/caption boundary; props remain solid and its landing
+	 * must enter normal clearance. This is never used for later stances. */
+	private startingFloor() {
+		if (this.startMask) return this.startMask;
+		const raw = this.area.rawMask ?? this.area.mask;
+		const objects = this.area.objectFootprints;
+		return (this.startMask = {
+			...raw,
+			data: raw.data.map((_, i) =>
+				objects?.data[cellAt(objects, cellPoint(raw, i))] ? 0 : 1,
+			),
+		});
 	}
 	/** Boots use raw floor, never the body erosion, and may not land on props. */
 	private soleFits(point: Point): boolean {
@@ -1095,12 +1261,7 @@ export class CharacterMotor {
 			foot = state?.foot ?? this.foot;
 		const raw = this.area.rawMask ?? this.area.mask,
 			clearance = this.area.clearanceMask ?? this.area.mask;
-		const mask = pose.firstStance
-			? this.startingClearance({
-					x: state?.end.x ?? this.target.x,
-					y: anchor.y,
-				})
-			: clearance;
+		const mask = pose.firstStance ? this.startingFloor() : clearance;
 		const on = (m: typeof raw, p: Point) => m.data[cellAt(m, p)] > 0;
 		if (!this.soleFits(anchor)) return;
 		const sampled = this.stanceSamples(
@@ -1111,7 +1272,9 @@ export class CharacterMotor {
 		);
 		if (!sampled) return this.reject("no-stance");
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
-		const previous = state?.end ?? this.target;
+		const previous = pose.firstStance
+			? { x: sampled.samples[0].x + shift, y: anchor.y }
+			: (state?.end ?? this.target);
 		let minX = previous.x,
 			maxX = previous.x;
 		for (const p of sampled.samples) {
@@ -1196,7 +1359,12 @@ export class CharacterMotor {
 			if (next) {
 				this.pose = next;
 				this.apply();
-				if (!d.poses.length && !d.resume) this.finish();
+				if (!d.poses.length && !d.resume && !d.resumeStart) this.finish();
+			} else if (d.resumeStart) {
+				this.foot = d.resumeStart.foot;
+				this.anchor = { ...d.resumeStart.anchor };
+				this.drawn = undefined;
+				this.beginWalk();
 			} else if (d.resume) {
 				this.pose = d.resume;
 				this.frameMs = d.resumeFrameMs;
