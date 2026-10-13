@@ -1,7 +1,7 @@
 import {
+	applySceneFootprints,
 	BaseScene,
 	baselineYAt,
-	bridgeOccluders,
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
@@ -19,12 +19,11 @@ import {
 	type HotspotVerb,
 	nearestCell,
 	type Occluder,
-	objectFootprints,
 	passageArrival,
 	refineMask,
 	type SceneConfig,
 	scaleAt,
-	subtractFootprints,
+	sceneExitApproaches,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
@@ -39,6 +38,7 @@ import {
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
+import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
 import {
 	getReviewAction,
@@ -735,8 +735,9 @@ export class StoryGameScene extends BaseScene {
 					this.hermesFacing = heading.endsWith("right") ? 1 : -1;
 					this.hermesSprite?.anims.stop();
 				},
-				{
-					current: () => {
+				hermesFootAnimation(
+					cycle,
+					() => {
 						const sprite = this.hermesSprite;
 						if (!sprite) throw new Error("Hermes unavailable");
 						return {
@@ -745,28 +746,8 @@ export class StoryGameScene extends BaseScene {
 							flipX: sprite.flipX,
 						};
 					},
-					select: (direction) => {
-						const texture = direction.startsWith("away-")
-							? HERMES_AWAY_DIAGONAL_TEXTURE
-							: direction.startsWith("toward-")
-								? HERMES_TOWARD_DIAGONAL_TEXTURE
-								: direction === "away"
-									? HERMES_AWAY_TEXTURE
-									: direction === "toward"
-										? HERMES_TOWARD_TEXTURE
-										: HERMES_TEXTURE;
-						return {
-							cycle: cycle(texture),
-							flipX: direction === "right" || direction.endsWith("-left"),
-						};
-					},
-					standing: (direction) => {
-						const { texture, flipX } = hermesStanding(direction);
-						return { cycle: cycle(texture), frame: 0, flipX };
-					},
-
 					show,
-				},
+				),
 			);
 		}
 		this.setSceneBackground(
@@ -1333,47 +1314,20 @@ export class StoryGameScene extends BaseScene {
 			});
 		}
 		if (this.visibleFloor && this.walkArea) {
-			const bridged = {
-				...this.visibleFloor,
-				data: [...this.visibleFloor.data],
-			};
-			if (!this.generatedPlace && this.reviewSceneId !== "outside") {
-				const segmented = refineMask(data.floor);
-				bridgeOccluders(segmented, this.objectLayers);
-				for (let i = 0; i < bridged.data.length; i++)
-					bridged.data[i] = bridged.data[i] && segmented.data[i] ? 1 : 0;
-			} else {
-				bridgeOccluders(bridged, this.objectLayers);
-			}
-			const footprints = objectFootprints(
-				bridged,
+			applySceneFootprints(
+				this.walkArea,
+				this.visibleFloor,
+				!this.generatedPlace && this.reviewSceneId !== "outside"
+					? data.floor
+					: undefined,
 				this.objectLayers,
-				this.walkArea.perspective,
-			);
-			// A seated actor occupies the seat-to-boot projection on the ground.
-			// Both seated states share placement; exclude it after hidden-floor bridging.
-			const kat = this.katSeatedSprite;
-			if (kat?.visible) {
-				for (let i = 0; i < footprints.data.length; i++) {
-					const p = cellPoint(footprints, i);
-					const sx = (p.x - kat.x) / kat.scaleX + 410;
-					const sy = (p.y - kat.y) / kat.scaleY + 880;
-					if (sx >= 260 && sx <= 800 && sy >= 535 && sy <= 880)
-						footprints.data[i] = 1;
-				}
-			}
-			subtractFootprints(bridged, footprints);
-			this.walkArea.clearanceMask = clipFloorBelow(
-				erode(bridged, this.walkArea.perspective, 0.3, footprints, 0),
 				MAX_FEET_Y,
+				this.katSeatedSprite,
 			);
-			this.walkArea.objectFootprints = footprints;
-			this.walkArea.rawMask = bridged;
-			this.visibleFloor = { ...bridged, data: [...bridged.data] };
-			this.walkArea.mask = clipFloorBelow(
-				erode(bridged, this.walkArea.perspective, 0.3, footprints),
-				MAX_FEET_Y,
-			);
+			this.visibleFloor = {
+				...this.walkArea.rawMask!,
+				data: [...this.walkArea.rawMask!.data],
+			};
 		}
 		this.sceneExits = data.exits;
 		const connectionResponse = await fetch(
@@ -1382,90 +1336,14 @@ export class StoryGameScene extends BaseScene {
 		if (!connectionResponse.ok)
 			throw new Error("Unable to load exit connections");
 		this.connections = await connectionResponse.json();
-		for (const link of this.connections) {
-			let exit = this.sceneExits.find((e) => e.id === link.exit);
-			if (!exit && link.kind === "near") {
-				exit = {
-					id: link.exit,
-					kind: "near",
-					region: [
-						{ x: 900, y: MAX_FEET_Y - 16 },
-						{ x: 1020, y: MAX_FEET_Y - 16 },
-						{ x: 1020, y: MAX_FEET_Y },
-						{ x: 900, y: MAX_FEET_Y },
-					],
-				};
-				this.sceneExits.push(exit);
-			}
-			if (exit) exit.to = link.to;
-			if (link.kind === "edge-left" || link.kind === "edge-right")
-				for (const fragment of this.sceneExits.filter(
-					(e) => e.kind === link.kind,
-				))
-					fragment.to = link.to;
-		}
-		if (!this.generatedPlace) {
-			for (const hotspot of this.activeScene().hotspots) {
-				const action = hotspot.actions.USE;
-				if (!action?.transitionTo || !hotspot.approach) continue;
-				const point = action.moveTo ?? hotspot.approach;
-				this.sceneExits = this.sceneExits.filter((e) => e.kind !== "door");
-				this.sceneExits.unshift({
-					id: hotspot.id,
-					kind: "door",
-					label: hotspot.name,
-					to: action.transitionTo,
-					region: [
-						{ x: point.x - 10, y: point.y - 10 },
-						{ x: point.x + 10, y: point.y - 10 },
-						{ x: point.x + 10, y: point.y + 10 },
-						{ x: point.x - 10, y: point.y + 10 },
-					],
-				});
-			}
-		}
-		// Caption clipping and footprint erosion can put a raw threshold just
-		// outside the navigable mask. Its reachable approach is the trigger.
-		const exitMask = this.walkArea?.mask;
-		const approachMask = this.walkArea
-			? erode(this.walkArea.mask, this.walkArea.perspective)
-			: undefined;
-		if (exitMask)
-			this.sceneExits = this.sceneExits.map((exit) => {
-				const center = {
-					x: exit.region.reduce((n, p) => n + p.x, 0) / exit.region.length,
-					y: exit.region.reduce((n, p) => n + p.y, 0) / exit.region.length,
-				};
-				// An entry belongs to its physical threshold, independent of the
-				// previous scene's sprite position or disconnected floor component.
-				const cell = nearestCell(exitMask, center);
-				if (cell < 0) return exit;
-				const point = cellPoint(exitMask, cell);
-				const interior =
-					exit.kind !== "door" && approachMask
-						? nearestCell(approachMask, point)
-						: -1;
-				const approach =
-					interior >= 0 && approachMask
-						? cellPoint(approachMask, interior)
-						: point;
-				return {
-					...exit,
-					approach: approach ?? point,
-					// Keep physical thresholds at their artwork. Only an explicit
-					// exit request may trigger at its reachable stance approach.
-				};
-			});
-		// Fragmented pixels on one image edge are aliases of one journey.
-		// Use the same reachable departure, rather than routing each fragment
-		// into a different narrow pocket beside a foreground obstacle.
-		for (const kind of ["edge-left", "edge-right"] as const) {
-			const primary = this.sceneExits.find((exit) => exit.kind === kind);
-			if (primary?.approach)
-				for (const exit of this.sceneExits) {
-					if (exit.kind === kind) exit.approach = { ...primary.approach };
-				}
-		}
+		const { exits, exitMask, approachMask } = sceneExitApproaches(
+			this.sceneExits,
+			this.connections,
+			this.walkArea!,
+			!this.generatedPlace ? this.activeScene().hotspots : undefined,
+			MAX_FEET_Y,
+		);
+		this.sceneExits = exits;
 		// Geometry may shrink after perception loads. Enter on an interior floor
 		// cell, away from travel gates, instead of spawning on a clipped edge.
 		if (this.hermesSprite && this.hermesMotor && exitMask) {

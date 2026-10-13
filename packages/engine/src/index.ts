@@ -21,6 +21,7 @@ export type {
 } from "./characters/Character";
 // Characters
 export { Character } from "./characters/Character";
+export type { FootAnimation } from "./characters/CharacterMotor";
 export { CharacterMotor } from "./characters/CharacterMotor";
 export type {
 	ContactFrame,
@@ -158,4 +159,8 @@ export {
 	toGround,
 	toMetres,
 } from "./walkarea/perspective";
+export {
+	applySceneFootprints,
+	sceneExitApproaches,
+} from "./walkarea/sceneGeometry";
 export type { FloorMask, WalkArea } from "./walkarea/types";
