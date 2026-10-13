@@ -282,16 +282,9 @@ export function planFootsteps<State, Pose>(
 				continue;
 			}
 			const sector = GROUND_SECTORS.indexOf(heading);
-			if (
-				options.routeCorners &&
-				GROUND_SECTORS.some((_, i) => {
-					const d = Math.abs(i - sector);
-					return history & (1 << i) && Math.min(d, 8 - d) > 2;
-				})
-			) {
-				reject("cumulative-reversal");
-				continue;
-			}
+			// Reversals are measured between consecutive runs. An initial heading
+			// must not forbid a later legal bend after two sustained stances;
+			// the shared corner/change budget still bounds the complete route.
 			history |= 1 << sector;
 			const run = turn ? 1 : node.run + 1;
 			const poses = sim.entries?.(

@@ -312,7 +312,7 @@ it("rejects a one-stance middle run in search, including before the stop edge", 
 		forcedRoute(["right", "away-right", "away-right", "away"]).complete,
 	).toBe(true);
 });
-it("rejects cumulative reversals made from individually legal turns", () => {
+it("bounds accumulated turns even when each consecutive turn is legal", () => {
 	const result = forcedRoute([
 		"right",
 		"away-right",
@@ -323,10 +323,10 @@ it("rejects cumulative reversals made from individually legal turns", () => {
 	]);
 	expect(result.steps).toEqual([]);
 	expect(
-		result.stats.rejections?.["search:cumulative-reversal"],
+		result.stats.rejections?.["search:turn-limit"],
 	).toBeGreaterThan(0);
 });
-it("permits a fresh direction envelope only near a route corner, once", () => {
+it("releases extra heading changes only near a route corner, once", () => {
 	const route: (typeof GROUND_SECTORS)[number][] = [
 		"right",
 		"away",
@@ -344,7 +344,7 @@ it("permits a fresh direction envelope only near a route corner, once", () => {
 			.complete,
 	).toBe(false);
 	expect(
-		forcedRoute([...route, "toward", "right"], {
+		forcedRoute([...route, "toward", "right", "right", "away"], {
 			routeCorners: [{ x: 3, y: 0 }],
 			cornerRadius: 10,
 		}).complete,
