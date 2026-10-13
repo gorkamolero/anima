@@ -291,6 +291,19 @@ export function planFootsteps<State, Pose>(
 				if (!d) continue;
 				for (const pose of sim.entries?.(node.state, heading, false, true) ??
 					[]) {
+					// A planted finish cannot improve the anchor's arrival distance.
+					// Reject distant poses before running the full exit animation.
+					if (
+						sim.acceptRest &&
+						!sim.acceptRest(
+							node.state,
+							pose,
+							sim.position(node.state),
+							target,
+							node.heading,
+						)
+					)
+						continue;
 					const rest = sim.rest(node.state, pose, heading);
 					if (
 						!rest ||
