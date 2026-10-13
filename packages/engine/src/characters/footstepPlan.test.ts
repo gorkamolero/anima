@@ -235,3 +235,19 @@ it("always returns the standing stop when no action is reachable", () => {
 	expect(result.arrivalKind).toBe("nearest-reachable");
 	expect(result.stats.optimal).toBe(true);
 });
+
+// A turn preference must not make a short, physically reachable corridor disappear.
+it("budgets the default search for a high-penalty corner", () => {
+	const safe = (p: Point) =>
+		p.x >= -0.1 &&
+		p.x <= 1.3 &&
+		p.y >= -0.1 &&
+		p.y <= 1.3 &&
+		(p.y <= 0.1 || p.x >= 1.1);
+	const result = search({ x: 1.2, y: 1.2 }, 0.3, safe, {
+		turnCost: 1.2,
+		maxHeadingChanges: 1,
+	});
+	expect(result.complete).toBe(true);
+	expect(result.distance).toBeLessThanOrEqual(0.15);
+});

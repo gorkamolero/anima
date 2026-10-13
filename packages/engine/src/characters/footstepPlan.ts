@@ -114,7 +114,12 @@ export function planFootsteps<State, Pose>(
 	const maxStride = options.maxStride ?? 0.6;
 	const weight = Math.max(1, options.stopWeight ?? 8);
 	const initialDistance = distance(ground(sim.position(initial)), goal);
-	const costBound = options.costBound ?? 1.5 * initialDistance + 2;
+	// The geometric allowance must also fund the permitted turn preferences.
+	// A 90-degree turn costs three turn units; without this allowance a short
+	// L corridor can exhaust its budget before its only valid corner.
+	const costBound =
+		options.costBound ??
+		1.5 * initialDistance + 2 + 3 * turnCost * (options.maxHeadingChanges ?? 2);
 	// For w >= 1, movement plus w * residual is at least straight distance.
 	// With bounded remaining cost B, residual is at least max(0, d - B).
 	const heuristic = (p: Point, g = 0) => {
