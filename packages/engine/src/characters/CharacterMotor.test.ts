@@ -647,9 +647,13 @@ it("cancels an in-flight worker and ignores its stale reply", async () => {
 	}
 });
 
-it("produces identical frames through worker and synchronous planning", () => {
+it.each([
+	false,
+	true,
+])("produces identical worker and synchronous frames (threshold=%s)", (threshold) => {
 	const direct = setup(true, true);
-	direct.motor.place({ x: 960, y: 850 });
+	if (threshold) direct.motor.placeContact({ x: 960, y: 850 });
+	else direct.motor.place({ x: 960, y: 850 });
 	void direct.motor.walk([{ x: 1400, y: 850 }]);
 	class InlineWorker {
 		onmessage?: (event: {
@@ -663,7 +667,8 @@ it("produces identical frames through worker and synchronous planning", () => {
 	vi.stubGlobal("Worker", InlineWorker);
 	try {
 		const worker = setup(true, true);
-		worker.motor.place({ x: 960, y: 850 });
+		if (threshold) worker.motor.placeContact({ x: 960, y: 850 });
+		else worker.motor.place({ x: 960, y: 850 });
 		void worker.motor.walk([{ x: 1400, y: 850 }]);
 		for (let i = 0; i < 300; i++) {
 			direct.motor.update(1000 / 24);

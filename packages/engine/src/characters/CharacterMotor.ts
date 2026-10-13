@@ -44,6 +44,7 @@ interface PredictedStance {
 	scale: number;
 }
 export interface MotorPlanRequest {
+	allowPivotFinish?: boolean;
 	area: WalkArea;
 	position: Point;
 	goal: Point;
@@ -69,6 +70,7 @@ export class CharacterMotor {
 		absorbedDistance: number;
 	};
 	anchor: Point = { x: 0, y: 0 };
+	private thresholdStart = false;
 	private pose?: FootPose;
 	private foot: Foot = "L";
 	private scale = 1;
@@ -475,6 +477,7 @@ export class CharacterMotor {
 	}
 
 	place(position: Point, snapToFloor = true): void {
+		this.thresholdStart = false;
 		// Teleport callers may have selected a fresh pose; do not restore the previous walk.
 		this.stop(true);
 		this.pose = undefined;
@@ -496,6 +499,7 @@ export class CharacterMotor {
 	/** Spawn with the actual planted sole on a floor boundary, not the sprite origin. */
 	placeContact(position: Point): void {
 		this.place(position, false);
+		this.thresholdStart = true;
 		this.anchor = { ...position };
 		this.apply();
 	}
@@ -503,6 +507,8 @@ export class CharacterMotor {
 		points: readonly Point[],
 		_initialHeading?: WalkDirection,
 	): Promise<void> {
+		const allowPivotFinish = !this.thresholdStart;
+		this.thresholdStart = false;
 		this.stop(true);
 		this.arrival = undefined;
 		this.lastStrideLength = 0;
@@ -564,6 +570,7 @@ export class CharacterMotor {
 				this.finish();
 			};
 			worker.postMessage({
+				allowPivotFinish,
 				area: this.area,
 				position: { x: this.target.x, y: this.target.y },
 				goal: this.goal,
@@ -581,7 +588,7 @@ export class CharacterMotor {
 			} satisfies MotorPlanRequest);
 			return promise;
 		}
-		this.buildPlan();
+		this.buildPlan({ pivotStops: allowPivotFinish ? undefined : false });
 		const promise = new Promise<void>((resolve) => {
 			this.resolve = resolve;
 		});
@@ -723,7 +730,10 @@ export class CharacterMotor {
 			finish();
 			const mask = this.area.clearanceMask ?? this.area.mask;
 			const corners =
-				first && last && mask.data[cellAt(mask, first)] && mask.data[cellAt(mask, last)]
+				first &&
+				last &&
+				mask.data[cellAt(mask, first)] &&
+				mask.data[cellAt(mask, last)]
 					? routeCorners(
 							clearanceRoute(
 								this.area.clearanceMask ?? this.area.mask,
@@ -749,9 +759,20 @@ export class CharacterMotor {
 			const goal = this.goal ?? trial.anchor;
 			const cell = nearestCell(mask, goal);
 			const standable = cell < 0 ? goal : cellPoint(mask, cell);
-			const distance = trial.arrival ? Math.max(trial.arrival.distance,
-				Math.hypot(trial.arrival.anchor.x - standable.x, trial.arrival.anchor.y - standable.y)) : Infinity;
-			return { clean, distance, arrived: distance <= (trial.arrival?.halfStride ?? -1) };
+			const distance = trial.arrival
+				? Math.max(
+						trial.arrival.distance,
+						Math.hypot(
+							trial.arrival.anchor.x - standable.x,
+							trial.arrival.anchor.y - standable.y,
+						),
+					)
+				: Infinity;
+			return {
+				clean,
+				distance,
+				arrived: distance <= (trial.arrival?.halfStride ?? -1),
+			};
 		};
 		let accepted = quality(best);
 		const totals = { ...best.stats, rejections: { ...best.stats.rejections } };
@@ -762,12 +783,49 @@ export class CharacterMotor {
 			{ searchWeight: 4, entryPhases: "authored" },
 			{ searchWeight: 4, entryPhases: "all" },
 			{ stopWeight: 128, searchWeight: 4, entryPhases: "authored" },
-			{ stopWeight: 128, searchWeight: 4, entryPhases: "all", startPhases: true },
-			{ stopPhases: true, entryPhases: "authored", searchWeight: 4, stopWeight: 128 },
-			{ stopPhases: true, entryPhases: "all", startPhases: true, searchWeight: 4, stopWeight: 128 },
-			{ turnCost: 0.15, nodeBudget: 24000, stopPhases: true, entryPhases: "all", startPhases: true, searchWeight: 4, stopWeight: 128 },
+			{
+				stopWeight: 128,
+				searchWeight: 4,
+				entryPhases: "all",
+				startPhases: true,
+			},
+			{
+				stopPhases: true,
+				entryPhases: "authored",
+				searchWeight: 4,
+				stopWeight: 128,
+			},
+			{
+				stopPhases: true,
+				entryPhases: "all",
+				startPhases: true,
+				searchWeight: 4,
+				stopWeight: 128,
+			},
+			{
+				turnCost: 0.15,
+				nodeBudget: 24000,
+				stopPhases: true,
+				entryPhases: "all",
+				startPhases: true,
+				searchWeight: 4,
+				stopWeight: 128,
+			},
+			{
+				pivotStops: true,
+				turnCost: 0.15,
+				nodeBudget: 24000,
+				stopPhases: true,
+				entryPhases: "all",
+				startPhases: true,
+				searchWeight: 4,
+				stopWeight: 128,
+			},
 		];
 		for (const alternative of alternatives) {
+			// A threshold walk continues through the doorway; do not finish it
+			// by turning away from its inward approach.
+			if (options.pivotStops === false && alternative.pivotStops) continue;
 			if (accepted.clean && accepted.arrived) break;
 			const trial = makeTrial();
 			const candidate = trial.buildRoute({ ...options, ...alternative });
@@ -781,7 +839,9 @@ export class CharacterMotor {
 			const checked = quality(candidate);
 			if (
 				checked.clean &&
-				(!accepted.clean || (checked.arrived && !accepted.arrived) || checked.distance < accepted.distance)
+				(!accepted.clean ||
+					(checked.arrived && !accepted.arrived) ||
+					checked.distance < accepted.distance)
 			) {
 				best = candidate;
 				accepted = checked;
@@ -1139,7 +1199,8 @@ export class CharacterMotor {
 				remaining,
 				support: (s) =>
 					`${s.foot}:${s.pose.cycle.name}:${s.pose.flipX}:${s.pose.frame}`,
-				entries: (s, h, starting, stopping) => entries(s, h, starting, stopping),
+				entries: (s, h, starting, stopping) =>
+					entries(s, h, starting, stopping),
 				entry: (s, h, starting, stopping) =>
 					entries(s, h, starting, stopping)[0],
 				advance: (s, pose) => {
@@ -1161,11 +1222,27 @@ export class CharacterMotor {
 					return candidates;
 				},
 				acceptRest: (s, pose, rest, target, heading) => {
-					const entry = lockedPlacement(s.anchor, pose, s.foot,
-						this.area.perspective, this.area.baseScale, this.area.scaleClamp, s.scale);
-					const half = this.authoredHalfStride(heading, rest, s.foot, entry.scale);
-					return Math.max(Math.hypot(rest.x - target.x, rest.y - target.y),
-						Math.hypot(rest.x - standableGoal.x, rest.y - standableGoal.y)) <= half;
+					const entry = lockedPlacement(
+						s.anchor,
+						pose,
+						s.foot,
+						this.area.perspective,
+						this.area.baseScale,
+						this.area.scaleClamp,
+						s.scale,
+					);
+					const half = this.authoredHalfStride(
+						heading,
+						rest,
+						s.foot,
+						entry.scale,
+					);
+					return (
+						Math.max(
+							Math.hypot(rest.x - target.x, rest.y - target.y),
+							Math.hypot(rest.x - standableGoal.x, rest.y - standableGoal.y),
+						) <= half
+					);
 				},
 				rest: (s, pose, heading) => {
 					this.rejectionReason = "no-exit-frame";
@@ -1217,7 +1294,9 @@ export class CharacterMotor {
 		motor.foot = request.foot;
 		motor.scale = request.scale;
 		motor.heading = request.heading;
-		const result = motor.buildPlan();
+		const result = motor.buildPlan({
+			pivotStops: request.allowPivotFinish === false ? false : undefined,
+		});
 		if (!result) throw new Error("Missing planning state");
 		return { ...result, path: motor.path, goal: motor.goal };
 	}
@@ -1253,7 +1332,10 @@ export class CharacterMotor {
 		if (step.stop) {
 			const exit = this.nextExit(step.pose, undefined, step.heading, true);
 			if (exit && this.goal) {
-				const halfStride = this.authoredHalfStride(step.heading, exit.anchor);
+				const halfStride = this.authoredHalfStride(
+					step.arrivalHeading ?? step.heading,
+					exit.anchor,
+				);
 				this.arrival = {
 					target: { ...this.goal },
 					anchor: { ...exit.anchor },
@@ -1281,7 +1363,12 @@ export class CharacterMotor {
 
 	/** Measure a full authored support interval, even when its landing is blocked.
 	 * An exit fragment and collision feasibility are not stride measurements. */
-	private authoredHalfStride(heading: WalkDirection, anchor: Point, foot = this.foot, scale = this.scale): number {
+	private authoredHalfStride(
+		heading: WalkDirection,
+		anchor: Point,
+		foot = this.foot,
+		scale = this.scale,
+	): number {
 		const selected = this.animation.select(heading);
 		const frame =
 			selected.cycle.switchFrames.find(

@@ -472,13 +472,22 @@ it("goal-biased ordering preserves the cost and route constraints", () => {
 
 it("considers an exit phase even when it cannot advance a complete stride", () => {
 	const advanced: string[] = [];
-	const result = planFootsteps({ x: 1, y: 0 }, { x: 0, y: 0 }, {
-		position: s => s,
-		entry: (_s, h) => h === "right" ? "stride" : undefined,
-		entries: (_s, h, _starting, stopping) => h === "right" ? [stopping ? "exit-only" : "stride"] : [],
-		advance: (s, pose) => { advanced.push(pose); return { x: s.x + 0.6, y: 0 }; },
-		rest: (_s, pose) => pose === "exit-only" ? { x: 1, y: 0 } : undefined,
-	}, { now: () => 0, stopPhases: true });
+	const result = planFootsteps(
+		{ x: 1, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			entry: (_s, h) => (h === "right" ? "stride" : undefined),
+			entries: (_s, h, _starting, stopping) =>
+				h === "right" ? [stopping ? "exit-only" : "stride"] : [],
+			advance: (s, pose) => {
+				advanced.push(pose);
+				return { x: s.x + 0.6, y: 0 };
+			},
+			rest: (_s, pose) => (pose === "exit-only" ? { x: 1, y: 0 } : undefined),
+		},
+		{ now: () => 0, stopPhases: true },
+	);
 	expect(result.complete).toBe(true);
 	expect(result.distance).toBe(0);
 	expect(result.steps[result.steps.length - 1]?.pose).toBe("exit-only");
@@ -486,13 +495,53 @@ it("considers an exit phase even when it cannot advance a complete stride", () =
 });
 
 it("uses the authored arrival test when a full next stride is blocked", () => {
-	const result = planFootsteps({ x: 1, y: 0 }, { x: 0.85, y: 0 }, {
-		position: s => s,
-		entry: (_s, h) => h === "right" ? h : undefined,
-		advance: () => undefined,
-		rest: s => s,
-		acceptRest: (_s, _pose, rest, target) => Math.hypot(rest.x - target.x, rest.y - target.y) <= 0.2,
-	}, { now: () => 0 });
+	const result = planFootsteps(
+		{ x: 1, y: 0 },
+		{ x: 0.85, y: 0 },
+		{
+			position: (s) => s,
+			entry: (_s, h) => (h === "right" ? h : undefined),
+			advance: () => undefined,
+			rest: (s) => s,
+			acceptRest: (_s, _pose, rest, target) =>
+				Math.hypot(rest.x - target.x, rest.y - target.y) <= 0.2,
+		},
+		{ now: () => 0 },
+	);
 	expect(result.complete).toBe(true);
 	expect(result.distance).toBeCloseTo(0.15);
+});
+
+it.each([
+	"away",
+	"left",
+] as const)("finishes with a planted %s pivot without another walking turn or changing the stride heading", (finishHeading) => {
+	const finish = (travel: number) =>
+		planFootsteps(
+			{ x: 3, y: 0 },
+			{ x: 0, y: 0 },
+			{
+				position: (s) => s,
+				entry: (_s, h) => (h === "right" ? h : undefined),
+				entries: (_s, h, _starting, stopping) =>
+					h === "right" || (stopping && h === finishHeading) ? [h] : [],
+				advance: (s, h) => (h === "right" ? { x: s.x + 1, y: 0 } : undefined),
+				rest: (s, h) =>
+					h === finishHeading && s.x === 3 ? { ...s, travel } : undefined,
+				acceptRest: (_s, _pose, rest, target, heading) =>
+					heading === "right" && rest.x === target.x,
+			},
+			{ now: () => 0, maxHeadingChanges: 0, pivotStops: true },
+		);
+	const result = finish(0);
+	expect(result.complete).toBe(true);
+	expect(
+		result.steps.filter((s) => !s.stop).every((s) => s.heading === "right"),
+	).toBe(true);
+	expect(result.steps[result.steps.length - 1]).toMatchObject({
+		stop: true,
+		heading: finishHeading,
+		arrivalHeading: "right",
+	});
+	expect(finish(0.1).complete).toBe(false);
 });

@@ -3,6 +3,8 @@ import { GROUND_SECTORS, type WalkDirection } from "./walkHeading";
 
 export interface PlannedStep<State, Pose> {
 	heading: WalkDirection;
+	/** An idle final pivot retains the last walking stride for arrival tolerance. */
+	arrivalHeading?: WalkDirection;
 	pose: Pose;
 	state: State;
 	stop: boolean;
@@ -40,7 +42,13 @@ export interface StepSimulation<State, Pose> {
 	/** All possible exit support positions, before collision/settle validation. */
 	restCandidates?(state: State, pose: Pose): readonly Point[];
 	/** Character-specific authored arrival radius; independent of a partial entry. */
-	acceptRest?(state: State, pose: Pose, rest: Point, target: Point, heading: WalkDirection): boolean;
+	acceptRest?(
+		state: State,
+		pose: Pose,
+		rest: Point,
+		target: Point,
+		heading: WalkDirection,
+	): boolean;
 }
 export interface RouteState {
 	heading?: WalkDirection;
@@ -54,6 +62,7 @@ export interface SearchOptions {
 	searchWeight?: number;
 	startPhases?: boolean;
 	stopPhases?: boolean;
+	pivotStops?: boolean;
 	/** Preserve the complete click's route rules across a grounded restart. */
 	initialRoute?: RouteState;
 	nodeBudget?: number;
@@ -270,6 +279,54 @@ export function planFootsteps<State, Pose>(
 			break;
 		}
 		expanded++;
+		// A final in-place turn is not another walking run. It must preserve the
+		// support exactly, and cannot borrow a larger stride from the idle facing.
+		if (options.pivotStops && node.heading && node.step) {
+			const p = ground(sim.position(node.state));
+			for (const heading of GROUND_SECTORS) {
+				const d = Math.abs(
+					GROUND_SECTORS.indexOf(heading) -
+						GROUND_SECTORS.indexOf(node.heading),
+				);
+				if (!d) continue;
+				for (const pose of sim.entries?.(node.state, heading, false, true) ??
+					[]) {
+					const rest = sim.rest(node.state, pose, heading);
+					if (
+						!rest ||
+						distance(p, ground(rest)) > 1e-8 ||
+						(rest.travel ?? 0) > 1e-8
+					)
+						continue;
+					const residual = distance(ground(rest), goal);
+					const complete =
+						sim.acceptRest?.(node.state, pose, rest, target, node.heading) ??
+						residual <= Math.min(node.stride, maxStride) / 2;
+					if (!complete) continue;
+					const cost = node.g + stepCost;
+					const score = cost + weight * remaining(rest);
+					if (cost > costBound || score >= bestScore) continue;
+					bestScore = score;
+					best = {
+						node,
+						step: {
+							...stepFor(node, heading, pose, true),
+							arrivalHeading: node.heading,
+						},
+						distance: residual,
+						cost,
+						complete,
+						routeState: {
+							heading: node.heading,
+							changes: node.changes,
+							run: node.run,
+							history: node.history,
+							corner: node.corner,
+						},
+					};
+				}
+			}
+		}
 		for (const heading of GROUND_SECTORS) {
 			const delta =
 				node.heading === undefined
@@ -328,12 +385,18 @@ export function planFootsteps<State, Pose>(
 				heading,
 				node.step === undefined,
 			) ?? [sim.entry(node.state, heading, node.step === undefined)];
-			const actions = (poses.length ? poses : [undefined]).map(pose => ({
+			const actions = (poses.length ? poses : [undefined]).map((pose) => ({
 				pose,
-				stopPose: pose ?? sim.entry(node.state, heading, node.step === undefined, true),
+				stopPose:
+					pose ?? sim.entry(node.state, heading, node.step === undefined, true),
 			}));
 			if (options.stopPhases)
-				for (const stopPose of sim.entries?.(node.state, heading, node.step === undefined, true) ?? [])
+				for (const stopPose of sim.entries?.(
+					node.state,
+					heading,
+					node.step === undefined,
+					true,
+				) ?? [])
 					actions.push({ pose: undefined, stopPose });
 			for (const { pose, stopPose } of actions) {
 				if (pose === undefined && stopPose === undefined) continue;
@@ -368,7 +431,7 @@ export function planFootsteps<State, Pose>(
 					const remaining = distance(ground(rest), goal);
 					const complete =
 						sim.acceptRest?.(node.state, stopPose, rest, target, heading) ??
-						(remaining <= Math.min(stride, maxStride) / 2 + 1e-8);
+						remaining <= Math.min(stride, maxStride) / 2 + 1e-8;
 					const cost =
 						node.g +
 						(rest.travel ?? distance(p, ground(rest))) +
