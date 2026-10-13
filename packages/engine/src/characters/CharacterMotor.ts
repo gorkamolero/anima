@@ -194,6 +194,37 @@ export class CharacterMotor {
 		this.elapsed = 0;
 		this.finish();
 	}
+	/** Exact candidate exit anchors without collision work. Between support
+	 * transfers the anchor cannot move; only transfer frames need placement. */
+	private exitAnchors(source: FootPose, state: PredictedStance): Point[] {
+		const candidates: Point[] = [];
+		let pose = source,
+			anchor = state.anchor,
+			foot = state.foot,
+			scale = state.scale;
+		for (let n = 0; n < source.cycle.contacts.length; n++) {
+			if (source.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true)
+				candidates.push(anchor);
+			const frame = (pose.frame + 1) % source.cycle.contacts.length;
+			const incoming = source.cycle.contacts[frame].planted;
+			if (incoming !== foot) {
+				const placed = lockedPlacement(
+					anchor,
+					pose,
+					foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					scale,
+				);
+				anchor = contactOnScreen(pose, incoming, placed, placed.scale);
+				foot = incoming;
+				scale = placed.scale;
+			}
+			pose = { ...source, frame };
+		}
+		return candidates;
+	}
 	/** Simulate safe supports to the next generated exit, without changing the motor. */
 	private nextExit(
 		source: FootPose,
@@ -424,6 +455,7 @@ export class CharacterMotor {
 					);
 			},
 			advance: (s, pose) => this.predictStance(pose, s),
+			restCandidates: (s, pose) => this.exitAnchors(pose, s),
 			acceptRest: (s, pose, rest, target) => {
 				const stride = this.predictStance(pose, s);
 				return (

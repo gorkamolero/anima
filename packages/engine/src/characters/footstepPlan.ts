@@ -25,6 +25,8 @@ export interface StepSimulation<State, Pose> {
 		pose: Pose,
 		heading: WalkDirection,
 	): (Point & { travel?: number }) | undefined;
+	/** All possible exit support positions, before collision/settle validation. */
+	restCandidates?(state: State, pose: Pose): readonly Point[];
 	acceptRest?(state: State, pose: Pose, rest: Point, target: Point): boolean;
 }
 export interface SearchOptions {
@@ -185,7 +187,17 @@ export function planFootsteps<State, Pose>(
 			const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
 			// Stopping is an edge, including all exit-frame motion. It cannot evade
 			// the turn cost or introduce a heading reversal at the final drawing.
-			const rest = sim.rest(node.state, pose, heading);
+			const candidates = best
+				? sim.restCandidates?.(node.state, pose)
+				: undefined;
+			const canImprove =
+				!candidates ||
+				candidates.some(
+					(q) =>
+						distance(ground(q), goal) <=
+						Math.max(best?.distance ?? Infinity, maxStride / 2) + 1e-6,
+				);
+			const rest = canImprove ? sim.rest(node.state, pose, heading) : undefined;
 			if (rest && (node.parent || next)) {
 				const remaining = distance(ground(rest), goal);
 				const complete =
