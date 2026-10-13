@@ -765,6 +765,7 @@ export class CharacterMotor {
 			{ stopWeight: 128, searchWeight: 4, entryPhases: "all", startPhases: true },
 			{ stopPhases: true, entryPhases: "authored", searchWeight: 4, stopWeight: 128 },
 			{ stopPhases: true, entryPhases: "all", startPhases: true, searchWeight: 4, stopWeight: 128 },
+			{ turnCost: 0.15, nodeBudget: 24000, stopPhases: true, entryPhases: "all", startPhases: true, searchWeight: 4, stopWeight: 128 },
 		];
 		for (const alternative of alternatives) {
 			if (accepted.clean && accepted.arrived) break;
