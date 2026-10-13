@@ -227,6 +227,26 @@ export class CharacterMotor {
 		};
 		const mask = this.area.clearanceMask ?? this.area.mask;
 		const raw = this.area.rawMask ?? this.area.mask;
+		const entry = lockedPlacement(
+			anchor,
+			source,
+			foot,
+			this.area.perspective,
+			this.area.baseScale,
+			this.area.scaleClamp,
+			position.scale,
+		);
+		if (
+			!raw.data[cellAt(raw, anchor)] ||
+			!mask.data[cellAt(mask, { x: entry.x, y: anchor.y })] ||
+			!lineOfSight(
+				mask,
+				{ x: position.x, y: anchor.y },
+				{ x: entry.x, y: anchor.y },
+			)
+		)
+			return;
+		position = entry;
 
 		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (

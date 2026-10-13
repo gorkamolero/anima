@@ -1,6 +1,7 @@
 import {mkdirSync,readFileSync,writeFileSync,existsSync,rmSync,readdirSync} from 'node:fs';
 import {spawn,spawnSync} from 'node:child_process';
 import {once} from 'node:events';
+import {createHash} from 'node:crypto';
 import {homedir} from 'node:os';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -68,7 +69,7 @@ if(i%120===0)writeFileSync(out+'/'+beat.name+'.partial.json',JSON.stringify(fram
 }
 encoder.stdin.end();const [code]=await once(encoder,'close');if(code)throw Error(encerr);
 writeFileSync(out+'/'+beat.name+'.json',JSON.stringify(frames));
-writeFileSync(out+'/'+beat.name+'-events.json',JSON.stringify({beat,setup,events:await page.evaluate(()=>window.qaEvents),completed:idle>=12&&!timedOut,timedOut},null,2));
+writeFileSync(out+'/'+beat.name+'-events.json',JSON.stringify({captureSource:Object.fromEntries(['packages/engine/src/characters/CharacterMotor.ts','packages/engine/src/characters/footstepPlan.ts','api/src/services/occluders.ts','adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts'].map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')])),beat,setup,events:await page.evaluate(()=>window.qaEvents),completed:idle>=12&&!timedOut,timedOut},null,2));
 writeFileSync(out+'/area.json',JSON.stringify({...geo,area:areas[place],areas}));
 spawnSync('ffmpeg',['-y','-v','error','-i',out+'/'+beat.name+'.mp4','-vf',`fps=6,scale=320:-1,tile=6x${Math.ceil(frames.length/24)}`,'-frames:v','1',out+'/'+beat.name+'-sheet.png']);
 rmSync(out+'/'+beat.name+'.partial.json',{force:true});console.log(name,beat.name,frames.length,timedOut?'TIMEOUT':idle>=12?'stopped':'INCOMPLETE');
