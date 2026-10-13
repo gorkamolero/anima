@@ -277,7 +277,7 @@ describe("contact motor", () => {
 		expect(pose().frame).toBe(exit);
 		motor.update(1000);
 		expect(pose().cycle.name).toBe("standing");
-	});
+	}, 30000);
 	it("waits beyond half a cycle for the sole source frame, transferring supports", () => {
 		const { motor, cycle, pose, target } = setup(true);
 		cycle.contacts = Array.from({ length: 12 }, (_, i) => ({

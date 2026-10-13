@@ -184,7 +184,7 @@ export class CharacterMotor {
 			),
 		);
 	}
-	stop(immediate = false, absorb = false): void {
+	stop(immediate = false, absorb = false, heading?: WalkDirection): void {
 		this.absorption = undefined;
 		if (this.pendingPlan) {
 			this.finish();
@@ -227,7 +227,7 @@ export class CharacterMotor {
 			(this.pose.cycle.name !== standing.cycle.name ||
 				this.pose.flipX !== standing.flipX)
 		) {
-			const matched = this.nextExit(this.pose, undefined, undefined, absorb);
+			const matched = this.nextExit(this.pose, undefined, heading, absorb);
 			if (matched?.absorption)
 				this.absorption = { ...matched.absorption, applied: 0 };
 			if (!matched && this.pose.cycle.matchedCut) {
@@ -633,6 +633,7 @@ export class CharacterMotor {
 	}
 	/** Compare complete, physically simulated routes before admitting shorter phases. */
 	private buildPlan(options: SearchOptions = {}) {
+		this.stanceCache.clear();
 		const initial = {
 			pose: this.pose,
 			foot: this.foot,
@@ -655,6 +656,7 @@ export class CharacterMotor {
 				...this.animation,
 				show() {},
 			});
+			trial.stanceCache = this.stanceCache;
 			trial.pose = initial.pose;
 			trial.foot = initial.foot;
 			trial.anchor = { ...initial.anchor };
@@ -856,6 +858,7 @@ export class CharacterMotor {
 				setDepth() {},
 			};
 			planner = new CharacterMotor(target, this.area, () => {}, this.animation);
+			planner.stanceCache = this.stanceCache;
 			planner.pose = idle;
 			planner.anchor = { ...exit.anchor };
 			planner.foot = exit.foot;
@@ -902,7 +905,6 @@ export class CharacterMotor {
 			turnCost: 1.2,
 			...options,
 		};
-		this.stanceCache.clear();
 		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
 		const mask = this.area.clearanceMask ?? this.area.mask;
@@ -1253,7 +1255,7 @@ export class CharacterMotor {
 				nextStep.state.anchor.y - step.state.anchor.y,
 			);
 		if (step.stop) {
-			const exit = this.nextExit(step.pose, undefined, undefined, true);
+			const exit = this.nextExit(step.pose, undefined, step.heading, true);
 			if (exit && this.goal) {
 				const halfStride = this.authoredHalfStride(step.heading, exit.anchor);
 				this.arrival = {
@@ -1275,7 +1277,7 @@ export class CharacterMotor {
 				};
 			}
 			const remaining = this.planned;
-			this.stop(false, true);
+			this.stop(false, true, step.heading);
 			this.planned = remaining;
 		}
 		return true;
