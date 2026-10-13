@@ -763,6 +763,8 @@ export class CharacterMotor {
 			{ searchWeight: 4, entryPhases: "all" },
 			{ stopWeight: 128, searchWeight: 4, entryPhases: "authored" },
 			{ stopWeight: 128, searchWeight: 4, entryPhases: "all", startPhases: true },
+			{ stopPhases: true, entryPhases: "authored", searchWeight: 4, stopWeight: 128 },
+			{ stopPhases: true, entryPhases: "all", startPhases: true, searchWeight: 4, stopWeight: 128 },
 		];
 		for (const alternative of alternatives) {
 			if (accepted.clean && accepted.arrived) break;
@@ -1134,7 +1136,7 @@ export class CharacterMotor {
 				remaining,
 				support: (s) =>
 					`${s.foot}:${s.pose.cycle.name}:${s.pose.flipX}:${s.pose.frame}`,
-				entries: (s, h, starting) => entries(s, h, starting),
+				entries: (s, h, starting, stopping) => entries(s, h, starting, stopping),
 				entry: (s, h, starting, stopping) =>
 					entries(s, h, starting, stopping)[0],
 				advance: (s, pose) => {

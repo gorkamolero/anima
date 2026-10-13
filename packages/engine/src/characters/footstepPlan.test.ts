@@ -469,3 +469,18 @@ it("goal-biased ordering preserves the cost and route constraints", () => {
 	expect(result.stats.optimal).toBe(false);
 	expect(result.stats.expanded).toBeLessThanOrEqual(1000);
 });
+
+it("considers an exit phase even when it cannot advance a complete stride", () => {
+	const advanced: string[] = [];
+	const result = planFootsteps({ x: 1, y: 0 }, { x: 0, y: 0 }, {
+		position: s => s,
+		entry: (_s, h) => h === "right" ? "stride" : undefined,
+		entries: (_s, h, _starting, stopping) => h === "right" ? [stopping ? "exit-only" : "stride"] : [],
+		advance: (s, pose) => { advanced.push(pose); return { x: s.x + 0.6, y: 0 }; },
+		rest: (_s, pose) => pose === "exit-only" ? { x: 1, y: 0 } : undefined,
+	}, { now: () => 0, stopPhases: true });
+	expect(result.complete).toBe(true);
+	expect(result.distance).toBe(0);
+	expect(result.steps.at(-1)?.pose).toBe("exit-only");
+	expect(advanced).not.toContain("exit-only");
+});

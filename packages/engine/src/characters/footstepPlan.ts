@@ -28,6 +28,7 @@ export interface StepSimulation<State, Pose> {
 		state: State,
 		heading: WalkDirection,
 		starting: boolean,
+		stopping?: boolean,
 	): readonly Pose[];
 	advance(state: State, pose: Pose): State | undefined;
 	/** Validate the complete exit and settle; return the final planted sole. */
@@ -51,6 +52,7 @@ export interface SearchOptions {
 	entryPhases?: "authored" | "all";
 	searchWeight?: number;
 	startPhases?: boolean;
+	stopPhases?: boolean;
 	/** Preserve the complete click's route rules across a grounded restart. */
 	initialRoute?: RouteState;
 	nodeBudget?: number;
@@ -325,9 +327,14 @@ export function planFootsteps<State, Pose>(
 				heading,
 				node.step === undefined,
 			) ?? [sim.entry(node.state, heading, node.step === undefined)];
-			for (const pose of poses.length ? poses : [undefined]) {
-				const stopPose =
-					pose ?? sim.entry(node.state, heading, node.step === undefined, true);
+			const actions = (poses.length ? poses : [undefined]).map(pose => ({
+				pose,
+				stopPose: pose ?? sim.entry(node.state, heading, node.step === undefined, true),
+			}));
+			if (options.stopPhases)
+				for (const stopPose of sim.entries?.(node.state, heading, node.step === undefined, true) ?? [])
+					actions.push({ pose: undefined, stopPose });
+			for (const { pose, stopPose } of actions) {
 				if (pose === undefined && stopPose === undefined) continue;
 				const p = ground(sim.position(node.state));
 				const next =
