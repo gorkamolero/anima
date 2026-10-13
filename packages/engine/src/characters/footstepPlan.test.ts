@@ -481,6 +481,18 @@ it("considers an exit phase even when it cannot advance a complete stride", () =
 	}, { now: () => 0, stopPhases: true });
 	expect(result.complete).toBe(true);
 	expect(result.distance).toBe(0);
-	expect(result.steps.at(-1)?.pose).toBe("exit-only");
+	expect(result.steps[result.steps.length - 1]?.pose).toBe("exit-only");
 	expect(advanced).not.toContain("exit-only");
+});
+
+it("uses the authored arrival test when a full next stride is blocked", () => {
+	const result = planFootsteps({ x: 1, y: 0 }, { x: 0.85, y: 0 }, {
+		position: s => s,
+		entry: (_s, h) => h === "right" ? h : undefined,
+		advance: () => undefined,
+		rest: s => s,
+		acceptRest: (_s, _pose, rest, target) => Math.hypot(rest.x - target.x, rest.y - target.y) <= 0.2,
+	}, { now: () => 0 });
+	expect(result.complete).toBe(true);
+	expect(result.distance).toBeCloseTo(0.15);
 });

@@ -906,6 +906,8 @@ export class CharacterMotor {
 		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
 		const mask = this.area.clearanceMask ?? this.area.mask;
+		const goalCell = nearestCell(mask, this.goal);
+		const standableGoal = goalCell < 0 ? this.goal : cellPoint(mask, goalCell);
 		this.path = clearanceRoute(mask, this.target, this.goal);
 		const points = this.path.map((p) => this.groundPoint(p));
 		const screenCorners = routeCorners(this.path);
@@ -1157,17 +1159,12 @@ export class CharacterMotor {
 						candidates.push(goal);
 					return candidates;
 				},
-				acceptRest: (s, pose, rest, target) => {
-					const stride = this.predictStance(pose, s);
-					return (
-						!!stride &&
-						Math.hypot(rest.x - target.x, rest.y - target.y) <=
-							Math.hypot(
-								stride.anchor.x - s.anchor.x,
-								stride.anchor.y - s.anchor.y,
-							) /
-								2
-					);
+				acceptRest: (s, pose, rest, target, heading) => {
+					const entry = lockedPlacement(s.anchor, pose, s.foot,
+						this.area.perspective, this.area.baseScale, this.area.scaleClamp, s.scale);
+					const half = this.authoredHalfStride(heading, rest, s.foot, entry.scale);
+					return Math.max(Math.hypot(rest.x - target.x, rest.y - target.y),
+						Math.hypot(rest.x - standableGoal.x, rest.y - standableGoal.y)) <= half;
 				},
 				rest: (s, pose, heading) => {
 					this.rejectionReason = "no-exit-frame";
@@ -1283,17 +1280,17 @@ export class CharacterMotor {
 
 	/** Measure a full authored support interval, even when its landing is blocked.
 	 * An exit fragment and collision feasibility are not stride measurements. */
-	private authoredHalfStride(heading: WalkDirection, anchor: Point): number {
+	private authoredHalfStride(heading: WalkDirection, anchor: Point, foot = this.foot, scale = this.scale): number {
 		const selected = this.animation.select(heading);
 		const frame =
 			selected.cycle.switchFrames.find(
-				(f) => selected.cycle.contacts[f].planted === this.foot,
+				(f) => selected.cycle.contacts[f].planted === foot,
 			) ?? 0;
 		const sampled = this.stanceSamples(
 			{ ...selected, frame },
 			anchor,
-			this.foot,
-			this.scale,
+			foot,
+			scale,
 		);
 		if (!sampled) return this.lastStrideLength / 2;
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;

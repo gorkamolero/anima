@@ -39,7 +39,8 @@ export interface StepSimulation<State, Pose> {
 	): (Point & { travel?: number }) | undefined;
 	/** All possible exit support positions, before collision/settle validation. */
 	restCandidates?(state: State, pose: Pose): readonly Point[];
-	acceptRest?(state: State, pose: Pose, rest: Point, target: Point): boolean;
+	/** Character-specific authored arrival radius; independent of a partial entry. */
+	acceptRest?(state: State, pose: Pose, rest: Point, target: Point, heading: WalkDirection): boolean;
 }
 export interface RouteState {
 	heading?: WalkDirection;
@@ -366,8 +367,8 @@ export function planFootsteps<State, Pose>(
 				if (rest && stopPose !== undefined) {
 					const remaining = distance(ground(rest), goal);
 					const complete =
-						remaining <= Math.min(stride, maxStride) / 2 + 1e-8 &&
-						(sim.acceptRest?.(node.state, stopPose, rest, target) ?? true);
+						sim.acceptRest?.(node.state, stopPose, rest, target, heading) ??
+						(remaining <= Math.min(stride, maxStride) / 2 + 1e-8);
 					const cost =
 						node.g +
 						(rest.travel ?? distance(p, ground(rest))) +
