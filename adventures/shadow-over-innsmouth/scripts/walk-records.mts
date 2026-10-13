@@ -158,6 +158,8 @@ print(json.dumps(out))`,
 		1064,
 	);
 	const result = {
+		layers,
+		visible: area.rawMask,
 		connections: stored.connections.filter((c) => c.scene === location),
 		description: place?.description ?? authored.description,
 		location,

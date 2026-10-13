@@ -26,11 +26,17 @@ import {
 	objectApproach,
 	objectFacingPoint,
 } from "../../../packages/engine/src/walkarea/objectApproach.ts";
+import { objectAtPoint } from "../../../packages/engine/src/walkarea/objectHit.ts";
 import { loadWalkRecords, storedOptions } from "./walk-records.mts";
 
 const { hermesFootAnimation } = createRequire(import.meta.url)(
 	"../src/game/scenes/hermesFootAnimation.ts",
 ) as typeof import("../src/game/scenes/hermesFootAnimation.ts");
+// Phaser's actual camera clock has no DOM dependency. Keep its completion and
+// floating-point timing identical while supplying only its event interface.
+const Fade = createRequire(import.meta.url)(
+	"phaser/src/cameras/2d/effects/Fade.js",
+);
 const arg = (name: string, fallback: string) =>
 	process.argv
 		.find((a) => a.startsWith(`--${name}=`))
@@ -135,6 +141,8 @@ for (const scene of scenes) {
 		let frame = -1,
 			idle = 0,
 			planningMs = 0;
+		const fade = new Fade({ emit() {}, scene: {} });
+		let fadeStarted = false;
 		const emit = (data) =>
 			events.push({
 				frame,
@@ -147,10 +155,18 @@ for (const scene of scenes) {
 			x: Math.floor(beat.click[0]),
 			y: Math.floor(beat.click[1]),
 		};
-		const interactable = beat.object
-			? geometry.interactables.find((o) => o.name === beat.object)
-			: undefined;
 		const exit = exitAt(clicked, geometry.exits);
+		const interactable = exit
+			? undefined
+			: objectAtPoint(
+					geometry.interactables,
+					geometry.layers,
+					geometry.visible,
+					clicked.x,
+					clicked.y,
+					1920,
+					1080,
+				);
 		requested = exit?.id;
 		const route = interactable
 			? objectApproach(
@@ -203,6 +219,7 @@ for (const scene of scenes) {
 		await Promise.resolve();
 		for (frame = 0; frame < 2400; frame++) {
 			for (const delta of captureSteps(1000 / 24)) {
+				fade.update(0, delta);
 				const wasWalking = motor.walking;
 				motor.update(delta);
 				const state = exitForFrame({
@@ -318,6 +335,15 @@ for (const scene of scenes) {
 			for (let n = 0; n < 5; n++) await Promise.resolve();
 			if (transfer) {
 				const travel = transfer;
+				if (travel.exit.to !== "outside" && travel.exit.to !== "inside") {
+					if (!fadeStarted) {
+						location = travel.exit.to;
+						fade.start(true, 250, 0, 0, 0, true);
+						fadeStarted = true;
+						continue;
+					}
+					if (fade.isRunning) continue;
+				}
 				try {
 					motor.detach();
 					await Promise.resolve();

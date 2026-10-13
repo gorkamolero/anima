@@ -3,8 +3,10 @@ import json,pathlib,sys,subprocess,collections,math
 sys.path.insert(0,'tmp/walkqa/tools')
 import floorcheck20,scalecheck,facing_stance,pathopt,behavior22,draworder
 import slide26
-root=pathlib.Path(sys.argv[1]);results=[]
+root=pathlib.Path(sys.argv[1]);selected=set(sys.argv[2:]);results=[]
+if selected and (root/'checks.json').exists():results=[r for r in json.loads((root/'checks.json').read_text())['walks'] if r['scene']+'/'+r['walk'] not in selected]
 for event in sorted(root.glob('*/*-events.json')):
+ if selected and event.parent.name+'/'+event.name.removesuffix('-events.json') not in selected:continue
  p=event.with_name(event.name.replace('-events',''));rows=json.loads(p.read_text());e=json.loads(event.read_text());geometry=json.loads((p.parent/'navigation.json').read_text());area=json.loads((p.parent/'area.json').read_text())
  result={'scene':p.parent.name,'walk':p.stem,'checks':{}}
  for name,fn in [('slideRatio',lambda:slide26.check(rows)),('floor',lambda:floorcheck20.check(rows,area)),('scale',lambda:scalecheck.check(rows,area)),('facing',lambda:facing_stance.check(rows)),('path',lambda:pathopt.check(rows,e,geometry)),('behavior',lambda:behavior22.check(rows,e)),('draworder',lambda:draworder.check(rows))]:
