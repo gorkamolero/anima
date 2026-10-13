@@ -154,6 +154,7 @@ export {
 	refineMask,
 } from "./walkarea/navigation";
 export { objectApproach, objectFacingPoint } from "./walkarea/objectApproach";
+export { objectAtPoint } from "./walkarea/objectHit";
 export type { Perspective } from "./walkarea/perspective";
 export {
 	fitFromLine,

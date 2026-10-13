@@ -20,6 +20,7 @@ import {
 	nearestCell,
 	type Occluder,
 	objectApproach,
+	objectAtPoint,
 	objectFacingPoint,
 	refineMask,
 	resolveReturnExit,
@@ -1106,23 +1107,15 @@ export class StoryGameScene extends BaseScene {
 		x: number,
 		y: number,
 	): SceneInteractable | undefined {
-		if (this.visibleFloor && floorPixel(this.visibleFloor, x, y))
-			return undefined;
-		const normalizedX = x / this.scale.width;
-		const normalizedY = y / this.scale.height;
-		return this.interactables.find(({ name, bounds }) => {
-			const layer = this.objectLayers.find(
-				(l) => l.data.label.toLowerCase() === name.toLowerCase(),
-			);
-			if (layer) return layer.alpha(x, y);
-			const [x0, y0, x1, y1] = bounds;
-			return (
-				normalizedX >= x0 &&
-				normalizedX <= x1 &&
-				normalizedY >= y0 &&
-				normalizedY <= y1
-			);
-		});
+		return objectAtPoint(
+			this.interactables,
+			this.objectLayers,
+			this.visibleFloor,
+			x,
+			y,
+			this.scale.width,
+			this.scale.height,
+		);
 	}
 
 	private async restoreWorld(): Promise<void> {
