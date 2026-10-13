@@ -393,3 +393,27 @@ it("offers standing pivots only before the first stance", () => {
 	expect(starts).toBe(1);
 	expect(startingFlags).toContain(false);
 });
+
+it("searches alternative entry phases when the first valid phase leads to a dead end", () => {
+	const result = planFootsteps(
+		{ x: 2, y: 0 },
+		{ x: 0, y: 0, phase: "full" },
+		{
+			position: (s) => s,
+			support: (s) => s.phase,
+			entry: (_s, h) => (h === "right" ? "short" : undefined),
+			entries: (s, h, starting) =>
+				h === "right" ? (starting ? ["short", "full"] : [s.phase]) : [],
+			advance: (s, p) =>
+				p === "short"
+					? s.x === 0
+						? { ...s, x: 0.1, phase: p }
+						: undefined
+					: { ...s, x: s.x + 0.25, phase: p },
+			rest: (s) => s,
+		},
+		{ now: () => 0, maxStride: 0.25 },
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps[0].pose).toBe("full");
+});

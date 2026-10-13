@@ -162,7 +162,7 @@ export function planFootsteps<State, Pose>(
 		corner = 0,
 	) => {
 		const p = ground(sim.position(state));
-		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? 0 : changes}:${Math.min(run, options.minHeadingRun ?? 0)}:${history}:${corner}`;
+		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? Math.min(changes, 1) : changes}:${Math.min(run, options.minHeadingRun ?? 0)}:${history}:${corner}`;
 	};
 	const open = new Heap<Node>();
 	const start: Node = {
