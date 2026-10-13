@@ -275,3 +275,121 @@ it("scores a partial rest by the route around an obstacle, while arrival stays g
 	expect(result.distance).toBeCloseTo(Math.SQRT2);
 	expect(result.stats.optimal).toBe(false);
 });
+
+/** A single available route exposes rule violations without cost preferences hiding them. */
+function forcedRoute(
+	headings: (typeof GROUND_SECTORS)[number][],
+	options: SearchOptions = {},
+) {
+	return planFootsteps(
+		{ x: headings.length, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			entry: (s, h) => (h === headings[s.x] ? h : undefined),
+			advance: (s) => ({ x: s.x + 1, y: 0 }),
+			rest: (s) =>
+				s.x === headings.length - 1 ? { x: headings.length, y: 0 } : undefined,
+		},
+		{
+			now: () => 0,
+			costBound: 100,
+			maxStride: 1,
+			turnCost: 0,
+			minHeadingRun: 2,
+			routeCorners: [],
+			...options,
+		},
+	);
+}
+it("rejects a one-stance middle run in search, including before the stop edge", () => {
+	const result = forcedRoute(["right", "away-right", "away"]);
+	expect(result.steps).toEqual([]);
+	expect(result.stats.rejections?.["search:min-heading-run"]).toBeGreaterThan(
+		0,
+	);
+	expect(
+		forcedRoute(["right", "away-right", "away-right", "away"]).complete,
+	).toBe(true);
+});
+it("rejects cumulative reversals made from individually legal turns", () => {
+	const result = forcedRoute([
+		"right",
+		"away-right",
+		"away-right",
+		"away",
+		"away",
+		"away-left",
+	]);
+	expect(result.steps).toEqual([]);
+	expect(
+		result.stats.rejections?.["search:cumulative-reversal"],
+	).toBeGreaterThan(0);
+});
+it("permits a fresh direction envelope only near a route corner, once", () => {
+	const route: (typeof GROUND_SECTORS)[number][] = [
+		"right",
+		"away",
+		"away",
+		"left",
+		"left",
+		"toward",
+	];
+	expect(
+		forcedRoute(route, { routeCorners: [{ x: 3, y: 0 }], cornerRadius: 0.1 })
+			.complete,
+	).toBe(true);
+	expect(
+		forcedRoute(route, { routeCorners: [{ x: 30, y: 0 }], cornerRadius: 0.1 })
+			.complete,
+	).toBe(false);
+	expect(
+		forcedRoute([...route, "toward", "right"], {
+			routeCorners: [{ x: 3, y: 0 }],
+			cornerRadius: 10,
+		}).complete,
+	).toBe(false);
+});
+it("applies the heading-change budget to the complete plan including the stop edge", () => {
+	const route: (typeof GROUND_SECTORS)[number][] = [
+		"right",
+		"away-right",
+		"away-right",
+		"away",
+		"away",
+		"away-right",
+	];
+	expect(forcedRoute(route, { maxHeadingChanges: 2 }).complete).toBe(false);
+	expect(
+		forcedRoute(route, {
+			maxHeadingChanges: 4,
+			routeCorners: [{ x: 5, y: 0 }],
+			cornerRadius: 0.1,
+		}).complete,
+	).toBe(true);
+});
+it("offers standing pivots only before the first stance", () => {
+	const startingFlags: boolean[] = [];
+	let starts = 0;
+	const result = planFootsteps(
+		{ x: 3, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			starts: (s) => {
+				starts++;
+				return [{ ...s, y: 0.01 }];
+			},
+			entry: (_s, h, starting) => {
+				startingFlags.push(starting);
+				return h === "right" ? h : undefined;
+			},
+			advance: (s) => ({ ...s, x: s.x + 0.3 }),
+			rest: (s) => s,
+		},
+		{ now: () => 0 },
+	);
+	expect(result.complete).toBe(true);
+	expect(starts).toBe(1);
+	expect(startingFlags).toContain(false);
+});

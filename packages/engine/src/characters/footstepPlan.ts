@@ -24,6 +24,11 @@ export interface StepSimulation<State, Pose> {
 		starting: boolean,
 		stopping?: boolean,
 	): Pose | undefined;
+	entries?(
+		state: State,
+		heading: WalkDirection,
+		starting: boolean,
+	): readonly Pose[];
 	advance(state: State, pose: Pose): State | undefined;
 	/** Validate the complete exit and settle; return the final planted sole. */
 	rest(
@@ -46,6 +51,10 @@ export interface SearchOptions {
 	stepCost?: number;
 	maxHeadingChanges?: number;
 	minHeadingRun?: number;
+	/** Ordered shortest-route corners in ground coordinates. Each is usable once. */
+	routeCorners?: readonly Point[];
+	cornerRadius?: number;
+	cornerHeadings?: readonly WalkDirection[];
 	/** Stride cap used for the goal radius. A larger drawn stride does not enlarge the goal set. */
 	maxStride?: number;
 	now?: () => number;
@@ -141,10 +150,19 @@ export function planFootsteps<State, Pose>(
 		stride: number;
 		changes: number;
 		run: number;
+		history: number;
+		corner: number;
 	};
-	const key = (state: State, heading?: WalkDirection, changes = 0, run = 0) => {
+	const key = (
+		state: State,
+		heading?: WalkDirection,
+		changes = 0,
+		run = 0,
+		history = 0,
+		corner = 0,
+	) => {
 		const p = ground(sim.position(state));
-		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? 0 : changes}:${Math.min(run, options.minHeadingRun ?? 0)}`;
+		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? 0 : changes}:${Math.min(run, options.minHeadingRun ?? 0)}:${history}:${corner}`;
 	};
 	const open = new Heap<Node>();
 	const start: Node = {
@@ -155,6 +173,8 @@ export function planFootsteps<State, Pose>(
 		stride: 0,
 		changes: 0,
 		run: 0,
+		history: 0,
+		corner: 0,
 	};
 	open.push(start);
 	const costs = new Map([[start.key, 0]]);
@@ -228,95 +248,144 @@ export function planFootsteps<State, Pose>(
 				continue;
 			}
 			const changes = node.changes + (turn ? 1 : 0);
-			if (changes > (options.maxHeadingChanges ?? Infinity)) {
+			if (turn && node.changes > 0 && node.run < (options.minHeadingRun ?? 0)) {
+				reject("min-heading-run");
+				continue;
+			}
+			let history = node.history;
+			let corner = node.corner;
+			const at = ground(sim.position(node.state));
+			const routeCorner = options.routeCorners?.[corner];
+			const outgoing = options.cornerHeadings?.[corner];
+			const outgoingDelta =
+				outgoing === undefined
+					? 0
+					: Math.abs(
+							GROUND_SECTORS.indexOf(outgoing) -
+								GROUND_SECTORS.indexOf(heading),
+						);
+			if (
+				turn &&
+				routeCorner &&
+				Math.min(outgoingDelta, 8 - outgoingDelta) <= 1 &&
+				distance(at, routeCorner) <= (options.cornerRadius ?? maxStride)
+			) {
+				history = 0;
+				corner++;
+			}
+			const changeLimit = Math.min(
+				options.maxHeadingChanges ?? Infinity,
+				options.routeCorners ? 2 + 2 * corner : Infinity,
+			);
+			if (changes > changeLimit) {
 				reject("turn-limit");
 				continue;
 			}
-			if (turn && node.changes > 0 && node.run < (options.minHeadingRun ?? 0))
+			const sector = GROUND_SECTORS.indexOf(heading);
+			if (
+				options.routeCorners &&
+				GROUND_SECTORS.some((_, i) => {
+					const d = Math.abs(i - sector);
+					return history & (1 << i) && Math.min(d, 8 - d) > 2;
+				})
+			) {
+				reject("cumulative-reversal");
 				continue;
+			}
+			history |= 1 << sector;
 			const run = turn ? 1 : node.run + 1;
-			const pose = sim.entry(node.state, heading, node.heading === undefined);
-			const stopPose =
-				sim.entry(node.state, heading, node.heading === undefined, true) ??
-				pose;
-			if (pose === undefined && stopPose === undefined) continue;
-			const p = ground(sim.position(node.state));
-			const next =
-				pose === undefined ? undefined : sim.advance(node.state, pose);
-			const stride = next
-				? distance(p, ground(sim.position(next)))
-				: node.stride;
-			const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
-			// Stopping is an edge, including all exit-frame motion. It cannot evade
-			// the turn cost or introduce a heading reversal at the final drawing.
-			const candidates = best
-				? stopPose === undefined
-					? undefined
-					: sim.restCandidates?.(node.state, stopPose)
-				: undefined;
-			const canImprove =
-				!candidates ||
-				candidates.some((q) => {
-					const point = ground(q);
-					const cost = node.g + distance(p, point) + turnPenalty + stepCost;
-					return cost <= costBound && cost + weight * remaining(q) < bestScore;
-				});
-			const rest =
-				canImprove && stopPose !== undefined
-					? sim.rest(node.state, stopPose, heading)
-					: undefined;
-			if (rest && stopPose !== undefined) {
-				const remaining = distance(ground(rest), goal);
-				const complete =
-					remaining <= Math.min(stride, maxStride) / 2 + 1e-8 &&
-					(sim.acceptRest?.(node.state, stopPose, rest, target) ?? true);
-				const cost =
-					node.g +
-					(rest.travel ?? distance(p, ground(rest))) +
-					turnPenalty +
-					stepCost;
-				const score = cost + weight * (sim.remaining?.(rest) ?? remaining);
-				if (cost <= costBound && score < bestScore) {
-					bestScore = score;
-					best = {
-						node,
-						step: stepFor(node, heading, stopPose, true),
-						distance: remaining,
-						cost,
-						complete,
-					};
-				}
-			}
-			if (!next || pose === undefined || stride < 1e-8) continue;
-			const g = node.g + stride + turnPenalty + stepCost;
-			if (g > costBound) {
-				reject("cost-bound");
-				continue;
-			}
-			const f = g + heuristic(sim.position(next), g);
-			if (f >= bestScore) {
-				reject("score-bound");
-				continue;
-			}
-			const nextKey = key(next, heading, changes, run);
-			if (g >= (costs.get(nextKey) ?? Infinity)) {
-				reject("duplicate");
-				continue;
-			}
-			costs.set(nextKey, g);
-			open.push({
-				state: next,
+			const poses = sim.entries?.(
+				node.state,
 				heading,
-				parent: node,
-				step: stepFor(node, heading, pose, false),
-				g,
-				f,
-				key: nextKey,
-				stride,
-				changes,
-				run,
-			});
-			generated++;
+				node.heading === undefined,
+			) ?? [sim.entry(node.state, heading, node.heading === undefined)];
+			for (const pose of poses.length ? poses : [undefined]) {
+				const stopPose =
+					sim.entry(node.state, heading, node.heading === undefined, true) ??
+					pose;
+				if (pose === undefined && stopPose === undefined) continue;
+				const p = ground(sim.position(node.state));
+				const next =
+					pose === undefined ? undefined : sim.advance(node.state, pose);
+				const stride = next
+					? distance(p, ground(sim.position(next)))
+					: node.stride;
+				const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
+				// Stopping is an edge, including all exit-frame motion. It cannot evade
+				// the turn cost or introduce a heading reversal at the final drawing.
+				const candidates = best
+					? stopPose === undefined
+						? undefined
+						: sim.restCandidates?.(node.state, stopPose)
+					: undefined;
+				const canImprove =
+					!candidates ||
+					candidates.some((q) => {
+						const point = ground(q);
+						const cost = node.g + distance(p, point) + turnPenalty + stepCost;
+						return (
+							cost <= costBound && cost + weight * remaining(q) < bestScore
+						);
+					});
+				const rest =
+					canImprove && stopPose !== undefined
+						? sim.rest(node.state, stopPose, heading)
+						: undefined;
+				if (rest && stopPose !== undefined) {
+					const remaining = distance(ground(rest), goal);
+					const complete =
+						remaining <= Math.min(stride, maxStride) / 2 + 1e-8 &&
+						(sim.acceptRest?.(node.state, stopPose, rest, target) ?? true);
+					const cost =
+						node.g +
+						(rest.travel ?? distance(p, ground(rest))) +
+						turnPenalty +
+						stepCost;
+					const score = cost + weight * (sim.remaining?.(rest) ?? remaining);
+					if (cost <= costBound && score < bestScore) {
+						bestScore = score;
+						best = {
+							node,
+							step: stepFor(node, heading, stopPose, true),
+							distance: remaining,
+							cost,
+							complete,
+						};
+					}
+				}
+				if (!next || pose === undefined || stride < 1e-8) continue;
+				const g = node.g + stride + turnPenalty + stepCost;
+				if (g > costBound) {
+					reject("cost-bound");
+					continue;
+				}
+				const f = g + heuristic(sim.position(next), g);
+				if (f >= bestScore) {
+					reject("score-bound");
+					continue;
+				}
+				const nextKey = key(next, heading, changes, run, history, corner);
+				if (g >= (costs.get(nextKey) ?? Infinity)) {
+					reject("duplicate");
+					continue;
+				}
+				costs.set(nextKey, g);
+				open.push({
+					state: next,
+					heading,
+					parent: node,
+					step: stepFor(node, heading, pose, false),
+					g,
+					f,
+					key: nextKey,
+					stride,
+					changes,
+					run,
+					history,
+					corner,
+				});
+				generated++;
+			}
 		}
 	}
 	const steps: PlannedStep<State, Pose>[] = [];
