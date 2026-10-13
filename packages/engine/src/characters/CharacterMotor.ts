@@ -356,7 +356,10 @@ export class CharacterMotor {
 	}
 	private buildPlan(initialHeading?: WalkDirection): void {
 		if (!this.pose || !this.goal) return;
-		this.path = findPath(this.area.mask, this.target, this.goal);
+		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
+			x: p.x,
+			y: p.y,
+		}));
 		this.goal = this.path[this.path.length - 1] ?? this.goal;
 		const legs = walkLegs(this.path, this.area.perspective);
 		if (initialHeading && legs[0]) {
