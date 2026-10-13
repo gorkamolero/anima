@@ -132,7 +132,8 @@ export function beginArrival(
 		x:
 			point.x + (kind === "edge-left" ? 400 : kind === "edge-right" ? -400 : 0),
 		y:
-			point.y + (edge ? 80 : kind === "near" ? -80 : kind === "far" ? 65 : 100),
+			point.y +
+			(edge ? 80 : kind === "near" ? -80 : kind === "far" ? 230 : 100),
 	};
 	const path = findPath(area.mask, motor.target, desired);
 	return path;
