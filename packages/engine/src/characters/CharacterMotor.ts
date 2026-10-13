@@ -754,10 +754,17 @@ export class CharacterMotor {
 		};
 		let accepted = quality(best);
 		const totals = { ...best.stats, rejections: { ...best.stats.rejections } };
-		for (const entryPhases of ["authored", "all"] as const) {
+		const alternatives: SearchOptions[] = [
+			{ entryPhases: "authored" },
+			{ entryPhases: "all" },
+			{ searchWeight: 4 },
+			{ searchWeight: 4, entryPhases: "authored" },
+			{ searchWeight: 4, entryPhases: "all" },
+		];
+		for (const alternative of alternatives) {
 			if (accepted.clean && accepted.arrived) break;
 			const trial = makeTrial();
-			const candidate = trial.buildRoute({ ...options, entryPhases });
+			const candidate = trial.buildRoute({ ...options, ...alternative });
 			if (!candidate) continue;
 			totals.expanded += candidate.stats.expanded;
 			totals.generated += candidate.stats.generated;

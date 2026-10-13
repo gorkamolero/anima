@@ -453,3 +453,18 @@ it("a grounded restart preserves the previous run and the whole-click turn budge
 	expect(legal.starting).toContain(true);
 	expect(legal.starting).toContain(false);
 });
+
+it("goal-biased ordering preserves the cost and route constraints", () => {
+	const result = search({ x: 3, y: 1 }, 0.3, () => true, {
+		searchWeight: 4,
+		maxHeadingChanges: 2,
+		minHeadingRun: 2,
+		nodeBudget: 1000,
+		now: () => 0,
+	});
+	expect(result.complete).toBe(true);
+	expect(changes(result).length).toBeLessThanOrEqual(2);
+	noReversals(result);
+	expect(result.stats.optimal).toBe(false);
+	expect(result.stats.expanded).toBeLessThanOrEqual(1000);
+});

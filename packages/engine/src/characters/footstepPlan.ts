@@ -49,6 +49,7 @@ export interface RouteState {
 }
 export interface SearchOptions {
 	entryPhases?: "authored" | "all";
+	searchWeight?: number;
 	/** Preserve the complete click's route rules across a grounded restart. */
 	initialRoute?: RouteState;
 	nodeBudget?: number;
@@ -79,14 +80,14 @@ export interface SearchStats {
 	costBound: number;
 }
 
-class Heap<T extends { f: number }> {
+class Heap<T extends { priority: number }> {
 	private items: T[] = [];
 	push(value: T) {
 		let i = this.items.length;
 		this.items.push(value);
 		while (i) {
 			const parent = (i - 1) >> 1;
-			if (this.items[parent].f <= value.f) break;
+			if (this.items[parent].priority <= value.priority) break;
 			this.items[i] = this.items[parent];
 			i = parent;
 		}
@@ -102,10 +103,10 @@ class Heap<T extends { f: number }> {
 				let child = 2 * i + 1;
 				if (
 					child + 1 < this.items.length &&
-					this.items[child + 1].f < this.items[child].f
+					this.items[child + 1].priority < this.items[child].priority
 				)
 					child++;
-				if (last.f <= this.items[child].f) break;
+				if (last.priority <= this.items[child].priority) break;
 				this.items[i] = this.items[child];
 				i = child;
 			}
@@ -156,6 +157,7 @@ export function planFootsteps<State, Pose>(
 		step?: PlannedStep<State, Pose>;
 		g: number;
 		f: number;
+		priority: number;
 		key: string;
 		stride: number;
 		changes: number;
@@ -179,6 +181,7 @@ export function planFootsteps<State, Pose>(
 		state: initial,
 		g: 0,
 		f: heuristic(sim.position(initial)),
+		priority: (options.searchWeight ?? 1) * heuristic(sim.position(initial)),
 		key: key(initial),
 		stride: 0,
 		changes: 0,
@@ -211,6 +214,7 @@ export function planFootsteps<State, Pose>(
 				start.corner,
 			),
 			f: heuristic(sim.position(state)),
+			priority: (options.searchWeight ?? 1) * heuristic(sim.position(state)),
 		};
 		if (costs.has(alternative.key)) continue;
 		open.push(alternative);
@@ -249,6 +253,7 @@ export function planFootsteps<State, Pose>(
 	for (let node = open.pop(); node; node = open.pop()) {
 		if (node.g !== costs.get(node.key)) continue;
 		if (node.f >= bestScore) {
+			if ((options.searchWeight ?? 1) !== 1) continue;
 			reason = best?.complete ? "complete" : "nearest-reachable";
 			break;
 		}
@@ -397,6 +402,8 @@ export function planFootsteps<State, Pose>(
 					step: stepFor(node, heading, pose, false),
 					g,
 					f,
+					priority:
+						g + (options.searchWeight ?? 1) * heuristic(sim.position(next), g),
 					key: nextKey,
 					stride,
 					changes,
@@ -434,7 +441,10 @@ export function planFootsteps<State, Pose>(
 			generated,
 			elapsedMs: now() - started,
 			reason,
-			optimal: !sim.remaining && !reason.endsWith("budget"),
+			optimal:
+				!sim.remaining &&
+				(options.searchWeight ?? 1) === 1 &&
+				!reason.endsWith("budget"),
 			costBound,
 		} satisfies SearchStats,
 	};
