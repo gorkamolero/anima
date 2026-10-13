@@ -6,8 +6,10 @@ from PIL import Image,ImageDraw
 root=pathlib.Path(sys.argv[1]);geometries={}
 for p in root.glob('*/navigation.json'):
  g=json.loads(p.read_text());geometries[g['location']]=g
-manifest=[];began=time.perf_counter()
+selected=set(sys.argv[2:]);manifest=[];began=time.perf_counter()
+if selected and (root/'visual-index.json').exists():manifest=[r for r in json.loads((root/'visual-index.json').read_text())['walks'] if r['scene']+'/'+r['walk'] not in selected]
 for p in sorted(root.glob('*/*-events.json')):
+ if selected and p.parent.name+'/'+p.name.removesuffix('-events.json') not in selected:continue
  name=p.name.removesuffix('-events.json');rows=json.loads(p.with_name(name+'.json').read_text());base=json.loads((p.parent/'navigation.json').read_text());cache={}
  def render(i,width):
   key=(i,width)

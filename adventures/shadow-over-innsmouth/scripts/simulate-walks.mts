@@ -380,6 +380,7 @@ for (const scene of scenes) {
 					visible = true;
 				}
 				transfer = undefined;
+				fadeStarted = false;
 				await Promise.resolve();
 			}
 			idle =
