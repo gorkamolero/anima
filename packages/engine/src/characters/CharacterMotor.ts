@@ -631,8 +631,164 @@ export class CharacterMotor {
 		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
-	/** Plan bounded stand-and-pivot continuations before any playback begins. */
+	/** Compare complete, physically simulated routes before admitting shorter phases. */
 	private buildPlan(options: SearchOptions = {}) {
+		const initial = {
+			pose: this.pose,
+			foot: this.foot,
+			anchor: { ...this.anchor },
+			scale: this.scale,
+			heading: this.heading,
+			position: { x: this.target.x, y: this.target.y },
+		};
+		const makeTrial = () => {
+			const target: MotorTarget = {
+				...initial.position,
+				setPosition(x, y) {
+					this.x = x;
+					this.y = y;
+				},
+				setScale() {},
+				setDepth() {},
+			};
+			const trial = new CharacterMotor(target, this.area, () => {}, {
+				...this.animation,
+				show() {},
+			});
+			trial.pose = initial.pose;
+			trial.foot = initial.foot;
+			trial.anchor = { ...initial.anchor };
+			trial.scale = initial.scale;
+			trial.heading = initial.heading;
+			trial.goal = this.goal;
+			return trial;
+		};
+		let best = this.buildRoute(options);
+		if (!best) return;
+		const quality = (result: NonNullable<typeof best>) => {
+			const trial = makeTrial();
+			trial.planned = structuredClone(result.steps);
+			const start = trial.planned[0]?.state;
+			if (start) {
+				trial.foot = start.foot;
+				trial.anchor = { ...start.anchor };
+			}
+			trial.beginWalk();
+			const runs: { heading: WalkDirection; count: number }[] = [];
+			let stance:
+				| { key: string; first: Point; last: Point; heading: WalkDirection }
+				| undefined;
+			let stances = 0,
+				bad = 0;
+			let first: Point | undefined, last: Point | undefined;
+			const finish = () => {
+				if (
+					!stance ||
+					Math.hypot(
+						stance.last.x - stance.first.x,
+						stance.last.y - stance.first.y,
+					) < 0.05
+				)
+					return;
+				stances++;
+				if (
+					!stanceFacesHeading(
+						stance.first,
+						stance.last,
+						stance.heading,
+						this.area.perspective.constant === undefined,
+					)
+				)
+					bad++;
+				const run = runs[runs.length - 1];
+				if (run?.heading === stance.heading) run.count++;
+				else runs.push({ heading: stance.heading, count: 1 });
+			};
+			for (let frame = 0; trial.walking && frame < 2400; frame++) {
+				for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
+				if (!trial.walking) break;
+				const position = { x: trial.target.x, y: trial.target.y };
+				first ??= position;
+				last = position;
+				if (trial.transition || trial.drawn) continue;
+				const key = `${trial.heading}:${trial.foot}:${trial.anchor.x.toFixed(3)}:${trial.anchor.y.toFixed(3)}`;
+				const ground = trial.groundPoint(position);
+				if (stance?.key !== key) {
+					finish();
+					stance = { key, first: ground, last: ground, heading: trial.heading };
+				} else stance.last = ground;
+			}
+			finish();
+			const corners =
+				first && last
+					? routeCorners(
+							clearanceRoute(
+								this.area.clearanceMask ?? this.area.mask,
+								first,
+								last,
+							),
+						).length
+					: 0;
+			const clean =
+				!trial.walking &&
+				stances > 0 &&
+				bad / stances <= 0.05 &&
+				runs.length - 1 <= 2 + 2 * corners &&
+				runs.slice(1, -1).every((r) => r.count >= 2) &&
+				runs.every((r, i) => {
+					if (!i) return true;
+					const d = Math.abs(
+						GROUND_SECTORS.indexOf(r.heading) -
+							GROUND_SECTORS.indexOf(runs[i - 1].heading),
+					);
+					return Math.min(d, 8 - d) <= 2;
+				});
+			return {
+				clean,
+				boundarySafe:
+					runs.length === 1 ||
+					(runs[0]?.count >= 2 && runs[runs.length - 1]?.count >= 2),
+				arrived:
+					!!trial.arrival && trial.arrival.distance <= trial.arrival.halfStride,
+			};
+		};
+		let accepted = quality(best);
+		const totals = { ...best.stats, rejections: { ...best.stats.rejections } };
+		for (const entryPhases of ["authored", "all"] as const) {
+			if (accepted.clean && accepted.arrived) break;
+			const trial = makeTrial();
+			const candidate = trial.buildRoute({ ...options, entryPhases });
+			if (!candidate) continue;
+			totals.expanded += candidate.stats.expanded;
+			totals.generated += candidate.stats.generated;
+			for (const [reason, count] of Object.entries(
+				candidate.stats.rejections ?? {},
+			))
+				totals.rejections[reason] = (totals.rejections[reason] ?? 0) + count;
+			const checked = quality(candidate);
+			if (
+				checked.clean &&
+				checked.boundarySafe &&
+				(!accepted.clean || candidate.distance < best.distance)
+			) {
+				best = candidate;
+				accepted = checked;
+			}
+		}
+		best.stats = { ...totals, reason: best.stats.reason, optimal: false };
+		this.planned = best.steps;
+		const start = best.steps[0]?.state;
+		if (start) {
+			this.foot = start.foot;
+			this.anchor = { ...start.anchor };
+		}
+		this.planDistance = best.distance;
+		this.planComplete = best.complete;
+		this.planSearch = best.stats;
+		return best;
+	}
+	/** Plan bounded stand-and-pivot continuations before any playback begins. */
+	private buildRoute(options: SearchOptions = {}) {
 		const result = this.buildSegment(options);
 		if (!result) return;
 		const screenCorners = routeCorners(this.path);
@@ -815,11 +971,24 @@ export class CharacterMotor {
 					selected.cycle.name === s.pose.cycle.name &&
 					selected.flipX === s.pose.flipX;
 				const frames = same
-					? [s.pose.frame]
+					? options.entryPhases
+						? [
+								...new Set([
+									s.pose.frame,
+									...(selected.cycle.matchedCut?.entryFrames ?? []),
+								]),
+							]
+						: [s.pose.frame]
 					: [
 							...(selected.cycle.matchedCut?.entryFrames ?? []),
 							...selected.cycle.switchFrames,
 						];
+				if (options.entryPhases === "all" && !starting)
+					frames.push(
+						...selected.cycle.contacts
+							.map((_, i) => i)
+							.filter((f) => !frames.includes(f)),
+					);
 				return frames
 					.filter(
 						(f) =>
