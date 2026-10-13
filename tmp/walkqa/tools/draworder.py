@@ -1,12 +1,12 @@
 """Depth/baseline consistency where sprite and occluder bounds overlap.
 Exact alpha intersection follows a bounding-box broad phase; NPC sprites are included."""
-import json,sys,math,pathlib
+import json,sys,math,pathlib,os
 from functools import lru_cache
 import numpy as np
 from PIL import Image
 SPR=pathlib.Path('adventures/shadow-over-innsmouth/public/assets/sprites/hermes')
 PUBLIC=SPR.parents[2]
-CATALOG_FILE=pathlib.Path('tmp/walkqa/harness-20/occluder-catalog.json')
+CATALOG_FILE=pathlib.Path(os.environ.get('WALKQA_ROOT','tmp/walkqa/harness-20'))/'occluder-catalog.json'
 CATALOG=json.loads(CATALOG_FILE.read_text()) if CATALOG_FILE.exists() else {}
 @lru_cache(None)
 def alpha(texture,frame):
@@ -54,7 +54,7 @@ def check(rows,metadata=meta):
     exact=exact_overlap(r,o,m)
     if exact is None:fallback+=1
     else:overlaps=exact
-   behind=y<baseline(pts,x);key=(r.get('location'),o['id'])
+   behind=not o.get("floorDecal",False) and y<baseline(pts,x);key=(r.get('location'),o['id'])
    if overlaps:
     count+=1
     if behind!=(r['depth']<o['depth']):bad.append(dict(frame=i,occluder=o['id'],feet=[x,y],baseline=baseline(pts,x)))
@@ -63,5 +63,5 @@ def check(rows,metadata=meta):
  return dict(pass_=not bad,flagged=bad,overlapFrames=count,crossings=crossings,overlapMethod='screen pixel intersection of sprite and occluder alpha masks',bboxFallbackFrames=fallback)
 if __name__=='__main__':
  if '--self-test' in sys.argv:
-  r=dict(texture='test',scale=1,x=50,y=100,contact={'anchor':{'x':50,'y':100}},depth=2,occluders=[dict(id='box',depth=3,bounds=dict(x=0,y=0,width=100,height=200),baseline=[dict(x=0,y=120),dict(x=100,y=120)])]);assert check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];r['depth']=4;assert not check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];print('PASS: inverted depth rejected')
+  r=dict(texture='test',scale=1,x=50,y=100,contact={'anchor':{'x':50,'y':100}},depth=2,occluders=[dict(id='box',depth=3,bounds=dict(x=0,y=0,width=100,height=200),baseline=[dict(x=0,y=120),dict(x=100,y=120)])]);assert check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];r['depth']=4;assert not check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];r['occluders'][0]['floorDecal']=True;assert check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];r['depth']=2;assert not check([r],lambda t:dict(frameWidth=100,frameHeight=200))['pass_'];print('PASS: inverted depth and raised floor decal rejected')
  else:print(json.dumps(check(json.load(open(sys.argv[1])))))

@@ -13,7 +13,8 @@ async function playwright(){
  }
 }
 const {chromium}=await playwright();
-const root='tmp/walkqa/harness-20';
+const root=process.env.WALKQA_ROOT??'tmp/walkqa/harness-20';
+const planRoot=process.env.WALKQA_PLAN_ROOT??root;
 const experiment=process.argv.find(a=>a.startsWith('--experiment='))?.split('=')[1];
 const outputRoot=experiment?root+'/experiments/'+experiment:root;
 const corpus=JSON.parse(readFileSync('tmp/walkqa/corpus-places.json'));
@@ -39,14 +40,14 @@ await initQa();
 async function enter(place){await page.evaluate(async place=>{const a=window.__anima,s=a.scene;let done=false,error;s.enterLocation(place).then(()=>done=true).catch(e=>{error=String(e);done=true;});for(let i=0;!done&&i<1000;i++){a.step(100);await new Promise(r=>setTimeout(r,10));}if(!done||error)throw Error(error??'enter timeout');s.setPlacementDebugEnabled(false);if(!s.geometryReady)throw Error('geometry unavailable');},place);}
 async function geometry(){return page.evaluate(()=>{const s=window.__anima.scene;return {location:s.locationId(),area:s.walkArea,exits:s.sceneExits,objects:s.objectLayers.map(l=>l.data),interactables:s.interactables,background:s.activeScene().background};});}
 for(const [name,place]of Object.entries(scenes)){
-if(selected&&selected!==name)continue;
+if(selected&&!selected.split(',').includes(name))continue;
 const out=outputRoot+'/'+name;mkdirSync(out,{recursive:true});await enter(place);
 const clean=await page.evaluate(async()=>{const s=window.__anima.scene;const visible=s.hermesSprite.visible;s.hermesSprite.visible=false;const png=await window.__anima.captureFrame({stepMs:0,width:1920,format:'png'});s.hermesSprite.visible=visible;return png;});writeFileSync(out+'/background.png',Buffer.from(clean.split(',')[1],'base64'));
 const geo=await geometry();writeFileSync(out+'/navigation.json',JSON.stringify(geo));
 const areas={[place]:{...geo.area,mask:geo.area.rawMask??geo.area.mask}};
 writeFileSync(out+'/area.json',JSON.stringify({...geo,area:areas[place],areas}));
 if(process.argv.includes('--probe')){console.log(name,geo.area.mask.data.filter(Boolean).length,geo.exits.length,geo.interactables.length);continue;}
-const plan=JSON.parse(readFileSync(root+'/'+name+'/plan.json'));writeFileSync(out+'/plan.json',JSON.stringify(plan,null,2));
+const plan=JSON.parse(readFileSync(planRoot+'/'+name+'/plan.json'));writeFileSync(out+'/plan.json',JSON.stringify(plan,null,2));
 for(const beat of plan.beats){
 if(selectedWalk&&beat.name!==selectedWalk)continue;
 if(existsSync(out+'/'+beat.name+'-events.json')&&!process.argv.includes('--redo'))continue;
@@ -58,7 +59,7 @@ const encoder=spawn('ffmpeg',['-y','-v','error','-f','image2pipe','-framerate','
 await page.evaluate(click=>window.__anima.click(...click),setup.click);
 for(let i=0;i<maxFrames+12;i++){
 if(i===maxFrames){timedOut=true;await page.evaluate(()=>{window.qaEvents.push({type:"capture-timeout",frame:window.qaFrame});window.__anima.scene.hermesMotor.stop(true);});}
-let frameTimer;const {png,...row}=await Promise.race([page.evaluate(async i=>{window.qaFrame=i;let row;const a=window.__anima;const png=await a.captureFrame({stepMs:1000/24,width:1920,format:'png',onFrame:()=>{const s=a.scene,h=s.hermesSprite,m=s.hermesMotor;row={t:i/24,visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:m.walking,contact:m.snapshot(),path:m.path.map(p=>({x:p.x,y:p.y})),target:m.goal?{x:m.goal.x,y:m.goal.y}:null,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,arriving:s.arrivingExit,object:s.selectedInteractable?.name,depth:h.depth,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,baseline:l.data.baseline,bounds:(()=>{const b=l.image.getBounds();return {x:b.x,y:b.y,width:b.width,height:b.height}})()})).concat([s.katSprite,s.katSeatedSprite].filter(k=>k?.visible).map(k=>{const b=k.getBounds(),f=k.frame;return {id:k.texture.key,depth:k.depth,baseline:[{x:b.x,y:k.y},{x:b.right,y:k.y}],bounds:{x:b.x,y:b.y,width:b.width,height:b.height},sprite:{texture:k.texture.key,cutX:f.cutX,cutY:f.cutY,width:f.cutWidth,height:f.cutHeight,flip:k.flipX}};}))};}});return {png,...row};},i),new Promise((_,reject)=>{frameTimer=setTimeout(()=>reject(Error('Capture snapshot timeout at '+name+'/'+beat.name+' frame '+i)),30000);})]);clearTimeout(frameTimer);
+let frameTimer;const {png,...row}=await Promise.race([page.evaluate(async i=>{window.qaFrame=i;let row;const a=window.__anima;const png=await a.captureFrame({stepMs:1000/24,width:1920,format:'png',onFrame:()=>{const s=a.scene,h=s.hermesSprite,m=s.hermesMotor;row={t:i/24,visible:h.visible,x:h.x,y:h.y,scale:h.scaleX,flip:h.flipX,texture:h.texture.key,frame:Number(h.frame.name),walking:m.walking,contact:m.snapshot(),path:m.path.map(p=>({x:p.x,y:p.y})),target:m.goal?{x:m.goal.x,y:m.goal.y}:null,location:s.locationId(),ui:s.openWorldBusy,inputBlocked:s.inputBlocked,arriving:s.arrivingExit,object:s.selectedInteractable?.name,depth:h.depth,occluders:s.objectLayers.map(l=>({id:l.data.id,depth:l.image.depth,floorDecal:l.data.floorDecal,baseline:l.data.baseline,bounds:(()=>{const b=l.image.getBounds();return {x:b.x,y:b.y,width:b.width,height:b.height}})()})).concat([s.katSprite,s.katSeatedSprite].filter(k=>k?.visible).map(k=>{const b=k.getBounds(),f=k.frame;return {id:k.texture.key,depth:k.depth,baseline:[{x:b.x,y:k.y},{x:b.right,y:k.y}],bounds:{x:b.x,y:b.y,width:b.width,height:b.height},sprite:{texture:k.texture.key,cutX:f.cutX,cutY:f.cutY,width:f.cutWidth,height:f.cutHeight,flip:k.flipX}};}))};}});return {png,...row};},i),new Promise((_,reject)=>{frameTimer=setTimeout(()=>reject(Error('Capture snapshot timeout at '+name+'/'+beat.name+' frame '+i)),30000);})]);clearTimeout(frameTimer);
 frames.push(row);if(!encoder.stdin.write(Buffer.from(png.split(',')[1],'base64')))await once(encoder.stdin,'drain');
 if(!areas[row.location]&&row.visible&&!row.ui){const g=await geometry();areas[g.location]={...g.area,mask:g.area.rawMask??g.area.mask};}
 idle=(!row.walking&&!row.ui&&!row.arriving&&!row.inputBlocked)?idle+1:0;

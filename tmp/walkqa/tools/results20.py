@@ -1,6 +1,6 @@
 """Aggregate evidence without converting missing checks or unreviewed visuals to passes."""
-import pathlib,json,re
-root=pathlib.Path('tmp/walkqa/harness-20');scenes={};total=0;frames=0
+import pathlib,json,re,os
+root=pathlib.Path(os.environ.get('WALKQA_ROOT','tmp/walkqa/harness-20'));scenes={};total=0;frames=0
 for planfile in sorted(root.glob('*/plan.json')):
  scene=planfile.parent;plan=json.loads(planfile.read_text());walks={}
  for beat in plan['beats']:
