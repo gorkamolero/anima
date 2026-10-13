@@ -153,7 +153,7 @@ for (const depth of [100, 600]) {
 				entry: (_p, h) => h,
 				advance: (p, h) => {
 					const a = (names.indexOf(h) * Math.PI) / 4;
-					const stride = 20 * (1 + (p.y - depth) / 2000);
+					const stride = 20 * (0.5 + depth / 600) * (1 + (p.y - depth) / 2000);
 					return {
 						x: p.x + stride * Math.cos(a),
 						y: p.y - stride * Math.sin(a),
@@ -161,7 +161,9 @@ for (const depth of [100, 600]) {
 				},
 				rest: (p) => p,
 			});
-			expect(result.distance).toBeLessThanOrEqual(10);
+			expect(result.distance).toBeLessThanOrEqual(
+				10 * (0.5 + depth / 600) * (1 + (end.y - depth) / 2000),
+			);
 			const switches = result.steps.filter(
 				(s, i) => i > 0 && s.heading !== result.steps[i - 1].heading,
 			);
@@ -174,3 +176,37 @@ for (const depth of [100, 600]) {
 		});
 	}
 }
+
+it("flips the dogleg order when the first corner cuts an obstacle", () => {
+	const names: WalkDirection[] = [
+		"right",
+		"away-right",
+		"away",
+		"away-left",
+		"left",
+		"toward-left",
+		"toward",
+		"toward-right",
+	];
+	const start = { x: 0, y: 0 },
+		end = { x: 120, y: -40 };
+	const safe = (p: Point) => !(p.x < 60 && p.y < -5) && p.y >= -50;
+	const result = planFootsteps(walkLegs([start, end], perspective), start, {
+		position: (p) => p,
+		entry: (_p, h) => h,
+		advance: (p, h) => {
+			const a = (names.indexOf(h) * Math.PI) / 4;
+			const next = { x: p.x + 20 * Math.cos(a), y: p.y - 20 * Math.sin(a) };
+			return safe(next) ? next : undefined;
+		},
+		rest: (p) => (safe(p) ? p : undefined),
+	});
+	expect(result.distance).toBeLessThan(10);
+	expect(result.steps[0].heading).toBe("right");
+	expect(result.steps.every((s) => safe(s.state))).toBe(true);
+	expect(
+		result.steps.filter(
+			(s, i) => i && s.heading !== result.steps[i - 1].heading,
+		),
+	).toHaveLength(1);
+});
