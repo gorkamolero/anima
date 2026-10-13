@@ -93,6 +93,11 @@ export class CharacterMotor {
 	>();
 	private planDistance?: number;
 	private planComplete = false;
+	private rejectionReason = "no-entry-frame";
+	private reject(reason: string): undefined {
+		this.rejectionReason = reason;
+		return undefined;
+	}
 	private planSearch?: ReturnType<typeof planFootsteps>["stats"];
 	private resolve?: () => void;
 	private plannerWorker?: Worker;
@@ -295,16 +300,17 @@ export class CharacterMotor {
 			this.area.scaleClamp,
 			position.scale,
 		);
+		if (!raw.data[cellAt(raw, anchor)]) return this.reject("sole-off-floor");
+		if (!mask.data[cellAt(mask, { x: entry.x, y: anchor.y })])
+			return this.reject("body-off-clearance");
 		if (
-			!raw.data[cellAt(raw, anchor)] ||
-			!mask.data[cellAt(mask, { x: entry.x, y: anchor.y })] ||
 			!lineOfSight(
 				mask,
 				{ x: position.x, y: anchor.y },
 				{ x: entry.x, y: anchor.y },
 			)
 		)
-			return;
+			return this.reject("swept-segment-blocked");
 		position = entry;
 		let stanceStart = this.groundPoint(entry);
 		let samples: { pose: FootPose; position: Point & { scale: number } }[] = [
@@ -354,7 +360,7 @@ export class CharacterMotor {
 			const incoming = next.cycle.contacts[next.frame].planted;
 			const previousAnchorY = anchor.y;
 			if (incoming !== foot) {
-				if (!facing()) return;
+				if (!facing()) return this.reject("facing-invalid");
 				firstStance = false;
 				const previous = this.groundPoint(anchor);
 				anchor = contactOnScreen(pose, incoming, position, position.scale);
@@ -374,16 +380,17 @@ export class CharacterMotor {
 				this.area.scaleClamp,
 				position.scale,
 			);
+			if (!raw.data[cellAt(raw, anchor)]) return this.reject("sole-off-floor");
+			if (!mask.data[cellAt(mask, { x: p.x, y: anchor.y })])
+				return this.reject("body-off-clearance");
 			if (
-				!raw.data[cellAt(raw, anchor)] ||
-				!mask.data[cellAt(mask, { x: p.x, y: anchor.y })] ||
 				!lineOfSight(
 					mask,
 					{ x: position.x, y: previousAnchorY },
 					{ x: p.x, y: anchor.y },
 				)
 			)
-				break;
+				return this.reject("swept-segment-blocked");
 			if (incoming !== pose.cycle.contacts[pose.frame].planted) {
 				stanceStart = this.groundPoint(p);
 				samples = [];
@@ -636,6 +643,11 @@ export class CharacterMotor {
 			pose: this.pose,
 			scale: this.scale,
 		};
+		const rejections: Record<string, number> = {};
+		const count = (action: string) => {
+			const key = `${action}:${this.rejectionReason}`;
+			rejections[key] = (rejections[key] ?? 0) + 1;
+		};
 		const result = planFootsteps(
 			this.goal,
 			initial,
@@ -664,50 +676,61 @@ export class CharacterMotor {
 				ground: (p) => this.groundPoint(p),
 				support: (s) => `${s.foot}:${s.pose.frame}`,
 				entry: (s, direction, starting, stopping) => {
-					const idle = this.animation.standing?.(direction);
-					// Reverse settle must use the support actually drawn in the sheet.
-					if (
-						starting &&
-						idle &&
-						idle.cycle.contacts[idle.frame].planted !== s.foot
-					)
-						return;
-					const selected = this.animation.select(direction);
-					const same =
-						selected.cycle.name === s.pose.cycle.name &&
-						selected.flipX === s.pose.flipX;
-					const frames = same
-						? [s.pose.frame]
-						: starting
-							? [
-									...(selected.cycle.matchedCut?.entryFrames ?? []),
-									...selected.cycle.switchFrames,
-								]
-							: selected.cycle.switchFrames;
-					return frames
-						.filter(
-							(f) =>
-								selected.cycle.contacts[f].planted === s.foot &&
-								selected.cycle.contacts[
-									(f + 1) % selected.cycle.contacts.length
-								].planted === s.foot,
+					this.rejectionReason = "no-entry-frame";
+					const entry = () => {
+						const idle = this.animation.standing?.(direction);
+						// Reverse settle must use the support actually drawn in the sheet.
+						if (
+							starting &&
+							idle &&
+							idle.cycle.contacts[idle.frame].planted !== s.foot
 						)
-						.map((frame) => ({ ...selected, frame, firstStance: starting }))
-						.find(
-							(p) =>
-								(stopping ||
-									this.validFacing(
-										p,
-										s.anchor,
-										s.foot,
-										s.scale,
-										direction,
-										starting ? 35 : 30,
-									)) &&
-								(!starting || this.canStand(p, s.anchor, s.foot, s.scale)),
-						);
+							return;
+						const selected = this.animation.select(direction);
+						const same =
+							selected.cycle.name === s.pose.cycle.name &&
+							selected.flipX === s.pose.flipX;
+						const frames = same
+							? [s.pose.frame]
+							: starting
+								? [
+										...(selected.cycle.matchedCut?.entryFrames ?? []),
+										...selected.cycle.switchFrames,
+									]
+								: selected.cycle.switchFrames;
+						return frames
+							.filter(
+								(f) =>
+									selected.cycle.contacts[f].planted === s.foot &&
+									selected.cycle.contacts[
+										(f + 1) % selected.cycle.contacts.length
+									].planted === s.foot,
+							)
+							.map((frame) => ({ ...selected, frame, firstStance: starting }))
+							.find(
+								(p) =>
+									(stopping ||
+										this.validFacing(
+											p,
+											s.anchor,
+											s.foot,
+											s.scale,
+											direction,
+											starting ? 35 : 30,
+										)) &&
+									(!starting || this.canStand(p, s.anchor, s.foot, s.scale)),
+							);
+					};
+					const pose = entry();
+					if (!pose) count(stopping ? "stop-entry" : "entry");
+					return pose;
 				},
-				advance: (s, pose) => this.predictStance(pose, s),
+				advance: (s, pose) => {
+					this.rejectionReason = "no-stance";
+					const next = this.predictStance(pose, s);
+					if (!next) count("advance");
+					return next;
+				},
 				restCandidates: (s, pose) => {
 					const candidates = this.exitAnchors(pose, s);
 					const goal = this.goal;
@@ -733,12 +756,15 @@ export class CharacterMotor {
 					);
 				},
 				rest: (s, pose, heading) => {
+					this.rejectionReason = "no-exit-frame";
 					const exit = this.nextExit(pose, s, heading, true);
+					if (!exit) count("rest");
 					return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
 				},
 			},
 			options,
 		);
+		Object.assign(result.stats.rejections, rejections);
 		this.planned = result.steps;
 		const start = result.steps[0]?.state;
 		if (start) {
@@ -879,6 +905,7 @@ export class CharacterMotor {
 		foot: Foot,
 		scale: number,
 	): boolean {
+		this.rejectionReason = "settle-does-not-fit";
 		if (!this.animation.standing) return true;
 		const direction = GROUND_SECTORS.find((d) => {
 			const selected = this.animation.select(d);
@@ -943,13 +970,15 @@ export class CharacterMotor {
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
 		const first = sampled.samples[0],
 			last = sampled.samples[sampled.samples.length - 1];
-		return stanceFacesHeading(
+		const valid = stanceFacesHeading(
 			this.groundPoint({ x: first.x + shift, y: first.y }),
 			this.groundPoint({ x: last.x + shift, y: last.y }),
 			heading,
 			this.area.perspective.constant === undefined,
 			toleranceDegrees,
 		);
+		if (!valid) this.rejectionReason = "facing-invalid";
+		return valid;
 	}
 	/** Cache exact-depth sheet simulation independently of scene collisions.
 	 * No quantised displacement reaches playback. Without lateral residuals,
@@ -1016,14 +1045,14 @@ export class CharacterMotor {
 		const raw = this.area.rawMask ?? this.area.mask,
 			mask = this.area.clearanceMask ?? this.area.mask;
 		const on = (m: typeof raw, p: Point) => m.data[cellAt(m, p)] > 0;
-		if (!on(raw, anchor)) return;
+		if (!on(raw, anchor)) return this.reject("sole-off-floor");
 		const sampled = this.stanceSamples(
 			pose,
 			anchor,
 			foot,
 			state?.scale ?? this.scale,
 		);
-		if (!sampled) return;
+		if (!sampled) return this.reject("no-stance");
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
 		const previous = state?.end ?? this.target;
 		let minX = previous.x,
@@ -1034,12 +1063,17 @@ export class CharacterMotor {
 		}
 		// While this foot is planted the body ground depth is constant. The union
 		// of all per-frame swept intervals is exactly [minX,maxX], including entry.
+		if (
+			!on(mask, { x: minX, y: anchor.y }) ||
+			!on(mask, { x: maxX, y: anchor.y })
+		)
+			return this.reject("body-off-clearance");
 		if (!lineOfSight(mask, { x: minX, y: anchor.y }, { x: maxX, y: anchor.y }))
-			return;
+			return this.reject("swept-segment-blocked");
 		const last = sampled.samples[sampled.samples.length - 1];
 		const position = { ...last, x: last.x + shift };
 		const landing = { ...sampled.landing, x: sampled.landing.x + shift };
-		if (!on(raw, landing)) return;
+		if (!on(raw, landing)) return this.reject("sole-off-floor");
 		const end = { ...sampled.end, x: sampled.end.x + shift };
 		const nextBodySafe =
 			on(mask, { x: end.x, y: landing.y }) &&

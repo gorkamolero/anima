@@ -49,6 +49,7 @@ export interface SearchOptions {
 	now?: () => number;
 }
 export interface SearchStats {
+	rejections?: Record<string, number>;
 	expanded: number;
 	generated: number;
 	elapsedMs: number;
@@ -161,6 +162,10 @@ export function planFootsteps<State, Pose>(
 		costs.set(alternative.key, 0);
 		generated++;
 	}
+	const rejections: Record<string, number> = {};
+	const reject = (reason: string) => {
+		rejections[`search:${reason}`] = (rejections[`search:${reason}`] ?? 0) + 1;
+	};
 	let expanded = 0;
 	let reason: SearchStats["reason"] = "nearest-reachable";
 	let bestScore = initialDistance * weight;
@@ -209,9 +214,15 @@ export function planFootsteps<State, Pose>(
 								GROUND_SECTORS.indexOf(node.heading),
 						);
 			const turn = Math.min(delta, 8 - delta);
-			if (turn > 2) continue;
+			if (turn > 2) {
+				reject("reversal");
+				continue;
+			}
 			const changes = node.changes + (turn ? 1 : 0);
-			if (changes > (options.maxHeadingChanges ?? Infinity)) continue;
+			if (changes > (options.maxHeadingChanges ?? Infinity)) {
+				reject("turn-limit");
+				continue;
+			}
 			if (turn && node.changes > 0 && node.run < (options.minHeadingRun ?? 0))
 				continue;
 			const run = turn ? 1 : node.run + 1;
@@ -272,11 +283,20 @@ export function planFootsteps<State, Pose>(
 			}
 			if (!next || pose === undefined || stride < 1e-8) continue;
 			const g = node.g + stride + turnPenalty + stepCost;
-			if (g > costBound) continue;
+			if (g > costBound) {
+				reject("cost-bound");
+				continue;
+			}
 			const f = g + heuristic(ground(sim.position(next)), g);
-			if (f >= bestScore) continue;
+			if (f >= bestScore) {
+				reject("score-bound");
+				continue;
+			}
 			const nextKey = key(next, heading, changes, run);
-			if (g >= (costs.get(nextKey) ?? Infinity)) continue;
+			if (g >= (costs.get(nextKey) ?? Infinity)) {
+				reject("duplicate");
+				continue;
+			}
 			costs.set(nextKey, g);
 			open.push({
 				state: next,
@@ -313,6 +333,7 @@ export function planFootsteps<State, Pose>(
 		arrivalKind: complete ? ("exact" as const) : ("nearest-reachable" as const),
 		complete,
 		stats: {
+			rejections,
 			expanded,
 			generated,
 			elapsedMs: now() - started,
