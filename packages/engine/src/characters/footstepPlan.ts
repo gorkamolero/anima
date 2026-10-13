@@ -75,260 +75,241 @@ export interface PlannedStep<State, Pose> {
 export interface StepSimulation<State, Pose> {
 	position(state: State): Point;
 	ground?(point: Point): Point;
-	native?(state: State, heading: WalkDirection): Point | undefined;
-	headings?(leg: WalkLeg): readonly WalkDirection[];
-	offset?(state: State, slide: Point): State;
+	/** Support and phase are part of the lattice, never inferred from position. */
+	support?(state: State): string;
 	entry(
 		state: State,
 		heading: WalkDirection,
 		starting: boolean,
 	): Pose | undefined;
 	advance(state: State, pose: Pose): State | undefined;
-	/** Safe exit plus every settle frame. Returns the final rest sole. */
+	/** Validate the complete exit and settle; return the final planted sole. */
 	rest(state: State, pose: Pose, heading: WalkDirection): Point | undefined;
 }
-/** Enumerate whole drawn strides before playback. Search backwards through safe
- * stop candidates for the nearest rest sole; a blocked settle selects an earlier
- * stride. No direction search, overshoot correction, or runtime replanning. */
-function simulatePlan<State, Pose>(
-	legs: readonly WalkLeg[],
-	initial: State,
-	sim: StepSimulation<State, Pose>,
-	corrections: readonly Point[] = [],
-) {
-	const target = legs[legs.length - 1]?.to;
-	if (!target)
-		return {
-			steps: [] as PlannedStep<State, Pose>[],
-			distance: 0,
-			complete: true,
-		};
-	type Branch = {
-		state: State;
-		steps: PlannedStep<State, Pose>[];
-		distance: number;
-	};
-	let beam: Branch[] = [{ state: initial, steps: [], distance: 0 }];
-	let bestStop:
-		| { steps: PlannedStep<State, Pose>[]; distance: number; remaining: number }
-		| undefined;
-	for (let legIndex = 0; legIndex < legs.length; legIndex++) {
-		const leg = legs[legIndex];
-		const tail = legs
-			.slice(legIndex + 1)
-			.reduce(
-				(sum, l) => sum + Math.hypot(l.to.x - l.from.x, l.to.y - l.from.y),
-				0,
-			);
-		const candidates: Branch[] = [];
-		for (const branch of beam) {
-			const origin = sim.position(branch.state);
-			const ground = sim.ground ?? ((p: Point) => p);
-			const g = ground(origin),
-				t = ground(leg.to);
-			const desired = Math.atan2(t.y - g.y, t.x - g.x);
-			// Measure the native direction from actual locked-foot landings.
-			const directions = (sim.headings?.(leg) ?? GROUND_SECTORS).flatMap(
-				(heading) => {
-					let endpoint = sim.native?.(branch.state, heading);
-					if (!endpoint) {
-						const pose = sim.entry(
-							branch.state,
-							heading,
-							branch.steps.length === 0,
-						);
-						const next =
-							pose === undefined ? undefined : sim.advance(branch.state, pose);
-						if (!next) return [];
-						const continuation = sim.entry(next, heading, false);
-						const landing =
-							continuation === undefined
-								? undefined
-								: sim.advance(next, continuation);
-						endpoint = sim.position(landing ?? next);
-					}
-					const p = ground(endpoint);
-					const angle = Math.atan2(p.y - g.y, p.x - g.x);
-					const error = Math.atan2(
-						Math.sin(angle - desired),
-						Math.cos(angle - desired),
-					);
-					return [{ heading, error }];
-				},
-			);
-			const close = directions.filter((d) => Math.abs(d.error) <= Math.PI / 36);
-			const low = directions
-				.filter((d) => d.error < 0)
-				.sort((a, b) => b.error - a.error)[0];
-			const high = directions
-				.filter((d) => d.error >= 0)
-				.sort((a, b) => a.error - b.error)[0];
-			const orders: WalkDirection[][] = close.length
-				? close.map((d) => [d.heading])
-				: low && high && high.error - low.error < Math.PI
-					? [
-							[low.heading, high.heading],
-							[high.heading, low.heading],
-						]
-					: directions
-							.filter((d) => Math.abs(d.error) < Math.PI / 2)
-							.map((d) => [d.heading]);
-			if (
-				!orders.some(
-					([heading]) =>
-						sim.entry(branch.state, heading, branch.steps.length === 0) !==
-						undefined,
-				)
-			) {
-				// A standing drawing can be blocked even when the route centre fits.
-				// Use a forward native departure; the midpoint search plans its turn.
-				orders.push(
-					...directions
-						.filter((d) => Math.abs(d.error) < Math.PI / 2)
-						.map((d) => [d.heading]),
-				);
-			}
-
-			const run = (
-				state: State,
-				prefix: PlannedStep<State, Pose>[],
-				heading: WalkDirection,
-				visit: (s: State, steps: PlannedStep<State, Pose>[]) => void,
-			) => {
-				const prior = prefix[prefix.length - 1];
-				if (prior?.leg === legIndex) {
-					const turn = Math.abs(
-						GROUND_SECTORS.indexOf(prior.heading) -
-							GROUND_SECTORS.indexOf(heading),
-					);
-					if (turn === 4) return;
-				}
-				const steps = [...prefix];
-				let previousDistance = Infinity,
-					growing = 0;
-				for (let stride = 0; stride < 128; stride++) {
-					const slide = steps.length
-						? (corrections[legIndex] ?? { x: 0, y: 0 })
-						: { x: 0, y: 0 };
-					if (sim.offset) state = sim.offset(state, slide);
-					const pose = sim.entry(state, heading, steps.length === 0);
-					if (pose === undefined) break;
-					const node = {
-						heading,
-						pose,
-						state,
-						stop: false,
-						leg: legIndex,
-						slide,
-					};
-					const rest = sim.rest(state, pose, heading);
-					if (rest) {
-						const distance = Math.hypot(rest.x - target.x, rest.y - target.y);
-						const remaining =
-							Math.hypot(rest.x - leg.to.x, rest.y - leg.to.y) + tail;
-						if (!bestStop || remaining < bestStop.remaining)
-							bestStop = {
-								steps: [...steps, { ...node, stop: true }],
-								distance,
-								remaining,
-							};
-					}
-					const next = sim.advance(state, pose);
-					if (!next) break;
-					steps.push(node);
-					visit(next, [...steps]);
-					const p = sim.position(next);
-					const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
-					state = next;
-					growing = distance > previousDistance ? growing + 1 : 0;
-					if (growing >= 2) break;
-					previousDistance = distance;
-				}
-			};
-			const retain = (state: State, steps: PlannedStep<State, Pose>[]) => {
-				const p = sim.position(state);
-				candidates.push({
-					state,
-					steps,
-					distance: Math.hypot(p.x - leg.to.x, p.y - leg.to.y),
-				});
-			};
-			for (const [first, second] of orders) {
-				run(branch.state, branch.steps, first, (state, steps) => {
-					retain(state, steps);
-					if (second) run(state, steps, second, retain);
-				});
-			}
-		}
-		// Retain several whole-stride corners: the closest drawing may have no
-		// safe next settle even though its first stance fits. Search ahead now,
-		// never after the character has arrived at that corner.
-		beam = candidates.sort((a, b) => a.distance - b.distance).slice(0, 12);
-		if (!beam.length) break;
-	}
-	return {
-		steps: bestStop?.steps ?? [],
-		distance: bestStop?.distance ?? Infinity,
-		complete: Boolean(bestStop),
-	};
+export interface SearchOptions {
+	nodeBudget?: number;
+	timeBudgetMs?: number;
+	resolution?: number;
+	turnCost?: number;
+	stepCost?: number;
+	/** Conservative bound on any support displacement, including a stop. */
+	maxStride?: number;
+	now?: () => number;
+}
+export interface SearchStats {
+	expanded: number;
+	generated: number;
+	elapsedMs: number;
+	reason: "goal" | "exhausted" | "node-budget" | "time-budget";
 }
 
-/** Distribute the leg's lateral residual equally across its supports, with a
- * strict subpixel bound. Resimulate all landings and settles after correction. */
+class Heap<T extends { f: number }> {
+	private items: T[] = [];
+	push(value: T) {
+		let i = this.items.length;
+		this.items.push(value);
+		while (i) {
+			const parent = (i - 1) >> 1;
+			if (this.items[parent].f <= value.f) break;
+			this.items[i] = this.items[parent];
+			i = parent;
+		}
+		this.items[i] = value;
+	}
+	pop(): T | undefined {
+		const first = this.items[0],
+			last = this.items.pop();
+		if (!last || !first) return;
+		if (this.items.length) {
+			let i = 0;
+			while (2 * i + 1 < this.items.length) {
+				let child = 2 * i + 1;
+				if (
+					child + 1 < this.items.length &&
+					this.items[child + 1].f < this.items[child].f
+				)
+					child++;
+				if (last.f <= this.items[child].f) break;
+				this.items[i] = this.items[child];
+				i = child;
+			}
+			this.items[i] = last;
+		}
+		return first;
+	}
+}
+
+/** A* on 3 cm support cells × foot/phase × heading. Positions are only
+ * quantised for duplicate detection: playback retains exact simulated poses.
+ * The route supplies a reachable target, not a sequence of steering legs. */
 export function planFootsteps<State, Pose>(
 	legs: readonly WalkLeg[],
 	initial: State,
 	sim: StepSimulation<State, Pose>,
+	options: SearchOptions = {},
 ) {
-	let first = simulatePlan(legs, initial, sim);
-	const last = first.steps[first.steps.length - 1];
-	const before = first.steps[first.steps.length - 2];
-	const halfStride =
-		last && before
-			? Math.hypot(
-					sim.position(last.state).x - sim.position(before.state).x,
-					sim.position(last.state).y - sim.position(before.state).y,
-				) / 2
-			: 0;
-	// If neither dogleg order fits, split each corridor leg and search again.
-	// Every candidate still uses the same footprint/settle validation.
-	if (first.distance > Math.max(2, halfStride)) {
-		const split = legs.flatMap((leg) => {
-			const midpoint = {
-				x: (leg.from.x + leg.to.x) / 2,
-				y: (leg.from.y + leg.to.y) / 2,
-			};
-			return [
-				{ ...leg, to: midpoint },
-				{ ...leg, from: midpoint, corner: true },
-			];
-		});
-		const alternative = simulatePlan(split, initial, sim);
-		if (alternative.distance < first.distance) {
-			legs = split;
-			first = alternative;
+	const now = options.now ?? (() => performance.now());
+	const started = now();
+	const ground = sim.ground ?? ((p: Point) => p);
+	const target = legs[legs.length - 1]?.to ?? sim.position(initial);
+	const goal = ground(target);
+	const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
+	const resolution = options.resolution ?? 0.03;
+	const turnCost = options.turnCost ?? 0.6;
+	const stepCost = options.stepCost ?? 0.02;
+	const maxStride = options.maxStride ?? 0.6;
+	// Distance is a lower bound on all distance+turn+step costs. Subtract
+	// the stop's maximum travel and goal radius so h=0 throughout the goal set.
+	const heuristic = (p: Point) =>
+		Math.max(0, distance(p, goal) - maxStride * 2.5);
+	type Node = {
+		state: State;
+		heading?: WalkDirection;
+		parent?: Node;
+		step?: PlannedStep<State, Pose>;
+		g: number;
+		f: number;
+		key: string;
+		stride: number;
+	};
+	const key = (state: State, heading?: WalkDirection) => {
+		const p = ground(sim.position(state));
+		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}`;
+	};
+	const open = new Heap<Node>();
+	const start: Node = {
+		state: initial,
+		g: 0,
+		f: heuristic(ground(sim.position(initial))),
+		key: key(initial),
+		stride: 0,
+	};
+	open.push(start);
+	const costs = new Map([[start.key, 0]]);
+	let expanded = 0,
+		generated = 1;
+	let reason: SearchStats["reason"] = "exhausted";
+	let best:
+		| {
+				node: Node;
+				step: PlannedStep<State, Pose>;
+				distance: number;
+				cost: number;
+				complete: boolean;
+		  }
+		| undefined;
+	const stepFor = (
+		node: Node,
+		heading: WalkDirection,
+		pose: Pose,
+		stop: boolean,
+	): PlannedStep<State, Pose> => ({
+		heading,
+		pose,
+		state: node.state,
+		stop,
+		leg: 0,
+		slide: { x: 0, y: 0 },
+	});
+	for (let node = open.pop(); node; node = open.pop()) {
+		if (node.g !== costs.get(node.key)) continue;
+		if (best?.complete && node.f >= best.cost) {
+			reason = "goal";
+			break;
+		}
+		if (expanded >= (options.nodeBudget ?? 12000)) {
+			reason = "node-budget";
+			break;
+		}
+		if (now() - started >= (options.timeBudgetMs ?? 30)) {
+			reason = "time-budget";
+			break;
+		}
+		expanded++;
+		for (const heading of GROUND_SECTORS) {
+			const delta =
+				node.heading === undefined
+					? 0
+					: Math.abs(
+							GROUND_SECTORS.indexOf(heading) -
+								GROUND_SECTORS.indexOf(node.heading),
+						);
+			const turn = Math.min(delta, 8 - delta);
+			if (turn > 2) continue;
+			const pose = sim.entry(node.state, heading, node.heading === undefined);
+			if (pose === undefined) continue;
+			const p = ground(sim.position(node.state));
+			const next = sim.advance(node.state, pose);
+			const stride = next
+				? distance(p, ground(sim.position(next)))
+				: node.stride;
+			const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
+			// Stopping is an edge, including all exit-frame motion. It cannot evade
+			// the turn cost or introduce a heading reversal at the final drawing.
+			const remainingBeforeStop = distance(p, goal);
+			const rest =
+				!best ||
+				remainingBeforeStop <= best.distance + maxStride * 2 ||
+				remainingBeforeStop <= maxStride * 2.5
+					? sim.rest(node.state, pose, heading)
+					: undefined;
+			if (rest && (node.parent || next)) {
+				const remaining = distance(ground(rest), goal);
+				const complete = remaining <= stride / 2 + 1e-8;
+				const cost =
+					node.g + distance(p, ground(rest)) + turnPenalty + stepCost;
+				if (
+					!best ||
+					(complete && !best.complete) ||
+					(complete === best.complete &&
+						(complete ? cost < best.cost : remaining < best.distance))
+				)
+					best = {
+						node,
+						step: stepFor(node, heading, pose, true),
+						distance: remaining,
+						cost,
+						complete,
+					};
+			}
+			if (!next || stride < 1e-8) continue;
+			const g = node.g + stride + turnPenalty + stepCost;
+			const nextKey = key(next, heading);
+			if (g >= (costs.get(nextKey) ?? Infinity)) continue;
+			costs.set(nextKey, g);
+			open.push({
+				state: next,
+				heading,
+				parent: node,
+				step: stepFor(node, heading, pose, false),
+				g,
+				f: g + heuristic(ground(sim.position(next))),
+				key: nextKey,
+				stride,
+			});
+			generated++;
 		}
 	}
-	if (!sim.offset) return first;
-	let corrections = legs.map(() => ({ x: 0, y: 0 }));
-	for (let pass = 0; pass < 3; pass++) {
-		const proposed = legs.map((leg, i) => {
-			const steps = first.steps.filter((s) => s.leg === i);
-			if (steps.length < 2) return corrections[i];
-			const last = steps[steps.length - 1];
-			const p = last.stop
-				? (sim.rest(last.state, last.pose, last.heading) ??
-					sim.position(last.state))
-				: sim.position(last.state);
-			const dx = corrections[i].x + (leg.to.x - p.x) / steps.length;
-			const dy = corrections[i].y + (leg.to.y - p.y) / steps.length;
-			const factor = Math.min(1, 0.99 / Math.hypot(dx, dy));
-			return { x: dx * factor, y: dy * factor };
-		});
-		const corrected = simulatePlan(legs, initial, sim, proposed);
-		if (corrected.distance >= first.distance) break;
-		first = corrected;
-		corrections = proposed;
+	const steps: PlannedStep<State, Pose>[] = [];
+	if (best) {
+		steps.push(best.step);
+		for (let n: Node | undefined = best.node; n?.step; n = n.parent)
+			steps.push(n.step);
+		steps.reverse();
 	}
-	return first;
+	if (best?.complete && reason === "exhausted") reason = "goal";
+	const last = best
+		? sim.rest(best.node.state, best.step.pose, best.step.heading)
+		: undefined;
+	return {
+		steps,
+		distance: last ? distance(last, target) : Infinity,
+		complete: best?.complete ?? false,
+		stats: {
+			expanded,
+			generated,
+			elapsedMs: now() - started,
+			reason,
+		} satisfies SearchStats,
+	};
 }

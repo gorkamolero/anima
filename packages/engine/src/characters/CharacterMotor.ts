@@ -63,6 +63,7 @@ export class CharacterMotor {
 	private lastStrideLength = 0;
 	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
 	private planDistance?: number;
+	private planSearch?: ReturnType<typeof planFootsteps>["stats"];
 	private resolve?: () => void;
 
 	private recoverAfterStanding = false;
@@ -402,25 +403,17 @@ export class CharacterMotor {
 			ground: (p) =>
 				this.area.perspective.constant === undefined
 					? toMetres(this.area.perspective, p)
-					: p,
-			headings: () => GROUND_SECTORS,
-			native: (s, direction) => {
-				const selected = this.animation.select(direction);
-				const frame = selected.cycle.switchFrames.find(
-					(f) => selected.cycle.contacts[f].planted === s.foot,
-				);
-				if (frame === undefined) return;
-				const first = this.predictStance({ ...selected, frame }, s, false);
-				if (!first) return;
-				return (
-					this.predictStance(first.pose, first, false)?.anchor ?? first.anchor
-				);
-			},
-			offset: (s, slide) => ({
-				...s,
-				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
-				end: { x: s.end.x + slide.x, y: s.end.y + slide.y },
-			}),
+					: {
+							x:
+								p.x /
+								((this.area.perspective.pixelsPerMetre ?? 300) *
+									(this.area.perspective.constant ?? 1)),
+							y:
+								-p.y /
+								((this.area.perspective.pixelsPerMetre ?? 300) *
+									(this.area.perspective.constant ?? 1)),
+						},
+			support: (s) => `${s.foot}:${s.pose.frame}`,
 			entry: (s, direction, starting) => {
 				const selected = this.animation.select(direction);
 				const same =
@@ -441,9 +434,7 @@ export class CharacterMotor {
 					)
 					.map((frame) => ({ ...selected, frame }))
 					.find(
-						(p) =>
-							this.predictStance(p, s) ||
-							(!starting && this.animation.standing && this.nextExit(p, s)),
+						(p) => !starting || this.canStand(p, s.anchor, s.foot, s.scale),
 					);
 			},
 			advance: (s, pose) => this.predictStance(pose, s),
@@ -472,6 +463,13 @@ export class CharacterMotor {
 		});
 		this.planned = result.steps;
 		this.planDistance = result.distance;
+		this.planSearch = result.stats;
+		if (!result.complete || result.stats.reason.endsWith("budget"))
+			console.warn("Footstep search partial/budget", result.stats, {
+				target: this.goal,
+				distance: result.distance,
+				complete: result.complete,
+			});
 	}
 	/** Consume a prevalidated stance. Only a new click calls buildPlan. */
 	private planStance(
@@ -859,7 +857,11 @@ export class CharacterMotor {
 	snapshot() {
 		return {
 			ground: toMetres(this.area.perspective, this.target),
-			plan: { remaining: this.planned.length, distance: this.planDistance },
+			plan: {
+				remaining: this.planned.length,
+				distance: this.planDistance,
+				search: this.planSearch,
+			},
 			arrival: this.arrival,
 			heading: this.heading,
 			walking: this.walking,
