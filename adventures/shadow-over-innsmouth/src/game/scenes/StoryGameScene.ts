@@ -277,11 +277,16 @@ export class StoryGameScene extends BaseScene {
 			"innsmouth-night",
 			"backgrounds/arkham-bus-depot-variant-b.png",
 		);
-		this.load.spritesheet(
-			HERMES_TEXTURE,
-			"assets/sprites/hermes/hermes-fal-veo-transparent-loop.png",
-			{ frameWidth: 612, frameHeight: 1059 },
-		);
+		const loadCycle = (texture: string) => {
+			this.load.once(`filecomplete-json-${texture}-meta`, () => {
+				const meta = this.cache.json.get(`${texture}-meta`) as FootCycle;
+				this.load.spritesheet(texture, `assets/sprites/hermes/${texture}.png`, {
+					frameWidth: meta.frameWidth,
+					frameHeight: meta.frameHeight,
+				});
+			});
+		};
+		loadCycle(HERMES_TEXTURE);
 		this.load.json(
 			`${HERMES_TEXTURE}-meta`,
 			`assets/sprites/hermes/${HERMES_TEXTURE}.json`,
@@ -300,10 +305,7 @@ export class StoryGameScene extends BaseScene {
 				`${texture}-meta`,
 				`assets/sprites/hermes/${texture}.json`,
 			);
-			this.load.spritesheet(texture, `assets/sprites/hermes/${texture}.png`, {
-				frameWidth: 612,
-				frameHeight: 1059,
-			});
+			loadCycle(texture);
 		}
 		for (const texture of [HERMES_IDLE_TEXTURE, HERMES_TALK_TEXTURE])
 			this.load.json(

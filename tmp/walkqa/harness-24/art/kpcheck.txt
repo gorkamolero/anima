@@ -1,0 +1,17 @@
+hermes-fal-veo-transparent-loop
+   {'foot': 'R', 'frames': '21..2', 'n': 12, 'flatErrMax': 16.52, 'wholeErrMax': 291.84, 'worst': (11, 291.8409676298302, (np.float64(-14.4), np.float64(12.4)), (277.2, 0.7))}
+   {'foot': 'L', 'frames': '3..20', 'n': 18, 'flatErrMax': 383.1, 'wholeErrMax': 425.99, 'worst': (17, 425.98856423178864, (np.float64(-25.2), np.float64(25.5)), (400.0, -0.0))}
+hermes-walk-away
+   {'foot': 'R', 'frames': '20..4', 'n': 15, 'flatErrMax': 190.26, 'wholeErrMax': 190.26, 'worst': (9, 190.25562137067698, (np.float64(-37.6), np.float64(-89.3)), (-0.8, 97.4))}
+   {'foot': 'L', 'frames': '5..19', 'n': 15, 'flatErrMax': 218.02, 'wholeErrMax': 240.49, 'worst': (12, 240.4890225302212, (np.float64(5.1), np.float64(-118.1)), (2.5, 122.4))}
+hermes-walk-toward
+   {'foot': 'R', 'frames': '18..4', 'n': 12, 'flatErrMax': 77.19, 'wholeErrMax': 82.63, 'worst': (9, 82.63131665862335, (np.float64(63.8), np.float64(-25.5)), (-2.6, -74.8))}
+   {'foot': 'L', 'frames': '5..17', 'n': 13, 'flatErrMax': 16.59, 'wholeErrMax': 80.92, 'worst': (12, 80.91532287970398, (np.float64(-51.4), np.float64(-34.4)), (-0.7, -97.5))}
+hermes-walk-away-right
+   {'foot': 'R', 'frames': '36..1', 'n': 14, 'flatErrMax': 189.91, 'wholeErrMax': 189.91, 'worst': (10, 189.9088845715737, (np.float64(-49.5), np.float64(-29.9)), (-225.9, 40.5))}
+   {'foot': 'L', 'frames': '2..13', 'n': 12, 'flatErrMax': 4.49, 'wholeErrMax': 282.22, 'worst': (10, 282.22091951813405, (np.float64(47.2), np.float64(-5.9)), (-231.3, 39.6))}
+   {'foot': 'R', 'frames': '14..23', 'n': 10, 'flatErrMax': 11.05, 'wholeErrMax': 11.05, 'worst': (5, 11.051087298300065, (np.float64(-132.9), np.float64(30.2)), (-143.2, 34.3))}
+   {'foot': 'L', 'frames': '24..35', 'n': 12, 'flatErrMax': 20.06, 'wholeErrMax': 335.54, 'worst': (11, 335.54019813235016, (np.float64(41.2), np.float64(10.3)), (-290.7, 59.8))}
+hermes-walk-toward-right
+   {'foot': 'L', 'frames': '24..11', 'n': 13, 'flatErrMax': 39.23, 'wholeErrMax': 221.26, 'worst': (12, 221.26263708314744, (np.float64(-46.2), np.float64(9.8)), (-262.3, -37.9))}
+   {'foot': 'R', 'frames': '12..23', 'n': 12, 'flatErrMax': 106.56, 'wholeErrMax': 315.51, 'worst': (11, 315.50638074200265, (np.float64(54.9), np.float64(-29.0)), (-260.4, -19.3))}
