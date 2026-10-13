@@ -13,6 +13,7 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "./footLock";
+import { type PlannedStep, planFootsteps, walkLegs } from "./footstepPlan";
 import { stanceFrameMs } from "./stanceTiming";
 import {
 	GROUND_SECTORS,
@@ -59,9 +60,10 @@ export class CharacterMotor {
 	private frameMs = 1000 / 24;
 	private path: Point[] = [];
 	private goal?: Point;
-	private visitedSupports = new Set<string>();
+	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
+	private planDistance?: number;
 	private resolve?: () => void;
-	private recoveries = 0;
+
 	private recoverAfterStanding = false;
 	private unmatchedCut = false;
 	private lastCut?: {
@@ -140,6 +142,7 @@ export class CharacterMotor {
 		);
 	}
 	stop(immediate = false): void {
+		this.planned = [];
 		if (this.drawn && !immediate) {
 			this.path = [];
 			if (!this.drawn.resume) return;
@@ -157,7 +160,10 @@ export class CharacterMotor {
 			}
 			return;
 		}
-		if (immediate) this.drawn = undefined;
+		if (immediate) {
+			this.drawn = undefined;
+			this.planned = [];
+		}
 		if (immediate) this.recoverAfterStanding = false;
 		this.path = [];
 		if (this.transition && !immediate) return;
@@ -198,7 +204,10 @@ export class CharacterMotor {
 		this.finish();
 	}
 	/** Simulate safe supports to the next generated exit, without changing the motor. */
-	private nextExit(source: FootPose):
+	private nextExit(
+		source: FootPose,
+		state?: PredictedStance,
+	):
 		| {
 				frames: number;
 				position: Point & { scale: number };
@@ -209,17 +218,20 @@ export class CharacterMotor {
 		// Search one full cycle, simulating every contact transfer.
 		// A boundary may prohibit the preferred exit; never walk off-floor to reach it.
 		let pose = source,
-			foot = this.foot,
-			anchor = this.anchor;
-		let position = { x: this.target.x, y: this.target.y, scale: this.scale };
+			foot = state?.foot ?? this.foot,
+			anchor = state?.anchor ?? this.anchor;
+		let position = {
+			x: state?.end.x ?? this.target.x,
+			y: state?.end.y ?? this.target.y,
+			scale: state?.scale ?? this.scale,
+		};
 		const mask = this.area.clearanceMask ?? this.area.mask;
 		const raw = this.area.rawMask ?? this.area.mask;
 
 		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
-				this.canStand(pose, anchor, foot, position.scale) &&
-				this.canResume(pose, anchor, foot, position)
+				this.canStand(pose, anchor, foot, position.scale)
 			) {
 				return { frames: n, position, anchor, foot };
 			}
@@ -290,8 +302,8 @@ export class CharacterMotor {
 		this.arrival = undefined;
 		this.lastCut = undefined;
 		this.unmatchedCut = false;
-		this.recoveries = 0;
-		this.visitedSupports.clear();
+
+		this.planned = [];
 		this.goal = points[points.length - 1];
 		if (!this.goal) return Promise.resolve();
 		const hadPose = Boolean(this.pose);
@@ -308,6 +320,7 @@ export class CharacterMotor {
 			this.scale,
 		);
 		const from = this.pose;
+		this.buildPlan(initialHeading);
 		if (!this.planStance(true, false, initialHeading)) {
 			if (!this.animation.standing || !from) return Promise.resolve();
 			// Standing is double support: if the held boot cannot start a safe
@@ -316,6 +329,7 @@ export class CharacterMotor {
 			this.pose = from;
 			this.foot = this.foot === "L" ? "R" : "L";
 			this.anchor = contactOnScreen(from, this.foot, this.target, this.scale);
+			this.buildPlan(initialHeading);
 			if (!this.planStance(true, false, initialHeading))
 				return Promise.resolve();
 		}
@@ -340,313 +354,145 @@ export class CharacterMotor {
 			this.resolve = resolve;
 		});
 	}
-	/** Replan from the actual locked body, and evaluate the drawing, not a nominal heading. */
-	private planStance(
-		starting = false,
-		turning = false,
-		initialHeading?: WalkDirection,
-	): boolean {
-		if (!this.pose || !this.goal) return false;
+	private buildPlan(initialHeading?: WalkDirection): void {
+		if (!this.pose || !this.goal) return;
 		this.path = findPath(this.area.mask, this.target, this.goal);
-		if (!this.path.length) return false;
-		const goal = this.path[this.path.length - 1];
-		this.goal = goal;
-		const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
-		const remaining = (p: Point) => {
-			const route = lineOfSight(this.area.mask, p, goal)
-				? [p, goal]
-				: findPath(this.area.mask, p, goal);
-			return route.length
-				? route.slice(1).reduce((n, q, i) => n + distance(route[i], q), 0)
-				: Infinity;
+		this.goal = this.path[this.path.length - 1] ?? this.goal;
+		const legs = walkLegs(this.path, this.area.perspective);
+		if (initialHeading && legs[0]) legs[0].heading = initialHeading;
+		const initial: PredictedStance = {
+			start: this.target,
+			end: { x: this.target.x, y: this.target.y },
+			anchor: { ...this.anchor },
+			foot: this.foot,
+			pose: this.pose,
+			scale: this.scale,
 		};
-		let best:
-			| { heading: WalkDirection; pose: FootPose; score: number }
-			| undefined;
-		const here = remaining(this.target);
-		const alternatives: {
-			heading: WalkDirection;
-			pose: FootPose;
-			predicted: PredictedStance;
-		}[] = [];
-		for (const heading of GROUND_SECTORS) {
-			if (starting && initialHeading && heading !== initialHeading) continue;
-			const next = this.animation.select(heading);
-			const same =
-				next.cycle.name === this.pose.cycle.name &&
-				next.flipX === this.pose.flipX;
-			const placementDistance = (frame: number) => {
-				const p = lockedPlacement(
-					this.anchor,
-					{ ...next, frame },
-					this.foot,
+		const result = planFootsteps(legs, initial, {
+			position: (s) => s.end,
+			offset: (s, slide) => ({
+				...s,
+				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
+				end: { x: s.end.x + slide.x, y: s.end.y + slide.y },
+			}),
+			entry: (s, direction, starting) => {
+				const selected = this.animation.select(direction);
+				const same =
+					selected.cycle.name === s.pose.cycle.name &&
+					selected.flipX === s.pose.flipX;
+				const frames = same
+					? [s.pose.frame]
+					: starting
+						? (selected.cycle.matchedCut?.entryFrames ??
+							selected.cycle.switchFrames)
+						: selected.cycle.switchFrames;
+				return frames
+					.filter(
+						(f) =>
+							selected.cycle.contacts[f].planted === s.foot &&
+							selected.cycle.contacts[(f + 1) % selected.cycle.contacts.length]
+								.planted === s.foot,
+					)
+					.map((frame) => ({ ...selected, frame }))
+					.find(
+						(p) =>
+							this.predictStance(p, s) ||
+							(!starting && this.animation.standing && this.nextExit(p, s)),
+					);
+			},
+			advance: (s, pose) => this.predictStance(pose, s),
+			rest: (s, pose, direction) => {
+				const exit = this.nextExit(pose, s);
+				if (!exit) return;
+				const idle = this.animation.standing?.(direction);
+				if (!idle) return exit.anchor;
+				const rest = {
+					...idle,
+					frame:
+						idle.cycle.settleFrames?.[idle.cycle.settleFrames.length - 1] ??
+						idle.frame,
+				};
+				const placed = lockedPlacement(
+					exit.anchor,
+					rest,
+					exit.foot,
 					this.area.perspective,
 					this.area.baseScale,
 					this.area.scaleClamp,
-					this.scale,
+					exit.position.scale,
 				);
-				return distance(p, this.target);
-			};
-			const remainingFrames = (frame: number) => {
-				let count = 1;
-				while (
-					count < next.cycle.contacts.length &&
-					next.cycle.contacts[(frame + count) % next.cycle.contacts.length]
-						.planted === this.foot
-				)
-					count++;
-				return count;
-			};
-			// An idle foot can enter mid-stance. Pick the closest safe drawing pose,
-			// avoiding an artificial backwards body jump just to start a depth walk.
-			if (turning && same) continue;
-			const frames =
-				starting || turning
-					? next.cycle.contacts
-							.flatMap((c, i) =>
-								c.planted === this.foot &&
-								(!starting ||
-									!next.cycle.matchedCut ||
-									next.cycle.matchedCut.entryFrames.includes(i))
-									? [i]
-									: [],
-							)
-							.sort(
-								(a, b) =>
-									(starting
-										? (next.cycle.matchedCut?.entryFrames.indexOf(a) ?? 0) -
-											(next.cycle.matchedCut?.entryFrames.indexOf(b) ?? 0)
-										: 0) ||
-									(turning ? remainingFrames(b) - remainingFrames(a) : 0) ||
-									placementDistance(a) - placementDistance(b),
-							)
-					: [
-							same
-								? this.pose.frame
-								: next.cycle.switchFrames.find(
-										(i) => next.cycle.contacts[i].planted === this.foot,
-									),
-						];
-			for (const frame of frames) {
-				if (frame === undefined) continue;
-				const pose = { ...next, frame };
-				// A one-frame pivot can switch support twice between rendered frames.
-				// Require a visible stance instead of hiding a second landing in one tick.
-				if (
-					(starting || turning) &&
-					next.cycle.contacts[(frame + 1) % next.cycle.contacts.length]
-						.planted !== this.foot
-				)
-					continue;
-				const predicted = this.predictStance(pose);
-				if (!predicted) continue;
-				// An arrival must remain escapable too: otherwise the next
-				// click cannot turn from the held contact in a narrow pocket.
-				{
-					let continuation = false;
-					for (const following of GROUND_SECTORS) {
-						const selected = this.animation.select(following);
-						for (let f = 0; f < selected.cycle.contacts.length; f++) {
-							if (
-								selected.cycle.contacts[f].planted !== predicted.foot ||
-								selected.cycle.contacts[
-									(f + 1) % selected.cycle.contacts.length
-								].planted !== predicted.foot
-							)
-								continue;
-							if (this.predictStance({ ...selected, frame: f }, predicted)) {
-								continuation = true;
-								break;
-							}
-						}
-						if (continuation) break;
-					}
-					if (!continuation) continue;
-				}
-				let score = remaining(
-					starting
-						? {
-								x: this.target.x + predicted.end.x - predicted.start.x,
-								y: this.target.y + predicted.end.y - predicted.start.y,
-							}
-						: predicted.end,
-				);
-				// Score the actual source-frame standing endpoint, including any
-				// intervening support transfers. Never assume the current anchor
-				// will still be the support when the cut comes around.
-				if (here < 200 && this.animation.standing && next.cycle.matchedCut) {
-					const exit = this.nextExit(pose);
-					if (exit) {
-						const end = lockedPlacement(
-							exit.anchor,
-							this.animation.standing(heading),
-							exit.foot,
-							this.area.perspective,
-							this.area.baseScale,
-							this.area.scaleClamp,
-							exit.position.scale,
-						);
-						score = Math.min(score, remaining(end));
-					}
-				}
-				if (score >= here - 0.01) {
-					alternatives.push({ heading, pose, predicted });
-					continue;
-				}
-				if (
-					!best ||
-					score < best.score - 0.01 ||
-					(Math.abs(score - best.score) <= 0.01 && heading === this.heading)
-				)
-					best = { heading, pose, score };
-				break;
-			}
-		}
-		// A short sidestep may be needed to change support foot at a narrow edge.
-		// Only take it when a fully validated following stance makes net progress.
-		if (!best)
-			for (const candidate of alternatives) {
-				for (const heading of GROUND_SECTORS) {
-					const state = candidate.predicted;
-					const next = this.animation.select(heading);
-					const frame =
-						next.cycle.name === state.pose.cycle.name &&
-						next.flipX === state.pose.flipX
-							? state.pose.frame
-							: next.cycle.switchFrames.find(
-									(i) => next.cycle.contacts[i].planted === state.foot,
-								);
-					if (frame === undefined) continue;
-					const follow = this.predictStance({ ...next, frame }, state);
-					if (!follow) continue;
-					const score = remaining(follow.end);
-					if (score < here - 0.01 && (!best || score < best.score))
-						best = { heading: candidate.heading, pose: candidate.pose, score };
-				}
-			}
-		// Bounded lookahead finds a safe detour when a single stance cannot progress.
-		if (!best && alternatives.length) {
-			let beam = alternatives.map((first) => ({
-				first,
-				state: first.predicted,
-				score: remaining(first.predicted.end),
-			}));
-			const visited = new Set<string>();
-			for (let depth = 0; depth < 6 && !best; depth++) {
-				const nextBeam: typeof beam = [];
-				for (const node of beam)
-					for (const direction of GROUND_SECTORS) {
-						const selected = this.animation.select(direction);
-						for (const frame of selected.cycle.switchFrames.filter(
-							(i) => selected.cycle.contacts[i].planted === node.state.foot,
-						)) {
-							const state = this.predictStance(
-								{ ...selected, frame },
-								node.state,
-							);
-							if (!state) continue;
-							const key = `${Math.round(state.anchor.x / 5)},${Math.round(state.anchor.y / 5)},${state.foot}`;
-							if (visited.has(key)) continue;
-							visited.add(key);
-							const score = remaining(state.end);
-							if (score < here - 1 && (!best || score < best.score))
-								best = {
-									heading: node.first.heading,
-									pose: node.first.pose,
-									score,
-								};
-							nextBeam.push({ first: node.first, state, score });
-						}
-					}
-				beam = nextBeam.sort((a, b) => a.score - b.score).slice(0, 12);
-			}
-		}
-
-		if (!best) {
-			// Turning on the held foot can enter a partial stance when a full
-			// landing pose would put the body beyond a boundary.
-			if (!starting && !turning) return this.planStance(false, true);
-			if (!starting && this.animation.standing && this.recoveries < 2) {
-				this.recoveries++;
-				this.recoverAfterStanding = true;
-			}
-			this.stop();
-			return false;
-		}
-		this.pose = best.pose;
-		// Keep full supports on their source clock. Partial turns get the
-		// available step time below, capped at one output frame per source pose.
-		const contacts = this.pose.cycle.contacts;
-		let first = this.pose.frame;
-		for (let n = 0; n < contacts.length - 1; n++) {
-			const previous = (first + contacts.length - 1) % contacts.length;
-			if (contacts[previous].planted !== this.foot) break;
-			first = previous;
-		}
-		let count = 1;
-		while (
-			count < contacts.length &&
-			contacts[(first + count) % contacts.length].planted === this.foot
-		)
-			count++;
-		// Use the natural upper cadence consistently: even four-support approaches
-		// must satisfy the reviewer's three-switch whole-clip estimator.
-		const cadence = 2.2;
-		const switches = this.pose.cycle.switchFrames;
-		const lengths = switches.map(
-			(frame, i) =>
-				(switches[(i + 1) % switches.length] - frame + contacts.length) %
-					contacts.length || contacts.length,
-		);
+				return contactOnScreen(rest, exit.foot, placed, placed.scale);
+			},
+		});
+		this.planned = result.steps;
+		this.planDistance = result.distance;
+	}
+	/** Consume a prevalidated stance. Only a new click calls buildPlan. */
+	private planStance(
+		_starting = false,
+		_turning = false,
+		_initialHeading?: WalkDirection,
+	): boolean {
+		const step = this.planned.shift();
+		if (!step) return false;
+		this.anchor = {
+			x: this.anchor.x + step.slide.x,
+			y: this.anchor.y + step.slide.y,
+		};
+		this.pose = step.pose;
+		this.heading = step.heading;
 		let supportFrames = 1;
 		while (
-			supportFrames < contacts.length &&
-			contacts[(this.pose.frame + supportFrames) % contacts.length].planted ===
-				this.foot
+			supportFrames < step.pose.cycle.contacts.length &&
+			step.pose.cycle.contacts[
+				(step.pose.frame + supportFrames) % step.pose.cycle.contacts.length
+			].planted === this.foot
 		)
 			supportFrames++;
-		// A partial entry or turn must not create a faster-than-natural step.
-		// Keep at least 1/2.2 seconds of support, including exit approaches.
 		this.frameMs = Math.max(
-			stanceFrameMs(lengths, count, cadence),
+			this.cycleFrameMs(step.pose),
 			1000 / (2.2 * supportFrames),
 		);
-		this.heading = best.heading;
 		this.apply();
-		// Zero is within the one-pixel steering allowance. All steering is now discrete.
-
-		return true;
-	}
-	/** A stop must leave a usable source-frame entry, not strand the next click. */
-	private canResume(
-		pose: FootPose,
-		anchor: Point,
-		foot: Foot,
-		position: Point & { scale: number },
-	): boolean {
-		if (!pose.cycle.matchedCut) return true;
-		const state = this.predictStance(pose, {
-			start: position,
-			end: position,
-			anchor,
-			foot,
-			pose,
-			scale: position.scale,
-		});
-		if (!state) return false;
-		for (const direction of GROUND_SECTORS) {
-			const selected = this.animation.select(direction);
-			for (let frame = 0; frame < selected.cycle.contacts.length; frame++) {
-				if (
-					selected.cycle.contacts[frame].planted !== state.foot ||
-					selected.cycle.contacts[(frame + 1) % selected.cycle.contacts.length]
-						.planted !== state.foot
-				)
-					continue;
-				if (this.predictStance({ ...selected, frame }, state)) return true;
+		if (step.stop) {
+			const exit = this.nextExit(step.pose);
+			if (exit && this.goal) {
+				const idle = this.animation.standing?.(step.heading);
+				const rest = idle
+					? {
+							...idle,
+							frame:
+								idle.cycle.settleFrames?.[idle.cycle.settleFrames.length - 1] ??
+								idle.frame,
+						}
+					: step.pose;
+				const p = lockedPlacement(
+					exit.anchor,
+					rest,
+					exit.foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					exit.position.scale,
+				);
+				const stride = this.predictStance(step.pose);
+				const halfStride = stride
+					? Math.hypot(
+							stride.end.x - stride.start.x,
+							stride.end.y - stride.start.y,
+						) / 2
+					: 2;
+				this.arrival = {
+					target: { ...this.goal },
+					anchor: { ...exit.anchor },
+					distance: Math.hypot(p.x - this.goal.x, p.y - this.goal.y),
+					halfStride: Math.max(2, halfStride),
+					switchFrame: step.pose.frame,
+				};
 			}
+			this.stop();
 		}
-		return false;
+		return true;
 	}
 
 	/** Resume the source cycle clock after a partial entry; its slower entry
@@ -690,22 +536,41 @@ export class CharacterMotor {
 		});
 		if (!direction) return true;
 		const idle = this.animation.standing(direction);
-		const placed = lockedPlacement(
-			anchor,
-			idle,
-			foot,
-			this.area.perspective,
-			this.area.baseScale,
-			this.area.scaleClamp,
-			scale,
-		);
 		const raw = this.area.rawMask ?? this.area.mask;
-		return (["L", "R"] as const).every(
-			(sole) =>
-				raw.data[
-					cellAt(raw, contactOnScreen(idle, sole, placed, placed.scale))
-				] > 0,
-		);
+		const poses = (idle.cycle.settleFrames ?? [idle.frame]).map((frame) => ({
+			...idle,
+			frame,
+		}));
+		return poses.every((rest, index) => {
+			const placed = lockedPlacement(
+				anchor,
+				rest,
+				foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				scale,
+			);
+			if (
+				!raw.data[cellAt(raw, anchor)] ||
+				!(this.area.clearanceMask ?? this.area.mask).data[
+					cellAt(this.area.clearanceMask ?? this.area.mask, {
+						x: placed.x,
+						y: anchor.y,
+					})
+				]
+			)
+				return false;
+			return (
+				index < poses.length - 1 ||
+				(["L", "R"] as const).every(
+					(sole) =>
+						raw.data[
+							cellAt(raw, contactOnScreen(rest, sole, placed, placed.scale))
+						] > 0,
+				)
+			);
+		});
 	}
 	/** Validate every body frame and the next planted landing before committing a stance. */
 	private predictStance(
@@ -820,151 +685,11 @@ export class CharacterMotor {
 		this.target.setDepth(10 + this.anchor.y / 20);
 		this.animation.show(this.pose);
 	}
-	private stanceEnd(): FootPose {
-		const pose = this.pose as FootPose,
-			n = pose.cycle.contacts.length;
-		let frame = (pose.frame + 1) % n;
-		while (
-			frame !== pose.frame &&
-			pose.cycle.contacts[frame].planted === this.foot
-		)
-			frame = (frame + 1) % n;
-		return { ...pose, frame: (frame + n - 1) % n };
-	}
 	private atSwitch(passingOnly = false): boolean {
-		if (!this.pose || !this.goal) return false;
-		const end = this.stanceEnd();
-		const predicted = lockedPlacement(
-			this.anchor,
-			end,
-			this.foot,
-			this.area.perspective,
-			this.area.baseScale,
-			this.area.scaleClamp,
-			this.scale,
-		);
-		const goal = this.goal;
-		const exit = this.pose.cycle.matchedCut
-			? this.nextExit(this.pose)
-			: undefined;
-		const standing = exit ? this.animation.standing?.(this.heading) : undefined;
-		const arrivalPosition =
-			standing && exit
-				? lockedPlacement(
-						exit.anchor,
-						standing,
-						exit.foot,
-						this.area.perspective,
-						this.area.baseScale,
-						this.area.scaleClamp,
-						exit.position.scale,
-					)
-				: this.target;
-		const distance = Math.hypot(
-			goal.x - arrivalPosition.x,
-			goal.y - arrivalPosition.y,
-		);
-		const stride = Math.hypot(
-			predicted.x - this.target.x,
-			predicted.y - this.target.y,
-		);
-		let halfStride = Math.max(2, stride / 2);
-		if (passingOnly) {
-			let first = this.pose.frame;
-			const contacts = this.pose.cycle.contacts;
-			for (let n = 0; n < contacts.length - 1; n++) {
-				const previous = (first + contacts.length - 1) % contacts.length;
-				if (contacts[previous].planted !== this.foot) break;
-				first = previous;
-			}
-			const start = lockedPlacement(
-				this.anchor,
-				{ ...this.pose, frame: first },
-				this.foot,
-				this.area.perspective,
-				this.area.baseScale,
-				this.area.scaleClamp,
-				this.scale,
-			);
-			halfStride = Math.max(
-				2,
-				Math.hypot(predicted.x - start.x, predicted.y - start.y) / 2,
-			);
-		}
-		// At a turn, arrival tolerance belongs to the stride aimed at the goal,
-		// not only to the cycle we happened to arrive on. Evaluate that stride
-		// without executing it: an overshooting step need not leave the floor.
-		if (
-			lineOfSight(this.area.mask, this.target, goal) &&
-			distance > halfStride
-		) {
-			let alignment = -Infinity;
-			for (const direction of GROUND_SECTORS) {
-				const selected = this.animation.select(direction);
-				const first = selected.cycle.switchFrames.find(
-					(i) => selected.cycle.contacts[i].planted === this.foot,
-				);
-				if (first === undefined) continue;
-				let last = first;
-				while (
-					selected.cycle.contacts[(last + 1) % selected.cycle.contacts.length]
-						.planted === this.foot
-				) {
-					last = (last + 1) % selected.cycle.contacts.length;
-					if (last === first) break;
-				}
-				const positions = [first, last].map((frame) =>
-					lockedPlacement(
-						this.anchor,
-						{ ...selected, frame },
-						this.foot,
-						this.area.perspective,
-						this.area.baseScale,
-						this.area.scaleClamp,
-						this.scale,
-					),
-				);
-				const dx = positions[1].x - positions[0].x,
-					dy = positions[1].y - positions[0].y;
-				const length = Math.hypot(dx, dy);
-				const dot =
-					(dx * (goal.x - this.target.x) + dy * (goal.y - this.target.y)) /
-					Math.max(
-						1e-9,
-						length * Math.hypot(goal.x - this.target.x, goal.y - this.target.y),
-					);
-				if (dot > alignment) {
-					alignment = dot;
-					halfStride = Math.max(2, (length * dot) / 2);
-				}
-			}
-			if (alignment <= 0) halfStride = Math.max(2, stride / 2);
-		}
-		if (
-			distance <= halfStride &&
-			(!this.pose.cycle.matchedCut || exit !== undefined) &&
-			this.canStand(this.pose, this.anchor, this.foot, this.scale)
-		) {
-			this.arrival = {
-				target: { ...goal },
-				anchor: { ...(exit?.anchor ?? this.anchor) },
-				distance,
-				halfStride,
-				switchFrame: this.pose.frame,
-			};
-			this.stop();
-			return true;
-		}
 		if (passingOnly) return false;
-		// A route can be connected in pixels but impossible for the drawn
-		// feet. Do not repeat the same support detour indefinitely.
-		const support = `${Math.round(this.anchor.x * 10)},${Math.round(this.anchor.y * 10)},${this.foot},${this.heading}`;
-		if (this.visitedSupports.has(support)) {
-			this.stop();
-			return true;
-		}
-		this.visitedSupports.add(support);
-		return !this.planStance();
+		if (this.planStance()) return Boolean(this.transition);
+		this.stop();
+		return true;
 	}
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
@@ -1069,11 +794,7 @@ export class CharacterMotor {
 			};
 			const foot = next.cycle.contacts[next.frame].planted;
 			const switched = foot !== this.foot;
-			const previous = {
-				pose: this.pose,
-				foot: this.foot,
-				anchor: { ...this.anchor },
-			};
+
 			if (switched) {
 				// Capture the incoming sole before changing frames: transfer support without snapping.
 				this.anchor = contactOnScreen(this.pose, foot, this.target, this.scale);
@@ -1081,30 +802,7 @@ export class CharacterMotor {
 			}
 			this.pose = next;
 			if (switched) {
-				const placement = lockedPlacement(
-					this.anchor,
-					next,
-					this.foot,
-					this.area.perspective,
-					this.area.baseScale,
-					this.area.scaleClamp,
-					this.scale,
-				);
-				if (
-					!lineOfSight(
-						this.area.clearanceMask ?? this.area.mask,
-						{ x: this.target.x, y: previous.anchor.y },
-						{ x: placement.x, y: this.anchor.y },
-					)
-				) {
-					if (!this.planStance()) {
-						this.pose = previous.pose;
-						this.foot = previous.foot;
-						this.anchor = previous.anchor;
-						this.stop();
-						break;
-					}
-				} else this.apply();
+				if (this.atSwitch()) break;
 			} else this.apply();
 			// Request the next exit as soon as the goal enters the arrival window;
 			// waiting until another support switch can miss that exit entirely.
@@ -1115,12 +813,12 @@ export class CharacterMotor {
 				this.atSwitch(true)
 			)
 				break;
-			if (switched && this.atSwitch()) break;
 		}
 	}
 	snapshot() {
 		return {
 			ground: toMetres(this.area.perspective, this.target),
+			plan: { remaining: this.planned.length, distance: this.planDistance },
 			arrival: this.arrival,
 			heading: this.heading,
 			walking: this.walking,

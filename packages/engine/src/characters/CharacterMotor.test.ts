@@ -282,8 +282,9 @@ describe("contact motor", () => {
 		const { motor, cycle, pose, target } = setup(true);
 		cycle.contacts = Array.from({ length: 12 }, (_, i) => ({
 			planted: i < 6 ? "L" : "R",
-			L: { x: i < 6 ? 70 - i * 2 : 40 + (i - 6) * 2, y: 190 },
-			R: { x: i < 6 ? 40 + i * 2 : 70 - (i - 6) * 2, y: 190 },
+			L: { x: i < 6 ? 70 - i * 2 : 70 + (i - 6) * 2, y: 190 },
+			// The incoming sole must land ahead; the old fixture moved backwards at every transfer.
+			R: { x: i < 6 ? 70 + i * 2 : 70 - (i - 6) * 2, y: 190 },
 		}));
 		cycle.switchFrames = [0, 6];
 		cycle.matchedCut = {
