@@ -1,6 +1,6 @@
 [
 	{
-		"id": "barrels-0-55e961-upright",
+		"id": "barrels-0-55e961-upright-upright",
 		"label": "barrels-0",
 		"bbox": {
 			"x": 1062,
@@ -34,7 +34,7 @@
 				"y": 821
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-0-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 12886,
 			"retainedPixels": 12886,
@@ -43,10 +43,10 @@
 		"heightMetres": 0.3986520464480591,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "barrels-1-55e961-upright",
+		"id": "barrels-1-55e961-upright-upright",
 		"label": "barrels-1",
 		"bbox": {
 			"x": 1765,
@@ -76,7 +76,7 @@
 				"y": 723
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-1-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 7915,
 			"retainedPixels": 7915,
@@ -85,10 +85,10 @@
 		"heightMetres": 0.4892686975668985,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "barrels-3-55e961-flat",
+		"id": "barrels-3-55e961-flat-flat",
 		"label": "barrels-3",
 		"bbox": {
 			"x": 1482,
@@ -122,7 +122,7 @@
 				"y": 1080
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-3-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-barrels-3-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 5105,
 			"retainedPixels": 5105,
@@ -131,28 +131,28 @@
 		"heightMetres": 0.08104063966270618,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-0-55e961-upright",
+		"id": "crates-0-55e961-upright-upright",
 		"label": "crates-0",
 		"bbox": {
-			"x": 802,
+			"x": 827,
 			"y": 728,
-			"w": 126,
+			"w": 98,
 			"h": 113
 		},
 		"baseline": [
 			{
-				"x": 835.5,
-				"y": 838
-			},
-			{
-				"x": 840.5,
+				"x": 838.5,
 				"y": 840
 			},
 			{
-				"x": 845.5,
+				"x": 842.5,
+				"y": 841
+			},
+			{
+				"x": 846.5,
 				"y": 841
 			},
 			{
@@ -160,32 +160,74 @@
 				"y": 840
 			},
 			{
-				"x": 855.5,
-				"y": 839
-			},
-			{
-				"x": 858.5,
-				"y": 838
+				"x": 854.5,
+				"y": 840
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-0-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 10430,
-			"retainedPixels": 10430,
+			"referencePixels": 8824,
+			"retainedPixels": 8824,
 			"fraction": 1
 		},
-		"heightMetres": 0.3087054504145285,
+		"heightMetres": 0.3122518803076037,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-1-55e961-upright",
+		"id": "crates-0-55e961-upright-flat",
+		"label": "crates-0",
+		"bbox": {
+			"x": 802,
+			"y": 739,
+			"w": 126,
+			"h": 96
+		},
+		"baseline": [
+			{
+				"x": 823.5,
+				"y": 824
+			},
+			{
+				"x": 824.5,
+				"y": 825
+			},
+			{
+				"x": 825.5,
+				"y": 830
+			},
+			{
+				"x": 826.5,
+				"y": 832
+			},
+			{
+				"x": 829.5,
+				"y": 835
+			},
+			{
+				"x": 925.5,
+				"y": 819
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-0-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 1606,
+			"retainedPixels": 1606,
+			"fraction": 1
+		},
+		"heightMetres": 0.2604967547426102,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-1-55e961-upright-upright",
 		"label": "crates-1",
 		"bbox": {
 			"x": 977,
 			"y": 686,
-			"w": 95,
+			"w": 86,
 			"h": 104
 		},
 		"baseline": [
@@ -210,24 +252,54 @@
 				"y": 789
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-1-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 8009,
-			"retainedPixels": 8009,
+			"referencePixels": 7808,
+			"retainedPixels": 7808,
 			"fraction": 1
 		},
 		"heightMetres": 0.34697547381094723,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-2-55e961-upright",
+		"id": "crates-1-55e961-upright-flat",
+		"label": "crates-1",
+		"bbox": {
+			"x": 1063,
+			"y": 696,
+			"w": 9,
+			"h": 48
+		},
+		"baseline": [
+			{
+				"x": 1063.5,
+				"y": 744
+			},
+			{
+				"x": 1064.5,
+				"y": 743
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-1-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 201,
+			"retainedPixels": 201,
+			"fraction": 1
+		},
+		"heightMetres": 0.19237198463836327,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-2-55e961-upright-upright",
 		"label": "crates-2",
 		"bbox": {
 			"x": 544,
 			"y": 636,
-			"w": 103,
+			"w": 93,
 			"h": 87
 		},
 		"baseline": [
@@ -256,24 +328,54 @@
 				"y": 721
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-2-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 7441,
-			"retainedPixels": 7441,
+			"referencePixels": 7097,
+			"retainedPixels": 7097,
 			"fraction": 1
 		},
-		"heightMetres": 0.38962150194761475,
+		"heightMetres": 0.3902715003464438,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-3-55e961-upright",
+		"id": "crates-2-55e961-upright-flat",
+		"label": "crates-2",
+		"bbox": {
+			"x": 637,
+			"y": 643,
+			"w": 10,
+			"h": 44
+		},
+		"baseline": [
+			{
+				"x": 637.5,
+				"y": 687
+			},
+			{
+				"x": 638.5,
+				"y": 686
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-2-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 344,
+			"retainedPixels": 344,
+			"fraction": 1
+		},
+		"heightMetres": 0.24278247190883168,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-3-55e961-upright-upright",
 		"label": "crates-3",
 		"bbox": {
 			"x": 1006,
 			"y": 617,
-			"w": 102,
+			"w": 92,
 			"h": 80
 		},
 		"baseline": [
@@ -302,70 +404,142 @@
 				"y": 695
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-3-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 6691,
-			"retainedPixels": 6691,
+			"referencePixels": 6517,
+			"retainedPixels": 6517,
 			"fraction": 1
 		},
 		"heightMetres": 0.4155022786239533,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-4-55e961-upright",
-		"label": "crates-4",
+		"id": "crates-3-55e961-upright-flat",
+		"label": "crates-3",
 		"bbox": {
-			"x": 910,
-			"y": 671,
-			"w": 92,
-			"h": 93
+			"x": 1098,
+			"y": 654,
+			"w": 10,
+			"h": 34
 		},
 		"baseline": [
 			{
-				"x": 945.5,
-				"y": 762
+				"x": 1098.5,
+				"y": 688
 			},
+			{
+				"x": 1099.5,
+				"y": 688
+			},
+			{
+				"x": 1100.5,
+				"y": 688
+			},
+			{
+				"x": 1101.5,
+				"y": 688
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-3-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 174,
+			"retainedPixels": 174,
+			"fraction": 1
+		},
+		"heightMetres": 0.18944527719266677,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-4-55e961-upright-upright",
+		"label": "crates-4",
+		"bbox": {
+			"x": 920,
+			"y": 671,
+			"w": 58,
+			"h": 93
+		},
+		"baseline": [
 			{
 				"x": 950.5,
 				"y": 764
 			},
 			{
-				"x": 955.5,
+				"x": 953.5,
 				"y": 764
 			},
 			{
-				"x": 960.5,
+				"x": 956.5,
 				"y": 764
 			},
 			{
-				"x": 965.5,
-				"y": 762
+				"x": 959.5,
+				"y": 764
 			},
 			{
-				"x": 969.5,
-				"y": 762
+				"x": 961.5,
+				"y": 764
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-4-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 5702,
-			"retainedPixels": 5702,
+			"referencePixels": 4907,
+			"retainedPixels": 4907,
 			"fraction": 1
 		},
 		"heightMetres": 0.3456245978852753,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-5-55e961-upright",
+		"id": "crates-4-55e961-upright-flat",
+		"label": "crates-4",
+		"bbox": {
+			"x": 910,
+			"y": 671,
+			"w": 92,
+			"h": 57
+		},
+		"baseline": [
+			{
+				"x": 914.5,
+				"y": 726
+			},
+			{
+				"x": 916.5,
+				"y": 727
+			},
+			{
+				"x": 918.5,
+				"y": 728
+			},
+			{
+				"x": 919.5,
+				"y": 728
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-4-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 795,
+			"retainedPixels": 795,
+			"fraction": 1
+		},
+		"heightMetres": 0.2515081855495154,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-5-55e961-upright-upright",
 		"label": "crates-5",
 		"bbox": {
-			"x": 6,
+			"x": 8,
 			"y": 679,
-			"w": 86,
+			"w": 81,
 			"h": 97
 		},
 		"baseline": [
@@ -390,70 +564,146 @@
 				"y": 776
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-5-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-5-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 7490,
-			"retainedPixels": 7490,
+			"referencePixels": 7370,
+			"retainedPixels": 7370,
 			"fraction": 1
 		},
 		"heightMetres": 0.34248207701670325,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-6-55e961-upright",
+		"id": "crates-5-55e961-upright-flat",
+		"label": "crates-5",
+		"bbox": {
+			"x": 6,
+			"y": 691,
+			"w": 86,
+			"h": 74
+		},
+		"baseline": [
+			{
+				"x": 89.5,
+				"y": 765
+			},
+			{
+				"x": 90.5,
+				"y": 765
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-5-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 120,
+			"retainedPixels": 120,
+			"fraction": 1
+		},
+		"heightMetres": 0.27381333632144633,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-6-55e961-upright-upright",
 		"label": "crates-6",
 		"bbox": {
 			"x": 682,
 			"y": 635,
-			"w": 190,
+			"w": 182,
 			"h": 81
 		},
 		"baseline": [
 			{
-				"x": 690.5,
-				"y": 709
+				"x": 737.5,
+				"y": 710
 			},
 			{
-				"x": 701.5,
-				"y": 709
-			},
-			{
-				"x": 712.5,
-				"y": 709
-			},
-			{
-				"x": 731.5,
-				"y": 709
-			},
-			{
-				"x": 742.5,
+				"x": 741.5,
 				"y": 712
 			},
 			{
-				"x": 752.5,
+				"x": 745.5,
+				"y": 713
+			},
+			{
+				"x": 749.5,
 				"y": 715
+			},
+			{
+				"x": 753.5,
+				"y": 714
+			},
+			{
+				"x": 755.5,
+				"y": 712
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-6-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-6-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 7716,
-			"retainedPixels": 7716,
+			"referencePixels": 5611,
+			"retainedPixels": 5611,
 			"fraction": 1
 		},
-		"heightMetres": 0.37859908516559,
+		"heightMetres": 0.37060530017223514,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-7-55e961-upright",
+		"id": "crates-6-55e961-upright-flat",
+		"label": "crates-6",
+		"bbox": {
+			"x": 817,
+			"y": 636,
+			"w": 55,
+			"h": 44
+		},
+		"baseline": [
+			{
+				"x": 818.5,
+				"y": 679
+			},
+			{
+				"x": 821.5,
+				"y": 679
+			},
+			{
+				"x": 824.5,
+				"y": 678
+			},
+			{
+				"x": 827.5,
+				"y": 678
+			},
+			{
+				"x": 865.5,
+				"y": 678
+			},
+			{
+				"x": 868.5,
+				"y": 678
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-6-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 2105,
+			"retainedPixels": 2105,
+			"fraction": 1
+		},
+		"heightMetres": 0.2504756142711373,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "crates-7-55e961-upright-upright",
 		"label": "crates-7",
 		"bbox": {
-			"x": 687,
+			"x": 688,
 			"y": 551,
-			"w": 69,
+			"w": 68,
 			"h": 96
 		},
 		"baseline": [
@@ -482,24 +732,24 @@
 				"y": 646
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-7-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-7-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 6082,
-			"retainedPixels": 6082,
+			"referencePixels": 6080,
+			"retainedPixels": 6080,
 			"fraction": 1
 		},
 		"heightMetres": 0.7299677425676606,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "crates-9-55e961-upright",
+		"id": "crates-9-55e961-upright-upright",
 		"label": "crates-9",
 		"bbox": {
 			"x": 688,
 			"y": 551,
-			"w": 180,
+			"w": 177,
 			"h": 94
 		},
 		"baseline": [
@@ -528,19 +778,45 @@
 				"y": 645
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-9-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-9-55e961-upright-upright-22.png",
 		"maskCoverage": {
-			"referencePixels": 10273,
-			"retainedPixels": 10273,
+			"referencePixels": 10217,
+			"retainedPixels": 10217,
 			"fraction": 1
 		},
 		"heightMetres": 0.7299677425676606,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-0-55e961-upright",
+		"id": "crates-9-55e961-upright-flat",
+		"label": "crates-9",
+		"bbox": {
+			"x": 800,
+			"y": 596,
+			"w": 68,
+			"h": 23
+		},
+		"baseline": [
+			{
+				"x": 865.5,
+				"y": 619
+			}
+		],
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-crates-9-55e961-upright-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 56,
+			"retainedPixels": 56,
+			"fraction": 1
+		},
+		"heightMetres": 0.23441190541103615,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "nets-0-55e961-upright-upright",
 		"label": "nets-0",
 		"bbox": {
 			"x": 983,
@@ -574,7 +850,7 @@
 				"y": 677
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 15859,
 			"retainedPixels": 15859,
@@ -583,10 +859,10 @@
 		"heightMetres": 1.6621950099882552,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-0-55e961-flat",
+		"id": "nets-0-55e961-flat-flat",
 		"label": "nets-0",
 		"bbox": {
 			"x": 934,
@@ -620,7 +896,7 @@
 				"y": 671
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-0-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 1353,
 			"retainedPixels": 1353,
@@ -629,10 +905,10 @@
 		"heightMetres": 0.6523331359953908,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-2-55e961-upright",
+		"id": "nets-2-55e961-upright-upright",
 		"label": "nets-2",
 		"bbox": {
 			"x": 815,
@@ -662,7 +938,7 @@
 				"y": 748
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 4508,
 			"retainedPixels": 4508,
@@ -671,10 +947,10 @@
 		"heightMetres": 0.287754259767662,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-2-55e961-flat",
+		"id": "nets-2-55e961-flat-flat",
 		"label": "nets-2",
 		"bbox": {
 			"x": 804,
@@ -708,7 +984,7 @@
 				"y": 741
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-2-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 1688,
 			"retainedPixels": 1688,
@@ -717,10 +993,10 @@
 		"heightMetres": 0.24792781878939843,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-3-55e961-upright",
+		"id": "nets-3-55e961-upright-upright",
 		"label": "nets-3",
 		"bbox": {
 			"x": 1161,
@@ -754,7 +1030,7 @@
 				"y": 809
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 17884,
 			"retainedPixels": 17884,
@@ -763,10 +1039,10 @@
 		"heightMetres": 0.5308338725775144,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-3-55e961-flat",
+		"id": "nets-3-55e961-flat-flat",
 		"label": "nets-3",
 		"bbox": {
 			"x": 1151,
@@ -800,7 +1076,7 @@
 				"y": 827
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-3-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 2614,
 			"retainedPixels": 2614,
@@ -809,10 +1085,10 @@
 		"heightMetres": 0.5154979589496789,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-4-55e961-upright",
+		"id": "nets-4-55e961-upright-upright",
 		"label": "nets-4",
 		"bbox": {
 			"x": 522,
@@ -842,7 +1118,7 @@
 				"y": 807
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 4781,
 			"retainedPixels": 4781,
@@ -851,10 +1127,10 @@
 		"heightMetres": 0.2720649276240714,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-4-55e961-flat",
+		"id": "nets-4-55e961-flat-flat",
 		"label": "nets-4",
 		"bbox": {
 			"x": 504,
@@ -884,7 +1160,7 @@
 				"y": 793
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-4-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 2620,
 			"retainedPixels": 2620,
@@ -893,10 +1169,10 @@
 		"heightMetres": 0.2556998150746801,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-5-55e961-upright",
+		"id": "nets-5-55e961-upright-upright",
 		"label": "nets-5",
 		"bbox": {
 			"x": 594,
@@ -930,7 +1206,7 @@
 				"y": 885
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 25155,
 			"retainedPixels": 25155,
@@ -939,10 +1215,10 @@
 		"heightMetres": 0.42745276577487684,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-5-55e961-flat",
+		"id": "nets-5-55e961-flat-flat",
 		"label": "nets-5",
 		"bbox": {
 			"x": 484,
@@ -976,7 +1252,7 @@
 				"y": 880
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-5-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 8628,
 			"retainedPixels": 8628,
@@ -985,10 +1261,10 @@
 		"heightMetres": 0.3740211700530172,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-6-55e961-flat",
+		"id": "nets-6-55e961-flat-flat",
 		"label": "nets-6",
 		"bbox": {
 			"x": 419,
@@ -1022,7 +1298,7 @@
 				"y": 744
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-6-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-6-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 4699,
 			"retainedPixels": 4699,
@@ -1031,10 +1307,10 @@
 		"heightMetres": 0.30235676984787707,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-9-55e961-upright",
+		"id": "nets-9-55e961-upright-upright",
 		"label": "nets-9",
 		"bbox": {
 			"x": 984,
@@ -1068,7 +1344,7 @@
 				"y": 788
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 33458,
 			"retainedPixels": 33458,
@@ -1077,10 +1353,10 @@
 		"heightMetres": 1.1382946397145057,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "nets-9-55e961-flat",
+		"id": "nets-9-55e961-flat-flat",
 		"label": "nets-9",
 		"bbox": {
 			"x": 935,
@@ -1114,7 +1390,7 @@
 				"y": 764
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-nets-9-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 2640,
 			"retainedPixels": 2640,
@@ -1123,10 +1399,10 @@
 		"heightMetres": 0.7326356836708969,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-0-55e961-upright",
+		"id": "posts-0-55e961-upright-upright",
 		"label": "posts-0",
 		"bbox": {
 			"x": 21,
@@ -1160,7 +1436,7 @@
 				"y": 681
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-0-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 4414,
 			"retainedPixels": 4414,
@@ -1169,10 +1445,10 @@
 		"heightMetres": 0.6599769478614871,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-1-55e961-upright",
+		"id": "posts-1-55e961-upright-flat",
 		"label": "posts-1",
 		"bbox": {
 			"x": 1773,
@@ -1206,7 +1482,7 @@
 				"y": 973
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961-upright-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 8758,
 			"retainedPixels": 8758,
@@ -1215,10 +1491,10 @@
 		"heightMetres": 0.22436990971868168,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-1-55e961-flat",
+		"id": "posts-1-55e961-flat-flat",
 		"label": "posts-1",
 		"bbox": {
 			"x": 1772,
@@ -1252,7 +1528,7 @@
 				"y": 1080
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-1-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 7154,
 			"retainedPixels": 7154,
@@ -1261,10 +1537,10 @@
 		"heightMetres": 0.15896433164607748,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-10-55e961-upright",
+		"id": "posts-10-55e961-upright-upright",
 		"label": "posts-10",
 		"bbox": {
 			"x": 611,
@@ -1298,7 +1574,7 @@
 				"y": 615
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-10-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-10-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 497,
 			"retainedPixels": 497,
@@ -1307,10 +1583,10 @@
 		"heightMetres": 0.687243250743099,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-11-55e961-flat",
+		"id": "posts-11-55e961-flat-flat",
 		"label": "posts-11",
 		"bbox": {
 			"x": 1483,
@@ -1344,7 +1620,7 @@
 				"y": 1080
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-11-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-11-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 5119,
 			"retainedPixels": 5119,
@@ -1353,10 +1629,10 @@
 		"heightMetres": 0.08104063966270618,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-2-55e961-upright",
+		"id": "posts-2-55e961-upright-upright",
 		"label": "posts-2",
 		"bbox": {
 			"x": 936,
@@ -1386,7 +1662,7 @@
 				"y": 657
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-2-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 3635,
 			"retainedPixels": 3635,
@@ -1395,10 +1671,10 @@
 		"heightMetres": 0.9865573318924877,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-3-55e961-upright",
+		"id": "posts-3-55e961-upright-upright",
 		"label": "posts-3",
 		"bbox": {
 			"x": 871,
@@ -1424,7 +1700,7 @@
 				"y": 658
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-3-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 1428,
 			"retainedPixels": 1428,
@@ -1433,10 +1709,10 @@
 		"heightMetres": 0.645383901395082,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-4-55e961-upright",
+		"id": "posts-4-55e961-upright-upright",
 		"label": "posts-4",
 		"bbox": {
 			"x": 586,
@@ -1466,7 +1742,7 @@
 				"y": 629
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-4-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 957,
 			"retainedPixels": 957,
@@ -1475,10 +1751,10 @@
 		"heightMetres": 0.6823874099348365,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-5-55e961-upright",
+		"id": "posts-5-55e961-upright-upright",
 		"label": "posts-5",
 		"bbox": {
 			"x": 536,
@@ -1504,7 +1780,7 @@
 				"y": 620
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-5-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-5-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 847,
 			"retainedPixels": 847,
@@ -1513,10 +1789,10 @@
 		"heightMetres": 0.6948856075431421,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-6-55e961-upright",
+		"id": "posts-6-55e961-upright-upright",
 		"label": "posts-6",
 		"bbox": {
 			"x": 1852,
@@ -1546,7 +1822,7 @@
 				"y": 705
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-6-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-6-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 1836,
 			"retainedPixels": 1836,
@@ -1555,10 +1831,10 @@
 		"heightMetres": 0.3057414842079967,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-7-55e961-upright",
+		"id": "posts-7-55e961-upright-upright",
 		"label": "posts-7",
 		"bbox": {
 			"x": 1282,
@@ -1592,7 +1868,7 @@
 				"y": 603
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-7-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-7-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 628,
 			"retainedPixels": 628,
@@ -1601,10 +1877,10 @@
 		"heightMetres": 0.4163863892550775,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-8-55e961-upright",
+		"id": "posts-8-55e961-upright-upright",
 		"label": "posts-8",
 		"bbox": {
 			"x": 915,
@@ -1634,7 +1910,7 @@
 				"y": 582
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 303,
 			"retainedPixels": 303,
@@ -1643,10 +1919,10 @@
 		"heightMetres": 0.44041901692183744,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-8-55e961-flat",
+		"id": "posts-8-55e961-flat-flat",
 		"label": "posts-8",
 		"bbox": {
 			"x": 917,
@@ -1680,7 +1956,7 @@
 				"y": 644
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961-flat-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-8-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 244,
 			"retainedPixels": 244,
@@ -1689,10 +1965,10 @@
 		"heightMetres": 0.18809694658602297,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "posts-9-55e961-upright",
+		"id": "posts-9-55e961-upright-upright",
 		"label": "posts-9",
 		"bbox": {
 			"x": 479,
@@ -1722,7 +1998,7 @@
 				"y": 669
 			}
 		],
-		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-9-55e961-upright-21.png",
+		"png": "5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.occluder-posts-9-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 1539,
 			"retainedPixels": 1539,
@@ -1731,6 +2007,6 @@
 		"heightMetres": 0.31196347031963484,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	}
 ]

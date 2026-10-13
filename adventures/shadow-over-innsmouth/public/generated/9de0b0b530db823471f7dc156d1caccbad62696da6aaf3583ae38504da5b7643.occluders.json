@@ -1,6 +1,6 @@
 [
 	{
-		"id": "fountain-0-55e961-upright",
+		"id": "fountain-0-55e961-upright-upright",
 		"label": "fountain-0",
 		"bbox": {
 			"x": 613,
@@ -34,7 +34,7 @@
 				"y": 883
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-fountain-0-55e961-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-fountain-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 166570,
 			"retainedPixels": 166570,
@@ -43,10 +43,10 @@
 		"heightMetres": 1.5159763313609467,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "lamp-post-0-55e961-upright",
+		"id": "lamp-post-0-55e961-upright-upright",
 		"label": "lamp-post-0",
 		"bbox": {
 			"x": 465,
@@ -80,7 +80,7 @@
 				"y": 862
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-0-55e961-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 23728,
 			"retainedPixels": 23728,
@@ -89,10 +89,10 @@
 		"heightMetres": 2.0718556701030932,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "lamp-post-1-55e961-upright",
+		"id": "lamp-post-1-55e961-upright-upright",
 		"label": "lamp-post-1",
 		"bbox": {
 			"x": 1217,
@@ -126,7 +126,7 @@
 				"y": 713
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-1-55e961-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 9521,
 			"retainedPixels": 9521,
@@ -135,10 +135,10 @@
 		"heightMetres": 1.9417164179104476,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "lamp-post-2-55e961-upright",
+		"id": "lamp-post-2-55e961-upright-upright",
 		"label": "lamp-post-2",
 		"bbox": {
 			"x": 1386,
@@ -172,7 +172,7 @@
 				"y": 863
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-2-55e961-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-lamp-post-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 23710,
 			"retainedPixels": 23710,
@@ -181,10 +181,10 @@
 		"heightMetres": 2.0718556701030932,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "left-building-52db90-upright",
+		"id": "left-building-52db90-upright-upright",
 		"label": "left building",
 		"bbox": {
 			"x": 0,
@@ -218,7 +218,7 @@
 				"y": 699
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-left-building-52db90-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-left-building-52db90-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 147157,
 			"retainedPixels": 147157,
@@ -227,10 +227,10 @@
 		"heightMetres": 2.3894859813084115,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "middle-left-building-53e883-upright",
+		"id": "middle-left-building-53e883-upright-upright",
 		"label": "middle left building",
 		"bbox": {
 			"x": 465,
@@ -264,7 +264,7 @@
 				"y": 748
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 19306,
 			"retainedPixels": 19306,
@@ -273,10 +273,10 @@
 		"heightMetres": 2.2262837837837837,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "middle-left-building-53e883-flat",
+		"id": "middle-left-building-53e883-flat-flat",
 		"label": "middle left building",
 		"bbox": {
 			"x": 512,
@@ -302,7 +302,7 @@
 				"y": 758
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-flat-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-left-building-53e883-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 20,
 			"retainedPixels": 20,
@@ -311,10 +311,10 @@
 		"heightMetres": 0.012434210526315789,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "middle-right-building-7d65d0-upright",
+		"id": "middle-right-building-7d65d0-upright-upright",
 		"label": "middle right building",
 		"bbox": {
 			"x": 1218,
@@ -348,7 +348,7 @@
 				"y": 748
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-right-building-7d65d0-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-middle-right-building-7d65d0-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 24894,
 			"retainedPixels": 24894,
@@ -357,10 +357,10 @@
 		"heightMetres": 2.205846774193548,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-building-66ec1d-upright",
+		"id": "right-building-66ec1d-upright-upright",
 		"label": "right building",
 		"bbox": {
 			"x": 1658,
@@ -394,7 +394,7 @@
 				"y": 726
 			}
 		],
-		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-right-building-66ec1d-upright-21.png",
+		"png": "9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.occluder-right-building-66ec1d-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 90720,
 			"retainedPixels": 90720,
@@ -403,6 +403,6 @@
 		"heightMetres": 2.1388313609467455,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	}
 ]

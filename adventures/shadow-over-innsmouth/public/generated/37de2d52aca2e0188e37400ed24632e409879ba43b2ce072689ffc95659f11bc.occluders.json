@@ -1,6 +1,6 @@
 [
 	{
-		"id": "left-fishing-net-0-55e961-upright",
+		"id": "left-fishing-net-0-55e961-upright-upright",
 		"label": "left-fishing-net-0",
 		"bbox": {
 			"x": 261,
@@ -34,7 +34,7 @@
 				"y": 1029
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 50101,
 			"retainedPixels": 50101,
@@ -43,10 +43,10 @@
 		"heightMetres": 1.066578107774626,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "left-fishing-net-0-55e961-flat",
+		"id": "left-fishing-net-0-55e961-flat-flat",
 		"label": "left-fishing-net-0",
 		"bbox": {
 			"x": 258,
@@ -76,7 +76,7 @@
 				"y": 1032
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961-flat-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-fishing-net-0-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 2512,
 			"retainedPixels": 2512,
@@ -85,10 +85,10 @@
 		"heightMetres": 0.8472483841929845,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-fishing-net-0-55e961-upright",
+		"id": "right-fishing-net-0-55e961-upright-upright",
 		"label": "right-fishing-net-0",
 		"bbox": {
 			"x": 1341,
@@ -122,7 +122,7 @@
 				"y": 1080
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 73584,
 			"retainedPixels": 73584,
@@ -131,10 +131,10 @@
 		"heightMetres": 1.0091127436666567,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-fishing-net-0-55e961-flat",
+		"id": "right-fishing-net-0-55e961-flat-flat",
 		"label": "right-fishing-net-0",
 		"bbox": {
 			"x": 1264,
@@ -168,7 +168,7 @@
 				"y": 1056
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961-flat-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-fishing-net-0-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 6489,
 			"retainedPixels": 6489,
@@ -177,10 +177,10 @@
 		"heightMetres": 0.9243209272417746,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "left-house-e99d6a-upright",
+		"id": "left-house-e99d6a-upright-upright",
 		"label": "left house",
 		"bbox": {
 			"x": 131,
@@ -214,7 +214,7 @@
 				"y": 789
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-house-e99d6a-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 127583,
 			"retainedPixels": 127583,
@@ -223,10 +223,10 @@
 		"heightMetres": 4.8536225606789865,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "left-tree-e55fac-upright",
+		"id": "left-tree-e55fac-upright-upright",
 		"label": "left tree",
 		"bbox": {
 			"x": 0,
@@ -260,7 +260,7 @@
 				"y": 891
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-tree-e55fac-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 160193,
 			"retainedPixels": 160193,
@@ -269,10 +269,10 @@
 		"heightMetres": 5.4585516340480424,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "left-lobster-trap-9a412d-upright",
+		"id": "left-lobster-trap-9a412d-upright-upright",
 		"label": "left lobster trap",
 		"bbox": {
 			"x": 39,
@@ -306,7 +306,7 @@
 				"y": 1079
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-left-lobster-trap-9a412d-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 82599,
 			"retainedPixels": 82599,
@@ -315,10 +315,10 @@
 		"heightMetres": 0.93066161802859,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-house-4a4f1c-upright",
+		"id": "right-house-4a4f1c-upright-upright",
 		"label": "right house",
 		"bbox": {
 			"x": 1340,
@@ -352,7 +352,7 @@
 				"y": 760
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 259190,
 			"retainedPixels": 259190,
@@ -361,10 +361,10 @@
 		"heightMetres": 7.373747812320735,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-house-4a4f1c-flat",
+		"id": "right-house-4a4f1c-flat-flat",
 		"label": "right house",
 		"bbox": {
 			"x": 1347,
@@ -378,7 +378,7 @@
 				"y": 760
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c-flat-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-house-4a4f1c-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 40,
 			"retainedPixels": 40,
@@ -387,10 +387,10 @@
 		"heightMetres": 0.23042961913502297,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-tree-441021-upright",
+		"id": "right-tree-441021-upright-upright",
 		"label": "right tree",
 		"bbox": {
 			"x": 1361,
@@ -424,7 +424,7 @@
 				"y": 975
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 165100,
 			"retainedPixels": 165100,
@@ -433,10 +433,10 @@
 		"heightMetres": 4.593805637071729,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-tree-441021-flat",
+		"id": "right-tree-441021-flat-flat",
 		"label": "right tree",
 		"bbox": {
 			"x": 1887,
@@ -466,7 +466,7 @@
 				"y": 974
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021-flat-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-tree-441021-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 34,
 			"retainedPixels": 34,
@@ -475,10 +475,10 @@
 		"heightMetres": 0.1889833581503048,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-lobster-trap-d0a0fc-upright",
+		"id": "right-lobster-trap-d0a0fc-upright-upright",
 		"label": "right lobster trap",
 		"bbox": {
 			"x": 1385,
@@ -512,7 +512,7 @@
 				"y": 926
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc-upright-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 23298,
 			"retainedPixels": 23298,
@@ -521,10 +521,10 @@
 		"heightMetres": 0.6863453739922124,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "right-lobster-trap-d0a0fc-flat",
+		"id": "right-lobster-trap-d0a0fc-flat-flat",
 		"label": "right lobster trap",
 		"bbox": {
 			"x": 1391,
@@ -554,7 +554,7 @@
 				"y": 931
 			}
 		],
-		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc-flat-21.png",
+		"png": "37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.occluder-right-lobster-trap-d0a0fc-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 77,
 			"retainedPixels": 77,
@@ -563,6 +563,6 @@
 		"heightMetres": 0.12327861334892519,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	}
 ]

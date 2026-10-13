@@ -1,0 +1,140 @@
+[
+	{
+		"id": "hotel-building-cc6e19-upright-upright",
+		"label": "hotel building",
+		"bbox": {
+			"x": 1249,
+			"y": 67,
+			"w": 555,
+			"h": 640
+		},
+		"baseline": [
+			{
+				"x": 1386.5,
+				"y": 703
+			},
+			{
+				"x": 1414.5,
+				"y": 705
+			},
+			{
+				"x": 1442.5,
+				"y": 702
+			},
+			{
+				"x": 1470.5,
+				"y": 702
+			},
+			{
+				"x": 1498.5,
+				"y": 702
+			},
+			{
+				"x": 1523.5,
+				"y": 702
+			}
+		],
+		"png": "6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-hotel-building-cc6e19-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 244483,
+			"retainedPixels": 244483,
+			"fraction": 1
+		},
+		"heightMetres": 3.6199970651289886,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "covered-bench-def9a7-upright-upright",
+		"label": "covered bench",
+		"bbox": {
+			"x": 760,
+			"y": 638,
+			"w": 437,
+			"h": 247
+		},
+		"baseline": [
+			{
+				"x": 846.5,
+				"y": 838
+			},
+			{
+				"x": 869.5,
+				"y": 883
+			},
+			{
+				"x": 881.5,
+				"y": 885
+			},
+			{
+				"x": 893.5,
+				"y": 857
+			},
+			{
+				"x": 1167.5,
+				"y": 842
+			},
+			{
+				"x": 1179.5,
+				"y": 842
+			}
+		],
+		"png": "6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-covered-bench-def9a7-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 50506,
+			"retainedPixels": 50506,
+			"fraction": 1
+		},
+		"heightMetres": 0.8145771832794846,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "covered-bench-def9a7-flat-flat",
+		"label": "covered bench",
+		"bbox": {
+			"x": 798,
+			"y": 779,
+			"w": 335,
+			"h": 35
+		},
+		"baseline": [
+			{
+				"x": 1122.5,
+				"y": 813
+			},
+			{
+				"x": 1124.5,
+				"y": 813
+			},
+			{
+				"x": 1126.5,
+				"y": 813
+			},
+			{
+				"x": 1128.5,
+				"y": 814
+			},
+			{
+				"x": 1130.5,
+				"y": 813
+			},
+			{
+				"x": 1132.5,
+				"y": 813
+			}
+		],
+		"png": "6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.occluder-covered-bench-def9a7-flat-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 62,
+			"retainedPixels": 62,
+			"fraction": 1
+		},
+		"heightMetres": 0.14156011477337066,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	}
+]

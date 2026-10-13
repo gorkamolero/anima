@@ -1,6 +1,6 @@
 [
 	{
-		"id": "pews-0-55e961-upright",
+		"id": "pews-0-55e961-upright-upright",
 		"label": "pews-0",
 		"bbox": {
 			"x": 0,
@@ -34,7 +34,7 @@
 				"y": 1077
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-0-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 127541,
 			"retainedPixels": 127541,
@@ -43,10 +43,10 @@
 		"heightMetres": 0.5928062678062679,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-1-55e961-upright",
+		"id": "pews-1-55e961-upright-upright",
 		"label": "pews-1",
 		"bbox": {
 			"x": 120,
@@ -80,7 +80,7 @@
 				"y": 958
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-1-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 62893,
 			"retainedPixels": 62893,
@@ -89,10 +89,10 @@
 		"heightMetres": 0.7140763462849353,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-10-55e961-upright",
+		"id": "pews-10-55e961-upright-upright",
 		"label": "pews-10",
 		"bbox": {
 			"x": 483,
@@ -126,7 +126,7 @@
 				"y": 868
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-10-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-10-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 20813,
 			"retainedPixels": 20813,
@@ -135,10 +135,10 @@
 		"heightMetres": 0.6383771929824561,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-2-55e961-upright",
+		"id": "pews-2-55e961-upright-upright",
 		"label": "pews-2",
 		"bbox": {
 			"x": 1348,
@@ -172,7 +172,7 @@
 				"y": 1055
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-2-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 127628,
 			"retainedPixels": 127628,
@@ -181,10 +181,10 @@
 		"heightMetres": 0.5954638687283056,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-3-55e961-upright",
+		"id": "pews-3-55e961-upright-upright",
 		"label": "pews-3",
 		"bbox": {
 			"x": 1169,
@@ -218,7 +218,7 @@
 				"y": 1007
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-3-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 69218,
 			"retainedPixels": 69218,
@@ -227,10 +227,10 @@
 		"heightMetres": 0.7128456811198363,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-4-55e961-upright",
+		"id": "pews-4-55e961-upright-upright",
 		"label": "pews-4",
 		"bbox": {
 			"x": 519,
@@ -264,7 +264,7 @@
 				"y": 768
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-4-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 9430,
 			"retainedPixels": 9430,
@@ -273,10 +273,10 @@
 		"heightMetres": 0.5625137061403509,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-5-55e961-upright",
+		"id": "pews-5-55e961-upright-upright",
 		"label": "pews-5",
 		"bbox": {
 			"x": 1084,
@@ -310,7 +310,7 @@
 				"y": 784
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-5-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-5-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 9473,
 			"retainedPixels": 9473,
@@ -319,10 +319,10 @@
 		"heightMetres": 0.5537486218302096,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-6-55e961-upright",
+		"id": "pews-6-55e961-upright-upright",
 		"label": "pews-6",
 		"bbox": {
 			"x": 484,
@@ -356,7 +356,7 @@
 				"y": 805
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-6-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-6-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 13189,
 			"retainedPixels": 13189,
@@ -365,10 +365,10 @@
 		"heightMetres": 0.5874878875968992,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-7-55e961-upright",
+		"id": "pews-7-55e961-upright-upright",
 		"label": "pews-7",
 		"bbox": {
 			"x": 328,
@@ -402,7 +402,7 @@
 				"y": 867
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-7-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-7-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 23551,
 			"retainedPixels": 23551,
@@ -411,10 +411,10 @@
 		"heightMetres": 0.6743421052631579,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-8-55e961-upright",
+		"id": "pews-8-55e961-upright-upright",
 		"label": "pews-8",
 		"bbox": {
 			"x": 1166,
@@ -448,7 +448,7 @@
 				"y": 900
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 25186,
 			"retainedPixels": 25186,
@@ -457,10 +457,10 @@
 		"heightMetres": 0.6743421052631579,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-8-55e961-flat",
+		"id": "pews-8-55e961-flat-flat",
 		"label": "pews-8",
 		"bbox": {
 			"x": 1242,
@@ -478,7 +478,7 @@
 				"y": 880
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961-flat-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-8-55e961-flat-flat-22.png",
 		"maskCoverage": {
 			"referencePixels": 42,
 			"retainedPixels": 42,
@@ -487,10 +487,10 @@
 		"heightMetres": 0.04066041848299913,
 		"floorDecal": true,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pews-9-55e961-upright",
+		"id": "pews-9-55e961-upright-upright",
 		"label": "pews-9",
 		"bbox": {
 			"x": 1116,
@@ -524,7 +524,7 @@
 				"y": 822
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-9-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pews-9-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 13586,
 			"retainedPixels": 13586,
@@ -533,10 +533,10 @@
 		"heightMetres": 0.5656936127744511,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-0-55e961-upright",
+		"id": "pillars-0-55e961-upright-upright",
 		"label": "pillars-0",
 		"bbox": {
 			"x": 1220,
@@ -570,7 +570,7 @@
 				"y": 652
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-0-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 33499,
 			"retainedPixels": 33499,
@@ -579,10 +579,10 @@
 		"heightMetres": 3.1895797227036398,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-1-55e961-upright",
+		"id": "pillars-1-55e961-upright-upright",
 		"label": "pillars-1",
 		"bbox": {
 			"x": 356,
@@ -616,7 +616,7 @@
 				"y": 733
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-1-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 76650,
 			"retainedPixels": 76650,
@@ -625,10 +625,10 @@
 		"heightMetres": 3.3672953964194376,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-2-55e961-upright",
+		"id": "pillars-2-55e961-upright-upright",
 		"label": "pillars-2",
 		"bbox": {
 			"x": 0,
@@ -662,7 +662,7 @@
 				"y": 813
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-2-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 67074,
 			"retainedPixels": 67074,
@@ -671,10 +671,10 @@
 		"heightMetres": 2.977679938744257,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-3-55e961-upright",
+		"id": "pillars-3-55e961-upright-upright",
 		"label": "pillars-3",
 		"bbox": {
 			"x": 1139,
@@ -708,7 +708,7 @@
 				"y": 654
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-3-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 17987,
 			"retainedPixels": 17987,
@@ -717,10 +717,10 @@
 		"heightMetres": 2.4717998281786944,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-4-55e961-upright",
+		"id": "pillars-4-55e961-upright-upright",
 		"label": "pillars-4",
 		"bbox": {
 			"x": 592,
@@ -754,7 +754,7 @@
 				"y": 654
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-4-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 33333,
 			"retainedPixels": 33333,
@@ -763,10 +763,10 @@
 		"heightMetres": 3.1745060137457046,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-5-55e961-upright",
+		"id": "pillars-5-55e961-upright-upright",
 		"label": "pillars-5",
 		"bbox": {
 			"x": 706,
@@ -800,7 +800,7 @@
 				"y": 654
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-5-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-5-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 18272,
 			"retainedPixels": 18272,
@@ -809,10 +809,10 @@
 		"heightMetres": 2.4717998281786944,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pillars-6-55e961-upright",
+		"id": "pillars-6-55e961-upright-upright",
 		"label": "pillars-6",
 		"bbox": {
 			"x": 1390,
@@ -846,7 +846,7 @@
 				"y": 731
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-6-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pillars-6-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 77110,
 			"retainedPixels": 77110,
@@ -855,10 +855,10 @@
 		"heightMetres": 3.386007101355714,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "pulpit-0-55e961-upright",
+		"id": "pulpit-0-55e961-upright-upright",
 		"label": "pulpit-0",
 		"bbox": {
 			"x": 896,
@@ -892,7 +892,7 @@
 				"y": 712
 			}
 		],
-		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pulpit-0-55e961-upright-21.png",
+		"png": "d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.occluder-pulpit-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 17041,
 			"retainedPixels": 17041,
@@ -901,6 +901,6 @@
 		"heightMetres": 0.7994154057771665,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	}
 ]

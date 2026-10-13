@@ -1,0 +1,258 @@
+[
+	{
+		"id": "left-house-door-8040df-upright-upright",
+		"label": "left house door",
+		"bbox": {
+			"x": 310,
+			"y": 325,
+			"w": 400,
+			"h": 568
+		},
+		"baseline": [
+			{
+				"x": 493.5,
+				"y": 885
+			},
+			{
+				"x": 505.5,
+				"y": 892
+			},
+			{
+				"x": 517.5,
+				"y": 889
+			},
+			{
+				"x": 529.5,
+				"y": 886
+			},
+			{
+				"x": 541.5,
+				"y": 879
+			},
+			{
+				"x": 556.5,
+				"y": 876
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-left-house-door-8040df-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 66045,
+			"retainedPixels": 66045,
+			"fraction": 1
+		},
+		"heightMetres": 3.661440941167007,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "right-house-door-aea2be-upright-upright",
+		"label": "right house door",
+		"bbox": {
+			"x": 1253,
+			"y": 418,
+			"w": 234,
+			"h": 441
+		},
+		"baseline": [
+			{
+				"x": 1272.5,
+				"y": 851
+			},
+			{
+				"x": 1280.5,
+				"y": 852
+			},
+			{
+				"x": 1318.5,
+				"y": 850
+			},
+			{
+				"x": 1326.5,
+				"y": 852
+			},
+			{
+				"x": 1334.5,
+				"y": 855
+			},
+			{
+				"x": 1342.5,
+				"y": 855
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-right-house-door-aea2be-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 49963,
+			"retainedPixels": 49963,
+			"fraction": 1
+		},
+		"heightMetres": 3.2705294483193565,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "far-left-house-88a961-upright-upright",
+		"label": "far left house",
+		"bbox": {
+			"x": 0,
+			"y": 111,
+			"w": 921,
+			"h": 834
+		},
+		"baseline": [
+			{
+				"x": 315.5,
+				"y": 936
+			},
+			{
+				"x": 346.5,
+				"y": 927
+			},
+			{
+				"x": 377.5,
+				"y": 944
+			},
+			{
+				"x": 408.5,
+				"y": 930
+			},
+			{
+				"x": 439.5,
+				"y": 924
+			},
+			{
+				"x": 469.5,
+				"y": 918
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-left-house-88a961-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 510067,
+			"retainedPixels": 510067,
+			"fraction": 1
+		},
+		"heightMetres": 4.7180451161093675,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "far-left-house-88a961-flat-flat",
+		"label": "far left house",
+		"bbox": {
+			"x": 243,
+			"y": 911,
+			"w": 117,
+			"h": 45
+		},
+		"baseline": [
+			{
+				"x": 311.5,
+				"y": 956
+			},
+			{
+				"x": 312.5,
+				"y": 956
+			},
+			{
+				"x": 324.5,
+				"y": 948
+			},
+			{
+				"x": 325.5,
+				"y": 948
+			},
+			{
+				"x": 326.5,
+				"y": 948
+			},
+			{
+				"x": 327.5,
+				"y": 948
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-left-house-88a961-flat-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 90,
+			"retainedPixels": 90,
+			"fraction": 1
+		},
+		"heightMetres": 0.23370691149600098,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "far-right-house-85fad2-upright-upright",
+		"label": "far right house",
+		"bbox": {
+			"x": 1111,
+			"y": 0,
+			"w": 809,
+			"h": 986
+		},
+		"baseline": [
+			{
+				"x": 1595.5,
+				"y": 966
+			},
+			{
+				"x": 1624.5,
+				"y": 954
+			},
+			{
+				"x": 1726.5,
+				"y": 962
+			},
+			{
+				"x": 1755.5,
+				"y": 972
+			},
+			{
+				"x": 1784.5,
+				"y": 975
+			},
+			{
+				"x": 1908.5,
+				"y": 955
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-right-house-85fad2-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 597633,
+			"retainedPixels": 597633,
+			"fraction": 1
+		},
+		"heightMetres": 4.869352891022329,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "far-right-house-85fad2-flat-flat",
+		"label": "far right house",
+		"bbox": {
+			"x": 1518,
+			"y": 942,
+			"w": 385,
+			"h": 35
+		},
+		"baseline": [
+			{
+				"x": 1803.5,
+				"y": 977
+			}
+		],
+		"png": "32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.occluder-far-right-house-85fad2-flat-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 170,
+			"retainedPixels": 170,
+			"fraction": 1
+		},
+		"heightMetres": 0.17089683847849205,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	}
+]

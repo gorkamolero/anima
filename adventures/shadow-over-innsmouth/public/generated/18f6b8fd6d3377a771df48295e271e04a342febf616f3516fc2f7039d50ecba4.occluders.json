@@ -1,0 +1,140 @@
+[
+	{
+		"id": "bench-de5b53-upright-upright",
+		"label": "bench",
+		"bbox": {
+			"x": 806,
+			"y": 678,
+			"w": 386,
+			"h": 118
+		},
+		"baseline": [
+			{
+				"x": 854.5,
+				"y": 793
+			},
+			{
+				"x": 870.5,
+				"y": 796
+			},
+			{
+				"x": 886.5,
+				"y": 795
+			},
+			{
+				"x": 902.5,
+				"y": 793
+			},
+			{
+				"x": 918.5,
+				"y": 792
+			},
+			{
+				"x": 932.5,
+				"y": 790
+			}
+		],
+		"png": "18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-bench-de5b53-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 27613,
+			"retainedPixels": 27613,
+			"fraction": 1
+		},
+		"heightMetres": 0.5762518416774002,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "fishing-nets-1e01c2-upright-upright",
+		"label": "fishing nets",
+		"bbox": {
+			"x": 1150,
+			"y": 637,
+			"w": 351,
+			"h": 190
+		},
+		"baseline": [
+			{
+				"x": 1327.5,
+				"y": 825
+			},
+			{
+				"x": 1338.5,
+				"y": 827
+			},
+			{
+				"x": 1349.5,
+				"y": 827
+			},
+			{
+				"x": 1360.5,
+				"y": 827
+			},
+			{
+				"x": 1371.5,
+				"y": 823
+			},
+			{
+				"x": 1380.5,
+				"y": 821
+			}
+		],
+		"png": "18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-fishing-nets-1e01c2-upright-upright-22.png",
+		"maskCoverage": {
+			"referencePixels": 27994,
+			"retainedPixels": 27994,
+			"fraction": 1
+		},
+		"heightMetres": 0.875309296588628,
+		"floorDecal": false,
+		"obstacle": true,
+		"layerDerivation": 22
+	},
+	{
+		"id": "fishing-nets-1e01c2-flat-flat",
+		"label": "fishing nets",
+		"bbox": {
+			"x": 1136,
+			"y": 620,
+			"w": 400,
+			"h": 201
+		},
+		"baseline": [
+			{
+				"x": 1145.5,
+				"y": 809
+			},
+			{
+				"x": 1150.5,
+				"y": 809
+			},
+			{
+				"x": 1186.5,
+				"y": 808
+			},
+			{
+				"x": 1191.5,
+				"y": 809
+			},
+			{
+				"x": 1246.5,
+				"y": 808
+			},
+			{
+				"x": 1270.5,
+				"y": 821
+			}
+		],
+		"png": "18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.occluder-fishing-nets-1e01c2-flat-flat-22.png",
+		"maskCoverage": {
+			"referencePixels": 2789,
+			"retainedPixels": 2789,
+			"fraction": 1
+		},
+		"heightMetres": 0.9461169604305113,
+		"floorDecal": true,
+		"obstacle": true,
+		"layerDerivation": 22
+	}
+]

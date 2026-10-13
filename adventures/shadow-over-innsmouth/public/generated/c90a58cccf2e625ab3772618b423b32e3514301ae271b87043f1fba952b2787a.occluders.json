@@ -1,6 +1,6 @@
 [
 	{
-		"id": "desk-0-55e961-upright",
+		"id": "desk-0-55e961-upright-upright",
 		"label": "desk-0",
 		"bbox": {
 			"x": 187,
@@ -34,7 +34,7 @@
 				"y": 830
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-desk-0-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-desk-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 145528,
 			"retainedPixels": 145528,
@@ -43,10 +43,10 @@
 		"heightMetres": 1.6962245552519886,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "railing-0-55e961-upright",
+		"id": "railing-0-55e961-upright-upright",
 		"label": "railing-0",
 		"bbox": {
 			"x": 800,
@@ -80,7 +80,7 @@
 				"y": 757
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-0-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-0-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 34495,
 			"retainedPixels": 34495,
@@ -89,10 +89,10 @@
 		"heightMetres": 3.9520063086854456,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "railing-1-55e961-upright",
+		"id": "railing-1-55e961-upright-upright",
 		"label": "railing-1",
 		"bbox": {
 			"x": 1567,
@@ -122,7 +122,7 @@
 				"y": 703
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-1-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-1-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 4795,
 			"retainedPixels": 4795,
@@ -131,10 +131,10 @@
 		"heightMetres": 1.0892643540669857,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "railing-2-55e961-upright",
+		"id": "railing-2-55e961-upright-upright",
 		"label": "railing-2",
 		"bbox": {
 			"x": 1494,
@@ -168,7 +168,7 @@
 				"y": 717
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-2-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-2-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 7072,
 			"retainedPixels": 7072,
@@ -177,10 +177,10 @@
 		"heightMetres": 1.19880850456621,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "railing-3-55e961-upright",
+		"id": "railing-3-55e961-upright-upright",
 		"label": "railing-3",
 		"bbox": {
 			"x": 1493,
@@ -214,7 +214,7 @@
 				"y": 716
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-3-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-3-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 12879,
 			"retainedPixels": 12879,
@@ -223,10 +223,10 @@
 		"heightMetres": 1.1943205988219896,
 		"floorDecal": false,
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	},
 	{
-		"id": "railing-4-55e961-upright",
+		"id": "railing-4-55e961-upright-upright",
 		"label": "railing-4",
 		"bbox": {
 			"x": 818,
@@ -260,13 +260,13 @@
 				"y": 398
 			}
 		],
-		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-4-55e961-upright-21.png",
+		"png": "c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.occluder-railing-4-55e961-upright-upright-22.png",
 		"maskCoverage": {
 			"referencePixels": 5378,
 			"retainedPixels": 5378,
 			"fraction": 1
 		},
 		"obstacle": true,
-		"layerDerivation": 21
+		"layerDerivation": 22
 	}
 ]
