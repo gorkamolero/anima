@@ -1,0 +1,2 @@
+import {writeFileSync}from'node:fs';
+const places=await(await fetch('http://localhost:4317/api/places')).json();const ids=['outside','inside',...places.map(p=>p.id)];const catalog={};for(const id of ids){const r=await fetch('http://localhost:4317/api/occluders/'+id);if(!r.ok)throw Error(id+' '+r.status);const d=await r.json();catalog[id]=d.occluders;}writeFileSync('tmp/walkqa/harness-20/occluder-catalog.json',JSON.stringify(catalog));console.log(ids.length);
