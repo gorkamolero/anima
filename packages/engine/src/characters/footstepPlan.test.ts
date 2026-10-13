@@ -184,7 +184,7 @@ it("searches both grounded starting supports even when the first has a safe part
 });
 
 for (const allowSlide of [true, false])
-	it(`validates bounded anchor refinement (${allowSlide}) without changing the searched headings`, () => {
+	it(`keeps an off-lattice stop unmodified even with offset support (${allowSlide})`, () => {
 		const result = planFootsteps(
 			{ x: 110, y: 6 },
 			{ x: 0, y: 0 },
@@ -201,18 +201,18 @@ for (const allowSlide of [true, false])
 			},
 			{ timeBudgetMs: 1000, maxStride: 0.2 },
 		);
-		expect(result.complete).toBe(allowSlide);
+		expect(result.complete).toBe(false);
+		expect(result.stats.reason).toBe("nearest-reachable");
+		expect(result.stats.optimal).toBe(true);
 		expect(result.steps.every((s) => s.heading === "right")).toBe(true);
 		expect(
 			result.steps.every(
 				(s) => Math.hypot(s.slide.x, s.slide.y) <= 0.99 + 1e-9,
 			),
 		).toBe(true);
-		if (allowSlide) expect(result.distance).toBeLessThanOrEqual(10);
-		else
-			expect(
-				result.steps.every((s) => s.slide.x === 0 && s.slide.y === 0),
-			).toBe(true);
+		expect(result.steps.every((s) => s.slide.x === 0 && s.slide.y === 0)).toBe(
+			true,
+		);
 	});
 
 it.each([
@@ -226,4 +226,12 @@ it.each([
 	expect(result.complete).toBe(true);
 	expect(result.stats.reason).toBe("complete");
 	expect(changes(result).length).toBeLessThanOrEqual(1);
+});
+
+it("always returns the standing stop when no action is reachable", () => {
+	const result = search({ x: 3, y: 0 }, 0.3, (p) => p.x === 0 && p.y === 0);
+	expect(result.steps).toEqual([]);
+	expect(result.distance).toBe(3);
+	expect(result.arrivalKind).toBe("nearest-reachable");
+	expect(result.stats.optimal).toBe(true);
 });

@@ -27,6 +27,8 @@ export interface FootCycle {
 	passingFrames?: number[];
 }
 export interface FootPose {
+	/** Only the entry stance from standing gets the start-facing tolerance. */
+	firstStance?: boolean;
 	cycle: FootCycle;
 	frame: number;
 	flipX: boolean;

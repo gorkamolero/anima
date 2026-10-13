@@ -48,6 +48,7 @@ export function stanceFacesHeading(
 	end: WalkPoint,
 	heading: WalkDirection,
 	perspective = true,
+	toleranceDegrees = 30,
 ): boolean {
 	const dx = end.x - start.x,
 		dz = end.y - start.y;
@@ -59,6 +60,6 @@ export function stanceFacesHeading(
 		Math.abs(
 			Math.atan2(Math.sin(angle - expected), Math.cos(angle - expected)),
 		) <=
-		Math.PI / 6
+		(toleranceDegrees * Math.PI) / 180
 	);
 }

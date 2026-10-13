@@ -20,6 +20,7 @@ export interface StepSimulation<State, Pose> {
 		state: State,
 		heading: WalkDirection,
 		starting: boolean,
+		stopping?: boolean,
 	): Pose | undefined;
 	advance(state: State, pose: Pose): State | undefined;
 	/** Validate the complete exit and settle; return the final planted sole. */
@@ -35,6 +36,9 @@ export interface StepSimulation<State, Pose> {
 export interface SearchOptions {
 	nodeBudget?: number;
 	timeBudgetMs?: number;
+	/** Maximum path cost, including turns and the exit edge. */
+	costBound?: number;
+	stopWeight?: number;
 	resolution?: number;
 	turnCost?: number;
 	stepCost?: number;
@@ -48,7 +52,9 @@ export interface SearchStats {
 	expanded: number;
 	generated: number;
 	elapsedMs: number;
-	reason: "complete" | "exhausted" | "node-budget" | "time-budget";
+	reason: "complete" | "nearest-reachable" | "node-budget" | "time-budget";
+	optimal: boolean;
+	costBound: number;
 }
 
 class Heap<T extends { f: number }> {
@@ -87,9 +93,9 @@ class Heap<T extends { f: number }> {
 	}
 }
 
-/** A* on 3 cm support cells × foot/phase × heading. Positions are only
- * quantised for duplicate detection: playback retains exact simulated poses.
- * The caller supplies a target projected onto the reachable walk area. */
+/** Best-first branch-and-bound over support cells, foot, phase and heading.
+ * Every valid exit is a goal with residual-distance cost. Playback retains the
+ * exact simulated positions; quantisation is only duplicate detection. */
 export function planFootsteps<State, Pose>(
 	target: Point,
 	initial: State,
@@ -105,10 +111,15 @@ export function planFootsteps<State, Pose>(
 	const turnCost = options.turnCost ?? 0.6;
 	const stepCost = options.stepCost ?? 0.02;
 	const maxStride = options.maxStride ?? 0.6;
-	// Distance is a lower bound on distance+turn+step costs, including the
-	// stop edge. Subtract only the maximum goal radius, not the stop travel.
-	const heuristic = (p: Point) =>
-		Math.max(0, distance(p, goal) - maxStride / 2);
+	const weight = Math.max(1, options.stopWeight ?? 8);
+	const initialDistance = distance(ground(sim.position(initial)), goal);
+	const costBound = options.costBound ?? 1.5 * initialDistance + 2;
+	// For w >= 1, movement plus w * residual is at least straight distance.
+	// With bounded remaining cost B, residual is at least max(0, d - B).
+	const heuristic = (p: Point, g = 0) => {
+		const d = distance(p, goal);
+		return d + (weight - 1) * Math.max(0, d - (costBound - g));
+	};
 	type Node = {
 		state: State;
 		heading?: WalkDirection;
@@ -151,7 +162,8 @@ export function planFootsteps<State, Pose>(
 		generated++;
 	}
 	let expanded = 0;
-	let reason: SearchStats["reason"] = "exhausted";
+	let reason: SearchStats["reason"] = "nearest-reachable";
+	let bestScore = initialDistance * weight;
 	let best:
 		| {
 				node: Node;
@@ -175,18 +187,15 @@ export function planFootsteps<State, Pose>(
 	});
 	for (let node = open.pop(); node; node = open.pop()) {
 		if (node.g !== costs.get(node.key)) continue;
-		if (best?.complete && node.f >= best.cost) {
-			reason = "complete";
+		if (node.f >= bestScore) {
+			reason = best?.complete ? "complete" : "nearest-reachable";
 			break;
 		}
 		if (expanded >= (options.nodeBudget ?? 12000)) {
 			reason = "node-budget";
 			break;
 		}
-		if (
-			now() - started >=
-			(options.timeBudgetMs ?? 30) - (sim.offset ? 3 : 0)
-		) {
+		if (now() - started >= (options.timeBudgetMs ?? 130)) {
 			reason = "time-budget";
 			break;
 		}
@@ -207,9 +216,13 @@ export function planFootsteps<State, Pose>(
 				continue;
 			const run = turn ? 1 : node.run + 1;
 			const pose = sim.entry(node.state, heading, node.heading === undefined);
-			if (pose === undefined) continue;
+			const stopPose =
+				sim.entry(node.state, heading, node.heading === undefined, true) ??
+				pose;
+			if (pose === undefined && stopPose === undefined) continue;
 			const p = ground(sim.position(node.state));
-			const next = sim.advance(node.state, pose);
+			const next =
+				pose === undefined ? undefined : sim.advance(node.state, pose);
 			const stride = next
 				? distance(p, ground(sim.position(next)))
 				: node.stride;
@@ -217,42 +230,51 @@ export function planFootsteps<State, Pose>(
 			// Stopping is an edge, including all exit-frame motion. It cannot evade
 			// the turn cost or introduce a heading reversal at the final drawing.
 			const candidates = best
-				? sim.restCandidates?.(node.state, pose)
+				? stopPose === undefined
+					? undefined
+					: sim.restCandidates?.(node.state, stopPose)
 				: undefined;
 			const canImprove =
 				!candidates ||
-				candidates.some(
-					(q) =>
-						distance(ground(q), goal) <=
-						Math.max(best?.distance ?? Infinity, maxStride / 2) + 1e-6,
-				);
-			const rest = canImprove ? sim.rest(node.state, pose, heading) : undefined;
-			if (rest && (node.parent || next)) {
+				candidates.some((q) => {
+					const point = ground(q);
+					const cost = node.g + distance(p, point) + turnPenalty + stepCost;
+					return (
+						cost <= costBound &&
+						cost + weight * distance(point, goal) < bestScore
+					);
+				});
+			const rest =
+				canImprove && stopPose !== undefined
+					? sim.rest(node.state, stopPose, heading)
+					: undefined;
+			if (rest && stopPose !== undefined) {
 				const remaining = distance(ground(rest), goal);
 				const complete =
 					remaining <= Math.min(stride, maxStride) / 2 + 1e-8 &&
-					(sim.acceptRest?.(node.state, pose, rest, target) ?? true);
+					(sim.acceptRest?.(node.state, stopPose, rest, target) ?? true);
 				const cost =
 					node.g +
 					(rest.travel ?? distance(p, ground(rest))) +
 					turnPenalty +
 					stepCost;
-				if (
-					!best ||
-					(complete && !best.complete) ||
-					(complete === best.complete &&
-						(complete ? cost < best.cost : remaining < best.distance))
-				)
+				const score = cost + weight * remaining;
+				if (cost <= costBound && score < bestScore) {
+					bestScore = score;
 					best = {
 						node,
-						step: stepFor(node, heading, pose, true),
+						step: stepFor(node, heading, stopPose, true),
 						distance: remaining,
 						cost,
 						complete,
 					};
+				}
 			}
-			if (!next || stride < 1e-8) continue;
+			if (!next || pose === undefined || stride < 1e-8) continue;
 			const g = node.g + stride + turnPenalty + stepCost;
+			if (g > costBound) continue;
+			const f = g + heuristic(ground(sim.position(next)), g);
+			if (f >= bestScore) continue;
 			const nextKey = key(next, heading, changes, run);
 			if (g >= (costs.get(nextKey) ?? Infinity)) continue;
 			costs.set(nextKey, g);
@@ -262,7 +284,7 @@ export function planFootsteps<State, Pose>(
 				parent: node,
 				step: stepFor(node, heading, pose, false),
 				g,
-				f: g + heuristic(ground(sim.position(next))),
+				f,
 				key: nextKey,
 				stride,
 				changes,
@@ -278,86 +300,25 @@ export function planFootsteps<State, Pose>(
 			steps.push(n.step);
 		steps.reverse();
 	}
-	if (best?.complete && reason === "exhausted") reason = "complete";
-	let last = best
+	if (!reason.endsWith("budget"))
+		reason = best?.complete ? "complete" : "nearest-reachable";
+	const last = best
 		? sim.rest(best.node.state, best.step.pose, best.step.heading)
-		: undefined;
-	let complete = best?.complete ?? false;
-	let correction = { x: 0, y: 0 };
-	// Refine only the allowed subpixel anchor slide on the fixed search result.
-	// No heading, stance count or route is changed. Re-simulate every support
-	// and settle before accepting a correction; playback consumes these poses.
-	if (!complete && last && sim.offset && steps.length > 1) {
-		const original = steps.slice();
-		for (
-			let pass = 0;
-			pass < 3 && now() - started < (options.timeBudgetMs ?? 30);
-			pass++
-		) {
-			const proposed = {
-				x: correction.x + (target.x - last.x) / (steps.length - 1),
-				y: correction.y + (target.y - last.y) / (steps.length - 1),
-			};
-			const factor = Math.min(1, 0.99 / Math.hypot(proposed.x, proposed.y));
-			const slide = { x: proposed.x * factor, y: proposed.y * factor };
-			const trial: PlannedStep<State, Pose>[] = [];
-			let state = original[0].state,
-				rest: Point | undefined,
-				stride = 0,
-				valid = true;
-			for (let i = 0; i < original.length; i++) {
-				const delta = i ? slide : { x: 0, y: 0 };
-				state = sim.offset(state, delta);
-				const previous = original[i],
-					pose = sim.entry(state, previous.heading, i === 0);
-				if (pose === undefined) {
-					valid = false;
-					break;
-				}
-				trial.push({ ...previous, state, pose, slide: delta });
-				const next = sim.advance(state, pose);
-				if (next)
-					stride = distance(
-						ground(sim.position(state)),
-						ground(sim.position(next)),
-					);
-				if (previous.stop) {
-					rest = sim.rest(state, pose, previous.heading);
-					break;
-				}
-				if (!next) {
-					valid = false;
-					break;
-				}
-				state = next;
-			}
-			if (
-				!valid ||
-				!rest ||
-				distance(ground(rest), goal) >= distance(ground(last), goal)
-			)
-				break;
-			steps.splice(0, steps.length, ...trial);
-			last = rest;
-			correction = slide;
-			const final = trial[trial.length - 1];
-			complete =
-				distance(ground(rest), goal) <=
-					Math.min(stride, maxStride) / 2 + 1e-8 &&
-				(sim.acceptRest?.(final.state, final.pose, rest, target) ?? true);
-			if (complete) break;
-		}
-	}
+		: sim.position(initial);
+	const complete = best?.complete ?? initialDistance <= maxStride / 2;
 
 	return {
 		steps,
-		distance: last ? distance(last, target) : Infinity,
+		distance: distance(last ?? sim.position(initial), target),
+		arrivalKind: complete ? ("exact" as const) : ("nearest-reachable" as const),
 		complete,
 		stats: {
 			expanded,
 			generated,
 			elapsedMs: now() - started,
 			reason,
+			optimal: !reason.endsWith("budget"),
+			costBound,
 		} satisfies SearchStats,
 	};
 }

@@ -299,20 +299,22 @@ export class CharacterMotor {
 			return;
 		position = entry;
 		let stanceStart = this.groundPoint(entry);
-		const facing = () =>
+		let firstStance = source.firstStance ?? false;
+		const facing = (last = false) =>
 			!heading ||
 			stanceFacesHeading(
 				stanceStart,
 				this.groundPoint(position),
 				heading,
 				this.area.perspective.constant === undefined,
+				firstStance || last ? 35 : 30,
 			);
 
 		for (let n = 0; n < pose.cycle.contacts.length; n++) {
 			if (
 				(pose.cycle.matchedCut?.exitFrames.includes(pose.frame) ?? true) &&
 				this.canStand(pose, anchor, foot, position.scale) &&
-				facing()
+				facing(true)
 			) {
 				return { frames: n, position, anchor, foot, travel };
 			}
@@ -324,6 +326,7 @@ export class CharacterMotor {
 			const previousAnchorY = anchor.y;
 			if (incoming !== foot) {
 				if (!facing()) return;
+				firstStance = false;
 				const previous = this.groundPoint(anchor);
 				anchor = contactOnScreen(pose, incoming, position, position.scale);
 				const nextGround = this.groundPoint(anchor);
@@ -564,9 +567,9 @@ export class CharacterMotor {
 				position: (s) => s.anchor,
 				ground: (p) => this.groundPoint(p),
 				support: (s) => `${s.foot}:${s.pose.frame}`,
-				entry: (s, direction, starting) => {
+				entry: (s, direction, starting, stopping) => {
 					const idle = this.animation.standing?.(direction);
-					// Reverse settle must lock the support actually drawn in that sheet.
+					// Reverse settle must use the support actually drawn in the sheet.
 					if (
 						starting &&
 						idle &&
@@ -580,8 +583,10 @@ export class CharacterMotor {
 					const frames = same
 						? [s.pose.frame]
 						: starting
-							? (selected.cycle.matchedCut?.entryFrames ??
-								selected.cycle.switchFrames)
+							? [
+									...(selected.cycle.matchedCut?.entryFrames ?? []),
+									...selected.cycle.switchFrames,
+								]
 							: selected.cycle.switchFrames;
 					return frames
 						.filter(
@@ -591,10 +596,18 @@ export class CharacterMotor {
 									(f + 1) % selected.cycle.contacts.length
 								].planted === s.foot,
 						)
-						.map((frame) => ({ ...selected, frame }))
+						.map((frame) => ({ ...selected, frame, firstStance: starting }))
 						.find(
 							(p) =>
-								this.validFacing(p, s.anchor, s.foot, s.scale, direction) &&
+								(stopping ||
+									this.validFacing(
+										p,
+										s.anchor,
+										s.foot,
+										s.scale,
+										direction,
+										starting ? 35 : 30,
+									)) &&
 								(!starting || this.canStand(p, s.anchor, s.foot, s.scale)),
 						);
 				},
@@ -660,7 +673,7 @@ export class CharacterMotor {
 		motor.scale = request.scale;
 		motor.heading = request.heading;
 		const result = motor.buildPlan({
-			timeBudgetMs: 5000,
+			timeBudgetMs: 125,
 			nodeBudget: 250000,
 			turnCost: 1.2,
 		});
@@ -813,6 +826,7 @@ export class CharacterMotor {
 		foot: Foot,
 		scale: number,
 		heading: WalkDirection,
+		toleranceDegrees = 30,
 	): boolean {
 		const sampled = this.stanceSamples(pose, anchor, foot, scale);
 		if (!sampled) return false;
@@ -824,6 +838,7 @@ export class CharacterMotor {
 			this.groundPoint({ x: last.x + shift, y: last.y }),
 			heading,
 			this.area.perspective.constant === undefined,
+			toleranceDegrees,
 		);
 	}
 	/** Cache exact-depth sheet simulation independently of scene collisions.
@@ -936,7 +951,7 @@ export class CharacterMotor {
 			end: nextBodySafe ? end : position,
 			anchor: landing,
 			foot: sampled.incoming,
-			pose: { ...pose, frame: sampled.frame },
+			pose: { ...pose, frame: sampled.frame, firstStance: false },
 			scale: nextBodySafe ? end.scale : scale,
 		};
 	}
