@@ -729,12 +729,10 @@ export class CharacterMotor {
 					selected.flipX === s.pose.flipX;
 				const frames = same
 					? [s.pose.frame]
-					: starting
-						? [
-								...(selected.cycle.matchedCut?.entryFrames ?? []),
-								...selected.cycle.switchFrames,
-							]
-						: selected.cycle.switchFrames;
+					: [
+							...(selected.cycle.matchedCut?.entryFrames ?? []),
+							...selected.cycle.switchFrames,
+						];
 				return frames
 					.filter(
 						(f) =>
