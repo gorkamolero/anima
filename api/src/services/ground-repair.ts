@@ -132,23 +132,9 @@ export async function subtractCachedObstacles(
 }
 export function excludeUnscaledStairs(ground: GroundData, stairs?: Raster) {
 	if (!stairs) return;
-	const scaled = new Uint8Array(ground.floor.data.length);
-	for (const r of ground.regions ?? [])
-		if (
-			r.kind === "stairs" &&
-			r.scaleAtY.length &&
-			r.scaleAtY.every(
-				(s) => Number.isFinite(s.scaleFactor) && s.scaleFactor > 0,
-			)
-		)
-			r.mask.data.forEach((v, i) => {
-				if (v) scaled[i] = 1;
-			});
 	const floor = {
 		...ground.floor,
-		data: ground.floor.data.map((v, i) =>
-			v && (!stairs.data[i] || scaled[i]) ? 1 : 0,
-		),
+		data: ground.floor.data.map((v, i) => (v && !stairs.data[i] ? 1 : 0)),
 	};
 	const removed =
 		ground.floor.data.filter(Boolean).length -
@@ -157,7 +143,7 @@ export function excludeUnscaledStairs(ground: GroundData, stairs?: Raster) {
 		replaceFloor(ground, floor);
 		ground.notes = [
 			...(ground.notes ?? []),
-			`Excluded ${removed} stair cells without derived region scale.`,
+			`Excluded ${removed} stair cells: local scale does not supply tread-aware foot placement.`,
 		];
 	}
 }

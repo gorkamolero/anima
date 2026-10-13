@@ -84,7 +84,7 @@ describe("asymmetric floor judge", () => {
 		expect(g.floor.data[35 * 40 + 3]).toBe(1);
 		expect(g.walkArea?.mask).toEqual(g.floor);
 	});
-	it("keeps only stairs with valid local depth scales", () => {
+	it("excludes stairs even with local scale until tread-aware foot placement exists", () => {
 		const g = ground(),
 			stairs = {
 				...g.floor,
@@ -94,7 +94,7 @@ describe("asymmetric floor judge", () => {
 		g.regions = depthRegions(g.floor, depth, stairs, 200, 1);
 		excludeUnscaledStairs(g, stairs);
 		expect(g.floor.data[35 * 40 + 2]).toBe(0);
-		expect(g.notes?.join(" ")).toContain("without derived region scale");
+		expect(g.notes?.join(" ")).toContain("tread-aware foot placement");
 		const valid = ground();
 		valid.regions = depthRegions(
 			valid.floor,
@@ -104,6 +104,6 @@ describe("asymmetric floor judge", () => {
 			1,
 		);
 		excludeUnscaledStairs(valid, stairs);
-		expect(valid.floor.data[35 * 40 + 2]).toBe(1);
+		expect(valid.floor.data[35 * 40 + 2]).toBe(0);
 	});
 });

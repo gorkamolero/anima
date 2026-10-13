@@ -1,6 +1,10 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
-import { canOcclude, maskGeometry } from "../../services/occluders.js";
+import {
+	canOcclude,
+	maskGeometry,
+	splitFloorClutter,
+} from "../../services/occluders.js";
 
 describe("hard-scene occluders", () => {
 	it("includes interior furniture and fountain while excluding floor", () => {
@@ -37,5 +41,35 @@ describe("hard-scene occluders", () => {
 		const geometry = maskGeometry(mask, floor);
 		expect(geometry?.bbox).toEqual(maskGeometry(mask)?.bbox);
 		expect(geometry?.baseline.length).toBeGreaterThan(0);
+	});
+});
+
+describe("floor-fragment derivation", () => {
+	it("preserves every segmented pixel while separating a detached low fragment", () => {
+		const mask = { width: 192, height: 108, data: Array(192 * 108).fill(0) };
+		for (let y = 40; y < 90; y++)
+			for (let x = 30; x < 40; x++) mask.data[y * 192 + x] = 1;
+		for (let y = 90; y < 93; y++)
+			for (let x = 50; x < 65; x++) mask.data[y * 192 + x] = 1;
+		const { upright, flat } = splitFloorClutter(mask, "pew", {
+			constant: 1,
+			slope: 0,
+			horizonY: 0,
+		});
+		expect(flat.data.reduce((a, b) => a + b, 0)).toBe(45);
+		for (let i = 0; i < mask.data.length; i++)
+			expect(upright.data[i] + flat.data[i]).toBe(mask.data[i]);
+	});
+	it("follows the full sloped desk front instead of extending one low leg", () => {
+		const mask = { width: 192, height: 108, data: Array(192 * 108).fill(0) };
+		for (let x = 30; x < 90; x++)
+			for (let y = 40; y < 95 - Math.floor((x - 30) / 3); y++)
+				mask.data[y * 192 + x] = 1;
+		const g = maskGeometry(mask, undefined, 0.8, 0.002, true);
+		expect(g?.baseline[0].x).toBeLessThan(400);
+		expect(g?.baseline[g.baseline.length - 1].x).toBeGreaterThan(800);
+		expect(g?.baseline[0].y).toBeGreaterThan(
+			g?.baseline[g.baseline.length - 1].y ?? Infinity,
+		);
 	});
 });

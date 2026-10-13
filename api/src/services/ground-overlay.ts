@@ -27,7 +27,7 @@ export async function groundOverlay(
 		.join("");
 	const points = (p: Array<{ x: number; y: number }>) =>
 		p.map((v) => `${v.x},${v.y}`).join(" ");
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"><g fill="#00ff66" opacity="0.3">${rects}</g><g fill="none" stroke-width="3"><path stroke="#ffff00" d="M0 ${ground.horizonY} H1920"/><polyline stroke="#ff3388" points="${points(ground.groundLine.points)}"/>${(ground.regions ?? []).map((r) => `<polygon stroke="#00dfff" stroke-dasharray="8 6" points="${points(r.polygon)}"/>`).join("")}${occluders.map((o) => `<polyline stroke="#ff8800" stroke-width="5" points="${points(o.baseline)}"/>`).join("")}${exits.map((e) => `<polygon fill="#4466ff" fill-opacity="0.4" stroke="#6688ff" points="${points(e.region)}"/>`).join("")}</g></svg>`;
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"><g fill="#00ff66" opacity="0.3">${rects}</g><g fill="none" stroke-width="3"><path stroke="#ffff00" d="M0 ${ground.horizonY} H1920"/><polyline stroke="#ff3388" points="${points(ground.groundLine.points)}"/>${(ground.regions ?? []).map((r) => `<polygon stroke="#00dfff" stroke-dasharray="8 6" points="${points(r.polygon)}"/>`).join("")}${occluders.map((o) => `<polyline stroke="${o.floorDecal ? "#bb66ff" : "#ff8800"}" stroke-width="5" points="${points(o.baseline)}"/>`).join("")}${exits.map((e) => `<polygon fill="#4466ff" fill-opacity="0.4" stroke="#6688ff" points="${points(e.region)}"/>`).join("")}</g></svg>`;
 	const svgPath = resolve(proofDirectory(key), "overlay.svg");
 	await writeFile(svgPath, svg);
 	const path = resolve(
@@ -76,7 +76,7 @@ export async function groundOverlay(
 		if (o.baseline.length > 1)
 			draw.push(
 				"-stroke",
-				"#ff8800",
+				o.floorDecal ? "#bb66ff" : "#ff8800",
 				"-strokewidth",
 				"5",
 				"-draw",

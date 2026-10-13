@@ -1,4 +1,9 @@
 import { readFile } from "node:fs/promises";
+import {
+	classifyOccluder,
+	type Occluder,
+} from "@anima/engine/occlusion/occlusion";
+import type { Perspective } from "@anima/engine/walkarea/perspective";
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
 import { cachedFloor, deriveOccluders } from "../services/occluders.js";
@@ -29,6 +34,8 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 								JSON.parse(text) as {
 									floor: NonNullable<Awaited<ReturnType<typeof cachedFloor>>>;
 									horizonY: number;
+									scaleSlope: number;
+									walkArea?: { perspective: Perspective };
 								},
 						)
 						.catch(() => undefined)
@@ -74,7 +81,21 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 						template: key === "inside" ? "interior" : "exterior",
 					},
 				);
-		return c.json({ ...geometry, floor });
+		const ground = anchorGround ?? place?.ground;
+		const perspective =
+			ground?.walkArea?.perspective ??
+			(ground
+				? { horizonY: ground.horizonY, slope: ground.scaleSlope }
+				: undefined);
+		return c.json({
+			...geometry,
+			occluders: perspective
+				? geometry.occluders.map((o: Occluder) =>
+						classifyOccluder(o, perspective),
+					)
+				: geometry.occluders,
+			floor,
+		});
 	} catch (error) {
 		if (error instanceof Error && "code" in error && error.code === "ENOENT")
 			return c.json(

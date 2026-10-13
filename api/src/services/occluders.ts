@@ -3,6 +3,11 @@ import { createHash } from "node:crypto";
 import { appendFileSync, mkdirSync, readFileSync, rmdirSync } from "node:fs";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
+import {
+	baselineYAt,
+	classifyOccluder,
+} from "@anima/engine/occlusion/occlusion";
+import type { Perspective } from "@anima/engine/walkarea/perspective";
 import { fal } from "@fal-ai/client";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { interactablesSchema } from "../routes/interactables.js";
@@ -21,6 +26,9 @@ export interface Occluder {
 	bbox: { x: number; y: number; w: number; h: number };
 	baseline: Point[];
 	png: string;
+	floorDecal?: boolean;
+	obstacle?: boolean;
+	heightMetres?: number;
 	maskCoverage?: {
 		referencePixels: number;
 		retainedPixels: number;
@@ -119,13 +127,13 @@ export function reserveSegmentation(key: string, label: string): void {
 		try {
 			previous = readFileSync(ledger, "utf8");
 		} catch {}
-		const scope = ["04a", "04c", "07", "08", "09", "10", "10c"].includes(
+		const scope = ["04a", "04c", "07", "08", "09", "10", "10c", "21"].includes(
 			process.env.DERIVATION_BRIEF ?? "",
 		)
 			? `${process.env.DERIVATION_BRIEF === "10c" ? "10" : process.env.DERIVATION_BRIEF} `
 			: "";
 		const limit =
-			scope === "10 " || scope === "09 "
+			scope === "21 " || scope === "10 " || scope === "09 "
 				? 30
 				: scope === "08 "
 					? 40
@@ -197,6 +205,7 @@ export function maskGeometry(
 	floor?: FloorRaster,
 	supportFraction = 0.8,
 	minimumFraction = 0.002,
+	solidFront = false,
 ): { bbox: Occluder["bbox"]; baseline: Point[] } | undefined {
 	const { width: w, height: h, data } = mask;
 	let count = 0,
@@ -246,6 +255,7 @@ export function maskGeometry(
 			support = [...contact, ...missing].sort((a, b) => a[0] - b[0]);
 		}
 	}
+	if (solidFront) support = columns;
 	const baseline: Point[] = [];
 	// Quantile buckets avoid inventing a contact point in the gap between bench legs.
 	const stride = Math.max(1, Math.ceil(support.length / 6));
@@ -337,6 +347,8 @@ export function deriveOccluders(
 	ground?: {
 		floor: FloorRaster;
 		horizonY?: number;
+		scaleSlope?: number;
+		walkArea?: { perspective: Perspective };
 		template?: "interior" | "exterior";
 	},
 ): Promise<{ occluders: Occluder[]; exits: ReturnType<typeof deriveExits> }> {
@@ -355,6 +367,8 @@ async function derive(
 	ground?: {
 		floor: FloorRaster;
 		horizonY?: number;
+		scaleSlope?: number;
+		walkArea?: { perspective: Perspective };
 		template?: "interior" | "exterior";
 	},
 ) {
@@ -412,6 +426,15 @@ async function derive(
 			generated: !!ground,
 		}),
 	);
+	const perspective =
+		ground?.walkArea?.perspective ??
+		(ground?.scaleSlope && horizonY !== undefined
+			? { slope: ground.scaleSlope, horizonY }
+			: undefined);
+	const classify = (objects: Occluder[]) =>
+		perspective
+			? objects.map((o) => classifyOccluder(o, perspective))
+			: objects;
 	const exits = floor
 		? deriveExits(floor, objects, horizonY, {
 				allowFar: template !== "interior",
@@ -437,7 +460,9 @@ async function derive(
 			).every(Boolean)
 		)
 			return {
-				occluders,
+				occluders: perspective
+					? classify(await refineCachedOccluders(image, perspective))
+					: occluders,
 				exits,
 			};
 	}
@@ -509,6 +534,7 @@ async function derive(
 			floor,
 			supportFraction,
 			/post|pole/i.test(object.name) ? 0.00015 : 0.002,
+			/\b(desk|counter)\b/i.test(object.name),
 		);
 		if (!geometry) continue;
 		const cleanPath = maskPath.replace(/\.png$/, ".clean.png");
@@ -548,7 +574,7 @@ async function derive(
 			"-crop",
 			`${w}x${h}+${x}+${y}`,
 			"+repage",
-			resolve(source, "..", png),
+			`PNG32:${resolve(source, "..", png)}`,
 		]);
 		const referencePixels = cleaned.data.reduce((n, v) => n + v, 0);
 		occluders.push({
@@ -565,12 +591,214 @@ async function derive(
 	}
 	await writeFile(
 		`${stem}.occluders.json`,
-		`${JSON.stringify(occluders, null, "\t")}\n`,
+		`${JSON.stringify(classify(occluders), null, "\t")}\n`,
 	);
 	await writeFile(
 		`${stem}.exits.json`,
 		`${JSON.stringify(exits, null, "\t")}\n`,
 	);
 	await writeFile(`${stem}.occluders.cache.json`, fingerprint);
-	return { occluders, exits };
+	return {
+		occluders: perspective
+			? classify(await refineCachedOccluders(image, perspective))
+			: occluders,
+		exits,
+	};
+}
+
+/** Separate low connected fragments and the flat apron of nets from upright
+ * occlusion, retaining every segmentation pixel in one of the two layers. */
+export function splitFloorClutter(
+	mask: FloorRaster,
+	label: string,
+	perspective: Perspective,
+	support?: Point[],
+): { upright: FloorRaster; flat: FloorRaster } {
+	const { width: w, height: h } = mask;
+	const upright = { ...mask, data: [...mask.data] };
+	const flat = { ...mask, data: mask.data.map(() => 0) };
+	const seen = new Uint8Array(w * h),
+		queue = new Int32Array(w * h);
+	const ppm = (y: number) =>
+		(perspective.pixelsPerMetre ?? 300) *
+		(perspective.constant ?? perspective.slope * (y - perspective.horizonY));
+	const mark = (pixels: number[]) => {
+		for (const i of pixels) {
+			upright.data[i] = 0;
+			flat.data[i] = mask.data[i];
+		}
+	};
+	for (let seed = 0; seed < mask.data.length; seed++) {
+		if (!mask.data[seed] || seen[seed]) continue;
+		let head = 0,
+			tail = 1,
+			minY = h,
+			maxY = 0;
+		queue[0] = seed;
+		seen[seed] = 1;
+		while (head < tail) {
+			const n = queue[head++],
+				x = n % w,
+				y = Math.floor(n / w);
+			minY = Math.min(minY, y);
+			maxY = Math.max(maxY, y);
+			for (const next of [
+				x ? n - 1 : -1,
+				x < w - 1 ? n + 1 : -1,
+				y ? n - w : -1,
+				y < h - 1 ? n + w : -1,
+			]) {
+				if (next >= 0 && mask.data[next] && !seen[next]) {
+					seen[next] = 1;
+					queue[tail++] = next;
+				}
+			}
+		}
+		const pixels = Array.from(queue.subarray(0, tail));
+		const centreX =
+			pixels.reduce((sum, i) => sum + (((i % w) + 0.5) * 1920) / w, 0) /
+			pixels.length;
+		const bottom = support?.length
+			? Math.max(
+					((maxY + 1) * 1080) / h,
+					baselineYAt(
+						{
+							id: "",
+							label,
+							png: "",
+							bbox: { x: 0, y: 0, w: 1920, h: 1080 },
+							baseline: support,
+						},
+						centreX,
+					),
+				)
+			: ((maxY + 1) * 1080) / h;
+		const height = (bottom - (minY * 1080) / h) / ppm(bottom);
+		if (
+			(height >= 0 && height < 0.25) ||
+			/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(label)
+		) {
+			mark(pixels);
+			continue;
+		}
+		if (/net|fishnet/i.test(label)) {
+			const columns = new Map<number, number[]>();
+			for (const i of pixels) {
+				const x = i % w;
+				const column = columns.get(x) ?? [];
+				column.push(i);
+				columns.set(x, column);
+			}
+			for (const column of columns.values()) {
+				const ys = column.map((i) => Math.floor(i / w));
+				const top = Math.min(...ys),
+					bottom = Math.max(...ys) + 1;
+				const height = ((bottom - top) * 1080) / h / ppm((bottom * 1080) / h);
+				if (height >= 0 && height < 0.25) mark(column);
+			}
+		}
+	}
+	return { upright, flat };
+}
+
+/** Explicit, cache-only geometry migration. No segmentation or image generation. */
+export async function refineCachedOccluders(
+	image: string,
+	perspective: Perspective,
+): Promise<Occluder[]> {
+	const source = imagePath(image),
+		stem = source.replace(/\.png$/, "");
+	const original = JSON.parse(
+		await readFile(`${stem}.occluders.json`, "utf8"),
+	) as (Occluder & { layerDerivation?: number })[];
+	if (original.every((o) => o.layerDerivation === 21)) return original;
+	const result: (Occluder & { layerDerivation: number })[] = [];
+	for (const o of original) {
+		const bytes = execFileSync(
+			"magick",
+			[
+				"-size",
+				"1920x1080",
+				"xc:none",
+				resolve(source, "..", o.png),
+				"-geometry",
+				`+${o.bbox.x}+${o.bbox.y}`,
+				"-composite",
+				"-alpha",
+				"extract",
+				"-depth",
+				"8",
+				"gray:-",
+			],
+			{ maxBuffer: 8e6 },
+		);
+		const mask = {
+			width: 1920,
+			height: 1080,
+			data: Array.from(bytes, (v) => (v > 127 ? 1 : 0)),
+		};
+		const split = splitFloorClutter(mask, o.label, perspective, o.baseline);
+		for (const kind of ["upright", "flat"] as const) {
+			const part = split[kind];
+			const geometry = maskGeometry(
+				part,
+				undefined,
+				0.8,
+				0.000005,
+				/\b(desk|counter)\b/i.test(o.label),
+			);
+			if (!geometry) continue;
+			const { x, y, w, h } = geometry.bbox;
+			const png = `${basename(stem)}.occluder-${o.id}-${kind}-21.png`;
+			execFileSync(
+				"magick",
+				[
+					source,
+					"-resize",
+					"1920x1080!",
+					"(",
+					"-size",
+					"1920x1080",
+					"-depth",
+					"8",
+					"gray:-",
+					")",
+					"-alpha",
+					"off",
+					"-compose",
+					"CopyOpacity",
+					"-composite",
+					"-crop",
+					`${w}x${h}+${x}+${y}`,
+					"+repage",
+					`PNG32:${resolve(source, "..", png)}`,
+				],
+				{ input: Buffer.from(part.data.map((v) => v * 255)), maxBuffer: 8e6 },
+			);
+			const classified = classifyOccluder(
+				{ ...o, ...geometry, png },
+				perspective,
+			);
+			const count = part.data.reduce((a, b) => a + b, 0);
+			result.push({
+				...classified,
+				id: `${o.id}-${kind}`,
+				floorDecal: kind === "flat" || classified.floorDecal,
+				obstacle:
+					kind !== "flat" ||
+					!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(o.label),
+				layerDerivation: 21,
+				maskCoverage: {
+					referencePixels: count,
+					retainedPixels: count,
+					fraction: 1,
+				},
+			});
+		}
+	}
+	await writeFile(
+		`${stem}.occluders.json`,
+		`${JSON.stringify(result, null, "\t")}\n`,
+	);
+	return result;
 }

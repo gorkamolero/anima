@@ -19,7 +19,8 @@
 		"./transitions": "./src/transitions/index.ts",
 		"./groundline": "./src/groundline/index.ts",
 		"./walkarea/perspective": "./src/walkarea/perspective.ts",
-		"./walkarea/types": "./src/walkarea/types.ts"
+		"./walkarea/types": "./src/walkarea/types.ts",
+		"./occlusion/occlusion": "./src/occlusion/occlusion.ts"
 	},
 	"scripts": {
 		"typecheck": "tsc --noEmit",

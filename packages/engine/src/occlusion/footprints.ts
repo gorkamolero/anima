@@ -26,6 +26,7 @@ export function objectFootprints(
 	const data = grid.data.map((_, i) => {
 		const { x, y } = cellPoint(grid, i);
 		return layers.some((layer) => {
+			if (layer.data.obstacle === false) return false;
 			const baseline = baselineYAt(layer.data, x);
 			const ground = toMetres(perspective, { x, y: baseline });
 			const strip = Math.max(
@@ -41,7 +42,7 @@ export function objectFootprints(
 			// Treating only opaque leg pixels as support lets a route walk through
 			// the seat and abruptly flip its entire overlap at the front baseline.
 			// Follow the contact polyline (not the object's rectangular bounds).
-			if (/\bbench\b/i.test(layer.data.label)) {
+			if (/\b(bench|desk|counter)\b/i.test(layer.data.label)) {
 				const contacts = layer.data.baseline;
 				if (
 					contacts.length > 1 &&

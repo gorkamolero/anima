@@ -7,6 +7,7 @@ import {
 	type CharacterAnimConfig,
 	CharacterMotor,
 	cellPoint,
+	depthForOccluder,
 	type Exit,
 	erode,
 	exitAt,
@@ -552,7 +553,7 @@ export class StoryGameScene extends BaseScene {
 			for (const layer of this.objectLayers)
 				layer.image.setDepth(
 					10 +
-						baselineYAt(
+						depthForOccluder(
 							layer.data,
 							this.hermesMotor?.anchor.x ?? this.hermesSprite.x,
 						) /
@@ -577,6 +578,7 @@ export class StoryGameScene extends BaseScene {
 			if (
 				exit &&
 				exit.id !== this.exitLatch &&
+				this.requestedExit === exit.id &&
 				(previousExit?.id !== exit.id || this.requestedExit === exit.id) &&
 				wasWalking &&
 				!this.approachingObject &&

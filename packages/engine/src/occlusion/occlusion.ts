@@ -1,3 +1,4 @@
+import { type Perspective, scaleAt } from "../walkarea/perspective";
 /** All coordinates and depths are in 1920 x 1080 game space. */
 export interface Point {
 	x: number;
@@ -10,6 +11,9 @@ export interface Occluder {
 	/** Sorted by x; endpoint values extend across the sprite's entire bbox. */
 	baseline: Point[];
 	png: string;
+	floorDecal?: boolean;
+	obstacle?: boolean;
+	heightMetres?: number;
 }
 export function baselineYAt(occluder: Occluder, x: number): number {
 	const points = occluder.baseline;
@@ -25,6 +29,7 @@ export function baselineYAt(occluder: Occluder, x: number): number {
 }
 export function isBehind(feet: Point, occluder: Occluder): boolean {
 	return (
+		!occluder.floorDecal &&
 		feet.x >= occluder.bbox.x &&
 		feet.x <= occluder.bbox.x + occluder.bbox.w &&
 		feet.y < baselineYAt(occluder, feet.x)
@@ -36,5 +41,29 @@ export function depthFor(feet: Point): number {
 }
 /** Re-evaluate at the character's x each frame, including when moving sideways. */
 export function depthForOccluder(occluder: Occluder, feetX: number): number {
-	return baselineYAt(occluder, feetX);
+	return occluder.floorDecal ? 0 : baselineYAt(occluder, feetX);
+}
+
+/** Height above the physical baseline, measured at that baseline's depth.
+ * Classification never deletes a low obstacle's footprint. */
+export function classifyOccluder<T extends Occluder>(
+	object: T,
+	perspective: Perspective,
+): T {
+	const x = object.bbox.x + object.bbox.w / 2;
+	const baseline = baselineYAt(object, x);
+	const ppm =
+		(perspective.pixelsPerMetre ?? 300) *
+		scaleAt(perspective, { x, y: baseline });
+	if (!(ppm > 0)) return object;
+	const heightMetres = Math.max(0, baseline - object.bbox.y) / ppm;
+	const floorDecal = object.floorDecal === true || heightMetres < 0.25;
+	return {
+		...object,
+		heightMetres,
+		floorDecal,
+		obstacle:
+			!floorDecal ||
+			!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(object.label),
+	};
 }
