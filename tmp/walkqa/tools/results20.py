@@ -33,6 +33,11 @@ result['pass_']=result['captureAndReviewComplete'] and result['measurementsCompl
 result['fixLoopComplete']=False
 result['complete']=False
 result['openRequirements']=['Not every defect class has two demonstrated repair attempts.', 'Full affected-scene reruns after the support fix are incomplete; targeted before/after evidence is retained.', 'Narrow-gap candidates and nearest-reachable projections need independent coverage validation.']
+# A later brief can record its reviewed assessment without inheriting brief 20's
+# stale work list. This never overrides measured pass/fail or completion gates.
+assessment=root/'assessment.json'
+if assessment.exists():
+ result['openRequirements']=json.loads(assessment.read_text())['openRequirements']
 result['totals']['reviewedWalks']=sum(w.get('checks',{}).get('visual',{}).get('pass_') is not None for s in scenes.values() for w in s['walks'].values())
 result['totals']['passingWalks']=sum(w.get('completedNaturally') and all(c.get('pass_') is True for c in w.get('checks',{}).values()) for s in scenes.values() for w in s['walks'].values())
 result['totals']['timedOutWalks']=sum(w.get('timedOut',False) for s in scenes.values() for w in s['walks'].values())
