@@ -123,6 +123,9 @@ for (const scene of scenes) {
 				),
 			);
 		let motor = makeMotor();
+		const searches = new Set<
+			NonNullable<ReturnType<CharacterMotor["snapshot"]>["plan"]["search"]>
+		>();
 		motor.heading = "right";
 		motor.place({ x: beat.start[0], y: beat.start[1] });
 		let blocked = false,
@@ -297,6 +300,8 @@ for (const scene of scenes) {
 				path: { x: number; y: number }[];
 				goal?: { x: number; y: number };
 			};
+			const search = motor.snapshot().plan.search;
+			if (search) searches.add(search);
 			const row = {
 				t: frame / 24,
 				visible,
@@ -401,12 +406,22 @@ for (const scene of scenes) {
 			completed: idle >= 12,
 			limitations,
 		});
+		const rejections: Record<string, number> = {};
+		for (const search of searches)
+			for (const [reason, count] of Object.entries(search.rejections ?? {}))
+				rejections[reason] = (rejections[reason] ?? 0) + count;
+		save(`${dir}/${beat.name}-rejections.json`, {
+			searches: [...searches],
+			rejections,
+		});
 		results.push({
 			scene,
 			walk: beat.name,
 			frames: rows.length,
 			planningMs,
 			search: motor.snapshot().plan.search,
+			searches: [...searches],
+			rejections,
 			arrival: motor.arrival,
 			limitations,
 		});
