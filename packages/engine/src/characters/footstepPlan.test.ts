@@ -251,3 +251,27 @@ it("budgets the default search for a high-penalty corner", () => {
 	expect(result.complete).toBe(true);
 	expect(result.distance).toBeLessThanOrEqual(0.15);
 });
+
+it("scores a partial rest by the route around an obstacle, while arrival stays geometric", () => {
+	const result = planFootsteps(
+		{ x: 1, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			remaining: (p) => (p.x === 0.8 ? 5 : p.y === 1 ? 0.4 : 2),
+			entry: (_s, heading) => heading,
+			advance: (s, heading) => {
+				if (s.x || s.y) return undefined;
+				if (heading === "right") return { x: 0.8, y: 0 };
+				if (heading === "away") return { x: 0, y: 1 };
+				return undefined;
+			},
+			rest: (s) => s,
+		},
+		{ turnCost: 0, costBound: 10 },
+	);
+	expect(result.steps.at(-1)?.state).toEqual({ x: 0, y: 1 });
+	expect(result.complete).toBe(false);
+	expect(result.distance).toBeCloseTo(Math.SQRT2);
+	expect(result.stats.optimal).toBe(false);
+});

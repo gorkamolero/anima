@@ -14,6 +14,8 @@ export interface StepSimulation<State, Pose> {
 	starts?(state: State): readonly State[];
 	offset?(state: State, slide: Point): State;
 	ground?(point: Point): Point;
+	/** Collision-aware remaining route cost, in ground units. */
+	remaining?(point: Point): number;
 	/** Support and phase are part of the lattice, never inferred from position. */
 	support?(state: State): string;
 	entry(
@@ -113,7 +115,9 @@ export function planFootsteps<State, Pose>(
 	const stepCost = options.stepCost ?? 0.02;
 	const maxStride = options.maxStride ?? 0.6;
 	const weight = Math.max(1, options.stopWeight ?? 8);
-	const initialDistance = distance(ground(sim.position(initial)), goal);
+	const remaining = (p: Point) =>
+		sim.remaining?.(p) ?? distance(ground(p), goal);
+	const initialDistance = remaining(sim.position(initial));
 	// The geometric allowance must also fund the permitted turn preferences.
 	// A 90-degree turn costs three turn units; without this allowance a short
 	// L corridor can exhaust its budget before its only valid corner.
@@ -123,7 +127,7 @@ export function planFootsteps<State, Pose>(
 	// For w >= 1, movement plus w * residual is at least straight distance.
 	// With bounded remaining cost B, residual is at least max(0, d - B).
 	const heuristic = (p: Point, g = 0) => {
-		const d = distance(p, goal);
+		const d = remaining(p);
 		return d + (weight - 1) * Math.max(0, d - (costBound - g));
 	};
 	type Node = {
@@ -146,7 +150,7 @@ export function planFootsteps<State, Pose>(
 	const start: Node = {
 		state: initial,
 		g: 0,
-		f: heuristic(ground(sim.position(initial))),
+		f: heuristic(sim.position(initial)),
 		key: key(initial),
 		stride: 0,
 		changes: 0,
@@ -160,7 +164,7 @@ export function planFootsteps<State, Pose>(
 			...start,
 			state,
 			key: key(state),
-			f: heuristic(ground(sim.position(state))),
+			f: heuristic(sim.position(state)),
 		};
 		if (costs.has(alternative.key)) continue;
 		open.push(alternative);
@@ -255,10 +259,7 @@ export function planFootsteps<State, Pose>(
 				candidates.some((q) => {
 					const point = ground(q);
 					const cost = node.g + distance(p, point) + turnPenalty + stepCost;
-					return (
-						cost <= costBound &&
-						cost + weight * distance(point, goal) < bestScore
-					);
+					return cost <= costBound && cost + weight * remaining(q) < bestScore;
 				});
 			const rest =
 				canImprove && stopPose !== undefined
@@ -274,7 +275,7 @@ export function planFootsteps<State, Pose>(
 					(rest.travel ?? distance(p, ground(rest))) +
 					turnPenalty +
 					stepCost;
-				const score = cost + weight * remaining;
+				const score = cost + weight * (sim.remaining?.(rest) ?? remaining);
 				if (cost <= costBound && score < bestScore) {
 					bestScore = score;
 					best = {
@@ -292,7 +293,7 @@ export function planFootsteps<State, Pose>(
 				reject("cost-bound");
 				continue;
 			}
-			const f = g + heuristic(ground(sim.position(next)), g);
+			const f = g + heuristic(sim.position(next), g);
 			if (f >= bestScore) {
 				reject("score-bound");
 				continue;
@@ -343,7 +344,7 @@ export function planFootsteps<State, Pose>(
 			generated,
 			elapsedMs: now() - started,
 			reason,
-			optimal: !reason.endsWith("budget"),
+			optimal: !sim.remaining && !reason.endsWith("budget"),
 			costBound,
 		} satisfies SearchStats,
 	};

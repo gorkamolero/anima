@@ -719,7 +719,7 @@ export class CharacterMotor {
 		this.stanceCache.clear();
 		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
-		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
+		this.path = findPath(this.area.mask, this.anchor, this.goal).map((p) => ({
 			x: p.x,
 			y: p.y,
 		}));
@@ -742,6 +742,23 @@ export class CharacterMotor {
 			...options,
 			maxHeadingChanges: 1 + 2 * corners,
 			minHeadingRun: 2,
+		};
+		const route = this.path;
+		const tail = route.map(() => 0);
+		for (let i = route.length - 2; i >= 0; i--)
+			tail[i] =
+				tail[i + 1] +
+				Math.hypot(
+					points[i + 1].x - points[i].x,
+					points[i + 1].y - points[i].y,
+				);
+		const remaining = (p: Point) => {
+			const g = this.groundPoint(p);
+			for (let i = route.length - 1; i >= 0; i--) {
+				if (stanceSweep(this.area.clearanceMask ?? this.area.mask, p, route[i]))
+					return Math.hypot(g.x - points[i].x, g.y - points[i].y) + tail[i];
+			}
+			return Math.hypot(g.x - points[0].x, g.y - points[0].y) + tail[0];
 		};
 		const initial: PredictedStance = {
 			start: { x: this.target.x, y: this.target.y },
@@ -855,6 +872,7 @@ export class CharacterMotor {
 				}),
 				position: (s) => s.anchor,
 				ground: (p) => this.groundPoint(p),
+				remaining,
 				support: (s) =>
 					`${s.foot}:${s.pose.cycle.name}:${s.pose.flipX}:${s.pose.frame}`,
 				entry: (s, direction, starting, stopping) => {
