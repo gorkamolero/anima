@@ -3,7 +3,11 @@ import {
 	type Point,
 	toMetres,
 } from "../walkarea/perspective";
-import { headingFromGround, type WalkDirection } from "./walkHeading";
+import {
+	GROUND_SECTORS,
+	headingFromGround,
+	type WalkDirection,
+} from "./walkHeading";
 
 export interface WalkLeg {
 	from: Point;
@@ -70,6 +74,7 @@ export interface PlannedStep<State, Pose> {
 }
 export interface StepSimulation<State, Pose> {
 	position(state: State): Point;
+	ground?(point: Point): Point;
 	headings?(leg: WalkLeg): readonly WalkDirection[];
 	offset?(state: State, slide: Point): State;
 	entry(
@@ -116,23 +121,62 @@ function simulatePlan<State, Pose>(
 			);
 		const candidates: Branch[] = [];
 		for (const branch of beam) {
-			const previousHeading = branch.steps[branch.steps.length - 1]?.heading;
-			const headings =
-				previousHeading && !leg.corner
-					? [previousHeading]
-					: (sim.headings?.(leg) ?? [leg.heading]);
-			for (const heading of headings) {
-				let state = branch.state;
-				const steps = [...branch.steps];
+			const origin = sim.position(branch.state);
+			const ground = sim.ground ?? ((p: Point) => p);
+			const g = ground(origin),
+				t = ground(leg.to);
+			const desired = Math.atan2(t.y - g.y, t.x - g.x);
+			// Measure the native direction from actual locked-foot landings.
+			const directions = (sim.headings?.(leg) ?? GROUND_SECTORS).flatMap(
+				(heading) => {
+					const pose = sim.entry(
+						branch.state,
+						heading,
+						branch.steps.length === 0,
+					);
+					const next =
+						pose === undefined ? undefined : sim.advance(branch.state, pose);
+					if (!next) return [];
+					const p = ground(sim.position(next));
+					const angle = Math.atan2(p.y - g.y, p.x - g.x);
+					const error = Math.atan2(
+						Math.sin(angle - desired),
+						Math.cos(angle - desired),
+					);
+					return [{ heading, error }];
+				},
+			);
+			const close = directions.filter((d) => Math.abs(d.error) <= Math.PI / 36);
+			const low = directions
+				.filter((d) => d.error < 0)
+				.sort((a, b) => b.error - a.error)[0];
+			const high = directions
+				.filter((d) => d.error >= 0)
+				.sort((a, b) => a.error - b.error)[0];
+			const orders: WalkDirection[][] = close.length
+				? close.map((d) => [d.heading])
+				: low && high && high.error - low.error < Math.PI
+					? [
+							[low.heading, high.heading],
+							[high.heading, low.heading],
+						]
+					: [[leg.heading]];
+			const run = (
+				state: State,
+				prefix: PlannedStep<State, Pose>[],
+				heading: WalkDirection,
+				visit: (s: State, steps: PlannedStep<State, Pose>[]) => void,
+			) => {
+				const steps = [...prefix];
 				let previousDistance = Infinity,
 					growing = 0;
-				for (let stride = 0; stride < 256; stride++) {
+				for (let stride = 0; stride < 128; stride++) {
 					const slide = steps.length
 						? (corrections[legIndex] ?? { x: 0, y: 0 })
 						: { x: 0, y: 0 };
 					if (sim.offset) state = sim.offset(state, slide);
 					const pose = sim.entry(state, heading, steps.length === 0);
-					if (!pose) break;
+					if (pose === undefined) break;
 					const node = {
 						heading,
 						pose,
@@ -155,29 +199,29 @@ function simulatePlan<State, Pose>(
 					}
 					const next = sim.advance(state, pose);
 					if (!next) break;
+					steps.push(node);
+					visit(next, [...steps]);
 					const p = sim.position(next);
 					const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
-					steps.push(node);
-					if (legIndex < legs.length - 1) {
-						const following = legs[legIndex + 1];
-						const valid = (
-							following.corner
-								? (sim.headings?.(following) ?? [following.heading])
-								: [heading]
-						).some((direction) => {
-							const entry = sim.entry(next, direction, false);
-							return (
-								entry !== undefined && sim.advance(next, entry) !== undefined
-							);
-						});
-						if (valid)
-							candidates.push({ state: next, steps: [...steps], distance });
-					}
 					state = next;
 					growing = distance > previousDistance ? growing + 1 : 0;
 					if (growing >= 2) break;
 					previousDistance = distance;
 				}
+			};
+			const retain = (state: State, steps: PlannedStep<State, Pose>[]) => {
+				const p = sim.position(state);
+				candidates.push({
+					state,
+					steps,
+					distance: Math.hypot(p.x - leg.to.x, p.y - leg.to.y),
+				});
+			};
+			for (const [first, second] of orders) {
+				run(branch.state, branch.steps, first, (state, steps) => {
+					retain(state, steps);
+					if (second) run(state, steps, second, retain);
+				});
 			}
 		}
 		// Retain several whole-stride corners: the closest drawing may have no
@@ -205,16 +249,15 @@ export function planFootsteps<State, Pose>(
 	const corrections = legs.map((leg, i) => {
 		const steps = first.steps.filter((s) => s.leg === i);
 		if (steps.length < 2) return { x: 0, y: 0 };
-		const p = sim.position(steps[steps.length - 1].state);
-		const dx = leg.to.x - leg.from.x,
-			dy = leg.to.y - leg.from.y;
-		const length = Math.hypot(dx, dy);
-		const nx = -dy / length,
-			ny = dx / length;
-		const error =
-			((leg.to.x - p.x) * nx + (leg.to.y - p.y) * ny) / steps.length;
-		const amount = Math.max(-0.9, Math.min(0.9, error));
-		return { x: nx * amount, y: ny * amount };
+		const last = steps[steps.length - 1];
+		const p = last.stop
+			? (sim.rest(last.state, last.pose, last.heading) ??
+				sim.position(last.state))
+			: sim.position(last.state);
+		const dx = (leg.to.x - p.x) / steps.length,
+			dy = (leg.to.y - p.y) / steps.length;
+		const factor = Math.min(1, 0.9 / Math.hypot(dx, dy));
+		return { x: dx * factor, y: dy * factor };
 	});
 	const corrected = simulatePlan(legs, initial, sim, corrections);
 	return corrected.distance <= first.distance ? corrected : first;

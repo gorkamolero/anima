@@ -127,3 +127,50 @@ it("plans beyond the first safe corner stance before committing a turn", () => {
 	expect(p.steps[p.steps.length - 1].state).toEqual({ x: 80, y: 0 });
 	expect(p.distance).toBe(20);
 });
+
+for (const depth of [100, 600]) {
+	for (const angle of [0, 10, 22.5, 30, 45, 60, 80, 90]) {
+		it(`decomposes ${angle} degrees at depth ${depth} without reversals`, () => {
+			const theta = (angle * Math.PI) / 180;
+			const start = { x: 0, y: depth };
+			const end = {
+				x: 240 * Math.cos(theta),
+				y: depth - 240 * Math.sin(theta),
+			};
+			const names: WalkDirection[] = [
+				"right",
+				"away-right",
+				"away",
+				"away-left",
+				"left",
+				"toward-left",
+				"toward",
+				"toward-right",
+			];
+			const result = planFootsteps(walkLegs([start, end], perspective), start, {
+				position: (p) => p,
+				offset: (p, d) => ({ x: p.x + d.x, y: p.y + d.y }),
+				entry: (_p, h) => h,
+				advance: (p, h) => {
+					const a = (names.indexOf(h) * Math.PI) / 4;
+					const stride = 20 * (1 + (p.y - depth) / 2000);
+					return {
+						x: p.x + stride * Math.cos(a),
+						y: p.y - stride * Math.sin(a),
+					};
+				},
+				rest: (p) => p,
+			});
+			expect(result.distance).toBeLessThanOrEqual(10);
+			const switches = result.steps.filter(
+				(s, i) => i > 0 && s.heading !== result.steps[i - 1].heading,
+			);
+			expect(switches.length).toBeLessThanOrEqual(1);
+			for (const s of result.steps) {
+				const a = (names.indexOf(s.heading) * Math.PI) / 4;
+				expect(Math.cos(a - theta)).toBeGreaterThan(0);
+				expect(Math.hypot(s.slide.x, s.slide.y)).toBeLessThanOrEqual(1);
+			}
+		});
+	}
+}

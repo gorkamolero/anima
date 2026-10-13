@@ -397,15 +397,11 @@ export class CharacterMotor {
 		};
 		const result = planFootsteps(legs, initial, {
 			position: (s) => s.end,
-			headings: (leg) => {
-				if (initialHeading && leg === legs[0]) return [initialHeading];
-				const i = GROUND_SECTORS.indexOf(leg.heading);
-				return [
-					leg.heading,
-					GROUND_SECTORS[(i + 7) % 8],
-					GROUND_SECTORS[(i + 1) % 8],
-				];
-			},
+			ground: (p) =>
+				this.area.perspective.constant === undefined
+					? toMetres(this.area.perspective, p)
+					: p,
+			headings: () => GROUND_SECTORS,
 			offset: (s, slide) => ({
 				...s,
 				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
