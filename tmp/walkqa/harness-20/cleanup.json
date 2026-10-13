@@ -1,0 +1,14 @@
+{
+  "stoppedTaskPids": [
+    62084,
+    62086,
+    62092,
+    62095,
+    62096,
+    62102
+  ],
+  "before": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    62092 gorkolas   19u  IPv6 0xe876f3d591e85b53      0t0  TCP *:4317 (LISTEN)\nnode    62096 gorkolas   18u  IPv6 0xd79ac306ef56e8eb      0t0  TCP *:8080 (LISTEN)\nnode    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)\nnode    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)\n",
+  "after": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)\nnode    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)\n",
+  "qaPortsStopped": true,
+  "ownerPortsListening": true
+}

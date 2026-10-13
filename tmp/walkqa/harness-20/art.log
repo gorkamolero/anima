@@ -1,0 +1,39 @@
+
+=== outside (bus-station-flat-v1.png) — PASS (0 errors, 0 warnings) ===
+
+=== inside (arkham-bus-depot-flat-2d.png) — PASS (0 errors, 1 warnings) ===
+[WARNING] art-internally-inconsistent :: vending-machine
+  actual:    "331 px/m at y=894"
+  expected:  "254 px/m"
+  use this:  "already excluded from the model (use:false)"
+  note:      painted ~30% oversized relative to the doorway
+
+=== place-aa7dd184a5f30fbc1f89 (c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-d3fc732744430e25f7c1 (18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-395743b437774b879679 (6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-e3110e2fd21ee4e07819 (32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-96acfd3d8faaf8f903fe (5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-7587ff22de8e1ebc9f87 (67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-15965c132f18663902c3 (d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-7672fad03a2b6c668284 (c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-0be8458a1e434dd7ee9e (9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-045884673aa9e212d400 (f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-f2d0a7f7f76225002663 (37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-2635d8cd03bce818a634 (1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-2a19481aac649a2e69f1 (4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png) — PASS (0 errors, 0 warnings) ===
+
+=== place-c65c23ccd4fb41403e93 (bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png) — PASS (0 errors, 0 warnings) ===
+
+Art verification: all scenes PASS

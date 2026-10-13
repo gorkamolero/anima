@@ -1,0 +1,8 @@
+scalecheck: PASS: 20% scale corruption rejected
+facing: PASS: wrong-cycle frames rejected
+draworder: PASS: inverted depth rejected
+pathopt: PASS: doctored route through wall rejected by checker
+pixelheight: PASS: doctored rendered silhouette 20% short rejected
+behavior20: PASS: dropped floor click rejected
+floorcheck20: PASS: off-floor frame rejected
+videoalign20: PASS: missing frame, wrong timestamps and wrong dimensions rejected

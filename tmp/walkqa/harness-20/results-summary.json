@@ -1,0 +1,2810 @@
+{
+  "totals": {
+    "scenes": 10,
+    "plannedWalks": 139,
+    "capturedWalks": 139,
+    "frames": 29264,
+    "reviewedWalks": 139,
+    "passingWalks": 0,
+    "timedOutWalks": 1
+  },
+  "captureAndReviewComplete": true,
+  "measurementsComplete": true,
+  "pass_": false,
+  "fixLoopComplete": false,
+  "complete": false,
+  "openRequirements": [
+    "Not every defect class has two demonstrated repair attempts.",
+    "Full affected-scene reruns after the support fix are incomplete; targeted before/after evidence is retained.",
+    "Narrow-gap candidates and nearest-reachable projections need independent coverage validation."
+  ],
+  "scenes": {
+    "alley": {
+      "planned": 14,
+      "captured": 14,
+      "walks": {
+        "near-left": {
+          "frames": 231,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Many corrections at left wall; debris masks cut feet at 72-87 and 191-199; final side rest stable.",
+          "reviewManifestSha256": "b6372064b5d6cd5317b9c4fcb056e5b16bb7e470a87cea5c2334e984e9152a63"
+        },
+        "near-right": {
+          "frames": 113,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Rightward traverse ends with away/left reversal near barrel; feet sliced by ground fragments at 87; final stable side rest.",
+          "reviewManifestSha256": "7696ba38b9ed26efcfa3cb5e88ce98f0650e187d88a057a7177f182eab6875e9"
+        },
+        "deepest": {
+          "frames": 149,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Alternating diagonal/side headings and scale changes; net occlusion at 61/105; final 143-148 bent-knee hoverlike held pose.",
+          "reviewManifestSha256": "f447cf15c452cf69f068b960dc84aacca092aff61764e899d3b431ebec347d90"
+        },
+        "far-left": {
+          "frames": 187,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Zigzags past crate and turns back; net cuts boots; final 181-186 held bent-knee pose.",
+          "reviewManifestSha256": "a6d703987fd23522dec96b317d10751a72571055a2c2fa7b41e78514627e177e"
+        },
+        "far-right": {
+          "frames": 256,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals and growth heading foreground; net contact around 39; final 250-255 bent-knee pose.",
+          "reviewManifestSha256": "30bbf78f9712078adc9b08ab192ff4f121f4366bedf8cfd97b05e7bc5fa07683"
+        },
+        "diagonal-away": {
+          "frames": 117,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral traverse ends with several reversals by barrel and held away walking stride.",
+          "reviewManifestSha256": "eba49f9e50e9e1c3bf041470fdd2d8b850fa9a6160f12aff941add70d38d9724"
+        },
+        "diagonal-toward": {
+          "frames": 300,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Net slices boots before crossing 49; repeated corrections near right foreground; final side rest stable.",
+          "reviewManifestSha256": "e141ab8b3758d7cd3f5f69ce7a25e0a6cca82452e412c0e755f2dc2d92d651c5"
+        },
+        "occluder-behind": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames stationary at left wall; no behind-occluder traversal.",
+          "reviewManifestSha256": "d0625ac0414596dff402b52fe6e5c0ef1a38f0ff44ae392927b1be843f6683f9"
+        },
+        "occluder-back": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames stationary at left wall; requested return never starts.",
+          "reviewManifestSha256": "03fbfb38899bb01ccdb5623b68afbba3fad6d74fb74d1a715ea77074248ea481"
+        },
+        "narrow-gap": {
+          "frames": 78,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Gap walk triggers unintended scene transition around frame 33; final stop is in a different alley.",
+          "reviewManifestSha256": "14714101d3fd6a9bed6099bb9bc7f62bfeb7c1e44d42681aa5194b536cc5cbd2"
+        },
+        "unreachable": {
+          "frames": 248,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals beside right wall; final frames 242-247 hold a spread walking stance.",
+          "reviewManifestSha256": "4f7dfcee01f24100267989f722b9d71658589db2d19d59ebffe3b6cf4c004cca"
+        },
+        "object": {
+          "frames": 279,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long oscillating approach; net cuts across boots before crossing 49; abrupt cycle changes at 49 and 82. Stable away pose in 273-278, but object behavior checks fail.",
+          "reviewManifestSha256": "cf7ab9928f3b297d333579a6cf5f3b383265bbbdd4527abc224ea9fcb5f28232"
+        },
+        "exit-far": {
+          "frames": 176,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated approach corrections and net cuts boot pixels at 49-77; transition occurs, final 170-175 stable away in destination.",
+          "reviewManifestSha256": "4bedc90c16610d89baff69540985b9351de69bea0705dafd0d46773fa12d84b0"
+        },
+        "exit-near": {
+          "frames": 210,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Rightward detour and repeated cycle switches on approach; transition occurs and final 204-209 stable front in road.",
+          "reviewManifestSha256": "3c2cc6b72fe419ef008aa19f48b05f56a8c8ba2f7ef0df8e5eee57050d4c44de"
+        }
+      }
+    },
+    "church": {
+      "planned": 12,
+      "captured": 12,
+      "walks": {
+        "near-left": {
+          "frames": 279,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated pivots around aisle; bent-knee final pose; pew fragments cross clothing at202.",
+          "reviewManifestSha256": "304a432bd189203c208a2197c7dfa3b62e0d41e3bed3f3a5fcf1943e183ae647"
+        },
+        "near-right": {
+          "frames": 60,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Abrupt right-away-right pivots; final six retain bent-knee pose.",
+          "reviewManifestSha256": "72c38fe28509131abd86b5e599cf6afb9a06d65a4903f53fbf43a3a8c377a120"
+        },
+        "deepest": {
+          "frames": 117,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "After support guard, retained safe planted foot, but final111-116 remain wide midstride with raised boot; abrupt pivots38,71,104.",
+          "reviewManifestSha256": "06c678218fee61e5dbb7af2d7006d962a9be769a72a10ae56bee8292a988a138"
+        },
+        "far-left": {
+          "frames": 561,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long repeated forward/back/side detours between pews; pose pivots visible at crossings 104,191,322,399,409,529; final stance stable.",
+          "reviewManifestSha256": "368e08b9f5277eb3933a59318af491df43f41dc2b03ee1af5f297568ad3e9b29"
+        },
+        "far-right": {
+          "frames": 59,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Side-away-toward cycle reversal before stop; final true rest stable.",
+          "reviewManifestSha256": "61ff6fdc43d7d1ea01da5351db5dbb181bf8a4253f8282d599dfd9f50821021c"
+        },
+        "diagonal-away": {
+          "frames": 103,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Planted feet and final six standing frames inspected; abrupt cycle turns interrupt the intended continuous route. Crossing crops reviewed.",
+          "reviewManifestSha256": "4f13d06e0af2c6948e75f02c8e3d0a97b9be5e3cf1f91231ac926b91252d170f"
+        },
+        "diagonal-toward": {
+          "frames": 59,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Planted feet and final six standing frames inspected; abrupt cycle turns interrupt the intended continuous route. Crossing crops reviewed.",
+          "reviewManifestSha256": "a1d9ac090a69ca4192d8c77c2a9b443f1ec90c70083ebe278a68639e45b3b54c"
+        },
+        "occluder-behind": {
+          "frames": 81,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated side-away-toward pivots beside pew; final true rest stable.",
+          "reviewManifestSha256": "6daba3d5f02cb66a51f55e96e114d6e651c302c5b306ea4574b43dd7e6684242"
+        },
+        "occluder-back": {
+          "frames": 47,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Stops beside pew with boot overlapping its base; final six stance frames stable.",
+          "reviewManifestSha256": "b9a55aafa4ab2a869f81383eaedeaeac046e79baabba795539dd934867b1eb5b"
+        },
+        "narrow-gap": {
+          "frames": 59,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Planted feet and final six standing frames inspected; abrupt cycle turns interrupt the intended continuous route. Crossing crops reviewed.",
+          "reviewManifestSha256": "db3c80b6723db6f8a63761d7d06fef039e352900db1794b1cd36bff91e1c7cae"
+        },
+        "unreachable": {
+          "frames": 96,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading reversals at38 and71; final90-95 stay in spread-leg walking pose.",
+          "reviewManifestSha256": "480b6f37af59df49402b3fd27897e1b8b90b17e2334637b30ccd1040efafb1c5"
+        },
+        "object": {
+          "frames": 140,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated direction changes and final six frames remain in forward midstride pose.",
+          "reviewManifestSha256": "fb04549c2cd57d2ec8c207e108be08638714118b23b6dcc5337628591b2241b5"
+        }
+      }
+    },
+    "grocery": {
+      "planned": 12,
+      "captured": 12,
+      "walks": {
+        "near-left": {
+          "frames": 190,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals beside counter/barrel; sudden size changes during turns; final front stance stable.",
+          "reviewManifestSha256": "ba6dbd802feae6153fef12a7b0e9ebe645486f5080438880d0d7cbb8d0addde8"
+        },
+        "near-right": {
+          "frames": 123,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated right-away-toward pivots; final bent-knee side pose at viewport edge.",
+          "reviewManifestSha256": "7672b9d8092c1b14dad671fbf925370aa88be02f80bd6190d380c0ae2315e595"
+        },
+        "deepest": {
+          "frames": 298,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated sideways detours and abrupt cycle/size changes; final six frames retain bent-knee pose.",
+          "reviewManifestSha256": "1f14b197556a958eb01b7c69807868281f5bdadfca2829811e05d8600ab94bb1"
+        },
+        "far-left": {
+          "frames": 234,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Oscillates at doorway before crossing, with repeated pivots; final front rest stable.",
+          "reviewManifestSha256": "9330a40668caac62c77fd9704ee6cbc0f1e1a2aef15572968ff341752f71ece1"
+        },
+        "far-right": {
+          "frames": 126,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated direction pivots and scale changes before the doorway; final side standing pose is stable.",
+          "reviewManifestSha256": "a1ff95c9d41693f51631c9e37b18161e2b2b97be0813dc9c7cd23261ee951b54"
+        },
+        "diagonal-away": {
+          "frames": 117,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated side/away pivots; final six frames retain a spread-leg walking pose with one boot raised.",
+          "reviewManifestSha256": "9d415ce996ef0544e88c52ba924ba81e16b4daa92cb3cdef1fd4a726274cedef"
+        },
+        "diagonal-toward": {
+          "frames": 100,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Multiple side/toward/away pivots along the doorway route; final away pose stable but clipped at the screen edge.",
+          "reviewManifestSha256": "b383040ef9b3dd1ed6ada330a004ca270a3ed59c7e3a42a4d6757146a2db6b3c"
+        },
+        "occluder-behind": {
+          "frames": 226,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated tiny stance cycles in the rear aisle; final six frames retain a lifted boot rather than standing.",
+          "reviewManifestSha256": "c34e9d514e120377528a241fe59e9aa57de315f2600487883abe5cd1a67ab94f"
+        },
+        "occluder-back": {
+          "frames": 187,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals in the aisle before returning; final front standing pose is stable.",
+          "reviewManifestSha256": "d1b41f96398174f3d78d4064187490993b215aeab9ce824ecf9c7bb2ed01d803"
+        },
+        "narrow-gap": {
+          "frames": 100,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Route repeatedly reverses around doorway instead of a direct gap crossing; final standing is stable.",
+          "reviewManifestSha256": "8f6c1b9a8d894439cbc9dfae7ead1fdea182f4b16765e6a183638bf7c8e373a9"
+        },
+        "unreachable": {
+          "frames": 301,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long repeated lateral and facing reversals at the shelving; final front standing pose is stable.",
+          "reviewManifestSha256": "525d8f1546a93bea89115858df0c6bb51cf92170926a68567718197975aa8c65"
+        },
+        "object": {
+          "frames": 293,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated circling by counter, foot over barrel at crossing 169, final six frames hold lifted forward boot; no completed narrator response.",
+          "reviewManifestSha256": "79bcc761697ac411fb5e6d7c9df09e746060d066971680968c7217542597e159"
+        }
+      }
+    },
+    "inside": {
+      "planned": 13,
+      "captured": 13,
+      "walks": {
+        "near-left": {
+          "frames": 230,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long traverse then repeated reversals beside vending machine; final 224-229 bent walking pose clipped by left screen edge.",
+          "reviewManifestSha256": "ad26f2723d487b028af76b26c963956879ef134bb569d23855515a5fdb50aced"
+        },
+        "near-right": {
+          "frames": 157,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral traverse ends in away turn then left-facing stop at right edge; final 151-156 partly clipped.",
+          "reviewManifestSha256": "e0cd5d0109f0b08ac0383b7f4d4b427432712d0e61fb125981f6546bbd1363ab"
+        },
+        "deepest": {
+          "frames": 972,
+          "completedNaturally": false,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated oscillation at bus doorway; body disappears behind bus while boots remain in front at baseline crossings; forced timeout stop holds a wide walking stride in frames 966\u2013971.",
+          "reviewManifestSha256": "6f45446c33110798126d1546779310735e85b0a9f8efbe0452446343592d8b24"
+        },
+        "far-left": {
+          "frames": 299,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Doorway oscillation then repeated turns by vending machine; final 293\u2013298 front standing partly off left edge.",
+          "reviewManifestSha256": "48bcc8a610de4a24c5bef5f45e6c79003fe1cb1aee3d8dd66dcbf4731eb395cd"
+        },
+        "far-right": {
+          "frames": 244,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated facing corrections at doorway; bus cuts body with boots in front at 201 then body pops forward at 202. Final 238\u2013243 stable side standing.",
+          "reviewManifestSha256": "900565f7bbf24c9f94af2b991f4ee01711f68d505c33548b7d6e4fb1c3d93983"
+        },
+        "diagonal-away": {
+          "frames": 300,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated doorway reversals; bus hides body but leaves detached boots at 246\u2013256; final 294\u2013299 stable front standing.",
+          "reviewManifestSha256": "c5a63eee93790517f1461fc96041e41fa32be259d2566b2bccd8eec98f7345a0"
+        },
+        "diagonal-toward": {
+          "frames": 156,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral traverse ends with away then side reversal; final 150\u2013155 stable side standing clipped at right edge.",
+          "reviewManifestSha256": "e1f53ddf8cc7d8f750d1ba57fe9920bc13973e7a4eb3e801423f40e946dc654f"
+        },
+        "occluder-behind": {
+          "frames": 99,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading reversals; detached boots below bus at 71\u201381 then body pops forward at 82; final 93\u201398 bent walking pose.",
+          "reviewManifestSha256": "cc3e7f419a4c9d9277da03061034edcf82dd5eb2a3eed8e61a0a19235304e8c8"
+        },
+        "occluder-back": {
+          "frames": 59,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Detached boots below bus before body pops forward at 27; final 53\u201358 stable front standing.",
+          "reviewManifestSha256": "ca5c6776f6e9ef4c56e1c949097d8fc272a0c430aa8833db64b47b7aeca9a1be"
+        },
+        "narrow-gap": {
+          "frames": 103,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Detached boots below bus before crossing 27; repeated heading changes rather than clear gap crossing; final 97\u2013102 bent walking pose.",
+          "reviewManifestSha256": "9ae33dd97dfe70e6a47b3ff702bdde2418f176a6179e5eaf2996bf627f6aa60c"
+        },
+        "unreachable": {
+          "frames": 784,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Prolonged side/front/away oscillation against ticket counter; final 778\u2013783 holds away walking pose with raised foot.",
+          "reviewManifestSha256": "d2fa7bca5e54612b0bdd4b8aa0603c131f4c7fbafb45405664fe16a4b938953f"
+        },
+        "object": {
+          "frames": 124,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Object approach wanders left along wall with repeated heading changes; final 118\u2013123 bent walking pose near left edge, no visible narrator.",
+          "reviewManifestSha256": "ddaf1cc612c447cbdd2481b5f08510190ab28b6a6fd0a408cae642c33ae85824"
+        },
+        "exit-bus_platform": {
+          "frames": 60,
+          "completedNaturally": true,
+          "checks": {
+            "floor": false,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": true
+          },
+          "visualNotes": "Visible traversal and single transition to flat depot exterior; final 54\u201359 coherent front standing at depot steps. Numeric checks and destination identity assessed separately.",
+          "reviewManifestSha256": "c447ab486e641eaf4cf02a9dc5f8636a8693a7c9d4c23bc878882d6f4164f0f5"
+        }
+      }
+    },
+    "lobby": {
+      "planned": 12,
+      "captured": 12,
+      "walks": {
+        "near-left": {
+          "frames": 105,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated away/toward reversal beside pillar before stable stop.",
+          "reviewManifestSha256": "5a9452946f229d32b5af3d3dd29885006bfa97ef449be9fa7ff24f9e4dcb3cf4"
+        },
+        "near-right": {
+          "frames": 392,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated pivots and detour across rug; stable stop clipped by viewport edge.",
+          "reviewManifestSha256": "7d9a0471d33c505c763b11d520cce4ad04c75b27cdb7aea34b75c5a9924fc5b3"
+        },
+        "deepest": {
+          "frames": 192,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Foot enters stair riser and final six frames retain bent walking pose; depth pop at frame160.",
+          "reviewManifestSha256": "51442b820ed7f7e0706569e1742816c30e16814fcfcd37e5d103d959ef16637a"
+        },
+        "far-left": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "No visible walking in contact sheet; actor remains at same standing position for all28 frames.",
+          "reviewManifestSha256": "8d88227998139f27ff45f9fd344a9ea14d557c0253c419f0583ac8d2ab8aba7f"
+        },
+        "far-right": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames remain stationary behind left pillar despite a nonempty requested route; no walk occurred.",
+          "reviewManifestSha256": "cfe4af2089408daa8b41990f9efc797d84dff1339f98260252979d01ba8517c4"
+        },
+        "diagonal-away": {
+          "frames": 417,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long reversals at right pillar; final six frames retain raised rear boot.",
+          "reviewManifestSha256": "954467104910a8bfd933fedfe8625cfa41357a754de814aeddd412f7a5c79ece"
+        },
+        "diagonal-toward": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames remain stationary at left boundary behind pillar; floor click produced no walk.",
+          "reviewManifestSha256": "e79a1cb374afad688a8c7d4308dacbab635786699121e673c2c3ce229125779a"
+        },
+        "occluder-behind": {
+          "frames": 83,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Reverses in front of desk; stable final side stance but does not visibly cross behind it.",
+          "reviewManifestSha256": "3c06ef5376b5359862e289fcb754e8cec1c437995c9e4d199b63e13964e5555d"
+        },
+        "occluder-back": {
+          "frames": 60,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Boots protrude beneath desk before whole-body depth pop at27; final bent-knee pose.",
+          "reviewManifestSha256": "39bc36a4880a9462033713a4e55a72cf579bdbca1514e4e429d1c9d5b4b085b7"
+        },
+        "narrow-gap": {
+          "frames": 103,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Boots traverse stair risers; abrupt depth change38; final lower body hidden by staircase.",
+          "reviewManifestSha256": "fe08af808ffadb5ae7e8ae03aa5692ea16840988b346854df65aa21abb2e4f52"
+        },
+        "unreachable": {
+          "frames": 108,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Reversals before stopping on stair riser rather than convincing floor contact.",
+          "reviewManifestSha256": "068de0c93a0f466963c12e419d1d376e28c0a2a9365bcc0d484ad16306c857b6"
+        },
+        "object": {
+          "frames": 233,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Boots visible below desk while torso hidden; whole-body pop at104; detours to left edge and stops clipped; narrator error recorded.",
+          "reviewManifestSha256": "5abf10514a995a1d4fa72a469b8f041a1bfead8cff019bed23bd10ed2860c317"
+        }
+      }
+    },
+    "outside": {
+      "planned": 17,
+      "captured": 17,
+      "walks": {
+        "near-left": {
+          "frames": 147,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral traverse ends in away/side reversals; final 141\u2013146 holds bent walking pose.",
+          "reviewManifestSha256": "abdc74c722a3ae22534ecdc5a56438e4d58ad3ecf3f1a14e2d2f4e154cb2584b"
+        },
+        "near-right": {
+          "frames": 166,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral walk veers away at end and reverses; final 160\u2013165 stable away standing.",
+          "reviewManifestSha256": "5ffc5b4f4f347f6b9c1c6066daf075769b52e664a46a44bbf410033339d8c54b"
+        },
+        "deepest": {
+          "frames": 258,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Path goes behind net and shelter; detached boot at crossing 60 then building slices body at 213; repeated heading corrections; final 252\u2013257 side standing partly obscured.",
+          "reviewManifestSha256": "c97a47af370603e7c73a602b11576271547e232001118d65f766c7956b0b622c"
+        },
+        "far-left": {
+          "frames": 478,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Large detour and repeated corrections; bus hides body with boots in front at 26 and 49 onward, body pops at 27; final 472\u2013477 stable side standing on boardwalk.",
+          "reviewManifestSha256": "ad332588afa2d88e134964987eecc0184350dc9bfac5540157941771795895e6"
+        },
+        "far-right": {
+          "frames": 437,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated corrections at net baseline 136/158/180/224; body disappears behind bus at 355 leaving boot; unintended transition to another depot scene; final 431\u2013436 away standing.",
+          "reviewManifestSha256": "b8d35f26ae33a28e3d0e2e8bb3629a67046fbb177e1492eed6791165c84be170"
+        },
+        "diagonal-away": {
+          "frames": 240,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "End corrections then body disappears behind bus at 169 leaving detached boots; unintended transition to another depot scene; final 234\u2013239 away standing.",
+          "reviewManifestSha256": "13e16971415f7bf12f7f87614114691b82d7ab21115ccede33837ca4a278aea8"
+        },
+        "diagonal-toward": {
+          "frames": 341,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Prolonged net-side oscillation with body pops at 136/158/180/224 and detached boot around 150; final 335\u2013340 stable away standing.",
+          "reviewManifestSha256": "a4c5ede7b41666ce78b04ec4883e29925b286e9ed027ee2170f4795d68ac84a6"
+        },
+        "occluder-behind": {
+          "frames": 182,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Detour and heading corrections around net; detached boots at 60\u201364; final 176\u2013181 side standing behind Kat with feet unobservable.",
+          "reviewManifestSha256": "9d6c7e6b84f44c6fae56dc2c63d9ae4bc47b4bb2fe82f3fc2b0c0a7e7d8facad"
+        },
+        "occluder-back": {
+          "frames": 1009,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "1009-frame return oscillates at net with repeated depth/heading pops at 278/322/333/409/442/606/617/628/649/737/769/802/813/933; final 1003\u20131008 bent walking pose.",
+          "reviewManifestSha256": "f4f231cd1e7ff075d39adefbc1467d7bfb19a4756d7d33596167c9d87be92221"
+        },
+        "narrow-gap": {
+          "frames": 37,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Only a tiny movement behind shelter rather than a demonstrated gap crossing; final 31\u201336 stable front standing, significant shelter occlusion.",
+          "reviewManifestSha256": "e43423bf5b0eca9653c84cdfeed1996c407bbe2869e4599ec6608115c0120ceb"
+        },
+        "unreachable": {
+          "frames": 136,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading reversals behind Kat; feet obscured; final 130-135 front standing.",
+          "reviewManifestSha256": "2a2112a2968abdc43cab2727ed1609aa5d0bd9d3f60317d4325440014e9607e1"
+        },
+        "object": {
+          "frames": 393,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": false,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Oscillating detour, detached boots 224-232 and depth pops 224/300/333; final 387-392 stable back-side; narrator not visible.",
+          "reviewManifestSha256": "c49e0ae32b9d9d2d44f2c5ad5545f092121fcffb31ec7e51395a7e442a962efa"
+        },
+        "exit-depot_doors": {
+          "frames": 1055,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Prolonged oscillation at net and bus; detached boots 224-232 and body slices at bus 476/586/696/806. Eventually enters interior; final 1049-1054 stable front.",
+          "reviewManifestSha256": "056c2b84beb2584f4dcc504690e7c348b393b8325de17ad111726a51bf8f959a"
+        },
+        "exit-edge-left": {
+          "frames": 257,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Transitions to road but tree mask leaves floating leg fragments 162-215; final 251-256 held bent pose.",
+          "reviewManifestSha256": "73dae878804fea4abcee98620c2c91764ee62866d2b82e80e9dbae75e6ace8ac"
+        },
+        "exit-edge-left-1": {
+          "frames": 255,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Transitions to road; tree mask leaves floating legs 160-213; final 249-254 held bent pose.",
+          "reviewManifestSha256": "401fd104fe643df478d31d5dc34e19e07588ff81a6ad684cdee6c3a85e61bc7c"
+        },
+        "exit-edge-right": {
+          "frames": 502,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long net oscillation, detached boots 224-232 and heading pops 300/333; transitions to seaside depot variant; final 496-501 stable away.",
+          "reviewManifestSha256": "a80833687d0e91aab5597a086325912b2498b8c54f547f066f62ef63326d0189"
+        },
+        "exit-far": {
+          "frames": 136,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading corrections behind Kat/shelter, no scene transition; final 130-135 front standing.",
+          "reviewManifestSha256": "6ddab98fb28995032e95449909d592e77b9c4b5da679523541e4c220d99367f5"
+        }
+      }
+    },
+    "pier": {
+      "planned": 14,
+      "captured": 14,
+      "walks": {
+        "near-left": {
+          "frames": 186,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Large heading reversals and size swings crossing planks; final six frames hold bent-knee walking pose at clipped left edge.",
+          "reviewManifestSha256": "48111dae6cae0fdf3f9518bc32beb28ed6c0c7955bdd142cf803a9deb9ceb9ce"
+        },
+        "near-right": {
+          "frames": 151,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated away/toward reversals and large scale swings; boots pass over plank holes; final front rest stable but head intersects narrative bar.",
+          "reviewManifestSha256": "c8c11e0b88896c816e03091a2f90e25717e7eb113d9618ddbfb2814d465cd29e"
+        },
+        "deepest": {
+          "frames": 248,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Large detour and repeated direction/size reversals; support stays safe after guard, but final six frames hold forward walking pose and lifted boot.",
+          "reviewManifestSha256": "3883720fde82006fd239ccaf66052f3aa96e22546bfd643b3c044d7d25e9613b"
+        },
+        "far-left": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Floor click produces no movement; all 28 frames stay at right boundary in standing pose.",
+          "reviewManifestSha256": "fb09834ac0f141aa4403824e13a0e22eee9a7872ed4ba9ef3dfd14d14d067721"
+        },
+        "far-right": {
+          "frames": 321,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long route with repeated away/toward reversals, scale swings and feet over plank holes; final front rest stable at right edge.",
+          "reviewManifestSha256": "5153754d50163828849aa2a43bad0fa1a5578b63a089160412af8f49f3b95d42"
+        },
+        "diagonal-away": {
+          "frames": 151,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated direction corrections and size changes; final front-facing stop is stable.",
+          "reviewManifestSha256": "a62aebbb785d4bc9185fb42eda457bb5daab4f92f446cdf9b2aaed9aab55d207"
+        },
+        "diagonal-toward": {
+          "frames": 277,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading reversals and major apparent-size swings; boots cross plank holes, final 271-276 stable front rest.",
+          "reviewManifestSha256": "abcf435b2cf32779dd98f0f7a021b5f37f01d61d52368600d622d2f505c61d73"
+        },
+        "occluder-behind": {
+          "frames": 29,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Little travel; final walking pose with spread legs remains held beside shelter.",
+          "reviewManifestSha256": "b004d2b79990ad77370d32e798d489d2d0c46b5ce883e64cf63bfcb895bbe45a"
+        },
+        "occluder-back": {
+          "frames": 41,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Net overlays torso but feet remain in front at frame 9; abrupt crossing at 10, final bent-knee rest 35-40.",
+          "reviewManifestSha256": "671a6190811976906c9fc356525cad70479dd8e041eb9da976b689dd9902c358"
+        },
+        "narrow-gap": {
+          "frames": 37,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Short blocked side stride ends in raised-heel walking pose.",
+          "reviewManifestSha256": "02967394885b87b4cd4f6a5215acd71d0e7462b040bbba00f6ba806f0af074c2"
+        },
+        "unreachable": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "No walking; net cuts torso while both boots remain visible in front, final 22-27.",
+          "reviewManifestSha256": "d54daf40c74683f5cfc15aa4a661c69b63a22cc190f30317fc6a3df31deef54c"
+        },
+        "object": {
+          "frames": 390,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Very long wandering reversals and scale swings; net crossing pops torso at 10 and 32; final 384-389 stable away rest, no narration.",
+          "reviewManifestSha256": "23d2ba803eba2ec52775a8732a2001cd04a678ecc06a40f910d20e509b666c83"
+        },
+        "exit-edge-left": {
+          "frames": 280,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals before reaching left boundary; net torso popping at 10/32; final clipped at left edge without transition.",
+          "reviewManifestSha256": "ba7e86ad7f9bdc9d725757d1f46968e2f0325310351ed7221ebda7f07f6f3074"
+        },
+        "exit-edge-right": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "No movement or transition; net overlays torso while feet draw in front throughout 28-frame capture.",
+          "reviewManifestSha256": "4044f07ad785de9127ebc970a1e65e156b750e218502ce4542ab6d5f060a9548"
+        }
+      }
+    },
+    "road": {
+      "planned": 17,
+      "captured": 17,
+      "walks": {
+        "near-left": {
+          "frames": 428,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long traverse with heading reversals, then repeated corrections behind left tree; final 422-427 largely occluded and clipped at left edge.",
+          "reviewManifestSha256": "279e3130731b861a248a18b23e98ccaa970bc565a7466fdff2d4e482e19d675a"
+        },
+        "near-right": {
+          "frames": 328,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long traverse and endpoint reversals behind right tree; sprite passes over foreground nets at 104-109; final 322-327 mostly hidden.",
+          "reviewManifestSha256": "e9bfe38d96b190bf58af7511ef2dd188c3e785d54d2d84fa40b816c0b21eff12"
+        },
+        "deepest": {
+          "frames": 191,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated side/away/front switches while moving into depth; stable front stop 185-190 after oscillating approach.",
+          "reviewManifestSha256": "7a5eb49c45f096029f920fde9ec6d49ec688cf96ecf718be428178a38a60a7fd"
+        },
+        "far-left": {
+          "frames": 436,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Body pops into view at baseline crossing 71; long detour then unintended scene exit to depot. Final 430-435 stable side in wrong scene.",
+          "reviewManifestSha256": "07381700a473e25c96bf84b1ec7d46d8cc0659803086eebf5a2b52682c5bb16e"
+        },
+        "far-right": {
+          "frames": 406,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": false,
+            "visual": false
+          },
+          "visualNotes": "Detached boot fragments before 100 while body hidden by building; long traversal and endpoint oscillations behind right tree; final 400-405 fully occluded.",
+          "reviewManifestSha256": "5b304fc2a946d416f086011c4f2519ac9ed4c0707d0707efd58f9a0f317b78ce"
+        },
+        "diagonal-away": {
+          "frames": 449,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long path behind foreground props, corrections near right tree and unintended exit to flat depot; final 443-448 stable side beside boardwalk in wrong scene.",
+          "reviewManifestSha256": "2fb5f5b00e2b7190633b59f5c06ebbd1f5c6926e14c9bda150a56dc3c508678e"
+        },
+        "diagonal-toward": {
+          "frames": 344,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Detached boot fragments behind building before 100; long traversal and repeated approach corrections; 338-343 bent pose mostly hidden behind tree.",
+          "reviewManifestSha256": "dc77c6268cebb67a2202f2e3f2b3871c63bd6d515cc4cd3228edca0e62066964"
+        },
+        "occluder-behind": {
+          "frames": 104,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Multiple side/away/front reversals beside lobster traps; final 98-103 side torso stable with lower body hidden, foot placement not visually verifiable.",
+          "reviewManifestSha256": "fee3f2e08f913faa54160db2c6d8b9feb8e1551e22448e69c456a0f6a4d08975"
+        },
+        "occluder-back": {
+          "frames": 103,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals on short return route; lower body hidden throughout final 97-102 front stop.",
+          "reviewManifestSha256": "272f03a0511d97cebc018d8ca4093f3024b7a6dca05fbc90462764f5401976aa"
+        },
+        "narrow-gap": {
+          "frames": 340,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals around tree; abrupt body pops at 191,300,311; tree mask fragments cut holes through legs from 193 onward, including final 334-339 away stop.",
+          "reviewManifestSha256": "00b4108be895d6cbdd08a537217bfc35a35b08d6df64dcfba258c0ee328da299"
+        },
+        "unreachable": {
+          "frames": 144,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated heading changes before unintended transition into alley; final 138-143 stable away in wrong scene instead of nearest reachable floor.",
+          "reviewManifestSha256": "8bae46f062c88c6d07cb6980e5124c49c603dc6162cdee4e3ea567f8c1d9d2c5"
+        },
+        "object": {
+          "frames": 149,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Approach reverses near left lobster traps, final 143-148 front stop with feet obscured; narrator behavior failed.",
+          "reviewManifestSha256": "aaee858b75e9759a82fa289de80344869ba6b24931ced3223782fc1d0f943aec"
+        },
+        "exit-edge-left": {
+          "frames": 218,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Approach changes direction behind left tree; visible transition to depot variant and stable side stop 212-217; numeric arrival/path checks remain failures.",
+          "reviewManifestSha256": "d0f3c9ae6d3571bf3f9cc5d7f01e102ac74dd62efc1ad3cb4c345a3e60fa12e5"
+        },
+        "exit-edge-left-1": {
+          "frames": 219,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Approach reversals around left tree, transition to same depot variant as other left exits; final 213-218 stable side.",
+          "reviewManifestSha256": "299110f2265ab3e13cf9475d5d97e1d2b28b10185f5203b68421b3d7d1cc61f0"
+        },
+        "exit-edge-left-2": {
+          "frames": 219,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Approach reversals around left tree, transition to same depot variant as other left exits; final 213-218 stable side.",
+          "reviewManifestSha256": "09c71c4c8cf9e347dc83353690b156ea1fcca42290649ccd34458bbb4c1f8bf0"
+        },
+        "exit-edge-right": {
+          "frames": 312,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Several side/away switches before right tree; transition to flat depot with further approach corrections, final 306-311 stable side.",
+          "reviewManifestSha256": "c8b003013c3bb26e290c3a51e97e20bf10c8228edcda4474a3f6dc17bec41d30"
+        },
+        "exit-far": {
+          "frames": 135,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated sideways/away switching while walking into depth; transition into alley, final 129-134 stable away stop.",
+          "reviewManifestSha256": "24ad906c8d65c6dbc9a36e1c07048461cb357c8719513786f52e6e9cf27d6d43"
+        }
+      }
+    },
+    "square": {
+      "planned": 13,
+      "captured": 13,
+      "walks": {
+        "near-left": {
+          "frames": 125,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Cross-square travel is visually continuous, but target approach flips away then toward and clips the final standing body at left edge.",
+          "reviewManifestSha256": "fb68ba5040d3cbd958cfc0e4877e72898d9b30adb1bad43ac5fea4db5a770f6e"
+        },
+        "near-right": {
+          "frames": 124,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Cross-square travel is continuous; final approach unnecessarily turns away then toward, with right-edge clipping.",
+          "reviewManifestSha256": "3f78347e59f37f66cbf20926465353cd7729fc09ba6613fbddac47792658e4cf"
+        },
+        "deepest": {
+          "frames": 191,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals beside fountain and lamppost; final six frames keep knees bent in walking pose.",
+          "reviewManifestSha256": "403f8c495a224be0ec3364c81d9b46364ea0d430d49b54f9c6f91943f2026c07"
+        },
+        "far-left": {
+          "frames": 213,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Passes behind fountain then repeatedly reverses at left shops; final six frames hold bent-knee walking pose.",
+          "reviewManifestSha256": "d9e9b22110d832d4f3fac6443bf6553f392a136a6e495d4f3fcf01a374f39781"
+        },
+        "far-right": {
+          "frames": 178,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Approach turns toward camera beside lamppost and later away despite lateral route; final rest stable.",
+          "reviewManifestSha256": "b7f3445c44d054295e8c2238ee27f51d70a0b6eb0ef8277c91e050c5507b5f73"
+        },
+        "diagonal-away": {
+          "frames": 170,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated away/toward reversals at right edge before a stable final rest.",
+          "reviewManifestSha256": "209d05d37e8565bfa236c8d6cfbb78aafd188d7049fca8b8e49d3faad3512fd3"
+        },
+        "diagonal-toward": {
+          "frames": 234,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated away/toward/lateral corrections at destination; final front rest stable at clipped right edge.",
+          "reviewManifestSha256": "dd15d6ad146b30827795494e978ba1242a75ee4d8f87710b72e1110e79d0bbf1"
+        },
+        "occluder-behind": {
+          "frames": 149,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated reversals beside fountain and lamppost before reaching rear; final feet obscured, with no visible lower-body settle proof.",
+          "reviewManifestSha256": "2063f1f02e5ba7ff163f82eae8a087ecc2ee3e95528cb1ba18f55b51d5de75fd"
+        },
+        "occluder-back": {
+          "frames": 564,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Very long oscillation beside fountain and lamppost with repeated occlusion switches; final side rest stable after 558 frames.",
+          "reviewManifestSha256": "267e5cee033d6cf64a28a9fae7d91b63ce0cce9b541295343520df5a03f69ccd"
+        },
+        "narrow-gap": {
+          "frames": 61,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Crosses behind fountain then reverses at right storefront; foreground shop panel clips the torso while boots remain below it.",
+          "reviewManifestSha256": "b9326823572bad5b0c28d9981f5d4fb1379fd3770efc285ba4eaaeec6a29d9c0"
+        },
+        "unreachable": {
+          "frames": 55,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Short motion behind fountain reverses direction; final feet remain wholly occluded so visible settle cannot be established.",
+          "reviewManifestSha256": "ddf57ce9aaa9543efa27b2a269851384dbaf0bdb7291d40da2a9b2e67a4e611d"
+        },
+        "object": {
+          "frames": 105,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Shop facade clips torso while head and boots protrude; final six frames retain bent knees; no narrator response.",
+          "reviewManifestSha256": "66af8e3222d101cfb42484eaeab90714c600fdec850f0f776ea1a2bd6646422f"
+        },
+        "exit-edge-left": {
+          "frames": 103,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Walk reaches left edge and settles facing front, but no destination transition occurs.",
+          "reviewManifestSha256": "efc8dcccc4382b25e91c60d6bf0958951cd955532f60be6d956ddb0dd07591e1"
+        }
+      }
+    },
+    "stepped-street": {
+      "planned": 15,
+      "captured": 15,
+      "walks": {
+        "near-left": {
+          "frames": 366,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Detours behind house, cutout fragments across body at 219-268, baseline flips 269/279/290 with scale and heading pops; final front rest stable.",
+          "reviewManifestSha256": "a54d1e3dec24e9fb513010d333da55ef44afcb8d31cee305cf83b7cc320538c9"
+        },
+        "near-right": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames stationary; no walk, boots overlap small buoy.",
+          "reviewManifestSha256": "96b6956680a196308215ddb9c27fb8c84c853fa314229e5c48d322cacee4513e"
+        },
+        "deepest": {
+          "frames": 216,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": true,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated side/away zigzags up steps; facade fragments occlude body at crossing 50; final tiny side rest 210-215.",
+          "reviewManifestSha256": "db17253f8067001dd6f6cdf43c0c44bfe761ea50768bf38e805d7ea970811696"
+        },
+        "far-left": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "No walk; all 28 frames body hidden by facade with detached boots on doorstep.",
+          "reviewManifestSha256": "68fa5336fbde5a2a342dac21e6864e0c7953dfa6c8787ec9f308598a4de5a894"
+        },
+        "far-right": {
+          "frames": 401,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long house detour; silhouette fragments through backdrop; body pops at 311/344/366/377, final 395-400 detached legs under facade.",
+          "reviewManifestSha256": "821102df88ffb0541b7fa0fcc2276f6c4f6e926210cacfc72e13bbfe659b28ae"
+        },
+        "diagonal-away": {
+          "frames": 28,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": true,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "All 28 frames stationary near left buoy; requested diagonal never begins.",
+          "reviewManifestSha256": "2d4e432e09b5a6877fafd1526452c46e3d67bb30d1303621ba90eff9f1fc8c0f"
+        },
+        "diagonal-toward": {
+          "frames": 343,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Long route behind left house with fragmented silhouette; right facade pop at 311; final front rest stable.",
+          "reviewManifestSha256": "64ef6ca7419fadf27a93da52eafc58da39356ed6061024ae6fecdc193813048c"
+        },
+        "occluder-behind": {
+          "frames": 161,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated doorway reversals and disappearing body at 39/49/82/93/137; final 155-160 only detached legs visible.",
+          "reviewManifestSha256": "730e1da64a02d70bdf372c1b255be73872fed544e9d28f50b547293c2c574379"
+        },
+        "occluder-back": {
+          "frames": 34,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Entire body hidden by facade except lower legs; direction reverses and final 28-33 holds lifted-boot away stride.",
+          "reviewManifestSha256": "f04274b7caa150eb6a5a9957c57e383e7b58cb567e773443edb9bfbe7ee76958"
+        },
+        "narrow-gap": {
+          "frames": 42,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Short toward walk only visible below facade, final 36-41 detached boots; gap passage not demonstrated.",
+          "reviewManifestSha256": "75a4e01963c7970fe332dc646c0fb6fdad84f840cd1b7500baa2744ae1b5ecdc"
+        },
+        "unreachable": {
+          "frames": 172,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Repeated turns at left doorway; facade clips legs throughout, final 166-171 away rest with missing leg pixels.",
+          "reviewManifestSha256": "957b297adae3d496d79c172aef549e3f89ebd71b26a93551dcc02731db98a575"
+        },
+        "object": {
+          "frames": 186,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": false,
+            "visual": false
+          },
+          "visualNotes": "Route around left house; silhouette cut through at dock, final 180-185 holes across upper legs, no narrator.",
+          "reviewManifestSha256": "5fe94f535bfbc90a49623288a93d7fb2158d6f521daaa38cf2a7f284415c21a2"
+        },
+        "exit-edge-left": {
+          "frames": 231,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "House detour and heading reversals; background fragments cut body at 191/213; final 225-230 corrupted silhouette, no exit.",
+          "reviewManifestSha256": "c81cd81ea5198336c5cc010158c3148c47ad764e331e7218cdc0376794ce1c3a"
+        },
+        "exit-edge-right": {
+          "frames": 124,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": false,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Right facade hides torso then pops at 71; ends front rest near buoy, no scene transition.",
+          "reviewManifestSha256": "b91f85df4364e8ea9ae7f32437cc5415f0d6fd7ae9cea6f5430090f955e0357c"
+        },
+        "exit-far": {
+          "frames": 163,
+          "completedNaturally": true,
+          "checks": {
+            "floor": true,
+            "behavior": false,
+            "scale": true,
+            "facing": false,
+            "draworder": true,
+            "path": false,
+            "height": true,
+            "video": true,
+            "lock": true,
+            "freeze": true,
+            "visual": false
+          },
+          "visualNotes": "Lateral zigzags then away/toward reversal; ends front rest on stairs, no transition.",
+          "reviewManifestSha256": "c66258f020697f4cb52b5a8ff583ca235115bdca693c57d351c83263e507a99e"
+        }
+      }
+    }
+  },
+  "checkTotals": {
+    "floor": {
+      "pass": 138,
+      "fail": 1,
+      "pending": 0
+    },
+    "behavior": {
+      "pass": 14,
+      "fail": 125,
+      "pending": 0
+    },
+    "scale": {
+      "pass": 139,
+      "fail": 0,
+      "pending": 0
+    },
+    "facing": {
+      "pass": 0,
+      "fail": 139,
+      "pending": 0
+    },
+    "draworder": {
+      "pass": 139,
+      "fail": 0,
+      "pending": 0
+    },
+    "path": {
+      "pass": 12,
+      "fail": 127,
+      "pending": 0
+    },
+    "height": {
+      "pass": 25,
+      "fail": 114,
+      "pending": 0
+    },
+    "video": {
+      "pass": 139,
+      "fail": 0,
+      "pending": 0
+    },
+    "lock": {
+      "pass": 138,
+      "fail": 1,
+      "pending": 0
+    },
+    "freeze": {
+      "pass": 137,
+      "fail": 2,
+      "pending": 0
+    },
+    "visual": {
+      "pass": 1,
+      "fail": 138,
+      "pending": 0
+    }
+  },
+  "regressions": {
+    "tests": 435,
+    "testFiles": 47,
+    "typecheck": true,
+    "lint": true,
+    "artScenes": 16,
+    "townRecords": 25,
+    "townCachedCalls": 28,
+    "townUncachedCalls": 0
+  },
+  "budget": {
+    "segmentationCalls": 0,
+    "imageEdits": 0,
+    "generativeVideos": 0
+  },
+  "cleanup": {
+    "stoppedTaskPids": [
+      62084,
+      62086,
+      62092,
+      62095,
+      62096,
+      62102
+    ],
+    "before": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    62092 gorkolas   19u  IPv6 0xe876f3d591e85b53      0t0  TCP *:4317 (LISTEN)\nnode    62096 gorkolas   18u  IPv6 0xd79ac306ef56e8eb      0t0  TCP *:8080 (LISTEN)\nnode    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)\nnode    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)\n",
+    "after": "COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nnode    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)\nnode    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)\n",
+    "qaPortsStopped": true,
+    "ownerPortsListening": true
+  }
+}
