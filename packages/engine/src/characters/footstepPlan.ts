@@ -195,6 +195,14 @@ function simulatePlan<State, Pose>(
 				heading: WalkDirection,
 				visit: (s: State, steps: PlannedStep<State, Pose>[]) => void,
 			) => {
+				const prior = prefix[prefix.length - 1];
+				if (prior?.leg === legIndex) {
+					const turn = Math.abs(
+						GROUND_SECTORS.indexOf(prior.heading) -
+							GROUND_SECTORS.indexOf(heading),
+					);
+					if (turn === 4) return;
+				}
 				const steps = [...prefix];
 				let previousDistance = Infinity,
 					growing = 0;
