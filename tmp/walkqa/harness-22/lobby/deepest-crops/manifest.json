@@ -1,0 +1,49 @@
+{
+  "flagged": [
+    16,
+    17,
+    27,
+    28,
+    29,
+    30,
+    31,
+    34,
+    35,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: right-toward-right-away cycle sequence truncates the depth approach; upright final back pose and intact boots.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/lobby/deepest-sheet.png": "c887acb446ead02761161d73ae7a22676e452b032d0c11d2394bdfc895847224",
+    "tmp/walkqa/harness-22/lobby/deepest-crops/feet-review-000.png": "35e2d9592a1f34592abf8ed55fe00bfa574b4e9bd7b5891f7619aec8e0d53494",
+    "tmp/walkqa/harness-22/lobby/deepest-crops/stop-review-000.png": "019229cb719d5e5fd98a8e1d5d668f4a94611aee1ee6a3dad1f03bb1d68c2a9f"
+  }
+}

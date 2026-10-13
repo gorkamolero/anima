@@ -1,0 +1,36 @@
+{
+  "flagged": [
+    14,
+    16,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    9
+  ],
+  "stop": [
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short rightward approach changes to away-right and back; narrow pew-side strip cuts right trouser in final pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/near-right-sheet.png": "14302dd00f9d895c76e69c624dc3df218a4950d2091f278a1da298c16c173386",
+    "tmp/walkqa/harness-22/church/near-right-crops/feet-review-000.png": "3f7215d4337708ba7c5f63c84f77c653acb7e2f79cb1bb8bd1a88a17614aae1d",
+    "tmp/walkqa/harness-22/church/near-right-crops/stop-review-000.png": "d75a5714a94285aa84a6700e9b7407677e9263a0a88c89c63aabe6472a916026"
+  }
+}

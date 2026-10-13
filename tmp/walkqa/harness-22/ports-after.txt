@@ -1,0 +1,3 @@
+COMMAND   PID     USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+node    74015 gorkolas   18u  IPv6 0xf14501543e6eebd1      0t0  TCP *:8090 (LISTEN)
+node    74022 gorkolas   19u  IPv6 0xa7d05ffa9665cac6      0t0  TCP *:4410 (LISTEN)

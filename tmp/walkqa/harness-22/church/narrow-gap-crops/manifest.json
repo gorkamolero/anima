@@ -1,0 +1,48 @@
+{
+  "flagged": [
+    10,
+    11,
+    21,
+    22,
+    32,
+    42,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed all sheets and stop frames: toward-left-away route reverses depth before stopping; feet intact and stable but route fails no-reversal intent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/narrow-gap-sheet.png": "f6b4b8a1a681df04ac8b78287a43287f25a53626ab6edecf2323df24d8da73ef",
+    "tmp/walkqa/harness-22/church/narrow-gap-crops/feet-review-000.png": "07aa897b65f093f8327282ef9f8d8df33326bdf3565c5b2170968817b28d4979",
+    "tmp/walkqa/harness-22/church/narrow-gap-crops/stop-review-000.png": "f4428a63a3136e38b66a1f5a6a2beb7daafa7d0401610488af0e41b4f20b7a8b"
+  }
+}

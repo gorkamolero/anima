@@ -1,0 +1,40 @@
+{
+  "flagged": [
+    14,
+    16,
+    22,
+    24,
+    28,
+    29,
+    32,
+    33,
+    37,
+    38,
+    44,
+    45
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    54,
+    55,
+    56,
+    57,
+    58,
+    59
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Initial side motion reverses, then away approach to stairs and side-back settle; extra heading changes on short approach.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/lobby/unreachable-sheet.png": "d1a5f3872aa6eca6498f8c9b02cb2e8856ef8de6af737efeca86be63e4090f4e",
+    "tmp/walkqa/harness-22/lobby/unreachable-crops/feet-review-000.png": "065347d4424a3beadfe0da44b2f27275cccbd913d22331bb037795178d290cea",
+    "tmp/walkqa/harness-22/lobby/unreachable-crops/stop-review-000.png": "f7d951462d2ce2d4cb130e610796dafbd754541d199fa60ed3fc89a316a0b126"
+  }
+}

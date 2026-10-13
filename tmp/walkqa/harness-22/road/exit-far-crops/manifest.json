@@ -1,0 +1,58 @@
+{
+  "flagged": [
+    1,
+    2,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    20,
+    21,
+    33,
+    34,
+    37,
+    38,
+    42,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed full arc and feet/stop: away then right then away, stops deep on road at 56-61 without any scene transition; very small distant sprite, stationary final.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/road/exit-far-sheet.png": "2ef1dfcbb3dd857b973996d5697de21cf58162d1f19b1c74e7275f503aefe009",
+    "tmp/walkqa/harness-22/road/exit-far-crops/feet-review-000.png": "b91835a2595f9c15c1f8c3cd479bb6837272b4d03c52a70a5491628335cf584b",
+    "tmp/walkqa/harness-22/road/exit-far-crops/stop-review-000.png": "81d812b6af0e3b211b9aaa2d18596be4655aeddddd39bf101e6f05eec7c5d4ab"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    23,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    60,
+    61,
+    71,
+    72,
+    82,
+    83,
+    93,
+    94,
+    104,
+    105,
+    115,
+    125,
+    126,
+    136,
+    137,
+    144,
+    145,
+    146,
+    152,
+    153,
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167
+  ],
+  "random": [
+    38,
+    66,
+    162,
+    25,
+    83
+  ],
+  "stop": [
+    162,
+    163,
+    164,
+    165,
+    166,
+    167
+  ],
+  "crossings": [
+    {
+      "frame": 93,
+      "occluder": "left-house-eba894-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Left then toward down left boundary; boardwalk mask cuts head/hips at92 and pops clear93; final162-167 bent rest at left foreground far from right destination.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/far-right-sheet.png": "ff20799fea40d1b96cded302ae8fe1835651bd38c54d4f1114178b38c0d75ac9",
+    "tmp/walkqa/harness-22/stepped-street/far-right-crops/crossing-review-000.png": "80f2a78c2e65e2440a185983cbf8c1afd3c729128f41d45b623a5ae997091a0e",
+    "tmp/walkqa/harness-22/stepped-street/far-right-crops/feet-review-000.png": "a00391b83b610dfd361e834bbb1e74b2aa8dd02c696cbbfef6d15efdd46b2fe5",
+    "tmp/walkqa/harness-22/stepped-street/far-right-crops/stop-review-000.png": "82f6c9d2fe74d1df265f51925eee5a1d0d1ff73349e4f1d073ba9910bffd8958"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "flagged": [
+    16,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Right-left-away loop rather than direct projection; final56-61 small away rest with gap above riser.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/unreachable-sheet.png": "b22ce53244d69dfb18ac0b90474f9579b0123f886a7a2e2b8ab44a1e11e1fcfc",
+    "tmp/walkqa/harness-22/stepped-street/unreachable-crops/feet-review-000.png": "4bfe99d7379a5eb25e696486d5a139288ded5d7bae4d33f2f5210d4aa445b87b",
+    "tmp/walkqa/harness-22/stepped-street/unreachable-crops/stop-review-000.png": "5ebb3e4d6aa9102605c7049f17d480752c25272f19d83f6a55ac4aa3822fb64f"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    38,
+    39,
+    40,
+    49,
+    50,
+    51,
+    67
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Left then right reversal crossing landing; final76-81 bent hovering stance at right house. No convincing contact with step surface.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/occluder-back-sheet.png": "522ae559e2c2b899175f90b361fa97fe8ba8ea4906f6409beea9254c224aca1c",
+    "tmp/walkqa/harness-22/stepped-street/occluder-back-crops/feet-review-000.png": "f7eed52603cbbfe3736f361476ad174de66e7e345f1c80466d465ddb6f40ed95",
+    "tmp/walkqa/harness-22/stepped-street/occluder-back-crops/stop-review-000.png": "b7192902c1b92bc60018dfe84e8dbb60ce8bd4bab82ee06da29a2fcb4b3fd08d"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    22,
+    23
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: short truncated approach behind bus with most silhouette hidden; final bent-knee diagonal pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/outside/far-left-sheet.png": "b0eb1cab2cbf32d756f3409b21945a76b0b9df5fe67c39807141af64109e03f6",
+    "tmp/walkqa/harness-22/outside/far-left-crops/feet-review-000.png": "e7887ebaf84a6b4e94a37bba8f7608be0b4cb5137ed91b1c35efe07b8420cea1",
+    "tmp/walkqa/harness-22/outside/far-left-crops/stop-review-000.png": "4c4cc93cd9c592d7f3f87097d8426dbc568029226478953ac19e4acd39b18eb4"
+  }
+}

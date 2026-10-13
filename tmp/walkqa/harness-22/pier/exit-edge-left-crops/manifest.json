@@ -1,0 +1,69 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    10
+  ],
+  "stop": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "crossings": [
+    {
+      "frame": 10,
+      "occluder": "barrels-0-55e961-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All four images viewed: very short toward-left approach stops near shelter instead of exit; soles straddle dark board gap, head under HUD; crossing boots remain intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/exit-edge-left-sheet.png": "066faf40fa957ecc542a01a1f4b39385f792de875ebc227f6dc04286f3120224",
+    "tmp/walkqa/harness-22/pier/exit-edge-left-crops/crossing-review-000.png": "3d6ba353e17418f092857ff6bf65d4250160f8de14558fa9340599dc3e83d2be",
+    "tmp/walkqa/harness-22/pier/exit-edge-left-crops/feet-review-000.png": "767476259b6c104cd29b2d852716bf3396fafe2f7c70d98c05359fa15a5e2671",
+    "tmp/walkqa/harness-22/pier/exit-edge-left-crops/stop-review-000.png": "fb497807cf6e704d10b379d9a4dac9a384de8ca46fa90702614c97552d5ddc70"
+  }
+}

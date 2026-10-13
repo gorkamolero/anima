@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short approach ends in bent-knee diagonal rest; boots intact but requested lateral traversal is truncated.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/near-left-sheet.png": "1d75406085150d820144f2a0fe16d8a7411d11a988df5a78c0b718c888da00fd",
+    "tmp/walkqa/harness-22/church/near-left-crops/feet-review-000.png": "407384f1482a5a7abb3ed7ded434568e9627bdec0209c31433e02c8d76563077",
+    "tmp/walkqa/harness-22/church/near-left-crops/stop-review-000.png": "702235b439315dde12adc261c40d79b8665e6f84c13bfa8e31651cfda80b5956"
+  }
+}

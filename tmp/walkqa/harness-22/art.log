@@ -1,0 +1,11 @@
+
+=== outside (bus-station-flat-v1.png) — PASS (0 errors, 0 warnings) ===
+
+=== inside (arkham-bus-depot-flat-2d.png) — PASS (0 errors, 1 warnings) ===
+[WARNING] art-internally-inconsistent :: vending-machine
+  actual:    "331 px/m at y=894"
+  expected:  "254 px/m"
+  use this:  "already excluded from the model (use:false)"
+  note:      painted ~30% oversized relative to the doorway
+
+Art verification: all scenes PASS

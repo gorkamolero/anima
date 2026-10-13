@@ -1,0 +1,216 @@
+{
+  "place": "outside",
+  "method": "largest eroded connected component; extrema, local clearance ridges, baseline rear strips",
+  "beats": [
+    {
+      "name": "near-left",
+      "start": [
+        1852.5,
+        937.5
+      ],
+      "click": [
+        67.5,
+        937.5
+      ]
+    },
+    {
+      "name": "near-right",
+      "start": [
+        67.5,
+        937.5
+      ],
+      "click": [
+        1852.5,
+        937.5
+      ]
+    },
+    {
+      "name": "deepest",
+      "start": [
+        957.5,
+        947.5
+      ],
+      "click": [
+        1182.5,
+        667.5
+      ]
+    },
+    {
+      "name": "far-left",
+      "start": [
+        1852.5,
+        817.5
+      ],
+      "click": [
+        67.5,
+        727.5
+      ]
+    },
+    {
+      "name": "far-right",
+      "start": [
+        67.5,
+        727.5
+      ],
+      "click": [
+        1852.5,
+        817.5
+      ]
+    },
+    {
+      "name": "diagonal-away",
+      "start": [
+        67.5,
+        937.5
+      ],
+      "click": [
+        1852.5,
+        817.5
+      ]
+    },
+    {
+      "name": "diagonal-toward",
+      "start": [
+        67.5,
+        727.5
+      ],
+      "click": [
+        1852.5,
+        937.5
+      ]
+    },
+    {
+      "name": "occluder-behind",
+      "start": [
+        892.5,
+        962.5
+      ],
+      "click": [
+        937.5,
+        782.5
+      ],
+      "occluder": "pergola-70c118"
+    },
+    {
+      "name": "occluder-back",
+      "start": [
+        937.5,
+        782.5
+      ],
+      "click": [
+        892.5,
+        962.5
+      ],
+      "occluder": "pergola-70c118"
+    },
+    {
+      "name": "narrow-gap",
+      "start": [
+        1182.5,
+        667.5
+      ],
+      "click": [
+        1027.5,
+        722.5
+      ],
+      "gapCentre": [
+        1102.5,
+        662.5
+      ],
+      "clearanceDiameter": 20
+    },
+    {
+      "name": "unreachable",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        960,
+        487.5
+      ]
+    },
+    {
+      "name": "object",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        947.5,
+        782.5
+      ],
+      "object": "pergola"
+    },
+    {
+      "name": "exit-depot_doors",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        1380,
+        750
+      ],
+      "exit": "depot_doors",
+      "expectedDestination": "inside",
+      "exitKind": "door"
+    },
+    {
+      "name": "exit-edge-left",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        7.5,
+        755
+      ],
+      "exit": "edge-left",
+      "expectedDestination": "place-f2d0a7f7f76225002663",
+      "exitKind": "edge-left"
+    },
+    {
+      "name": "exit-edge-left-1",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        5,
+        871
+      ],
+      "exit": "edge-left-1",
+      "expectedDestination": "place-f2d0a7f7f76225002663",
+      "exitKind": "edge-left"
+    },
+    {
+      "name": "exit-edge-right",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        1912.5,
+        940
+      ],
+      "exit": "edge-right",
+      "expectedDestination": "place-2a19481aac649a2e69f1",
+      "exitKind": "edge-right"
+    },
+    {
+      "name": "exit-far",
+      "start": [
+        947.5,
+        782.5
+      ],
+      "click": [
+        1110,
+        657.5
+      ],
+      "exit": "far",
+      "expectedDestination": null,
+      "exitKind": "far"
+    }
+  ]
+}

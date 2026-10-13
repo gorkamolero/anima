@@ -1,0 +1,19 @@
+{
+  "captures": 139,
+  "sourceMismatch": [],
+  "sourceChanged": [],
+  "reviews": 139,
+  "reviewHashMismatch": [],
+  "checkCounts": {
+    "behavior-goal22.json": 139,
+    "video.json": 139,
+    "behavior.json": 139,
+    "facing.json": 139,
+    "path.json": 139,
+    "height.json": 139,
+    "scale.json": 139,
+    "draworder.json": 139,
+    "floor.json": 139
+  },
+  "checkerErrors": []
+}

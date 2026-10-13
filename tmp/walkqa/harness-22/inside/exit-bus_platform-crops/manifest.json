@@ -1,0 +1,47 @@
+{
+  "flagged": [
+    16,
+    17,
+    26,
+    38,
+    39,
+    40,
+    48,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    73
+  ],
+  "stop": [
+    69,
+    70,
+    71,
+    72,
+    73,
+    74
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Rightward approach visibly transitions once to exterior bus terminal; final destination stance stable and boots intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/inside/exit-bus_platform-sheet.png": "948e1a4c268ac1383a2a05b555ba083da17034f8cf249ec2140ca74c4fc459d1",
+    "tmp/walkqa/harness-22/inside/exit-bus_platform-crops/feet-review-000.png": "cdfc11ddae4727debe919e694f90bc6d7aad04b8002d8475b514288d39cdaa50",
+    "tmp/walkqa/harness-22/inside/exit-bus_platform-crops/stop-review-000.png": "646da13f9443ee936aa96813118a7d66601c73b89cb7c5d6e17fad7cd82842ef"
+  }
+}

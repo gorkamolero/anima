@@ -1,0 +1,266 @@
+{
+  "run": 97,
+  "muted": true,
+  "records": [
+    {
+      "step": "start",
+      "frame": "01-run97-start.png",
+      "ms": 0
+    },
+    {
+      "step": "depot-hotspots-and-kat",
+      "frame": "02-run97-depot-hotspots-and-kat.png",
+      "ms": 0,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 361,
+            "width": 425,
+            "x": 1495,
+            "y": 492
+          },
+          "id": "bus",
+          "name": "Innsmouth Bus",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 186,
+            "width": 312,
+            "x": 753,
+            "y": 698
+          },
+          "id": "waiting_bench",
+          "name": "Waiting Bench",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 225,
+            "width": 105,
+            "x": 1329,
+            "y": 465
+          },
+          "id": "depot_doors",
+          "name": "Depot Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "kat": {
+        "depth": 56.22395341517155,
+        "scale": 0.3753016472563215,
+        "x": 920,
+        "y": 924.479068303431
+      }
+    },
+    {
+      "step": "depot-left",
+      "frame": "03-run97-depot-left.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 485,
+          "width": 280,
+          "x": -37,
+          "y": 489
+        },
+        "className": "Character",
+        "displayHeight": 485,
+        "motionState": "idle",
+        "scale": 0.4582,
+        "textureKey": "hermes-passing-stand-toward",
+        "x": 103,
+        "y": 974
+      }
+    },
+    {
+      "step": "depot-right",
+      "frame": "04-run97-depot-right.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 467,
+          "width": 270,
+          "x": 1673,
+          "y": 489
+        },
+        "className": "Character",
+        "displayHeight": 467,
+        "motionState": "idle",
+        "scale": 0.4407,
+        "textureKey": "hermes-passing-stand-away-right",
+        "x": 1808,
+        "y": 955
+      }
+    },
+    {
+      "step": "depot-far",
+      "frame": "05-run97-depot-far.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 297,
+          "width": 172,
+          "x": 213,
+          "y": 484
+        },
+        "className": "Character",
+        "displayHeight": 297,
+        "motionState": "idle",
+        "scale": 0.2803,
+        "textureKey": "hermes-passing-stand-toward-right",
+        "x": 299,
+        "y": 780
+      }
+    },
+    {
+      "step": "depot-near",
+      "frame": "06-run97-depot-near.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 521,
+          "width": 301,
+          "x": 1281,
+          "y": 490
+        },
+        "className": "Character",
+        "displayHeight": 521,
+        "motionState": "idle",
+        "scale": 0.4918,
+        "textureKey": "hermes-passing-stand-side",
+        "x": 1432,
+        "y": 1011
+      }
+    },
+    {
+      "step": "road-arrival",
+      "frame": "07-run97-road-arrival.png",
+      "ms": 0
+    },
+    {
+      "step": "road-left",
+      "frame": "08-run97-road-left.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 355,
+          "width": 205,
+          "x": 253,
+          "y": 604
+        },
+        "className": "Character",
+        "displayHeight": 355,
+        "motionState": "idle",
+        "scale": 0.3353,
+        "textureKey": "hermes-passing-stand-toward-right",
+        "x": 356,
+        "y": 959
+      }
+    },
+    {
+      "step": "road-right",
+      "frame": "09-run97-road-right.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 339,
+          "width": 196,
+          "x": 1299,
+          "y": 604
+        },
+        "className": "Character",
+        "displayHeight": 339,
+        "motionState": "idle",
+        "scale": 0.3205,
+        "textureKey": "hermes-passing-stand-side",
+        "x": 1397,
+        "y": 944
+      }
+    }
+  ],
+  "calls": [
+    {
+      "at": "2026-10-13T06:44:22.443Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:25.211Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:28.023Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:28.023Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:28.024Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:29.322Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:32.196Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:32.197Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:44:32.198Z",
+      "kind": "narrate-options",
+      "ms": 0,
+      "cached": true
+    }
+  ],
+  "error": "far: did not stop within half a drawn stride: {\"expected\":{\"x\":1342.5,\"y\":807.5}}"
+}

@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All28 frames stationary at doorway; attempted walk does not depart. Standing soles intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/inside/narrow-gap-sheet.png": "e814a5ad341d7c04fdc11f5a9d89a729e4dd12283988b1ffc032bf987e5f80a5",
+    "tmp/walkqa/harness-22/inside/narrow-gap-crops/feet-review-000.png": "65063b1aac54ff4885dddacf2c9a298df772428c031fa1acbfbf551abcaa1c6e",
+    "tmp/walkqa/harness-22/inside/narrow-gap-crops/stop-review-000.png": "e443e258ac39cb92f62480833ce6b33d8152765bdd704002fd9cb361798c95d7"
+  }
+}

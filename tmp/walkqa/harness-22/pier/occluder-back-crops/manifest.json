@@ -1,0 +1,45 @@
+{
+  "flagged": [
+    14,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: brief right then toward approach ends before broad return crossing; stable front rest and intact boots, HUD clips hair.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/occluder-back-sheet.png": "f515d025c55583393f8884e6aae48043bac9a8ffc2b3766e8dcedf91f3d39a14",
+    "tmp/walkqa/harness-22/pier/occluder-back-crops/feet-review-000.png": "8e19154ab8a9c5887c07ae34d8c57a8be6c8d0332b244728c8b36d367fd753e8",
+    "tmp/walkqa/harness-22/pier/occluder-back-crops/stop-review-000.png": "efb67d8188a10b875f78a99d858b18cd9f260d3d3673e878f9e56f5934f5cd6c"
+  }
+}

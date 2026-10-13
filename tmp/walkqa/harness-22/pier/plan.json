@@ -1,0 +1,174 @@
+{
+  "place": "place-96acfd3d8faaf8f903fe",
+  "method": "largest eroded connected component; extrema, local clearance ridges, baseline rear strips",
+  "beats": [
+    {
+      "name": "near-left",
+      "start": [
+        1837.5,
+        917.5
+      ],
+      "click": [
+        82.5,
+        937.5
+      ]
+    },
+    {
+      "name": "near-right",
+      "start": [
+        82.5,
+        937.5
+      ],
+      "click": [
+        1837.5,
+        917.5
+      ]
+    },
+    {
+      "name": "deepest",
+      "start": [
+        957.5,
+        937.5
+      ],
+      "click": [
+        117.5,
+        692.5
+      ]
+    },
+    {
+      "name": "far-left",
+      "start": [
+        1837.5,
+        752.5
+      ],
+      "click": [
+        117.5,
+        692.5
+      ]
+    },
+    {
+      "name": "far-right",
+      "start": [
+        117.5,
+        692.5
+      ],
+      "click": [
+        1837.5,
+        752.5
+      ]
+    },
+    {
+      "name": "diagonal-away",
+      "start": [
+        82.5,
+        937.5
+      ],
+      "click": [
+        1837.5,
+        752.5
+      ]
+    },
+    {
+      "name": "diagonal-toward",
+      "start": [
+        117.5,
+        692.5
+      ],
+      "click": [
+        1837.5,
+        917.5
+      ]
+    },
+    {
+      "name": "occluder-behind",
+      "start": [
+        1152.5,
+        877.5
+      ],
+      "click": [
+        987.5,
+        802.5
+      ],
+      "occluder": "nets-9-55e961"
+    },
+    {
+      "name": "occluder-back",
+      "start": [
+        987.5,
+        802.5
+      ],
+      "click": [
+        1152.5,
+        877.5
+      ],
+      "occluder": "nets-9-55e961"
+    },
+    {
+      "name": "narrow-gap",
+      "start": [
+        792.5,
+        922.5
+      ],
+      "click": [
+        632.5,
+        907.5
+      ],
+      "gapCentre": [
+        712.5,
+        912.5
+      ],
+      "clearanceDiameter": 20
+    },
+    {
+      "name": "unreachable",
+      "start": [
+        962.5,
+        812.5
+      ],
+      "click": [
+        960,
+        512.5
+      ]
+    },
+    {
+      "name": "object",
+      "start": [
+        962.5,
+        812.5
+      ],
+      "click": [
+        962.5,
+        812.5
+      ],
+      "object": "lighthouse"
+    },
+    {
+      "name": "exit-edge-left",
+      "start": [
+        962.5,
+        812.5
+      ],
+      "click": [
+        11.666666666666666,
+        886.6666666666666
+      ],
+      "exit": "edge-left",
+      "expectedDestination": null,
+      "exitKind": "edge-left"
+    },
+    {
+      "name": "exit-edge-right",
+      "start": [
+        962.5,
+        812.5
+      ],
+      "click": [
+        1908.5714285714287,
+        828.5714285714286
+      ],
+      "exit": "edge-right",
+      "expectedDestination": null,
+      "exitKind": "edge-right"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Short diagonal approach stops upright beside ticket booth; no visible reversal or sliced sole in reviewed samples.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/inside/unreachable-sheet.png": "5f031fa1315a2ac2db5b1946afadf590cd2cf8b3bc8c162dcd758534c7f85334",
+    "tmp/walkqa/harness-22/inside/unreachable-crops/feet-review-000.png": "0998ba9882e96b2ecbe0729d892a59d780e65254e2322627688f91ff906b13e8",
+    "tmp/walkqa/harness-22/inside/unreachable-crops/stop-review-000.png": "c03f4484561ce1861b5ea17a813541b0a0a12bc6d9583bca88bca4a09bcff942"
+  }
+}

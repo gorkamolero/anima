@@ -1,0 +1,61 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    18,
+    27,
+    28,
+    29,
+    38,
+    39,
+    40,
+    49,
+    50,
+    51,
+    60,
+    61,
+    62,
+    71,
+    72,
+    73,
+    74,
+    75,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    84,
+    85,
+    86,
+    87,
+    88
+  ],
+  "random": [
+    92,
+    87,
+    100,
+    98,
+    19
+  ],
+  "stop": [
+    97,
+    98,
+    99,
+    100,
+    101,
+    102
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "All images viewed: rightward approach followed by toward settle, boots intact through barrel-side passage and stable upright final pose; numeric path/facing gates remain independent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/grocery/diagonal-toward-sheet.png": "b6e44cda26f97acfb4fd11fe5e296932b8f2c8291db33c6ec4b9127776e3b9eb",
+    "tmp/walkqa/harness-22/grocery/diagonal-toward-crops/feet-review-000.png": "db51c926462a48ebde0454f3b404d97354cc77ada84875bc1693a6ee464e3932",
+    "tmp/walkqa/harness-22/grocery/diagonal-toward-crops/stop-review-000.png": "d72b743e5fcd4238050a1097219f7670227b98b0c813a1eb5b8b9810a4adb460"
+  }
+}

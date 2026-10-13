@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "No traversal: stationary standing pose at the far-right boundary throughout the clip.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/far-left-sheet.png": "a4bc27237512cc5d86c85cf5b41d57019d5e3167a361f0fe4ce529d8697befd7",
+    "tmp/walkqa/harness-22/pier/far-left-crops/feet-review-000.png": "3960b402f3e883968e5fb978f5cca2b11f8d7ca96cbe6d1efa5197be3bd06c78",
+    "tmp/walkqa/harness-22/pier/far-left-crops/stop-review-000.png": "0a3f3ab9daf3802606743ba1c32c787b8c86a572fc267048a606fccd7333dc5e"
+  }
+}

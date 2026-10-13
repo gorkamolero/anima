@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: stationary at left frame boundary throughout, no requested approach; upright rest with screen clipping.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/lobby/far-right-sheet.png": "5e58e81523b0b3e0f19f7f98b3458f956e5b2f0df52b16588d793696e598e2c2",
+    "tmp/walkqa/harness-22/lobby/far-right-crops/feet-review-000.png": "7137faea866e9a2d810fd7596427d058d5c9c3eb73c983530fb93e2852b7fa50",
+    "tmp/walkqa/harness-22/lobby/far-right-crops/stop-review-000.png": "4f13b42dd2bb2ffb27c03e8a08451b7e19c4b9c1a79ac0ac703c7a243cbdca76"
+  }
+}

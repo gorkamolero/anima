@@ -1,0 +1,44 @@
+{
+  "flagged": [
+    11,
+    14,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed whole short arc and feet/settle: tiny left then toward movement stops deep in alley; final 31-36 stand visibly floating above painted ground near facade. No stop drift.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/alley/narrow-gap-sheet.png": "bd9d470345e2ed242a52e00540cc353d714c03a57ec218635ec93dc619e739e8",
+    "tmp/walkqa/harness-22/alley/narrow-gap-crops/feet-review-000.png": "e32fdb7670a55b5158b8b52b21084ecf26b296e25c8056cc69e9932423ce2246",
+    "tmp/walkqa/harness-22/alley/narrow-gap-crops/stop-review-000.png": "7aec26d92bf187dc1c8b762edfe303154e063900b01c4b47da2c5458d5005e9f"
+  }
+}

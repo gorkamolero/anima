@@ -1,0 +1,55 @@
+{
+  "flagged": [
+    10,
+    11,
+    18,
+    19,
+    20,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [
+    {
+      "frame": 10,
+      "occluder": "pews-3-55e961-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All review images viewed including crossing 9/10/11: spurious pew-colored pixels cut the trouser at frame 9; front settle stable and boots intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/occluder-back-sheet.png": "c20d639fc993062c98fc62c880f9423b832b0ff33b237b1c9a83b879a8c57fa9",
+    "tmp/walkqa/harness-22/church/occluder-back-crops/crossing-review-000.png": "8f78922be566e21ee78e68e954ac44d7ea0944c541f1405378ba177d09cf5c46",
+    "tmp/walkqa/harness-22/church/occluder-back-crops/feet-review-000.png": "5b15f7965218ffab96070b59f34b295df8366d7f1719bda4cb1c93d00e3e6104",
+    "tmp/walkqa/harness-22/church/occluder-back-crops/stop-review-000.png": "7b2c8139d34be76c56624f0001b6fe9bcd0eb28c75e07c4f6a78f89280d4f3c9"
+  }
+}

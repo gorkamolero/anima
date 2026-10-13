@@ -1,0 +1,50 @@
+{
+  "flagged": [
+    14,
+    17,
+    18,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    73
+  ],
+  "stop": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Viewed complete sheet, flagged and random feet, and six stop frames: forward traversal, intact boots, stable upright front settle; numerical bars remain independent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/diagonal-toward-sheet.png": "a303c2738cbe82429ac1a5e7dbdfb585cfd799c975067d20826d29227571dcd1",
+    "tmp/walkqa/harness-22/church/diagonal-toward-crops/feet-review-000.png": "0f15807a7a68aa4ea2d6f985f3ae25c7784f955202b0cf0e51c8195f756b6188",
+    "tmp/walkqa/harness-22/church/diagonal-toward-crops/stop-review-000.png": "1bca5f1ea9665280fb952bbb59173e3372d685b305d82200763bacd5413ea3d8"
+  }
+}

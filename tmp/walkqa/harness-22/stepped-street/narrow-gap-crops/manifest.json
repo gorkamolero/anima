@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    22,
+    27,
+    28,
+    38,
+    39,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    60,
+    71,
+    72
+  ],
+  "random": [
+    92,
+    87,
+    100,
+    98,
+    19
+  ],
+  "stop": [
+    98,
+    99,
+    100,
+    101,
+    102,
+    103
+  ],
+  "crossings": [
+    {
+      "frame": 49,
+      "occluder": "right-house-179fc3-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Left-toward-right-toward-right corrections; building slices half torso at48 then releases49. Bent hovering rest98-103 against right wall.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/narrow-gap-sheet.png": "26da7b7374ebfc2fd12e93b2f6750d1626d9f1704209347f648a8b7e294d08c8",
+    "tmp/walkqa/harness-22/stepped-street/narrow-gap-crops/crossing-review-000.png": "40fda8658974544548419789fce4e4494b88ac7b015cb085a1bcaf4468c79397",
+    "tmp/walkqa/harness-22/stepped-street/narrow-gap-crops/feet-review-000.png": "d7feb65110122b061d1b047ae1861fa3148cd063f41206b4a7518d162e49fb6e",
+    "tmp/walkqa/harness-22/stepped-street/narrow-gap-crops/stop-review-000.png": "a812fde9dd56b2fe6b9ba52d947fb8c28abd5bc3c14328bd2c3eea405bcef830"
+  }
+}

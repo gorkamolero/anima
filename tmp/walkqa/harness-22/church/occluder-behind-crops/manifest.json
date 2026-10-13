@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Stationary hold beside the pew; the requested behind-object crossing is not executed.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/occluder-behind-sheet.png": "139cddba3bdb1e8ae960ef3a8d6419f5597fd1baffdfa458aad5f69392215bfd",
+    "tmp/walkqa/harness-22/church/occluder-behind-crops/feet-review-000.png": "f0d2742d69f20e47b4a3196c5f87b58348018804bf164fcd63747c3a92d90db6",
+    "tmp/walkqa/harness-22/church/occluder-behind-crops/stop-review-000.png": "b471707f3a9fc498a2ed3ffc2849d5ab036cf88a2a0c9c79c4134306375af96b"
+  }
+}

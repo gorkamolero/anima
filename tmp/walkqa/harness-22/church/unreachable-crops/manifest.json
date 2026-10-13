@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Immediate turn and settle without a meaningful walk to the nearest reachable point; feet remain intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/unreachable-sheet.png": "8e41ddfe68426507a8a1ce59172f37f164bb05778d69072e0b19d1de237a0b04",
+    "tmp/walkqa/harness-22/church/unreachable-crops/feet-review-000.png": "9566c5c697af19d8b21c90b4cb384854d11723fd21210cf2d453e1a9f470919b",
+    "tmp/walkqa/harness-22/church/unreachable-crops/stop-review-000.png": "bb359f21fb59670f75d9bdbaec2ca963f030b1ca2504348de895ff7c5a11e404"
+  }
+}

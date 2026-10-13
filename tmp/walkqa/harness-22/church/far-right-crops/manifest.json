@@ -1,0 +1,29 @@
+{
+  "flagged": [
+    14
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short truncated approach with abrupt side-to-diagonal turn; straight final rest but no full requested aisle traversal.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/far-right-sheet.png": "2cc47e58d399c597aaccc3cd62e39fd4db05b9bcb321a41a22ea1e0806e7e4af",
+    "tmp/walkqa/harness-22/church/far-right-crops/feet-review-000.png": "dbd6674208d0b383dd395a95c95dcc1e2f2dcb2563a5faa96b1c13cf76705e56",
+    "tmp/walkqa/harness-22/church/far-right-crops/stop-review-000.png": "229efe8a17f69ce4984c0593b0ab2d7a96093f5905cde8d4339daae47b96904a"
+  }
+}

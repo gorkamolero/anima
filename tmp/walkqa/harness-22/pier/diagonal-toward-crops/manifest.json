@@ -1,0 +1,42 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    65,
+    66,
+    67
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: truncated right-toward-right approach; final bent-knee diagonal rest straddles visible water gap.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/diagonal-toward-sheet.png": "fac39dc1e5aa071535d8e760ff34715f6b55152b3a7a8bfd6a18312e4b55a866",
+    "tmp/walkqa/harness-22/pier/diagonal-toward-crops/feet-review-000.png": "0aabc00236999671a212993fb737c8334b0c378d7fb3d37576b9ce5371e7baf6",
+    "tmp/walkqa/harness-22/pier/diagonal-toward-crops/stop-review-000.png": "a5563837679f33fda8f25fbc21a5e840cc11c13321b49138b1de2b5546036c50"
+  }
+}

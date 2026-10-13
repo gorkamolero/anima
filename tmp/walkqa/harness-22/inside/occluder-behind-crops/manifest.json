@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    16,
+    17,
+    20,
+    21,
+    22,
+    26,
+    27,
+    29,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Moves away then left and diagonal back toward start; extra turn leaves endpoint near initial doorway. Stable rear diagonal settle.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/inside/occluder-behind-sheet.png": "155364c831d16049c057aa912159b2fa4a0842b78fdc976f19194f19bc32ccd0",
+    "tmp/walkqa/harness-22/inside/occluder-behind-crops/feet-review-000.png": "ef42e5a4a28543b23f866c7905ba76c4a8dfa26abaa227ee222417ff2971339f",
+    "tmp/walkqa/harness-22/inside/occluder-behind-crops/stop-review-000.png": "3d75916041ed5a51b32157e9f2cb193bd7ea51de9438b68d896f852100c3aaf9"
+  }
+}

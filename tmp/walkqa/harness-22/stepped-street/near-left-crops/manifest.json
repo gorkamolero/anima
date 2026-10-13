@@ -1,0 +1,45 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    38,
+    39,
+    40,
+    49,
+    50,
+    51
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Left-toward-left path, steady final76-81 bent stance with visible gap over ground; stairs treated as flat.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/near-left-sheet.png": "ea644a1f3cfcd25716e2c18a5f325893887e0d2a21b0c9a97f6ef200e1b86227",
+    "tmp/walkqa/harness-22/stepped-street/near-left-crops/feet-review-000.png": "e15b2b30befa76496de93d116c9b5c49474e0b04cc6c898b1fa3b7e1643951c8",
+    "tmp/walkqa/harness-22/stepped-street/near-left-crops/stop-review-000.png": "1431c93df91becae185d104d53aa0daf5b638146f235a9c3f4d1d7b7c4d09992"
+  }
+}

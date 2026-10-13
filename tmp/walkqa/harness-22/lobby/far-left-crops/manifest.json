@@ -1,0 +1,54 @@
+{
+  "flagged": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: stationary tiny character at far-right doorway, no requested crossing; clear boots but no arrival.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/lobby/far-left-sheet.png": "06475446dc2c9a4286f1dc330f48c59a25ae84ea03f5b1edd123039a2c0cf8eb",
+    "tmp/walkqa/harness-22/lobby/far-left-crops/feet-review-000.png": "8c155648a5c53e1dad265d5b12578ab3be852831b7a2cc8835050ffaaf2500b8",
+    "tmp/walkqa/harness-22/lobby/far-left-crops/stop-review-000.png": "77a8f2deb1791d2e7fe56e37e40bffe3cbfe2a386149ee536359abbe11a32b8e"
+  }
+}

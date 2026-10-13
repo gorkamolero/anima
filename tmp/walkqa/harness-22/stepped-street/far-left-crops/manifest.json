@@ -1,0 +1,45 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    36,
+    37,
+    38,
+    39,
+    46,
+    47,
+    48
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    21
+  ],
+  "stop": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "All sheets viewed. Continuous left run across landing, no reversal or fragment observed, stable side rest67-72 by doorway. Numeric floor and path checks remain separate.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/far-left-sheet.png": "582ca4cea3e87db8497407fde1c82b11c1dbecf4d1b9efaffddfd0201089badf",
+    "tmp/walkqa/harness-22/stepped-street/far-left-crops/feet-review-000.png": "1d53ba064270a654b47dc40e5d896c64e90e3e94eb3c2b3212ba89883ffd9ab3",
+    "tmp/walkqa/harness-22/stepped-street/far-left-crops/stop-review-000.png": "50ed2ee437bb2852d3213b661a29902a20fb0fa0b413f64288597f8178c68310"
+  }
+}

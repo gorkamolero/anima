@@ -1,0 +1,88 @@
+{
+  "flagged": [
+    16,
+    17,
+    26,
+    27,
+    38,
+    39,
+    42,
+    43,
+    44,
+    46,
+    48,
+    49,
+    50,
+    53,
+    54,
+    55,
+    59,
+    60,
+    61,
+    64,
+    65,
+    66,
+    68,
+    70,
+    71,
+    73,
+    74,
+    75,
+    76,
+    77,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98
+  ],
+  "random": [
+    115,
+    92,
+    87,
+    100,
+    98
+  ],
+  "stop": [
+    111,
+    112,
+    113,
+    114,
+    115,
+    116
+  ],
+  "crossings": [
+    {
+      "frame": 49,
+      "occluder": "lamp-post-0-55e961-upright-upright"
+    },
+    {
+      "frame": 93,
+      "occluder": "left-building-52db90-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Left then away route changes right again; building-colored pixels erase large body sections at lamp crossing93-94. Final stance stable.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/square/deepest-sheet.png": "c87b5098275d8816452a246e0fb7ac5e76cc6d716107410564c33eefc551b554",
+    "tmp/walkqa/harness-22/square/deepest-crops/crossing-review-000.png": "150cdac9cb2fcf916298354f6815af3aa5f46257ff5df531ec5815ea498eb489",
+    "tmp/walkqa/harness-22/square/deepest-crops/feet-review-000.png": "64b246e7517d1ee2bc30efe89393365977356f87b9d9ba47da4b1243a468153d",
+    "tmp/walkqa/harness-22/square/deepest-crops/stop-review-000.png": "e5216c3ed837b895e85b79a14d003b9574d28492f72ccd14e077de68cab31418"
+  }
+}

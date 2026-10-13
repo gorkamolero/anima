@@ -1,0 +1,10 @@
+{
+  "commit": "20e617d36973463193e16fe18db0935bea8e64d9",
+  "sourceHashes": {
+    "packages/engine/src/characters/CharacterMotor.ts": "e6fb3797f2a95e25445f3f95951d4571382c6efd0e189715b6d4d2e44c1aaa6d",
+    "packages/engine/src/characters/footstepPlan.ts": "a6ca12bade27f403e890783b2213e55469fed24cbec796a07ec1be321ba87fd6",
+    "api/src/services/occluders.ts": "c93183a81ff586cad86f016aa1ac3043a14d211940d42c2df21195d539d62c9b",
+    "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "be3aee606766df2aa25092b6c824e40c85212f15bdcd34070fa9975792d2b1de"
+  },
+  "commitTime": "2026-10-13T01:01:11-06:00"
+}

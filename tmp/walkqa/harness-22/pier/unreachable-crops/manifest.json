@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "No real departure, only rear-facing settle next to crate; left boot occluded by crate and head reaches HUD.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/unreachable-sheet.png": "51c82026c8e4625ef4871dab2775cdbfadcb9f77bce42695784f52c045e59493",
+    "tmp/walkqa/harness-22/pier/unreachable-crops/feet-review-000.png": "076c2deae2da3e49dc988a0e148f339706aaab991080dc5428e83ca58c6a3af3",
+    "tmp/walkqa/harness-22/pier/unreachable-crops/stop-review-000.png": "543aa7167d6a1ce1f12137c847fda078d90b552171d265798acb170e3e982da0"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "flagged": [
+    14,
+    16,
+    17,
+    25,
+    26,
+    27,
+    31,
+    32,
+    35,
+    37,
+    38,
+    45,
+    47,
+    48
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    73
+  ],
+  "stop": [
+    68,
+    69,
+    70,
+    71,
+    72,
+    73
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed full sheet, feet and settle 68-73: initial left leg immediately reverses into away-right then front-right at wall; stable final stand, boots intact in sampled floor/net passage.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/alley/unreachable-sheet.png": "26e5e0b7d0ea94ceee564fbfe8432b513058d2563cd050bdf874f7ce8c327080",
+    "tmp/walkqa/harness-22/alley/unreachable-crops/feet-review-000.png": "b8fbdef21fc6d633022ba35d69e9a9e88ca93d7f306f2b1b02a2cb23becbbeea",
+    "tmp/walkqa/harness-22/alley/unreachable-crops/stop-review-000.png": "eae261d43b4eb14f4ec92c4c59e34a4e6a6e9e594c52777671eefaa23ff2e968"
+  }
+}

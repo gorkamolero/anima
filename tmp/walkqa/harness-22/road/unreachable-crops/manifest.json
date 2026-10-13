@@ -1,0 +1,60 @@
+{
+  "flagged": [
+    1,
+    2,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    20,
+    21,
+    22,
+    25,
+    26,
+    27,
+    31,
+    32,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed: away then left then away, extra correction corner; final 55-60 stable short away rest with apparent ground gap.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/road/unreachable-sheet.png": "e51e22f7f13a298152627dad4db682c7a140ea23b9c8fc998e2cd442013717fc",
+    "tmp/walkqa/harness-22/road/unreachable-crops/feet-review-000.png": "e3047336d9d2fa7c9a42fe27241cdbd81d4fdae89d17933f53147a998e4dd2a5",
+    "tmp/walkqa/harness-22/road/unreachable-crops/stop-review-000.png": "1b980af495f01d89f87474448e422e7b3a29b7d771abcccadbd211224be9680b"
+  }
+}

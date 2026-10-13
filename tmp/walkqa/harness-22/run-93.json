@@ -1,0 +1,122 @@
+{
+  "run": 93,
+  "muted": true,
+  "records": [
+    {
+      "step": "start",
+      "frame": "01-run93-start.png",
+      "ms": 0
+    },
+    {
+      "step": "depot-hotspots-and-kat",
+      "frame": "02-run93-depot-hotspots-and-kat.png",
+      "ms": 0,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 361,
+            "width": 425,
+            "x": 1495,
+            "y": 492
+          },
+          "id": "bus",
+          "name": "Innsmouth Bus",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 186,
+            "width": 312,
+            "x": 753,
+            "y": 698
+          },
+          "id": "waiting_bench",
+          "name": "Waiting Bench",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 225,
+            "width": 105,
+            "x": 1329,
+            "y": 465
+          },
+          "id": "depot_doors",
+          "name": "Depot Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "kat": {
+        "depth": 56.22395341517155,
+        "scale": 0.3753016472563215,
+        "x": 920,
+        "y": 924.479068303431
+      }
+    },
+    {
+      "step": "depot-left",
+      "frame": "03-run93-depot-left.png",
+      "ms": 0,
+      "hermes": {
+        "animationKey": "hermes-fal-veo-transparent-loop-idle",
+        "animationState": "idle",
+        "baseScale": 0.5,
+        "bounds": {
+          "height": 485,
+          "width": 280,
+          "x": -37,
+          "y": 489
+        },
+        "className": "Character",
+        "displayHeight": 485,
+        "motionState": "idle",
+        "scale": 0.4581,
+        "textureKey": "hermes-passing-stand-toward",
+        "x": 103,
+        "y": 974
+      }
+    }
+  ],
+  "calls": [
+    {
+      "at": "2026-10-13T06:34:21.084Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:34:22.418Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:34:23.979Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:34:24.846Z",
+      "kind": "interactables",
+      "ms": 0,
+      "cached": true
+    },
+    {
+      "at": "2026-10-13T06:34:25.883Z",
+      "kind": "interactables",
+      "ms": 1,
+      "cached": true
+    }
+  ],
+  "error": "right: did not stop within half a drawn stride: {\"expected\":{\"x\":1817.5,\"y\":947.5},\"arrival\":{\"anchor\":{\"x\":1798.585719616368,\"y\":939.6141131563952},\"distance\":19.84028846850647,\"halfStride\":2,\"switchFrame\":2,\"target\":{\"x\":1817,\"y\":947}},\"cut\":{\"cycleFrames\":48,\"from\":{\"x\":1798.585719616368,\"y\":939.6141131563952},\"matched\":true,\"to\":{\"x\":1798.585719616368,\"y\":939.6141131563952},\"waitFrames\":6}}"
+}

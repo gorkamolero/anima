@@ -1,0 +1,10 @@
+{
+  "openRequirements": [
+    "0/139 walks passes every bar; named limitations are not waived passes.",
+    "57/139 meet the supplementary half-stride/exact-exit behavior assessment; no exit meets all exact-region and destination conditions.",
+    "Global route-join reversals and truncated arrivals remain after multiple planner attempts.",
+    "Canonical rest silhouette errors remain after two rejected scaling trials.",
+    "The path checker reports a canonical octilinear norm infimum, not a proven shortest finite depth-varying native-stride path.",
+    "Newly isolated pier destination mapping and road/boardwalk mask defects lack two targeted repair attempts; the acceptance fallback is incomplete for these."
+  ]
+}

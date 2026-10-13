@@ -1,0 +1,51 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    28,
+    29,
+    32,
+    33,
+    37,
+    38,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    56
+  ],
+  "stop": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Right then away; stops51-56 midway up steps without exit transition, small floating away rest.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/exit-far-sheet.png": "bbb26344dd1726f72fd0854abe1a0e03095c36c1540b661566c74214ec55265a",
+    "tmp/walkqa/harness-22/stepped-street/exit-far-crops/feet-review-000.png": "7c35f9e556d77a468b012ca1f33cc3e0d14c35b50a4975cea306db32e17fb407",
+    "tmp/walkqa/harness-22/stepped-street/exit-far-crops/stop-review-000.png": "32954ed8f3bedeade4b141ad624a4a6db6ee15b3530b55586143867243cd1efb"
+  }
+}

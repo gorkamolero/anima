@@ -1,0 +1,54 @@
+{
+  "flagged": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: stationary behind seated character and bench, no requested return crossing; feet hidden for entire capture.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/outside/occluder-back-sheet.png": "7e86014976cdc777d6e52bbc4e200e9a140baeac882558d2893607a4dfb3580e",
+    "tmp/walkqa/harness-22/outside/occluder-back-crops/feet-review-000.png": "d0bbdeeec8ce4787af12c58a59769194d3e479cccf960981331ab8c902663b4c",
+    "tmp/walkqa/harness-22/outside/occluder-back-crops/stop-review-000.png": "158bc86ebaec8f4dfb9ad3526eaf835c8afb6c593ad54e253f2afb698872d123"
+  }
+}

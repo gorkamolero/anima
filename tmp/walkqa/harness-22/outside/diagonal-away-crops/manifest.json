@@ -1,0 +1,75 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    30,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    59,
+    60,
+    69,
+    70,
+    71,
+    82,
+    91,
+    92,
+    93,
+    137,
+    138,
+    143,
+    147
+  ],
+  "random": [
+    38,
+    66,
+    162,
+    25,
+    83
+  ],
+  "stop": [
+    161,
+    162,
+    163,
+    164,
+    165,
+    166
+  ],
+  "crossings": [
+    {
+      "frame": 148,
+      "occluder": "van-fd463b-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All four review images viewed: right run then away approach disappears abruptly behind bus at 148 while boots remain below chassis; final silhouette mostly occluded.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/outside/diagonal-away-sheet.png": "d3befd54917a0d89bf7b8fab18e38f51f05bcce4c005acd1d8ebfa6cb29bfdee",
+    "tmp/walkqa/harness-22/outside/diagonal-away-crops/crossing-review-000.png": "766aec6127710458a56c750bbff61697c6d8cab18a8df866ae6a8f2f370af2db",
+    "tmp/walkqa/harness-22/outside/diagonal-away-crops/feet-review-000.png": "43bca96d6ee26b44756c1f13413fabca5a4b7a4c5fb71d850369ce9d669844a8",
+    "tmp/walkqa/harness-22/outside/diagonal-away-crops/stop-review-000.png": "0a7f19da326e468478f7f991c4fd706e72814658f8134e452e71beeff65ed836"
+  }
+}

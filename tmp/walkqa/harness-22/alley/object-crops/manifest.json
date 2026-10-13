@@ -1,0 +1,43 @@
+{
+  "flagged": [
+    14,
+    16,
+    60,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    78,
+    79,
+    80,
+    81,
+    82,
+    83
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed whole arc and feet/settle: left then away-left then left approach to crate; final away stand 78-83 floats over crate shadow area instead of grounded contact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/alley/object-sheet.png": "e5630d8288f3f3e035bb06d058702214199c196f4f57e9a7ec422e21de4756f3",
+    "tmp/walkqa/harness-22/alley/object-crops/feet-review-000.png": "144c5fd6132d89ba970093b7487f2f4df96ec21c48de38d6c8084f167f5accf9",
+    "tmp/walkqa/harness-22/alley/object-crops/stop-review-000.png": "07a4f76770d04c047fab900957284820b5d6644bbef6987e0400fc85169313a5"
+  }
+}

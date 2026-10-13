@@ -1,0 +1,62 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    36,
+    37,
+    39,
+    40,
+    49,
+    50,
+    60,
+    61,
+    71,
+    72,
+    81,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88
+  ],
+  "random": [
+    92,
+    87,
+    100,
+    98,
+    19
+  ],
+  "stop": [
+    97,
+    98,
+    99,
+    100,
+    101,
+    102
+  ],
+  "crossings": [
+    {
+      "frame": 60,
+      "occluder": "left-house-eba894-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed. Right-left-toward-left-away corrective loop. Building releases whole body at60; final97-102 stable diagonal back rest at left doorway.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/stepped-street/object-sheet.png": "36ad2149b2dcafc3dfb0790789250ee6b865170c5da9cd32110767a4e0433d91",
+    "tmp/walkqa/harness-22/stepped-street/object-crops/crossing-review-000.png": "c404420123dd47d130569ebfc48194cc6e2f986e45ba398f6a01ff298b6e99e4",
+    "tmp/walkqa/harness-22/stepped-street/object-crops/feet-review-000.png": "421b9553e2f0763b495b01c791df135d5a325d65f5fabf815ea42cfccd976af8",
+    "tmp/walkqa/harness-22/stepped-street/object-crops/stop-review-000.png": "280edc2deca121342ab3e0fe3da84f08318ee511233c0be5202f2c524ef59681"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "flagged": [
+    14
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed all sheets and stop frames: short truncated traversal with abrupt away turn then side settle; boots intact, upright final pose.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/far-left-sheet.png": "6d7e44118381d50ad5870055ce268931103be4d8a8013d0e0872d6f55f6cf90b",
+    "tmp/walkqa/harness-22/church/far-left-crops/feet-review-000.png": "3c6fe63e331cb0f8fb7ce90a9b968e32972eded6e4c2123768cace3f3862e178",
+    "tmp/walkqa/harness-22/church/far-left-crops/stop-review-000.png": "70c36f08efa3351ebfddbacdcb70dc4bb8d3c96be1013aa620e4bd673c1f3cc2"
+  }
+}

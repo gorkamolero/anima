@@ -1,0 +1,72 @@
+{
+  "flagged": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    36
+  ],
+  "stop": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "crossings": [
+    {
+      "frame": 10,
+      "occluder": "barrels-0-55e961-upright-upright"
+    }
+  ],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All four images viewed: short toward-left-away-left sequence before upright stop; crossing boots intact but head hidden under HUD and repeated cycle changes persist.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/object-sheet.png": "f0ceac0e3e4f2fd922d50340175b9fd92ff9705e63d670d404135d18c34c45a8",
+    "tmp/walkqa/harness-22/pier/object-crops/crossing-review-000.png": "636a86141eb7b6b5b4438fe8165a09978b3cb473d27c5018025c497439c5c4ae",
+    "tmp/walkqa/harness-22/pier/object-crops/feet-review-000.png": "ced4952c519c30186cdbb737d435fc2ddde61b2958dab3ce01c9343b5889339e",
+    "tmp/walkqa/harness-22/pier/object-crops/stop-review-000.png": "79b3a0fb4a91017673ebf606c5e438064189bfba7e8934fff578fa0c3eca4be0"
+  }
+}

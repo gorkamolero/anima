@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Stationary hold with no meaningful walk to the requested depth; straight rest and intact boots do not establish arrival.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/deepest-sheet.png": "f5217eb4bc2c1da1bfc8dee2f181c8a30b0a24231d48dc929d810308a69928f1",
+    "tmp/walkqa/harness-22/church/deepest-crops/feet-review-000.png": "87cfe76da03e075d6dbfc5ce093d3e07ce3eaed18864066f82b3ee5bedba9e80",
+    "tmp/walkqa/harness-22/church/deepest-crops/stop-review-000.png": "e5b0e8b4f1ed7b1cce02c128bacb86f7a79f83be8e514d6a49049dcd4e165185"
+  }
+}

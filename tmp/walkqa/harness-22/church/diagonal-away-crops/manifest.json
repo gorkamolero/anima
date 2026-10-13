@@ -1,0 +1,44 @@
+{
+  "flagged": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    26,
+    27,
+    28,
+    32,
+    33,
+    37
+  ],
+  "random": [
+    57,
+    46,
+    43,
+    50,
+    49
+  ],
+  "stop": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Viewed complete sheet, all flagged and random feet, and six stop frames: clear aisle traversal with intact boots and upright stable side settle; numerical bars remain independent.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/diagonal-away-sheet.png": "02f1c254d266568259f1229c1a0fbc1615469196c8d6b93e31eb5898809a6ca8",
+    "tmp/walkqa/harness-22/church/diagonal-away-crops/feet-review-000.png": "97952c4afde28045747bb00d5d4eebe7ce808fe7addb0dcb958cfb0a0e00d4ec",
+    "tmp/walkqa/harness-22/church/diagonal-away-crops/stop-review-000.png": "e4b90cc470f2bca4ae21e711f863b0a24cc0efc813a3f902a8ad94e26bce0bc6"
+  }
+}

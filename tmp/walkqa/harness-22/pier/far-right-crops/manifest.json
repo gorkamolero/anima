@@ -1,0 +1,41 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    65,
+    67
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    77,
+    78,
+    79,
+    80,
+    81,
+    82
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: approach remains on left branch, changes toward to away-right before truncation; upright rest but feet over visible board gap.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/far-right-sheet.png": "3127026da0dc38fdf7055454216a25fb8063328aa0f36d583108dc90b0da5cce",
+    "tmp/walkqa/harness-22/pier/far-right-crops/feet-review-000.png": "388a97fd425709e904917fb2baa85e4ae630dbabafd995f6881aa5c9ac1003d9",
+    "tmp/walkqa/harness-22/pier/far-right-crops/stop-review-000.png": "1f7fd76123f4bae1ea2f91c99b025188d2643184c9752290c6b8650399fe873e"
+  }
+}

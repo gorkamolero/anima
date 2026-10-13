@@ -1,0 +1,91 @@
+{
+  "counts": {
+    "pass": 7317,
+    "drawing silhouette differs from canonical side pose": 1014,
+    "censored: screen clipping": 538,
+    "render/tracking or occlusion discrepancy": 2145,
+    "censored: no distinguishable silhouette": 127,
+    "censored: invisible": 23
+  },
+  "textures": {
+    "hermes-walk-away": 280,
+    "hermes-passing-stand-away": 547,
+    "hermes-walk-toward-right": 228,
+    "hermes-walk-toward": 695,
+    "hermes-passing-stand-toward": 434,
+    "hermes-walk-away-right": 306,
+    "hermes-passing-stand-side": 415,
+    "hermes-fal-veo-transparent-loop": 816,
+    "hermes-passing-stand-away-right": 87,
+    "hermes-passing-stand-toward-right": 39
+  },
+  "examples": {
+    "drawing silhouette differs from canonical side pose": {
+      "log": "tmp/walkqa/harness-21/road/near-left.json",
+      "frame": 31,
+      "measurement": {
+        "height": 183,
+        "expected": 188.58847726447078,
+        "relativeError": 0.029633185152842967,
+        "canonicalExpected": 191.09186413081332,
+        "normalizedHeightError": 0.04234541416830795,
+        "box": [
+          1694,
+          608,
+          1759,
+          798
+        ]
+      },
+      "texture": "hermes-fal-veo-transparent-loop",
+      "assetFrame": 25
+    },
+    "censored: screen clipping": {
+      "log": "tmp/walkqa/harness-21/alley/near-right.json",
+      "frame": 32,
+      "measurement": {
+        "censored": "screen clipping",
+        "expected": 634.5711142642797
+      },
+      "texture": "hermes-walk-away",
+      "assetFrame": 20
+    },
+    "render/tracking or occlusion discrepancy": {
+      "log": "tmp/walkqa/harness-21/road/far-left.json",
+      "frame": 61,
+      "measurement": {
+        "height": 1,
+        "expected": 179.32732987138758,
+        "relativeError": 0.99442360514308,
+        "canonicalExpected": 179.24036220413666,
+        "normalizedHeightError": 0.9944208994687196,
+        "box": [
+          1809,
+          609,
+          1868,
+          789
+        ]
+      },
+      "texture": "hermes-fal-veo-transparent-loop",
+      "assetFrame": 29
+    },
+    "censored: no distinguishable silhouette": {
+      "log": "tmp/walkqa/harness-21/road/near-left.json",
+      "frame": 0,
+      "measurement": {
+        "censored": "no distinguishable silhouette",
+        "expected": 184.2546686835561
+      },
+      "texture": "hermes-passing-stand-side",
+      "assetFrame": 0
+    },
+    "censored: invisible": {
+      "log": "tmp/walkqa/harness-21/outside/exit-far.json",
+      "frame": 140,
+      "measurement": {
+        "censored": "invisible"
+      },
+      "texture": "hermes-passing-stand-away",
+      "assetFrame": 0
+    }
+  }
+}

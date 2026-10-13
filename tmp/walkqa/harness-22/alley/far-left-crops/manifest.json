@@ -1,0 +1,62 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    17,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    37,
+    38,
+    47,
+    48,
+    49,
+    50,
+    53,
+    54,
+    55,
+    59,
+    60,
+    61,
+    64,
+    65,
+    66,
+    68,
+    70,
+    71,
+    72,
+    75,
+    76,
+    81,
+    82
+  ],
+  "random": [
+    38,
+    66,
+    25,
+    83,
+    146
+  ],
+  "stop": [
+    142,
+    143,
+    144,
+    145,
+    146,
+    147
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed whole arc, feet and settle: long left leg then away leg then left leg around crate; final 142-147 stable but soles appear above painted floor/box area. No slicing in sampled net passage.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/alley/far-left-sheet.png": "c6558a481a807f6cd2fd74cfd29604d4b9a84b2a3b81b628c47b56acce1f2061",
+    "tmp/walkqa/harness-22/alley/far-left-crops/feet-review-000.png": "84e504b97cdcb861542633898367f5c62ae9a94e45f66e66947e83a5fafb555e",
+    "tmp/walkqa/harness-22/alley/far-left-crops/stop-review-000.png": "a52600c22422f04883a069ad602607dc568d64dc1ad8d0b9986254513a76aefa"
+  }
+}

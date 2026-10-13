@@ -1,0 +1,48 @@
+{
+  "flagged": [
+    10,
+    13,
+    14,
+    15,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "random": [
+    9,
+    16,
+    6,
+    20,
+    10
+  ],
+  "stop": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short away approach terminates near central post, character enormous relative to shelter and head under HUD. Soles intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/occluder-behind-sheet.png": "f930487494be9f6f251ae57520e34da44f9d1f4d4fb301a3b9bae8b6862680c7",
+    "tmp/walkqa/harness-22/pier/occluder-behind-crops/feet-review-000.png": "7c874d78517f7b53f34528e828eb11b130fd1c89ab66d865650b9dfe7ec35163",
+    "tmp/walkqa/harness-22/pier/occluder-behind-crops/stop-review-000.png": "c19b07169f3ef1d338e9eae2eeef6944360d399021598a953c4b54bf9604fdd9"
+  }
+}

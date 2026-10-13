@@ -1,0 +1,174 @@
+{
+  "place": "place-2635d8cd03bce818a634",
+  "method": "largest eroded connected component; extrema, local clearance ridges, baseline rear strips",
+  "beats": [
+    {
+      "name": "near-left",
+      "start": [
+        1687.5,
+        952.5
+      ],
+      "click": [
+        322.5,
+        937.5
+      ]
+    },
+    {
+      "name": "near-right",
+      "start": [
+        322.5,
+        937.5
+      ],
+      "click": [
+        1687.5,
+        952.5
+      ]
+    },
+    {
+      "name": "deepest",
+      "start": [
+        992.5,
+        937.5
+      ],
+      "click": [
+        652.5,
+        657.5
+      ]
+    },
+    {
+      "name": "far-left",
+      "start": [
+        1597.5,
+        922.5
+      ],
+      "click": [
+        462.5,
+        727.5
+      ]
+    },
+    {
+      "name": "far-right",
+      "start": [
+        462.5,
+        727.5
+      ],
+      "click": [
+        1597.5,
+        922.5
+      ]
+    },
+    {
+      "name": "diagonal-away",
+      "start": [
+        322.5,
+        937.5
+      ],
+      "click": [
+        1597.5,
+        922.5
+      ]
+    },
+    {
+      "name": "diagonal-toward",
+      "start": [
+        462.5,
+        727.5
+      ],
+      "click": [
+        1687.5,
+        952.5
+      ]
+    },
+    {
+      "name": "occluder-behind",
+      "start": [
+        297.5,
+        987.5
+      ],
+      "click": [
+        297.5,
+        987.5
+      ],
+      "occluder": "left-fishnet-0-55e961"
+    },
+    {
+      "name": "occluder-back",
+      "start": [
+        297.5,
+        987.5
+      ],
+      "click": [
+        297.5,
+        987.5
+      ],
+      "occluder": "left-fishnet-0-55e961"
+    },
+    {
+      "name": "narrow-gap",
+      "start": [
+        652.5,
+        657.5
+      ],
+      "click": [
+        472.5,
+        722.5
+      ],
+      "gapCentre": [
+        552.5,
+        632.5
+      ],
+      "clearanceDiameter": 20
+    },
+    {
+      "name": "unreachable",
+      "start": [
+        987.5,
+        802.5
+      ],
+      "click": [
+        992.5,
+        477.5
+      ]
+    },
+    {
+      "name": "object",
+      "start": [
+        987.5,
+        802.5
+      ],
+      "click": [
+        987.5,
+        802.5
+      ],
+      "object": "door left"
+    },
+    {
+      "name": "exit-far",
+      "start": [
+        987.5,
+        802.5
+      ],
+      "click": [
+        570,
+        635
+      ],
+      "exit": "far",
+      "expectedDestination": "place-aa7dd184a5f30fbc1f89",
+      "exitKind": "far"
+    },
+    {
+      "name": "exit-near",
+      "start": [
+        987.5,
+        802.5
+      ],
+      "click": [
+        960,
+        1056
+      ],
+      "exit": "near",
+      "expectedDestination": "place-f2d0a7f7f76225002663",
+      "exitKind": "near"
+    }
+  ]
+}

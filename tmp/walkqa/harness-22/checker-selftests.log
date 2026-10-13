@@ -1,0 +1,11 @@
+PASS: 20% scale corruption rejected
+PASS: wrong-cycle frames rejected
+PASS: inverted depth and raised floor decal rejected
+/Users/gorkolas/Developer/anima/tmp/walkqa/tools/pathopt.py:40: DeprecationWarning: The 'shapely.ops.transform()' function is deprecated. Use 'shapely.transform()' or 'shapely.transform_coordseq()' instead. See https://shapely.readthedocs.io/en/latest/manual.html#shapely.ops.transform for more details.
+  poly=transform(lambda x,y,z=None:ground(perspective,(np.asarray(x),np.asarray(y))),screen)
+PASS: doctored route through wall rejected by checker
+PASS: doctored rendered silhouette 20% short rejected
+PASS: dropped floor click rejected
+PASS: actual sole beyond half stride rejected
+PASS: off-floor frame rejected
+PASS: missing frame, wrong timestamps and wrong dimensions rejected

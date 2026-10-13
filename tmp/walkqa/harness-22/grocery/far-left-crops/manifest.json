@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: stationary right doorway hold with no requested leftward movement; upright rest and intact feet.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/grocery/far-left-sheet.png": "e8a8e32250f16f23f84ef6cada3c5bd9637ac21707bb6cc73611bb996303e601",
+    "tmp/walkqa/harness-22/grocery/far-left-crops/feet-review-000.png": "c4b178f38a5e052d7ce75aca7b31d750c91770ee67666d422c5c03faa7f78420",
+    "tmp/walkqa/harness-22/grocery/far-left-crops/stop-review-000.png": "5a8d1aaee68c97e7b96d52fbeefa19dcc2a89ac28d35e8330d7d9ae6d823dccb"
+  }
+}

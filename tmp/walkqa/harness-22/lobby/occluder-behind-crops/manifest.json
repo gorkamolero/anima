@@ -1,0 +1,37 @@
+{
+  "flagged": [
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    26
+  ],
+  "random": [
+    19,
+    33,
+    81,
+    12,
+    41
+  ],
+  "stop": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Left run reverses right beside reception; final rear-diagonal stance stable but route doubles back.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/lobby/occluder-behind-sheet.png": "557b3cf48f1a161459545f1af645214337b3e3382a4c6a363e2875b50f332934",
+    "tmp/walkqa/harness-22/lobby/occluder-behind-crops/feet-review-000.png": "b814aebe8b38263c56cbd78ec18d328406b8b243f1dc88c78d23ffb1b2a2990d",
+    "tmp/walkqa/harness-22/lobby/occluder-behind-crops/stop-review-000.png": "04a27c630b48332a8d5c6d36e21343729532063473e6f7eb6b2e7ee1a0b6c4d3"
+  }
+}

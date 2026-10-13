@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed whole 28-frame arc and feet/stop sheets: stationary start beside left wall, only bent-to-straight settle; no actual behind-object walk. Boots remain intact.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/alley/occluder-behind-sheet.png": "208b6e854605e13a565a5882154fc342925bf255227686d3584ac5c4578421c7",
+    "tmp/walkqa/harness-22/alley/occluder-behind-crops/feet-review-000.png": "969ff6d7292cd2d7bd7ef42e3fe4c45dacff92887db32918deed892bf221bceb",
+    "tmp/walkqa/harness-22/alley/occluder-behind-crops/stop-review-000.png": "aec22f20ee92eeb13697aacdc8fabcc26895bec79194f2940d5a4c819a34f06b"
+  }
+}

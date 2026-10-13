@@ -1,0 +1,9 @@
+{
+  "source": "harness-21/alley/deepest",
+  "frames": [
+    49,
+    50,
+    51
+  ],
+  "method": "Replay exact pose, position, scale and anchor against the new cached occluder layers; no movement simulation"
+}

@@ -1,0 +1,50 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    36,
+    37,
+    38,
+    46,
+    47,
+    48,
+    60,
+    70,
+    71
+  ],
+  "random": [
+    115,
+    92,
+    87,
+    100,
+    98
+  ],
+  "stop": [
+    111,
+    112,
+    113,
+    114,
+    115,
+    116
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed: crosses right in front of fountain with late away then right switch; final 111-116 clipped by right viewport edge.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/square/near-right-sheet.png": "439146b778406359100b10bf1638aa0d30baee762b03939cf772eb75e27ba329",
+    "tmp/walkqa/harness-22/square/near-right-crops/feet-review-000.png": "57692955ef0a3f8880ac41785d8e7b4d661105242e282baf52632730fb55baaa",
+    "tmp/walkqa/harness-22/square/near-right-crops/stop-review-000.png": "2be92efacb3e65237736cdd08264885cc083f3f4ce75fb799329641cebe476da"
+  }
+}

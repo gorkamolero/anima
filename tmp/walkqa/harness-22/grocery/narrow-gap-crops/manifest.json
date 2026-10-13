@@ -1,0 +1,34 @@
+{
+  "flagged": [
+    9,
+    10,
+    11,
+    12,
+    19,
+    20
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All images viewed: short toward-left approach truncates near doorway; final diagonal rest visibly bent at knee despite intact feet.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/grocery/narrow-gap-sheet.png": "3fdb05ce1fbfa6467627a18074391e941b0cc0321fc9a0b931adc7264aef8a2b",
+    "tmp/walkqa/harness-22/grocery/narrow-gap-crops/feet-review-000.png": "acd44ebfc0a5f45f7bba00bfa7a106e93799bad4dc91dd5f018175ccd05d07c6",
+    "tmp/walkqa/harness-22/grocery/narrow-gap-crops/stop-review-000.png": "cdee1f79992d762734b11d59c14c3e7b29ebec382d4ec4485a3ee1245234d600"
+  }
+}

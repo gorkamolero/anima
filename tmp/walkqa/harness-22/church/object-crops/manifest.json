@@ -1,0 +1,57 @@
+{
+  "flagged": [
+    10,
+    11,
+    21,
+    22,
+    32,
+    33,
+    43,
+    44,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    75
+  ],
+  "random": [
+    87,
+    19,
+    33,
+    86,
+    81
+  ],
+  "stop": [
+    84,
+    85,
+    86,
+    87,
+    88,
+    89
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All review images viewed: forward then sideways approach has several terminal cycle changes before side rest; boots intact, interaction arrival judged separately.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/church/object-sheet.png": "3b6ae0f1a3dec6888ae3baa4ef180212faed455117c556df66151ed2bc5acc62",
+    "tmp/walkqa/harness-22/church/object-crops/feet-review-000.png": "bae3eda7de31013ea342cf607562db0d9fb5a26aadd744744feb09be8cb6ccdd",
+    "tmp/walkqa/harness-22/church/object-crops/stop-review-000.png": "27648d6116f27f4b8295494d0f83de0c7a942612d8108fff13af12ee8381ab25"
+  }
+}

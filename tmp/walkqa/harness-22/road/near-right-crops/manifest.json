@@ -1,0 +1,27 @@
+{
+  "flagged": [],
+  "random": [
+    23,
+    21,
+    25,
+    24,
+    4
+  ],
+  "stop": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "All sheets viewed: 28-frame stationary capture behind left tree; no requested walk, final stance largely occluded.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/road/near-right-sheet.png": "d5a2d1b77cc45348d63c13bbe66ff659a822832f9443ea46b5d8d6146068a65a",
+    "tmp/walkqa/harness-22/road/near-right-crops/feet-review-000.png": "88459c215b24c8eaba9d3ba499ea0b289e58192a35609c5971f03e6e9cc44b20",
+    "tmp/walkqa/harness-22/road/near-right-crops/stop-review-000.png": "06cf12c39af817b98fe63e2e9919f4df1d4f6952f4ff0e616ea44dcc07dba90f"
+  }
+}

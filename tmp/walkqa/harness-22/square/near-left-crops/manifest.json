@@ -1,0 +1,56 @@
+{
+  "flagged": [
+    8,
+    11,
+    14,
+    16,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    36,
+    37,
+    38,
+    47,
+    48,
+    60,
+    71,
+    72,
+    78,
+    82,
+    83,
+    84,
+    85,
+    86,
+    92
+  ],
+  "random": [
+    115,
+    92,
+    87,
+    100,
+    98
+  ],
+  "stop": [
+    111,
+    112,
+    113,
+    114,
+    115,
+    116
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Viewed whole arc and feet/settle sheets: leftward walk changes away then side then toward-left repeatedly; final body clipped at left screen edge, stationary settle 111-116.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/square/near-left-sheet.png": "698f52dc0afb87f8159979bb239ccb4906af02cffa98445a207a3dea1e71925e",
+    "tmp/walkqa/harness-22/square/near-left-crops/feet-review-000.png": "234cafee9a2d8626c5ff1f79e29397a338f4bf59220eebeb388ceed2ac7522f0",
+    "tmp/walkqa/harness-22/square/near-left-crops/stop-review-000.png": "bef6e3ae460dc677e9b607a21842d39708a64282b1cf2292ba53c7b13e1776ba"
+  }
+}

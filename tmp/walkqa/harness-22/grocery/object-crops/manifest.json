@@ -1,0 +1,50 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    38,
+    39,
+    49,
+    50,
+    51,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65
+  ],
+  "random": [
+    19,
+    33,
+    12,
+    41,
+    73
+  ],
+  "stop": [
+    72,
+    73,
+    74,
+    75,
+    76,
+    77
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Left, toward, left and away runs double back near counter; final bent diagonal pose remains above sacks. Boots intact in inspected frames.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/grocery/object-sheet.png": "bafa67bdc80cd1eff7f2422d6987296e0981a213b22da131bad66dcf7c9816d4",
+    "tmp/walkqa/harness-22/grocery/object-crops/feet-review-000.png": "d107def6b5eed858720a895d08791fe47b92fe9bf203409e1b7acc2474e00edc",
+    "tmp/walkqa/harness-22/grocery/object-crops/stop-review-000.png": "2e7cc0cd6d43eca53fe1f689a8f5728839eb5b421ed760968ae4f576304c39de"
+  }
+}

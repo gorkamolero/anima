@@ -1,0 +1,36 @@
+{
+  "flagged": [
+    10,
+    11,
+    18,
+    19,
+    20,
+    25,
+    26,
+    27
+  ],
+  "random": [
+    9,
+    16,
+    40,
+    6,
+    20
+  ],
+  "stop": [
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": false,
+  "notes": "Short toward-camera walk stays by the left edge instead of traversing right; head and left body are clipped by viewport/HUD.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/pier/near-right-sheet.png": "df20e55a7ac7504572e78fafd89a906ff7d16941ff60c5e889cf5c4b2aa6c0d9",
+    "tmp/walkqa/harness-22/pier/near-right-crops/feet-review-000.png": "93ebc8a81db35e0280e12718c051a26d927e427bb2cc0d04695d20841c6a5e94",
+    "tmp/walkqa/harness-22/pier/near-right-crops/stop-review-000.png": "1678988e2ca9395e89debce96f4825298debe85902ce4053390db303068385da"
+  }
+}

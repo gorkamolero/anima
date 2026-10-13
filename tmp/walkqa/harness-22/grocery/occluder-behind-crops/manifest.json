@@ -1,0 +1,55 @@
+{
+  "flagged": [
+    11,
+    14,
+    16,
+    17,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    32,
+    33,
+    37,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "random": [
+    46,
+    43,
+    50,
+    49,
+    56
+  ],
+  "stop": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56
+  ],
+  "crossings": [],
+  "viewed": true,
+  "pass_": true,
+  "notes": "Left run then away run, stable rear standing pose; all inspected soles intact and no visible occlusion slice.",
+  "reviewedImageHashes": {
+    "tmp/walkqa/harness-22/grocery/occluder-behind-sheet.png": "032c7927854c4472f24669e33ad2d73ed1682c752b4b5e1fa6b8563789a4e299",
+    "tmp/walkqa/harness-22/grocery/occluder-behind-crops/feet-review-000.png": "7e34f09557c3088703e062ac2d6eeb833391a8f8be24e94bce4085ffd94af1a2",
+    "tmp/walkqa/harness-22/grocery/occluder-behind-crops/stop-review-000.png": "e6a1e32237010b02ee6acea06372165acc9a78c12b7cc639cdeaf17d72ad7904"
+  }
+}

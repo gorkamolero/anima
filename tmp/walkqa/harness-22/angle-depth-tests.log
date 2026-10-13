@@ -1,0 +1,56 @@
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+ ❯ packages/engine/src/characters/footstepPlan.test.ts (24 tests | 1 failed) 26ms
+     ✓ snaps a straight stop to a whole stride without correcting backwards 2ms
+     ✓ changes heading only at the L corner 1ms
+     ✓ keeps small bends on one heading 0ms
+     ✓ keeps every stride inside a narrow corridor 0ms
+     ✓ stops one stride early when the final rest sole cannot fit near a wall 0ms
+     ✓ projects an unreachable target before planning 3ms
+   ✓ plans beyond the first safe corner stance before committing a turn 1ms
+   ✓ decomposes 0 degrees at depth 100 without reversals 1ms
+   ✓ decomposes 10 degrees at depth 100 without reversals 2ms
+   ✓ decomposes 22.5 degrees at depth 100 without reversals 3ms
+   ✓ decomposes 30 degrees at depth 100 without reversals 3ms
+   ✓ decomposes 45 degrees at depth 100 without reversals 0ms
+   ✓ decomposes 60 degrees at depth 100 without reversals 1ms
+   ✓ decomposes 80 degrees at depth 100 without reversals 1ms
+   ✓ decomposes 90 degrees at depth 100 without reversals 0ms
+   ✓ decomposes 0 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 10 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 22.5 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 30 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 45 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 60 degrees at depth 600 without reversals 1ms
+   ✓ decomposes 80 degrees at depth 600 without reversals 0ms
+   ✓ decomposes 90 degrees at depth 600 without reversals 0ms
+   × flips the dogleg order when the first corner cuts an obstacle 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/engine/src/characters/footstepPlan.test.ts > flips the dogleg order when the first corner cuts an obstacle
+AssertionError: expected 'toward-right' to be 'right' // Object.is equality
+
+Expected: "right"
+Received: "toward-right"
+
+ ❯ packages/engine/src/characters/footstepPlan.test.ts:205:34
+    203|  });
+    204|  expect(result.distance).toBeLessThan(10);
+    205|  expect(result.steps[0].heading).toBe("right");
+       |                                  ^
+    206|  expect(result.steps.every((s) => safe(s.state))).toBe(true);
+    207|  expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 23 passed (24)
+Type Errors  no errors
+   Start at  00:42:19
+   Duration  466ms (transform 61ms, setup 30ms, import 49ms, tests 26ms, environment 231ms)
+
