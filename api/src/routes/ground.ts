@@ -3,11 +3,8 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { derivationError } from "../services/derivation-errors.js";
 import { labelledFloorObjects } from "../services/floor-judge.js";
-import {
-	deriveGround,
-	failedGround,
-	judgeFloorOverlay,
-} from "../services/ground.js";
+import { footfallProvider } from "../services/footfall-provider.js";
+import { failedGround, judgeFloorOverlay } from "../services/ground.js";
 import { groundMaskReview } from "../services/ground-overlay.js";
 import { repairGround } from "../services/ground-repair.js";
 export const groundRoutes = new Hono();
@@ -27,7 +24,7 @@ groundRoutes.post("/ground", async (c) => {
 	if (!parsed.success) return c.json({ error: "Invalid ground request" }, 400);
 	try {
 		const input = parsed.data;
-		const ground = await deriveGround(
+		const ground = await footfallProvider.deriveGround(
 			input.image,
 			input.template,
 			input.fraction,

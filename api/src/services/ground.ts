@@ -2,79 +2,36 @@ import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import { scaleAt as perspectiveScaleAt } from "@anima/footfall/core/walkarea/perspective";
-import type { WalkArea } from "@anima/footfall/core/walkarea/types";
+import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, PUBLIC } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
-import { calibrateGround, type ScaleReference } from "./ground-calibration.js";
+import { calibrateGround } from "./ground-calibration.js";
 import { safeGroundLine } from "./ground-line.js";
 import {
 	DERIVATION_VERSION,
 	perceiveFloor,
 	proofDirectory,
 } from "./ground-perception.js";
-import { depthRegions } from "./ground-regions.js";
 import {
 	excludeUnscaledStairs,
 	subtractCachedObstacles,
 } from "./ground-repair.js";
 
-export interface Raster {
-	width: number;
-	height: number;
-	data: number[];
-}
-export interface GroundData {
-	scaleReference?: ScaleReference;
-	walkArea?: WalkArea;
-	groundLine: {
-		points: Array<{ x: number; y: number; scaleFactor: number }>;
-		interpolation: "linear";
-		clampToBounds: boolean;
-	};
-	freeWalkBounds: { minX: number; maxX: number; minY: number; maxY: number };
-	freeWalkRanges: Array<{ minX: number; maxX: number }>;
-	floor: Raster;
-	horizonY: number;
-	scaleSlope: number;
-	baseScale: number;
-	ground: "derived" | "inherited" | "failed";
-	reason?: string;
-	walkable?: boolean;
-	travelEnabled?: boolean;
-	regions?: GroundRegion[];
-	overlays?: string[];
-	derivationVersion?: number;
-	verdicts: GroundVerdict[];
-	notes?: string[];
-}
-export interface GroundVerdict {
-	pass: boolean;
-	why: string;
-	question?: string;
-	answer?: string;
-	reason?: string;
-	overlay?: string;
-	attempt?: string;
-	probabilities?: Record<string, number>;
-	questions?: import("./floor-judge.js").FloorQuestions;
-	rejected?: string[];
-	hazardBounds?: number[][];
-}
-/** Regions use game coordinates (1920x1080). Intersect polygon AND mask.
- * scaleAtY is piecewise linear, clamped at endpoints; factors multiply baseScale.
- * Regions override the global perspective only inside their visible mask. */
-export interface GroundRegion {
-	id: string;
-	kind: "floor" | "stairs";
-	polygon: Array<{ x: number; y: number }>;
-	mask: Raster;
-	scaleAtY: Array<{ y: number; scaleFactor: number }>;
-	interpolation: "linear";
-	source: "relative-depth";
-}
+export type {
+	GroundData,
+	GroundRegion,
+	GroundVerdict,
+	Raster,
+} from "@anima/footfall/derive/types";
+
+import type {
+	GroundData,
+	GroundVerdict,
+	Raster,
+} from "@anima/footfall/derive/types";
 export function failedGround(
 	reason: string,
 	candidate?: GroundData,

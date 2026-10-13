@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
+import type { FloorRaster } from "@anima/footfall/derive/exits";
 import { imagePath } from "../lib/backgrounds.js";
-import type { FloorRaster } from "./exits.js";
 import { cachedFloor } from "./occluders.js";
 
 /** Reuse only unchanged pixels of an anchor's segmented floor after a scene

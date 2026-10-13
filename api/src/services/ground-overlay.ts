@@ -1,8 +1,8 @@
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import type { Exit } from "@anima/footfall/derive/exits";
 import { imagePath } from "../lib/backgrounds.js";
-import type { Exit } from "./exits.js";
 import type { GroundData } from "./ground.js";
 import { proofDirectory, proofRoot } from "./ground-perception.js";
 import type { Occluder } from "./occluders.js";

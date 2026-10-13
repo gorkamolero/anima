@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { planFootsteps, type SearchOptions } from "../../phaser/footstepPlan";
 import { findPath } from "../walkarea/navigation";
 import type { Point } from "../walkarea/perspective";
-import { planFootsteps, type SearchOptions } from "./footstepPlan";
 import { GROUND_SECTORS } from "./walkHeading";
 
 type State = Point & { foot: "L" | "R" };

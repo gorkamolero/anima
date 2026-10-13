@@ -10,27 +10,30 @@ import {
 	applySceneFootprints,
 	beginArrival,
 	CharacterMotor,
-	cellPoint,
 	depthForOccluder,
 	type Exit,
-	erode,
 	exitAt,
 	exitForFrame,
 	type FootCycle,
 	findPath,
 	floorPixel,
-	nearestCell,
 	type Occluder,
 	objectApproach,
 	objectAtPoint,
 	objectFacingPoint,
-	refineMask,
 	resolveReturnExit,
 	sceneExitApproaches,
 	type WalkArea,
 	type WalkDirection,
-	walkAreaFromAnchor,
 } from "@anima/footfall";
+import {
+	interiorSpawn,
+	sceneFloor,
+} from "@anima/footfall/core/walkarea/sceneFloor";
+import {
+	type FloorMask,
+	narrativeDeparture as findNarrativeDeparture,
+} from "@anima/footfall/core/walkarea/worldGeometry";
 import { refreshPlacementDebugOverlay } from "@anima/footfall/phaser/debugOverlay";
 import {
 	createOccluderLayers,
@@ -60,11 +63,6 @@ import {
 	type SceneCharacterState,
 	type ScenePoint,
 } from "./standaloneScenes";
-import {
-	clipFloorBelow,
-	type FloorMask,
-	narrativeDeparture as findNarrativeDeparture,
-} from "./worldGeometry";
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
@@ -681,29 +679,9 @@ export class StoryGameScene extends BaseScene {
 		const ground =
 			this.generatedPlace?.ground ??
 			(this.reviewSceneId === "outside" ? exteriorGround : undefined);
-		this.walkArea = ground
-			? {
-					mask: refineMask(ground.floor),
-					perspective: {
-						horizonY: ground.horizonY,
-						slope: ground.scaleSlope,
-						pixelsPerMetre: (ground.baseScale * 1059) / 1.75,
-					},
-					baseScale: ground.baseScale,
-					scaleClamp: ("walkArea" in ground
-						? ground.walkArea?.scaleClamp
-						: undefined) ?? { min: 0.18, max: 1.5 },
-				}
-			: walkAreaFromAnchor(scene, {}, 1080);
-		this.visibleFloor = {
-			...this.walkArea.mask,
-			data: [...this.walkArea.mask.data],
-		};
-		this.walkArea.rawMask = this.visibleFloor;
-		this.walkArea.mask = clipFloorBelow(
-			erode(this.walkArea.mask, this.walkArea.perspective),
-			MAX_FEET_Y,
-		);
+		const floor = sceneFloor(ground, scene, MAX_FEET_Y);
+		this.walkArea = floor.area;
+		this.visibleFloor = floor.visible;
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
 			const { cycle, current, show } = spriteFootBinding(
@@ -1209,20 +1187,12 @@ export class StoryGameScene extends BaseScene {
 			const spawnMask = approachMask?.data.some(Boolean)
 				? approachMask
 				: exitMask;
-			const safe = {
-				...spawnMask,
-				data: spawnMask.data.map((value, i) => {
-					if (!value) return 0;
-					const p = cellPoint(spawnMask, i);
-					return this.sceneExits.some((e) =>
-						e.region.some((q) => Math.hypot(p.x - q.x, p.y - q.y) < 60),
-					)
-						? 0
-						: 1;
-				}),
-			};
-			const cell = nearestCell(safe, this.hermesSprite);
-			if (cell >= 0) this.hermesMotor.place(cellPoint(safe, cell));
+			const point = interiorSpawn(
+				spawnMask,
+				this.sceneExits,
+				this.hermesSprite,
+			);
+			if (point) this.hermesMotor.place(point);
 		}
 		this.exitLatch = this.hermesSprite
 			? exitAt(this.hermesSprite, this.sceneExits)?.id

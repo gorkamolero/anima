@@ -1,6 +1,7 @@
-import type { Exit, FloorMask } from "@anima/footfall";
+import type { Exit } from "../occlusion/exits";
+import type { FloorMask } from "./types";
 
-export type { FloorMask } from "@anima/engine";
+export type { FloorMask } from "./types";
 
 /** Narrative travel must not rebind an exit already leading somewhere else. */
 export function narrativeDeparture(

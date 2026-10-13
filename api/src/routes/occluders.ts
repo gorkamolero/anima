@@ -6,7 +6,8 @@ import {
 import type { Perspective } from "@anima/footfall/core/walkarea/perspective";
 import { Hono } from "hono";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
-import { cachedFloor, deriveOccluders } from "../services/occluders.js";
+import { footfallProvider } from "../services/footfall-provider.js";
+import { cachedFloor } from "../services/occluders.js";
 import { unchangedAnchorFloor } from "../services/variant-floor.js";
 import { getPlace } from "./places.js";
 export const occludersRoutes = new Hono();
@@ -72,7 +73,7 @@ occludersRoutes.get("/occluders/:imageKey", async (c) => {
 						),
 					),
 				}
-			: await deriveOccluders(
+			: await footfallProvider.deriveOccluders(
 					image,
 					(place
 						? { ...place.ground, template: place.template }

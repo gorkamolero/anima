@@ -1,11 +1,8 @@
 // @vitest-environment node
 
 import { exitAt } from "@anima/footfall/core/occlusion/exits";
+import { deriveExits, type FloorRaster } from "@anima/footfall/derive/exits";
 import { describe, expect, it } from "vitest";
-import {
-	deriveExits,
-	type FloorRaster,
-} from "../../../../api/src/services/exits.js";
 import {
 	canOcclude,
 	largestComponent,

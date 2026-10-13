@@ -1,6 +1,6 @@
 import type { Exit } from "@anima/footfall";
 import { describe, expect, it } from "vitest";
-import { narrativeDeparture } from "../src/game/scenes/worldGeometry";
+import { narrativeDeparture } from "./worldGeometry";
 
 describe("narrative travel preserves physical connections", () => {
 	const far: Exit = {

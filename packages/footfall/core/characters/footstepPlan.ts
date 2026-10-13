@@ -140,9 +140,9 @@ export function planFootsteps<State, Pose>(
 	target: Point,
 	initial: State,
 	sim: StepSimulation<State, Pose>,
-	options: SearchOptions = {},
+	options: SearchOptions & { now: () => number },
 ) {
-	const now = options.now ?? (() => performance.now());
+	const now = options.now;
 	const started = now();
 	const ground = sim.ground ?? ((p: Point) => p);
 	const goal = ground(target);

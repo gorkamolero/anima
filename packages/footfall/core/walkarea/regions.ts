@@ -1,4 +1,4 @@
-import type { GroundRegion, Raster } from "./ground.js";
+import type { GroundRegion, Raster } from "../../derive/types";
 
 /** Local depth samples, not a fitted global plane. Rectangles only index the
  * regions: the full-resolution floor intersection in mask defines membership. */

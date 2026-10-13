@@ -1,20 +1,10 @@
-// Wire contract mirrors the engine occlusion module without importing unexported source.
-export interface Point {
-	x: number;
-	y: number;
-}
-export interface Exit {
-	id: string;
-	kind: "edge-left" | "edge-right" | "far" | "near" | "door";
-	region: Point[];
-	label?: string;
-	to?: string;
-}
-export interface FloorRaster {
-	width: number;
-	height: number;
-	data: number[];
-}
+import type { Exit } from "../core/occlusion/exits";
+import type { Point } from "../core/walkarea/perspective";
+import type { FloorMask as FloorRaster } from "../core/walkarea/types";
+
+export type { Exit } from "../core/occlusion/exits";
+export type { Point } from "../core/walkarea/perspective";
+export type { FloorMask as FloorRaster } from "../core/walkarea/types";
 export interface LabelledBox {
 	name: string;
 	bounds: number[];

@@ -8,10 +8,9 @@ import {
 	type FootPose,
 	lockedPlacement,
 } from "../core/characters/footLock";
-import {
-	type PlannedStep,
-	planFootsteps,
-	type SearchOptions,
+import type {
+	PlannedStep,
+	SearchOptions,
 } from "../core/characters/footstepPlan";
 import { stanceSweep } from "../core/characters/stanceSweep";
 import { stanceFrameMs } from "../core/characters/stanceTiming";
@@ -25,6 +24,7 @@ import {
 import { cellAt, cellPoint, nearestCell } from "../core/walkarea/navigation";
 import { type Point, scaleAt, toMetres } from "../core/walkarea/perspective";
 import type { WalkArea } from "../core/walkarea/types";
+import { planFootsteps } from "./footstepPlan";
 
 export interface MotorTarget extends Point {
 	motor?: CharacterMotor;

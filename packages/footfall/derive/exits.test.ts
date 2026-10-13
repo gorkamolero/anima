@@ -1,6 +1,7 @@
 // @vitest-environment node
+
+import { deriveExits } from "@anima/footfall/derive/exits";
 import { expect, it } from "vitest";
-import { deriveExits } from "../../services/exits.js";
 
 it("does not infer onward travel into the closed end of an interior aisle", () => {
 	const floor = {

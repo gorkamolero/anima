@@ -1,6 +1,7 @@
 // @vitest-environment node
+
+import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { describe, expect, it } from "vitest";
-import { depthRegions } from "../../services/ground-regions.js";
 
 describe("local depth scale regions", () => {
 	it("allows different scale at the same screen height and never invents floor membership", () => {

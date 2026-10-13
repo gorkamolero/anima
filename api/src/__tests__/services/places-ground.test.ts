@@ -271,7 +271,10 @@ it("installs an explicit reviewer replacement while preserving judge disagreemen
 	const review = {
 		approvedBy: "reviewer" as const,
 		date: "2026-10-12",
-		overlay: new URL("./exits.test.ts", import.meta.url).pathname,
+		overlay: new URL(
+			"../../../../packages/footfall/derive/exits.test.ts",
+			import.meta.url,
+		).pathname,
 		judgeDisagreement: candidate.ground.verdicts,
 	};
 	await expect(

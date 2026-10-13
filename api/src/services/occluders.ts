@@ -8,33 +8,22 @@ import {
 	classifyOccluder,
 } from "@anima/footfall/core/occlusion/occlusion";
 import type { Perspective } from "@anima/footfall/core/walkarea/perspective";
-import { fal } from "@fal-ai/client";
-import { imagePath, ROOT } from "../lib/backgrounds.js";
-import { interactablesSchema } from "../routes/interactables.js";
 import {
 	deriveExits,
 	type FloorRaster,
 	floorAt,
 	type LabelledBox,
 	type Point,
-} from "./exits.js";
+} from "@anima/footfall/derive/exits";
+import { fal } from "@fal-ai/client";
+import { imagePath, ROOT } from "../lib/backgrounds.js";
+import { interactablesSchema } from "../routes/interactables.js";
 import { DERIVATION_VERSION } from "./ground-perception.js";
 
-export interface Occluder {
-	id: string;
-	label: string;
-	bbox: { x: number; y: number; w: number; h: number };
-	baseline: Point[];
-	png: string;
-	floorDecal?: boolean;
-	obstacle?: boolean;
-	heightMetres?: number;
-	maskCoverage?: {
-		referencePixels: number;
-		retainedPixels: number;
-		fraction: number;
-	};
-}
+export type { DerivedOccluder as Occluder } from "@anima/footfall/derive/types";
+
+import type { DerivedOccluder as Occluder } from "@anima/footfall/derive/types";
+
 const MODEL = "fal-ai/sam2/image";
 const VERSION = 22;
 const cacheRoot = resolve(ROOT, "api/data/perception");

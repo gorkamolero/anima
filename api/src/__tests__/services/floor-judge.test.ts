@@ -1,8 +1,9 @@
 // @vitest-environment node
+
+import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { describe, expect, it } from "vitest";
 import { floorQuestions, floorVerdict } from "../../services/floor-judge.js";
 import { maskToGround } from "../../services/ground.js";
-import { depthRegions } from "../../services/ground-regions.js";
 import {
 	excludeUnscaledStairs,
 	repairGround,

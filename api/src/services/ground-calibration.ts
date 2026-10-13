@@ -11,7 +11,9 @@ export const scaleReferenceSchema = z.object({
 	}),
 	realHeightM: z.number().positive(),
 });
-export type ScaleReference = z.infer<typeof scaleReferenceSchema>;
+export type { ScaleReference } from "@anima/footfall/derive/types";
+
+import type { ScaleReference } from "@anima/footfall/derive/types";
 
 export function calibrateGround(guidance: {
 	horizonY: number;

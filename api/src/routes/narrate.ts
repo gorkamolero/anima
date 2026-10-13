@@ -1,10 +1,10 @@
+import { deriveExits } from "@anima/footfall/derive/exits";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
 import { getModel } from "../lib/model.js";
 import { narrationCacheInput } from "../lib/narrationCacheInput.js";
 import { recordCall } from "../services/costs.js";
-import { deriveExits } from "../services/exits.js";
 
 import {
 	getWorldDb,

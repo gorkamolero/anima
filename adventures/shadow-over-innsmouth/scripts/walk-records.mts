@@ -6,19 +6,16 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { classifyOccluder } from "@anima/footfall/core/occlusion/occlusion";
-import { walkAreaFromAnchor } from "@anima/footfall/core/walkarea/anchor";
-import { erode, refineMask } from "@anima/footfall/core/walkarea/navigation";
+import { sceneFloor } from "@anima/footfall/core/walkarea/sceneFloor";
 import {
 	applySceneFootprints,
 	sceneExitApproaches,
 } from "@anima/footfall/core/walkarea/sceneGeometry";
-import type { WalkArea } from "@anima/footfall/core/walkarea/types";
+import { deriveExits } from "@anima/footfall/derive/exits";
 import { narrationCacheInput } from "../../../api/src/lib/narrationCacheInput.ts";
-import { deriveExits } from "../../../api/src/services/exits.ts";
 
 const require = createRequire(import.meta.url);
 const { REVIEW_SCENES } = require("../src/game/scenes/standaloneScenes.ts");
-const { clipFloorBelow } = require("../src/game/scenes/worldGeometry.ts");
 const json = (p: string) => JSON.parse(readFileSync(p, "utf8"));
 const stored = JSON.parse(
 	execFileSync(
@@ -61,21 +58,7 @@ export function loadWalkRecords(location: string) {
 			);
 		floor = json(`api/data/perception/${names[0] ?? `${hash}.json`}`).mask;
 	}
-	const area: WalkArea = ground
-		? {
-				mask: refineMask(ground.floor),
-				perspective: {
-					horizonY: ground.horizonY,
-					slope: ground.scaleSlope,
-					pixelsPerMetre: (ground.baseScale * 1059) / 1.75,
-				},
-				baseScale: ground.baseScale,
-				scaleClamp: ground.walkArea?.scaleClamp ?? { min: 0.18, max: 1.5 },
-			}
-		: walkAreaFromAnchor(authored, {}, 1080);
-	const visible = { ...area.mask, data: [...area.mask.data] };
-	area.rawMask = visible;
-	area.mask = clipFloorBelow(erode(area.mask, area.perspective), 1064);
+	const { area, visible } = sceneFloor(ground, authored, 1064);
 	const perspective =
 		ground?.walkArea?.perspective ??
 		(ground

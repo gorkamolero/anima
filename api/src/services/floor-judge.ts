@@ -9,18 +9,13 @@ import { getModel } from "../lib/model.js";
 import type { GroundData, GroundVerdict } from "./ground.js";
 
 export const FALSE_WALKABLE_THRESHOLD = 0.6;
-export interface FloorObject {
-	name: string;
-	bounds: number[];
-}
-export interface FloorQuestion {
-	type: "noul" | "score";
-	instructions: string;
-	criteria: Record<string, string> | string[];
-	bounds?: number[];
-	advisory?: boolean;
-}
-export type FloorQuestions = Record<string, FloorQuestion>;
+export type {
+	FloorObject,
+	FloorQuestion,
+	FloorQuestions,
+} from "@anima/footfall/derive/types";
+
+import type { FloorObject, FloorQuestions } from "@anima/footfall/derive/types";
 export function floorQuestions(
 	objects: FloorObject[],
 	ground?: GroundData,

@@ -6,11 +6,16 @@
 	"types": "./index.ts",
 	"exports": {
 		".": "./index.ts",
-		"./*": "./*.ts"
+		"./*": "./*.ts",
+		"./core": "./core/index.ts",
+		"./phaser": "./phaser/index.ts",
+		"./derive": "./derive/index.ts",
+		"./sim": "./sim/index.ts",
+		"./qa": "./qa/index.ts"
 	},
 	"scripts": {
 		"test": "vitest run --root ../.. packages/footfall",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.core.json",
 		"lint": "biome check ."
 	},
 	"peerDependencies": {
