@@ -17,7 +17,6 @@ import {
 	exitAt,
 	exitForFrame,
 	type FootCycle,
-	type FootPose,
 	findPath,
 	floorPixel,
 	nearestCell,
@@ -27,12 +26,17 @@ import {
 	objectFacingPoint,
 	refineMask,
 	resolveReturnExit,
-	scaleAt,
 	sceneExitApproaches,
 	type WalkArea,
 	type WalkDirection,
 	walkAreaFromAnchor,
 } from "@anima/footfall";
+import { refreshPlacementDebugOverlay } from "@anima/footfall/phaser/debugOverlay";
+import {
+	createOccluderLayers,
+	loadOccluderImages,
+} from "@anima/footfall/phaser/occluderLayers";
+import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
 import {
 	parseStoryScript,
 	StoryRuntime,
@@ -702,21 +706,11 @@ export class StoryGameScene extends BaseScene {
 		);
 		if (this.hermesSprite) {
 			this.hermesMotor?.detach();
-			const cycle = (texture: string) => {
-				const data = this.cache.json.get(`${texture}-meta`) as FootCycle;
-				if (!data?.contacts)
-					throw new Error(`Missing sole contacts: ${texture}`);
-				return { ...data, name: texture };
-			};
-			const show = (pose: FootPose) => {
-				const sprite = this.hermesSprite;
-				if (!sprite) return;
-				sprite.anims.stop();
-				sprite
-					.setTexture(pose.cycle.name, pose.frame)
-					.setOrigin(0.5, 1)
-					.setFlipX(pose.flipX);
-			};
+			const { cycle, current, show } = spriteFootBinding(
+				() => this.hermesSprite,
+				(texture) => this.cache.json.get(`${texture}-meta`),
+				"Hermes unavailable",
+			);
 			this.hermesMotor = new CharacterMotor(
 				this.hermesSprite,
 				this.walkArea,
@@ -726,19 +720,7 @@ export class StoryGameScene extends BaseScene {
 					this.hermesFacing = heading.endsWith("right") ? 1 : -1;
 					this.hermesSprite?.anims.stop();
 				},
-				hermesFootAnimation(
-					cycle,
-					() => {
-						const sprite = this.hermesSprite;
-						if (!sprite) throw new Error("Hermes unavailable");
-						return {
-							cycle: cycle(sprite.texture.key),
-							frame: Number(sprite.frame.name),
-							flipX: sprite.flipX,
-						};
-					},
-					show,
-				),
+				hermesFootAnimation(cycle, current, show),
 			);
 		}
 		this.setSceneBackground(
@@ -785,68 +767,23 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private refreshPlacementDebugOverlay(): void {
-		const graphics = this.placementDebugGraphics;
-		if (!graphics) return;
-		graphics.clear();
-		this.clearPlacementDebugLabels();
-		if (!this.placementDebugEnabled || !this.reviewSceneId) return;
-
-		const scene = this.activeScene();
-		const points = scene.groundLine.points;
-		graphics.lineStyle(2, 0xff66dd, 0.9);
-		for (const exit of this.sceneExits) {
-			graphics.strokePoints(exit.region, true);
-			if (exit.region[0])
-				this.addPlacementDebugLabel(
-					exit.region[0].x,
-					exit.region[0].y,
-					exit.id,
-					"#ff66dd",
-				);
-		}
-		for (const layer of this.objectLayers)
-			graphics.strokePoints(layer.data.baseline, false);
-		if (points.length > 1) {
-			graphics.lineStyle(3, 0x4de8ff, 0.88);
-			graphics.beginPath();
-			graphics.moveTo(points[0].x, points[0].y);
-			for (const point of points.slice(1)) graphics.lineTo(point.x, point.y);
-			graphics.strokePath();
-		}
-
-		for (const point of points) {
-			graphics.fillStyle(0xffd166, 0.94);
-			graphics.fillCircle(point.x, point.y, 7);
-			graphics.lineStyle(2, 0x111111, 0.82);
-			graphics.strokeCircle(point.x, point.y, 7);
-			this.addPlacementDebugLabel(
-				point.x + 10,
-				point.y - 28,
-				`${point.x},${point.y} x${(point.scaleFactor ?? 1).toFixed(3)}`,
-				"#ffe7a3",
-			);
-		}
-
-		const hermes = this.hermesSprite;
-		if (hermes?.visible) {
-			const bounds = hermes.getBounds();
-			graphics.lineStyle(2, 0x7cff80, 0.92);
-			graphics.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
-			graphics.lineStyle(2, 0xff4d6d, 0.92);
-			graphics.lineBetween(hermes.x - 22, hermes.y, hermes.x + 22, hermes.y);
-			graphics.lineBetween(hermes.x, hermes.y - 22, hermes.x, hermes.y + 22);
-			this.addPlacementDebugLabel(
-				Math.min(hermes.x + 18, this.scale.width - 280),
-				Math.max(bounds.y + 8, TITLE_BAR_HEIGHT + 8),
-				[
-					`Hermes ${Math.round(hermes.x)},${Math.round(hermes.y)}`,
-					`scale ${hermes.scaleX.toFixed(4)} base ${hermes.getBaseScale().toFixed(3)}`,
-					`h ${Math.round(hermes.displayHeight)} ${this.hermesMotionState}`,
-					`anim ${hermes.anims.currentAnim?.key ?? "none"}`,
-				].join("\n"),
-				"#b9ffbf",
-			);
-		}
+		refreshPlacementDebugOverlay(
+			{
+				placementDebugGraphics: this.placementDebugGraphics,
+				placementDebugEnabled: this.placementDebugEnabled,
+				reviewSceneId: this.reviewSceneId,
+				activeScene: () => this.activeScene(),
+				clearPlacementDebugLabels: () => this.clearPlacementDebugLabels(),
+				addPlacementDebugLabel: (x, y, text, color) =>
+					this.addPlacementDebugLabel(x, y, text, color),
+				sceneExits: this.sceneExits,
+				objectLayers: this.objectLayers,
+				hermesSprite: this.hermesSprite,
+				hermesMotionState: this.hermesMotionState,
+				scale: this.scale,
+			},
+			TITLE_BAR_HEIGHT,
+		);
 	}
 
 	private renderSceneHotspots(scene: ReviewScene): void {
@@ -1231,71 +1168,11 @@ export class StoryGameScene extends BaseScene {
 		const base =
 			this.currentImage ??
 			`${window.location.origin}/backgrounds/${this.reviewSceneId === "outside" ? "bus-station-flat-v1" : "arkham-bus-depot-flat-2d"}.png`;
-		const loaded = await Promise.all(
-			data.occluders.map(async (object) => {
-				const url = new URL(object.png, base).href;
-				const img = new Image();
-				img.crossOrigin = "anonymous";
-				await new Promise<void>((resolve, reject) => {
-					img.onload = () => resolve();
-					img.onerror = () =>
-						reject(new Error(`Occluder image failed: ${object.id}`));
-					img.src = url;
-				});
-				const canvas = document.createElement("canvas");
-				canvas.width = img.width;
-				canvas.height = img.height;
-				const context = canvas.getContext("2d");
-				if (!context) throw new Error("No mask context");
-				context.drawImage(img, 0, 0);
-				const pixels = context.getImageData(0, 0, img.width, img.height).data;
-				const alpha = (x: number, y: number) => {
-					const cx = Math.floor(
-							((x - object.bbox.x) * img.width) / object.bbox.w,
-						),
-						cy = Math.floor(((y - object.bbox.y) * img.height) / object.bbox.h);
-					return (
-						cx >= 0 &&
-						cy >= 0 &&
-						cx < img.width &&
-						cy < img.height &&
-						pixels[(cy * img.width + cx) * 4 + 3] > 127
-					);
-				};
-				return { object, url, img, alpha };
-			}),
-		);
+		const loaded = await loadOccluderImages(data.occluders, base);
 		if (generation !== this.geometryGeneration) return;
 		for (const layer of this.objectLayers) layer.image.destroy();
 		this.objectLayers = [];
-		const layerArea = this.walkArea;
-		for (const { object, url, img, alpha } of loaded) {
-			const canOverlap =
-				!layerArea ||
-				layerArea.mask.data.some((v, i) => {
-					if (!v) return false;
-					const p = cellPoint(layerArea.mask, i);
-					const scale =
-						layerArea.baseScale *
-						scaleAt(layerArea.perspective, p, layerArea.scaleClamp);
-					return (
-						p.y >= object.bbox.y &&
-						p.y - 1059 * scale <= object.bbox.y + object.bbox.h &&
-						p.x + 306 * scale >= object.bbox.x &&
-						p.x - 306 * scale <= object.bbox.x + object.bbox.w
-					);
-				});
-			if (!this.textures.exists(url)) this.textures.addImage(url, img);
-			this.objectLayers.push({
-				data: object,
-				alpha,
-				image: this.add
-					.image(object.bbox.x, object.bbox.y, url)
-					.setOrigin(0)
-					.setDisplaySize(object.bbox.w, object.bbox.h)
-					.setVisible(canOverlap),
-			});
-		}
+		this.objectLayers = createOccluderLayers(this, this.walkArea, loaded);
 		if (this.visibleFloor && this.walkArea) {
 			applySceneFootprints(
 				this.walkArea,
