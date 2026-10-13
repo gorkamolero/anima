@@ -1,7 +1,7 @@
 import {
 	applySceneFootprints,
 	BaseScene,
-	baselineYAt,
+	beginArrival,
 	Character,
 	type CharacterAnimationState,
 	type CharacterAnimConfig,
@@ -11,7 +11,7 @@ import {
 	type Exit,
 	erode,
 	exitAt,
-	exitAtArrival,
+	exitForFrame,
 	type FootCycle,
 	type FootPose,
 	findPath,
@@ -19,8 +19,10 @@ import {
 	type HotspotVerb,
 	nearestCell,
 	type Occluder,
-	passageArrival,
+	objectApproach,
+	objectFacingPoint,
 	refineMask,
+	resolveReturnExit,
 	type SceneConfig,
 	scaleAt,
 	sceneExitApproaches,
@@ -545,11 +547,6 @@ export class StoryGameScene extends BaseScene {
 	override update(_time: number, delta: number): void {
 		super.update(_time, delta);
 		const wasWalking = this.hermesMotor?.walking;
-		// A matched sprite cut can move its origin across an edge while the
-		// planted sole stays inside. Travel follows the physical floor contact.
-		const previousExit = this.hermesSprite
-			? exitAt(this.hermesMotor?.anchor ?? this.hermesSprite, this.sceneExits)
-			: undefined;
 		this.hermesMotor?.update(delta);
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
@@ -565,31 +562,22 @@ export class StoryGameScene extends BaseScene {
 			// Scene update follows Phaser's normal pre-update depth sort. Flush
 			// changed baselines now so this captured frame uses its own order.
 			this.children.depthSort();
-			const exit =
-				exitAt(
-					this.hermesMotor?.anchor ?? this.hermesSprite,
-					this.sceneExits,
-				) ??
-				exitAtArrival(
-					this.hermesMotor?.anchor ?? this.hermesSprite,
-					this.requestedExit,
-					this.hermesMotor?.snapshot().arrival,
-					this.sceneExits,
-				);
-			if (!exit) this.exitLatch = undefined;
-			if (
-				exit &&
-				exit.id !== this.exitLatch &&
-				this.requestedExit === exit.id &&
-				(previousExit?.id !== exit.id || this.requestedExit === exit.id) &&
-				wasWalking &&
-				!this.approachingObject &&
-				!this.arrivingExit &&
-				!this.openWorldBusy
-			) {
-				this.exitLatch = exit.id;
+			const state = exitForFrame({
+				anchor: this.hermesMotor?.anchor ?? this.hermesSprite,
+				exits: this.sceneExits,
+				requested: this.requestedExit,
+				latch: this.exitLatch,
+				arrival: this.hermesMotor?.snapshot().arrival,
+				wasWalking: !!wasWalking,
+				approachingObject: this.approachingObject,
+				arriving: this.arrivingExit,
+				busy: this.openWorldBusy,
+			});
+			this.exitLatch = state.latch;
+			if (state.trigger) {
+				this.exitLatch = state.trigger.id;
 				this.hermesMotor?.stop();
-				void this.triggerExit(exit);
+				void this.triggerExit(state.trigger);
 			}
 		}
 		this.updateReviewHotspotHover();
@@ -1324,10 +1312,8 @@ export class StoryGameScene extends BaseScene {
 				MAX_FEET_Y,
 				this.katSeatedSprite,
 			);
-			this.visibleFloor = {
-				...this.walkArea.rawMask!,
-				data: [...this.walkArea.rawMask!.data],
-			};
+			const raw = this.walkArea.rawMask ?? this.walkArea.mask;
+			this.visibleFloor = { ...raw, data: [...raw.data] };
 		}
 		this.sceneExits = data.exits;
 		const connectionResponse = await fetch(
@@ -1336,10 +1322,11 @@ export class StoryGameScene extends BaseScene {
 		if (!connectionResponse.ok)
 			throw new Error("Unable to load exit connections");
 		this.connections = await connectionResponse.json();
+		if (!this.walkArea) throw new Error("Walk area unavailable");
 		const { exits, exitMask, approachMask } = sceneExitApproaches(
 			this.sceneExits,
 			this.connections,
-			this.walkArea!,
+			this.walkArea,
 			!this.generatedPlace ? this.activeScene().hotspots : undefined,
 			MAX_FEET_Y,
 		);
@@ -1374,33 +1361,15 @@ export class StoryGameScene extends BaseScene {
 		object: SceneInteractable,
 		x: number,
 	): Promise<void> {
-		const layer = this.objectLayers.find(
-			(l) => l.data.label.toLowerCase() === object.name.toLowerCase(),
-		);
 		const generation = this.geometryGeneration;
-		const y = layer
-			? baselineYAt(layer.data, x) + 5
-			: object.bounds[3] * 1080 + 5;
-		const mask = this.walkArea?.mask;
-		if (!mask) return;
-		const candidates = mask.data
-			.flatMap((v, i) => (v ? [cellPoint(mask, i)] : []))
-			.filter((p) => !layer || p.y >= baselineYAt(layer.data, p.x));
-		candidates.sort(
-			(a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
+		if (!this.walkArea || !this.hermesSprite) return;
+		const path = objectApproach(
+			this.walkArea,
+			this.hermesSprite,
+			this.objectLayers.map((l) => l.data),
+			object,
+			x,
 		);
-		let path: ScenePoint[] = [];
-		for (const point of candidates.slice(0, 128)) {
-			const candidate = this.previewWalk(point.x, point.y);
-			const end = candidate[candidate.length - 1];
-			if (end && Math.hypot(end.x - point.x, end.y - point.y) < 1) {
-				path = candidate;
-				break;
-			}
-		}
-		// A foreground object can have no floor beyond its baseline. Still walk
-		// to the nearest reachable edge instead of dropping the click entirely.
-		if (!path.length) path = this.previewWalk(x, y);
 		if (!path.length) {
 			this.emitOpenWorldState({
 				status: "error",
@@ -1424,42 +1393,13 @@ export class StoryGameScene extends BaseScene {
 	}): Promise<void> {
 		if (!this.hermesMotor || !this.walkArea)
 			throw new Error("Arrival floor unavailable");
-		const existing = this.connections.find(
-			(c) => c.to === travel.from && c.entry === travel.exit.id,
+		const { existing, entry, kind } = resolveReturnExit(
+			this.walkArea,
+			this.sceneExits,
+			this.connections,
+			travel,
+			MAX_FEET_Y,
 		);
-		const kind: Exit["kind"] =
-			travel.exit.kind === "edge-left"
-				? "edge-right"
-				: travel.exit.kind === "edge-right"
-					? "edge-left"
-					: travel.exit.kind === "far"
-						? "near"
-						: travel.exit.kind === "near"
-							? "far"
-							: "door";
-		let entry =
-			this.sceneExits.find((e) => e.id === existing?.exit) ??
-			this.sceneExits.find(
-				(e) => e.kind === kind && (!e.to || e.to === travel.from),
-			);
-		if (!entry && kind === "near") {
-			const cell = nearestCell(this.walkArea.mask, { x: 960, y: MAX_FEET_Y });
-			const p = cellPoint(this.walkArea.mask, cell);
-			entry = {
-				id: "near",
-				kind: "near",
-				approach: p,
-				region: [
-					{ x: p.x - 12, y: p.y - 8 },
-					{ x: p.x + 12, y: p.y - 8 },
-					{ x: p.x + 12, y: p.y + 8 },
-					{ x: p.x - 12, y: p.y + 8 },
-				],
-			};
-			this.sceneExits.push(entry);
-		}
-		if (!entry)
-			throw new Error(`No physical ${kind} return exit in destination`);
 		if (!existing) {
 			const response = await fetch(`${API_BASE_URL}/connections`, {
 				method: "POST",
@@ -1479,71 +1419,14 @@ export class StoryGameScene extends BaseScene {
 				);
 		}
 		entry.to = travel.from;
-		const point = entry.approach
-			? { ...entry.approach }
-			: {
-					x: entry.region.reduce((n, p) => n + p.x, 0) / entry.region.length,
-					y: entry.region.reduce((n, p) => n + p.y, 0) / entry.region.length,
-				};
-		// Side arrivals put the planted sole on the literal image boundary,
-		// facing inward. A rest pose's sprite origin can leave that sole off-floor.
-		const edge = kind === "edge-left" || kind === "edge-right";
-		if (edge) {
-			const mask = this.walkArea.clearanceMask ?? this.walkArea.mask;
-			const column = kind === "edge-left" ? 0 : mask.width - 1;
-			const boundary = Array.from(
-				{ length: mask.height },
-				(_, row) => row * mask.width + column,
-			)
-				.filter((i) => mask.data[i])
-				.sort(
-					(a, b) =>
-						Math.abs(cellPoint(mask, a).y - point.y) -
-						Math.abs(cellPoint(mask, b).y - point.y),
-				);
-			if (!boundary.length)
-				throw new Error("No walkable image boundary for edge arrival");
-			point.y = cellPoint(mask, boundary[0]).y;
-			point.x = kind === "edge-left" ? 0 : 1919.999;
-			this.hermesSprite
-				?.setTexture(HERMES_IDLE_TEXTURE, 0)
-				.setFlipX(kind === "edge-left");
-		}
-		if (kind === "near" || kind === "far") {
-			Object.assign(
-				point,
-				passageArrival(this.walkArea, point, kind, MAX_FEET_Y),
-			);
-			this.hermesSprite
-				?.setTexture(
-					kind === "far" ? "hermes-walk-toward" : "hermes-walk-away",
-					0,
-				)
-				.setFlipX(false);
-		}
-		this.hermesMotor.heading =
-			kind === "near"
-				? "away"
-				: kind === "far"
-					? "toward"
-					: kind === "edge-left"
-						? "right"
-						: kind === "edge-right"
-							? "left"
-							: "toward";
-		if (edge || kind === "near" || kind === "far")
-			this.hermesMotor.placeContact(point);
-		else this.hermesMotor.place(point, !edge);
+		const path = beginArrival(
+			this.hermesMotor,
+			this.walkArea,
+			entry,
+			kind,
+			MAX_FEET_Y,
+		);
 		this.exitLatch = entry.id;
-		const desired = {
-			x:
-				point.x +
-				(kind === "edge-left" ? 400 : kind === "edge-right" ? -400 : 0),
-			y:
-				point.y +
-				(edge ? 80 : kind === "near" ? -80 : kind === "far" ? 65 : 100),
-		};
-		const path = this.previewWalk(desired.x, desired.y);
 		// A walk-in can cross another nearby gate (the depot door beside its
 		// right edge). Do not chain a second journey during the arrival itself.
 		this.arrivingExit = true;
@@ -1626,8 +1509,7 @@ export class StoryGameScene extends BaseScene {
 		this.openWorldBusy = true;
 		this.selectedInteractable = interactable;
 		if (this.hermesMotor) {
-			const b = interactable.bounds;
-			this.hermesMotor.facePoint({ x: (b[0] + b[2]) * 960, y: b[3] * 1080 });
+			this.hermesMotor.facePoint(objectFacingPoint(interactable));
 		}
 		this.emitOpenWorldState({ status: "loading", object: interactable.name });
 		try {

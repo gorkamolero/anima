@@ -6,6 +6,7 @@ import {
 	type LandmarksFile,
 	verifySceneArt,
 } from "../verification/ArtLandmarks";
+import { captureSteps } from "./captureClock";
 
 /**
  * Snapshot of everything an agent needs to reason about a running scene.
@@ -303,10 +304,10 @@ export function installAgentDebug(scene: BaseScene): void {
 		// Exact elapsed time, subdivided only for simulation stability.
 		game.loop.smoothStep = false;
 		virtualTime = Math.max(virtualTime, game.loop.lastTime);
-		const frames = Math.max(1, Math.ceil(ms / (1000 / 60)));
-		for (let i = 0; i < frames; i++) {
-			virtualTime += ms / frames;
-			if (i === frames - 1) beforeFinalFrame?.();
+		const steps = captureSteps(ms);
+		for (let i = 0; i < steps.length; i++) {
+			virtualTime += steps[i];
+			if (i === steps.length - 1) beforeFinalFrame?.();
 			game.loop.step(virtualTime);
 		}
 	};

@@ -66,3 +66,33 @@ export function exitAtArrival(
 	const exit = exitAt(arrival.target, exits);
 	return exit?.id === requestedId ? exit : undefined;
 }
+
+/** Scene-level exit guard shared by the game and offline runtime. */
+export function exitForFrame(state: {
+	anchor: Point;
+	exits: readonly Exit[];
+	requested?: string;
+	latch?: string;
+	arrival?: { target: Point; halfStride: number };
+	wasWalking: boolean;
+	approachingObject: boolean;
+	arriving: boolean;
+	busy: boolean;
+}) {
+	const exit =
+		exitAt(state.anchor, state.exits) ??
+		exitAtArrival(state.anchor, state.requested, state.arrival, state.exits);
+	return {
+		latch: exit ? state.latch : undefined,
+		trigger:
+			exit &&
+			exit.id !== state.latch &&
+			state.requested === exit.id &&
+			state.wasWalking &&
+			!state.approachingObject &&
+			!state.arriving &&
+			!state.busy
+				? exit
+				: undefined,
+	};
+}

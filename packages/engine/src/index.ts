@@ -89,10 +89,14 @@ export type {
 // Inventory
 export * as inventory from "./inventory";
 export { InventoryManager } from "./inventory";
-export { passageArrival } from "./occlusion/arrivals";
+export {
+	beginArrival,
+	passageArrival,
+	resolveReturnExit,
+} from "./occlusion/arrivals";
 export { bridgeFloor, bridgeOccluders, floorPixel } from "./occlusion/bridge";
 export type { Exit } from "./occlusion/exits";
-export { exitAt, exitAtArrival } from "./occlusion/exits";
+export { exitAt, exitAtArrival, exitForFrame } from "./occlusion/exits";
 export { objectFootprints, subtractFootprints } from "./occlusion/footprints";
 export type { Occluder } from "./occlusion/occlusion";
 export { baselineYAt, depthForOccluder, isBehind } from "./occlusion/occlusion";
@@ -149,6 +153,7 @@ export {
 	nearestReachable,
 	refineMask,
 } from "./walkarea/navigation";
+export { objectApproach, objectFacingPoint } from "./walkarea/objectApproach";
 export type { Perspective } from "./walkarea/perspective";
 export {
 	fitFromLine,

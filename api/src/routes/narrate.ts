@@ -1,8 +1,8 @@
-import { createHash } from "node:crypto";
 import { generateObject, type LanguageModel } from "ai";
 import { Hono } from "hono";
 import { z } from "zod";
 import { getModel } from "../lib/model.js";
+import { narrationCacheInput } from "../lib/narrationCacheInput.js";
 import { recordCall } from "../services/costs.js";
 import { deriveExits } from "../services/exits.js";
 
@@ -632,30 +632,11 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 					})
 					.map((p) => ({ id: p.id, description: p.description }))
 			: [];
-		const sharedPrompt = [
-			`Scene: ${request.scene}`,
-			`Scene description: ${request.sceneDescription}`,
-			`Clicked object: ${request.object}`,
-			...(request.exit
-				? [
-						`Known places available for travel: ${JSON.stringify(knownPlaces)}. If one is the natural destination, use kind existing and its exact id. Otherwise use kind new; do not pretend the current scene is a new destination.`,
-					]
-				: []),
-			`Current flags: ${JSON.stringify(request.flags)}`,
-			`<world-state>${JSON.stringify(world ? { ...world, visual: world.visual[world.location] } : { flags: request.flags })}</world-state>`,
-			"Return statePatch.flags, inventory {add,remove}, npcMemory when changed. A visual delta new MUST include a nonempty visualStatePatch describing the resulting visible state, preserving earlier changes. Travel only for declared movement: {to: stable short place slug, kind: anchor or new, template: exterior or interior, description}. Anchors: outside (depot exterior), inside (depot interior).",
-		].join("\n");
-
-		const cacheKey = createHash("sha256")
-			.update(
-				JSON.stringify({
-					prompt: sharedPrompt,
-					choice: request.choice,
-					mode: request.mode,
-					version: 3,
-				}),
-			)
-			.digest("hex");
+		const { sharedPrompt, cacheKey } = narrationCacheInput(
+			request,
+			world,
+			knownPlaces,
+		);
 		const db = request.sessionId ? await getWorldDb() : undefined;
 		if (db) {
 			const cached = await db.execute({
