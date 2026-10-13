@@ -1,11 +1,7 @@
-import {
-	cellAt,
-	cellPoint,
-	findPath,
-	nearestCell,
-} from "../walkarea/navigation";
+import { cellAt, cellPoint, nearestCell } from "../walkarea/navigation";
 import { type Point, scaleAt, toMetres } from "../walkarea/perspective";
 import type { WalkArea } from "../walkarea/types";
+import { clearanceRoute, routeCorners } from "./clearanceRoute";
 import {
 	contactOnScreen,
 	type Foot,
@@ -637,75 +633,9 @@ export class CharacterMotor {
 		const ppm = (perspective.pixelsPerMetre ?? 300) * perspective.constant;
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
-	/** Plan bounded stand-and-pivot continuations before any playback begins. */
+	/** One search owns the entire click; standing pivots cannot restart mid-walk. */
 	private buildPlan(options: SearchOptions = {}) {
-		const result = this.buildSegment(options);
-		if (!result) return;
-		let planner: CharacterMotor = this;
-		let segment = result;
-		for (let attempt = 0; attempt < 8 && !segment.complete; attempt++) {
-			const last = segment.steps[segment.steps.length - 1];
-			const first = segment.steps[0];
-			if (!last || !first) break;
-			const exit = planner.nextExit(last.pose, last.state, last.heading, true);
-			const idle = this.animation.standing?.(last.heading);
-			if (
-				!exit ||
-				!idle ||
-				Math.hypot(
-					exit.anchor.x - first.state.anchor.x,
-					exit.anchor.y - first.state.anchor.y,
-				) <= 0.5
-			)
-				break;
-			const placed = lockedPlacement(
-				exit.anchor,
-				idle,
-				exit.foot,
-				this.area.perspective,
-				this.area.baseScale,
-				this.area.scaleClamp,
-				exit.position.scale,
-			);
-			const target: MotorTarget = {
-				...placed,
-				setPosition(x, y) {
-					this.x = x;
-					this.y = y;
-				},
-				setScale() {},
-				setDepth() {},
-			};
-			planner = new CharacterMotor(target, this.area, () => {}, this.animation);
-			planner.pose = idle;
-			planner.anchor = { ...exit.anchor };
-			planner.foot = exit.foot;
-			planner.scale = placed.scale;
-			planner.heading = last.heading;
-			planner.goal = this.goal;
-			const next = planner.buildSegment(options);
-			if (!next) break;
-			// Include rejected continuation searches as well as the accepted path.
-			result.stats.expanded += next.stats.expanded;
-			result.stats.generated += next.stats.generated;
-			result.stats.optimal = false;
-			result.stats.rejections ??= {};
-			const rejections = result.stats.rejections;
-			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
-				rejections[reason] = (rejections[reason] ?? 0) + count;
-			if (!next.steps.length || next.distance >= segment.distance - 0.5) break;
-			result.steps.push(...next.steps);
-			result.distance = next.distance;
-			result.complete = next.complete;
-			result.arrivalKind = next.arrivalKind;
-			result.stats.reason = next.stats.reason;
-			segment = next;
-		}
-		this.planned = result.steps;
-		this.planDistance = result.distance;
-		this.planComplete = result.complete;
-		this.planSearch = result.stats;
-		return result;
+		return this.buildSegment(options);
 	}
 	private buildSegment(options: SearchOptions = {}) {
 		// Fixed work budget makes worker and Node route selection identical.
@@ -723,28 +653,30 @@ export class CharacterMotor {
 		this.stanceCache.clear();
 		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
-		this.path = findPath(this.area.mask, this.anchor, this.goal).map((p) => ({
-			x: p.x,
-			y: p.y,
-		}));
-		this.goal = this.path[this.path.length - 1] ?? this.goal;
+		const mask = this.area.clearanceMask ?? this.area.mask;
+		this.path = clearanceRoute(mask, this.target, this.goal);
 		const points = this.path.map((p) => this.groundPoint(p));
-		let corners = 0;
-		for (let i = 1; i + 1 < points.length; i++) {
-			const a = points[i - 1],
-				b = points[i],
-				c = points[i + 1];
-			const turn =
-				Math.atan2(c.y - b.y, c.x - b.x) - Math.atan2(b.y - a.y, b.x - a.x);
-			if (
-				Math.abs(Math.atan2(Math.sin(turn), Math.cos(turn))) >
-				(25 * Math.PI) / 180
-			)
-				corners++;
-		}
+		const screenCorners = routeCorners(this.path);
+		const corners = screenCorners.map((p) => this.groundPoint(p));
+		const cornerHeadings = screenCorners.map((p) => {
+			const i = this.path.indexOf(p),
+				a = points[i],
+				b = points[i + 1];
+			return headingFromGround(
+				b.x - a.x,
+				b.y - a.y,
+				this.heading,
+				this.area.perspective.constant === undefined ? a : undefined,
+				0,
+			);
+		});
+
 		options = {
 			...options,
-			maxHeadingChanges: 1 + 2 * corners,
+			maxHeadingChanges: 2 + 2 * corners.length,
+			routeCorners: corners,
+			cornerHeadings,
+			cornerRadius: 0.6,
 			minHeadingRun: 2,
 		};
 		const route = this.path;
@@ -776,6 +708,68 @@ export class CharacterMotor {
 		const count = (action: string) => {
 			const key = `${action}:${this.rejectionReason}`;
 			rejections[key] = (rejections[key] ?? 0) + 1;
+		};
+		const entries = (
+			s: PredictedStance,
+			direction: WalkDirection,
+			starting: boolean,
+			stopping = false,
+		): FootPose[] => {
+			this.rejectionReason = "no-entry-frame";
+			const entry = () => {
+				const idle = this.animation.standing?.(direction);
+				// Reverse settle must use the support actually drawn in the sheet.
+				if (
+					starting &&
+					idle &&
+					idle.cycle.contacts[idle.frame].planted !== s.foot
+				)
+					return [];
+				const selected = this.animation.select(direction);
+				const same =
+					selected.cycle.name === s.pose.cycle.name &&
+					selected.flipX === s.pose.flipX;
+				const frames = same
+					? [s.pose.frame]
+					: starting
+						? [
+								...(selected.cycle.matchedCut?.entryFrames ?? []),
+								...selected.cycle.switchFrames,
+							]
+						: selected.cycle.switchFrames;
+				return frames
+					.filter(
+						(f) =>
+							selected.cycle.contacts[f].planted === s.foot &&
+							selected.cycle.contacts[(f + 1) % selected.cycle.contacts.length]
+								.planted === s.foot,
+					)
+					.map((frame) => ({ ...selected, frame, firstStance: starting }))
+					.filter(
+						(p) =>
+							(stopping ||
+								this.validFacing(
+									p,
+									s.anchor,
+									s.foot,
+									s.scale,
+									direction,
+									starting ? 35 : 30,
+								)) &&
+							(!starting ||
+								this.canStand(
+									p,
+									s.anchor,
+									s.foot,
+									s.scale,
+									this.startingFloor(),
+								)) &&
+							(stopping || !!this.predictStance(p, s)),
+					);
+			};
+			const pose = entry();
+			if (!pose.length) count(stopping ? "stop-entry" : "entry");
+			return pose;
 		};
 		const result = planFootsteps(
 			this.goal,
@@ -879,64 +873,9 @@ export class CharacterMotor {
 				remaining,
 				support: (s) =>
 					`${s.foot}:${s.pose.cycle.name}:${s.pose.flipX}:${s.pose.frame}`,
-				entry: (s, direction, starting, stopping) => {
-					this.rejectionReason = "no-entry-frame";
-					const entry = () => {
-						const idle = this.animation.standing?.(direction);
-						// Reverse settle must use the support actually drawn in the sheet.
-						if (
-							starting &&
-							idle &&
-							idle.cycle.contacts[idle.frame].planted !== s.foot
-						)
-							return;
-						const selected = this.animation.select(direction);
-						const same =
-							selected.cycle.name === s.pose.cycle.name &&
-							selected.flipX === s.pose.flipX;
-						const frames = same
-							? [s.pose.frame]
-							: starting
-								? [
-										...(selected.cycle.matchedCut?.entryFrames ?? []),
-										...selected.cycle.switchFrames,
-									]
-								: selected.cycle.switchFrames;
-						return frames
-							.filter(
-								(f) =>
-									selected.cycle.contacts[f].planted === s.foot &&
-									selected.cycle.contacts[
-										(f + 1) % selected.cycle.contacts.length
-									].planted === s.foot,
-							)
-							.map((frame) => ({ ...selected, frame, firstStance: starting }))
-							.find(
-								(p) =>
-									(stopping ||
-										this.validFacing(
-											p,
-											s.anchor,
-											s.foot,
-											s.scale,
-											direction,
-											starting ? 35 : 30,
-										)) &&
-									(!starting ||
-										this.canStand(
-											p,
-											s.anchor,
-											s.foot,
-											s.scale,
-											this.startingFloor(),
-										)) &&
-									(stopping || !!this.predictStance(p, s)),
-							);
-					};
-					const pose = entry();
-					if (!pose) count(stopping ? "stop-entry" : "entry");
-					return pose;
-				},
+				entries: (s, h, starting) => entries(s, h, starting),
+				entry: (s, h, starting, stopping) =>
+					entries(s, h, starting, stopping)[0],
 				advance: (s, pose) => {
 					this.rejectionReason = "no-stance";
 					const next = this.predictStance(pose, s);
@@ -1053,13 +992,7 @@ export class CharacterMotor {
 		if (step.stop) {
 			const exit = this.nextExit(step.pose, undefined, undefined, true);
 			if (exit && this.goal) {
-				const stride = this.predictStance(step.pose);
-				const halfStride = stride
-					? Math.hypot(
-							stride.anchor.x - this.anchor.x,
-							stride.anchor.y - this.anchor.y,
-						) / 2
-					: this.lastStrideLength / 2;
+				const halfStride = this.authoredHalfStride(step.heading, exit.anchor);
 				this.arrival = {
 					target: { ...this.goal },
 					anchor: { ...exit.anchor },
@@ -1067,7 +1000,7 @@ export class CharacterMotor {
 						exit.anchor.x - this.goal.x,
 						exit.anchor.y - this.goal.y,
 					),
-					halfStride: Math.max(2, halfStride),
+					halfStride,
 					switchFrame: step.pose.frame,
 					exactDistance: Math.hypot(
 						exit.anchor.x - (exit.absorption?.delta.x ?? 0) - this.goal.x,
@@ -1083,6 +1016,30 @@ export class CharacterMotor {
 			this.planned = remaining;
 		}
 		return true;
+	}
+
+	/** Measure a full authored support interval, even when its landing is blocked.
+	 * An exit fragment and collision feasibility are not stride measurements. */
+	private authoredHalfStride(heading: WalkDirection, anchor: Point): number {
+		const selected = this.animation.select(heading);
+		const frame =
+			selected.cycle.switchFrames.find(
+				(f) => selected.cycle.contacts[f].planted === this.foot,
+			) ?? 0;
+		const sampled = this.stanceSamples(
+			{ ...selected, frame },
+			anchor,
+			this.foot,
+			this.scale,
+		);
+		if (!sampled) return this.lastStrideLength / 2;
+		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
+		return (
+			Math.hypot(
+				sampled.landing.x + shift - anchor.x,
+				sampled.landing.y - anchor.y,
+			) / 2
+		);
 	}
 
 	/** Resume the source cycle clock after a partial entry; its slower entry

@@ -1001,3 +1001,34 @@ it("steps inward from the caption boundary while keeping both supports on raw fl
 	expect(inward).toBeDefined();
 	expect(inward?.anchor.y).toBeLessThan(850);
 });
+
+it("measures a full authored stride even when the next landing is blocked", () => {
+	const { motor, area, cycle } = setup(true);
+	motor.place({ x: 960, y: 850 });
+	const internal = motor as unknown as {
+		authoredHalfStride(
+			heading: "right",
+			anchor: { x: number; y: number },
+		): number;
+	};
+	const before = internal.authoredHalfStride("right", motor.anchor);
+	expect(before).toBeGreaterThan(2);
+	// Collision changes cannot turn an authored stride into a two-pixel tolerance.
+	area.mask.data.fill(0);
+	expect(internal.authoredHalfStride("right", motor.anchor)).toBe(before);
+	expect(cycle.switchFrames.length).toBe(2);
+});
+it("a click plan contains standing pivots only at its first action and one final stop", () => {
+	const { motor } = setup(true);
+	motor.place({ x: 960, y: 850 });
+	void motor.walk([{ x: 1700, y: 850 }]);
+	const internal = motor as unknown as {
+		planned: { stop: boolean; state: { pivot?: unknown } }[];
+	};
+	expect(internal.planned.length).toBeGreaterThan(1);
+	expect(internal.planned.slice(1).every((step) => !step.state.pivot)).toBe(
+		true,
+	);
+	expect(internal.planned.filter((step) => step.stop)).toHaveLength(1);
+	expect(internal.planned.at(-1)?.stop).toBe(true);
+});
