@@ -68,6 +68,8 @@ export class CharacterMotor {
 		distance: number;
 		halfStride: number;
 		switchFrame: number;
+		exactDistance: number;
+		absorbedDistance: number;
 	};
 	anchor: Point = { x: 0, y: 0 };
 	private pose?: FootPose;
@@ -104,6 +106,7 @@ export class CharacterMotor {
 		cycleFrames: number;
 		matched: boolean;
 	};
+	private absorption?: { delta: Point; frames: number; applied: number };
 	private transition?: { to: FootPose; remaining: number; frame: number };
 	private drawn?: {
 		poses: FootPose[];
@@ -158,7 +161,8 @@ export class CharacterMotor {
 			),
 		);
 	}
-	stop(immediate = false): void {
+	stop(immediate = false, absorb = false): void {
+		this.absorption = undefined;
 		if (this.pendingPlan) {
 			this.finish();
 			return;
@@ -195,7 +199,9 @@ export class CharacterMotor {
 			(this.pose.cycle.name !== standing.cycle.name ||
 				this.pose.flipX !== standing.flipX)
 		) {
-			const matched = this.nextExit(this.pose);
+			const matched = this.nextExit(this.pose, undefined, undefined, absorb);
+			if (matched?.absorption)
+				this.absorption = { ...matched.absorption, applied: 0 };
 			if (!matched && this.pose.cycle.matchedCut) {
 				// A blocked source frame is not permission to cut on another pose.
 				// Keep the last safe drawing when no floor-safe approach exists.
@@ -256,9 +262,11 @@ export class CharacterMotor {
 		source: FootPose,
 		state?: PredictedStance,
 		heading?: WalkDirection,
+		absorb = false,
 	):
 		| {
 				frames: number;
+				absorption?: { delta: Point; frames: number };
 				travel: number;
 				position: Point & { scale: number };
 				anchor: Point;
@@ -299,6 +307,9 @@ export class CharacterMotor {
 			return;
 		position = entry;
 		let stanceStart = this.groundPoint(entry);
+		let samples: { pose: FootPose; position: Point & { scale: number } }[] = [
+			{ pose, position },
+		];
 		let firstStance = source.firstStance ?? false;
 		const facing = (last = false) =>
 			!heading ||
@@ -316,7 +327,25 @@ export class CharacterMotor {
 				this.canStand(pose, anchor, foot, position.scale) &&
 				facing(true)
 			) {
-				return { frames: n, position, anchor, foot, travel };
+				const absorption = absorb
+					? this.stopAbsorption(samples, anchor, foot)
+					: undefined;
+				if (absorption) {
+					anchor = {
+						x: anchor.x + absorption.delta.x,
+						y: anchor.y + absorption.delta.y,
+					};
+					position = lockedPlacement(
+						anchor,
+						pose,
+						foot,
+						this.area.perspective,
+						this.area.baseScale,
+						this.area.scaleClamp,
+						position.scale,
+					);
+				}
+				return { frames: n, position, anchor, foot, travel, absorption };
 			}
 			const next = {
 				...pose,
@@ -355,12 +384,67 @@ export class CharacterMotor {
 				)
 			)
 				break;
-			if (incoming !== pose.cycle.contacts[pose.frame].planted)
+			if (incoming !== pose.cycle.contacts[pose.frame].planted) {
 				stanceStart = this.groundPoint(p);
+				samples = [];
+			}
 			pose = next;
 			position = p;
+			samples.push({ pose, position });
 		}
 		return undefined;
+	}
+
+	/** Only the final support may spend its slide budget, with a smooth ramp.
+	 * Validate every corrected drawing and the complete settle before using it. */
+	private stopAbsorption(
+		samples: { pose: FootPose; position: Point & { scale: number } }[],
+		anchor: Point,
+		foot: Foot,
+	) {
+		if (!this.goal || samples.length < 3) return;
+		const first = samples[0],
+			last = samples[samples.length - 1];
+		const bodyTravel = Math.hypot(
+			last.position.x - first.position.x,
+			last.position.y - first.position.y,
+		);
+		const distance = Math.hypot(this.goal.x - anchor.x, this.goal.y - anchor.y);
+		const budget = Math.min(1.45, bodyTravel * 0.05);
+		// Absorb only genuinely sub-stride error; never drift toward a remote goal.
+		if (distance < 1e-8 || distance > budget) return;
+		const delta = { x: this.goal.x - anchor.x, y: this.goal.y - anchor.y };
+		const raw = this.area.rawMask ?? this.area.mask;
+		const mask = this.area.clearanceMask ?? this.area.mask;
+		let previous = first.position;
+		for (let i = 0; i < samples.length; i++) {
+			const t = i / (samples.length - 1),
+				amount = t * t * (3 - 2 * t);
+			const a = {
+				x: anchor.x + delta.x * amount,
+				y: anchor.y + delta.y * amount,
+			};
+			const sample = samples[i];
+			const p = lockedPlacement(
+				a,
+				sample.pose,
+				foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				sample.position.scale,
+			);
+			if (
+				!raw.data[cellAt(raw, a)] ||
+				!mask.data[cellAt(mask, { x: p.x, y: a.y })] ||
+				!lineOfSight(mask, { x: previous.x, y: anchor.y }, { x: p.x, y: a.y })
+			)
+				return;
+			previous = p;
+		}
+		const shifted = { x: anchor.x + delta.x, y: anchor.y + delta.y };
+		if (!this.canStand(last.pose, shifted, foot, previous.scale)) return;
+		return { delta, frames: samples.length - 1 };
 	}
 
 	place(position: Point, snapToFloor = true): void {
@@ -506,6 +590,18 @@ export class CharacterMotor {
 		return { x: p.x / ppm, y: -p.y / ppm };
 	}
 	private buildPlan(options: SearchOptions = {}) {
+		// Fixed work budget makes worker and Node route selection identical.
+		// elapsedMs belongs to the virtual planning clock; measure wall time at
+		// the caller, outside frame telemetry.
+		options = {
+			now: () => 0,
+			timeBudgetMs: Infinity,
+			nodeBudget: 4000,
+			resolution: 0.005,
+			stopWeight: 32,
+			turnCost: 1.2,
+			...options,
+		};
 		this.stanceCache.clear();
 		if (!this.pose || !this.goal) return;
 		this.path = findPath(this.area.mask, this.target, this.goal).map((p) => ({
@@ -612,7 +708,18 @@ export class CharacterMotor {
 						);
 				},
 				advance: (s, pose) => this.predictStance(pose, s),
-				restCandidates: (s, pose) => this.exitAnchors(pose, s),
+				restCandidates: (s, pose) => {
+					const candidates = this.exitAnchors(pose, s);
+					const goal = this.goal;
+					if (
+						goal &&
+						candidates.some(
+							(p) => Math.hypot(p.x - goal.x, p.y - goal.y) <= 1.45,
+						)
+					)
+						candidates.push(goal);
+					return candidates;
+				},
 				acceptRest: (s, pose, rest, target) => {
 					const stride = this.predictStance(pose, s);
 					return (
@@ -626,7 +733,7 @@ export class CharacterMotor {
 					);
 				},
 				rest: (s, pose, heading) => {
-					const exit = this.nextExit(pose, s, heading);
+					const exit = this.nextExit(pose, s, heading, true);
 					return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
 				},
 			},
@@ -672,11 +779,7 @@ export class CharacterMotor {
 		motor.foot = request.foot;
 		motor.scale = request.scale;
 		motor.heading = request.heading;
-		const result = motor.buildPlan({
-			timeBudgetMs: 125,
-			nodeBudget: 250000,
-			turnCost: 1.2,
-		});
+		const result = motor.buildPlan();
 		if (!result) throw new Error("Missing planning state");
 		return { ...result, path: motor.path, goal: motor.goal };
 	}
@@ -710,7 +813,7 @@ export class CharacterMotor {
 				nextStep.state.anchor.y - step.state.anchor.y,
 			);
 		if (step.stop) {
-			const exit = this.nextExit(step.pose);
+			const exit = this.nextExit(step.pose, undefined, undefined, true);
 			if (exit && this.goal) {
 				const stride = this.predictStance(step.pose);
 				const halfStride = stride
@@ -728,9 +831,16 @@ export class CharacterMotor {
 					),
 					halfStride: Math.max(2, halfStride),
 					switchFrame: step.pose.frame,
+					exactDistance: Math.hypot(
+						exit.anchor.x - (exit.absorption?.delta.x ?? 0) - this.goal.x,
+						exit.anchor.y - (exit.absorption?.delta.y ?? 0) - this.goal.y,
+					),
+					absorbedDistance: exit.absorption
+						? Math.hypot(exit.absorption.delta.x, exit.absorption.delta.y)
+						: 0,
 				};
 			}
-			this.stop();
+			this.stop(false, true);
 		}
 		return true;
 	}
@@ -1065,6 +1175,20 @@ export class CharacterMotor {
 					this.frameMs = this.cycleFrameMs(next);
 					t.remaining--;
 					t.frame++;
+					const absorption = this.absorption;
+					if (absorption && t.remaining < absorption.frames) {
+						const progress = 1 - t.remaining / absorption.frames,
+							amount = progress * progress * (3 - 2 * progress);
+						this.anchor = {
+							x:
+								this.anchor.x +
+								absorption.delta.x * (amount - absorption.applied),
+							y:
+								this.anchor.y +
+								absorption.delta.y * (amount - absorption.applied),
+						};
+						absorption.applied = amount;
+					}
 					this.apply();
 					// The selected exit must be rendered before the cut, even when
 					// one output tick advances several source frames.

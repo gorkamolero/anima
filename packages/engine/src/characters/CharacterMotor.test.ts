@@ -646,3 +646,115 @@ it("cancels an in-flight worker and ignores its stale reply", async () => {
 		vi.unstubAllGlobals();
 	}
 });
+
+it("produces identical frames through worker and synchronous planning", () => {
+	const direct = setup(true, true);
+	direct.motor.place({ x: 960, y: 850 });
+	void direct.motor.walk([{ x: 1400, y: 850 }]);
+	class InlineWorker {
+		onmessage?: (event: {
+			data: ReturnType<typeof CharacterMotor.computePlan>;
+		}) => void;
+		terminate() {}
+		postMessage(request: Parameters<typeof CharacterMotor.computePlan>[0]) {
+			this.onmessage?.({ data: CharacterMotor.computePlan(request) });
+		}
+	}
+	vi.stubGlobal("Worker", InlineWorker);
+	try {
+		const worker = setup(true, true);
+		worker.motor.place({ x: 960, y: 850 });
+		void worker.motor.walk([{ x: 1400, y: 850 }]);
+		for (let i = 0; i < 300; i++) {
+			direct.motor.update(1000 / 24);
+			worker.motor.update(1000 / 24);
+			expect(worker.motor.snapshot()).toEqual(direct.motor.snapshot());
+			expect(worker.pose()).toEqual(direct.pose());
+			expect([worker.target.x, worker.target.y, worker.target.scale]).toEqual([
+				direct.target.x,
+				direct.target.y,
+				direct.target.scale,
+			]);
+		}
+	} finally {
+		vi.unstubAllGlobals();
+	}
+});
+
+it("absorbs a one-pixel stop error smoothly within the final stance", () => {
+	const cycle: FootCycle = {
+		name: "absorption-walk",
+		frameWidth: 200,
+		frameHeight: 200,
+		fps: 24,
+		switchFrames: [0, 6],
+		matchedCut: {
+			standing: "absorption-idle",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [5],
+		},
+		contacts: Array.from({ length: 12 }, (_, i) => ({
+			planted: i < 6 ? "L" : "R",
+			L: { x: 100 - i * 20, y: 200 },
+			R: { x: 120, y: 200 },
+		})),
+	};
+	const idle: FootCycle = {
+		...cycle,
+		name: "absorption-idle",
+		contacts: [{ planted: "L", L: { x: 100, y: 200 }, R: { x: 120, y: 200 } }],
+		switchFrames: [],
+	};
+	let pose: FootPose = { cycle, frame: 0, flipX: false };
+	const target = {
+		x: 500,
+		y: 800,
+		setPosition(x: number, y: number) {
+			this.x = x;
+			this.y = y;
+		},
+		setScale() {},
+		setDepth() {},
+	};
+	const motor = new CharacterMotor(
+		target,
+		{
+			mask: { width: 192, height: 108, data: Array(192 * 108).fill(1) },
+			perspective: { constant: 1, horizonY: 0, slope: 0 },
+			baseScale: 1,
+			scaleClamp: { min: 1, max: 1 },
+		},
+		() => {},
+		{
+			current: () => pose,
+			select: () => ({ cycle, flipX: false }),
+			show: (p) => {
+				pose = p;
+			},
+			standing: () => ({ cycle: idle, frame: 0, flipX: false }),
+		},
+	);
+	motor.place({ x: 500, y: 800 }, false);
+	// Prepare a native stance at its first drawing, as planStance does.
+	const state = motor as unknown as {
+		pose: FootPose;
+		goal: { x: number; y: number };
+	};
+	state.pose = pose = { cycle, frame: 0, flipX: false };
+	state.goal = { x: 501, y: 800 };
+	motor.stop(false, true);
+	expect(motor.anchor).toEqual({ x: 500, y: 800 });
+	const positions: number[] = [];
+	for (let i = 0; i < 30 && motor.walking; i++) {
+		motor.update(1000 / 24);
+		positions.push(motor.anchor.x);
+	}
+	expect(motor.walking).toBe(false);
+	expect(motor.anchor.x).toBeCloseTo(501, 8);
+	expect(positions.filter((x) => x > 500 && x < 501).length).toBeGreaterThan(2);
+	expect(Math.max(...positions) - 500).toBeLessThanOrEqual(1.5);
+	expect(positions.every((x, i) => i === 0 || x >= positions[i - 1])).toBe(
+		true,
+	);
+});
