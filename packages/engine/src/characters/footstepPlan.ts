@@ -70,6 +70,7 @@ export interface PlannedStep<State, Pose> {
 }
 export interface StepSimulation<State, Pose> {
 	position(state: State): Point;
+	headings?(leg: WalkLeg): readonly WalkDirection[];
 	offset?(state: State, slide: Point): State;
 	entry(
 		state: State,
@@ -115,51 +116,68 @@ function simulatePlan<State, Pose>(
 			);
 		const candidates: Branch[] = [];
 		for (const branch of beam) {
-			let state = branch.state;
-			const steps = [...branch.steps];
-			let previousDistance = Infinity,
-				growing = 0;
-			for (let stride = 0; stride < 256; stride++) {
-				const slide = steps.length
-					? (corrections[legIndex] ?? { x: 0, y: 0 })
-					: { x: 0, y: 0 };
-				if (sim.offset) state = sim.offset(state, slide);
-				const pose = sim.entry(state, leg.heading, steps.length === 0);
-				if (!pose) break;
-				const node = {
-					heading: leg.heading,
-					pose,
-					state,
-					stop: false,
-					leg: legIndex,
-					slide,
-				};
-				const rest = sim.rest(state, pose, leg.heading);
-				if (rest) {
-					const distance = Math.hypot(rest.x - target.x, rest.y - target.y);
-					const remaining =
-						Math.hypot(rest.x - leg.to.x, rest.y - leg.to.y) + tail;
-					if (!bestStop || remaining < bestStop.remaining)
-						bestStop = {
-							steps: [...steps, { ...node, stop: true }],
-							distance,
-							remaining,
-						};
+			const previousHeading = branch.steps[branch.steps.length - 1]?.heading;
+			const headings =
+				previousHeading && !leg.corner
+					? [previousHeading]
+					: (sim.headings?.(leg) ?? [leg.heading]);
+			for (const heading of headings) {
+				let state = branch.state;
+				const steps = [...branch.steps];
+				let previousDistance = Infinity,
+					growing = 0;
+				for (let stride = 0; stride < 256; stride++) {
+					const slide = steps.length
+						? (corrections[legIndex] ?? { x: 0, y: 0 })
+						: { x: 0, y: 0 };
+					if (sim.offset) state = sim.offset(state, slide);
+					const pose = sim.entry(state, heading, steps.length === 0);
+					if (!pose) break;
+					const node = {
+						heading,
+						pose,
+						state,
+						stop: false,
+						leg: legIndex,
+						slide,
+					};
+					const rest = sim.rest(state, pose, heading);
+					if (rest) {
+						const distance = Math.hypot(rest.x - target.x, rest.y - target.y);
+						const remaining =
+							Math.hypot(rest.x - leg.to.x, rest.y - leg.to.y) + tail;
+						if (!bestStop || remaining < bestStop.remaining)
+							bestStop = {
+								steps: [...steps, { ...node, stop: true }],
+								distance,
+								remaining,
+							};
+					}
+					const next = sim.advance(state, pose);
+					if (!next) break;
+					const p = sim.position(next);
+					const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
+					steps.push(node);
+					if (legIndex < legs.length - 1) {
+						const following = legs[legIndex + 1];
+						const valid = (
+							following.corner
+								? (sim.headings?.(following) ?? [following.heading])
+								: [heading]
+						).some((direction) => {
+							const entry = sim.entry(next, direction, false);
+							return (
+								entry !== undefined && sim.advance(next, entry) !== undefined
+							);
+						});
+						if (valid)
+							candidates.push({ state: next, steps: [...steps], distance });
+					}
+					state = next;
+					growing = distance > previousDistance ? growing + 1 : 0;
+					if (growing >= 2) break;
+					previousDistance = distance;
 				}
-				const next = sim.advance(state, pose);
-				if (!next) break;
-				const p = sim.position(next);
-				const distance = Math.hypot(p.x - leg.to.x, p.y - leg.to.y);
-				steps.push(node);
-				if (legIndex < legs.length - 1) {
-					const entry = sim.entry(next, legs[legIndex + 1].heading, false);
-					if (entry !== undefined && sim.advance(next, entry) !== undefined)
-						candidates.push({ state: next, steps: [...steps], distance });
-				}
-				state = next;
-				growing = distance > previousDistance ? growing + 1 : 0;
-				if (growing >= 2) break;
-				previousDistance = distance;
 			}
 		}
 		// Retain several whole-stride corners: the closest drawing may have no

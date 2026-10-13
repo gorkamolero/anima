@@ -314,8 +314,8 @@ describe("contact motor", () => {
 		expect(motor.snapshot().cut?.matched).toBe(true);
 	});
 
-	it("measures arrival at the eventual standing endpoint after support transfers", () => {
-		const { motor, cycle, target, pose } = setup(true);
+	it("measures arrival at the eventual planted sole after support transfers", () => {
+		const { motor, cycle, pose } = setup(true);
 		cycle.matchedCut = {
 			standing: "standing",
 			headings: ["right"],
@@ -339,7 +339,10 @@ describe("contact motor", () => {
 		expect(pose().cycle.name).toBe("standing");
 		if (!arrival) throw Error("Missing arrival");
 		expect(
-			Math.hypot(target.x - arrival.target.x, target.y - arrival.target.y),
+			Math.hypot(
+				motor.anchor.x - arrival.target.x,
+				motor.anchor.y - arrival.target.y,
+			),
 		).toBeCloseTo(arrival.distance, 8);
 		expect(arrival.distance).toBeLessThanOrEqual(arrival.halfStride);
 		expect(motor.snapshot().cut?.matched).toBe(true);

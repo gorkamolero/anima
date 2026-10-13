@@ -397,6 +397,15 @@ export class CharacterMotor {
 		};
 		const result = planFootsteps(legs, initial, {
 			position: (s) => s.end,
+			headings: (leg) => {
+				if (initialHeading && leg === legs[0]) return [initialHeading];
+				const i = GROUND_SECTORS.indexOf(leg.heading);
+				return [
+					leg.heading,
+					GROUND_SECTORS[(i + 7) % 8],
+					GROUND_SECTORS[(i + 1) % 8],
+				];
+			},
 			offset: (s, slide) => ({
 				...s,
 				anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
@@ -484,24 +493,6 @@ export class CharacterMotor {
 		if (step.stop) {
 			const exit = this.nextExit(step.pose);
 			if (exit && this.goal) {
-				const idle = this.animation.standing?.(step.heading);
-				const rest = idle
-					? {
-							...idle,
-							frame:
-								idle.cycle.settleFrames?.[idle.cycle.settleFrames.length - 1] ??
-								idle.frame,
-						}
-					: step.pose;
-				const p = lockedPlacement(
-					exit.anchor,
-					rest,
-					exit.foot,
-					this.area.perspective,
-					this.area.baseScale,
-					this.area.scaleClamp,
-					exit.position.scale,
-				);
 				const stride = this.predictStance(step.pose);
 				const halfStride = stride
 					? Math.hypot(
@@ -512,7 +503,10 @@ export class CharacterMotor {
 				this.arrival = {
 					target: { ...this.goal },
 					anchor: { ...exit.anchor },
-					distance: Math.hypot(p.x - this.goal.x, p.y - this.goal.y),
+					distance: Math.hypot(
+						exit.anchor.x - this.goal.x,
+						exit.anchor.y - this.goal.y,
+					),
 					halfStride: Math.max(2, halfStride),
 					switchFrame: step.pose.frame,
 				};
