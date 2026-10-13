@@ -536,6 +536,9 @@ export class CharacterMotor {
 				this.resolve = resolve;
 			});
 			this.pendingPlan = true;
+			// Planning owns the motion request too: observers must not treat
+			// a doorway walk as idle before the worker returns.
+			this.animate("walk", this.heading, 1);
 			this.walking = false;
 			this.planComplete = false;
 			this.planSearch = undefined;

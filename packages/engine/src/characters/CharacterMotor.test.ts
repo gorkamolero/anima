@@ -45,7 +45,8 @@ function setup(standing = false, drawn = false) {
 		baseScale: 0.5,
 		scaleClamp: { min: 0.18, max: 1.5 },
 	};
-	const motor = new CharacterMotor(target, area, () => {}, {
+	const animate = vi.fn();
+	const motor = new CharacterMotor(target, area, animate, {
 		current: () => shown,
 		select: (d) => ({ cycle, flipX: d === "left" }),
 		standing: standing
@@ -72,6 +73,7 @@ function setup(standing = false, drawn = false) {
 		},
 	});
 	return {
+		animate,
 		motor,
 		target,
 		area,
@@ -627,11 +629,12 @@ it("cancels an in-flight worker and ignores its stale reply", async () => {
 	}
 	vi.stubGlobal("Worker", FakeWorker);
 	try {
-		const { motor, target } = setup();
+		const { motor, target, animate } = setup();
 		motor.place({ x: 960, y: 850 });
 		const start = { x: target.x, y: target.y };
 		const promise = motor.walk([{ x: 1300, y: 850 }]);
 		expect(motor.snapshot().plan.pending).toBe(true);
+		expect(animate).toHaveBeenLastCalledWith("walk", motor.heading, 1);
 		expect(motor.walking).toBe(false);
 		motor.update(1000);
 		expect({ x: target.x, y: target.y }).toEqual(start);
@@ -639,6 +642,7 @@ it("cancels an in-flight worker and ignores its stale reply", async () => {
 		motor.stop(true);
 		await promise;
 		expect(worker.terminate).toHaveBeenCalledOnce();
+		expect(animate).toHaveBeenLastCalledWith("idle", motor.heading, 1);
 		worker.onmessage?.({ data: {} });
 		expect(motor.snapshot().plan.pending).toBe(false);
 		expect(motor.walking).toBe(false);
