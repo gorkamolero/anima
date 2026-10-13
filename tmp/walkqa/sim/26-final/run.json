@@ -1,0 +1,3848 @@
+{
+  "status": "browser-equivalent; goal-failures-remain",
+  "elapsedMs": 7879.6320829999995,
+  "walks": 139,
+  "results": [
+    {
+      "scene": "outside",
+      "walk": "near-left",
+      "frames": 141,
+      "planningMs": 9.547541000000024,
+      "search": {
+        "expanded": 83,
+        "generated": 83,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.5057497411373
+      },
+      "arrival": {
+        "target": {
+          "x": 67,
+          "y": 937
+        },
+        "anchor": {
+          "x": 438.2776665427434,
+          "y": 993.2961916353038
+        },
+        "distance": 375.5214599274766,
+        "halfStride": 104.10788748837847,
+        "switchFrame": 3,
+        "exactDistance": 375.5214599274766,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "near-right",
+      "frames": 136,
+      "planningMs": 5.913625000000025,
+      "search": {
+        "expanded": 87,
+        "generated": 87,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.760795277248485
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1474.3523840619937,
+          "y": 1004.8677645780386
+        },
+        "distance": 383.6974788716756,
+        "halfStride": 106.43311595644218,
+        "switchFrame": 3,
+        "exactDistance": 383.6974788716756,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "deepest",
+      "frames": 101,
+      "planningMs": 9.783958999999982,
+      "search": {
+        "expanded": 167,
+        "generated": 167,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.050443994179165
+      },
+      "arrival": {
+        "target": {
+          "x": 1182,
+          "y": 667
+        },
+        "anchor": {
+          "x": 1440.6692907515724,
+          "y": 755.6535715464953
+        },
+        "distance": 273.43967840434397,
+        "halfStride": 20.099576287271418,
+        "switchFrame": 20,
+        "exactDistance": 273.43967840434397,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "far-left",
+      "frames": 130,
+      "planningMs": 6.522457999999915,
+      "search": {
+        "expanded": 35,
+        "generated": 35,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 18.777229121412475
+      },
+      "arrival": {
+        "target": {
+          "x": 67,
+          "y": 727
+        },
+        "anchor": {
+          "x": 1055.4149140668646,
+          "y": 941.2457770906353
+        },
+        "distance": 1011.3680316042116,
+        "halfStride": 64.82886053164262,
+        "switchFrame": 12,
+        "exactDistance": 1011.3680316042116,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "far-right",
+      "frames": 291,
+      "planningMs": 78.60300000000007,
+      "search": {
+        "expanded": 4000,
+        "generated": 4314,
+        "elapsedMs": 0,
+        "reason": "node-budget",
+        "optimal": false,
+        "costBound": 19.165931791618846
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 817
+        },
+        "anchor": {
+          "x": 1864.8414931671484,
+          "y": 816.3467925752342
+        },
+        "distance": 12.858095764991367,
+        "halfStride": 24.449344484055157,
+        "switchFrame": 20,
+        "exactDistance": 12.858095764991367,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "diagonal-away",
+      "frames": 186,
+      "planningMs": 11.423790999999937,
+      "search": {
+        "expanded": 414,
+        "generated": 492,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 14.722523786158188
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 817
+        },
+        "anchor": {
+          "x": 1853.6511793341335,
+          "y": 817.6501128733086
+        },
+        "distance": 1.7745534484796897,
+        "halfStride": 24.542750981299847,
+        "switchFrame": 20,
+        "exactDistance": 1.7745534484796897,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "diagonal-toward",
+      "frames": 271,
+      "planningMs": 23.90645900000004,
+      "search": {
+        "expanded": 1850,
+        "generated": 1920,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 17.89484007881036
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1878.4645647555155,
+          "y": 932.5781257164307
+        },
+        "distance": 26.831439765293382,
+        "halfStride": 60.455769414619645,
+        "switchFrame": 14,
+        "exactDistance": 26.831439765293382,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "occluder-behind",
+      "frames": 28,
+      "planningMs": 4.4621669999999085,
+      "search": {
+        "expanded": 38,
+        "generated": 38,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.1775523605806395
+      },
+      "arrival": {
+        "target": {
+          "x": 937,
+          "y": 782
+        },
+        "anchor": {
+          "x": 918.5233317595215,
+          "y": 944.650469520512
+        },
+        "distance": 163.69655617792245,
+        "halfStride": 2,
+        "switchFrame": 11,
+        "exactDistance": 163.69655617792245,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "occluder-back",
+      "frames": 28,
+      "planningMs": 3.1655829999999696,
+      "search": {
+        "expanded": 11,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.57771136804438
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "narrow-gap",
+      "frames": 87,
+      "planningMs": 3.1914580000000115,
+      "search": {
+        "expanded": 32,
+        "generated": 37,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.349519259486646
+      },
+      "arrival": {
+        "target": {
+          "x": 1027,
+          "y": 722
+        },
+        "anchor": {
+          "x": 1077.988485959035,
+          "y": 719.2171191884315
+        },
+        "distance": 51.064372374544085,
+        "halfStride": 33.94377240354982,
+        "switchFrame": 12,
+        "exactDistance": 51.064372374544085,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "unreachable",
+      "frames": 63,
+      "planningMs": 2.439792000000125,
+      "search": {
+        "expanded": 20,
+        "generated": 20,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 8.144384975912843
+      },
+      "arrival": {
+        "target": {
+          "x": 1097.5,
+          "y": 657.5
+        },
+        "anchor": {
+          "x": 1006.317310850151,
+          "y": 713.2627082391548
+        },
+        "distance": 106.88200237066619,
+        "halfStride": 34.52630346061839,
+        "switchFrame": 21,
+        "exactDistance": 106.88200237066619,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "object",
+      "frames": 28,
+      "planningMs": 2.8654579999999896,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.165785166104476
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-depot_doors",
+      "frames": 28,
+      "planningMs": 4.0942079999999805,
+      "search": {
+        "expanded": 12,
+        "generated": 12,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.222635667690224
+      },
+      "arrival": {
+        "target": {
+          "x": 1377.5,
+          "y": 762.5
+        },
+        "anchor": {
+          "x": 958.5807758892037,
+          "y": 765.2907486097996
+        },
+        "distance": 418.92851968730264,
+        "halfStride": 46.7711930297724,
+        "switchFrame": 8,
+        "exactDistance": 418.92851968730264,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-left",
+      "frames": 123,
+      "planningMs": 3.1517080000000988,
+      "search": {
+        "expanded": 41,
+        "generated": 41,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.381798915993702
+      },
+      "arrival": {
+        "target": {
+          "x": 27.5,
+          "y": 737.5
+        },
+        "anchor": {
+          "x": 408.82504026304014,
+          "y": 740.4537928834478
+        },
+        "distance": 381.33648032152325,
+        "halfStride": 12.529740423340648,
+        "switchFrame": 18,
+        "exactDistance": 381.33648032152325,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-left-1",
+      "frames": 123,
+      "planningMs": 3.1429169999998976,
+      "search": {
+        "expanded": 41,
+        "generated": 41,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.381798915993702
+      },
+      "arrival": {
+        "target": {
+          "x": 27.5,
+          "y": 737.5
+        },
+        "anchor": {
+          "x": 408.82504026304014,
+          "y": 740.4537928834478
+        },
+        "distance": 381.33648032152325,
+        "halfStride": 12.529740423340648,
+        "switchFrame": 18,
+        "exactDistance": 381.33648032152325,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-right",
+      "frames": 89,
+      "planningMs": 3.9135420000000067,
+      "search": {
+        "expanded": 21,
+        "generated": 21,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 8.50846144945704
+      },
+      "arrival": {
+        "target": {
+          "x": 1872.5,
+          "y": 937.5
+        },
+        "anchor": {
+          "x": 1174.3041825276396,
+          "y": 721.9400251833775
+        },
+        "distance": 730.7143780430494,
+        "halfStride": 49.580721100441195,
+        "switchFrame": 3,
+        "exactDistance": 730.7143780430494,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-far",
+      "frames": 63,
+      "planningMs": 3.5078329999998914,
+      "search": {
+        "expanded": 20,
+        "generated": 20,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.847419243154349
+      },
+      "arrival": {
+        "target": {
+          "x": 1112.5,
+          "y": 662.5
+        },
+        "anchor": {
+          "x": 1006.317310850151,
+          "y": 713.2627082391548
+        },
+        "distance": 117.69288858239064,
+        "halfStride": 34.52630346061839,
+        "switchFrame": 21,
+        "exactDistance": 117.69288858239064,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "near-left",
+      "frames": 28,
+      "planningMs": 2.8597919999999704,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.454406193420564
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "near-right",
+      "frames": 136,
+      "planningMs": 3.965249999999969,
+      "search": {
+        "expanded": 68,
+        "generated": 68,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.616635641967632
+      },
+      "arrival": {
+        "target": {
+          "x": 1887,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1490.512977809306,
+          "y": 1022.0266365340568
+        },
+        "distance": 405.5015261203569,
+        "halfStride": 108.89039589072111,
+        "switchFrame": 3,
+        "exactDistance": 405.5015261203569,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "deepest",
+      "frames": 87,
+      "planningMs": 4.405624999999873,
+      "search": {
+        "expanded": 65,
+        "generated": 66,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.793982389295742
+      },
+      "arrival": {
+        "target": {
+          "x": 1502,
+          "y": 772
+        },
+        "anchor": {
+          "x": 1621.6941228668397,
+          "y": 854.3783277769891
+        },
+        "distance": 145.30269073969404,
+        "halfStride": 52.383375621322116,
+        "switchFrame": 14,
+        "exactDistance": 145.30269073969404,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "far-left",
+      "frames": 28,
+      "planningMs": 3.5257919999999103,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 13.832713803047207
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "far-right",
+      "frames": 163,
+      "planningMs": 6.258207999999968,
+      "search": {
+        "expanded": 91,
+        "generated": 91,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.088460392071305
+      },
+      "arrival": {
+        "target": {
+          "x": 1827,
+          "y": 782
+        },
+        "anchor": {
+          "x": 1688.107707233552,
+          "y": 917.3608703507145
+        },
+        "distance": 193.94234765007786,
+        "halfStride": 58.79908063208049,
+        "switchFrame": 14,
+        "exactDistance": 193.94234765007786,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "diagonal-away",
+      "frames": 136,
+      "planningMs": 5.274541999999883,
+      "search": {
+        "expanded": 68,
+        "generated": 68,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.144399730086725
+      },
+      "arrival": {
+        "target": {
+          "x": 1827,
+          "y": 782
+        },
+        "anchor": {
+          "x": 1490.512977809306,
+          "y": 1022.0266365340568
+        },
+        "distance": 413.3234839065073,
+        "halfStride": 108.89039589072111,
+        "switchFrame": 3,
+        "exactDistance": 413.3234839065073,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "diagonal-toward",
+      "frames": 87,
+      "planningMs": 2.203708000000006,
+      "search": {
+        "expanded": 11,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.559960189574607
+      },
+      "arrival": {
+        "target": {
+          "x": 1887,
+          "y": 937
+        },
+        "anchor": {
+          "x": 624.4469226193087,
+          "y": 1029.9692188060585
+        },
+        "distance": 1265.9713854779113,
+        "halfStride": 76.31865811025466,
+        "switchFrame": 12,
+        "exactDistance": 1265.9713854779113,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "occluder-behind",
+      "frames": 67,
+      "planningMs": 2.528666999999814,
+      "search": {
+        "expanded": 33,
+        "generated": 34,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.300089679457964
+      },
+      "arrival": {
+        "target": {
+          "x": 1602,
+          "y": 772
+        },
+        "anchor": {
+          "x": 1718.6572617448128,
+          "y": 798.210073180296
+        },
+        "distance": 119.56539906642823,
+        "halfStride": 25.567167487125182,
+        "switchFrame": 20,
+        "exactDistance": 119.56539906642823,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "occluder-back",
+      "frames": 67,
+      "planningMs": 2.248583999999937,
+      "search": {
+        "expanded": 34,
+        "generated": 35,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 5.342928077181819
+      },
+      "arrival": {
+        "target": {
+          "x": 1602,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1616.1077755926362,
+          "y": 855.7969521079194
+        },
+        "distance": 16.62575407496487,
+        "halfStride": 28.81555987603484,
+        "switchFrame": 20,
+        "exactDistance": 16.62575407496487,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "narrow-gap",
+      "frames": 87,
+      "planningMs": 2.5898329999999987,
+      "search": {
+        "expanded": 44,
+        "generated": 44,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 5.030313158992302
+      },
+      "arrival": {
+        "target": {
+          "x": 1452,
+          "y": 842
+        },
+        "anchor": {
+          "x": 1454.4278763220098,
+          "y": 868.3086893730384
+        },
+        "distance": 26.420479177372997,
+        "halfStride": 58.51646012052267,
+        "switchFrame": 12,
+        "exactDistance": 26.420479177372997,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "unreachable",
+      "frames": 28,
+      "planningMs": 2.362707999999884,
+      "search": {
+        "expanded": 17,
+        "generated": 17,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 2.817685950244787
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "object",
+      "frames": 88,
+      "planningMs": 3.1986249999999927,
+      "search": {
+        "expanded": 42,
+        "generated": 49,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.521194092792773
+      },
+      "arrival": {
+        "target": {
+          "x": 72.5,
+          "y": 1022.5
+        },
+        "anchor": {
+          "x": 487.53649075819914,
+          "y": 928.8794140962347
+        },
+        "distance": 425.4645728681121,
+        "halfStride": 94.08394582877227,
+        "switchFrame": 3,
+        "exactDistance": 425.4645728681121,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "inside",
+      "walk": "exit-bus_platform",
+      "frames": 72,
+      "planningMs": 5.1353340000002845,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.60949244767569
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "near-left",
+      "frames": 320,
+      "planningMs": 65.67166700000007,
+      "search": {
+        "expanded": 4000,
+        "generated": 8690,
+        "elapsedMs": 0,
+        "reason": "node-budget",
+        "optimal": false,
+        "costBound": 23.45781014481671
+      },
+      "arrival": {
+        "target": {
+          "x": 37.5,
+          "y": 907.5
+        },
+        "anchor": {
+          "x": 145.99468877157926,
+          "y": 868.791665788469
+        },
+        "distance": 115.19302335242976,
+        "halfStride": 36.11958638435348,
+        "switchFrame": 14,
+        "exactDistance": 115.19302335242976,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "near-right",
+      "frames": 28,
+      "planningMs": 4.091707999999926,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 23.35378915215748
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 797
+        },
+        "anchor": {
+          "x": 53.78190448241979,
+          "y": 890.0755057293402
+        },
+        "distance": 1800.6252716247334,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 1800.6252716247334,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "deepest",
+      "frames": 111,
+      "planningMs": 3.9152909999997974,
+      "search": {
+        "expanded": 381,
+        "generated": 381,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 15.740286857984183
+      },
+      "arrival": {
+        "target": {
+          "x": 1147,
+          "y": 732
+        },
+        "anchor": {
+          "x": 1148.9368831790366,
+          "y": 738.5929160275807
+        },
+        "distance": 6.871539725270139,
+        "halfStride": 9.657708599228826,
+        "switchFrame": 20,
+        "exactDistance": 6.871539725270139,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "far-left",
+      "frames": 397,
+      "planningMs": 67.71866600000021,
+      "search": {
+        "expanded": 4000,
+        "generated": 11256,
+        "elapsedMs": 0,
+        "reason": "node-budget",
+        "optimal": false,
+        "costBound": 35.73718859700176
+      },
+      "arrival": {
+        "target": {
+          "x": 67,
+          "y": 767
+        },
+        "anchor": {
+          "x": 55.05575422127114,
+          "y": 768.454726147941
+        },
+        "distance": 12.032507443928113,
+        "halfStride": 11.922374434485917,
+        "switchFrame": 20,
+        "exactDistance": 12.032507443928113,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "far-right",
+      "frames": 331,
+      "planningMs": 76.62062500000002,
+      "search": {
+        "expanded": 4000,
+        "generated": 12867,
+        "elapsedMs": 0,
+        "reason": "node-budget",
+        "optimal": false,
+        "costBound": 35.706074187672364
+      },
+      "arrival": {
+        "target": {
+          "x": 1847,
+          "y": 737
+        },
+        "anchor": {
+          "x": 1656.5779583968767,
+          "y": 775.4373044113123
+        },
+        "distance": 194.26265801411628,
+        "halfStride": 23.027034940377128,
+        "switchFrame": 14,
+        "exactDistance": 194.26265801411628,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "diagonal-away",
+      "frames": 28,
+      "planningMs": 5.033334000000195,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 30.938904066245563
+      },
+      "arrival": {
+        "target": {
+          "x": 1847,
+          "y": 737
+        },
+        "anchor": {
+          "x": 53.78190448241979,
+          "y": 890.0755057293402
+        },
+        "distance": 1799.7397724521152,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 1799.7397724521152,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "diagonal-toward",
+      "frames": 331,
+      "planningMs": 67.80670800000007,
+      "search": {
+        "expanded": 4000,
+        "generated": 12829,
+        "elapsedMs": 0,
+        "reason": "node-budget",
+        "optimal": false,
+        "costBound": 29.94669018566989
+      },
+      "arrival": {
+        "target": {
+          "x": 1852,
+          "y": 797
+        },
+        "anchor": {
+          "x": 1681.679938216846,
+          "y": 778.3659125968937
+        },
+        "distance": 171.33637284349163,
+        "halfStride": 23.437759760978295,
+        "switchFrame": 14,
+        "exactDistance": 171.33637284349163,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "occluder-behind",
+      "frames": 56,
+      "planningMs": 2.1347500000001673,
+      "search": {
+        "expanded": 30,
+        "generated": 31,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.100986610910092
+      },
+      "arrival": {
+        "target": {
+          "x": 292,
+          "y": 867
+        },
+        "anchor": {
+          "x": 347.1965705786359,
+          "y": 875.624671389381
+        },
+        "distance": 55.86632581633716,
+        "halfStride": 40.41647295415753,
+        "switchFrame": 21,
+        "exactDistance": 55.86632581633716,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "occluder-back",
+      "frames": 107,
+      "planningMs": 2.6384580000003552,
+      "search": {
+        "expanded": 111,
+        "generated": 115,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 7.003977022332793
+      },
+      "arrival": {
+        "target": {
+          "x": 292,
+          "y": 1017
+        },
+        "anchor": {
+          "x": 293.0385295504169,
+          "y": 1004.7252501406482
+        },
+        "distance": 12.318604942798766,
+        "halfStride": 19.610719114105045,
+        "switchFrame": 18,
+        "exactDistance": 12.318604942798766,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "narrow-gap",
+      "frames": 129,
+      "planningMs": 2.952125000000251,
+      "search": {
+        "expanded": 96,
+        "generated": 102,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 8.99856310065199
+      },
+      "arrival": {
+        "target": {
+          "x": 67,
+          "y": 997
+        },
+        "anchor": {
+          "x": 225.98597300595318,
+          "y": 991.9766355528134
+        },
+        "distance": 159.06531301015607,
+        "halfStride": 18.975336347572455,
+        "switchFrame": 18,
+        "exactDistance": 159.06531301015607,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "unreachable",
+      "frames": 78,
+      "planningMs": 3.480000000000018,
+      "search": {
+        "expanded": 227,
+        "generated": 227,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.29183109605212
+      },
+      "arrival": {
+        "target": {
+          "x": 952.5,
+          "y": 727.5
+        },
+        "anchor": {
+          "x": 983.5830710320762,
+          "y": 726.3627259999782
+        },
+        "distance": 31.103869484940606,
+        "halfStride": 17.598229106164112,
+        "switchFrame": 21,
+        "exactDistance": 31.103869484940606,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "object",
+      "frames": 137,
+      "planningMs": 6.510541000000103,
+      "search": {
+        "expanded": 384,
+        "generated": 420,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 12.049953377440039
+      },
+      "arrival": {
+        "target": {
+          "x": 282.5,
+          "y": 787.5
+        },
+        "anchor": {
+          "x": 282.46358531209125,
+          "y": 786.4794733228306
+        },
+        "distance": 1.0211761495011216,
+        "halfStride": 13.28933875954155,
+        "switchFrame": 20,
+        "exactDistance": 1.0211761495011216,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left",
+      "frames": 163,
+      "planningMs": 4.587041000000227,
+      "search": {
+        "expanded": 287,
+        "generated": 287,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.94205804812918
+      },
+      "arrival": {
+        "target": {
+          "x": 17.5,
+          "y": 797.5
+        },
+        "anchor": {
+          "x": 99.93101049534863,
+          "y": 800.0398444841022
+        },
+        "distance": 82.4701297518544,
+        "halfStride": 26.477436365696143,
+        "switchFrame": 14,
+        "exactDistance": 82.4701297518544,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left-1",
+      "frames": 163,
+      "planningMs": 6.20895900000005,
+      "search": {
+        "expanded": 287,
+        "generated": 287,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.94205804812918
+      },
+      "arrival": {
+        "target": {
+          "x": 17.5,
+          "y": 797.5
+        },
+        "anchor": {
+          "x": 99.93101049534863,
+          "y": 800.0398444841022
+        },
+        "distance": 82.4701297518544,
+        "halfStride": 26.477436365696143,
+        "switchFrame": 14,
+        "exactDistance": 82.4701297518544,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left-2",
+      "frames": 163,
+      "planningMs": 4.381875000000036,
+      "search": {
+        "expanded": 287,
+        "generated": 287,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.94205804812918
+      },
+      "arrival": {
+        "target": {
+          "x": 17.5,
+          "y": 797.5
+        },
+        "anchor": {
+          "x": 99.93101049534863,
+          "y": 800.0398444841022
+        },
+        "distance": 82.4701297518544,
+        "halfStride": 26.477436365696143,
+        "switchFrame": 14,
+        "exactDistance": 82.4701297518544,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-right",
+      "frames": 181,
+      "planningMs": 10.28354199999967,
+      "search": {
+        "expanded": 658,
+        "generated": 745,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 17.792284474119583
+      },
+      "arrival": {
+        "target": {
+          "x": 1902.5,
+          "y": 772.5
+        },
+        "anchor": {
+          "x": 1811.3325194747556,
+          "y": 762.8896728826411
+        },
+        "distance": 91.67261255480537,
+        "halfStride": 10.700183063881576,
+        "switchFrame": 5,
+        "exactDistance": 91.67261255480537,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "road",
+      "walk": "exit-far",
+      "frames": 102,
+      "planningMs": 7.077832999999373,
+      "search": {
+        "expanded": 14,
+        "generated": 14,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 2.667400318047996
+      },
+      "arrival": {
+        "target": {
+          "x": 957.5,
+          "y": 982.5
+        },
+        "anchor": {
+          "x": 970.2580483193728,
+          "y": 932.3492316741815
+        },
+        "distance": 51.74811456071971,
+        "halfStride": 35.37145394477351,
+        "switchFrame": 20,
+        "exactDistance": 51.74811456071971,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "near-left",
+      "frames": 28,
+      "planningMs": 3.634165999999823,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.270251455381807
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "near-right",
+      "frames": 122,
+      "planningMs": 4.52212499999996,
+      "search": {
+        "expanded": 107,
+        "generated": 118,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.476767926849403
+      },
+      "arrival": {
+        "target": {
+          "x": 1687,
+          "y": 952
+        },
+        "anchor": {
+          "x": 1593.627412778973,
+          "y": 1003.8100303066743
+        },
+        "distance": 106.78351597848244,
+        "halfStride": 26.80697792310376,
+        "switchFrame": 18,
+        "exactDistance": 106.78351597848244,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "deepest",
+      "frames": 111,
+      "planningMs": 2.8763749999998254,
+      "search": {
+        "expanded": 95,
+        "generated": 102,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 10.843280779497467
+      },
+      "arrival": {
+        "target": {
+          "x": 652,
+          "y": 657
+        },
+        "anchor": {
+          "x": 636.3913902531426,
+          "y": 660.7184785329933
+        },
+        "distance": 16.04542865834452,
+        "halfStride": 14.771467407969938,
+        "switchFrame": 20,
+        "exactDistance": 16.04542865834452,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "far-left",
+      "frames": 111,
+      "planningMs": 4.3959579999996095,
+      "search": {
+        "expanded": 78,
+        "generated": 87,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.288817371902466
+      },
+      "arrival": {
+        "target": {
+          "x": 462,
+          "y": 727
+        },
+        "anchor": {
+          "x": 587.2678083832039,
+          "y": 838.9531859880731
+        },
+        "distance": 168.00458228873157,
+        "halfStride": 28.288466243728926,
+        "switchFrame": 20,
+        "exactDistance": 168.00458228873157,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "far-right",
+      "frames": 197,
+      "planningMs": 8.410041999999976,
+      "search": {
+        "expanded": 323,
+        "generated": 380,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.715621155288844
+      },
+      "arrival": {
+        "target": {
+          "x": 1597,
+          "y": 922
+        },
+        "anchor": {
+          "x": 1463.7639715225455,
+          "y": 964.3122065296849
+        },
+        "distance": 139.7932834790562,
+        "halfStride": 105.43970861432095,
+        "switchFrame": 3,
+        "exactDistance": 139.7932834790562,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "diagonal-away",
+      "frames": 114,
+      "planningMs": 3.6850420000000668,
+      "search": {
+        "expanded": 103,
+        "generated": 110,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.21541214623917
+      },
+      "arrival": {
+        "target": {
+          "x": 1597,
+          "y": 922
+        },
+        "anchor": {
+          "x": 1541.0817485878413,
+          "y": 1005.7755840497541
+        },
+        "distance": 100.72338022460727,
+        "halfStride": 81.42631031501526,
+        "switchFrame": 2,
+        "exactDistance": 100.72338022460727,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "diagonal-toward",
+      "frames": 197,
+      "planningMs": 6.0452909999999065,
+      "search": {
+        "expanded": 364,
+        "generated": 411,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.101821542364869
+      },
+      "arrival": {
+        "target": {
+          "x": 1687,
+          "y": 952
+        },
+        "anchor": {
+          "x": 1463.7639715225455,
+          "y": 964.3122065296849
+        },
+        "distance": 223.57530015638244,
+        "halfStride": 105.43970861432095,
+        "switchFrame": 3,
+        "exactDistance": 223.57530015638244,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "occluder-behind",
+      "frames": 129,
+      "planningMs": 2.6785409999997682,
+      "search": {
+        "expanded": 58,
+        "generated": 65,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.803299133567589
+      },
+      "arrival": {
+        "target": {
+          "x": 297,
+          "y": 987
+        },
+        "anchor": {
+          "x": 669.7255378756024,
+          "y": 939.7361768569425
+        },
+        "distance": 375.71025480116367,
+        "halfStride": 23.613578202153374,
+        "switchFrame": 18,
+        "exactDistance": 375.71025480116367,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "occluder-back",
+      "frames": 129,
+      "planningMs": 2.481250000000273,
+      "search": {
+        "expanded": 58,
+        "generated": 65,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.803299133567589
+      },
+      "arrival": {
+        "target": {
+          "x": 297,
+          "y": 987
+        },
+        "anchor": {
+          "x": 669.7255378756024,
+          "y": 939.7361768569425
+        },
+        "distance": 375.71025480116367,
+        "halfStride": 23.613578202153374,
+        "switchFrame": 18,
+        "exactDistance": 375.71025480116367,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "narrow-gap",
+      "frames": 64,
+      "planningMs": 1.6725830000000315,
+      "search": {
+        "expanded": 21,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.944217974353705
+      },
+      "arrival": {
+        "target": {
+          "x": 472,
+          "y": 722
+        },
+        "anchor": {
+          "x": 667.6945688847736,
+          "y": 701.8521977521314
+        },
+        "distance": 196.72899691305454,
+        "halfStride": 11.757593403488848,
+        "switchFrame": 18,
+        "exactDistance": 196.72899691305454,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "unreachable",
+      "frames": 28,
+      "planningMs": 1.7268330000001697,
+      "search": {
+        "expanded": 11,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 3.2876502223455186
+      },
+      "arrival": {
+        "target": {
+          "x": 927.5,
+          "y": 752.5
+        },
+        "anchor": {
+          "x": 996.5465983525377,
+          "y": 792.1167982543018
+        },
+        "distance": 79.6047953830591,
+        "halfStride": 21.00618294210937,
+        "switchFrame": 13,
+        "exactDistance": 79.6047953830591,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "object",
+      "frames": 83,
+      "planningMs": 2.134041999999681,
+      "search": {
+        "expanded": 22,
+        "generated": 30,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.540513689374084
+      },
+      "arrival": {
+        "target": {
+          "x": 457.5,
+          "y": 722.5
+        },
+        "anchor": {
+          "x": 499.3960005263109,
+          "y": 724.1815074563302
+        },
+        "distance": 41.92973082940478,
+        "halfStride": 36.21693609334107,
+        "switchFrame": 14,
+        "exactDistance": 41.92973082940478,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "exit-far",
+      "frames": 105,
+      "planningMs": 2.7779169999998885,
+      "search": {
+        "expanded": 71,
+        "generated": 75,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.813361743859854
+      },
+      "arrival": {
+        "target": {
+          "x": 567.5,
+          "y": 632.5
+        },
+        "anchor": {
+          "x": 620.4049723364963,
+          "y": 680.2270250146007
+        },
+        "distance": 71.25170183700706,
+        "halfStride": 16.250960396986635,
+        "switchFrame": 20,
+        "exactDistance": 71.25170183700706,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "alley",
+      "walk": "exit-near",
+      "frames": 107,
+      "planningMs": 2.5449170000001686,
+      "search": {
+        "expanded": 20,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.180569645182223
+      },
+      "arrival": {
+        "target": {
+          "x": 957.5,
+          "y": 1032.5
+        },
+        "anchor": {
+          "x": 1036.9187821515661,
+          "y": 1024.405087756462
+        },
+        "distance": 79.83026094576228,
+        "halfStride": 27.833422364512423,
+        "switchFrame": 18,
+        "exactDistance": 79.83026094576228,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "near-left",
+      "frames": 56,
+      "planningMs": 4.809290999999575,
+      "search": {
+        "expanded": 12,
+        "generated": 12,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.838685505920613
+      },
+      "arrival": {
+        "target": {
+          "x": 82,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1258.5373866366674,
+          "y": 944.6779679589652
+        },
+        "distance": 1176.5624392040645,
+        "halfStride": 104.16226666103604,
+        "switchFrame": 21,
+        "exactDistance": 1176.5624392040645,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "near-right",
+      "frames": 42,
+      "planningMs": 4.637749999999869,
+      "search": {
+        "expanded": 7,
+        "generated": 7,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 8.079851000486094
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 917
+        },
+        "anchor": {
+          "x": 149.40449079511353,
+          "y": 1012.6840005623712
+        },
+        "distance": 1690.3058985438463,
+        "halfStride": 49.080739305138366,
+        "switchFrame": 18,
+        "exactDistance": 1690.3058985438463,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "deepest",
+      "frames": 35,
+      "planningMs": 3.4227499999997235,
+      "search": {
+        "expanded": 14,
+        "generated": 14,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 10.204775591361406
+      },
+      "arrival": {
+        "target": {
+          "x": 117,
+          "y": 692
+        },
+        "anchor": {
+          "x": 670.1376862927796,
+          "y": 916.9002680600728
+        },
+        "distance": 597.1109030748158,
+        "halfStride": 123.9655441943654,
+        "switchFrame": 5,
+        "exactDistance": 597.1109030748158,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "far-left",
+      "frames": 28,
+      "planningMs": 5.52454200000011,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.342993220121922
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "far-right",
+      "frames": 56,
+      "planningMs": 5.059124999999767,
+      "search": {
+        "expanded": 5,
+        "generated": 5,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.505713944869708
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 752
+        },
+        "anchor": {
+          "x": 219.7126287236319,
+          "y": 756.5900716021632
+        },
+        "distance": 1617.2938848729189,
+        "halfStride": 27.542469032284824,
+        "switchFrame": 21,
+        "exactDistance": 1617.2938848729189,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "diagonal-away",
+      "frames": 42,
+      "planningMs": 5.249541999999565,
+      "search": {
+        "expanded": 7,
+        "generated": 7,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 10.665205462872208
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 752
+        },
+        "anchor": {
+          "x": 149.40449079511353,
+          "y": 1012.6840005623712
+        },
+        "distance": 1707.6108312018,
+        "halfStride": 49.080739305138366,
+        "switchFrame": 18,
+        "exactDistance": 1707.6108312018,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "diagonal-toward",
+      "frames": 56,
+      "planningMs": 4.9675829999996495,
+      "search": {
+        "expanded": 5,
+        "generated": 5,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 13.191624044096535
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 917
+        },
+        "anchor": {
+          "x": 219.7126287236319,
+          "y": 756.5900716021632
+        },
+        "distance": 1625.2229959050617,
+        "halfStride": 27.542469032284824,
+        "switchFrame": 21,
+        "exactDistance": 1625.2229959050617,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "occluder-behind",
+      "frames": 86,
+      "planningMs": 2.134791999999834,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.256130014254671
+      },
+      "arrival": {
+        "target": {
+          "x": 987,
+          "y": 802
+        },
+        "anchor": {
+          "x": 1642.2103869568614,
+          "y": 951.5994467631605
+        },
+        "distance": 672.0719051173048,
+        "halfStride": 46.43595000451608,
+        "switchFrame": 18,
+        "exactDistance": 672.0719051173048,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "occluder-back",
+      "frames": 86,
+      "planningMs": 1.9886659999992844,
+      "search": {
+        "expanded": 11,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.533001750426923
+      },
+      "arrival": {
+        "target": {
+          "x": 1152,
+          "y": 877
+        },
+        "anchor": {
+          "x": 1642.2103869568614,
+          "y": 951.5994467631605
+        },
+        "distance": 495.85411255505926,
+        "halfStride": 46.43595000451608,
+        "switchFrame": 18,
+        "exactDistance": 495.85411255505926,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "narrow-gap",
+      "frames": 28,
+      "planningMs": 2.034417000000758,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.699048121074371
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "unreachable",
+      "frames": 28,
+      "planningMs": 1.658625000000029,
+      "search": {
+        "expanded": 4,
+        "generated": 4,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 2.763072924002185
+      },
+      "arrival": {
+        "target": {
+          "x": 957.5,
+          "y": 787.5
+        },
+        "anchor": {
+          "x": 1018.2289538150745,
+          "y": 819.2637511803589
+        },
+        "distance": 68.53423757890071,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 68.53423757890071,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "object",
+      "frames": 28,
+      "planningMs": 3.194208000000799,
+      "search": {
+        "expanded": 6,
+        "generated": 6,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.873050909354847
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "exit-edge-left",
+      "frames": 28,
+      "planningMs": 2.671624999999949,
+      "search": {
+        "expanded": 5,
+        "generated": 5,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.371638561998402
+      },
+      "limitations": []
+    },
+    {
+      "scene": "pier",
+      "walk": "exit-edge-right",
+      "frames": 38,
+      "planningMs": 2.971875000000182,
+      "search": {
+        "expanded": 6,
+        "generated": 6,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.121545471569718
+      },
+      "arrival": {
+        "target": {
+          "x": 1862.5,
+          "y": 817.5
+        },
+        "anchor": {
+          "x": 1149.090449150128,
+          "y": 841.0025872950952
+        },
+        "distance": 713.79658086417,
+        "halfStride": 99.2785124450402,
+        "switchFrame": 24,
+        "exactDistance": 713.79658086417,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "near-left",
+      "frames": 28,
+      "planningMs": 2.2261250000001382,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.968513215698702
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "near-right",
+      "frames": 67,
+      "planningMs": 2.232625000000553,
+      "search": {
+        "expanded": 31,
+        "generated": 32,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.636127461391437
+      },
+      "arrival": {
+        "target": {
+          "x": 1412,
+          "y": 922
+        },
+        "anchor": {
+          "x": 1317.4775739304387,
+          "y": 939.6349683178942
+        },
+        "distance": 96.15342499177457,
+        "halfStride": 124.78515953110842,
+        "switchFrame": 3,
+        "exactDistance": 96.15342499177457,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "deepest",
+      "frames": 78,
+      "planningMs": 1.650749999999789,
+      "search": {
+        "expanded": 57,
+        "generated": 58,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.971247127492864
+      },
+      "arrival": {
+        "target": {
+          "x": 952.5,
+          "y": 737.5
+        },
+        "anchor": {
+          "x": 920.1794867360643,
+          "y": 739.8213867756982
+        },
+        "distance": 32.40377160465477,
+        "halfStride": 17.770759223546186,
+        "switchFrame": 20,
+        "exactDistance": 32.40377160465477,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "far-left",
+      "frames": 78,
+      "planningMs": 2.720166000000063,
+      "search": {
+        "expanded": 38,
+        "generated": 42,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.465395243112748
+      },
+      "arrival": {
+        "target": {
+          "x": 607.5,
+          "y": 867.5
+        },
+        "anchor": {
+          "x": 742.5212366723011,
+          "y": 887.892116260531
+        },
+        "distance": 136.55245423682643,
+        "halfStride": 104.17207126945617,
+        "switchFrame": 3,
+        "exactDistance": 136.55245423682643,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "far-right",
+      "frames": 28,
+      "planningMs": 1.4425830000000133,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.7133154711546
+      },
+      "arrival": {
+        "target": {
+          "x": 1357,
+          "y": 847
+        },
+        "anchor": {
+          "x": 652.8923512747875,
+          "y": 855.325729337508
+        },
+        "distance": 704.1568708479302,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 704.1568708479302,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "diagonal-away",
+      "frames": 71,
+      "planningMs": 2.6689580000002024,
+      "search": {
+        "expanded": 32,
+        "generated": 36,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.792144085045774
+      },
+      "arrival": {
+        "target": {
+          "x": 1357,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1392.4468218540214,
+          "y": 862.3900010979132
+        },
+        "distance": 38.64361930958981,
+        "halfStride": 70.10900522135597,
+        "switchFrame": 24,
+        "exactDistance": 38.64361930958981,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "diagonal-toward",
+      "frames": 28,
+      "planningMs": 1.4264579999999114,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.458129754883415
+      },
+      "arrival": {
+        "target": {
+          "x": 1412,
+          "y": 922
+        },
+        "anchor": {
+          "x": 652.8923512747875,
+          "y": 855.325729337508
+        },
+        "distance": 762.0301048656121,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 762.0301048656121,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "occluder-behind",
+      "frames": 28,
+      "planningMs": 1.2768749999995634,
+      "search": {
+        "expanded": 16,
+        "generated": 16,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.318307027837096
+      },
+      "arrival": {
+        "target": {
+          "x": 1372,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1365.25,
+          "y": 1016.75
+        },
+        "distance": 169.8841517034476,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 169.8841517034476,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "occluder-back",
+      "frames": 28,
+      "planningMs": 1.0895000000000437,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.106860963696476
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "narrow-gap",
+      "frames": 28,
+      "planningMs": 1.1590409999998883,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.356812501095088
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "unreachable",
+      "frames": 46,
+      "planningMs": 1.330166000000645,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.0650003921984235
+      },
+      "arrival": {
+        "target": {
+          "x": 797.5,
+          "y": 747.5
+        },
+        "anchor": {
+          "x": 920.4019749482889,
+          "y": 747.0063974814068
+        },
+        "distance": 122.90296615475228,
+        "halfStride": 28.780393258996604,
+        "switchFrame": 5,
+        "exactDistance": 122.90296615475228,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "object",
+      "frames": 67,
+      "planningMs": 1.5005000000001019,
+      "search": {
+        "expanded": 16,
+        "generated": 17,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.316740090704217
+      },
+      "arrival": {
+        "target": {
+          "x": 607.5,
+          "y": 867.5
+        },
+        "anchor": {
+          "x": 889.7186549085371,
+          "y": 855.217730489993
+        },
+        "distance": 282.485793134275,
+        "halfStride": 22.298198166327293,
+        "switchFrame": 18,
+        "exactDistance": 282.485793134275,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-edge-left",
+      "frames": 107,
+      "planningMs": 1.7911250000006476,
+      "search": {
+        "expanded": 45,
+        "generated": 48,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.4724541642582025
+      },
+      "arrival": {
+        "target": {
+          "x": 562.5,
+          "y": 1062.5
+        },
+        "anchor": {
+          "x": 922.3087535259632,
+          "y": 1035.3356191718947
+        },
+        "distance": 360.83270735852324,
+        "halfStride": 35.365854922689955,
+        "switchFrame": 18,
+        "exactDistance": 360.83270735852324,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-edge-right",
+      "frames": 129,
+      "planningMs": 2.4454580000001442,
+      "search": {
+        "expanded": 33,
+        "generated": 36,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 8.22710474114933
+      },
+      "arrival": {
+        "target": {
+          "x": 1372.5,
+          "y": 1037.5
+        },
+        "anchor": {
+          "x": 1103.163703159679,
+          "y": 1064.331607401428
+        },
+        "distance": 270.6694957903492,
+        "halfStride": 35.365854922689934,
+        "switchFrame": 18,
+        "exactDistance": 270.6694957903492,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-far",
+      "frames": 46,
+      "planningMs": 1.4726250000003347,
+      "search": {
+        "expanded": 15,
+        "generated": 15,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.628434259613515
+      },
+      "arrival": {
+        "target": {
+          "x": 972.5,
+          "y": 737.5
+        },
+        "anchor": {
+          "x": 920.4019749482889,
+          "y": 747.0063974814068
+        },
+        "distance": 52.95824588638884,
+        "halfStride": 28.780393258996604,
+        "switchFrame": 5,
+        "exactDistance": 52.95824588638884,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "near-left",
+      "frames": 107,
+      "planningMs": 1.2894169999999576,
+      "search": {
+        "expanded": 11,
+        "generated": 12,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.029695087864156
+      },
+      "arrival": {
+        "target": {
+          "x": 707,
+          "y": 1022
+        },
+        "anchor": {
+          "x": 1111.7189930736965,
+          "y": 1056.9939176624025
+        },
+        "distance": 406.229045770917,
+        "halfStride": 35.365854922689934,
+        "switchFrame": 18,
+        "exactDistance": 406.229045770917,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "near-right",
+      "frames": 107,
+      "planningMs": 1.4654170000003433,
+      "search": {
+        "expanded": 21,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.038516567124118
+      },
+      "arrival": {
+        "target": {
+          "x": 1207,
+          "y": 1007
+        },
+        "anchor": {
+          "x": 1099.357017984618,
+          "y": 1021.9042453031291
+        },
+        "distance": 108.66990432138826,
+        "halfStride": 35.365854922689955,
+        "switchFrame": 18,
+        "exactDistance": 108.66990432138826,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "deepest",
+      "frames": 57,
+      "planningMs": 1.0230410000003758,
+      "search": {
+        "expanded": 10,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.040104719128992
+      },
+      "arrival": {
+        "target": {
+          "x": 877,
+          "y": 762
+        },
+        "anchor": {
+          "x": 946.4857390929548,
+          "y": 881.7209885068464
+        },
+        "distance": 138.4246474669545,
+        "halfStride": 43.03031516923149,
+        "switchFrame": 20,
+        "exactDistance": 138.4246474669545,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "far-left",
+      "frames": 57,
+      "planningMs": 0.811040999999932,
+      "search": {
+        "expanded": 10,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.052638099405796
+      },
+      "arrival": {
+        "target": {
+          "x": 872,
+          "y": 762
+        },
+        "anchor": {
+          "x": 946.4857390929548,
+          "y": 881.7209885068464
+        },
+        "distance": 141.00085254096933,
+        "halfStride": 43.03031516923149,
+        "switchFrame": 20,
+        "exactDistance": 141.00085254096933,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "far-right",
+      "frames": 57,
+      "planningMs": 1.0397079999993366,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.284611570668113
+      },
+      "arrival": {
+        "target": {
+          "x": 1047,
+          "y": 757
+        },
+        "anchor": {
+          "x": 913.1044382163641,
+          "y": 881.7209885068464
+        },
+        "distance": 182.98455246134952,
+        "halfStride": 43.03031516923149,
+        "switchFrame": 20,
+        "exactDistance": 182.98455246134952,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "diagonal-away",
+      "frames": 57,
+      "planningMs": 0.9759169999997539,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.284611570668113
+      },
+      "arrival": {
+        "target": {
+          "x": 1047,
+          "y": 757
+        },
+        "anchor": {
+          "x": 913.1044382163641,
+          "y": 881.7209885068464
+        },
+        "distance": 182.98455246134952,
+        "halfStride": 43.03031516923149,
+        "switchFrame": 20,
+        "exactDistance": 182.98455246134952,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "diagonal-toward",
+      "frames": 107,
+      "planningMs": 1.45049999999992,
+      "search": {
+        "expanded": 21,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.038516567124118
+      },
+      "arrival": {
+        "target": {
+          "x": 1207,
+          "y": 1007
+        },
+        "anchor": {
+          "x": 1099.357017984618,
+          "y": 1021.9042453031291
+        },
+        "distance": 108.66990432138826,
+        "halfStride": 35.365854922689955,
+        "switchFrame": 18,
+        "exactDistance": 108.66990432138826,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "occluder-behind",
+      "frames": 107,
+      "planningMs": 1.2075000000004366,
+      "search": {
+        "expanded": 21,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.038516567124118
+      },
+      "arrival": {
+        "target": {
+          "x": 1207,
+          "y": 1007
+        },
+        "anchor": {
+          "x": 1099.357017984618,
+          "y": 1021.9042453031291
+        },
+        "distance": 108.66990432138826,
+        "halfStride": 35.365854922689955,
+        "switchFrame": 18,
+        "exactDistance": 108.66990432138826,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "occluder-back",
+      "frames": 107,
+      "planningMs": 2.257999999999811,
+      "search": {
+        "expanded": 21,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.072755739147651
+      },
+      "arrival": {
+        "target": {
+          "x": 1217,
+          "y": 1017
+        },
+        "anchor": {
+          "x": 1109.3570179846186,
+          "y": 1021.9042453031291
+        },
+        "distance": 107.75464351552094,
+        "halfStride": 35.365854922689955,
+        "switchFrame": 18,
+        "exactDistance": 107.75464351552094,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "narrow-gap",
+      "frames": 57,
+      "planningMs": 0.9817919999995866,
+      "search": {
+        "expanded": 10,
+        "generated": 11,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.052638099405796
+      },
+      "arrival": {
+        "target": {
+          "x": 872,
+          "y": 762
+        },
+        "anchor": {
+          "x": 946.4857390929548,
+          "y": 881.7209885068464
+        },
+        "distance": 141.00085254096933,
+        "halfStride": 43.03031516923149,
+        "switchFrame": 20,
+        "exactDistance": 141.00085254096933,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "unreachable",
+      "frames": 28,
+      "planningMs": 0.8478750000003856,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 3.1739194176736456
+      },
+      "arrival": {
+        "target": {
+          "x": 957.5,
+          "y": 757.5
+        },
+        "anchor": {
+          "x": 985.8103019415463,
+          "y": 822.2030102029065
+        },
+        "distance": 70.62543964704888,
+        "halfStride": 2,
+        "switchFrame": 8,
+        "exactDistance": 70.62543964704888,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "church",
+      "walk": "object",
+      "frames": 67,
+      "planningMs": 1.1256249999996726,
+      "search": {
+        "expanded": 18,
+        "generated": 22,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.2268928098462855
+      },
+      "arrival": {
+        "target": {
+          "x": 1052.5,
+          "y": 757.5
+        },
+        "anchor": {
+          "x": 1000.4212326464792,
+          "y": 769.9701581204997
+        },
+        "distance": 53.550936990984646,
+        "halfStride": 32.588503456069255,
+        "switchFrame": 20,
+        "exactDistance": 53.550936990984646,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "near-left",
+      "frames": 108,
+      "planningMs": 4.784208000000035,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 15.63131368825917
+      },
+      "arrival": {
+        "target": {
+          "x": 32,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1491.9655435128514,
+          "y": 1047.6265160749322
+        },
+        "distance": 1464.1508167889167,
+        "halfStride": 61.18378868697445,
+        "switchFrame": 12,
+        "exactDistance": 1464.1508167889167,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "near-right",
+      "frames": 207,
+      "planningMs": 6.219583000000057,
+      "search": {
+        "expanded": 65,
+        "generated": 65,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 15.919485514483778
+      },
+      "arrival": {
+        "target": {
+          "x": 1887,
+          "y": 937
+        },
+        "anchor": {
+          "x": 1587.6000352543326,
+          "y": 912.8279978349175
+        },
+        "distance": 300.3741409948193,
+        "halfStride": 43.80317435849659,
+        "switchFrame": 14,
+        "exactDistance": 300.3741409948193,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "deepest",
+      "frames": 84,
+      "planningMs": 4.61304199999995,
+      "search": {
+        "expanded": 106,
+        "generated": 128,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.373875365748703
+      },
+      "arrival": {
+        "target": {
+          "x": 1112,
+          "y": 747
+        },
+        "anchor": {
+          "x": 1159.4986834163374,
+          "y": 747.3136145812167
+        },
+        "distance": 47.49971874012513,
+        "halfStride": 16.18672943004302,
+        "switchFrame": 20,
+        "exactDistance": 47.49971874012513,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "far-left",
+      "frames": 28,
+      "planningMs": 5.727334000000155,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 20.290927335356383
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "far-right",
+      "frames": 28,
+      "planningMs": 6.120750000000044,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 20.59030921225823
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "diagonal-away",
+      "frames": 251,
+      "planningMs": 8.257542000000285,
+      "search": {
+        "expanded": 162,
+        "generated": 175,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 19.584394785889437
+      },
+      "arrival": {
+        "target": {
+          "x": 1817,
+          "y": 742
+        },
+        "anchor": {
+          "x": 1591.3943406561027,
+          "y": 787.7794330141865
+        },
+        "distance": 230.20354040521403,
+        "halfStride": 32.90106676949636,
+        "switchFrame": 14,
+        "exactDistance": 230.20354040521403,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "diagonal-toward",
+      "frames": 28,
+      "planningMs": 5.671709000000192,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 17.30692747501367
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "occluder-behind",
+      "frames": 67,
+      "planningMs": 2.5408330000000205,
+      "search": {
+        "expanded": 32,
+        "generated": 32,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.047903696498103
+      },
+      "arrival": {
+        "target": {
+          "x": 447,
+          "y": 892
+        },
+        "anchor": {
+          "x": 497.87602016182996,
+          "y": 897.277175508874
+        },
+        "distance": 51.14897857101732,
+        "halfStride": 23.391601777273785,
+        "switchFrame": 20,
+        "exactDistance": 51.14897857101732,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "occluder-back",
+      "frames": 28,
+      "planningMs": 2.4058750000003783,
+      "search": {
+        "expanded": 35,
+        "generated": 35,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.038267437246026
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "narrow-gap",
+      "frames": 87,
+      "planningMs": 2.5860830000001442,
+      "search": {
+        "expanded": 42,
+        "generated": 44,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.033528191525959
+      },
+      "arrival": {
+        "target": {
+          "x": 1017,
+          "y": 772
+        },
+        "anchor": {
+          "x": 1077.152193958739,
+          "y": 818.6468831361572
+        },
+        "distance": 76.11976185175605,
+        "halfStride": 39.19813504273794,
+        "switchFrame": 12,
+        "exactDistance": 76.11976185175605,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "unreachable",
+      "frames": 46,
+      "planningMs": 3.372957999999926,
+      "search": {
+        "expanded": 29,
+        "generated": 29,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 4.353547293786864
+      },
+      "arrival": {
+        "target": {
+          "x": 817.5,
+          "y": 747.5
+        },
+        "anchor": {
+          "x": 868.6572495267337,
+          "y": 759.0945918027719
+        },
+        "distance": 52.454730370228795,
+        "halfStride": 16.75273650857515,
+        "switchFrame": 20,
+        "exactDistance": 52.454730370228795,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "lobby",
+      "walk": "object",
+      "frames": 141,
+      "planningMs": 5.862749999999323,
+      "search": {
+        "expanded": 223,
+        "generated": 245,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 10.062410434265985
+      },
+      "arrival": {
+        "target": {
+          "x": 42.5,
+          "y": 842.5
+        },
+        "anchor": {
+          "x": 366.4776494852055,
+          "y": 941.0612186600474
+        },
+        "distance": 338.63820101948386,
+        "halfStride": 52.29719356787136,
+        "switchFrame": 2,
+        "exactDistance": 338.63820101948386,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "near-left",
+      "frames": 83,
+      "planningMs": 2.8824580000000424,
+      "search": {
+        "expanded": 31,
+        "generated": 34,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 6.748437363629888
+      },
+      "arrival": {
+        "target": {
+          "x": 762,
+          "y": 922
+        },
+        "anchor": {
+          "x": 865.1753652406074,
+          "y": 895.5129954598937
+        },
+        "distance": 106.52097165366246,
+        "halfStride": 155.0714070666325,
+        "switchFrame": 3,
+        "exactDistance": 106.52097165366246,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "near-right",
+      "frames": 65,
+      "planningMs": 2.456916999999521,
+      "search": {
+        "expanded": 34,
+        "generated": 34,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.653461557244658
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1492.2191216726717,
+          "y": 776.8289217851619
+        },
+        "distance": 351.8491641001821,
+        "halfStride": 80.60478476524095,
+        "switchFrame": 14,
+        "exactDistance": 351.8491641001821,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "deepest",
+      "frames": 57,
+      "planningMs": 2.7058749999996508,
+      "search": {
+        "expanded": 57,
+        "generated": 57,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 14.48022047772986
+      },
+      "arrival": {
+        "target": {
+          "x": 962,
+          "y": 622
+        },
+        "anchor": {
+          "x": 1075.4871589282266,
+          "y": 762.6047049555634
+        },
+        "distance": 180.69039348355406,
+        "halfStride": 38.954589555936735,
+        "switchFrame": 20,
+        "exactDistance": 180.69039348355406,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "far-left",
+      "frames": 64,
+      "planningMs": 2.4095420000003287,
+      "search": {
+        "expanded": 8,
+        "generated": 8,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.62755865705505
+      },
+      "arrival": {
+        "target": {
+          "x": 862,
+          "y": 762
+        },
+        "anchor": {
+          "x": 1890.49163129677,
+          "y": 758.9173862766417
+        },
+        "distance": 1028.4962509192042,
+        "halfStride": 23.54146871338403,
+        "switchFrame": 18,
+        "exactDistance": 1028.4962509192042,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "far-right",
+      "frames": 90,
+      "planningMs": 3.1928340000004027,
+      "search": {
+        "expanded": 54,
+        "generated": 54,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.28914523010192
+      },
+      "arrival": {
+        "target": {
+          "x": 1857,
+          "y": 672
+        },
+        "anchor": {
+          "x": 1598.8765678842838,
+          "y": 808.0046957956049
+        },
+        "distance": 291.76186091683024,
+        "halfStride": 28.820114603137988,
+        "switchFrame": 18,
+        "exactDistance": 291.76186091683024,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "diagonal-away",
+      "frames": 83,
+      "planningMs": 5.116417000000183,
+      "search": {
+        "expanded": 71,
+        "generated": 71,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 13.511523522125673
+      },
+      "arrival": {
+        "target": {
+          "x": 1857,
+          "y": 672
+        },
+        "anchor": {
+          "x": 1504.504177092826,
+          "y": 758.7617579743645
+        },
+        "distance": 363.0164015768543,
+        "halfStride": 38.2820951341871,
+        "switchFrame": 20,
+        "exactDistance": 363.0164015768543,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "diagonal-toward",
+      "frames": 90,
+      "planningMs": 2.0446670000001177,
+      "search": {
+        "expanded": 12,
+        "generated": 14,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.849699864585272
+      },
+      "arrival": {
+        "target": {
+          "x": 1837,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1598.8765678842838,
+          "y": 808.0046957956049
+        },
+        "distance": 241.29526036074856,
+        "halfStride": 28.820114603137988,
+        "switchFrame": 18,
+        "exactDistance": 241.29526036074856,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "occluder-behind",
+      "frames": 61,
+      "planningMs": 3.7310829999996713,
+      "search": {
+        "expanded": 223,
+        "generated": 223,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.32347497667266
+      },
+      "arrival": {
+        "target": {
+          "x": 962,
+          "y": 622
+        },
+        "anchor": {
+          "x": 900.861308920022,
+          "y": 726.1013514725528
+        },
+        "distance": 120.72709275628627,
+        "halfStride": 32.56670502029845,
+        "switchFrame": 20,
+        "exactDistance": 120.72709275628627,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "occluder-back",
+      "frames": 127,
+      "planningMs": 1.9850420000002487,
+      "search": {
+        "expanded": 31,
+        "generated": 32,
+        "elapsedMs": 0,
+        "reason": "complete",
+        "optimal": true,
+        "costBound": 13.965352233783705
+      },
+      "arrival": {
+        "target": {
+          "x": 1312,
+          "y": 782
+        },
+        "anchor": {
+          "x": 1307.9292055822855,
+          "y": 774.863250854317
+        },
+        "distance": 8.21611560043446,
+        "halfStride": 102.44512927328735,
+        "switchFrame": 3,
+        "exactDistance": 8.21611560043446,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "narrow-gap",
+      "frames": 42,
+      "planningMs": 1.3942500000002838,
+      "search": {
+        "expanded": 7,
+        "generated": 8,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.7281586464479695
+      },
+      "arrival": {
+        "target": {
+          "x": 1662,
+          "y": 847
+        },
+        "anchor": {
+          "x": 1849.783431105847,
+          "y": 786.2797445854997
+        },
+        "distance": 197.35644508220796,
+        "halfStride": 26.483903359659138,
+        "switchFrame": 18,
+        "exactDistance": 197.35644508220796,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "unreachable",
+      "frames": 28,
+      "planningMs": 1.8899169999995138,
+      "search": {
+        "expanded": 27,
+        "generated": 27,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 4.763084971751368
+      },
+      "arrival": {
+        "target": {
+          "x": 1217.5,
+          "y": 692.5
+        },
+        "anchor": {
+          "x": 1338.6048158640226,
+          "y": 754.5632672332389
+        },
+        "distance": 136.08168710419213,
+        "halfStride": 2,
+        "switchFrame": 11,
+        "exactDistance": 136.08168710419213,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "grocery",
+      "walk": "object",
+      "frames": 65,
+      "planningMs": 2.6105829999996786,
+      "search": {
+        "expanded": 56,
+        "generated": 57,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.309164571504368
+      },
+      "arrival": {
+        "target": {
+          "x": 737.5,
+          "y": 852.5
+        },
+        "anchor": {
+          "x": 1012.4303714325295,
+          "y": 854.8984419001517
+        },
+        "distance": 274.94083301608185,
+        "halfStride": 94.99392994988575,
+        "switchFrame": 12,
+        "exactDistance": 274.94083301608185,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "near-left",
+      "frames": 28,
+      "planningMs": 3.13891699999931,
+      "search": {
+        "expanded": 3,
+        "generated": 3,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.489505454294692
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "near-right",
+      "frames": 105,
+      "planningMs": 3.911041999999725,
+      "search": {
+        "expanded": 49,
+        "generated": 49,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 9.832489156163987
+      },
+      "arrival": {
+        "target": {
+          "x": 1882,
+          "y": 947
+        },
+        "anchor": {
+          "x": 1424.0612881233549,
+          "y": 1010.0224808303348
+        },
+        "distance": 462.25501287195465,
+        "halfStride": 146.1770619641694,
+        "switchFrame": 3,
+        "exactDistance": 462.25501287195465,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "deepest",
+      "frames": 83,
+      "planningMs": 5.076709000000847,
+      "search": {
+        "expanded": 62,
+        "generated": 66,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 7.420071486643794
+      },
+      "arrival": {
+        "target": {
+          "x": 572,
+          "y": 652
+        },
+        "anchor": {
+          "x": 330.94930632755586,
+          "y": 818.2992339642273
+        },
+        "distance": 292.84957254033225,
+        "halfStride": 36.84762193846044,
+        "switchFrame": 20,
+        "exactDistance": 292.84957254033225,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "far-left",
+      "frames": 176,
+      "planningMs": 6.199249999999665,
+      "search": {
+        "expanded": 151,
+        "generated": 158,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.565438443535804
+      },
+      "arrival": {
+        "target": {
+          "x": 82,
+          "y": 737
+        },
+        "anchor": {
+          "x": 139.12715013696157,
+          "y": 821.6010557514553
+        },
+        "distance": 102.08256421657812,
+        "halfStride": 37.12394374767313,
+        "switchFrame": 20,
+        "exactDistance": 102.08256421657812,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "far-right",
+      "frames": 28,
+      "planningMs": 4.725250000000415,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 13.073771438267475
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "diagonal-away",
+      "frames": 137,
+      "planningMs": 7.566791999999623,
+      "search": {
+        "expanded": 121,
+        "generated": 142,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 11.068036515711395
+      },
+      "arrival": {
+        "target": {
+          "x": 1807,
+          "y": 782
+        },
+        "anchor": {
+          "x": 1713.1280796418932,
+          "y": 767.8685162415293
+        },
+        "distance": 94.92963849575463,
+        "halfStride": 32.62719210940886,
+        "switchFrame": 20,
+        "exactDistance": 94.92963849575463,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "diagonal-toward",
+      "frames": 28,
+      "planningMs": 7.207374999999956,
+      "search": {
+        "expanded": 2,
+        "generated": 2,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 12.234009958021595
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "occluder-behind",
+      "frames": 86,
+      "planningMs": 3.0418330000002243,
+      "search": {
+        "expanded": 12,
+        "generated": 12,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.420305297942553
+      },
+      "arrival": {
+        "target": {
+          "x": 962,
+          "y": 807
+        },
+        "anchor": {
+          "x": 1372.6224598269475,
+          "y": 791.9778420753389
+        },
+        "distance": 410.89715226933197,
+        "halfStride": 22.643437039855684,
+        "switchFrame": 18,
+        "exactDistance": 410.89715226933197,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "occluder-back",
+      "frames": 64,
+      "planningMs": 4.231541000000107,
+      "search": {
+        "expanded": 28,
+        "generated": 30,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.261119818786059
+      },
+      "arrival": {
+        "target": {
+          "x": 962,
+          "y": 952
+        },
+        "anchor": {
+          "x": 1001.7798922590036,
+          "y": 798.6796226713669
+        },
+        "distance": 158.3969000085935,
+        "halfStride": 23.01000580648419,
+        "switchFrame": 18,
+        "exactDistance": 158.3969000085935,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "narrow-gap",
+      "frames": 28,
+      "planningMs": 3.6135829999993803,
+      "search": {
+        "expanded": 32,
+        "generated": 32,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 5.067999168853115
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "unreachable",
+      "frames": 42,
+      "planningMs": 2.95629099999951,
+      "search": {
+        "expanded": 13,
+        "generated": 13,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 2.459441178423447
+      },
+      "arrival": {
+        "target": {
+          "x": 982.5,
+          "y": 812.5
+        },
+        "anchor": {
+          "x": 943.3155503611652,
+          "y": 809.5508248500265
+        },
+        "distance": 39.295276148203946,
+        "halfStride": 23.604630342053458,
+        "switchFrame": 18,
+        "exactDistance": 39.295276148203946,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "object",
+      "frames": 84,
+      "planningMs": 4.281583999999384,
+      "search": {
+        "expanded": 47,
+        "generated": 51,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.5708513143748855
+      },
+      "arrival": {
+        "target": {
+          "x": 362.5,
+          "y": 702.5
+        },
+        "anchor": {
+          "x": 244.40347421807718,
+          "y": 741.8922830640748
+        },
+        "distance": 124.49313783000473,
+        "halfStride": 28.022459719024326,
+        "switchFrame": 5,
+        "exactDistance": 124.49313783000473,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    },
+    {
+      "scene": "square",
+      "walk": "exit-edge-left",
+      "frames": 71,
+      "planningMs": 3.835750000000189,
+      "search": {
+        "expanded": 43,
+        "generated": 45,
+        "elapsedMs": 0,
+        "reason": "nearest-reachable",
+        "optimal": true,
+        "costBound": 6.189193223358663
+      },
+      "arrival": {
+        "target": {
+          "x": 62.5,
+          "y": 922.5
+        },
+        "anchor": {
+          "x": 417.9332635557097,
+          "y": 815.4298833493584
+        },
+        "distance": 371.209933489723,
+        "halfStride": 80.77217677429604,
+        "switchFrame": 2,
+        "exactDistance": 371.209933489723,
+        "absorbedDistance": 0
+      },
+      "limitations": []
+    }
+  ],
+  "browserDiff": "tmp/walkqa/harness-26/diff-report.json"
+}

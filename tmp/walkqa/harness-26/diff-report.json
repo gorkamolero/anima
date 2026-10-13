@@ -1,0 +1,1120 @@
+{
+  "complete": true,
+  "equal": true,
+  "compared": 139,
+  "matched": 139,
+  "walks": [
+    {
+      "browser": "tmp/walkqa/harness-26/alley/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/exit-far.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/exit-far.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/exit-near.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/exit-near.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/alley/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/alley/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/exit-edge-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/exit-edge-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/square/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/square/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/church/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/church/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/lobby/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/lobby/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/exit-edge-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/exit-edge-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/exit-far.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/exit-far.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/exit-edge-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/exit-edge-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/exit-edge-left-2.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/exit-edge-left-2.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/exit-edge-left-1.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/exit-edge-left-1.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/road/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/road/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/exit-edge-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/exit-edge-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/exit-far.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/exit-far.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/exit-edge-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/exit-edge-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/exit-depot_doors.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/exit-depot_doors.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/exit-edge-left-1.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/exit-edge-left-1.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/outside/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/outside/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/exit-bus_platform.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/exit-bus_platform.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/inside/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/inside/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/grocery/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/grocery/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/exit-edge-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/exit-edge-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/exit-far.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/exit-far.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/exit-edge-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/exit-edge-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/stepped-street/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/stepped-street/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/unreachable.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/unreachable.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/exit-edge-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/exit-edge-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/near-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/near-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/exit-edge-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/exit-edge-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/occluder-behind.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/occluder-behind.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/deepest.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/deepest.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/far-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/far-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/occluder-back.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/occluder-back.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/narrow-gap.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/narrow-gap.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/diagonal-toward.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/diagonal-toward.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/near-right.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/near-right.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/diagonal-away.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/diagonal-away.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/far-left.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/far-left.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    },
+    {
+      "browser": "tmp/walkqa/harness-26/pier/object.json",
+      "simulator": "tmp/walkqa/sim/26-final/pier/object.json",
+      "equal": true,
+      "differences": 0,
+      "maxNumericDifference": 0,
+      "examples": []
+    }
+  ]
+}

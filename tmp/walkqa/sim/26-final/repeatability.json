@@ -1,0 +1,702 @@
+{
+  "walks": 139,
+  "equal": true,
+  "elapsedMs": 7879.6320829999995,
+  "comparisons": [
+    {
+      "scene": "alley",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "exit-far",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "exit-near",
+      "equal": true
+    },
+    {
+      "scene": "alley",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "exit-edge-left",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "square",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "church",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "lobby",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "exit-far",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-right",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left-2",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "exit-edge-left-1",
+      "equal": true
+    },
+    {
+      "scene": "road",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-left",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-far",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-right",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-depot_doors",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "exit-edge-left-1",
+      "equal": true
+    },
+    {
+      "scene": "outside",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "exit-bus_platform",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "inside",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "grocery",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-edge-left",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-far",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "exit-edge-right",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "stepped-street",
+      "walk": "object",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "unreachable",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "exit-edge-left",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "near-left",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "exit-edge-right",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "occluder-behind",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "deepest",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "far-right",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "occluder-back",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "narrow-gap",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "diagonal-toward",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "near-right",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "diagonal-away",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "far-left",
+      "equal": true
+    },
+    {
+      "scene": "pier",
+      "walk": "object",
+      "equal": true
+    }
+  ]
+}

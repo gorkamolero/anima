@@ -1,0 +1,17 @@
+{
+  "packages/engine/src/characters/CharacterMotor.ts": "67ecaf54d9203b344bf740d4a52e558bf52d47ccf2f1f643e84605490731943d",
+  "packages/engine/src/characters/footstepPlan.ts": "5f6200f07492a6fd7b5442f551103cddd902be4accbebd377d8da5f4f15878b0",
+  "packages/engine/src/characters/footstep.worker.ts": "769e2f8adf98305b7821439a31103cfaf1fd753ad05b3ba23927f29d0a1a62b3",
+  "packages/engine/src/characters/footLock.ts": "6ec0b2caf2d1ab9726ef5eb6f0739b5071a3a0d525724661196f9498c1a1fb61",
+  "packages/engine/src/characters/walkHeading.ts": "b84c7a9ea67d871c8aae2acbc13ce31e7a9f394a66095ee7d876ecc314e7b40b",
+  "packages/engine/src/walkarea/sceneGeometry.ts": "490d22f71123ecc9af7bce3dc7bb2a358ff9ce8763ca2079e5f99e8620dad210",
+  "packages/engine/src/walkarea/objectApproach.ts": "c53e6cb4fe125271f330f65bb6a3b1528223431eb73e419712c7f36b73c2228a",
+  "packages/engine/src/walkarea/objectHit.ts": "704809b63ab93af4d908e05c19da335c5b9b3edcca323f1daad3c9d530ceefc6",
+  "packages/engine/src/debug/captureClock.ts": "c30cfe04106e03b831191cec5f4caf22f4fc43953e53b8e8007ab27f08b6e26a",
+  "packages/engine/src/occlusion/arrivals.ts": "98a4a84e21d43f281e4b750820172b2eef524dffd02e2dc8600ed4a2164169ad",
+  "packages/engine/src/occlusion/exits.ts": "b0feb2a599b303c0aa124dc41efb7306fdeddd22326a9b828859ca828a4105bd",
+  "adventures/shadow-over-innsmouth/src/game/scenes/StoryGameScene.ts": "5a330cb6c57f9c56ad04473bf221d1dd816866e53a8820c447185aae42b76c56",
+  "adventures/shadow-over-innsmouth/src/game/scenes/hermesFootAnimation.ts": "bf1956fe440475c633727cb07a6265ddbefc918a24e5cfab8b8cc62c4d9fd635",
+  "adventures/shadow-over-innsmouth/scripts/simulate-walks.mts": "08eec39c08c0062d22f278f77cf230bce48a89ead0ed91ea88ba5edd1f607f8d",
+  "adventures/shadow-over-innsmouth/scripts/walk-records.mts": "63a6d54d985d173c9c840ea5bc2d9aeff11b3d819a8a4be8436206787eef5d95"
+}
