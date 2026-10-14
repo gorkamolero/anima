@@ -519,9 +519,10 @@ export class CharacterMotor {
 			const scale =
 				this.area.baseScale *
 				scaleAt(this.area.perspective, q, this.area.scaleClamp);
-			const foot = pose.cycle.contacts[pose.frame].planted;
-			const anchor = contactOnScreen(pose, foot, q, scale);
-			return this.canStand(pose, anchor, foot, scale, undefined, true);
+			// canStand only knows walk cycles; the placed pose is a standing one.
+			return (["L", "R"] as const).every((sole) =>
+				this.soleFits(contactOnScreen(pose, sole, q, scale)),
+			);
 		};
 		if (fits(start)) return start;
 		const mask = this.area.mask;
