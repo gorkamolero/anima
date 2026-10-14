@@ -114,6 +114,23 @@ const results = {
 
 For QA, import `qa/checks`: `checkFootLock`, `checkFloor`, `checkScale`, `checkFacing`, `checkArrival`, `checkDrawOrder`, `checkPath`, `checkExits` and `checkFrozenFrames`. Supply sheet metadata and scene areas. Facing accepts the independently calculated route corner count; path checking accepts an independent shortest octilinear distance; draw order requires exact alpha-overlap callbacks. Frozen-frame checking requires rendered frame hashes, not transform logs. Telemetry cannot establish drawn-boot accuracy or pixel-height correctness; retain rendered review and the independent reviewer tools for those bars.
 
+## Brief 36 planning experiment: acceptance blocked
+
+The motor now makes one weighted search per segment, sharing an **800-node budget per click** across continuations. Every entry phase, start phase, stop phase and permitted pivot stop is available immediately; doorway approaches still exclude pivot finishes. The fixed search weight is 4, corner radius 1.2 ground units, and search resolution 0.005. Continuous phases and authored entries cost less than other cuts; turns retain a cost and route constraints. Weighted search ends after finding an arrival. The retry ladder and its playback-ranking simulation are removed.
+
+Stance, facing, settle and exit-sweep validity is cached per click by support/phase and quantised ground anchor. Placements remain exact. Before playback, the selected steps are checked again without the lattice cache, including their predicted next states and stop anchors. A mismatch throws; it never launches another search. Regression tests cover cache reuse/invalidation, exact rejection, action costs, the node cap and worker/synchronous equivalence.
+
+**This experiment does not meet the reviewer gate and is not a completed release.** Final sequential measurements:
+
+| Run | Half / one / far | Facing | Reversals | Flicker | Lock px | Off-floor | Contacts | Planning p90 / max ms |
+|---|---|---|---|---|---|---|---|---|
+| [36-final](../../tmp/walkqa/sim/36-final/run.json) | 114 / 3 / 8 | 115 | 0 | 6 | 0 | 0 | 0 | 310 / 743 |
+| [36-final-gen](../../tmp/walkqa/sim/36-final-gen/run.json) | 34 / 0 / 4 | 33 | 0 | 0 | 0 | 0 | 0 | 281 / 467 |
+
+Gate verdicts: harness `GATE FAIL: facing<132 flicker>1 plan_p90>300`; new scenes `GATE FAIL: facing<36`. Arrival buckets exclude some walks; they are not the corpus totals (139 and 41). Facing still misses short or unmeasured walking fragments, excess changes and some sampled stance angles. The cache's exact validation completed on both corpora.
+
+Attempts retained as evidence: [all-action search](../../tmp/walkqa/sim/36-unified/run.json), [stronger turn/entry costs](../../tmp/walkqa/sim/36-costs/run.json), [measured-run and partial-route constraints](../../tmp/walkqa/sim/36-route-costs/run.json), and [rejected cut-displacement costs](../../tmp/walkqa/sim/36-seams/run.json). The last experiment regressed facing to 93 and flicker to 34 and was removed. Final pivot-default correction restored pivot stops as initial actions. No scene-specific tuning or search fallback was introduced. `FINAL.md` is deferred until both gates pass; earlier recordings do not establish sign-off for this changed planner.
+
 ## Hidden-floor patent note and limitations
 
 The project's [prior-art review](../../tmp/walkarea/prior-art.md) flags US 11,741,675 B2 concerning learned visible/hidden traversable-space prediction. Footfall currently uses geometric bridging from visible masks and baselines. This note records the project's design boundary, not a patent clearance opinion.
