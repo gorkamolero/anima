@@ -1,13 +1,228 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { reserveCall } from "./costs.js";
-import type { GroundData, GroundVerdict } from "./ground.js";
+import type { GroundData, GroundVerdict, Raster } from "./ground.js";
+
+/** Outlines are sampled on the floor grid; a one-cell (8-neighbour) erosion
+ * tolerates segmentation fringes. Rejections remove the full outline, never a box. */
+export interface FloorOutline {
+	name: string;
+	mask: Raster;
+	bounds: number[];
+	environment: boolean;
+}
+export function outlineOverlap(floor: Raster, mask: Raster) {
+	if (floor.width !== mask.width || floor.height !== mask.height)
+		throw new Error("Outline grid mismatch");
+	let pixels = 0,
+		covered = 0;
+	for (let y = 1; y < mask.height - 1; y++)
+		for (let x = 1; x < mask.width - 1; x++) {
+			let interior = true;
+			for (let dy = -1; dy <= 1; dy++)
+				for (let dx = -1; dx <= 1; dx++)
+					if (!mask.data[(y + dy) * mask.width + x + dx]) interior = false;
+			if (!interior) continue;
+			pixels++;
+			if (floor.data[y * floor.width + x]) covered++;
+		}
+	const fraction = pixels ? covered / pixels : 0;
+	return { pixels, covered, fraction, pass: fraction <= 0.2 };
+}
+const canonical = (name: string) =>
+	name.toLowerCase().replace(/-\d+$/, "").replaceAll("-", " ");
+export function hasOutline(object: FloorObject, outlines: FloorOutline[]) {
+	return outlines.some((outline) => {
+		if (canonical(object.name) === canonical(outline.name)) return true;
+		const [a, b, c, d] = object.bounds,
+			[x, y, z, w] = outline.bounds;
+		const intersection =
+			Math.max(0, Math.min(c, z) - Math.max(a, x)) *
+			Math.max(0, Math.min(d, w) - Math.max(b, y));
+		const union = (c - a) * (d - b) + (z - x) * (w - y) - intersection;
+		return union > 0 && intersection / union >= 0.5;
+	});
+}
+/** Interaction labels and segmenter class names can differ (including plural
+ * classes). Resolve vocabulary only; the model never judges outlined pixels. */
+async function outlineLabels(
+	objects: FloorObject[],
+	outlines: FloorOutline[],
+): Promise<FloorObject[]> {
+	const pending = objects.filter((o) => !hasOutline(o, outlines));
+	if (!pending.length || !outlines.length) return objects;
+	const classes = [
+		...new Set(
+			outlines.map((o) =>
+				canonical(o.name.replace(/\.clean$/, "").replace(/^sized-v1-/, "")),
+			),
+		),
+	];
+	const input = { labels: pending.map((o) => o.name), classes };
+	const hash = createHash("sha256")
+		.update("outline-labels-v1")
+		.update(JSON.stringify(input))
+		.digest("hex");
+	const path = resolve(
+		ROOT,
+		"api/data/perception",
+		`${hash}-outline-labels.json`,
+	);
+	const cached = await readFile(path, "utf8").catch(() => null);
+	if (!cached) reserveCall("perception");
+	const mapping: {
+		matches: Array<{
+			label: string;
+			outlineClass: string | null;
+			environment: boolean;
+		}>;
+	} = cached
+		? JSON.parse(cached)
+		: (
+				await generateObject({
+					model: getModel(),
+					mode: "json",
+					temperature: 0,
+					schema: z.object({
+						matches: z.array(
+							z.object({
+								label: z.string(),
+								outlineClass: z.string().nullable(),
+								environment: z.boolean(),
+							}),
+						),
+					}),
+					prompt: `Match interaction labels to synonymous segmentation classes. Use only an exact supplied class string, or null when uncertain. Ignore positional modifiers. Do not match merely related objects (a lamp is not a crate). environment=true only for sky, sunlight, clouds, walls or water; never for solid props. This is a vocabulary task, NOT a floor safety judgment. ${JSON.stringify(input)}`,
+				})
+			).object;
+	if (!cached) {
+		await mkdir(dirname(path), { recursive: true });
+		await writeFile(path, JSON.stringify(mapping));
+	}
+	return objects.filter((o) => {
+		const match = mapping.matches.find((m) => m.label === o.name);
+		if (match?.environment && outlines.some((m) => m.environment)) return false;
+		if (
+			match?.outlineClass &&
+			classes.includes(match.outlineClass) &&
+			outlines.some((outline) => {
+				if (
+					outline.name.startsWith("sized-v1-") ||
+					canonical(outline.name.replace(/\.clean$/, "")) !== match.outlineClass
+				)
+					return false;
+				const [a, b, c, d] = o.bounds,
+					[x, y, z, w] = outline.bounds;
+				const intersection =
+					Math.max(0, Math.min(c, z) - Math.max(a, x)) *
+					Math.max(0, Math.min(d, w) - Math.max(b, y));
+				return (
+					intersection > 0.2 * Math.min((c - a) * (d - b), (z - x) * (w - y))
+				);
+			})
+		)
+			return false;
+		return true;
+	});
+}
+export async function floorOutlines(
+	image: string,
+	floor: Raster,
+): Promise<FloorOutline[]> {
+	const source = imagePath(image);
+	const hash = createHash("sha256")
+		.update(await readFile(source))
+		.digest("hex");
+	const root = resolve(ROOT, "api/data/perception");
+	const names = (await readdir(root)).filter(
+		(n) =>
+			(n.startsWith(`${hash}-obstacle-`) && n.endsWith(".png")) ||
+			(n.startsWith(`${hash}-floor-`) &&
+				/-(water|sea|wall|walls)\.png$/.test(n)),
+	);
+	const outlines: FloorOutline[] = [];
+	const add = (name: string, args: string[]) => {
+		const bytes = execFileSync(
+			"magick",
+			[
+				...args,
+				"-resize",
+				`${floor.width}x${floor.height}!`,
+				"-depth",
+				"8",
+				"gray:-",
+			],
+			{ maxBuffer: 8 * 1024 * 1024 },
+		);
+		const data = Array.from(bytes, (v) => (v > 32 ? 1 : 0));
+		let x0 = floor.width,
+			y0 = floor.height,
+			x1 = -1,
+			y1 = -1;
+		data.forEach((v, i) => {
+			if (v) {
+				const x = i % floor.width,
+					y = Math.floor(i / floor.width);
+				x0 = Math.min(x0, x);
+				x1 = Math.max(x1, x);
+				y0 = Math.min(y0, y);
+				y1 = Math.max(y1, y);
+			}
+		});
+		if (x1 < 0) return;
+		outlines.push({
+			name,
+			mask: { ...floor, data },
+			bounds: [
+				x0 / floor.width,
+				y0 / floor.height,
+				(x1 + 1) / floor.width,
+				(y1 + 1) / floor.height,
+			],
+			environment: /\b(water|sea|wall|walls)\b/.test(canonical(name)),
+		});
+	};
+	for (const name of names)
+		add(
+			name
+				.replace(`${hash}-obstacle-`, "")
+				.replace(`${hash}-floor-`, "")
+				.replace(/\.png$/, ""),
+			[resolve(root, name), "-colorspace", "gray"],
+		);
+	const segmented = await readFile(
+		source.replace(/\.png$/, ".occluders.json"),
+		"utf8",
+	).catch(() => null);
+	if (segmented)
+		for (const o of JSON.parse(segmented) as Array<{
+			label: string;
+			png: string;
+			bbox: { x: number; y: number; w: number; h: number };
+		}>)
+			add(o.label, [
+				"-size",
+				"1920x1080",
+				"xc:none",
+				"(",
+				resolve(dirname(source), o.png),
+				"-resize",
+				`${o.bbox.w}x${o.bbox.h}!`,
+				")",
+				"-geometry",
+				`+${o.bbox.x}+${o.bbox.y}`,
+				"-composite",
+				"-alpha",
+				"extract",
+			]);
+	return outlines;
+}
 
 export const FALSE_WALKABLE_THRESHOLD = 0.6;
 export type {
@@ -20,9 +235,11 @@ import type { FloorObject, FloorQuestions } from "@anima/footfall/derive/types";
 export function floorQuestions(
 	objects: FloorObject[],
 	ground?: GroundData,
+	outlines: FloorOutline[] = [],
 ): FloorQuestions {
 	const questions: FloorQuestions = {};
 	for (const [i, object] of objects.entries()) {
+		if (hasOutline(object, outlines)) continue;
 		const [x0, y0, x1, y1] = object.bounds;
 		if (
 			ground &&
@@ -60,21 +277,16 @@ export function floorQuestions(
 					},
 		};
 	}
-	questions.environment = {
-		type: "noul",
-		instructions:
-			"Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.",
-		criteria: {
-			true: "Green includes water, sky or wall surfaces",
-			false: "No green on water, sky or walls",
-		},
-	};
-	questions.coverage = {
-		type: "score",
-		instructions:
-			"Estimate the fraction of visible standable floor covered by GREEN, from 0 to 1. Missing floor is a coverage note only and never a rejection.",
-		criteria: ["All visible standable floor is covered by green"],
-	};
+	if (!outlines.some((o) => o.environment))
+		questions.environment = {
+			type: "noul",
+			instructions:
+				"Does GREEN cover water, sky or walls? Only green pixels count; missing floor is never an error.",
+			criteria: {
+				true: "Green includes water, sky or wall surfaces",
+				false: "No green on water, sky or walls",
+			},
+		};
 	return questions;
 }
 export function floorVerdict(
@@ -107,13 +319,37 @@ export async function asymmetricFloorJudge(
 	ground?: GroundData,
 	referenceImage?: string,
 ): Promise<GroundVerdict> {
-	const questions = floorQuestions(objects, ground);
+	const outlines =
+		ground && referenceImage
+			? await floorOutlines(referenceImage, ground.floor)
+			: [];
+	const deterministic = ground
+		? outlines.map((o) => ({
+				name: o.name,
+				...outlineOverlap(ground.floor, o.mask),
+			}))
+		: [];
+	const rejectedOutlines = outlines.filter((_, i) => !deterministic[i].pass);
+	const exclusionMask =
+		ground && rejectedOutlines.length
+			? {
+					...ground.floor,
+					data: ground.floor.data.map((_, i) =>
+						rejectedOutlines.some((o) => o.mask.data[i]) ? 1 : 0,
+					),
+				}
+			: undefined;
+	const questions = floorQuestions(
+		await outlineLabels(objects, outlines),
+		ground,
+		outlines,
+	);
 	const bytes = await readFile(overlay);
 	const reference = referenceImage
 		? await readFile(imagePath(referenceImage))
 		: undefined;
 	const fingerprint = createHash("sha256")
-		.update("asymmetric-v3-signed-confidence")
+		.update("asymmetric-v4-outline-arithmetic")
 		.update(JSON.stringify(questions))
 		.update(reference ?? "")
 		.update(
@@ -133,7 +369,9 @@ export async function asymmetricFloorJudge(
 		provider: string;
 		fallbackReason?: string;
 	};
-	if (stored) result = JSON.parse(stored);
+	if (!Object.keys(questions).length)
+		result = { probabilities: {}, provider: "deterministic-outlines" };
+	else if (stored) result = JSON.parse(stored);
 	else {
 		try {
 			if (imageUnsupported) throw new Error(imageUnsupported);
@@ -196,6 +434,7 @@ export async function asymmetricFloorJudge(
 			// Separate calls prevent one object's answer from contaminating the others.
 			const answers = await Promise.all(
 				Object.entries(questions).map(async ([name, question]) => {
+					reserveCall("perception");
 					const { object } = await generateObject({
 						model: getModel(),
 						mode: "json",
@@ -272,8 +511,20 @@ export async function asymmetricFloorJudge(
 		await writeFile(cache, JSON.stringify(result, null, 2));
 	}
 	const decision = floorVerdict(questions, result.probabilities);
+	if (rejectedOutlines.length) {
+		decision.pass = false;
+		decision.rejected.push(
+			...deterministic.filter((o) => !o.pass).map((o) => `outline:${o.name}`),
+		);
+		decision.why = `False walkable outline overlap (>20% after erosion): ${deterministic
+			.filter((o) => !o.pass)
+			.map((o) => `${o.name}=${o.fraction.toFixed(3)}`)
+			.join(", ")}; ${decision.why}`;
+	}
 	const verdict = {
 		...decision,
+		deterministic,
+		exclusionMask,
 		...result,
 		questions,
 		question: JSON.stringify(questions),

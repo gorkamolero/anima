@@ -38,7 +38,7 @@ export function replaceFloor(ground: GroundData, floor: Raster) {
 export function repairGround(
 	ground: GroundData,
 	verdict: GroundVerdict,
-	objectMask?: Raster,
+	objectMask: Raster | undefined = verdict.exclusionMask,
 ): boolean {
 	if (!objectMask) return false;
 	const floor = ground.floor;

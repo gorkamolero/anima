@@ -46,6 +46,14 @@ export interface GroundVerdict {
 	questions?: FloorQuestions;
 	rejected?: string[];
 	hazardBounds?: number[][];
+	exclusionMask?: Raster;
+	deterministic?: Array<{
+		name: string;
+		pixels: number;
+		covered: number;
+		fraction: number;
+		pass: boolean;
+	}>;
 }
 /** Regions use game coordinates (1920x1080). Intersect polygon AND mask.
  * scaleAtY is piecewise linear, clamped at endpoints; factors multiply baseScale.

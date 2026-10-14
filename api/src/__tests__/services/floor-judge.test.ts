@@ -2,7 +2,12 @@
 
 import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { describe, expect, it } from "vitest";
-import { floorQuestions, floorVerdict } from "../../services/floor-judge.js";
+import {
+	floorQuestions,
+	floorVerdict,
+	hasOutline,
+	outlineOverlap,
+} from "../../services/floor-judge.js";
 import { maskToGround } from "../../services/ground.js";
 import {
 	excludeUnscaledStairs,
@@ -106,5 +111,82 @@ describe("asymmetric floor judge", () => {
 		);
 		excludeUnscaledStairs(valid, stairs);
 		expect(valid.floor.data[35 * 40 + 2]).toBe(0);
+	});
+});
+
+describe("deterministic outlines", () => {
+	const mask = {
+		width: 10,
+		height: 10,
+		data: Array.from({ length: 100 }, (_, i) =>
+			i % 10 >= 2 &&
+			i % 10 <= 7 &&
+			Math.floor(i / 10) >= 2 &&
+			Math.floor(i / 10) <= 7
+				? 1
+				: 0,
+		),
+	};
+	it("passes a fully excluded pool", () => {
+		expect(
+			outlineOverlap({ ...mask, data: mask.data.map((v) => 1 - v) }, mask),
+		).toMatchObject({ pass: true, fraction: 0, pixels: 16 });
+	});
+	it("rejects a half-covered rock and subtracts its silhouette", () => {
+		const floor = {
+			...mask,
+			data: mask.data.map((v, i) => (v && i % 10 < 5 ? 1 : 0)),
+		};
+		expect(outlineOverlap(floor, mask)).toMatchObject({
+			pass: false,
+			fraction: 0.5,
+		});
+		const g = ground();
+		const exclusionMask = {
+			...g.floor,
+			data: g.floor.data.map((v, i) => (v && i % 40 === 4 ? 1 : 0)),
+		};
+		expect(
+			repairGround(g, { pass: false, why: "outline", exclusionMask }),
+		).toBe(true);
+		expect(g.floor.data[1404]).toBe(0);
+		expect(g.floor.data[1405]).toBe(1);
+	});
+	it("passes a one-cell green fringe", () => {
+		const floor = {
+			...mask,
+			data: mask.data.map((v, i) =>
+				v &&
+				(i % 10 === 2 ||
+					i % 10 === 7 ||
+					Math.floor(i / 10) === 2 ||
+					Math.floor(i / 10) === 7)
+					? 1
+					: 0,
+			),
+		};
+		expect(outlineOverlap(floor, mask)).toMatchObject({
+			pass: true,
+			fraction: 0,
+		});
+	});
+	it("does not ask the model about outlined objects or masked water", () => {
+		const outlines = [
+			{ name: "pool", mask, bounds: [0.2, 0.2, 0.8, 0.8], environment: true },
+		];
+		expect(
+			hasOutline({ name: "tide pool", bounds: [0.2, 0.2, 0.8, 0.8] }, outlines),
+		).toBe(true);
+		const q = floorQuestions(
+			[
+				{ name: "pool", bounds: [0, 0, 1, 1] },
+				{ name: "cage", bounds: [0, 0, 0.1, 0.1] },
+			],
+			undefined,
+			outlines,
+		);
+		expect(q.object_0).toBeUndefined();
+		expect(q.environment).toBeUndefined();
+		expect(q.object_1).toBeDefined();
 	});
 });

@@ -38,11 +38,16 @@ groundRoutes.post("/ground", async (c) => {
 				ground,
 				input.key ?? basename(input.image, ".png"),
 			);
-			const verdict = await judgeFloorOverlay(overlay, objects, ground);
+			const verdict = await judgeFloorOverlay(
+				overlay,
+				objects,
+				ground,
+				input.image,
+			);
 			ground.verdicts.push(verdict);
 			ground.notes = [
 				...(ground.notes ?? []),
-				`Visible-floor coverage score: ${verdict.probabilities?.coverage ?? "unknown"}; missing floor does not reject.`,
+				`Floor review: ${verdict.deterministic?.length ?? 0} outlines checked arithmetically; missing floor does not reject.`,
 			];
 			if (verdict.pass) return c.json(ground);
 			if (attempt === 2 || !repairGround(ground, verdict))

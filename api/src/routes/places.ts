@@ -202,7 +202,7 @@ async function createPlace(
 			ground.verdicts.push(verdict);
 			ground.notes = [
 				...(ground.notes ?? []),
-				`Visible-floor coverage score: ${verdict.probabilities?.coverage ?? "unknown"}; missing floor does not reject.`,
+				`Floor review: ${verdict.deterministic?.length ?? 0} outlines checked arithmetically; missing floor does not reject.`,
 			];
 			if (verdict.pass) break;
 			if (attempt === 2 || !repairGround(ground, verdict)) {

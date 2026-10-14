@@ -43,7 +43,7 @@ it("sends typed image questions to Decisions and applies the inclusive threshold
 	);
 	expect(body.model).toBe("openai/gpt-6-luna-decisions");
 	expect(body.questions.environment.type).toBe("noul");
-	expect(body.questions.coverage.type).toBe("score");
+	expect(body.questions.coverage).toBeUndefined();
 	expect(body.state.image.image_url.url).toMatch(/^data:image\/png;base64,/);
 });
 it("falls back on rejected image state with the same named questions and preserves evidence", async () => {
@@ -65,7 +65,7 @@ it("falls back on rejected image state with the same named questions and preserv
 	);
 	const result = await asymmetricFloorJudge("/proof/mask.png");
 	expect(result.pass).toBe(true);
-	expect(result.probabilities?.coverage).toBe(0.1);
+	expect(result.probabilities?.coverage).toBeUndefined();
 	expect(result.probabilities?.obstacles).toBeUndefined();
 	expect(result.probabilities?.environment).toBeCloseTo(0.1);
 	expect(
@@ -73,7 +73,7 @@ it("falls back on rejected image state with the same named questions and preserv
 			String(text).includes("no water"),
 		),
 	).toBe(true);
-	expect(mocks.generate).toHaveBeenCalledTimes(2);
+	expect(mocks.generate).toHaveBeenCalledTimes(1);
 	expect(JSON.stringify(mocks.generate.mock.calls)).toContain("Missing floor");
 });
 it("does not treat missing fallback answers as safe probabilities", async () => {
