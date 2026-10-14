@@ -627,3 +627,24 @@ it("funds a necessary detour without relaxing the heading-change limit", () => {
 	expect(run({ costScale: 2, maxHeadingChanges: 1 }).complete).toBe(false);
 	expect(run({ costScale: 2, costBound: 4 }).complete).toBe(false);
 });
+
+it("prices authored actions in one search and stops weighted refinement after arrival", () => {
+	const result = planFootsteps(
+		{ x: 2, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			entry: () => "authored",
+			entries: (_s, h) => (h === "right" ? ["partial", "authored"] : []),
+			actionCost: (_s, pose: string) => (pose === "authored" ? 0 : 1),
+			advance: (s) => ({ ...s, x: s.x + 1 }),
+			rest: (s) => (s.x === 2 ? s : undefined),
+		},
+		{ now: () => 0, searchWeight: 4, nodeBudget: 20 },
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps.every((step) => step.pose === "authored")).toBe(true);
+	expect(result.steps.at(-1)?.stopAnchor).toEqual({ x: 2, y: 0 });
+	expect(result.stats.expanded).toBeLessThan(20);
+	expect(result.stats.optimal).toBe(false);
+});
