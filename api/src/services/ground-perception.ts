@@ -14,7 +14,7 @@ import { scaleReferenceSchema } from "./ground-calibration.js";
 import { reserveSegmentation } from "./occluders.js";
 import { semanticCoastalScale } from "./semantic-scale.js";
 
-export const DERIVATION_VERSION = 7;
+export const DERIVATION_VERSION = 9;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 export const proofRoot = resolve(ROOT, "tmp/walkqa/derivation");
 export function proofDirectory(key: string): string {
@@ -235,6 +235,41 @@ export function refineWithDepth(
 	};
 	return { mask, planeMask };
 }
+const obstacleSchema = z.object({
+	obstacles: z.array(z.string().min(2).max(40)).max(10),
+});
+/** Kinds of solid things standing on this scene's floor that a person can't walk
+ * through, named by the model from the picture itself (cached per image). This
+ * replaces scene-type keyword lists, which only knew the scenes they were written for. */
+export async function obstacleClasses(
+	hash: string,
+	bytes: Buffer,
+	description: string,
+	cacheRoot: string,
+): Promise<string[]> {
+	const path = resolve(cacheRoot, `${hash}-obstacle-classes-v1.json`);
+	const stored = await readFile(path, "utf8").catch(() => null);
+	if (stored) return obstacleSchema.parse(JSON.parse(stored)).obstacles;
+	const { object } = await generateObject({
+		model: getModel(),
+		mode: "json",
+		schema: obstacleSchema,
+		messages: [
+			{
+				role: "user",
+				content: [
+					{
+						type: "text",
+						text: `Scene: ${description}. List the KINDS of solid things standing or lying on the floor in this picture that a person cannot walk through or stand on (for example: rocks, boulders, headstones, crates, barrels, benches, tables, pillars, statues, fences). Short plural nouns usable as segmentation prompts, most common first, at most 10. Do not list the floor, walls, sky, water, people, or anything on walls or the ceiling.`,
+					},
+					{ type: "image", image: bytes, mediaType: "image/png" },
+				],
+			},
+		],
+	});
+	await writeFile(path, JSON.stringify(object, null, 2));
+	return object.obstacles;
+}
 export async function perceiveFloor(
 	image: string,
 	description = "",
@@ -344,6 +379,38 @@ export async function perceiveFloor(
 	if (/pew|church/i.test(description)) exclusions.push("pews", "pulpit");
 	if (/lobby|desk|grocery|counter/i.test(description))
 		exclusions.push("counter");
+	const named = new Set<string>();
+	for (const kind of await obstacleClasses(
+		hash,
+		bytes,
+		description,
+		cacheRoot,
+	).catch(() => [] as string[])) {
+		const prompt = kind.toLowerCase().trim();
+		if (prompt && !exclusions.includes(prompt)) {
+			exclusions.push(prompt);
+			named.add(prompt);
+		}
+	}
+	// A model-named class can also describe the floor's own texture (a pebble beach is
+	// "rocks"). Keep only instances big enough to block a person: at least 15% of an
+	// adult's image height at the instance's foot row, from the guidance's perspective.
+	const blocksAPerson = (instance: Raster) => {
+		let top = Number.POSITIVE_INFINITY;
+		let bottom = -1;
+		instance.data.forEach((v, j) => {
+			if (v <= 127) return;
+			const row = Math.floor(j / instance.width);
+			if (row < top) top = row;
+			if (row > bottom) bottom = row;
+		});
+		if (bottom < 0) return false;
+		const span = (bottom + 1) / instance.height - guidance.horizonY;
+		const reference = guidance.referenceFootY - guidance.horizonY;
+		if (span <= 0 || reference <= 0) return true;
+		const adult = (guidance.referenceHeight * span) / reference;
+		return (bottom - top + 1) / instance.height >= 0.15 * adult;
+	};
 	const excluded = { ...union, data: union.data.map(() => 0) };
 	const stairMask = { ...union, data: union.data.map(() => 0) };
 	if (/step|stair/i.test(description)) exclusions.push("railing");
@@ -364,7 +431,12 @@ export async function perceiveFloor(
 	);
 	for (const prompt of [...prompts, ...exclusions]) {
 		const slug = prompt.replaceAll(" ", "-");
-		const path = resolve(cacheRoot, `${hash}-floor-${slug}.png`);
+		const path = resolve(
+			cacheRoot,
+			named.has(prompt)
+				? `${hash}-obstacle-sized-v1-${slug}.png`
+				: `${hash}-floor-${slug}.png`,
+		);
 		let mask: Raster;
 		try {
 			mask = readRaster(path);
@@ -396,7 +468,9 @@ export async function perceiveFloor(
 							target,
 							resolve(cacheRoot, `${hash}-obstacle-${slug}-${i}.png`),
 						);
-					readRaster(target).data.forEach((v, j) => {
+					const instance = readRaster(target);
+					if (named.has(prompt) && !blocksAPerson(instance)) continue;
+					instance.data.forEach((v, j) => {
 						if (v > 127) mask.data[j] = 255;
 					});
 				}
