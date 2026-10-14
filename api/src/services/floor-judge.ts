@@ -6,6 +6,7 @@ import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
+import { reserveCall } from "./costs.js";
 import type { GroundData, GroundVerdict } from "./ground.js";
 
 export const FALSE_WALKABLE_THRESHOLD = 0.6;
@@ -99,7 +100,6 @@ export function floorVerdict(
 		rejected,
 	};
 }
-let decisionCalls = 0;
 let imageUnsupported: string | undefined;
 export async function asymmetricFloorJudge(
 	overlay: string,
@@ -137,9 +137,7 @@ export async function asymmetricFloorJudge(
 	else {
 		try {
 			if (imageUnsupported) throw new Error(imageUnsupported);
-			if (decisionCalls >= 200)
-				throw new Error("Decision call budget exhausted");
-			decisionCalls++;
+			reserveCall("decision");
 			const response = await fetch(
 				"https://openrouter.ai/api/alpha/decisions",
 				{

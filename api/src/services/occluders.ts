@@ -1,6 +1,5 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, mkdirSync, readFileSync, rmdirSync } from "node:fs";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
 import {
@@ -18,6 +17,7 @@ import {
 import { fal } from "@fal-ai/client";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { interactablesSchema } from "../routes/interactables.js";
+import { reserveCall } from "./costs.js";
 import { DERIVATION_VERSION } from "./ground-perception.js";
 
 export type { DerivedOccluder as Occluder } from "@anima/footfall/derive/types";
@@ -100,60 +100,9 @@ export function canOcclude(object: LabelledBox): boolean {
 		)
 	);
 }
-/** Record attempted requests BEFORE submitting, including failures. Cross-process lock
- * prevents concurrent routes from overspending the task's hard 120-call allowance. */
-export function reserveSegmentation(key: string, label: string): void {
-	mkdirSync(proofRoot, { recursive: true });
-	const lock = resolve(proofRoot, "budget.lock");
-	try {
-		mkdirSync(lock);
-	} catch {
-		throw new Error("Segmentation budget busy; retry shortly");
-	}
-	try {
-		const ledger = resolve(proofRoot, "calls.md");
-		let previous = "";
-		try {
-			previous = readFileSync(ledger, "utf8");
-		} catch {}
-		const scope = ["04a", "04c", "07", "08", "09", "10", "10c", "21"].includes(
-			process.env.DERIVATION_BRIEF ?? "",
-		)
-			? `${process.env.DERIVATION_BRIEF === "10c" ? "10" : process.env.DERIVATION_BRIEF} `
-			: "";
-		const limit =
-			scope === "21 " || scope === "10 " || scope === "09 "
-				? 30
-				: scope === "08 "
-					? 40
-					: scope === "04c "
-						? 20
-						: scope === "07 "
-							? 60
-							: 120;
-		const count = previous
-			.split("\n")
-			.filter(
-				(line) =>
-					new RegExp(`^\\| CALL ${scope}\\d+ \\|`).test(line) &&
-					(scope || !line.startsWith("| CALL 04a ")),
-			).length;
-		if (count >= limit)
-			throw new Error(
-				`Occluder segmentation budget exhausted (${limit} calls)`,
-			);
-		if (!previous)
-			appendFileSync(
-				ledger,
-				"# Occluder segmentation calls\n\nSAM 3.1, box prompts. Attempts reserved before submission; cache hits cost zero. Limit: 120.\n\n| Attempt | UTC | Cache key | Object |\n|---|---|---|---|\n",
-			);
-		appendFileSync(
-			ledger,
-			`| CALL ${scope}${count + 1} | ${new Date().toISOString()} | ${key} | ${label.replace(/[\n|]/g, " ")} |\n`,
-		);
-	} finally {
-		rmdirSync(lock);
-	}
+/** Spending guard before each paid segmentation call (see costs.ts). */
+export function reserveSegmentation(_key: string, _label: string): void {
+	reserveCall("segmentation");
 }
 /** Remove disconnected detections; one labelled box represents one prop. */
 export function largestComponent(mask: FloorRaster): FloorRaster {
