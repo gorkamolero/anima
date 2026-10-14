@@ -1041,3 +1041,71 @@ it("a click plan contains standing pivots only at its first action and one final
 	expect(internal.planned.filter((step) => step.stop)).toHaveLength(1);
 	expect(internal.planned[internal.planned.length - 1]?.stop).toBe(true);
 });
+
+it("reuses lattice validity until exact validation and clears it for the next click", () => {
+	const { motor, pose } = setup();
+	const internal = motor as unknown as {
+		latticeResolution?: number;
+		latticeKey(
+			pose: FootPose,
+			anchor: { x: number; y: number },
+			foot: "L",
+		): string | undefined;
+		validity(key: string | undefined, check: () => boolean): boolean;
+		validityCache: Map<string, boolean>;
+	};
+	internal.latticeResolution = 0.005;
+	const a = internal.latticeKey(pose(), { x: 960, y: 850 }, "L");
+	const b = internal.latticeKey(pose(), { x: 960.00001, y: 850 }, "L");
+	expect(a).toBe(b);
+	const sweep = vi.fn(() => true);
+	expect(internal.validity(a, sweep)).toBe(true);
+	expect(internal.validity(b, sweep)).toBe(true);
+	expect(sweep).toHaveBeenCalledOnce();
+	internal.latticeResolution = undefined;
+	const exactSweep = vi.fn(() => false);
+	expect(
+		internal.validity(
+			internal.latticeKey(pose(), { x: 960, y: 850 }, "L"),
+			exactSweep,
+		),
+	).toBe(false);
+	expect(exactSweep).toHaveBeenCalledOnce();
+	internal.validityCache.set("previous-click", true);
+	void motor.walk([{ x: 1300, y: 850 }]);
+	expect(internal.validityCache.has("previous-click")).toBe(false);
+	expect(motor.snapshot().plan.search?.expanded).toBeLessThanOrEqual(800);
+});
+
+it("rejects an unsafe selected route before playback even if the lattice said it was valid", () => {
+	const { motor, target, area, pose } = setup();
+	motor.place({ x: 960, y: 850 });
+	const state = {
+		start: { x: target.x, y: target.y },
+		end: { x: target.x, y: target.y },
+		anchor: { ...motor.anchor },
+		foot: "L",
+		pose: pose(),
+		scale: target.scale,
+	};
+	const internal = motor as unknown as {
+		latticeResolution?: number;
+		validatePlan(steps: unknown[]): void;
+	};
+	internal.latticeResolution = 0.005;
+	area.mask.data.fill(0);
+	expect(() =>
+		internal.validatePlan([
+			{
+				state,
+				pose: pose(),
+				heading: "right",
+				stop: true,
+				slide: { x: 0, y: 0 },
+				stopAnchor: state.anchor,
+			},
+		]),
+	).toThrow("Footstep exact exit validation failed");
+	expect(internal.latticeResolution).toBeUndefined();
+	expect(motor.walking).toBe(false);
+});
