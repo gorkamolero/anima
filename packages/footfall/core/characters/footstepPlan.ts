@@ -8,8 +8,6 @@ export interface PlannedStep<State, Pose> {
 	pose: Pose;
 	state: State;
 	stop: boolean;
-	/** Exact planned exit, checked again after lattice-cached search. */
-	stopAnchor?: Point;
 	slide: Point;
 }
 export interface StepSimulation<State, Pose> {
@@ -34,12 +32,6 @@ export interface StepSimulation<State, Pose> {
 		starting: boolean,
 		stopping?: boolean,
 	): readonly Pose[];
-	/** Tiny support fragments do not establish a new walking heading or run. */
-	measurable?(state: State, pose: Pose): boolean;
-	/** A partial stop must satisfy the corner allowance of its own route. */
-	maxChangesAtRest?(rest: Point): number;
-	/** Nonnegative authored-entry / cut preference, in the same units as travel. */
-	actionCost?(state: State, pose: Pose): number;
 	advance(state: State, pose: Pose): State | undefined;
 	/** Validate the complete exit and settle; return the final planted sole. */
 	rest(
@@ -66,7 +58,11 @@ export interface RouteState {
 	corner: number;
 }
 export interface SearchOptions {
+	entryPhases?: "authored" | "all";
+	/** Try a lower bound that does not require continuous floor between steps. */
+	directHeuristic?: boolean;
 	searchWeight?: number;
+	startPhases?: boolean;
 	stopPhases?: boolean;
 	pivotStops?: boolean;
 	/** Preserve the complete click's route rules across a grounded restart. */
@@ -328,19 +324,13 @@ export function planFootsteps<State, Pose>(
 					if (!complete) continue;
 					const cost = node.g + stepCost;
 					const score = cost + weight * remaining(rest);
-					if (
-						cost > costBound ||
-						score >= bestScore ||
-						node.changes > (sim.maxChangesAtRest?.(rest) ?? Infinity)
-					)
-						continue;
+					if (cost > costBound || score >= bestScore) continue;
 					bestScore = score;
 					best = {
 						node,
 						step: {
 							...stepFor(node, heading, pose, true),
 							arrivalHeading: node.heading,
-							stopAnchor: rest,
 						},
 						distance: residual,
 						cost,
@@ -437,12 +427,7 @@ export function planFootsteps<State, Pose>(
 				const stride = next
 					? distance(p, ground(sim.position(next)))
 					: node.stride;
-				const turnPenalty =
-					turnCost * turn +
-					(turn === 2 ? turnCost : 0) +
-					(stopPose === undefined
-						? 0
-						: (sim.actionCost?.(node.state, stopPose) ?? 0));
+				const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
 				// Stopping is an edge, including all exit-frame motion. It cannot evade
 				// the turn cost or introduce a heading reversal at the final drawing.
 				const candidates = best
@@ -474,18 +459,11 @@ export function planFootsteps<State, Pose>(
 						turnPenalty +
 						stepCost;
 					const score = cost + weight * (sim.remaining?.(rest) ?? remaining);
-					if (
-						cost <= costBound &&
-						score < bestScore &&
-						changes <= (sim.maxChangesAtRest?.(rest) ?? Infinity)
-					) {
+					if (cost <= costBound && score < bestScore) {
 						bestScore = score;
 						best = {
 							node,
-							step: {
-								...stepFor(node, heading, stopPose, true),
-								stopAnchor: rest,
-							},
+							step: stepFor(node, heading, stopPose, true),
 							distance: remaining,
 							cost,
 							complete,
@@ -504,20 +482,7 @@ export function planFootsteps<State, Pose>(
 					reject("score-bound");
 					continue;
 				}
-				const measurable = sim.measurable?.(node.state, pose) ?? true;
-				const nextHeading = measurable ? heading : node.heading;
-				const nextChanges = measurable ? changes : node.changes;
-				const nextRun = measurable ? run : node.run;
-				const nextHistory = measurable ? history : node.history;
-				const nextCorner = measurable ? corner : node.corner;
-				const nextKey = key(
-					next,
-					nextHeading,
-					nextChanges,
-					nextRun,
-					nextHistory,
-					nextCorner,
-				);
+				const nextKey = key(next, heading, changes, run, history, corner);
 				if (g >= (costs.get(nextKey) ?? Infinity)) {
 					reject("duplicate");
 					continue;
@@ -525,7 +490,7 @@ export function planFootsteps<State, Pose>(
 				costs.set(nextKey, g);
 				open.push({
 					state: next,
-					heading: nextHeading,
+					heading,
 					parent: node,
 					step: stepFor(node, heading, pose, false),
 					g,
@@ -534,17 +499,13 @@ export function planFootsteps<State, Pose>(
 						g + (options.searchWeight ?? 1) * heuristic(sim.position(next), g),
 					key: nextKey,
 					stride,
-					changes: nextChanges,
-					run: nextRun,
-					history: nextHistory,
-					corner: nextCorner,
+					changes,
+					run,
+					history,
+					corner,
 				});
 				generated++;
 			}
-		}
-		if (best?.complete && (options.searchWeight ?? 1) > 1) {
-			reason = "complete";
-			break;
 		}
 	}
 	const steps: PlannedStep<State, Pose>[] = [];
