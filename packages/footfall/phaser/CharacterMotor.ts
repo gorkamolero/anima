@@ -497,7 +497,9 @@ export class CharacterMotor {
 		if (standing) this.animation.show(standing);
 		const cell = nearestCell(this.area.mask, position);
 		if (cell < 0) throw new Error("Walk area has no floor");
-		const p = snapToFloor ? cellPoint(this.area.mask, cell) : position;
+		const p = snapToFloor
+			? this.nearestStandable(cellPoint(this.area.mask, cell))
+			: position;
 		this.target.setPosition(p.x, p.y);
 		this.scale =
 			this.area.baseScale *
@@ -507,6 +509,31 @@ export class CharacterMotor {
 		this.foot = this.pose.cycle.contacts[this.pose.frame].planted;
 		this.anchor = contactOnScreen(this.pose, this.foot, p, this.scale);
 		this.target.setDepth(10 + this.anchor.y / 20);
+	}
+	/** The nearest point where the standing pose fits with both soles on the floor
+	 * (searched outward over the walk-area cells). A body point on the floor is not
+	 * enough: in a narrow strip the soles can land off it, leaving no valid first step. */
+	private nearestStandable(start: Point): Point {
+		const pose = this.animation.current();
+		const fits = (q: Point) => {
+			const scale =
+				this.area.baseScale *
+				scaleAt(this.area.perspective, q, this.area.scaleClamp);
+			const foot = pose.cycle.contacts[pose.frame].planted;
+			const anchor = contactOnScreen(pose, foot, q, scale);
+			return this.canStand(pose, anchor, foot, scale, undefined, true);
+		};
+		if (fits(start)) return start;
+		const mask = this.area.mask;
+		const candidates: { q: Point; d: number }[] = [];
+		for (let i = 0; i < mask.data.length; i++) {
+			if (!mask.data[i]) continue;
+			const q = cellPoint(mask, i);
+			candidates.push({ q, d: Math.hypot(q.x - start.x, q.y - start.y) });
+		}
+		candidates.sort((a, b) => a.d - b.d);
+		for (const { q } of candidates) if (fits(q)) return q;
+		return start;
 	}
 	/** Spawn with the actual planted sole on a floor boundary, not the sprite origin. */
 	placeContact(position: Point): void {
