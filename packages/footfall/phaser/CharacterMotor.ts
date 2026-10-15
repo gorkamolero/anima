@@ -738,31 +738,49 @@ export class CharacterMotor {
 		// without bound near the horizon, so it must not inflate the work budget.
 		const from = this.groundPoint(this.anchor);
 		const to = this.groundPoint(this.goal ?? this.anchor);
+		const route = this.goal
+			? clearanceRoute(
+					this.area.clearanceMask ?? this.area.mask,
+					this.target,
+					this.goal,
+				)
+			: [];
+		let lateralSpan = 0;
+		for (let i = 1; i < route.length; i++)
+			lateralSpan += Math.abs(
+				this.groundPoint(route[i]).x - this.groundPoint(route[i - 1]).x,
+			);
+		const directSpan = Math.abs(to.x - from.x);
 		const nodeBudget = Math.min(
 			4000,
-			Math.max(1600, Math.ceil(400 * Math.abs(to.x - from.x))),
+			Math.max(1600, Math.ceil(400 * directSpan)) +
+				Math.ceil(800 * Math.max(0, lateralSpan - directSpan)),
 		);
-		return this.buildSegment({
-			entryPhases: "all",
-			startPhases: true,
-			stopPhases: true,
-			preferMotion: !alreadyAtTarget,
-			firstArrival: !alreadyAtTarget,
-			restartCost: 0.6,
-			minRestartRun: 1,
-			pivotStops: options.pivotStops !== false,
-			minTerminalRun: 2,
-			minFirstHeadingRun: options.pivotStops === false ? 2 : 0,
-			searchWeight: 4,
-			stopWeight: 128,
-			costScale: 2,
-			cornerRadius: 1.2,
-			nodeBudget,
-			resolution: 0.005,
-			...options,
-		});
+
+		return this.buildSegment(
+			{
+				entryPhases: "all",
+				startPhases: true,
+				stopPhases: true,
+				preferMotion: !alreadyAtTarget,
+				firstArrival: !alreadyAtTarget,
+				restartCost: 0.6,
+				minRestartRun: 1,
+				pivotStops: options.pivotStops !== false,
+				minTerminalRun: 2,
+				minFirstHeadingRun: options.pivotStops === false ? 2 : 0,
+				searchWeight: 4,
+				stopWeight: 128,
+				costScale: 2,
+				cornerRadius: 1.2,
+				nodeBudget,
+				resolution: 0.005,
+				...options,
+			},
+			route,
+		);
 	}
-	private buildSegment(options: SearchOptions = {}) {
+	private buildSegment(options: SearchOptions = {}, route?: Point[]) {
 		// Fixed work budget makes worker and Node route selection identical.
 		// elapsedMs belongs to the virtual planning clock; measure wall time at
 		// the caller, outside frame telemetry.
@@ -803,7 +821,7 @@ export class CharacterMotor {
 		});
 		const goalCell = nearestCell(mask, this.goal);
 		const standableGoal = goalCell < 0 ? this.goal : cellPoint(mask, goalCell);
-		this.path = clearanceRoute(mask, this.target, this.goal);
+		this.path = route ?? clearanceRoute(mask, this.target, this.goal);
 		const screenCorners = routeCorners(this.path);
 		const corners = screenCorners.map((p) => this.groundPoint(p));
 
