@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type Exit, exitAtArrival } from "./exits";
+import { type Exit, exitAtArrival, exitForFrame } from "./exits";
 
 const exit: Exit = {
 	id: "door",
@@ -72,4 +72,42 @@ it("uses a requested stance-clear approach without expanding the physical trigge
 			[gate],
 		),
 	).toBeUndefined();
+});
+
+it("waits for the planned support before a requested transfer and latches once", () => {
+	const state = {
+		anchor: { x: 108, y: 108 },
+		exits: [exit],
+		requested: exit.id,
+		wasWalking: true,
+		approachingObject: false,
+		arriving: false,
+		busy: false,
+	};
+	expect(exitForFrame(state).trigger).toBeUndefined();
+	const arrival = {
+		target: state.anchor,
+		halfStride: 10,
+		anchor: { x: 110, y: 108 },
+	};
+	expect(exitForFrame({ ...state, arrival }).trigger).toBeUndefined();
+	const arrived = { ...state, arrival: { ...arrival, anchor: state.anchor } };
+	expect(exitForFrame(arrived).trigger?.id).toBe(exit.id);
+	expect(exitForFrame({ ...arrived, latch: exit.id }).trigger).toBeUndefined();
+});
+
+it("honours the requested exit when arrival regions overlap", () => {
+	const requested = { ...exit, id: "other-door" };
+	const anchor = { x: 108, y: 108 };
+	const result = exitForFrame({
+		anchor,
+		exits: [exit, requested],
+		requested: requested.id,
+		arrival: { anchor, target: anchor, halfStride: 10 },
+		wasWalking: true,
+		approachingObject: false,
+		arriving: false,
+		busy: false,
+	});
+	expect(result.trigger?.id).toBe(requested.id);
 });

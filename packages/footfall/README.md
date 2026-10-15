@@ -10,7 +10,7 @@
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
 
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock; the platform adapter preserves the original `performance.now()` default.
+**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a fixed 1,500-node budget so worker and headless route selection remain identical.
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
@@ -114,9 +114,15 @@ const results = {
 
 For QA, import `qa/checks`: `checkFootLock`, `checkFloor`, `checkScale`, `checkFacing`, `checkArrival`, `checkDrawOrder`, `checkPath`, `checkExits` and `checkFrozenFrames`. Supply sheet metadata and scene areas. Facing accepts the independently calculated route corner count; path checking accepts an independent shortest octilinear distance; draw order requires exact alpha-overlap callbacks. Frozen-frame checking requires rendered frame hashes, not transform logs. Telemetry cannot establish drawn-boot accuracy or pixel-height correctness; retain rendered review and the independent reviewer tools for those bars.
 
-## Known limitation: planning time on hard clicks
+## Planning bounds and current evidence
 
-Most clicks plan in about 0.1 s, but when the first search does not find a clean arrival the motor tries a ladder of up to 16 alternative searches. In the harness, 1 click in 10 takes over 6.6 s to plan and the worst takes 44 s (`tmp/walkqa/sim/lad1000000000/run.json`). Two fixes were measured and rejected: a single all-action search (brief 36: 0.7 s worst, but facing 132 → 115 because routes weave) and a total node cap on the ladder (8,000 nodes: arrivals 109 → 96, worst click still 6.8 s). A real fix needs a search whose cost model makes the clean route the cheapest one, so no retries are needed.
+Each walk uses one bounded footstep search. Support changes and grounded restarts are edges in that same frontier; there is no retry ladder. State retains heading/run limits and the captured start's turn allowance. A shared obstacle-distance field guides progress, and terminal playback validates measured facing before a route is accepted. A closer incomplete stop cannot prune an arrival that satisfies its authored stride tolerance.
+
+Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
+
+The verified local runs are `38al-harness` (139 walks: 111 half-stride arrivals, 136 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 200 ms and max 615 ms) and `38al` (41 untuned walks: 32 arrivals, 39 facing passes, zero reversals/flicker/floor violations/object contacts, p90 168 ms and max 297 ms). Footfall's 172 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+
+Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
 ## Hidden-floor patent note and limitations
 

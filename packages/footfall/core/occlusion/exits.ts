@@ -73,15 +73,17 @@ export function exitForFrame(state: {
 	exits: readonly Exit[];
 	requested?: string;
 	latch?: string;
-	arrival?: { target: Point; halfStride: number };
+	arrival?: { target: Point; halfStride: number; anchor?: Point };
 	wasWalking: boolean;
 	approachingObject: boolean;
 	arriving: boolean;
 	busy: boolean;
 }) {
+	const requested = state.exits.find((exit) => exit.id === state.requested);
 	const exit =
-		exitAt(state.anchor, state.exits) ??
-		exitAtArrival(state.anchor, state.requested, state.arrival, state.exits);
+		(requested ? exitAt(state.anchor, [requested]) : undefined) ??
+		exitAtArrival(state.anchor, state.requested, state.arrival, state.exits) ??
+		exitAt(state.anchor, state.exits);
 	return {
 		latch: exit ? state.latch : undefined,
 		trigger:
@@ -89,6 +91,11 @@ export function exitForFrame(state: {
 			exit.id !== state.latch &&
 			state.requested === exit.id &&
 			state.wasWalking &&
+			state.arrival?.anchor &&
+			Math.hypot(
+				state.anchor.x - state.arrival.anchor.x,
+				state.anchor.y - state.arrival.anchor.y,
+			) < 1e-6 &&
 			!state.approachingObject &&
 			!state.arriving &&
 			!state.busy

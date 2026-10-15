@@ -1,3 +1,4 @@
+import { clearanceDistance } from "../core/characters/clearanceDistance";
 import {
 	clearanceRoute,
 	routeCorners,
@@ -694,10 +695,14 @@ export class CharacterMotor {
 			this.animation.show(this.pose);
 			return;
 		}
+		const stopping = this.planned[0]?.stop;
 		if (!this.planStance() || !this.pose) {
 			this.finish();
 			return;
 		}
+		// A cycle without a standing animation can finish synchronously in
+		// planStance. Do not restart its clock after that completed stop.
+		if (stopping && !this.walking && !this.planned.length) return;
 		this.walking = true;
 		this.animate("walk", this.heading, 1);
 		const idle = this.animation.standing?.(this.heading);
@@ -724,341 +729,30 @@ export class CharacterMotor {
 	/** Compare complete, physically simulated routes before admitting shorter phases. */
 	private buildPlan(options: SearchOptions = {}) {
 		this.stanceCache.clear();
-		const initial = {
-			pose: this.pose,
-			foot: this.foot,
-			anchor: { ...this.anchor },
-			scale: this.scale,
-			heading: this.heading,
-			position: { x: this.target.x, y: this.target.y },
-		};
-		const makeTrial = () => {
-			const target: MotorTarget = {
-				...initial.position,
-				setPosition(x, y) {
-					this.x = x;
-					this.y = y;
-				},
-				setScale() {},
-				setDepth() {},
-			};
-			const trial = new CharacterMotor(target, this.area, () => {}, {
-				...this.animation,
-				show() {},
-			});
-			trial.stanceCache = this.stanceCache;
-			trial.pose = initial.pose;
-			trial.foot = initial.foot;
-			trial.anchor = { ...initial.anchor };
-			trial.scale = initial.scale;
-			trial.heading = initial.heading;
-			trial.goal = this.goal;
-			return trial;
-		};
-		let best = this.buildRoute(options);
-		if (!best) return;
-		const quality = (result: NonNullable<typeof best>) => {
-			const trial = makeTrial();
-			trial.planned = structuredClone(result.steps);
-			const start = trial.planned[0]?.state;
-			if (start) {
-				trial.foot = start.foot;
-				trial.anchor = { ...start.anchor };
-			}
-			trial.beginWalk();
-			const runs: { heading: WalkDirection; count: number }[] = [];
-			let stance:
-				| { key: string; first: Point; last: Point; heading: WalkDirection }
-				| undefined;
-			let stances = 0,
-				bad = 0;
-			let first: Point | undefined, last: Point | undefined;
-			const finish = () => {
-				if (
-					!stance ||
-					Math.hypot(
-						stance.last.x - stance.first.x,
-						stance.last.y - stance.first.y,
-					) < 0.05
-				)
-					return;
-				stances++;
-				if (
-					!stanceFacesHeading(
-						stance.first,
-						stance.last,
-						stance.heading,
-						this.area.perspective.constant === undefined,
-					)
-				)
-					bad++;
-				const run = runs[runs.length - 1];
-				if (run?.heading === stance.heading) run.count++;
-				else runs.push({ heading: stance.heading, count: 1 });
-			};
-			for (let frame = 0; trial.walking && frame < 2400; frame++) {
-				for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
-				if (!trial.walking) break;
-				const position = { x: trial.target.x, y: trial.target.y };
-				first ??= position;
-				last = position;
-				if (trial.transition || trial.drawn) continue;
-				const key = `${trial.heading}:${trial.foot}:${trial.anchor.x.toFixed(3)}:${trial.anchor.y.toFixed(3)}`;
-				const ground = trial.groundPoint(position);
-				if (stance?.key !== key) {
-					finish();
-					stance = { key, first: ground, last: ground, heading: trial.heading };
-				} else stance.last = ground;
-			}
-			finish();
-			const mask = this.area.clearanceMask ?? this.area.mask;
-			const corners =
-				first &&
-				last &&
-				mask.data[cellAt(mask, first)] &&
-				mask.data[cellAt(mask, last)]
-					? routeCorners(
-							clearanceRoute(
-								this.area.clearanceMask ?? this.area.mask,
-								first,
-								last,
-							),
-						).length
-					: 0;
-			const clean =
-				!trial.walking &&
-				stances > 0 &&
-				bad / stances <= 0.05 &&
-				runs.length - 1 <= 2 + 2 * corners &&
-				runs.slice(1, -1).every((r) => r.count >= 2) &&
-				runs.every((r, i) => {
-					if (!i) return true;
-					const d = Math.abs(
-						GROUND_SECTORS.indexOf(r.heading) -
-							GROUND_SECTORS.indexOf(runs[i - 1].heading),
-					);
-					return Math.min(d, 8 - d) <= 2;
-				});
-			const goal = this.goal ?? trial.anchor;
-			const cell = nearestCell(mask, goal);
-			const standable = cell < 0 ? goal : cellPoint(mask, cell);
-			const distance = trial.arrival
-				? Math.max(
-						trial.arrival.distance,
-						Math.hypot(
-							trial.arrival.anchor.x - standable.x,
-							trial.arrival.anchor.y - standable.y,
-						),
-					)
-				: Infinity;
-			return {
-				clean,
-				distance,
-				arrived: distance <= (trial.arrival?.halfStride ?? -1),
-			};
-		};
-		let accepted = quality(best);
-		const totals = { ...best.stats, rejections: { ...best.stats.rejections } };
-		const alternatives: SearchOptions[] = [
-			{ entryPhases: "authored" },
-			{ entryPhases: "all" },
-			{ searchWeight: 4 },
-			{ searchWeight: 4, entryPhases: "authored" },
-			{ searchWeight: 4, entryPhases: "all" },
-			{ stopWeight: 128, searchWeight: 4, entryPhases: "authored" },
-			{
-				stopWeight: 128,
-				searchWeight: 4,
-				entryPhases: "all",
-				startPhases: true,
-			},
-			{
-				stopPhases: true,
-				entryPhases: "authored",
-				searchWeight: 4,
-				stopWeight: 128,
-			},
-			{
-				stopPhases: true,
-				entryPhases: "all",
-				startPhases: true,
-				searchWeight: 4,
-				stopWeight: 128,
-			},
-			{
-				turnCost: 0.15,
-				nodeBudget: 24000,
-				stopPhases: true,
-				entryPhases: "all",
-				startPhases: true,
-				searchWeight: 4,
-				stopWeight: 128,
-			},
-			{
-				pivotStops: true,
-				turnCost: 0.15,
-				nodeBudget: 24000,
-				stopPhases: true,
-				entryPhases: "all",
-				startPhases: true,
-				searchWeight: 4,
-				stopWeight: 128,
-			},
-			{ costScale: 2 },
-			{ costScale: 2, entryPhases: "authored" },
-			{
-				cornerRadius: 1.2,
-				costScale: 2,
-				entryPhases: "all",
-				startPhases: true,
-				stopPhases: true,
-				searchWeight: 4,
-				stopWeight: 128,
-				nodeBudget: 24000,
-			},
-			{
-				directHeuristic: true,
-				cornerRadius: 1.2,
-				costScale: 2,
-				entryPhases: "all",
-				startPhases: true,
-				stopPhases: true,
-				searchWeight: 4,
-				stopWeight: 128,
-				nodeBudget: 24000,
-			},
-		];
-		for (const alternative of alternatives) {
-			// A threshold walk continues through the doorway; do not finish it
-			// by turning away from its inward approach.
-			if (options.pivotStops === false && alternative.pivotStops) continue;
-			if (accepted.clean && accepted.arrived) break;
-			const trial = makeTrial();
-			const candidate = trial.buildRoute({ ...options, ...alternative });
-			if (!candidate) continue;
-			totals.expanded += candidate.stats.expanded;
-			totals.generated += candidate.stats.generated;
-			for (const [reason, count] of Object.entries(
-				candidate.stats.rejections ?? {},
-			))
-				totals.rejections[reason] = (totals.rejections[reason] ?? 0) + count;
-			const checked = quality(candidate);
-			if (
-				checked.clean &&
-				// Refinement must preserve an arrival already achieved, including a
-				// planted finish with no measurable walking stance.
-				(!accepted.arrived || checked.arrived) &&
-				(!accepted.clean ||
-					(checked.arrived && !accepted.arrived) ||
-					checked.distance < accepted.distance)
-			) {
-				best = candidate;
-				accepted = checked;
-			}
-		}
-		best.stats = { ...totals, reason: best.stats.reason, optimal: false };
-		this.planned = best.steps;
-		const start = best.steps[0]?.state;
-		if (start) {
-			this.foot = start.foot;
-			this.anchor = { ...start.anchor };
-		}
-		this.planDistance = best.distance;
-		this.planComplete = best.complete;
-		this.planSearch = best.stats;
-		return best;
-	}
-	/** Plan bounded stand-and-pivot continuations before any playback begins. */
-	private buildRoute(options: SearchOptions = {}) {
-		const result = this.buildSegment(options);
-		if (!result) return;
-		const screenCorners = routeCorners(this.path);
-		const shared = {
+		const alreadyAtTarget =
+			!this.animation.standing &&
+			this.goal &&
+			Math.hypot(this.goal.x - this.anchor.x, this.goal.y - this.anchor.y) <=
+				this.authoredHalfStride(this.heading, this.anchor);
+		return this.buildSegment({
+			entryPhases: "all",
+			startPhases: true,
+			stopPhases: true,
+			preferMotion: !alreadyAtTarget,
+			firstArrival: !alreadyAtTarget,
+			restartCost: 0.6,
+			minRestartRun: 1,
+			pivotStops: options.pivotStops !== false,
+			minTerminalRun: 2,
+			minFirstHeadingRun: options.pivotStops === false ? 2 : 0,
+			searchWeight: 4,
+			stopWeight: 128,
+			costScale: 2,
+			cornerRadius: 1.2,
+			nodeBudget: 1500,
+			resolution: 0.005,
 			...options,
-			maxHeadingChanges: 2 + 2 * screenCorners.length,
-			routeCorners: screenCorners.map((p) => this.groundPoint(p)),
-			cornerHeadings: screenCorners.map((p) => {
-				const i = this.path.indexOf(p),
-					a = this.groundPoint(p),
-					b = this.groundPoint(this.path[i + 1]);
-				return headingFromGround(
-					b.x - a.x,
-					b.y - a.y,
-					this.heading,
-					this.area.perspective.constant === undefined ? a : undefined,
-					0,
-				);
-			}),
-		};
-		let planner: CharacterMotor = this;
-		let segment = result;
-		for (let attempt = 0; attempt < 8 && !segment.complete; attempt++) {
-			const last = segment.steps[segment.steps.length - 1];
-			const first = segment.steps[0];
-			if (!last || !first) break;
-			const exit = planner.nextExit(last.pose, last.state, last.heading, true);
-			const idle = this.animation.standing?.(last.heading);
-			if (
-				!exit ||
-				!idle ||
-				Math.hypot(
-					exit.anchor.x - first.state.anchor.x,
-					exit.anchor.y - first.state.anchor.y,
-				) <= 0.5
-			)
-				break;
-			const placed = lockedPlacement(
-				exit.anchor,
-				idle,
-				exit.foot,
-				this.area.perspective,
-				this.area.baseScale,
-				this.area.scaleClamp,
-				exit.position.scale,
-			);
-			const target: MotorTarget = {
-				...placed,
-				setPosition(x, y) {
-					this.x = x;
-					this.y = y;
-				},
-				setScale() {},
-				setDepth() {},
-			};
-			planner = new CharacterMotor(target, this.area, () => {}, this.animation);
-			planner.stanceCache = this.stanceCache;
-			planner.pose = idle;
-			planner.anchor = { ...exit.anchor };
-			planner.foot = exit.foot;
-			planner.scale = placed.scale;
-			planner.heading = last.heading;
-			planner.goal = this.goal;
-			const next = planner.buildSegment({
-				...shared,
-				initialRoute: segment.routeState,
-			});
-			if (!next) break;
-			// Include rejected continuation searches as well as the accepted path.
-			result.stats.expanded += next.stats.expanded;
-			result.stats.generated += next.stats.generated;
-			result.stats.optimal = false;
-			result.stats.rejections ??= {};
-			const rejections = result.stats.rejections;
-			for (const [reason, count] of Object.entries(next.stats.rejections ?? {}))
-				rejections[reason] = (rejections[reason] ?? 0) + count;
-			if (!next.steps.length || next.distance >= segment.distance - 0.5) break;
-			result.steps.push(...next.steps);
-			result.distance = next.distance;
-			result.complete = next.complete;
-			result.arrivalKind = next.arrivalKind;
-			result.stats.reason = next.stats.reason;
-			segment = next;
-		}
-		this.planned = result.steps;
-		this.planDistance = result.distance;
-		this.planComplete = result.complete;
-		this.planSearch = result.stats;
-		return result;
+		});
 	}
 	private buildSegment(options: SearchOptions = {}) {
 		// Fixed work budget makes worker and Node route selection identical.
@@ -1079,51 +773,20 @@ export class CharacterMotor {
 		const goalCell = nearestCell(mask, this.goal);
 		const standableGoal = goalCell < 0 ? this.goal : cellPoint(mask, goalCell);
 		this.path = clearanceRoute(mask, this.target, this.goal);
-		const points = this.path.map((p) => this.groundPoint(p));
 		const screenCorners = routeCorners(this.path);
 		const corners = screenCorners.map((p) => this.groundPoint(p));
-		const cornerHeadings = screenCorners.map((p) => {
-			const i = this.path.indexOf(p),
-				a = points[i],
-				b = points[i + 1];
-			return headingFromGround(
-				b.x - a.x,
-				b.y - a.y,
-				this.heading,
-				this.area.perspective.constant === undefined ? a : undefined,
-				0,
-			);
-		});
 
 		options = {
 			...options,
 			maxHeadingChanges: options.maxHeadingChanges ?? 2 + 2 * corners.length,
-			routeCorners: options.routeCorners ?? corners,
-			cornerHeadings: options.cornerHeadings ?? cornerHeadings,
+			routeCorners: options.routeCorners,
+			cornerHeadings: options.cornerHeadings,
 			cornerRadius: options.cornerRadius ?? 0.6,
 			minHeadingRun: 2,
 		};
-		const route = this.path;
-		const tail = route.map(() => 0);
-		for (let i = route.length - 2; i >= 0; i--)
-			tail[i] =
-				tail[i + 1] +
-				Math.hypot(
-					points[i + 1].x - points[i].x,
-					points[i + 1].y - points[i].y,
-				);
-		const remaining = (p: Point) => {
-			const g = this.groundPoint(p);
-			if (options.directHeuristic) {
-				const goal = this.groundPoint(standableGoal);
-				return Math.hypot(g.x - goal.x, g.y - goal.y);
-			}
-			for (let i = route.length - 1; i >= 0; i--) {
-				if (stanceSweep(this.area.clearanceMask ?? this.area.mask, p, route[i]))
-					return Math.hypot(g.x - points[i].x, g.y - points[i].y) + tail[i];
-			}
-			return Math.hypot(g.x - points[0].x, g.y - points[0].y) + tail[0];
-		};
+		const remaining = clearanceDistance(mask, standableGoal, (p) =>
+			this.groundPoint(p),
+		);
 		const initial: PredictedStance = {
 			start: { x: this.target.x, y: this.target.y },
 			end: { x: this.target.x, y: this.target.y },
@@ -1136,6 +799,55 @@ export class CharacterMotor {
 		const count = (action: string) => {
 			const key = `${action}:${this.rejectionReason}`;
 			rejections[key] = (rejections[key] ?? 0) + 1;
+		};
+		const predictionCache = new WeakMap<
+			PredictedStance,
+			Map<string, { value: PredictedStance | undefined; reason: string }>
+		>();
+		const exitCache = new WeakMap<
+			PredictedStance,
+			Map<
+				string,
+				{ value: ReturnType<CharacterMotor["nextExit"]>; reason: string }
+			>
+		>();
+		const poseKey = (p: FootPose) =>
+			`${p.cycle.name}:${p.flipX}:${p.frame}:${!!p.firstStance}`;
+		const predict = (pose: FootPose, state: PredictedStance) => {
+			let cache = predictionCache.get(state);
+			if (!cache) {
+				cache = new Map();
+				predictionCache.set(state, cache);
+			}
+			const key = poseKey(pose),
+				saved = cache.get(key);
+			if (saved) {
+				this.rejectionReason = saved.reason;
+				return saved.value;
+			}
+			const value = this.predictStance(pose, state);
+			cache.set(key, { value, reason: this.rejectionReason });
+			return value;
+		};
+		const exitFor = (
+			pose: FootPose,
+			state: PredictedStance,
+			heading: WalkDirection,
+		) => {
+			let cache = exitCache.get(state);
+			if (!cache) {
+				cache = new Map();
+				exitCache.set(state, cache);
+			}
+			const key = `${poseKey(pose)}:${heading}`,
+				saved = cache.get(key);
+			if (saved) {
+				this.rejectionReason = saved.reason;
+				return saved.value;
+			}
+			const value = this.nextExit(pose, state, heading, true);
+			cache.set(key, { value, reason: this.rejectionReason });
+			return value;
 		};
 		const entries = (
 			s: PredictedStance,
@@ -1203,44 +915,64 @@ export class CharacterMotor {
 									s.scale,
 									this.startingFloor(),
 								)) &&
-							(stopping || !!this.predictStance(p, s)),
+							(stopping || !!predict(p, s)),
 					);
 			};
 			const pose = entry();
 			if (!pose.length) count(stopping ? "stop-entry" : "entry");
 			return pose;
 		};
-		const result = planFootsteps(
-			this.goal,
-			initial,
-			{
-				starts: (s) => {
+		const starts = (s: PredictedStance): PredictedStance[] => {
+			if (
+				!GROUND_SECTORS.some(
+					(h) => this.animation.standing?.(h)?.cycle.name === s.pose.cycle.name,
+				)
+			)
+				return [];
+			const foot: Foot = s.foot === "L" ? "R" : "L";
+			const starts: PredictedStance[] = [
+				{
+					...s,
+					foot,
+					anchor: contactOnScreen(s.pose, foot, s.end, s.scale),
+				},
+			];
+			for (const direction of GROUND_SECTORS) {
+				const idle = this.animation.standing?.(direction);
+				if (
+					!idle ||
+					(idle.cycle.name === s.pose.cycle.name && idle.flipX === s.pose.flipX)
+				)
+					continue;
+				for (const support of ["L", "R"] as const) {
+					const anchor = contactOnScreen(s.pose, support, s.end, s.scale);
 					if (
-						this.animation.standing?.(this.heading)?.cycle.name !==
-						s.pose.cycle.name
-					)
-						return [];
-					const foot: Foot = s.foot === "L" ? "R" : "L";
-					const starts: PredictedStance[] = [
-						{
-							...s,
-							foot,
-							anchor: contactOnScreen(s.pose, foot, s.end, s.scale),
-						},
-					];
-					for (const direction of GROUND_SECTORS) {
-						const idle = this.animation.standing?.(direction);
-						if (
-							!idle ||
-							(idle.cycle.name === s.pose.cycle.name &&
-								idle.flipX === s.pose.flipX)
+						!this.canStand(
+							{ ...this.animation.select(direction), frame: 0 },
+							anchor,
+							support,
+							s.scale,
+							this.startingFloor(),
+							true,
 						)
-							continue;
-						for (const support of ["L", "R"] as const) {
-							const anchor = contactOnScreen(s.pose, support, s.end, s.scale);
+					) {
+						count("pivot");
+						continue;
+					}
+					let via: FootPose | undefined;
+					const previousSupport = s.pose.cycle.contacts[s.pose.frame].planted;
+					if (
+						support !== previousSupport &&
+						idle.cycle.contacts[idle.frame].planted === previousSupport
+					) {
+						// Show the weight transfer before pivoting the old drawn support.
+						for (const heading of GROUND_SECTORS) {
+							const candidate = this.animation.standing?.(heading);
 							if (
-								!this.canStand(
-									{ ...this.animation.select(direction), frame: 0 },
+								candidate?.cycle.contacts[candidate.frame].planted ===
+									support &&
+								this.canStand(
+									{ ...this.animation.select(heading), frame: 0 },
 									anchor,
 									support,
 									s.scale,
@@ -1248,60 +980,219 @@ export class CharacterMotor {
 									true,
 								)
 							) {
-								count("pivot");
-								continue;
+								via = candidate;
+								break;
 							}
-							let via: FootPose | undefined;
-							const previousSupport =
-								s.pose.cycle.contacts[s.pose.frame].planted;
-							if (
-								support !== previousSupport &&
-								idle.cycle.contacts[idle.frame].planted === previousSupport
-							) {
-								// Show the weight transfer before pivoting the old drawn support.
-								for (const heading of GROUND_SECTORS) {
-									const candidate = this.animation.standing?.(heading);
-									if (
-										candidate?.cycle.contacts[candidate.frame].planted ===
-											support &&
-										this.canStand(
-											{ ...this.animation.select(heading), frame: 0 },
-											anchor,
-											support,
-											s.scale,
-											this.startingFloor(),
-											true,
-										)
-									) {
-										via = candidate;
-										break;
-									}
-								}
-								if (!via) continue;
-							}
-							const end = lockedPlacement(
-								anchor,
-								idle,
-								support,
-								this.area.perspective,
-								this.area.baseScale,
-								this.area.scaleClamp,
-								s.scale,
-							);
-							for (const foot of ["L", "R"] as const)
-								starts.push({
-									...s,
-									end,
-									pose: idle,
-									scale: end.scale,
-									foot,
-									anchor: contactOnScreen(idle, foot, end, end.scale),
-									pivot: { pose: idle, foot: support, anchor, via },
-								});
 						}
+						if (!via) continue;
 					}
-					return starts;
+					const end = lockedPlacement(
+						anchor,
+						idle,
+						support,
+						this.area.perspective,
+						this.area.baseScale,
+						this.area.scaleClamp,
+						s.scale,
+					);
+					for (const foot of ["L", "R"] as const)
+						starts.push({
+							...s,
+							end,
+							pose: idle,
+							scale: end.scale,
+							foot,
+							anchor: contactOnScreen(idle, foot, end, end.scale),
+							pivot: { pose: idle, foot: support, anchor, via },
+						});
+				}
+			}
+			return starts;
+		};
+		const standingCache = new Map<string, PredictedStance[]>();
+		const restExits = new WeakMap<
+			Point,
+			NonNullable<ReturnType<CharacterMotor["nextExit"]>>
+		>();
+		const routeBudgetCache = new Map<string, number>();
+		const qualityInitial = {
+			pose: this.pose,
+			foot: this.foot,
+			anchor: { ...this.anchor },
+			scale: this.scale,
+			heading: this.heading,
+			position: { x: this.target.x, y: this.target.y },
+		};
+		const makeTrial = () => {
+			const target: MotorTarget = {
+				...qualityInitial.position,
+				setPosition(x, y) {
+					this.x = x;
+					this.y = y;
 				},
+				setScale() {},
+				setDepth() {},
+			};
+			const trial = new CharacterMotor(target, this.area, () => {}, {
+				...this.animation,
+				show() {},
+			});
+			trial.stanceCache = this.stanceCache;
+			trial.pose = qualityInitial.pose;
+			trial.foot = qualityInitial.foot;
+			trial.anchor = { ...qualityInitial.anchor };
+			trial.scale = qualityInitial.scale;
+			trial.heading = qualityInitial.heading;
+			trial.goal = this.goal;
+			return trial;
+		};
+		const startLimits = new WeakMap<PredictedStance, Map<string, number>>();
+		const qualityReasons = new Map<string, number>();
+		const quality = (steps: PlannedStep<PredictedStance, FootPose>[]) => {
+			const trial = makeTrial();
+			trial.planned = steps.map((step) => ({
+				...step,
+				state: { ...step.state },
+				slide: { ...step.slide },
+			}));
+			const start = trial.planned[0]?.state;
+			if (start) {
+				trial.foot = start.foot;
+				trial.anchor = { ...start.anchor };
+			}
+			trial.beginWalk();
+			const runs: { heading: WalkDirection; count: number }[] = [];
+			let stance:
+				| { key: string; first: Point; last: Point; heading: WalkDirection }
+				| undefined;
+			let stances = 0,
+				bad = 0;
+			let first: Point | undefined, last: Point | undefined;
+			const finish = () => {
+				if (
+					!stance ||
+					Math.hypot(
+						stance.last.x - stance.first.x,
+						stance.last.y - stance.first.y,
+					) < 0.05
+				)
+					return;
+				stances++;
+				if (
+					!stanceFacesHeading(
+						stance.first,
+						stance.last,
+						stance.heading,
+						this.area.perspective.constant === undefined,
+					)
+				)
+					bad++;
+				const run = runs[runs.length - 1];
+				if (run?.heading === stance.heading) run.count++;
+				else runs.push({ heading: stance.heading, count: 1 });
+			};
+			for (let frame = 0; trial.walking && frame < 2400; frame++) {
+				for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
+				if (!trial.walking) break;
+				const position = { x: trial.target.x, y: trial.target.y };
+				first ??= position;
+				last = position;
+				if (trial.transition || trial.drawn) continue;
+				const key = `${trial.heading}:${trial.foot}:${trial.anchor.x.toFixed(3)}:${trial.anchor.y.toFixed(3)}`;
+				const ground = trial.groundPoint(position);
+				if (stance?.key !== key) {
+					finish();
+					stance = { key, first: ground, last: ground, heading: trial.heading };
+				} else stance.last = ground;
+			}
+			finish();
+			const mask = this.area.clearanceMask ?? this.area.mask;
+			const cornerKey = `${first ? cellAt(mask, first) : -1}:${last ? cellAt(mask, last) : -1}`;
+			let corners = routeBudgetCache.get(cornerKey);
+			if (corners === undefined) {
+				corners =
+					first &&
+					last &&
+					mask.data[cellAt(mask, first)] &&
+					mask.data[cellAt(mask, last)]
+						? routeCorners(
+								clearanceRoute(
+									this.area.clearanceMask ?? this.area.mask,
+									first,
+									last,
+								),
+							).length
+						: 0;
+				routeBudgetCache.set(cornerKey, corners);
+			}
+			const clean =
+				!trial.walking &&
+				stances > 0 &&
+				bad / stances <= 0.05 &&
+				runs.length - 1 <= 2 + 2 * corners &&
+				runs.slice(1, -1).every((r) => r.count >= 2) &&
+				(runs.length < 2 ||
+					((runs[runs.length - 1]?.count ?? 0) >=
+						(options.minTerminalRun ?? 0) &&
+						runs[0].count >= (options.minFirstHeadingRun ?? 0))) &&
+				runs.every((r, i) => {
+					if (!i) return true;
+					const d = Math.abs(
+						GROUND_SECTORS.indexOf(r.heading) -
+							GROUND_SECTORS.indexOf(runs[i - 1].heading),
+					);
+					return Math.min(d, 8 - d) <= 2;
+				});
+			const issues =
+				[
+					trial.walking ? "unfinished" : "",
+					!stances ? "no-motion" : "",
+					bad / Math.max(stances, 1) > 0.05 ? "angle" : "",
+					runs.length - 1 > 2 + 2 * corners ? "changes" : "",
+					runs.slice(1, -1).some((r) => r.count < 2) ? "flicker" : "",
+				]
+					.filter(Boolean)
+					.join("+") || "other";
+			if (!clean) {
+				qualityReasons.set(issues, (qualityReasons.get(issues) ?? 0) + 1);
+			}
+			return { clean };
+		};
+		const result = planFootsteps<PredictedStance, FootPose>(
+			this.goal,
+			initial,
+			{
+				startTurnLimit: (state, pose, heading) => {
+					let limits = startLimits.get(state);
+					if (!limits) {
+						limits = new Map();
+						startLimits.set(state, limits);
+					}
+					const key = `${poseKey(pose)}:${heading}`;
+					const saved = limits.get(key);
+					if (saved !== undefined) return saved;
+					const trial = makeTrial();
+					trial.foot = state.foot;
+					trial.anchor = { ...state.anchor };
+					trial.planned = [
+						{
+							state: { ...state },
+							pose,
+							heading,
+							stop: false,
+							slide: { x: 0, y: 0 },
+						},
+					];
+					trial.beginWalk();
+					for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
+					const limit = mask.data[cellAt(mask, trial.target)]
+						? (options.maxHeadingChanges ?? Infinity)
+						: 2;
+					limits.set(key, limit);
+					return limit;
+				},
+				acceptPlan: (steps) => quality(steps).clean,
+				starts,
 				offset: (s, slide) => ({
 					...s,
 					anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
@@ -1316,9 +1207,52 @@ export class CharacterMotor {
 					entries(s, h, starting, stopping),
 				entry: (s, h, starting, stopping) =>
 					entries(s, h, starting, stopping)[0],
+				continueFromRest: (state, pose, heading, rest) => {
+					if (predict(pose, state)) return [];
+					const exit = restExits.get(rest),
+						idle = this.animation.standing?.(heading);
+					if (!exit || !idle) return [];
+					const key = `${heading}:${exit.foot}:${exit.anchor.x}:${exit.anchor.y}:${this.area.perspective.residual?.length ? exit.position.scale : 0}`;
+					const cached = standingCache.get(key);
+					if (cached) return cached;
+					const end = lockedPlacement(
+						exit.anchor,
+						idle,
+						exit.foot,
+						this.area.perspective,
+						this.area.baseScale,
+						this.area.scaleClamp,
+						exit.position.scale,
+					);
+					const standing: PredictedStance = {
+						...state,
+						start: end,
+						end,
+						pose: idle,
+						foot: exit.foot,
+						anchor: exit.anchor,
+						scale: end.scale,
+						pivot: undefined,
+					};
+					const choices = [standing, ...starts(standing)];
+					standingCache.set(key, choices);
+					return choices;
+				},
+				stanceKey: (state, _pose, heading) =>
+					`${heading}:${state.foot}:${state.anchor.x.toFixed(3)}:${state.anchor.y.toFixed(3)}`,
+				countStance: (s, pose) => {
+					const samples = this.stanceSamples(pose, s.anchor, s.foot, s.scale);
+					if (!samples) return false;
+					const shift = this.area.perspective.residual?.length ? 0 : s.anchor.x;
+					const first = samples.samples[0];
+					const last = samples.samples[samples.samples.length - 1];
+					const a = this.groundPoint({ x: first.x + shift, y: first.y });
+					const b = this.groundPoint({ x: last.x + shift, y: last.y });
+					return Math.hypot(b.x - a.x, b.y - a.y) >= 0.05;
+				},
 				advance: (s, pose) => {
 					this.rejectionReason = "no-stance";
-					const next = this.predictStance(pose, s);
+					const next = predict(pose, s);
 					if (!next) count("advance");
 					return next;
 				},
@@ -1359,13 +1293,24 @@ export class CharacterMotor {
 				},
 				rest: (s, pose, heading) => {
 					this.rejectionReason = "no-exit-frame";
-					const exit = this.nextExit(pose, s, heading, true);
+					const exit = exitFor(pose, s, heading);
 					if (!exit) count("rest");
-					return exit ? { ...exit.anchor, travel: exit.travel } : undefined;
+					if (!exit) return;
+					const rest = {
+						...exit.anchor,
+						travel: exit.travel,
+						body: exit.position,
+						stances: 0,
+						supports: [],
+					};
+					restExits.set(rest, exit);
+					return rest;
 				},
 			},
 			options,
 		);
+		for (const [reason, count] of qualityReasons)
+			rejections[`quality:${reason}`] = count;
 		Object.assign(result.stats.rejections, rejections);
 		this.planned = result.steps;
 		const start = result.steps[0]?.state;
@@ -1626,17 +1571,35 @@ export class CharacterMotor {
 		const sampled = this.stanceSamples(pose, anchor, foot, scale);
 		if (!sampled) return false;
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
-		const first = sampled.samples[0],
-			last = sampled.samples[sampled.samples.length - 1];
-		const valid = stanceFacesHeading(
-			this.groundPoint({ x: first.x + shift, y: first.y }),
-			this.groundPoint({ x: last.x + shift, y: last.y }),
-			heading,
-			this.area.perspective.constant === undefined,
-			toleranceDegrees,
-		);
-		if (!valid) this.rejectionReason = "facing-invalid";
-		return valid;
+		// Capture can omit either boundary drawing of a support interval.
+		// Every such sampled stance must obey the same facing tolerance.
+		for (
+			let first = 0;
+			first <= Math.min(1, sampled.samples.length - 1);
+			first++
+		) {
+			for (
+				let last = sampled.samples.length - 1;
+				last >= Math.max(first, sampled.samples.length - 2);
+				last--
+			) {
+				const a = sampled.samples[first],
+					b = sampled.samples[last];
+				if (
+					!stanceFacesHeading(
+						this.groundPoint({ x: a.x + shift, y: a.y }),
+						this.groundPoint({ x: b.x + shift, y: b.y }),
+						heading,
+						this.area.perspective.constant === undefined,
+						toleranceDegrees,
+					)
+				) {
+					this.rejectionReason = "facing-invalid";
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	/** Cache exact-depth sheet simulation independently of scene collisions.
 	 * No quantised displacement reaches playback. Without lateral residuals,
