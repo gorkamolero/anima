@@ -10,7 +10,7 @@
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
 
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a fixed 1,500-node budget so worker and headless route selection remain identical.
+**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,500–4,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38an` (139 walks: 111 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 196 ms and max 587 ms) and `38an-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 228 ms and max 314 ms). Footfall's 173 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38az` (139 walks: 111 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 190 ms and max 588 ms) and `38az-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 158 ms and max 352 ms). Footfall's 173 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 

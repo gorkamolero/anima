@@ -734,6 +734,14 @@ export class CharacterMotor {
 			this.goal &&
 			Math.hypot(this.goal.x - this.anchor.x, this.goal.y - this.anchor.y) <=
 				this.authoredHalfStride(this.heading, this.anchor);
+		// Long lateral crossings need more stance choices. Reciprocal depth grows
+		// without bound near the horizon, so it must not inflate the work budget.
+		const from = this.groundPoint(this.anchor);
+		const to = this.groundPoint(this.goal ?? this.anchor);
+		const nodeBudget = Math.min(
+			4000,
+			Math.max(1500, Math.ceil(400 * Math.abs(to.x - from.x))),
+		);
 		return this.buildSegment({
 			entryPhases: "all",
 			startPhases: true,
@@ -749,7 +757,7 @@ export class CharacterMotor {
 			stopWeight: 128,
 			costScale: 2,
 			cornerRadius: 1.2,
-			nodeBudget: 1500,
+			nodeBudget,
 			resolution: 0.005,
 			...options,
 		});
