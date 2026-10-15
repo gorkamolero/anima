@@ -174,7 +174,9 @@ it("accepts conservative coverage and does not rederive existing places after a 
 	});
 	const place = await (await request()).json();
 	expect(place.ground.ground).toBe("derived");
-	expect(place.ground.notes.join(" ")).toContain("missing floor does not reject");
+	expect(place.ground.notes.join(" ")).toContain(
+		"missing floor does not reject",
+	);
 	place.ground.derivationVersion = -100;
 	mocks.rows.set(place.id, JSON.stringify(place));
 	const loaded = await placesRoutes.request(

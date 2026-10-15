@@ -15,5 +15,10 @@ for (const pair of pairs) {
 	mkdirSync(dir, { recursive: true });
 	writeFileSync(resolve(dir, "plan.json"), JSON.stringify(plan, null, 1));
 	writeFileSync(resolve(dir, "navigation.json"), JSON.stringify({ location }));
-	console.log(key, location, "beats", (plan as { beats: unknown[] }).beats.length);
+	console.log(
+		key,
+		location,
+		"beats",
+		(plan as { beats: unknown[] }).beats.length,
+	);
 }
