@@ -778,6 +778,29 @@ export class CharacterMotor {
 		this.startMask = undefined;
 		if (!this.pose || !this.goal) return;
 		const mask = this.area.clearanceMask ?? this.area.mask;
+		const goal = this.goal;
+		options.goalHeadings = GROUND_SECTORS.filter((heading) => {
+			const selected = this.animation.standing?.(heading);
+			if (!selected) return false;
+			const pose = { ...selected, frame: 0 };
+			return (["L", "R"] as const).some((foot) => {
+				const p = lockedPlacement(
+					goal,
+					pose,
+					foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					this.area.baseScale,
+				);
+				return (
+					!!mask.data[cellAt(mask, { x: p.x, y: goal.y })] &&
+					(["L", "R"] as const).every((sole) =>
+						this.soleFits(contactOnScreen(pose, sole, p, p.scale)),
+					)
+				);
+			});
+		});
 		const goalCell = nearestCell(mask, this.goal);
 		const standableGoal = goalCell < 0 ? this.goal : cellPoint(mask, goalCell);
 		this.path = clearanceRoute(mask, this.target, this.goal);

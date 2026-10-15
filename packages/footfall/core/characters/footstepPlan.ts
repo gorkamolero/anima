@@ -99,6 +99,8 @@ export interface SearchOptions {
 	/** Try a lower bound that does not require continuous floor between steps. */
 	directHeuristic?: boolean;
 	searchWeight?: number;
+	/** Queue preference only; never excludes an arrival orientation. */
+	goalHeadings?: readonly WalkDirection[];
 	startPhases?: boolean;
 	stopPhases?: boolean;
 	pivotStops?: boolean;
@@ -188,6 +190,19 @@ export function planFootsteps<State, Pose>(
 	const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 	const resolution = options.resolution ?? 0.03;
 	const turnCost = options.turnCost ?? 0.6;
+	const arrivalTurn = (heading: WalkDirection) => {
+		if (!options.firstArrival || !options.goalHeadings?.length) return 0;
+		const sector = GROUND_SECTORS.indexOf(heading);
+		return (
+			turnCost *
+			Math.min(
+				...options.goalHeadings.map((h) => {
+					const d = Math.abs(GROUND_SECTORS.indexOf(h) - sector);
+					return Math.min(d, 8 - d);
+				}),
+			)
+		);
+	};
 	const stepCost = options.stepCost ?? 0.02;
 	const maxStride = options.maxStride ?? 0.6;
 	const weight = Math.max(1, options.stopWeight ?? 8);
@@ -644,7 +659,8 @@ export function planFootsteps<State, Pose>(
 								priority:
 									g +
 									(options.searchWeight ?? 1) *
-										heuristic(sim.position(standing), g),
+										heuristic(sim.position(standing), g) +
+									arrivalTurn(heading),
 								key: k,
 								stride,
 								changes,
@@ -735,7 +751,9 @@ export function planFootsteps<State, Pose>(
 					g,
 					f,
 					priority:
-						g + (options.searchWeight ?? 1) * heuristic(sim.position(next), g),
+						g +
+						(options.searchWeight ?? 1) * heuristic(sim.position(next), g) +
+						arrivalTurn(heading),
 					key: nextKey,
 					stride,
 					changes,

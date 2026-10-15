@@ -835,3 +835,26 @@ it("rejects an invalid captured start while retaining an alternative entry", () 
 		0,
 	);
 });
+
+it("keeps feasible arrivals whose heading differs from the target preference", () => {
+	const result = planFootsteps<number, string>(
+		{ x: 2, y: 0 },
+		0,
+		{
+			position: (n) => ({ x: n, y: 0 }),
+			entry: (_n, heading) => (heading === "right" ? heading : undefined),
+			advance: (n) => (n < 2 ? n + 1 : undefined),
+			rest: (n) => (n === 2 ? { x: n, y: 0 } : undefined),
+		},
+		{
+			now: () => 0,
+			firstArrival: true,
+			searchWeight: 4,
+			goalHeadings: ["left"],
+			costBound: 20,
+			nodeBudget: 50,
+		},
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps.at(-1)?.state).toBe(2);
+});

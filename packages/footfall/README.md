@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38az` (139 walks: 111 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 190 ms and max 588 ms) and `38az-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 158 ms and max 352 ms). Footfall's 173 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38bd-full` (139 walks: 112 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 197 ms and max 598 ms) and `38bd-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 159 ms and max 393 ms). Footfall's 174 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
@@ -129,3 +129,5 @@ Remaining arrival misses and broader visual/path/art/journey sign-off remain ope
 The project's [prior-art review](../../tmp/walkarea/prior-art.md) flags US 11,741,675 B2 concerning learned visible/hidden traversable-space prediction. Footfall currently uses geometric bridging from visible masks and baselines. This note records the project's design boundary, not a patent clearance opinion.
 
 See [reviewer findings](../../tmp/walkqa/reports/findings.md), especially F20 (standing drawings), F23 (source-cycle drift), F24 (bounded search), and the Brief 31/32 arrival findings. Existing gate misses are intentionally preserved by this extraction. Non-planar stairs, uncalibrated characters, missing contact data, segmentation failures, bounded lattice searches and off-lattice clicks remain limitations. A successful log gate does not constitute visual sign-off of every scene.
+
+For bounded first-arrival searches, queue ordering prefers headings with a standing pose that fits the target floor and body clearance. This does not exclude other headings or relax arrival rules.
