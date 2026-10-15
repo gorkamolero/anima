@@ -11,6 +11,20 @@ export function stanceSweep(mask: FloorMask, a: Point, b: Point): boolean {
 	const from = cellAt(mask, a),
 		to = cellAt(mask, b);
 	if (from < 0 || to < 0 || !mask.data[from] || !mask.data[to]) return false;
+	if (from === to) return true;
+	// A straight segment whose endpoints share a row or column cannot leave it.
+	// Scan its exact cells directly, including thin blocked intervals.
+	const lo = Math.min(from, to),
+		hi = Math.max(from, to);
+	if (Math.floor(from / mask.width) === Math.floor(to / mask.width)) {
+		for (let i = lo + 1; i < hi; i++) if (!mask.data[i]) return false;
+		return true;
+	}
+	if (from % mask.width === to % mask.width) {
+		for (let i = lo + mask.width; i < hi; i += mask.width)
+			if (!mask.data[i]) return false;
+		return true;
+	}
 	const ax = (a.x * mask.width) / 1920,
 		ay = (a.y * mask.height) / 1080;
 	const bx = (b.x * mask.width) / 1920,

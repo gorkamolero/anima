@@ -11,6 +11,9 @@ export interface PlannedStep<State, Pose> {
 	slide: Point;
 }
 export interface StepSimulation<State, Pose> {
+	/** Exact terminal validation; a rejected goal leaves this same frontier active. */
+	acceptPlan?(steps: PlannedStep<State, Pose>[]): boolean;
+	startTurnLimit?(state: State, pose: Pose, heading: WalkDirection): number;
 	position(state: State): Point;
 	/** Additional zero-motion support choices, only at the standing start. */
 	starts?(state: State): readonly State[];
@@ -33,12 +36,39 @@ export interface StepSimulation<State, Pose> {
 		stopping?: boolean,
 	): readonly Pose[];
 	advance(state: State, pose: Pose): State | undefined;
+	/** Fragments consume turns but cannot fill a sustained run. */
+	countStance?(state: State, pose: Pose): boolean;
+	stanceKey?(state: State, pose: Pose, heading: WalkDirection): string;
+	/** Standing and support-transfer edges remain in this same search frontier. */
+	continueFromRest?(
+		state: State,
+		pose: Pose,
+		heading: WalkDirection,
+		rest: Point,
+	): readonly State[];
+	/** Validate the turn budget against the route to the actual stop. */
+	routeAllowed?(
+		origin: State,
+		rest: Point & {
+			body?: Point;
+			stances?: number;
+			supports?: readonly { key: string; counted: boolean }[];
+		},
+		changes: number,
+	): boolean;
 	/** Validate the complete exit and settle; return the final planted sole. */
 	rest(
 		state: State,
 		pose: Pose,
 		heading: WalkDirection,
-	): (Point & { travel?: number }) | undefined;
+	):
+		| (Point & {
+				travel?: number;
+				body?: Point;
+				stances?: number;
+				supports?: readonly { key: string; counted: boolean }[];
+		  })
+		| undefined;
 	/** All possible exit support positions, before collision/settle validation. */
 	restCandidates?(state: State, pose: Pose): readonly Point[];
 	/** Character-specific authored arrival radius; independent of a partial entry. */
@@ -58,6 +88,12 @@ export interface RouteState {
 	corner: number;
 }
 export interface SearchOptions {
+	/** Keep a stationary stop as fallback without pruning a valid walking route. */
+	preferMotion?: boolean;
+	/** Explicit preferences for a bounded, non-optimal first-arrival search. */
+	firstArrival?: boolean;
+	restartCost?: number;
+	minRestartRun?: number;
 	entryPhases?: "authored" | "all";
 	/** Try a lower bound that does not require continuous floor between steps. */
 	directHeuristic?: boolean;
@@ -79,6 +115,8 @@ export interface SearchOptions {
 	stepCost?: number;
 	maxHeadingChanges?: number;
 	minHeadingRun?: number;
+	minFirstHeadingRun?: number;
+	minTerminalRun?: number;
 	/** Ordered shortest-route corners in ground coordinates. Each is usable once. */
 	routeCorners?: readonly Point[];
 	cornerRadius?: number;
@@ -170,6 +208,12 @@ export function planFootsteps<State, Pose>(
 		return d + (weight - 1) * Math.max(0, d - (costBound - g));
 	};
 	type Node = {
+		changeLimit: number;
+		lastSupport?: string;
+		lastCounted?: boolean;
+		sinceRest: number;
+		stances: number;
+		origin: State;
 		state: State;
 		heading?: WalkDirection;
 		parent?: Node;
@@ -197,6 +241,10 @@ export function planFootsteps<State, Pose>(
 	};
 	const open = new Heap<Node>();
 	const start: Node = {
+		changeLimit: options.maxHeadingChanges ?? Infinity,
+		sinceRest: options.minRestartRun ?? 0,
+		stances: 0,
+		origin: initial,
 		state: initial,
 		g: 0,
 		f: heuristic(sim.position(initial)),
@@ -223,6 +271,7 @@ export function planFootsteps<State, Pose>(
 	for (const state of sim.starts?.(initial) ?? []) {
 		const alternative = {
 			...start,
+			origin: state,
 			state,
 			key: key(
 				state,
@@ -246,7 +295,9 @@ export function planFootsteps<State, Pose>(
 	};
 	let expanded = 0;
 	let reason: SearchStats["reason"] = "nearest-reachable";
-	let bestScore = initialDistance * weight;
+	let bestScore = options.preferMotion
+		? Math.max(initialDistance * weight, costBound)
+		: initialDistance * weight;
 	let best:
 		| {
 				node: Node;
@@ -257,6 +308,12 @@ export function planFootsteps<State, Pose>(
 				routeState: RouteState;
 		  }
 		| undefined;
+	const searchBound = () =>
+		options.firstArrival && !best?.complete
+			? Math.max(bestScore, costBound)
+			: bestScore;
+	let stationary: typeof best;
+	let stationaryScore = Infinity;
 	const stepFor = (
 		node: Node,
 		heading: WalkDirection,
@@ -269,9 +326,21 @@ export function planFootsteps<State, Pose>(
 		stop,
 		slide: { x: 0, y: 0 },
 	});
-	for (let node = open.pop(); node; node = open.pop()) {
+	const collect = (node: Node, step: PlannedStep<State, Pose>) => {
+		const steps = [step];
+		for (let n: Node | undefined = node; n?.step; n = n.parent)
+			steps.push(n.step);
+		return steps.reverse();
+	};
+	const acceptable = (node: Node, step: PlannedStep<State, Pose>) => {
+		if (options.preferMotion && node.stances === 0) return true;
+		if (!sim.acceptPlan || sim.acceptPlan(collect(node, step))) return true;
+		reject("playback-route");
+		return false;
+	};
+	search: for (let node = open.pop(); node; node = open.pop()) {
 		if (node.g !== costs.get(node.key)) continue;
-		if (node.f >= bestScore) {
+		if (node.f >= searchBound()) {
 			if ((options.searchWeight ?? 1) !== 1) continue;
 			reason = best?.complete ? "complete" : "nearest-reachable";
 			break;
@@ -287,7 +356,12 @@ export function planFootsteps<State, Pose>(
 		expanded++;
 		// A final in-place turn is not another walking run. It must preserve the
 		// support exactly, and cannot borrow a larger stride from the idle facing.
-		if (options.pivotStops && node.heading && node.step) {
+		if (
+			options.pivotStops &&
+			node.heading &&
+			node.step &&
+			(node.changes === 0 || node.run >= (options.minTerminalRun ?? 0))
+		) {
 			const p = ground(sim.position(node.state));
 			for (const heading of GROUND_SECTORS) {
 				const d = Math.abs(
@@ -323,8 +397,25 @@ export function planFootsteps<State, Pose>(
 						residual <= Math.min(node.stride, maxStride) / 2;
 					if (!complete) continue;
 					const cost = node.g + stepCost;
-					const score = cost + weight * remaining(rest);
-					if (cost > costBound || score >= bestScore) continue;
+					const score =
+						cost +
+						(options.firstArrival && complete ? 0 : weight * remaining(rest));
+					if (cost > costBound || (!options.firstArrival && score >= bestScore))
+						continue;
+					if (
+						sim.routeAllowed &&
+						!sim.routeAllowed(node.origin, rest, node.changes)
+					)
+						continue;
+					if (
+						!acceptable(node, {
+							...stepFor(node, heading, pose, true),
+							arrivalHeading: node.heading,
+						})
+					)
+						continue;
+					const previousBest = best,
+						previousScore = bestScore;
 					bestScore = score;
 					best = {
 						node,
@@ -343,6 +434,14 @@ export function planFootsteps<State, Pose>(
 							corner: node.corner,
 						},
 					};
+					if (options.preferMotion && node.stances === 0) {
+						if (score < stationaryScore) {
+							stationary = best;
+							stationaryScore = score;
+						}
+						best = previousBest;
+						bestScore = previousScore;
+					}
 				}
 			}
 		}
@@ -360,7 +459,13 @@ export function planFootsteps<State, Pose>(
 				continue;
 			}
 			const changes = node.changes + (turn ? 1 : 0);
-			if (turn && node.changes > 0 && node.run < (options.minHeadingRun ?? 0)) {
+			if (
+				turn &&
+				node.run <
+					(node.changes > 0
+						? (options.minHeadingRun ?? 0)
+						: (options.minFirstHeadingRun ?? 0))
+			) {
 				reject("min-heading-run");
 				continue;
 			}
@@ -388,7 +493,7 @@ export function planFootsteps<State, Pose>(
 				corner++;
 			}
 			const changeLimit = Math.min(
-				options.maxHeadingChanges ?? Infinity,
+				node.changeLimit,
 				options.routeCorners ? 2 + 2 * corner : Infinity,
 			);
 			if (changes > changeLimit) {
@@ -400,22 +505,34 @@ export function planFootsteps<State, Pose>(
 			// must not forbid a later legal bend after two sustained stances;
 			// the shared corner/change budget still bounds the complete route.
 			history |= 1 << sector;
-			const run = turn ? 1 : node.run + 1;
+
 			const poses = sim.entries?.(
 				node.state,
 				heading,
-				node.step === undefined,
-			) ?? [sim.entry(node.state, heading, node.step === undefined)];
+				node.step === undefined || node.step.stop,
+			) ?? [
+				sim.entry(
+					node.state,
+					heading,
+					node.step === undefined || node.step.stop,
+				),
+			];
 			const actions = (poses.length ? poses : [undefined]).map((pose) => ({
 				pose,
 				stopPose:
-					pose ?? sim.entry(node.state, heading, node.step === undefined, true),
+					pose ??
+					sim.entry(
+						node.state,
+						heading,
+						node.step === undefined || node.step.stop,
+						true,
+					),
 			}));
 			if (options.stopPhases)
 				for (const stopPose of sim.entries?.(
 					node.state,
 					heading,
-					node.step === undefined,
+					node.step === undefined || node.step.stop,
 					true,
 				) ?? [])
 					actions.push({ pose: undefined, stopPose });
@@ -424,6 +541,18 @@ export function planFootsteps<State, Pose>(
 				const p = ground(sim.position(node.state));
 				const next =
 					pose === undefined ? undefined : sim.advance(node.state, pose);
+				const supportKey =
+					pose === undefined
+						? undefined
+						: sim.stanceKey?.(node.state, pose, heading);
+				const rawCounted =
+					pose !== undefined && (sim.countStance?.(node.state, pose) ?? true);
+				const counted =
+					rawCounted &&
+					(supportKey === undefined ||
+						supportKey !== node.lastSupport ||
+						!node.lastCounted);
+				const run = (turn ? 0 : node.run) + (counted ? 1 : 0);
 				const stride = next
 					? distance(p, ground(sim.position(next)))
 					: node.stride;
@@ -445,10 +574,23 @@ export function planFootsteps<State, Pose>(
 						);
 					});
 				const rest =
-					canImprove && stopPose !== undefined
+					(canImprove || sim.continueFromRest) && stopPose !== undefined
 						? sim.rest(node.state, stopPose, heading)
 						: undefined;
 				if (rest && stopPose !== undefined) {
+					let lastSupport = node.lastSupport,
+						lastCounted = node.lastCounted;
+					let stopCount = rest.supports ? 0 : (rest.stances ?? 0);
+					for (const support of rest.supports ?? []) {
+						if (support.key === lastSupport) {
+							if (support.counted && !lastCounted) stopCount++;
+							lastCounted ||= support.counted;
+						} else {
+							lastSupport = support.key;
+							lastCounted = support.counted;
+							if (support.counted) stopCount++;
+						}
+					}
 					const remaining = distance(ground(rest), goal);
 					const complete =
 						sim.acceptRest?.(node.state, stopPose, rest, target, heading) ??
@@ -458,8 +600,70 @@ export function planFootsteps<State, Pose>(
 						(rest.travel ?? distance(p, ground(rest))) +
 						turnPenalty +
 						stepCost;
-					const score = cost + weight * (sim.remaining?.(rest) ?? remaining);
-					if (cost <= costBound && score < bestScore) {
+					const score =
+						cost +
+						(options.firstArrival && complete
+							? 0
+							: weight * (sim.remaining?.(rest) ?? remaining));
+					if (
+						node.step &&
+						cost <= costBound &&
+						sim.continueFromRest &&
+						node.sinceRest + stopCount >= (options.minRestartRun ?? 0)
+					) {
+						const restRun = (turn ? 0 : node.run) + stopCount;
+						for (const standing of sim.continueFromRest(
+							node.state,
+							stopPose,
+							heading,
+							rest,
+						)) {
+							const g = cost + (options.restartCost ?? stepCost);
+							const f = g + heuristic(sim.position(standing), g);
+							if (g > costBound || f >= searchBound()) continue;
+							const k =
+								key(standing, heading, changes, restRun, history, corner) +
+								(options.minRestartRun ? ":rest:0" : "") +
+								`:held:${lastSupport ?? ""}:${!!lastCounted}:limit:${node.changeLimit}`;
+							if (g >= (costs.get(k) ?? Infinity)) continue;
+							costs.set(k, g);
+							open.push({
+								state: standing,
+								origin: node.origin,
+								sinceRest: 0,
+								changeLimit: node.changeLimit,
+								stances: node.stances + stopCount,
+								lastSupport,
+								lastCounted,
+								heading,
+								parent: node,
+								step: stepFor(node, heading, stopPose, true),
+								g,
+								f,
+								priority:
+									g +
+									(options.searchWeight ?? 1) *
+										heuristic(sim.position(standing), g),
+								key: k,
+								stride,
+								changes,
+								run: restRun,
+								history,
+								corner,
+							});
+							generated++;
+						}
+					}
+					if (
+						(node.changes === 0 || node.run >= (options.minTerminalRun ?? 0)) &&
+						cost <= costBound &&
+						((options.firstArrival && complete) || score < bestScore) &&
+						(!sim.routeAllowed ||
+							sim.routeAllowed(node.origin, rest, changes)) &&
+						acceptable(node, stepFor(node, heading, stopPose, true))
+					) {
+						const previousBest = best,
+							previousScore = bestScore;
 						bestScore = score;
 						best = {
 							node,
@@ -469,7 +673,19 @@ export function planFootsteps<State, Pose>(
 							complete,
 							routeState: { heading, changes, run, history, corner },
 						};
+						if (options.preferMotion && node.stances === 0) {
+							if (score < stationaryScore) {
+								stationary = best;
+								stationaryScore = score;
+							}
+							best = previousBest;
+							bestScore = previousScore;
+						}
 					}
+				}
+				if (options.firstArrival && best?.complete) {
+					reason = "complete";
+					break search;
 				}
 				if (!next || pose === undefined || stride < 1e-8) continue;
 				const g = node.g + stride + turnPenalty + stepCost;
@@ -478,17 +694,35 @@ export function planFootsteps<State, Pose>(
 					continue;
 				}
 				const f = g + heuristic(sim.position(next), g);
-				if (f >= bestScore) {
+				if (f >= searchBound()) {
 					reject("score-bound");
 					continue;
 				}
-				const nextKey = key(next, heading, changes, run, history, corner);
+				const captureLimit = node.step
+					? node.changeLimit
+					: Math.min(
+							node.changeLimit,
+							sim.startTurnLimit?.(node.state, pose, heading) ?? Infinity,
+						);
+				const nextKey =
+					key(next, heading, changes, run, history, corner) +
+					`:limit:${captureLimit}` +
+					(options.minRestartRun
+						? `:rest:${Math.min(options.minRestartRun, node.sinceRest + (counted ? 1 : 0))}`
+						: "");
 				if (g >= (costs.get(nextKey) ?? Infinity)) {
 					reject("duplicate");
 					continue;
 				}
 				costs.set(nextKey, g);
 				open.push({
+					changeLimit: captureLimit,
+					sinceRest: node.sinceRest + (counted ? 1 : 0),
+					stances: node.stances + (counted ? 1 : 0),
+					lastSupport: supportKey,
+					lastCounted:
+						rawCounted || (supportKey === node.lastSupport && node.lastCounted),
+					origin: node.origin,
 					state: next,
 					heading,
 					parent: node,
@@ -508,6 +742,8 @@ export function planFootsteps<State, Pose>(
 			}
 		}
 	}
+	if (!best?.complete && stationary?.complete) best = stationary;
+	best ??= stationary;
 	const steps: PlannedStep<State, Pose>[] = [];
 	if (best) {
 		steps.push(best.step);
@@ -535,6 +771,7 @@ export function planFootsteps<State, Pose>(
 			elapsedMs: now() - started,
 			reason,
 			optimal:
+				!options.firstArrival &&
 				!sim.remaining &&
 				(options.searchWeight ?? 1) === 1 &&
 				!reason.endsWith("budget"),

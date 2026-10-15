@@ -627,3 +627,177 @@ it("funds a necessary detour without relaxing the heading-change limit", () => {
 	expect(run({ costScale: 2, maxHeadingChanges: 1 }).complete).toBe(false);
 	expect(run({ costScale: 2, costBound: 4 }).complete).toBe(false);
 });
+
+it("keeps a stationary fallback without pruning a valid moving arrival", () => {
+	const result = search({ x: 0.1, y: 0 }, 0.2, () => true, {
+		preferMotion: true,
+	});
+	expect(result.complete).toBe(true);
+	expect(result.steps.some((s) => !s.stop)).toBe(true);
+	const blocked = search({ x: 0, y: 0 }, 0.2, (p) => p.x === 0 && p.y === 0, {
+		preferMotion: true,
+	});
+	expect(blocked.complete).toBe(true);
+	expect(blocked.steps.every((s) => s.stop)).toBe(true);
+});
+
+it("crosses a support reset as an edge of one search while preserving route state", () => {
+	type S = Point & { reset: boolean };
+	const result = planFootsteps(
+		{ x: 0.6, y: 0 },
+		{ x: 0, y: 0, reset: true } as S,
+		{
+			position: (s) => s,
+			support: (s) => String(s.reset),
+			entry: (_s, h) => (h === "right" ? h : undefined),
+			advance: (s) =>
+				s.reset && s.x < 0.6 ? { x: s.x + 0.3, y: 0, reset: false } : undefined,
+			rest: (s) => s,
+			continueFromRest: (s) => (s.reset ? [] : [{ ...s, reset: true }]),
+		},
+		{
+			now: () => 0,
+			maxStride: 0.3,
+			nodeBudget: 100,
+			minHeadingRun: 2,
+			maxHeadingChanges: 0,
+		},
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps.filter((s) => !s.stop)).toHaveLength(2);
+	expect(result.steps.filter((s) => s.stop)).toHaveLength(2);
+	expect(result.routeState?.changes).toBe(0);
+});
+
+it("does not count a held support twice across an interior settle", () => {
+	type S = Point & { stage: number };
+	const state = (stage: number): S => ({ x: stage, y: 0, stage });
+	const result = planFootsteps<S, (typeof GROUND_SECTORS)[number]>(
+		{ x: 5, y: 0 },
+		state(0),
+		{
+			position: (s) => s,
+			support: (s) => String(s.stage),
+			entry: (_s, h) => h,
+			advance: (s, h) => {
+				if (s.stage === 0 && h === "right") return state(1);
+				if (s.stage === 1 && h === "away") return state(2);
+				if (s.stage === 2.5 && h === "away") return state(3);
+				if (s.stage === 3 && h === "away") return state(4);
+				if ((s.stage === 3 || s.stage === 4) && h === "left") return state(5);
+			},
+			countStance: (s) => s.stage !== 1,
+			stanceKey: (s, _p, h) =>
+				s.stage === 2.5 ? "away:held" : `${h}:${s.stage}`,
+			rest: (s, _p, h) =>
+				s.stage === 2 && h === "away"
+					? { ...s, supports: [{ key: "away:held", counted: true }] }
+					: s.stage === 5
+						? s
+						: undefined,
+			continueFromRest: (s) => (s.stage === 2 ? [state(2.5)] : []),
+		},
+		{
+			now: () => 0,
+			nodeBudget: 200,
+			costBound: 100,
+			maxStride: 0.1,
+			minHeadingRun: 2,
+			maxHeadingChanges: 2,
+		},
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps.find((s) => s.heading === "left")?.state.stage).toBe(4);
+});
+
+it("retains the captured start's turn budget throughout the search", () => {
+	const headings = [
+		"right",
+		"away",
+		"away",
+		"left",
+		"left",
+		"toward",
+		"toward",
+	] as const;
+	const run = (limit: number) =>
+		planFootsteps<number, (typeof headings)[number]>(
+			{ x: 6, y: 0 },
+			0,
+			{
+				position: (n) => ({ x: n, y: 0 }),
+				startTurnLimit: () => limit,
+				entry: (n, h) => (h === headings[n] ? h : undefined),
+				advance: (n) => (n < 6 ? n + 1 : undefined),
+				rest: (n) => (n === 6 ? { x: n, y: 0 } : undefined),
+			},
+			{
+				now: () => 0,
+				maxHeadingChanges: 4,
+				minHeadingRun: 2,
+				costBound: 100,
+				nodeBudget: 100,
+			},
+		);
+	expect(run(4).complete).toBe(true);
+	expect(run(2).complete).toBe(false);
+	expect(run(2).stats.rejections?.["search:turn-limit"]).toBeGreaterThan(0);
+});
+
+it("does not let a closer partial stop prune a valid arrival with a wider tolerance", () => {
+	const points = [
+		{ x: 0, y: 0 },
+		{ x: 0.9, y: 0 },
+		{ x: 0, y: 2 },
+		{ x: 0.7, y: 0 },
+	];
+	const result = planFootsteps<number, (typeof GROUND_SECTORS)[number]>(
+		{ x: 1, y: 0 },
+		0,
+		{
+			position: (n) => points[n],
+			entry: (_n, h) => h,
+			advance: (n, h) =>
+				n === 0 && h === "right"
+					? 1
+					: n === 0 && h === "away"
+						? 2
+						: n === 2 && h === "right"
+							? 3
+							: undefined,
+			rest: (n) => (n === 1 || n === 3 ? points[n] : undefined),
+			acceptRest: (n) => n === 3,
+		},
+		{
+			now: () => 0,
+			firstArrival: true,
+			searchWeight: 4,
+			stopWeight: 1,
+			turnCost: 0,
+			stepCost: 0,
+			costBound: 10,
+			nodeBudget: 50,
+		},
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps.at(-1)?.state).toBe(3);
+});
+
+it("can require sustained first and last runs for continuing walks", () => {
+	const headings = ["right", "away", "away"] as const;
+	const run = (options: SearchOptions) =>
+		planFootsteps<number, (typeof headings)[number]>(
+			{ x: 2, y: 0 },
+			0,
+			{
+				position: (n) => ({ x: n, y: 0 }),
+				entry: (n, h) => (h === headings[n] ? h : undefined),
+				advance: (n) => (n < 2 ? n + 1 : undefined),
+				rest: (n) => (n === 2 ? { x: n, y: 0 } : undefined),
+			},
+			{ now: () => 0, costBound: 20, nodeBudget: 50, ...options },
+		);
+	expect(run({}).complete).toBe(true);
+	expect(run({ minFirstHeadingRun: 2 }).complete).toBe(false);
+	expect(run({ minTerminalRun: 2 }).complete).toBe(false);
+});
