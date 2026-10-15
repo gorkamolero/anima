@@ -858,3 +858,42 @@ it("keeps feasible arrivals whose heading differs from the target preference", (
 	expect(result.complete).toBe(true);
 	expect(result.steps.at(-1)?.state).toBe(2);
 });
+
+it("preserves walking runs across a settling turn while counting both drawn turns", () => {
+	const run = (limit: number, resume: "right" | "toward" = "right") =>
+		planFootsteps<number, (typeof GROUND_SECTORS)[number]>(
+			{ x: 2, y: 0 },
+			0,
+			{
+				position: (s) => ({ x: s === 2 ? 1 : s === 3 ? 2 : s, y: 0 }),
+				support: (s) => String(s),
+				entry: (_s, h) => h,
+				advance: (s, h) =>
+					s === 0 && h === "right"
+						? 1
+						: s === 2 && h === resume
+							? 3
+							: undefined,
+				rest: (s, _p, h) =>
+					s === 1 && h === "away"
+						? { x: 1, y: 0, stances: 0 }
+						: s === 3 && h === resume
+							? { x: 2, y: 0 }
+							: undefined,
+				continueFromRest: (s) => (s === 1 ? [2] : []),
+			},
+			{
+				now: () => 0,
+				minHeadingRun: 2,
+				minRestartRun: 1,
+				maxHeadingChanges: limit,
+				costBound: 20,
+				nodeBudget: 100,
+				maxStride: 0.1,
+			},
+		);
+	expect(run(2).complete).toBe(true);
+	expect(run(2).routeState?.changes).toBe(2);
+	expect(run(1).complete).toBe(false);
+	expect(run(3, "toward").complete).toBe(false);
+});

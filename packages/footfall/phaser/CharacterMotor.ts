@@ -740,7 +740,7 @@ export class CharacterMotor {
 		const to = this.groundPoint(this.goal ?? this.anchor);
 		const nodeBudget = Math.min(
 			4000,
-			Math.max(1500, Math.ceil(400 * Math.abs(to.x - from.x))),
+			Math.max(1600, Math.ceil(400 * Math.abs(to.x - from.x))),
 		);
 		return this.buildSegment({
 			entryPhases: "all",

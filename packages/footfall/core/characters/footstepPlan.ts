@@ -232,6 +232,7 @@ export function planFootsteps<State, Pose>(
 		origin: State;
 		state: State;
 		heading?: WalkDirection;
+		drawnHeading?: WalkDirection;
 		parent?: Node;
 		step?: PlannedStep<State, Pose>;
 		g: number;
@@ -474,7 +475,19 @@ export function planFootsteps<State, Pose>(
 				reject("reversal");
 				continue;
 			}
-			const changes = node.changes + (turn ? 1 : 0);
+			const drawnDelta =
+				node.drawnHeading === undefined
+					? delta
+					: Math.abs(
+							GROUND_SECTORS.indexOf(heading) -
+								GROUND_SECTORS.indexOf(node.drawnHeading),
+						);
+			const drawnTurn = Math.min(drawnDelta, 8 - drawnDelta);
+			if (drawnTurn > 2) {
+				reject("reversal");
+				continue;
+			}
+			const changes = node.changes + (drawnTurn ? 1 : 0);
 			if (
 				turn &&
 				node.run <
@@ -572,7 +585,9 @@ export function planFootsteps<State, Pose>(
 				const stride = next
 					? distance(p, ground(sim.position(next)))
 					: node.stride;
-				const turnPenalty = turnCost * turn + (turn === 2 ? turnCost : 0);
+				const chargedTurn = Math.max(turn, drawnTurn);
+				const turnPenalty =
+					turnCost * chargedTurn + (chargedTurn === 2 ? turnCost : 0);
 				// Stopping is an edge, including all exit-frame motion. It cannot evade
 				// the turn cost or introduce a heading reversal at the final drawing.
 				const candidates = best
@@ -627,7 +642,12 @@ export function planFootsteps<State, Pose>(
 						sim.continueFromRest &&
 						node.sinceRest + stopCount >= (options.minRestartRun ?? 0)
 					) {
-						const restRun = (turn ? 0 : node.run) + stopCount;
+						// A settling pose has a drawn heading but contributes no walking
+						// stance. Preserve the run; still charge and constrain each drawn turn.
+						const restHeading = stopCount ? heading : node.heading;
+						const restRun = stopCount
+							? (turn ? 0 : node.run) + stopCount
+							: node.run;
 						for (const standing of sim.continueFromRest(
 							node.state,
 							stopPose,
@@ -638,7 +658,8 @@ export function planFootsteps<State, Pose>(
 							const f = g + heuristic(sim.position(standing), g);
 							if (g > costBound || f >= searchBound()) continue;
 							const k =
-								key(standing, heading, changes, restRun, history, corner) +
+								key(standing, restHeading, changes, restRun, history, corner) +
+								`:drawn:${heading}` +
 								(options.minRestartRun ? ":rest:0" : "") +
 								`:held:${lastSupport ?? ""}:${!!lastCounted}:limit:${node.changeLimit}`;
 							if (g >= (costs.get(k) ?? Infinity)) continue;
@@ -651,7 +672,8 @@ export function planFootsteps<State, Pose>(
 								stances: node.stances + stopCount,
 								lastSupport,
 								lastCounted,
-								heading,
+								heading: restHeading,
+								drawnHeading: heading,
 								parent: node,
 								step: stepFor(node, heading, stopPose, true),
 								g,

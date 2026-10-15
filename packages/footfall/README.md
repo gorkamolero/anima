@@ -10,7 +10,7 @@
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
 
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,500–4,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
+**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–4,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38bd-full` (139 walks: 112 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 197 ms and max 598 ms) and `38bd-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 159 ms and max 393 ms). Footfall's 174 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38bk` (139 walks: 119 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 202 ms and max 634 ms) and `38bk-gen` (41 untuned walks: 35 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 220 ms and max 454 ms). Footfall's 175 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
@@ -131,3 +131,5 @@ The project's [prior-art review](../../tmp/walkarea/prior-art.md) flags US 11,74
 See [reviewer findings](../../tmp/walkqa/reports/findings.md), especially F20 (standing drawings), F23 (source-cycle drift), F24 (bounded search), and the Brief 31/32 arrival findings. Existing gate misses are intentionally preserved by this extraction. Non-planar stairs, uncalibrated characters, missing contact data, segmentation failures, bounded lattice searches and off-lattice clicks remain limitations. A successful log gate does not constitute visual sign-off of every scene.
 
 For bounded first-arrival searches, queue ordering prefers headings with a standing pose that fits the target floor and body clearance. This does not exclude other headings or relax arrival rules.
+
+Standing turns preserve the preceding walking-run count when they contribute no walking stances. Their drawn headings still count toward turn limits, reversal checks and turn costs. The deterministic search allowance is 1,600–4,000 nodes.
