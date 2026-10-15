@@ -13,6 +13,7 @@ export interface PlannedStep<State, Pose> {
 export interface StepSimulation<State, Pose> {
 	/** Exact terminal validation; a rejected goal leaves this same frontier active. */
 	acceptPlan?(steps: PlannedStep<State, Pose>[]): boolean;
+	/** A negative first-capture limit rejects the starting pose. */
 	startTurnLimit?(state: State, pose: Pose, heading: WalkDirection): number;
 	position(state: State): Point;
 	/** Additional zero-motion support choices, only at the standing start. */
@@ -704,6 +705,10 @@ export function planFootsteps<State, Pose>(
 							node.changeLimit,
 							sim.startTurnLimit?.(node.state, pose, heading) ?? Infinity,
 						);
+				if (changes > captureLimit) {
+					reject("start-turn-limit");
+					continue;
+				}
 				const nextKey =
 					key(next, heading, changes, run, history, corner) +
 					`:limit:${captureLimit}` +

@@ -116,11 +116,11 @@ For QA, import `qa/checks`: `checkFootLock`, `checkFloor`, `checkScale`, `checkF
 
 ## Planning bounds and current evidence
 
-Each walk uses one bounded footstep search. Support changes and grounded restarts are edges in that same frontier; there is no retry ladder. State retains heading/run limits and the captured start's turn allowance. A shared obstacle-distance field guides progress, and terminal playback validates measured facing before a route is accepted. A closer incomplete stop cannot prune an arrival that satisfies its authored stride tolerance.
+Each walk uses one bounded footstep search. Support changes and grounded restarts are edges in that same frontier; there is no retry ladder. State retains heading/run limits and the captured start's turn allowance. A body placed inside clearance cannot choose a starting pose outside it; boundary entrances retain their allowance. A shared obstacle-distance field guides progress, and terminal playback validates measured facing before a route is accepted. A closer incomplete stop cannot prune an arrival that satisfies its authored stride tolerance.
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38al-harness` (139 walks: 111 half-stride arrivals, 136 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 200 ms and max 615 ms) and `38al` (41 untuned walks: 32 arrivals, 39 facing passes, zero reversals/flicker/floor violations/object contacts, p90 168 ms and max 297 ms). Footfall's 172 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38an` (139 walks: 111 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 196 ms and max 587 ms) and `38an-gen` (41 untuned walks: 32 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 228 ms and max 314 ms). Footfall's 173 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 

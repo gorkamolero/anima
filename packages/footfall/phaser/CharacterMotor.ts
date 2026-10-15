@@ -1185,9 +1185,13 @@ export class CharacterMotor {
 					];
 					trial.beginWalk();
 					for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
+					// A safely placed body must not pivot outside clearance on its
+					// first captured pose. Boundary entrances retain their allowance.
 					const limit = mask.data[cellAt(mask, trial.target)]
 						? (options.maxHeadingChanges ?? Infinity)
-						: 2;
+						: mask.data[cellAt(mask, qualityInitial.position)]
+							? -1
+							: 2;
 					limits.set(key, limit);
 					return limit;
 				},

@@ -801,3 +801,37 @@ it("can require sustained first and last runs for continuing walks", () => {
 	expect(run({ minFirstHeadingRun: 2 }).complete).toBe(false);
 	expect(run({ minTerminalRun: 2 }).complete).toBe(false);
 });
+
+it("rejects an invalid captured start while retaining an alternative entry", () => {
+	const points = [
+		{ x: 0, y: 0 },
+		{ x: 1, y: 0 },
+		{ x: 0, y: 1 },
+		{ x: 1, y: 0 },
+	];
+	const result = planFootsteps<number, (typeof GROUND_SECTORS)[number]>(
+		points[1],
+		0,
+		{
+			position: (n) => points[n],
+			entry: (_n, h) => h,
+			startTurnLimit: (_n, _pose, h) => (h === "right" ? -1 : 2),
+			advance: (n, h) =>
+				n === 0 && h === "right"
+					? 1
+					: n === 0 && h === "away"
+						? 2
+						: n === 2 && h === "right"
+							? 3
+							: undefined,
+			rest: (n) => (n === 1 || n === 3 ? points[n] : undefined),
+		},
+		{ now: () => 0, costBound: 10, nodeBudget: 50 },
+	);
+	expect(result.complete).toBe(true);
+	expect(result.steps[0].heading).toBe("away");
+	expect(result.steps.at(-1)?.state).toBe(3);
+	expect(result.stats.rejections?.["search:start-turn-limit"]).toBeGreaterThan(
+		0,
+	);
+});
