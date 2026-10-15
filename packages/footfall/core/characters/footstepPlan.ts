@@ -590,11 +590,14 @@ export function planFootsteps<State, Pose>(
 					turnCost * chargedTurn + (chargedTurn === 2 ? turnCost : 0);
 				// Stopping is an edge, including all exit-frame motion. It cannot evade
 				// the turn cost or introduce a heading reversal at the final drawing.
-				const candidates = best
-					? stopPose === undefined
-						? undefined
-						: sim.restCandidates?.(node.state, stopPose)
-					: undefined;
+				// A restart requires evaluating the stop regardless of terminal cost.
+				// Do not simulate candidate exits for a bound that cannot prune it.
+				const candidates =
+					best && !sim.continueFromRest
+						? stopPose === undefined
+							? undefined
+							: sim.restCandidates?.(node.state, stopPose)
+						: undefined;
 				const canImprove =
 					!candidates ||
 					candidates.some((q) => {

@@ -653,6 +653,9 @@ it("crosses a support reset as an edge of one search while preserving route stat
 			advance: (s) =>
 				s.reset && s.x < 0.6 ? { x: s.x + 0.3, y: 0, reset: false } : undefined,
 			rest: (s) => s,
+			restCandidates: () => {
+				throw new Error("Terminal bound cannot prune a restart");
+			},
 			continueFromRest: (s) => (s.reset ? [] : [{ ...s, reset: true }]),
 		},
 		{
