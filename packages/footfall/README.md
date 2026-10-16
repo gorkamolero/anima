@@ -10,7 +10,7 @@
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
 
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–8,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
+**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–8, 000-node budget based on horizontal ground span so worker and headless route selection remain identical.
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
@@ -61,7 +61,7 @@ Coordinates use the existing 1920 × 1080 scene space. Sprite contacts use unsca
 `FootCycle` also supports `frameDurationsMs`, `passingFrames`, `settleFrames`, and `matchedCut` (standing sheet, compatible headings, entry and exit frames). Contact labels must match the authored drawings. Every displayed frame needs contact data.
 
 ```json
-{"mask":{"width":2,"height":2,"data":[0,0,1,1]},
+{"mask":{"width":2,"height":2,"data":[0, 0,1,1]},
  "perspective":{"horizonY":470,"slope":0.002,"pixelsPerMetre":300},
  "baseScale":0.5,"scaleClamp":{"min":0.18,"max":1.5}}
 ```
@@ -116,32 +116,10 @@ For QA, import `qa/checks`: `checkFootLock`, `checkFloor`, `checkScale`, `checkF
 
 ## Planning bounds and current evidence
 
-Each walk uses one bounded footstep search. Support changes and grounded restarts are edges in that same frontier; there is no retry ladder. State retains heading/run limits and the captured start's turn allowance. A body placed inside clearance cannot choose a starting pose outside it; boundary entrances retain their allowance. A shared obstacle-distance field guides progress, and terminal playback validates measured facing before a route is accepted. A closer incomplete stop cannot prune an arrival that satisfies its authored stride tolerance.
+Each click uses one bounded footstep search. Support changes and grounded restarts are edges in that frontier; there is no retry ladder. State retains heading/run limits and the captured start's turn allowance. Intermediate pivots use normal body clearance. Exact terminal playback validates measured facing before accepting a route.
 
-Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
+Planning reuses deterministic Dijkstra frontiers, exact stance samples, immutable entry/standing pose lists, and playback-prefix checkpoints. Checkpoints include the following step because its anchor determines stride length. These caches do not approximate positions, weaken collision checks or change the fixed node budgets. The 180-walk equivalence audit compares both frame and event logs byte for byte.
 
-The verified local runs are `38dd-full` (139 walks: 122 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 172 ms and max 853 ms) and `38dd-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 280 ms and max 486 ms). Footfall's 176 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+Current verification (2026-10-16, derivation 20 candidates): `76-standing-full` passes with 120 half-stride arrivals, 135 facing passes, 0 reversals/flicker/floor violations/object contacts, planning p90 250 ms and max 937 ms. `76-standing-gen` passes with 33 half-stride arrivals, 41 facing passes, 0 reversals/flicker/floor violations/object contacts, p90 265 ms and max 458 ms. All 181 package tests and 122 API tests pass. The source keeps SAM floor/water/object signals and adds cached MoGe geometry; original saved scene floors are not overwritten by the harness candidate override.
 
-Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
-
-## Hidden-floor patent note and limitations
-
-The project's [prior-art review](../../tmp/walkarea/prior-art.md) flags US 11,741,675 B2 concerning learned visible/hidden traversable-space prediction. Footfall currently uses geometric bridging from visible masks and baselines. This note records the project's design boundary, not a patent clearance opinion.
-
-See [reviewer findings](../../tmp/walkqa/reports/findings.md), especially F20 (standing drawings), F23 (source-cycle drift), F24 (bounded search), and the Brief 31/32 arrival findings. Existing gate misses are intentionally preserved by this extraction. Non-planar stairs, uncalibrated characters, missing contact data, segmentation failures, bounded lattice searches and off-lattice clicks remain limitations. A successful log gate does not constitute visual sign-off of every scene.
-
-For bounded first-arrival searches, queue ordering prefers headings with a standing pose that fits the target floor and body clearance. This does not exclude other headings or relax arrival rules.
-
-Standing turns preserve the preceding walking-run count when they contribute no walking stances. Their drawn headings still count toward turn limits, reversal checks and turn costs. The deterministic search allowance is 1,600–8,000 nodes.
-
-The same bounded search also funds lateral backtracking around obstacles: extra route distance can raise its allowance within the existing 8,000-node cap. Reciprocal depth near the horizon does not inflate the allowance.
-
-Restart-capable searches skip a terminal-only cost bound that cannot prune their stop edges. The optimization preserves identical frame telemetry across all 180 verified walks.
-
-Exact per-state entry candidates are cached within each search. Longer depth clicks receive additional deterministic search capacity based on vertical screen distance, within the same 8,000-node cap. This recovers the deepest outside and beach clicks without changing the quality or timing thresholds.
-
-Long lateral crossings receive 825 nodes per ground metre within the 8,000-node cap. This recovers all three lobby arrival misses; short-click base capacity and all playback quality checks are unchanged. The untuned p90 measurement is close to the 300 ms limit.
-
-Partial entries use the clock of their complete authored support, avoiding long holds when only a few drawings remain. The sparse-support cadence limit remains intact. Per-search contact validation is cached and sampling reuses temporary pose storage; all 180 frame logs exactly match the timing-corrected implementation before these allocation optimizations. A live deepest-point check reduced duplicate rendered pairs from 32 to 15, with identical arrival; strict zero-freeze acceptance is still unmet.
-
-Intermediate standing pivots use normal body clearance. Only initial standing pivots retain the boundary-start allowance. This removes invalid pivot choices; all 15 baseline transfers remain, but outside/occluder-back and pier/near-left now miss their arrival tolerances. Seven arrival misses remain. Both quality/timing gates and 176 package tests pass; restart-stride clearance and full visual/path sign-off remain open.
+The complete Footfall goal remains open. Remaining arrival misses include a quay entrance that loads correctly but cannot complete its inward stride. Current exact-alpha draw-order checks pass all 180 walks; all 51 crossing triplets have been reviewed. Contact sheets are available for every walk. Strict zero-duplicate animation, complete path/feet/pixel-scale verification, interaction/exit coverage, browser parity, art verification and the town replay still need sign-off. Deliberate two-tick settle poses and the authored cadence are retained; passing numeric gates does not waive these remaining requirements. See `tmp/walkqa/report.md` and `tmp/walkqa/reports/FINAL.md` for the current audit.
