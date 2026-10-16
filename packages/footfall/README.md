@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38bt-full` (139 walks: 120 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 180 ms and max 590 ms) and `38bt-gen` (41 untuned walks: 35 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 193 ms and max 408 ms). Footfall's 175 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38cf-full` (139 walks: 121 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 163 ms and max 552 ms) and `38cf-full-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 257 ms and max 391 ms). Footfall's 175 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
@@ -137,3 +137,5 @@ Standing turns preserve the preceding walking-run count when they contribute no 
 The same bounded search also funds lateral backtracking around obstacles: extra route distance can raise its allowance within the existing 4,000-node cap. Reciprocal depth near the horizon does not inflate the allowance.
 
 Restart-capable searches skip a terminal-only cost bound that cannot prune their stop edges. The optimization preserves identical frame telemetry across all 180 verified walks.
+
+Exact per-state entry candidates are cached within each search. Longer depth clicks receive additional deterministic search capacity based on vertical screen distance, within the same 4,000-node cap. This recovers the deepest outside and beach clicks without changing the quality or timing thresholds.

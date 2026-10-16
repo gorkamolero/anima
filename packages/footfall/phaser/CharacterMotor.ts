@@ -754,7 +754,14 @@ export class CharacterMotor {
 		const nodeBudget = Math.min(
 			4000,
 			Math.max(1600, Math.ceil(400 * directSpan)) +
-				Math.ceil(800 * Math.max(0, lateralSpan - directSpan)),
+				Math.ceil(800 * Math.max(0, lateralSpan - directSpan)) +
+				Math.ceil(
+					9 *
+						Math.max(
+							0,
+							Math.abs((this.goal ?? this.anchor).y - this.anchor.y) - 100,
+						),
+				),
 		);
 
 		return this.buildSegment(
@@ -898,7 +905,7 @@ export class CharacterMotor {
 			cache.set(key, { value, reason: this.rejectionReason });
 			return value;
 		};
-		const entries = (
+		const computeEntries = (
 			s: PredictedStance,
 			direction: WalkDirection,
 			starting: boolean,
@@ -970,6 +977,32 @@ export class CharacterMotor {
 			const pose = entry();
 			if (!pose.length) count(stopping ? "stop-entry" : "entry");
 			return pose;
+		};
+		const entryCache = new WeakMap<
+			PredictedStance,
+			Map<string, { poses: FootPose[]; reason: string }>
+		>();
+		const entries = (
+			state: PredictedStance,
+			heading: WalkDirection,
+			starting: boolean,
+			stopping = false,
+		) => {
+			let cache = entryCache.get(state);
+			if (!cache) {
+				cache = new Map();
+				entryCache.set(state, cache);
+			}
+			const key = `${heading}:${starting}:${stopping}`;
+			const saved = cache.get(key);
+			if (saved) {
+				this.rejectionReason = saved.reason;
+				if (!saved.poses.length) count(stopping ? "stop-entry" : "entry");
+				return saved.poses;
+			}
+			const poses = computeEntries(state, heading, starting, stopping);
+			cache.set(key, { poses, reason: this.rejectionReason });
+			return poses;
 		};
 		const starts = (s: PredictedStance): PredictedStance[] => {
 			if (
