@@ -752,8 +752,8 @@ export class CharacterMotor {
 			);
 		const directSpan = Math.abs(to.x - from.x);
 		const nodeBudget = Math.min(
-			4000,
-			Math.max(1600, Math.ceil(400 * directSpan)) +
+			8000,
+			Math.max(1600, Math.ceil(825 * directSpan)) +
 				Math.ceil(800 * Math.max(0, lateralSpan - directSpan)) +
 				Math.ceil(
 					9 *

@@ -10,7 +10,7 @@
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
 
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–4,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
+**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–8,000-node budget based on horizontal ground span so worker and headless route selection remain identical.
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38cf-full` (139 walks: 121 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 163 ms and max 552 ms) and `38cf-full-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 257 ms and max 391 ms). Footfall's 175 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38cq-full` (139 walks: 124 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 168 ms and max 1047 ms) and `38cq-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 298 ms and max 521 ms). Footfall's 175 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
@@ -132,10 +132,12 @@ See [reviewer findings](../../tmp/walkqa/reports/findings.md), especially F20 (s
 
 For bounded first-arrival searches, queue ordering prefers headings with a standing pose that fits the target floor and body clearance. This does not exclude other headings or relax arrival rules.
 
-Standing turns preserve the preceding walking-run count when they contribute no walking stances. Their drawn headings still count toward turn limits, reversal checks and turn costs. The deterministic search allowance is 1,600–4,000 nodes.
+Standing turns preserve the preceding walking-run count when they contribute no walking stances. Their drawn headings still count toward turn limits, reversal checks and turn costs. The deterministic search allowance is 1,600–8,000 nodes.
 
-The same bounded search also funds lateral backtracking around obstacles: extra route distance can raise its allowance within the existing 4,000-node cap. Reciprocal depth near the horizon does not inflate the allowance.
+The same bounded search also funds lateral backtracking around obstacles: extra route distance can raise its allowance within the existing 8,000-node cap. Reciprocal depth near the horizon does not inflate the allowance.
 
 Restart-capable searches skip a terminal-only cost bound that cannot prune their stop edges. The optimization preserves identical frame telemetry across all 180 verified walks.
 
-Exact per-state entry candidates are cached within each search. Longer depth clicks receive additional deterministic search capacity based on vertical screen distance, within the same 4,000-node cap. This recovers the deepest outside and beach clicks without changing the quality or timing thresholds.
+Exact per-state entry candidates are cached within each search. Longer depth clicks receive additional deterministic search capacity based on vertical screen distance, within the same 8,000-node cap. This recovers the deepest outside and beach clicks without changing the quality or timing thresholds.
+
+Long lateral crossings receive 825 nodes per ground metre within the 8,000-node cap. This recovers all three lobby arrival misses; short-click base capacity and all playback quality checks are unchanged. The untuned p90 measurement is close to the 300 ms limit.
