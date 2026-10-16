@@ -352,23 +352,25 @@ async function derive(
 					!/-obstacle-(wall|water)-/.test(name),
 			)
 		: [];
+	const perspective =
+		ground?.walkArea?.perspective ??
+		(ground?.scaleSlope && horizonY !== undefined
+			? { slope: ground.scaleSlope, horizonY }
+			: undefined);
 	const fingerprint = hashOf(
 		JSON.stringify({
 			image: hashOf(bytes),
 			objects,
 			floor,
 			horizonY,
+			// Layer splitting depends on physical height, not only the floor mask.
+			perspective,
 			version: VERSION,
 			semanticMasks,
 			template,
 			generated: !!ground,
 		}),
 	);
-	const perspective =
-		ground?.walkArea?.perspective ??
-		(ground?.scaleSlope && horizonY !== undefined
-			? { slope: ground.scaleSlope, horizonY }
-			: undefined);
 	const classify = (objects: Occluder[]) =>
 		perspective
 			? objects.map((o) => classifyOccluder(o, perspective))
