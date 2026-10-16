@@ -6,6 +6,8 @@
 
 **Perspective.** A horizon and scale slope project screen positions to ground space and back. Optional horizontal residuals preserve authored calibration. A walk area supplies base scale and clamps. Degenerate legacy calibration can use a constant model. Derivation records can carry regional depth/scale descriptions; the current runtime walk area still uses one perspective model.
 
+Object scale references are checked against cached segmented instances of the same category. An overlapping but contradictory reference falls back to the existing adult-height guidance; missing segmentation preserves the reference. This checks the reference rectangle, not the assumed physical height. Calibration-only derivation revisions reuse provider evidence.
+
 **Walk area.** Row-major binary masks describe visible floor, raw physical support, routing clearance and object footprints separately. Clearance erosion happens in ground units. Baseline-guided geometric bridging restores floor behind occluders; it does not predict hidden floor with a trained model. Supported narrow gaps retain their existing stride-sweep rules.
 
 **Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
@@ -13,6 +15,8 @@
 **Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–8, 000-node budget based on horizontal ground span so worker and headless route selection remain identical.
 
 Starting pivots, reverse starts and stopping drawings advance once per 24 Hz output frame. Dense walking cycles use the shared per-support clock; sparse cycles retain the cadence floor. Run189 has zero repeated visible draw-state pairs across 180 walks, down from 439 starting holds in run171. This is telemetry evidence; complete visual sign-off remains open.
+
+Before a nonterminal direction change, the motor can finish a safe portion of the outgoing support using its existing drawings. It keeps the planted sole and the incoming stance's landing unchanged, and uses the same clearance and physical-gap checks as ordinary walking. This reduces abrupt direction cuts without interpolating poses or sliding the anchor. Stops cancel the pending turn; a pivot-to-walk handoff does not repeat an already visible identical idle frame.
 
 Weighted searches initially retain normal route-cost ordering. If no moving finish has been found after the first eighth of the fixed budget, they alternate with a turn-neutral queue over the same states. Each state is expanded once, without retrying the search or relaxing route costs and facing checks. Unweighted searches preserve their original ordering. This recovers the cellar route under faster starting animation without the route changes caused by unconditional diversification.
 

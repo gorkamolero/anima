@@ -132,6 +132,7 @@ export class CharacterMotor {
 		resumeStart?: PredictedStance;
 		poses: FootPose[];
 		resume?: FootPose;
+		resumeHeading?: WalkDirection;
 		resumeFrameMs: number;
 	};
 
@@ -159,7 +160,7 @@ export class CharacterMotor {
 			this.anchor = { ...start.anchor };
 			this.transition = undefined;
 			this.drawn = undefined;
-			this.beginWalk();
+			this.beginWalk(true);
 			return;
 		}
 		this.plannerWorker?.terminate();
@@ -218,6 +219,13 @@ export class CharacterMotor {
 			return;
 		}
 		this.planned = [];
+		if (this.drawn?.resumeHeading !== undefined && !immediate) {
+			// A turn bridge is still the outgoing walking cycle, not reverse idle
+			// playback. Cancel its resume and settle from the visible source pose.
+			this.drawn = undefined;
+			this.stop(false, absorb, heading);
+			return;
+		}
 		if (this.drawn && !immediate) {
 			this.path = [];
 			if (this.drawn.resumeStart) {
@@ -699,7 +707,13 @@ export class CharacterMotor {
 		this.beginWalk();
 		return promise;
 	}
-	private beginWalk(): void {
+	private beginWalk(restarting = false): void {
+		const previousPose = this.pose;
+		const previousPosition = {
+			x: this.target.x,
+			y: this.target.y,
+			scale: this.scale,
+		};
 		const start = this.planned[0]?.state;
 		if (start?.pivot) {
 			const pivot = start.pivot;
@@ -733,6 +747,31 @@ export class CharacterMotor {
 			const poses = [...idle.cycle.settleFrames]
 				.reverse()
 				.map((frame) => ({ ...idle, frame }));
+			const first = poses[0];
+			if (
+				restarting &&
+				poses.length > 1 &&
+				previousPose &&
+				first.cycle.name === previousPose.cycle.name &&
+				first.frame === previousPose.frame &&
+				first.flipX === previousPose.flipX
+			) {
+				const placed = lockedPlacement(
+					this.anchor,
+					first,
+					this.foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					this.scale,
+				);
+				if (
+					Math.abs(placed.x - previousPosition.x) < 1e-8 &&
+					Math.abs(placed.y - previousPosition.y) < 1e-8 &&
+					Math.abs(placed.scale - previousPosition.scale) < 1e-8
+				)
+					poses.shift();
+			}
 			this.pose = poses.shift() as FootPose;
 			this.drawn = { poses, resume, resumeFrameMs: this.frameMs };
 			this.elapsed = 0;
@@ -1756,6 +1795,11 @@ export class CharacterMotor {
 	private planStance(): boolean {
 		const step = this.planned.shift();
 		if (!step) return false;
+		const outgoingHeading = this.heading;
+		const bridge =
+			!step.stop && !step.slide.x && !step.slide.y
+				? this.turnBridge(step.pose)
+				: [];
 		this.anchor = {
 			x: this.anchor.x + step.slide.x,
 			y: this.anchor.y + step.slide.y,
@@ -1788,6 +1832,18 @@ export class CharacterMotor {
 			? this.cycleFrameMs(step.pose)
 			: Math.max(this.cycleFrameMs(step.pose), 1000 / (2.2 * supportFrames));
 		this.apply();
+		if (bridge.length) {
+			this.drawn = {
+				poses: bridge.slice(1),
+				resume: step.pose,
+				resumeHeading: step.heading,
+				resumeFrameMs: this.frameMs,
+			};
+			this.pose = bridge[0];
+			this.heading = outgoingHeading;
+			this.elapsed = 0;
+			this.apply();
+		}
 		const nextStep = this.planned[0];
 		if (!step.stop && nextStep)
 			this.lastStrideLength = Math.hypot(
@@ -1824,6 +1880,82 @@ export class CharacterMotor {
 			this.planned = remaining;
 		}
 		return true;
+	}
+
+	/** Finish a safe part of the outgoing support before changing drawings.
+	 * The support anchor and subsequent planned stance remain exactly unchanged. */
+	private turnBridge(incoming: FootPose): FootPose[] {
+		const outgoing = this.pose;
+		if (
+			!outgoing ||
+			!outgoing.cycle.switchFrames.length ||
+			incoming.firstStance ||
+			(outgoing.cycle.name === incoming.cycle.name &&
+				outgoing.flipX === incoming.flipX)
+		)
+			return [];
+		const place = (pose: FootPose) =>
+			lockedPlacement(
+				this.anchor,
+				pose,
+				this.foot,
+				this.area.perspective,
+				this.area.baseScale,
+				this.area.scaleClamp,
+				this.scale,
+			);
+		const destination = place(incoming);
+		const support = this.stanceSamples(
+			incoming,
+			this.anchor,
+			this.foot,
+			this.scale,
+		);
+		if (!support) return [];
+		const landing = {
+			...support.landing,
+			x:
+				support.landing.x +
+				(this.area.perspective.residual?.length ? 0 : this.anchor.x),
+		};
+		let best = Math.hypot(
+			destination.x - this.target.x,
+			destination.y - this.target.y,
+		);
+		const poses: FootPose[] = [];
+		let selected = 0;
+		let previous = { x: this.target.x, y: this.anchor.y };
+		const bodyPath = [previous];
+		const mask = this.area.clearanceMask ?? this.area.mask;
+		for (let n = 0; n < outgoing.cycle.contacts.length; n++) {
+			const frame = (outgoing.frame + n) % outgoing.cycle.contacts.length;
+			if (outgoing.cycle.contacts[frame].planted !== this.foot) break;
+			const pose = { ...outgoing, frame };
+			const position = place(pose);
+			const body = { x: position.x, y: this.anchor.y };
+			if (
+				!this.soleFits(this.anchor) ||
+				(!stanceSweep(mask, previous, body) &&
+					!strideSweep(
+						this.area,
+						[this.anchor, landing],
+						[...bodyPath, body, { x: destination.x, y: this.anchor.y }],
+					))
+			)
+				break;
+			bodyPath.push(body);
+			poses.push(pose);
+			const jump = Math.hypot(
+				destination.x - position.x,
+				destination.y - position.y,
+			);
+			if (jump < best - 1) {
+				best = jump;
+				selected = poses.length;
+			}
+			previous = body;
+		}
+		return poses.slice(0, selected);
 	}
 
 	/** Measure a full authored support interval, even when its landing is blocked.
@@ -2222,18 +2354,25 @@ export class CharacterMotor {
 			if (next) {
 				this.pose = next;
 				this.apply();
-				if (!d.poses.length && !d.resume && !d.resumeStart) this.finish();
+				if (
+					!d.poses.length &&
+					!d.resume &&
+					!d.resumeStart &&
+					!this.planned.length
+				)
+					this.finish();
 			} else if (d.resumeStart) {
 				this.foot = d.resumeStart.foot;
 				this.anchor = { ...d.resumeStart.anchor };
 				this.drawn = undefined;
-				this.beginWalk();
+				this.beginWalk(true);
 			} else if (d.resume) {
 				this.pose = d.resume;
+				if (d.resumeHeading) this.heading = d.resumeHeading;
 				this.frameMs = d.resumeFrameMs;
 				this.drawn = undefined;
 				this.apply();
-			}
+			} else this.finish();
 			return;
 		}
 		if (this.transition) {

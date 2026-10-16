@@ -1107,3 +1107,132 @@ it("does not override the frame cap for a short support in an uneven cycle", () 
 		expect(pose().frame).toBe(frame);
 	}
 });
+
+it("plays outgoing support drawings before a turn while keeping the sole fixed", () => {
+	const { motor, cycle, target, pose } = setup();
+	motor.place({ x: 960, y: 850 }, false);
+	const state = motor as unknown as {
+		pose: FootPose;
+		foot: "L";
+		scale: number;
+		planned: unknown[];
+		planStance(): boolean;
+	};
+	state.pose = { cycle, frame: 0, flipX: false };
+	state.foot = "L";
+	motor.heading = "right";
+	const start = lockedPlacement(
+		motor.anchor,
+		state.pose,
+		"L",
+		motor.area.perspective,
+		motor.area.baseScale,
+		motor.area.scaleClamp,
+		state.scale,
+	);
+	target.setPosition(start.x, start.y);
+	const incoming = {
+		cycle: { ...cycle, name: "turned" },
+		frame: 0,
+		flipX: true,
+	};
+	state.planned = [
+		{
+			pose: incoming,
+			heading: "left",
+			stop: false,
+			slide: { x: 0, y: 0 },
+			state: { anchor: { ...motor.anchor } },
+		},
+	];
+	motor.walking = true;
+	const anchor = { ...motor.anchor };
+	expect(state.planStance()).toBe(true);
+	expect(pose().cycle.name).toBe("walk");
+	expect(motor.heading).toBe("right");
+	for (let i = 0; i < 2; i++) {
+		motor.update(1000 / 24);
+		const sole = contactOnScreen(pose(), "L", target, target.scale);
+		expect(sole.x).toBeCloseTo(anchor.x, 8);
+		expect(sole.y).toBeCloseTo(anchor.y, 8);
+	}
+	expect(pose().cycle.name).toBe("turned");
+	expect(motor.heading).toBe("left");
+});
+
+it("cancels a pending turn when stopped during its outgoing drawings", () => {
+	const { motor, cycle, pose } = setup(true);
+	motor.place({ x: 960, y: 850 }, false);
+	const state = motor as unknown as {
+		pose: FootPose;
+		drawn?: {
+			poses: FootPose[];
+			resume: FootPose;
+			resumeHeading: "left";
+			resumeFrameMs: number;
+		};
+	};
+	state.pose = { cycle, frame: 0, flipX: false };
+	state.drawn = {
+		poses: [],
+		resume: {
+			cycle: { ...cycle, name: "cancelled-turn" },
+			frame: 0,
+			flipX: true,
+		},
+		resumeHeading: "left",
+		resumeFrameMs: 1000 / 24,
+	};
+	motor.heading = "right";
+	motor.walking = true;
+	motor.stop();
+	for (let i = 0; i < 30 && motor.walking; i++) motor.update(1000 / 24);
+	expect(motor.walking).toBe(false);
+	expect(pose().cycle.name).not.toBe("cancelled-turn");
+	expect(motor.heading).toBe("right");
+});
+
+it("does not redraw the same idle frame when a pivot resumes walking", () => {
+	const { motor, cycle, pose } = setup(true, true);
+	motor.place({ x: 960, y: 850 }, false);
+	const state = motor as unknown as {
+		drawn: unknown;
+		planned: unknown[];
+	};
+	const anchor = { ...motor.anchor };
+	state.drawn = {
+		poses: [],
+		resumeStart: { foot: "L", anchor },
+		resumeFrameMs: 1000 / 24,
+	};
+	state.planned = [
+		{
+			pose: { cycle, frame: 0, flipX: false, firstStance: true },
+			heading: "right",
+			stop: false,
+			slide: { x: 0, y: 0 },
+			state: { anchor },
+		},
+	];
+	motor.heading = "right";
+	motor.walking = true;
+	expect(pose().frame).toBe(0);
+	motor.update(1000 / 24);
+	expect(pose().cycle.name).toBe("standing");
+	expect(pose().frame).toBe(1);
+	expect(motor.anchor).toEqual(anchor);
+});
+
+it("does not mistake a worker-deserialized continuation for a direction change", () => {
+	const { motor, cycle } = setup();
+	motor.place({ x: 960, y: 850 }, false);
+	const state = motor as unknown as {
+		pose: FootPose;
+		turnBridge(pose: FootPose): FootPose[];
+	};
+	state.pose = { cycle, frame: 0, flipX: false };
+	const restored = JSON.parse(JSON.stringify(cycle)) as FootCycle;
+	expect(state.turnBridge({ cycle: restored, frame: 1, flipX: false })).toEqual(
+		[],
+	);
+});
