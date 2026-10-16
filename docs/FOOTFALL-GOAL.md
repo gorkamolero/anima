@@ -19,6 +19,12 @@ The next milestone is a visibly credible character at near, middle and far posit
 
 Preserve SAM + MoGe floor combination and existing movement safeguards. No unrelated rewrite. The path, exits, occlusion and other requirements below remain open until independently verified; this priority change does not mark them complete.
 
+### Current work order
+
+The current scale comparisons still show an oversized foreground character in the grocery and an undersized character in the alley; the square remains uncertain. These are the next calibration cases. The pier correction does not establish that the shared model works everywhere.
+
+Resolve these scale failures, or document a supported named limitation under the rule below, and present the actual near/middle/far stills before resuming broad route optimization. Keep the existing path diagnostics as evidence, but do not let additional planner experiments displace this milestone. A green numerical gate must never close an unresolved visible size failure.
+
 ## Scenes (13)
 Existing: depot outside, depot inside (hand-calibrated anchors), road, alley.
 New, generated through the real pipeline (`POST /api/places`), chosen to break things:
