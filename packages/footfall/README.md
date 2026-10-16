@@ -88,7 +88,7 @@ Call `simulateWalks` from `sim/runner` with:
 - `Fade`: your transition clock (Innsmouth uses Phaser's actual Fade implementation);
 - `save(path,value)`: your log sink, plus optional `out`, selected walk names, extra sprite occluders and immediate-transition locations.
 
-The runner returns a report and writes per-frame arrays, events, search rejections and scene geometry through the sink. It makes no provider calls. Execution timings in the top-level run report are diagnostic; scene JSON is deterministic.
+The runner returns a report and writes per-frame arrays, events, search rejections and scene geometry through the sink. It makes no provider calls. For live verification against generated candidates, the API accepts `ANIMA_WORLD_DB_URL=file:/absolute/path/to/qa.db`; a copied database can contain those derivations without changing the saved world. Unset it to use the normal project database. Shipped anchor assets are separate from database-backed generated scenes and must be accounted for explicitly. Execution timings in the top-level run report are diagnostic; scene JSON is deterministic.
 
 Innsmouth's read-only adapter remains runnable from the repository root:
 

@@ -63,7 +63,7 @@ export const initialWorld = (): WorldState => ({
 });
 let database: Promise<Client> | undefined;
 export async function getWorldDb(): Promise<Client> {
-	if (!database) database = openWorldDb();
+	if (!database) database = openWorldDb(process.env.ANIMA_WORLD_DB_URL);
 	return database;
 }
 export async function openWorldDb(url?: string): Promise<Client> {
