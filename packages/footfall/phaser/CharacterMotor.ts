@@ -2221,7 +2221,11 @@ export class CharacterMotor {
 		this.elapsed += delta;
 		if (this.drawn) {
 			// Never skip a drawn pose even if the caller advances a large time step.
-			if (this.elapsed + 1e-8 < 2000 / 24) return;
+			if (
+				this.elapsed + 1e-8 <
+				(this.drawn.resume || this.drawn.resumeStart ? 2000 : 1000) / 24
+			)
+				return;
 			this.elapsed = 0;
 			const d = this.drawn;
 			const next = d.poses.shift();
@@ -2247,10 +2251,7 @@ export class CharacterMotor {
 			while (
 				this.elapsed + 1e-8 >=
 					(t.remaining === 0
-						? Math.max(
-								this.frameMs,
-								(t.to.cycle.settleFrames ? 2000 : 1000) / 24,
-							)
+						? Math.max(this.frameMs, 1000 / 24)
 						: this.frameMs) &&
 				this.transition &&
 				this.pose
