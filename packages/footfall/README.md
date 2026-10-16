@@ -120,7 +120,7 @@ Each walk uses one bounded footstep search. Support changes and grounded restart
 
 Requested exits wait for the planned support and take precedence over overlapping exit regions. Automatic entrances and multi-heading finishes sustain their endpoint runs to avoid flicker across transfers.
 
-The verified local runs are `38cu-full` (139 walks: 124 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 165 ms and max 878 ms) and `38cu-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 288 ms and max 468 ms). Footfall's 176 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
+The verified local runs are `38dd-full` (139 walks: 122 half-stride arrivals, 134 facing passes, zero reversals/flicker/floor violations/object contacts, planning p90 172 ms and max 853 ms) and `38dd-gen` (41 untuned walks: 36 arrivals, 40 facing passes, zero reversals/flicker/floor violations/object contacts, p90 280 ms and max 486 ms). Footfall's 176 tests, repository typecheck/lint, and 107 API tests pass. Timings are measured wall time on the local machine, not a universal latency guarantee.
 
 Remaining arrival misses and broader visual/path/art/journey sign-off remain open in `tmp/walkqa/reports/FINAL.md`. Passing these gates does not complete `docs/FOOTFALL-GOAL.md`.
 
@@ -143,3 +143,5 @@ Exact per-state entry candidates are cached within each search. Longer depth cli
 Long lateral crossings receive 825 nodes per ground metre within the 8,000-node cap. This recovers all three lobby arrival misses; short-click base capacity and all playback quality checks are unchanged. The untuned p90 measurement is close to the 300 ms limit.
 
 Partial entries use the clock of their complete authored support, avoiding long holds when only a few drawings remain. The sparse-support cadence limit remains intact. Per-search contact validation is cached and sampling reuses temporary pose storage; all 180 frame logs exactly match the timing-corrected implementation before these allocation optimizations. A live deepest-point check reduced duplicate rendered pairs from 32 to 15, with identical arrival; strict zero-freeze acceptance is still unmet.
+
+Intermediate standing pivots use normal body clearance. Only initial standing pivots retain the boundary-start allowance. This removes invalid pivot choices; all 15 baseline transfers remain, but outside/occluder-back and pier/near-left now miss their arrival tolerances. Seven arrival misses remain. Both quality/timing gates and 176 package tests pass; restart-stride clearance and full visual/path sign-off remain open.

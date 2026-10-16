@@ -1007,7 +1007,10 @@ export class CharacterMotor {
 			cache.set(key, { poses, reason: this.rejectionReason });
 			return poses;
 		};
-		const starts = (s: PredictedStance): PredictedStance[] => {
+		const starts = (
+			s: PredictedStance,
+			startMask = this.startingFloor(),
+		): PredictedStance[] => {
 			if (
 				!GROUND_SECTORS.some(
 					(h) => this.animation.standing?.(h)?.cycle.name === s.pose.cycle.name,
@@ -1037,7 +1040,7 @@ export class CharacterMotor {
 							anchor,
 							support,
 							s.scale,
-							this.startingFloor(),
+							startMask,
 							true,
 						)
 					) {
@@ -1061,7 +1064,7 @@ export class CharacterMotor {
 									anchor,
 									support,
 									s.scale,
-									this.startingFloor(),
+									startMask,
 									true,
 								)
 							) {
@@ -1324,7 +1327,8 @@ export class CharacterMotor {
 						scale: end.scale,
 						pivot: undefined,
 					};
-					const choices = [standing, ...starts(standing)];
+					// Mid-route pivots must not inherit the spawn boundary exemption.
+					const choices = [standing, ...starts(standing, mask)];
 					standingCache.set(key, choices);
 					return choices;
 				},
