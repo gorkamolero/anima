@@ -42,7 +42,14 @@ export function loadWalkRecords(location: string) {
 			: "/backgrounds/arkham-bus-depot-flat-2d.png");
 	const image = resolve(publicRoot, `.${background}`),
 		stem = image.replace(/\.png$/, "");
+	const candidateRoot = process.env.WALK_GROUND_CANDIDATES;
+	const candidate = candidateRoot
+		? resolve(candidateRoot, `${location}.json`)
+		: undefined;
+	if (candidate && !existsSync(candidate))
+		throw new Error(`Missing derived ground candidate: ${location}`);
 	const ground =
+		(candidate ? json(candidate) : undefined) ??
 		place?.ground ??
 		(existsSync(`${stem}.ground.json`)
 			? json(`${stem}.ground.json`)
@@ -138,6 +145,15 @@ print(json.dumps(out))`,
 		1064,
 	);
 	const result = {
+		groundDerivationVersion: ground?.derivationVersion,
+		groundCandidate: candidate
+			? {
+					path: candidate,
+					sha256: createHash("sha256")
+						.update(readFileSync(candidate))
+						.digest("hex"),
+				}
+			: undefined,
 		layers,
 		visible: area.rawMask,
 		connections: stored.connections.filter((c) => c.scene === location),
