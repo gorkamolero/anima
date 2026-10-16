@@ -14,6 +14,8 @@
 
 Stopping drawings advance once per 24 Hz output frame instead of holding each for two frames. Reverse starts and starting pivots retain their two-frame timing, which affects the first captured position and route acceptance. Run169 reduces repeated draw-state pairs from 816 to 461 across 180 walks, with all endpoints unchanged and no larger position jumps; the remaining starting/stride holds are still an open freeze requirement.
 
+Cycles with enough drawings to sustain natural cadence use the shared per-support timing directly. A short support must not override that clock and reintroduce held frames; sparse cycles retain the cadence floor. Run171 removes all 24 stride repeats; 439 starting-pose repeats remain.
+
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. Numbered semantic outlines are associated with named interactables by category and bounding-box overlap, then tested against their actual alpha. Partial category masks add positive hits while preserving named-box fallback; exact named masks remain authoritative, with split outlines combined. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
 **Exits.** Boundary-inclusive regions, requested-exit guards, latches and return approaches determine when travel may begin. The game owns travel and narrative resolution. The runner receives scene records and transition timing so the same motion and exit logic can run without browser rendering.

@@ -1075,3 +1075,35 @@ it("does not stretch a late entry over the duration of a complete support", () =
 	motor.update(1000 / 24);
 	expect(pose().frame).toBe(11);
 });
+
+it("does not override the frame cap for a short support in an uneven cycle", () => {
+	const { motor, cycle, pose } = setup();
+	const source = cycle.contacts;
+	cycle.contacts = Array.from(
+		{ length: 48 },
+		(_, i) => source[i < 12 ? 0 : i < 22 ? 2 : i < 34 ? 0 : 2],
+	);
+	cycle.switchFrames = [0, 12, 22, 34];
+	motor.place({ x: 960, y: 850 });
+	const internal = motor as unknown as {
+		planned: unknown[];
+		foot: "L" | "R";
+		planStance: () => boolean;
+	};
+	internal.foot = "R";
+	internal.planned = [
+		{
+			pose: { cycle, frame: 12, flipX: false },
+			heading: "right",
+			stop: false,
+			slide: { x: 0, y: 0 },
+			state: { anchor: { ...motor.anchor } },
+		},
+	];
+	expect(internal.planStance()).toBe(true);
+	motor.walking = true;
+	for (let frame = 13; frame <= 20; frame++) {
+		motor.update(1000 / 24);
+		expect(pose().frame).toBe(frame);
+	}
+});

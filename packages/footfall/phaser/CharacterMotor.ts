@@ -1789,10 +1789,13 @@ export class CharacterMotor {
 				this.foot
 		)
 			supportFrames++;
-		this.frameMs = Math.max(
-			this.cycleFrameMs(step.pose),
-			1000 / (2.2 * supportFrames),
-		);
+		// Dense cycles can redistribute time among supports at natural cadence.
+		// Sparse cycles still need held frames to avoid an implausible step rate.
+		const denseCycle =
+			contacts.length / step.pose.cycle.switchFrames.length >= 24 / 2.2;
+		this.frameMs = denseCycle
+			? this.cycleFrameMs(step.pose)
+			: Math.max(this.cycleFrameMs(step.pose), 1000 / (2.2 * supportFrames));
 		this.apply();
 		const nextStep = this.planned[0];
 		if (!step.stop && nextStep)
