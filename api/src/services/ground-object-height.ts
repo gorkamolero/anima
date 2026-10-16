@@ -81,8 +81,12 @@ export function measureObjectHeight(
 	field: NormalField,
 	mask: Raster,
 	plane: FloorPlane,
+	shape: "general" | "upright-panel" = "general",
 ) {
 	const heights: number[] = [];
+	const columns = new Map<number, { y: number; height: number }[]>();
+	let minY = field.height;
+	let maxY = -1;
 	let clipped = false;
 	let supported = 0;
 	let markedPixels = 0;
@@ -91,18 +95,56 @@ export function measureObjectHeight(
 		for (let x = 0; x < field.width; x++) {
 			if (!marked(mask, x, y, field.width, field.height)) continue;
 			markedPixels++;
+			minY = Math.min(minY, y);
+			maxY = Math.max(maxY, y);
 			if (y === 0 || y === field.height - 1) clipped = true;
 			const p = point(field, y * field.width + x);
 			if (!p) continue;
 			supported++;
-			heights.push(dot(p, plane.normal) - offset);
+			const height = dot(p, plane.normal) - offset;
+			heights.push(height);
+			if (shape === "upright-panel") {
+				const column = columns.get(x) ?? [];
+				column.push({ y, height });
+				columns.set(x, column);
+			}
 		}
 	const reject = (reason: string) => ({ status: "rejected" as const, reason });
 	if (clipped) return reject("object height clipped by image boundary");
 	if (supported < 32 || supported < markedPixels * 0.8)
 		return reject("insufficient valid object geometry");
-	const bottom = quantile(heights, 0.05);
-	const top = quantile(heights, 0.95);
+	let bottom = quantile(heights, 0.05);
+	let top = quantile(heights, 0.95);
+	if (shape === "upright-panel") {
+		// Door panels have full-height columns. Taking area quantiles trims real
+		// height from both ends; use the median of complete column boundaries
+		// instead, so isolated bad depth samples cannot set the object's height.
+		const spans = [...columns.values()]
+			.filter(
+				(c) =>
+					c.length >= 8 && c[c.length - 1].y - c[0].y >= (maxY - minY) * 0.8,
+			)
+			.map((c) => ({
+				bottom: Math.min(...c.map((p) => p.height)),
+				top: Math.max(...c.map((p) => p.height)),
+			}));
+		if (spans.length < 3) return reject("insufficient complete panel columns");
+		bottom = quantile(
+			spans.map((c) => c.bottom),
+			0.5,
+		);
+		top = quantile(
+			spans.map((c) => c.top),
+			0.5,
+		);
+		if (
+			quantile(
+				spans.map((c) => Math.abs((c.top - c.bottom) / (top - bottom) - 1)),
+				0.5,
+			) > 0.1
+		)
+			return reject("inconsistent panel boundaries");
+	}
 	const extent = top - bottom;
 	if (!(extent > 1e-8)) return reject("degenerate object height");
 	if (plane.residual90 > extent * 0.1)

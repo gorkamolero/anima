@@ -54,6 +54,33 @@ it("rejects a shelf board floating well above the floor", () => {
 		reason: "object base is missing or elevated above the reference floor",
 	});
 });
+it("recovers full panel height without trimming its genuine top and bottom", () => {
+	for (const unit of [0.1, 1, 100]) {
+		const { field, mask, plane } = object(0, 2, unit);
+		const r = measureObjectHeight(field, mask, plane, "upright-panel");
+		expect(r.status).toBe("measured");
+		if (r.status !== "measured") throw Error(r.reason);
+		expect(r.extent / unit).toBeCloseTo(2, 5);
+	}
+});
+it("does not let isolated bad depth columns inflate a panel", () => {
+	const { field, mask, plane } = object(0, 2);
+	for (const x of [3, 7, 11]) field.points[(20 * 40 + x) * 3 + 1] = -100;
+	const r = measureObjectHeight(field, mask, plane, "upright-panel");
+	if (r.status !== "measured") throw Error(r.reason);
+	expect(r.extent).toBeCloseTo(2, 5);
+});
+it("rejects a panel without enough complete columns", () => {
+	const { field, mask, plane } = object(0, 2);
+	for (let y = 1; y < 39; y++)
+		for (let x = 1; x < 39; x++)
+			if (x > 2 && (y < 10 || y > 30)) mask.data[y * 40 + x] = 0;
+	const r = measureObjectHeight(field, mask, plane, "upright-panel");
+	expect(r).toEqual({
+		status: "rejected",
+		reason: "insufficient complete panel columns",
+	});
+});
 it("makes the same completeness decision in arbitrary depth units", () => {
 	for (const units of [0.1, 1, 100]) {
 		const { field, mask, plane } = object(2, 0.1, units);

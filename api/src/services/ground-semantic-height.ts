@@ -143,7 +143,12 @@ export async function semanticHeightScale(
 			height: field.height,
 			data: Array.from(bytes, (v) => (v > 200 ? 1 : 0)),
 		};
-		const measurement = measureObjectHeight(field, mask, plane);
+		const measurement = measureObjectHeight(
+			field,
+			mask,
+			plane,
+			category === "doors" ? "upright-panel" : "general",
+		);
 		if (measurement.status === "rejected") {
 			rejected.push({ id: object.id, reason: measurement.reason });
 			continue;

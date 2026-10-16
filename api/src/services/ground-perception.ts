@@ -18,7 +18,7 @@ import { MOGE_VERSION, mogeNormals, readMoge } from "./moge.js";
 import { reserveSegmentation } from "./occluders.js";
 import { semanticCoastalScale } from "./semantic-scale.js";
 
-export const DERIVATION_VERSION = 24;
+export const DERIVATION_VERSION = 25;
 // Calibration changes reuse the same provider evidence; only changes to
 // perception itself should invalidate these expensive cached results.
 const PERCEPTION_VERSION = 20;
