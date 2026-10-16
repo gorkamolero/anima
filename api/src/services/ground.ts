@@ -10,6 +10,8 @@ import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
 import { calibrateGround } from "./ground-calibration.js";
 import { safeGroundLine } from "./ground-line.js";
+import { occluderWalkLinks } from "./ground-links.js";
+import { cleanMainFloor, type FloorLink } from "./ground-normals.js";
 import {
 	DERIVATION_VERSION,
 	perceiveFloor,
@@ -216,7 +218,22 @@ export async function deriveGround(
 ): Promise<GroundData> {
 	const perceived = await perceiveFloor(image, description, key);
 	const { depth, guidance, stairMask } = perceived;
-	const mask = await subtractCachedObstacles(image, perceived.mask);
+	const outlined = await subtractCachedObstacles(image, perceived.mask);
+	let mask = outlined;
+	let links: FloorLink[];
+	// Removing a component can invalidate a bridge that used it as support.
+	// Recompute until no pixels change; cleanup only removes pixels, so this
+	// reaches a fixed point without retaining links through discarded floor.
+	for (;;) {
+		links = await occluderWalkLinks(image, mask, guidance);
+		const cleaned = cleanMainFloor(mask, guidance, links, perceived.samMask);
+		if (cleaned.data.every((v, i) => v === mask.data[i])) break;
+		mask = cleaned;
+	}
+	await writeFile(
+		resolve(proofDirectory(key), "walk-links.json"),
+		JSON.stringify(links),
+	);
 	const { horizonY, slope, referenceFactor, referenceFootY } =
 		calibrateGround(guidance);
 	const data = maskToGround(

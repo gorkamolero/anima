@@ -9,12 +9,16 @@ import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall, reserveCall } from "./costs.js";
 import { derivationError } from "./derivation-errors.js";
+import { isFloorCovering } from "./floor-surfaces.js";
 import { fitPlane, type Raster } from "./ground.js";
 import { scaleReferenceSchema } from "./ground-calibration.js";
+import { combineNormals, reduceFloor } from "./ground-normals.js";
+import { spatialMaskCache } from "./ground-spatial-cache.js";
+import { mogeNormals } from "./moge.js";
 import { reserveSegmentation } from "./occluders.js";
 import { semanticCoastalScale } from "./semantic-scale.js";
 
-export const DERIVATION_VERSION = 9;
+export const DERIVATION_VERSION = 20;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 export const proofRoot = resolve(ROOT, "tmp/walkqa/derivation");
 export function proofDirectory(key: string): string {
@@ -249,7 +253,10 @@ export async function obstacleClasses(
 ): Promise<string[]> {
 	const path = resolve(cacheRoot, `${hash}-obstacle-classes-v1.json`);
 	const stored = await readFile(path, "utf8").catch(() => null);
-	if (stored) return obstacleSchema.parse(JSON.parse(stored)).obstacles;
+	if (stored)
+		return obstacleSchema
+			.parse(JSON.parse(stored))
+			.obstacles.filter((name) => !isFloorCovering(name));
 	const { object } = await generateObject({
 		model: getModel(),
 		mode: "json",
@@ -268,7 +275,7 @@ export async function obstacleClasses(
 		],
 	});
 	await writeFile(path, JSON.stringify(object, null, 2));
-	return object.obstacles;
+	return object.obstacles.filter((name) => !isFloorCovering(name));
 }
 export async function perceiveFloor(
 	image: string,
@@ -292,6 +299,7 @@ export async function perceiveFloor(
 	if (previous) {
 		const result = JSON.parse(previous) as {
 			mask: Raster;
+			samMask: Raster;
 			depth: Raster;
 			guidance: FloorGuidance;
 			stairMask?: Raster;
@@ -412,6 +420,8 @@ export async function perceiveFloor(
 		return (bottom - top + 1) / instance.height >= 0.15 * adult;
 	};
 	const excluded = { ...union, data: union.data.map(() => 0) };
+	const water = { ...union, data: union.data.map(() => 0) };
+	let waterReady = false;
 	const stairMask = { ...union, data: union.data.map(() => 0) };
 	if (/step|stair/i.test(description)) exclusions.push("railing");
 	const labels = await readFile(
@@ -485,6 +495,7 @@ export async function perceiveFloor(
 				continue;
 			}
 		}
+		if (prompt === "water") waterReady = true;
 		await saveRaster(resolve(out, `${slug}-mask.png`), mask, false);
 		steps.push({
 			prompt,
@@ -493,10 +504,17 @@ export async function perceiveFloor(
 		});
 		mask.data.forEach((v, i) => {
 			if (v > 127) {
+				if (prompt === "water") water.data[i] = 1;
 				(exclusions.includes(prompt) ? excluded : union).data[i] = 1;
 				if (prompt === "steps" || prompt === "stairs") stairMask.data[i] = 1;
 			}
 		});
+	}
+	if (exclusions.includes("water") && !waterReady) {
+		await writeFile(resolve(out, "steps.json"), JSON.stringify(steps, null, 2));
+		throw new Error(
+			`SAM water segmentation is required for normals floor derivation: ${steps.find((s) => s.prompt === "water")?.error ?? "missing result"}`,
+		);
 	}
 	// Spatially prompted SAM2 is independent of SAM3's concept vocabulary.
 	const covered = union.data.filter((v, i) => v && envelope.data[i]).length;
@@ -510,7 +528,11 @@ export async function perceiveFloor(
 			.split(" ")
 			.map(Number);
 		try {
-			const path = resolve(out, "sam2-fallback.png");
+			const path = await spatialMaskCache(
+				cacheRoot,
+				hash,
+				guidance.areas.map((area) => area.seed),
+			);
 			if (
 				!(await readFile(path)
 					.then(() => true)
@@ -537,6 +559,7 @@ export async function perceiveFloor(
 					Buffer.from(await (await fetch(result.data.image.url)).arrayBuffer()),
 				);
 			}
+			await copyFile(path, resolve(out, "sam2-fallback.png"));
 			readRaster(path).data.forEach((v, i) => {
 				if (v > 127 && envelope.data[i]) union.data[i] = 1;
 			});
@@ -589,8 +612,15 @@ export async function perceiveFloor(
 	await saveRaster(resolve(out, "depth-plane-mask.png"), refined.planeMask);
 	await saveRaster(resolve(out, "pre-clearance-mask.png"), refined.mask);
 	refined.mask = erodeFloor(refined.mask);
+	await saveRaster(resolve(out, "sam-final-mask.png"), refined.mask);
+	const samMask = refined.mask;
+	const normals = await mogeNormals(bytes, hash, cacheRoot);
+	const combined = combineNormals(normals, refined.mask, water, excluded);
+	await saveRaster(resolve(out, "normal-combined-mask.png"), combined);
+	refined.mask = reduceFloor(combined);
 	await saveRaster(resolve(out, "final-mask.png"), refined.mask);
 	const result = {
+		samMask,
 		mask: refined.mask,
 		stairMask: {
 			...stairMask,
