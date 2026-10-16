@@ -102,9 +102,12 @@ export async function subtractCachedObstacles(
 	).catch(() => null);
 	if (segmented)
 		for (const o of JSON.parse(segmented) as Array<{
+			label?: string;
+			id?: string;
 			png: string;
 			bbox: { x: number; y: number; w: number; h: number };
 		}>) {
+			if (isFloorCovering(o.label ?? o.id ?? "")) continue;
 			const bytes = execFileSync(
 				"magick",
 				[

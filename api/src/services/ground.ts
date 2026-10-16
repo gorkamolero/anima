@@ -13,6 +13,7 @@ import {
 	calibrateGround,
 	validatedScaleGuidance,
 } from "./ground-calibration.js";
+import { calibrateDepthScale } from "./ground-depth-scale.js";
 import { safeGroundLine } from "./ground-line.js";
 import { occluderWalkLinks } from "./ground-links.js";
 import { cleanMainFloor, type FloorLink } from "./ground-normals.js";
@@ -25,6 +26,7 @@ import {
 	excludeUnscaledStairs,
 	subtractCachedObstacles,
 } from "./ground-repair.js";
+import { semanticHeightScale } from "./ground-semantic-height.js";
 
 export type {
 	GroundData,
@@ -229,11 +231,64 @@ export async function deriveGround(
 		if (error.code === "ENOENT") return "[]";
 		throw error;
 	});
-	const guidance = validatedScaleGuidance(
-		perceived.guidance,
-		JSON.parse(outlines) as Occluder[],
-	);
+	const objects = JSON.parse(outlines) as Occluder[];
+	let guidance = validatedScaleGuidance(perceived.guidance, objects);
 	const outlined = await subtractCachedObstacles(image, perceived.mask);
+	const originalReference = guidance.scaleReference;
+	const depthScale =
+		originalReference && perceived.normalField
+			? calibrateDepthScale(perceived.normalField, outlined, originalReference)
+			: undefined;
+	const semanticScale =
+		depthScale?.status !== "accepted" && perceived.normalField
+			? await semanticHeightScale(
+					image,
+					objects,
+					perceived.normalField,
+					outlined,
+				)
+			: undefined;
+	const calibratedScale =
+		depthScale?.status === "accepted"
+			? depthScale
+			: semanticScale?.status === "estimated"
+				? semanticScale.calibration
+				: undefined;
+	if (calibratedScale) {
+		guidance = {
+			...guidance,
+			horizonY: calibratedScale.horizonY / 1080,
+			referenceFootY: calibratedScale.referenceFootY,
+			referenceHeight: (calibratedScale.referenceFactor * 1059 * 0.5) / 1080,
+			scaleReference: undefined,
+		};
+	} else if (depthScale?.status === "rejected") {
+		// A contradicted measurement must not quietly fall back to the same
+		// object's planar projection. Retain the independent guidance estimate.
+		guidance = { ...guidance, scaleReference: undefined };
+	}
+	await writeFile(
+		resolve(proofDirectory(key), "scale-calibration.json"),
+		JSON.stringify(
+			{
+				method:
+					depthScale?.status === "accepted"
+						? "reference-relative-depth"
+						: semanticScale?.status === "estimated"
+							? "semantic-vertical-height"
+							: "guidance",
+				reference: originalReference,
+				depthScale: depthScale ?? {
+					status: "unknown",
+					reason: "no reference or cached geometry",
+				},
+				semanticScale,
+				visualSignoff: false,
+			},
+			null,
+			2,
+		),
+	);
 	let mask = outlined;
 	let links: FloorLink[];
 	// Removing a component can invalidate a bridge that used it as support.
@@ -250,7 +305,7 @@ export async function deriveGround(
 		JSON.stringify(links),
 	);
 	const { horizonY, slope, referenceFactor, referenceFootY } =
-		calibrateGround(guidance);
+		calibratedScale ?? calibrateGround(guidance);
 	const data = maskToGround(
 		mask,
 		horizonY,
@@ -258,8 +313,20 @@ export async function deriveGround(
 		fraction ?? (template === "exterior" ? 0.62 : 0.5),
 		5,
 	);
-	data.scaleReference = guidance.scaleReference;
-	if (guidance.scaleReference && data.walkArea) {
+	data.scaleReference =
+		depthScale?.status === "accepted"
+			? originalReference
+			: semanticScale?.status === "estimated"
+				? semanticScale.reference
+				: guidance.scaleReference;
+	data.notes = [
+		depthScale?.status === "accepted"
+			? "Scale transferred by relative depth from the visible reference; visual validation remains required."
+			: semanticScale?.status === "estimated"
+				? `Scale uses a semantic height assumption of ${semanticScale.assumedHeightM}m ±${semanticScale.heightUncertaintyM}m; visual validation remains required.`
+				: `Scale remains unverified: ${depthScale?.status === "rejected" ? depthScale.reason : "no supported depth reference"}.`,
+	];
+	if (data.scaleReference && data.walkArea) {
 		// Keep the measured projection over all reachable depths; an arbitrary
 		// legacy cap must not silently invalidate the reference object.
 		data.walkArea.scaleClamp.max = Math.max(

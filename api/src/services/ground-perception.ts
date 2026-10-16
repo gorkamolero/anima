@@ -14,11 +14,11 @@ import { fitPlane, type Raster } from "./ground.js";
 import { scaleReferenceSchema } from "./ground-calibration.js";
 import { combineNormals, reduceFloor } from "./ground-normals.js";
 import { spatialMaskCache } from "./ground-spatial-cache.js";
-import { mogeNormals } from "./moge.js";
+import { MOGE_VERSION, mogeNormals, readMoge } from "./moge.js";
 import { reserveSegmentation } from "./occluders.js";
 import { semanticCoastalScale } from "./semantic-scale.js";
 
-export const DERIVATION_VERSION = 21;
+export const DERIVATION_VERSION = 24;
 // Calibration changes reuse the same provider evidence; only changes to
 // perception itself should invalidate these expensive cached results.
 const PERCEPTION_VERSION = 20;
@@ -315,7 +315,13 @@ export async function perceiveFloor(
 		if (result.artifactsDirectory && result.artifactsDirectory !== out)
 			await cp(result.artifactsDirectory, out, { recursive: true });
 		await saveRaster(resolve(out, "final-mask.png"), result.mask);
-		return result;
+		const normalField = await readMoge(
+			resolve(cacheRoot, `${hash}-moge2-${MOGE_VERSION}`),
+		).catch((error: NodeJS.ErrnoException) => {
+			if (error.code === "ENOENT") return undefined;
+			throw error;
+		});
+		return { ...result, normalField };
 	}
 	const guidancePath = resolve(cacheRoot, `${hash}-floor-guidance-v3.json`);
 	const storedGuidance = await readFile(guidancePath, "utf8").catch(() => null);
@@ -639,7 +645,7 @@ export async function perceiveFloor(
 	};
 	await writeFile(cache, JSON.stringify(result));
 	recordCall("perception-v3", 0);
-	return result;
+	return { ...result, normalField: normals };
 }
 
 /** One-cell safety margin excludes mixed floor/obstacle pixels after reduction.
