@@ -956,3 +956,37 @@ it("ranks complete finishes without changing the route to the first arrival", ()
 	expect(ranked.steps.slice(0, -1)).toEqual(original.steps.slice(0, -1));
 	expect(ranked.stats.expanded).toBe(original.stats.expanded);
 });
+
+it("gives alternate starts a chance before a cheap dead end spends the boundary budget", () => {
+	const run = (layeredFrontier: boolean) =>
+		planFootsteps(
+			{ x: 10, y: 0 },
+			{ x: 8, y: 0, lane: "dead-end" },
+			{
+				position: (s) => s,
+				support: (s) => s.lane,
+				starts: () => [{ x: 0, y: 0, lane: "arrival" }],
+				entry: (_s, h) => (h === "right" ? h : undefined),
+				advance: (s) => ({ ...s, x: s.x + (s.lane === "arrival" ? 5 : 0.01) }),
+				rest: (s) => s,
+				acceptRest: (s) => s.lane === "arrival" && s.x === 10,
+			},
+			{
+				now: () => 0,
+				firstArrival: true,
+				preferMotion: true,
+				searchWeight: 3,
+				layeredFrontier,
+				resolution: 0.001,
+				nodeBudget: 8,
+				costBound: 50,
+			},
+		);
+	expect(run(false).complete).toBe(false);
+	const result = run(true);
+	expect(result.complete).toBe(true);
+	expect(result.stats.expanded).toBeLessThanOrEqual(8);
+	expect(result.steps.every((step) => step.state.lane === "arrival")).toBe(
+		true,
+	);
+});

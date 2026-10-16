@@ -1485,6 +1485,7 @@ export class CharacterMotor {
 			}
 			return lastAssessment;
 		};
+		options.layeredFrontier = !mask.data[cellAt(mask, qualityInitial.position)];
 		const result = planFootsteps<PredictedStance, FootPose>(
 			this.goal,
 			initial,

@@ -91,6 +91,8 @@ export interface RouteState {
 	corner: number;
 }
 export interface SearchOptions {
+	/** Share a boundary-start budget across depths and heading histories. */
+	layeredFrontier?: boolean;
 	/** Keep a stationary stop as fallback without pruning a valid walking route. */
 	preferMotion?: boolean;
 	/** Explicit preferences for a bounded, non-optimal first-arrival search. */
@@ -176,6 +178,70 @@ class Heap<T extends { priority: number }> {
 	}
 }
 
+/** A bounded frontier for starts outside routing clearance. Evaluate diverse
+ * short prefixes before allowing one low-priority family to spend the budget.
+ * This schedules the same search edges; it never retries a completed search. */
+class LayeredFrontier<
+	T extends {
+		priority: number;
+		parent?: T;
+		history: number;
+		heading?: WalkDirection;
+		run: number;
+	},
+> {
+	private layers = new Map<number, Heap<T>>();
+	private depths = new WeakMap<T, number>();
+	private counts = new Map<string, number>();
+	private depth = 0;
+	private maximumDepth = 0;
+	private layerCount = 0;
+	constructor(
+		private score: (node: T) => number,
+		private current: (node: T) => boolean,
+		private discard: (node: T) => void,
+	) {}
+	push(node: T) {
+		const depth = node.parent ? (this.depths.get(node.parent) ?? 0) + 1 : 0;
+		this.depths.set(node, depth);
+		node.priority = this.score(node);
+		this.maximumDepth = Math.max(this.maximumDepth, depth);
+		let heap = this.layers.get(depth);
+		if (!heap) {
+			heap = new Heap<T>();
+			this.layers.set(depth, heap);
+		}
+		heap.push(node);
+	}
+	pop(): T | undefined {
+		while (this.depth <= this.maximumDepth) {
+			const heap = this.layers.get(this.depth);
+			if (this.layerCount >= 400) {
+				for (let node = heap?.pop(); node; node = heap?.pop())
+					this.discard(node);
+			}
+			const node = heap?.pop();
+			if (!node) {
+				this.layers.delete(this.depth++);
+				this.layerCount = 0;
+				this.counts.clear();
+				continue;
+			}
+			if (!this.current(node)) continue;
+			const key = `${node.history}:${node.heading ?? "start"}:${Math.min(node.run, 2)}`;
+			const count = this.counts.get(key) ?? 0;
+			if (count >= (this.depth ? 12 : 100)) {
+				this.discard(node);
+				continue;
+			}
+			this.counts.set(key, count + 1);
+			this.layerCount++;
+			return node;
+		}
+		return undefined;
+	}
+}
+
 /** Best-first branch-and-bound over support cells, foot, phase and heading.
  * Every valid exit is a goal with residual-distance cost. Playback retains the
  * exact simulated positions; quantisation is only duplicate detection. */
@@ -258,7 +324,18 @@ export function planFootsteps<State, Pose>(
 		const p = ground(sim.position(state));
 		return `${Math.round(p.x / resolution)},${Math.round(p.y / resolution)},${sim.support?.(state) ?? ""},${heading ?? "standing"}:${options.maxHeadingChanges === undefined ? Math.min(changes, 1) : changes}:${Math.min(run, options.minHeadingRun ?? 0)}:${history}:${corner}`;
 	};
-	const open = new Heap<Node>();
+	const costs = new Map<string, number>();
+	const open =
+		options.layeredFrontier && options.firstArrival
+			? new LayeredFrontier<Node>(
+					(node) =>
+						distance(ground(sim.position(node.state)), goal) + 0.05 * node.g,
+					(node) => node.g === costs.get(node.key),
+					(node) => {
+						if (node.g === costs.get(node.key)) costs.delete(node.key);
+					},
+				)
+			: new Heap<Node>();
 	const start: Node = {
 		changeLimit: options.maxHeadingChanges ?? Infinity,
 		sinceRest: options.minRestartRun ?? 0,
@@ -285,7 +362,7 @@ export function planFootsteps<State, Pose>(
 		start.corner,
 	);
 	open.push(start);
-	const costs = new Map([[start.key, 0]]);
+	costs.set(start.key, 0);
 	let generated = 1;
 	for (const state of sim.starts?.(initial) ?? []) {
 		const alternative = {
@@ -370,7 +447,8 @@ export function planFootsteps<State, Pose>(
 	search: for (let node = open.pop(); node; node = open.pop()) {
 		if (node.g !== costs.get(node.key)) continue;
 		if (node.f >= searchBound()) {
-			if ((options.searchWeight ?? 1) !== 1) continue;
+			if ((options.searchWeight ?? 1) !== 1 || options.layeredFrontier)
+				continue;
 			reason = best?.complete ? "complete" : "nearest-reachable";
 			break;
 		}
