@@ -1,6 +1,6 @@
 import type { Perspective, Point } from "./perspective";
 import { fromMetres, scaleAt, toMetres } from "./perspective";
-import type { FloorMask } from "./types";
+import type { FloorMask, WalkArea } from "./types";
 
 export function cellPoint(mask: FloorMask, i: number): Point {
 	return {
@@ -285,6 +285,26 @@ export function findPath(
 	)
 		path[path.length - 1] = target;
 	return stringPull(mask, path);
+}
+
+/** Keep the routing margin unless it disconnects a target that remains reachable
+ * with physical body clearance. The motor still validates every sole and sweep. */
+export function findWalkPath(
+	area: Pick<WalkArea, "mask" | "clearanceMask">,
+	start: Point,
+	target: Point,
+): Point[] {
+	const preferred = findPath(area.mask, start, target);
+	if (!area.clearanceMask || !preferred.length) return preferred;
+	const intended = nearestCell(area.mask, target);
+	if (cellAt(area.mask, preferred[preferred.length - 1]) === intended)
+		return preferred;
+	const point = cellPoint(area.mask, intended);
+	const physical = findPath(area.clearanceMask, start, point);
+	const end = physical[physical.length - 1];
+	return end && Math.hypot(end.x - point.x, end.y - point.y) < 1e-6
+		? physical
+		: preferred;
 }
 
 /** Round a string-pulled corner only when every replacement segment stays on floor. */

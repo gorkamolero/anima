@@ -33,6 +33,7 @@ export {
 	cellPoint,
 	erode,
 	findPath,
+	findWalkPath,
 	lineOfSight,
 	nearestCell,
 	nearestReachable,

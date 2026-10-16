@@ -2,7 +2,7 @@ import type { FootCycle, FootPose } from "../core/characters/footLock";
 import { beginArrival, resolveReturnExit } from "../core/occlusion/arrivals";
 import { exitAt, exitForFrame } from "../core/occlusion/exits";
 import { depthForOccluder } from "../core/occlusion/occlusion";
-import { findPath } from "../core/walkarea/navigation";
+import { findWalkPath } from "../core/walkarea/navigation";
 import {
 	objectApproach,
 	objectFacingPoint,
@@ -150,7 +150,7 @@ export async function simulateWalks({
 						interactable,
 						clicked.x,
 					)
-				: findPath(geometry.area.mask, sprite, exit?.approach ?? clicked);
+				: findWalkPath(geometry.area, sprite, exit?.approach ?? clicked);
 			const setup = {
 				start: { x: sprite.x, y: sprite.y },
 				startAnchor: { ...motor.anchor },

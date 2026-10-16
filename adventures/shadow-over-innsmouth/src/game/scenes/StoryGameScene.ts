@@ -15,7 +15,7 @@ import {
 	exitAt,
 	exitForFrame,
 	type FootCycle,
-	findPath,
+	findWalkPath,
 	floorPixel,
 	type Occluder,
 	objectApproach,
@@ -955,7 +955,7 @@ export class StoryGameScene extends BaseScene {
 	/** Read-only path preview for editor and click-to-walk verification. */
 	public previewWalk(x: number, y: number): ScenePoint[] {
 		return this.walkArea && this.hermesSprite
-			? findPath(this.walkArea.mask, this.hermesSprite, { x, y })
+			? findWalkPath(this.walkArea, this.hermesSprite, { x, y })
 			: [];
 	}
 	/** Both authored and generated free walks use the same navigation. */

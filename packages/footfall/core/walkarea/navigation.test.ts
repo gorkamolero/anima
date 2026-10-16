@@ -3,12 +3,48 @@ import {
 	cellAt,
 	erode,
 	findPath,
+	findWalkPath,
 	lineOfSight,
 	nearestReachable,
 } from "./navigation";
 
 const mask = () => ({ width: 20, height: 10, data: Array(200).fill(1) });
 describe("navigation", () => {
+	it("crosses a routing-margin seam only when physical body clearance connects it", () => {
+		const routing = mask();
+		for (let y = 0; y < 10; y++) routing.data[y * 20 + 10] = 0;
+		const clearance = { ...routing, data: [...routing.data] };
+		clearance.data[5 * 20 + 10] = 1;
+		const target = { x: 1500, y: 300 };
+		const path = findWalkPath(
+			{ mask: routing, clearanceMask: clearance },
+			{ x: 400, y: 300 },
+			target,
+		);
+		expect(cellAt(routing, path[path.length - 1])).toBe(
+			cellAt(routing, target),
+		);
+		for (let i = 1; i < path.length; i++)
+			expect(lineOfSight(clearance, path[i - 1], path[i])).toBe(true);
+	});
+	it("does not cross a physical wall even when a target is beyond the routing component", () => {
+		const routing = mask();
+		for (let y = 0; y < 10; y++) routing.data[y * 20 + 10] = 0;
+		const start = { x: 400, y: 300 },
+			target = { x: 1500, y: 300 };
+		expect(
+			findWalkPath({ mask: routing, clearanceMask: routing }, start, target),
+		).toEqual(findPath(routing, start, target));
+	});
+	it("preserves preferred routes around obstacles when their destination is reachable", () => {
+		const routing = mask();
+		for (let y = 0; y < 8; y++) routing.data[y * 20 + 10] = 0;
+		const start = { x: 400, y: 300 },
+			target = { x: 1500, y: 300 };
+		expect(
+			findWalkPath({ mask: routing, clearanceMask: mask() }, start, target),
+		).toEqual(findPath(routing, start, target));
+	});
 	it("shortcuts an open floor to a single diagonal", () => {
 		expect(
 			findPath(mask(), { x: 200, y: 200 }, { x: 1700, y: 850 }),
