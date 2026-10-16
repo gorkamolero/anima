@@ -104,15 +104,14 @@ describe("contact motor", () => {
 			expect(p.x).toBeCloseTo(anchor.x, 9);
 			expect(p.y).toBeCloseTo(anchor.y, 9);
 		};
-		for (const expected of [1, 2]) {
-			motor.update(1000 / 24);
-			expect(pose().cycle.name).toBe("standing");
-			expect(pose().frame).toBe(expected);
-			assertLocked();
-		}
+		motor.update(1000 / 24);
+		expect(pose().cycle.name).toBe("standing");
+		expect(pose().frame).toBe(1);
+		assertLocked();
 		motor.update(1000 / 24);
 		expect(pose().cycle.name).toBe("walk");
 		expect(pose().frame).toBe(0);
+		assertLocked();
 		motor.stop();
 		for (let i = 0; i < 40 && pose().cycle.name === "walk"; i++)
 			motor.update(1000 / 24);
@@ -1235,4 +1234,49 @@ it("does not mistake a worker-deserialized continuation for a direction change",
 	expect(state.turnBridge({ cycle: restored, frame: 1, flipX: false })).toEqual(
 		[],
 	);
+});
+
+it.each([
+	[true, 0],
+	[true, 10],
+	[false, 0],
+] as const)("omits a matched entry copy (%s) with canvas padding %s", (matched, padding) => {
+	const { motor, cycle, pose, target } = setup(true, true);
+	motor.place({ x: 960, y: 850 }, false);
+	if (matched)
+		cycle.matchedCut = {
+			standing: "standing",
+			headings: ["right"],
+			entryFrames: [0],
+			exitFrames: [0],
+		};
+	const anchor = { ...motor.anchor };
+	const state = motor as unknown as {
+		planned: unknown[];
+		beginWalk(): void;
+	};
+	state.planned = [
+		{
+			pose: {
+				cycle: { ...cycle, frameHeight: cycle.frameHeight + padding },
+				frame: 0,
+				flipX: false,
+				firstStance: true,
+			},
+			heading: "right",
+			stop: false,
+			slide: { x: 0, y: 0 },
+			state: { anchor },
+		},
+	];
+	motor.heading = "right";
+	state.beginWalk();
+	motor.update(1000 / 24);
+	expect(pose().frame).toBe(1);
+	motor.update(1000 / 24);
+	expect(pose().cycle.name).toBe(matched ? "walk" : "standing");
+	expect(pose().frame).toBe(matched ? 0 : 2);
+	const sole = contactOnScreen(pose(), "L", target, target.scale);
+	expect(sole.x).toBeCloseTo(anchor.x, 8);
+	expect(sole.y).toBeCloseTo(anchor.y, 8);
 });

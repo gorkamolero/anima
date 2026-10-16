@@ -747,6 +747,19 @@ export class CharacterMotor {
 			const poses = [...idle.cycle.settleFrames]
 				.reverse()
 				.map((frame) => ({ ...idle, frame }));
+			// The matched entry supplies the passing pose itself. Replaying the
+			// standing sheet's copy first adds a stationary tick at the seam.
+			const cut = resume.cycle.matchedCut;
+			const last = poses[poses.length - 1];
+			if (
+				poses.length > 1 &&
+				last &&
+				cut?.standing === idle.cycle.name &&
+				cut.headings.includes(this.heading) &&
+				cut.entryFrames.includes(resume.frame) &&
+				last.flipX === resume.flipX
+			)
+				poses.pop();
 			const first = poses[0];
 			if (
 				restarting &&
