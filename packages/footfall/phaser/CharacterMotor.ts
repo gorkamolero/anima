@@ -1241,7 +1241,12 @@ export class CharacterMotor {
 		};
 		const qualityCache = new Map<
 			string,
-			{ clean: boolean; issues: string; maxJumpSquared: number }
+			{
+				clean: boolean;
+				issues: string;
+				maxJumpSquared: number;
+				terminal: string;
+			}
 		>();
 		type QualityStance = {
 			key: string;
@@ -1312,7 +1317,11 @@ export class CharacterMotor {
 						saved.issues,
 						(qualityReasons.get(saved.issues) ?? 0) + 1,
 					);
-				return { clean: saved.clean, maxJumpSquared: saved.maxJumpSquared };
+				return {
+					clean: saved.clean,
+					maxJumpSquared: saved.maxJumpSquared,
+					terminal: saved.terminal,
+				};
 			}
 			// The consumed prefix observes only the next anchor for stride length.
 			// Its future pose is not played until after restoring the checkpoint.
@@ -1473,8 +1482,16 @@ export class CharacterMotor {
 				qualityReasons.set(issues, (qualityReasons.get(issues) ?? 0) + 1);
 			}
 			if (qualityCache.size >= 8192) qualityCache.clear();
-			qualityCache.set(signature, { clean, issues, maxJumpSquared });
-			return { clean, maxJumpSquared };
+			const terminal = JSON.stringify({
+				x: trial.target.x,
+				y: trial.target.y,
+				scale: trial.scale,
+				foot: trial.foot,
+				anchor: trial.anchor,
+				arrival: trial.arrival,
+			});
+			qualityCache.set(signature, { clean, issues, maxJumpSquared, terminal });
+			return { clean, maxJumpSquared, terminal };
 		};
 		let lastAssessedSteps: PlannedStep<PredictedStance, FootPose>[] | undefined;
 		let lastAssessment: ReturnType<typeof quality> | undefined;
@@ -1624,15 +1641,26 @@ export class CharacterMotor {
 			},
 			options,
 		);
-		// Refine only the drawings of intermediate stops, retaining their exact
-		// settled support and every subsequent route edge. This is not a search
-		// retry: full playback must remain clean and its worst jump must shrink.
+		// Refine intermediate stance entry drawings, retaining their exact
+		// landing support, complete terminal state and every subsequent route edge.
+		// This is not a search retry: full playback must remain clean and its
+		// worst jump must shrink.
 		let selectedQuality: ReturnType<typeof quality> | undefined;
 		for (let i = 1; i + 1 < result.steps.length; i++) {
 			const step = result.steps[i];
-			if (!step.stop || step.pose.firstStance || step.slide.x || step.slide.y)
-				continue;
-			const originalExit = exitFor(step.pose, step.state, step.heading);
+			if (step.pose.firstStance || step.slide.x || step.slide.y) continue;
+			const refinementExit = (pose: FootPose) => {
+				if (step.stop) return exitFor(pose, step.state, step.heading);
+				const next = predict(pose, step.state);
+				return next
+					? {
+							foot: next.foot,
+							anchor: next.anchor,
+							position: { ...next.end, scale: next.scale },
+						}
+					: undefined;
+			};
+			const originalExit = refinementExit(step.pose);
 			if (!originalExit) continue;
 			const entryJump = (pose: FootPose) => {
 				const p = lockedPlacement(
@@ -1649,7 +1677,7 @@ export class CharacterMotor {
 				return dx * dx + dy * dy;
 			};
 			const originalJump = entryJump(step.pose);
-			for (const pose of entries(step.state, step.heading, false, true)) {
+			for (const pose of entries(step.state, step.heading, false, step.stop)) {
 				if (
 					pose.cycle !== step.pose.cycle ||
 					pose.flipX !== step.pose.flipX ||
@@ -1657,7 +1685,7 @@ export class CharacterMotor {
 				)
 					continue;
 				if (entryJump(pose) >= originalJump) continue;
-				const exit = exitFor(pose, step.state, step.heading);
+				const exit = refinementExit(pose);
 				if (
 					!exit ||
 					exit.foot !== originalExit.foot ||
@@ -1675,6 +1703,7 @@ export class CharacterMotor {
 				const assessment = quality(candidate);
 				if (
 					assessment.clean &&
+					assessment.terminal === selectedQuality.terminal &&
 					assessment.maxJumpSquared < selectedQuality.maxJumpSquared
 				) {
 					result.steps = candidate;
