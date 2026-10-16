@@ -887,7 +887,7 @@ export function planFootsteps<State, Pose>(
 			break;
 		}
 	}
-	if (!best?.complete && stationary?.complete) best = stationary;
+	// A stationary finish is a fallback only when no valid walking plan exists.
 	best ??= stationary;
 	const steps: PlannedStep<State, Pose>[] = [];
 	if (best) {

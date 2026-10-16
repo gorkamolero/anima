@@ -990,3 +990,27 @@ it("gives alternate starts a chance before a cheap dead end spends the boundary 
 		true,
 	);
 });
+
+it("prefers a valid partial walk over an arrival made only by a stationary finish", () => {
+	const result = planFootsteps(
+		{ x: 1, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			entry: (_s, h) => (h === "right" ? h : undefined),
+			advance: (s) => (s.x < 0.6 ? { x: s.x + 0.3, y: 0 } : undefined),
+			rest: (s) => (s.x === 0 ? { x: 1, y: 0 } : s),
+			acceptPlan: (steps) => steps.some((step) => !step.stop),
+		},
+		{
+			preferMotion: true,
+			maxStride: 0.2,
+			resolution: 0.001,
+			costBound: 10,
+			nodeBudget: 20,
+		},
+	);
+	expect(result.steps.some((step) => !step.stop)).toBe(true);
+	expect(result.complete).toBe(false);
+	expect(result.steps.at(-1)?.state.x).toBeCloseTo(0.6);
+});
