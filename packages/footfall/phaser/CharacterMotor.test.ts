@@ -864,7 +864,7 @@ it("tries the next compatible entry when the first phase clips an object footpri
 	expect(pose().frame).toBe(1);
 });
 
-it("uses the drawn support through an idle turn's settle frames", () => {
+it("uses the drawn support and waits for an idle turn's settle frames", async () => {
 	const { motor, target, area } = setup();
 	const source: FootCycle = {
 		name: "source-idle",
@@ -905,7 +905,12 @@ it("uses the drawn support through an idle turn's settle frames", () => {
 	turning.heading = "right";
 	turning.place({ x: 960, y: 850 }, false);
 	const support = contactOnScreen(pose, "L", target, target.scale);
-	turning.face("left");
+	let completed = false;
+	const turn = turning.facePoint({ x: 100, y: 850 }).then(() => {
+		completed = true;
+	});
+	await Promise.resolve();
+	expect(completed).toBe(false);
 	for (let i = 0; i < 8; i++) {
 		turning.update(1000 / 24);
 		const sole = contactOnScreen(pose, "L", target, target.scale);
@@ -913,6 +918,9 @@ it("uses the drawn support through an idle turn's settle frames", () => {
 			Math.hypot(sole.x - support.x, sole.y - support.y),
 		).toBeLessThanOrEqual(1.5);
 	}
+	await turn;
+	expect(completed).toBe(true);
+	expect(turning.walking).toBe(false);
 	expect(pose.cycle.name).toBe("destination-idle");
 });
 

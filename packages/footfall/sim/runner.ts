@@ -160,7 +160,7 @@ export async function simulateWalks({
 				actualReachableTarget: { x: route.at(-1)?.x, y: route.at(-1)?.y },
 				exits: geometry.exits,
 			};
-			const walk = (path: Point[], after?: () => void) => {
+			const walk = (path: Point[], after?: () => void | Promise<void>) => {
 				blocked = true;
 				const start = performance.now();
 				void motor.walk(path).then(() => {
@@ -172,10 +172,11 @@ export async function simulateWalks({
 			walk(
 				route,
 				interactable
-					? () => {
+					? async () => {
 							if (transfer) return;
 							object = interactable.name;
-							motor.facePoint(objectFacingPoint(interactable));
+							busy = true;
+							await motor.facePoint(objectFacingPoint(interactable));
 							emit({ status: "loading", object });
 							try {
 								emit({
@@ -186,6 +187,8 @@ export async function simulateWalks({
 							} catch (error) {
 								limitations.push(String(error));
 								emit({ status: "error", message: String(error) });
+							} finally {
+								busy = false;
 							}
 						}
 					: undefined,

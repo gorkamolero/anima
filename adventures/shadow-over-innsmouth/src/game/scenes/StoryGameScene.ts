@@ -1351,7 +1351,7 @@ export class StoryGameScene extends BaseScene {
 		this.openWorldBusy = true;
 		this.selectedInteractable = interactable;
 		if (this.hermesMotor) {
-			this.hermesMotor.facePoint(objectFacingPoint(interactable));
+			await this.hermesMotor.facePoint(objectFacingPoint(interactable));
 		}
 		this.emitOpenWorldState({ status: "loading", object: interactable.name });
 		try {

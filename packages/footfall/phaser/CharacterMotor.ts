@@ -189,7 +189,8 @@ export class CharacterMotor {
 		this.heading = heading;
 		this.stop();
 	}
-	facePoint(point: Point): void {
+	/** Resolves after the facing settle, so interactions can wait for the pose. */
+	facePoint(point: Point): Promise<void> {
 		const here = toMetres(this.area.perspective, this.target);
 		const there = toMetres(this.area.perspective, point);
 		this.face(
@@ -201,6 +202,14 @@ export class CharacterMotor {
 				0,
 			),
 		);
+		if (!this.walking) return Promise.resolve();
+		return new Promise<void>((resolve) => {
+			const previous = this.resolve;
+			this.resolve = () => {
+				previous?.();
+				resolve();
+			};
+		});
 	}
 	stop(immediate = false, absorb = false, heading?: WalkDirection): void {
 		this.absorption = undefined;
@@ -1867,6 +1876,11 @@ export class CharacterMotor {
 		const sampled = this.stanceSamples(pose, anchor, foot, scale);
 		if (!sampled) return false;
 		const shift = this.area.perspective.residual?.length ? 0 : anchor.x;
+		const lastIndex = sampled.samples.length - 1;
+		const endPoints = [lastIndex, Math.max(0, lastIndex - 1)].map((i) => {
+			const p = sampled.samples[i];
+			return this.groundPoint({ x: p.x + shift, y: p.y });
+		});
 		// Capture can omit either boundary drawing of a support interval.
 		// Every such sampled stance must obey the same facing tolerance.
 		for (
@@ -1874,17 +1888,17 @@ export class CharacterMotor {
 			first <= Math.min(1, sampled.samples.length - 1);
 			first++
 		) {
+			const a = sampled.samples[first];
+			const startPoint = this.groundPoint({ x: a.x + shift, y: a.y });
 			for (
 				let last = sampled.samples.length - 1;
 				last >= Math.max(first, sampled.samples.length - 2);
 				last--
 			) {
-				const a = sampled.samples[first],
-					b = sampled.samples[last];
 				if (
 					!stanceFacesHeading(
-						this.groundPoint({ x: a.x + shift, y: a.y }),
-						this.groundPoint({ x: b.x + shift, y: b.y }),
+						startPoint,
+						endPoints[lastIndex - last],
 						heading,
 						this.area.perspective.constant === undefined,
 						toleranceDegrees,
