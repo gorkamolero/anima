@@ -564,7 +564,8 @@ export function planFootsteps<State, Pose>(
 					node.step === undefined || node.step.stop,
 					true,
 				) ?? [])
-					actions.push({ pose: undefined, stopPose });
+					if (!poses.includes(stopPose))
+						actions.push({ pose: undefined, stopPose });
 			for (const { pose, stopPose } of actions) {
 				if (pose === undefined && stopPose === undefined) continue;
 				const p = ground(sim.position(node.state));

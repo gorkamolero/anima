@@ -900,3 +900,24 @@ it("preserves walking runs across a settling turn while counting both drawn turn
 	expect(run(1).complete).toBe(false);
 	expect(run(3, "toward").complete).toBe(false);
 });
+
+it("evaluates each stop once while retaining stop-only phases", () => {
+	const stopped: string[] = [];
+	planFootsteps(
+		{ x: 2, y: 0 },
+		{ x: 0, y: 0 },
+		{
+			position: (s) => s,
+			entry: () => undefined,
+			entries: (_s, h, _starting, stopping) =>
+				h === "right" ? (stopping ? ["walk", "stop-only"] : ["walk"]) : [],
+			advance: () => undefined,
+			rest: (_s, pose) => {
+				stopped.push(pose);
+				return undefined;
+			},
+		},
+		{ now: () => 0, stopPhases: true, nodeBudget: 1 },
+	);
+	expect(stopped).toEqual(["walk", "stop-only"]);
+});
