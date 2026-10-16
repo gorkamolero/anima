@@ -65,6 +65,16 @@ export function classifyOccluder<T extends Occluder>(
 	object: T,
 	perspective: Perspective,
 ): T {
+	// Floor textiles extend through image depth; their bounding-box height is
+	// not physical height. Reclassify legacy upright splits at every consumer.
+	if (/^(rugs?|carpets?)(?:-\d+)?$/i.test(object.label.trim()))
+		return {
+			...object,
+			floorDecal: true,
+			floorDecalSource: "explicit",
+			obstacle: false,
+			heightMetres: 0,
+		};
 	const x = object.bbox.x + object.bbox.w / 2;
 	const baseline = baselineYAt(object, x);
 	const ppm =

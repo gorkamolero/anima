@@ -19,6 +19,38 @@ const object: Occluder = {
 	png: "net.png",
 };
 describe("low floor clutter", () => {
+	it.each([
+		"rug",
+		"rugs-0",
+		"carpet",
+		"carpets-2",
+	])("keeps a depth-spanning %s below feet and out of collision", (label) => {
+		const rug = classifyOccluder(
+			{
+				...object,
+				id: "rugs-0-upright",
+				label,
+				bbox: { x: 100, y: 300, w: 1500, h: 700 },
+				floorDecal: false,
+				floorDecalSource: "height" as const,
+				obstacle: true,
+			},
+			perspective,
+		);
+		expect(rug.floorDecal).toBe(true);
+		expect(rug.obstacle).toBe(false);
+		expect(depthForOccluder(rug, 150)).toBe(0);
+		expect(isBehind({ x: 150, y: 825 }, rug)).toBe(false);
+	});
+	it("does not flatten a rolled carpet or a rug display", () => {
+		for (const label of ["rolled carpet", "rug display"])
+			expect(
+				classifyOccluder(
+					{ ...object, label, bbox: { ...object.bbox, y: 300, h: 550 } },
+					perspective,
+				).obstacle,
+			).toBe(true);
+	});
 	it("recalculates height-derived layers when perspective is corrected", () => {
 		const low = classifyOccluder(object, perspective);
 		const corrected = classifyOccluder(low, { ...perspective, constant: 0.5 });
