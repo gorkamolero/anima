@@ -10,7 +10,6 @@ import {
 	applySceneFootprints,
 	beginArrival,
 	CharacterMotor,
-	depthForOccluder,
 	type Exit,
 	exitAt,
 	exitForFrame,
@@ -21,6 +20,7 @@ import {
 	objectApproach,
 	objectAtPoint,
 	objectFacingPoint,
+	renderDepthForOccluder,
 	resolveReturnExit,
 	sceneExitApproaches,
 	type WalkArea,
@@ -556,13 +556,10 @@ export class StoryGameScene extends BaseScene {
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
 				layer.image.setDepth(
-					10 +
-						depthForOccluder(
-							layer.data,
-							this.hermesMotor?.anchor.x ?? this.hermesSprite.x,
-						) /
-							20 -
-						0.001,
+					renderDepthForOccluder(
+						layer.data,
+						this.hermesMotor?.anchor ?? this.hermesSprite,
+					),
 				);
 			// Scene update follows Phaser's normal pre-update depth sort. Flush
 			// changed baselines now so this captured frame uses its own order.

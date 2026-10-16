@@ -44,6 +44,17 @@ export function depthForOccluder(occluder: Occluder, feetX: number): number {
 	return occluder.floorDecal ? 0 : baselineYAt(occluder, feetX);
 }
 
+/** Resolve renderer ties on the correct side of the baseline. An unconditional
+ * negative offset would put feet just behind the baseline in front of it. */
+export function renderDepthForOccluder(
+	occluder: Occluder,
+	feet: Point,
+): number {
+	const baseline = depthForOccluder(occluder, feet.x);
+	const behind = !occluder.floorDecal && feet.y < baseline;
+	return 10 + baseline / 20 + (behind ? 0.001 : -0.001);
+}
+
 /** Height above the physical baseline, measured at that baseline's depth.
  * Classification never deletes a low obstacle's footprint. */
 export function classifyOccluder<T extends Occluder>(

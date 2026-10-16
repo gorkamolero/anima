@@ -30,6 +30,7 @@ export {
 	baselineYAt,
 	depthForOccluder,
 	isBehind,
+	renderDepthForOccluder,
 } from "./occlusion/occlusion";
 export { walkAreaFromAnchor } from "./walkarea/anchor";
 export {

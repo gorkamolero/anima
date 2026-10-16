@@ -1,7 +1,7 @@
 import type { FootCycle, FootPose } from "../core/characters/footLock";
 import { beginArrival, resolveReturnExit } from "../core/occlusion/arrivals";
 import { exitAt, exitForFrame } from "../core/occlusion/exits";
-import { depthForOccluder } from "../core/occlusion/occlusion";
+import { renderDepthForOccluder } from "../core/occlusion/occlusion";
 import { findWalkPath } from "../core/walkarea/navigation";
 import {
 	objectApproach,
@@ -272,7 +272,7 @@ export async function simulateWalks({
 					occluders: geometry.objects
 						.map<LoggedOccluder>((o) => ({
 							id: o.id,
-							depth: 10 + depthForOccluder(o, motor.anchor.x) / 20 - 0.001,
+							depth: renderDepthForOccluder(o, motor.anchor),
 							floorDecal: o.floorDecal,
 							baseline: o.baseline,
 							bounds: {

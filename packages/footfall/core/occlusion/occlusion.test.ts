@@ -5,6 +5,7 @@ import {
 	depthForOccluder,
 	isBehind,
 	type Occluder,
+	renderDepthForOccluder,
 } from "@anima/footfall/core/occlusion/occlusion";
 import { describe, expect, it } from "vitest";
 
@@ -19,6 +20,22 @@ const prop: Occluder = {
 	png: "bench.png",
 };
 describe("walk-behind depth contract", () => {
+	it("keeps subpixel crossings on their physical side of the baseline", () => {
+		for (const x of [100, 300, 500]) {
+			const baseline = baselineYAt(prop, x);
+			for (const delta of [-1, -0.01, -0.00001, 0, 0.00001, 0.01, 1]) {
+				const feet = { x, y: baseline + delta };
+				expect(10 + feet.y / 20 < renderDepthForOccluder(prop, feet)).toBe(
+					delta < 0,
+				);
+			}
+		}
+	});
+	it("keeps floor decals below the character at the baseline", () => {
+		expect(
+			renderDepthForOccluder({ ...prop, floorDecal: true }, { x: 300, y: 0 }),
+		).toBeLessThan(10);
+	});
 	it("interpolates sloping baselines and extends support endpoints under overhangs", () => {
 		expect(baselineYAt(prop, 300)).toBe(650);
 		expect(baselineYAt(prop, 100)).toBe(600);
