@@ -714,7 +714,7 @@ export async function refineCachedOccluders(
 				{ input: Buffer.from(part.data.map((v) => v * 255)), maxBuffer: 8e6 },
 			);
 			const classified = classifyOccluder(
-				{ ...o, ...geometry, png },
+				{ ...o, ...geometry, png, floorDecalSource: "height" },
 				perspective,
 			);
 			const count = part.data.reduce((a, b) => a + b, 0);
@@ -722,6 +722,7 @@ export async function refineCachedOccluders(
 				...classified,
 				id: `${o.id}-${kind}`,
 				floorDecal: kind === "flat" || classified.floorDecal,
+				floorDecalSource: kind === "flat" ? "explicit" : "height",
 				obstacle:
 					kind !== "flat" ||
 					!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(o.label),

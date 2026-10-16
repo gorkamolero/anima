@@ -12,6 +12,10 @@ export interface Occluder {
 	baseline: Point[];
 	png: string;
 	floorDecal?: boolean;
+	/** Explicit flat artwork survives recalibration; height estimates do not. */
+	floorDecalSource?: "explicit" | "height";
+	/** Version of the cached mask split, when present. */
+	layerDerivation?: number;
 	obstacle?: boolean;
 	heightMetres?: number;
 }
@@ -68,11 +72,30 @@ export function classifyOccluder<T extends Occluder>(
 		scaleAt(perspective, { x, y: baseline });
 	if (!(ppm > 0)) return object;
 	const heightMetres = Math.max(0, baseline - object.bbox.y) / ppm;
-	const floorDecal = object.floorDecal === true || heightMetres < 0.25;
+	// Version 22 split masks encode flat intent in the component kind. Its
+	// upright components inherited an older height classification, which can
+	// become false after correcting the scene's perspective.
+	const splitKind =
+		object.layerDerivation === 22
+			? object.id.match(/-(upright|flat)$/)?.[1]
+			: undefined;
+	const floorDecalSource =
+		object.floorDecalSource ??
+		(splitKind === "flat"
+			? "explicit"
+			: splitKind === "upright"
+				? "height"
+				: object.floorDecal === true
+					? "explicit"
+					: "height");
+	const floorDecal =
+		(floorDecalSource === "explicit" && object.floorDecal === true) ||
+		heightMetres < 0.25;
 	return {
 		...object,
 		heightMetres,
 		floorDecal,
+		floorDecalSource,
 		obstacle:
 			!floorDecal ||
 			!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(object.label),

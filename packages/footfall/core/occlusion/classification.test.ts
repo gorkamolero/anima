@@ -19,6 +19,36 @@ const object: Occluder = {
 	png: "net.png",
 };
 describe("low floor clutter", () => {
+	it("recalculates height-derived layers when perspective is corrected", () => {
+		const low = classifyOccluder(object, perspective);
+		const corrected = classifyOccluder(low, { ...perspective, constant: 0.5 });
+		expect(corrected.floorDecal).toBe(false);
+		expect(corrected.obstacle).toBe(true);
+		expect(isBehind({ x: 150, y: 825 }, corrected)).toBe(true);
+	});
+	it("recovers an upright cached post without lifting its explicitly flat split", () => {
+		const post = {
+			...object,
+			id: "posts-1-upright",
+			label: "post",
+			layerDerivation: 22,
+			floorDecal: true,
+		};
+		const p = { ...perspective, constant: 0.5 };
+		expect(classifyOccluder(post, p).floorDecal).toBe(false);
+		expect(
+			classifyOccluder({ ...post, id: "posts-1-flat" }, p).floorDecal,
+		).toBe(true);
+	});
+	it("preserves explicit flat artwork across repeated recalibration", () => {
+		const explicit = classifyOccluder(
+			{ ...object, floorDecal: true },
+			perspective,
+		);
+		expect(
+			classifyOccluder(explicit, { ...perspective, constant: 0.1 }).floorDecal,
+		).toBe(true);
+	});
 	it("draws a low net pile below the character while retaining its obstacle", () => {
 		const o = classifyOccluder(object, perspective);
 		expect(o.floorDecal).toBe(true);

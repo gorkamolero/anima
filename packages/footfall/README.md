@@ -22,6 +22,8 @@ Weighted searches initially retain normal route-cost ordering. If no moving fini
 
 **Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. Numbered semantic outlines are associated with named interactables by category and bounding-box overlap, then tested against their actual alpha. Partial category masks add positive hits while preserving named-box fallback; exact named masks remain authoritative, with split outlines combined. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
 
+Flat-layer classification records whether it comes from explicit artwork or estimated physical height. Correcting scene scale recalculates height-derived layers while preserving deliberately flat masks. Legacy version22 split masks recover this distinction from their component kind. Run270 corrects the pier post previously drawn below the boots; all180 movement trajectories and support anchors remain identical to260. This fixes that observed layer defect, not the outstanding scene-wide visual review.
+
 **Exits.** Boundary-inclusive regions, requested-exit guards, latches and return approaches determine when travel may begin. The game owns travel and narrative resolution. The runner receives scene records and transition timing so the same motion and exit logic can run without browser rendering.
 
 ## Layout
