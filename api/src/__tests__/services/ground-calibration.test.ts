@@ -5,7 +5,37 @@ import { expect, it } from "vitest";
 import {
 	calibrateGround,
 	referenceLandmark,
+	validatedScaleGuidance,
 } from "../../services/ground-calibration.js";
+
+it("rejects a contradicted object reference without mutating cached guidance", () => {
+	const guidance = {
+		horizonY: 0.55,
+		referenceFootY: 0.9,
+		referenceHeight: 0.5,
+		scaleReference: {
+			label: "crate",
+			rect: { x: 0.016, y: 0.613, width: 0.231, height: 0.177 },
+			realHeightM: 0.5,
+		},
+	};
+	const selected = validatedScaleGuidance(guidance, [
+		{
+			id: "crates-2-upright",
+			label: "crates-2",
+			bbox: { x: 213, y: 537, w: 384, h: 257 },
+			baseline: [],
+			png: "unused.png",
+		},
+	]);
+	expect(selected.scaleReference).toBeUndefined();
+	expect(guidance.scaleReference).toBeDefined();
+	const calibrated = calibrateGround(selected);
+	expect(
+		(0.9 * 1080 - calibrated.horizonY) * calibrated.slope * 1059 * 0.5,
+	).toBeCloseTo(540);
+	expect(validatedScaleGuidance(guidance, [])).toBe(guidance);
+});
 
 it("uses the visible object's physical height rather than an imagined adult", () => {
 	const scaleReference = {

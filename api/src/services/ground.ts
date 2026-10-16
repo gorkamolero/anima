@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, resolve } from "node:path";
+import type { Occluder } from "@anima/footfall/core/occlusion/occlusion";
 import { scaleAt as perspectiveScaleAt } from "@anima/footfall/core/walkarea/perspective";
 import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { generateObject } from "ai";
@@ -8,7 +9,10 @@ import { z } from "zod";
 import { imagePath, PUBLIC } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
-import { calibrateGround } from "./ground-calibration.js";
+import {
+	calibrateGround,
+	validatedScaleGuidance,
+} from "./ground-calibration.js";
 import { safeGroundLine } from "./ground-line.js";
 import { occluderWalkLinks } from "./ground-links.js";
 import { cleanMainFloor, type FloorLink } from "./ground-normals.js";
@@ -217,7 +221,18 @@ export async function deriveGround(
 	key = basename(image, ".png"),
 ): Promise<GroundData> {
 	const perceived = await perceiveFloor(image, description, key);
-	const { depth, guidance, stairMask } = perceived;
+	const { depth, stairMask } = perceived;
+	const outlines = await readFile(
+		imagePath(image).replace(/\.png$/, ".occluders.json"),
+		"utf8",
+	).catch((error: NodeJS.ErrnoException) => {
+		if (error.code === "ENOENT") return "[]";
+		throw error;
+	});
+	const guidance = validatedScaleGuidance(
+		perceived.guidance,
+		JSON.parse(outlines) as Occluder[],
+	);
 	const outlined = await subtractCachedObstacles(image, perceived.mask);
 	let mask = outlined;
 	let links: FloorLink[];

@@ -1,3 +1,5 @@
+import type { Occluder } from "@anima/footfall/core/occlusion/occlusion";
+import { assessScaleReference } from "@anima/footfall/derive/scaleReference";
 import { z } from "zod";
 
 /** A visible object, not an imagined adult or a runtime-clamped projection. */
@@ -14,6 +16,30 @@ export const scaleReferenceSchema = z.object({
 export type { ScaleReference } from "@anima/footfall/derive/types";
 
 import type { ScaleReference } from "@anima/footfall/derive/types";
+
+/** Use independent segmented instances to reject a box spanning unrelated props.
+ * Missing outlines are unknown evidence, so preserve the original reference. */
+export function validatedScaleGuidance<
+	T extends { scaleReference?: ScaleReference },
+>(guidance: T, objects: readonly Occluder[]): T {
+	if (!guidance.scaleReference) return guidance;
+	const assessment = assessScaleReference(
+		guidance.scaleReference,
+		objects.map((object) => ({
+			id: object.id.replace(/-(upright|flat)$/, ""),
+			label: object.label,
+			rect: {
+				x: object.bbox.x / 1920,
+				y: object.bbox.y / 1080,
+				width: object.bbox.w / 1920,
+				height: object.bbox.h / 1080,
+			},
+		})),
+	);
+	return assessment.status === "contradicted"
+		? { ...guidance, scaleReference: undefined }
+		: guidance;
+}
 
 export function calibrateGround(guidance: {
 	horizonY: number;

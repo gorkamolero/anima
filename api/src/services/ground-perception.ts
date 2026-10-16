@@ -18,7 +18,10 @@ import { mogeNormals } from "./moge.js";
 import { reserveSegmentation } from "./occluders.js";
 import { semanticCoastalScale } from "./semantic-scale.js";
 
-export const DERIVATION_VERSION = 20;
+export const DERIVATION_VERSION = 21;
+// Calibration changes reuse the same provider evidence; only changes to
+// perception itself should invalidate these expensive cached results.
+const PERCEPTION_VERSION = 20;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 export const proofRoot = resolve(ROOT, "tmp/walkqa/derivation");
 export function proofDirectory(key: string): string {
@@ -288,7 +291,7 @@ export async function perceiveFloor(
 	const out = proofDirectory(key);
 	await mkdir(out, { recursive: true });
 	await mkdir(cacheRoot, { recursive: true });
-	const cache = resolve(cacheRoot, `${hash}-floor-v${DERIVATION_VERSION}.json`);
+	const cache = resolve(cacheRoot, `${hash}-floor-v${PERCEPTION_VERSION}.json`);
 	const cached = await readFile(cache, "utf8").catch(() => null);
 	const previous =
 		cached &&
