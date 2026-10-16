@@ -1,6 +1,7 @@
 import { clearanceDistance } from "../core/characters/clearanceDistance";
 import {
 	clearanceRoute,
+	clearanceRouteQuery,
 	routeCorners,
 } from "../core/characters/clearanceRoute";
 import {
@@ -63,6 +64,14 @@ export interface MotorPlanRequest {
 	standing: Partial<Record<WalkDirection, FootPose>>;
 }
 /** The animation clock and contact anchor are the only owners of walking motion. */
+interface StanceSamples {
+	samples: (Point & { scale: number })[];
+	landing: Point;
+	end: Point & { scale: number };
+	frame: number;
+	incoming: Foot;
+}
+
 export class CharacterMotor {
 	heading: WalkDirection = "left";
 	walking = false;
@@ -87,16 +96,16 @@ export class CharacterMotor {
 	private lastStrideLength = 0;
 	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
 	private cycleValidity = new WeakMap<FootCycle, boolean>();
-	private stanceCache = new Map<
-		string,
-		{
-			samples: (Point & { scale: number })[];
-			landing: Point;
-			end: Point & { scale: number };
-			frame: number;
-			incoming: Foot;
-		}
+	private standingPoseCache = new WeakMap<
+		FootPose["cycle"],
+		Map<string, FootPose[]>
 	>();
+	private stanceCache = new Map<string, StanceSamples>();
+	private directStanceCache = new Map<
+		FootCycle,
+		Map<number, Map<number, StanceSamples>>
+	>();
+	private stanceCacheCount = { value: 0 };
 	private planDistance?: number;
 	private planComplete = false;
 	private rejectionReason = "no-entry-frame";
@@ -730,7 +739,10 @@ export class CharacterMotor {
 	}
 	/** Compare complete, physically simulated routes before admitting shorter phases. */
 	private buildPlan(options: SearchOptions = {}) {
+		this.standingPoseCache = new WeakMap();
 		this.stanceCache.clear();
+		this.directStanceCache.clear();
+		this.stanceCacheCount.value = 0;
 		this.cycleValidity = new WeakMap();
 		const alreadyAtTarget =
 			!this.animation.standing &&
@@ -779,7 +791,7 @@ export class CharacterMotor {
 				pivotStops: options.pivotStops !== false,
 				minTerminalRun: 2,
 				minFirstHeadingRun: options.pivotStops === false ? 2 : 0,
-				searchWeight: 4,
+				searchWeight: 3,
 				stopWeight: 128,
 				costScale: 2,
 				cornerRadius: 1.2,
@@ -908,6 +920,10 @@ export class CharacterMotor {
 			cache.set(key, { value, reason: this.rejectionReason });
 			return value;
 		};
+		const phaseCache = new WeakMap<
+			FootPose["cycle"],
+			Map<string, FootPose[]>
+		>();
 		const computeEntries = (
 			s: PredictedStance,
 			direction: WalkDirection,
@@ -928,54 +944,61 @@ export class CharacterMotor {
 				const same =
 					selected.cycle.name === s.pose.cycle.name &&
 					selected.flipX === s.pose.flipX;
-				const frames = same
-					? options.entryPhases
-						? [
-								...new Set([
-									s.pose.frame,
-									...(selected.cycle.matchedCut?.entryFrames ?? []),
-								]),
-							]
-						: [s.pose.frame]
-					: [
-							...(selected.cycle.matchedCut?.entryFrames ?? []),
-							...selected.cycle.switchFrames,
-						];
-				if (options.entryPhases === "all" && (!starting || options.startPhases))
-					frames.push(
-						...selected.cycle.contacts
-							.map((_, i) => i)
-							.filter((f) => !frames.includes(f)),
-					);
-				return frames
-					.filter(
-						(f) =>
-							selected.cycle.contacts[f].planted === s.foot &&
-							selected.cycle.contacts[(f + 1) % selected.cycle.contacts.length]
-								.planted === s.foot,
+				let cyclePhases = phaseCache.get(selected.cycle);
+				if (!cyclePhases) {
+					cyclePhases = new Map();
+					phaseCache.set(selected.cycle, cyclePhases);
+				}
+				const phaseKey = `${selected.flipX}:${same}:${s.pose.frame}:${s.foot}:${starting}`;
+				let phases = cyclePhases.get(phaseKey);
+				if (!phases) {
+					const frames = same
+						? options.entryPhases
+							? [
+									...new Set([
+										s.pose.frame,
+										...(selected.cycle.matchedCut?.entryFrames ?? []),
+									]),
+								]
+							: [s.pose.frame]
+						: [
+								...(selected.cycle.matchedCut?.entryFrames ?? []),
+								...selected.cycle.switchFrames,
+							];
+					if (
+						options.entryPhases === "all" &&
+						(!starting || options.startPhases)
 					)
-					.map((frame) => ({ ...selected, frame, firstStance: starting }))
-					.filter(
-						(p) =>
-							(stopping ||
-								this.validFacing(
-									p,
-									s.anchor,
-									s.foot,
-									s.scale,
-									direction,
-									30,
-								)) &&
-							(!starting ||
-								this.canStand(
-									p,
-									s.anchor,
-									s.foot,
-									s.scale,
-									this.startingFloor(),
-								)) &&
-							(stopping || !!predict(p, s)),
-					);
+						frames.push(
+							...selected.cycle.contacts
+								.map((_, i) => i)
+								.filter((f) => !frames.includes(f)),
+						);
+					phases = frames
+						.filter(
+							(f) =>
+								selected.cycle.contacts[f].planted === s.foot &&
+								selected.cycle.contacts[
+									(f + 1) % selected.cycle.contacts.length
+								].planted === s.foot,
+						)
+						.map((frame) => ({ ...selected, frame, firstStance: starting }));
+					cyclePhases.set(phaseKey, phases);
+				}
+				return phases.filter(
+					(p) =>
+						(stopping ||
+							this.validFacing(p, s.anchor, s.foot, s.scale, direction, 30)) &&
+						(!starting ||
+							this.canStand(
+								p,
+								s.anchor,
+								s.foot,
+								s.scale,
+								this.startingFloor(),
+							)) &&
+						(stopping || !!predict(p, s)),
+				);
 			};
 			const pose = entry();
 			if (!pose.length) count(stopping ? "stop-entry" : "entry");
@@ -1103,6 +1126,9 @@ export class CharacterMotor {
 			NonNullable<ReturnType<CharacterMotor["nextExit"]>>
 		>();
 		const routeBudgetCache = new Map<string, number>();
+		const qualityRoute = clearanceRouteQuery(
+			this.area.clearanceMask ?? this.area.mask,
+		);
 		const qualityInitial = {
 			pose: this.pose,
 			foot: this.foot,
@@ -1125,7 +1151,10 @@ export class CharacterMotor {
 				...this.animation,
 				show() {},
 			});
+			trial.standingPoseCache = this.standingPoseCache;
 			trial.stanceCache = this.stanceCache;
+			trial.directStanceCache = this.directStanceCache;
+			trial.stanceCacheCount = this.stanceCacheCount;
 			trial.cycleValidity = this.cycleValidity;
 			trial.pose = qualityInitial.pose;
 			trial.foot = qualityInitial.foot;
@@ -1135,28 +1164,171 @@ export class CharacterMotor {
 			trial.goal = this.goal;
 			return trial;
 		};
-		const startLimits = new WeakMap<PredictedStance, Map<string, number>>();
-		const qualityReasons = new Map<string, number>();
-		const quality = (steps: PlannedStep<PredictedStance, FootPose>[]) => {
+		const startLimits = new WeakMap<PredictedStance, Map<string, boolean>>();
+		const initialStarts = starts(initial);
+		const captureInside = (
+			state: PredictedStance,
+			pose: FootPose,
+			heading: WalkDirection,
+		) => {
+			let limits = startLimits.get(state);
+			if (!limits) {
+				limits = new Map();
+				startLimits.set(state, limits);
+			}
+			// First capture is at 1/24s; a drawn pivot/settle lasts 2/24s.
+			// Its position is independent of the following walking entry phase.
+			const idle = this.animation.standing?.(heading);
+			const closedFormSettle =
+				idle &&
+				!this.area.perspective.residual?.length &&
+				(this.area.perspective.constant !== undefined ||
+					1 +
+						this.area.baseScale *
+							this.area.perspective.slope *
+							(idle.cycle.contacts[idle.frame][state.foot].y -
+								idle.cycle.frameHeight) >
+						0);
+			const key = state.pivot
+				? "pivot"
+				: closedFormSettle && idle.cycle.settleFrames?.length
+					? `settle:${heading}`
+					: `${poseKey(pose)}:${heading}`;
+			const saved = limits.get(key);
+			if (saved !== undefined) {
+				if (saved) hasInteriorStart = true;
+				return saved;
+			}
 			const trial = makeTrial();
-			trial.planned = steps.map((step) => ({
+			trial.foot = state.foot;
+			trial.anchor = { ...state.anchor };
+			trial.planned = [
+				{
+					state: { ...state },
+					pose,
+					heading,
+					stop: false,
+					slide: { x: 0, y: 0 },
+				},
+			];
+			trial.beginWalk();
+			for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
+			const inside = !!mask.data[cellAt(mask, trial.target)];
+			limits.set(key, inside);
+			if (inside) hasInteriorStart = true;
+			return inside;
+		};
+		let hasInteriorStart: boolean | undefined;
+		const qualityReasons = new Map<string, number>();
+		const qualityIds = new WeakMap<object, number>();
+		let nextQualityId = 0;
+		const qualityId = (value: object) => {
+			let id = qualityIds.get(value);
+			if (id === undefined) {
+				id = ++nextQualityId;
+				qualityIds.set(value, id);
+			}
+			return id;
+		};
+		const qualityCache = new Map<string, { clean: boolean; issues: string }>();
+		type QualityStance = {
+			key: string;
+			first: Point;
+			last: Point;
+			heading: WalkDirection;
+		};
+		const copyTrial = (source: CharacterMotor) => {
+			const copy = makeTrial();
+			copy.target.setPosition(source.target.x, source.target.y);
+			copy.pose = source.pose;
+			copy.foot = source.foot;
+			copy.anchor = { ...source.anchor };
+			copy.scale = source.scale;
+			copy.heading = source.heading;
+			copy.walking = source.walking;
+			copy.elapsed = source.elapsed;
+			copy.frameMs = source.frameMs;
+			copy.lastStrideLength = source.lastStrideLength;
+			copy.unmatchedCut = source.unmatchedCut;
+			copy.arrival = source.arrival;
+			copy.lastCut = source.lastCut;
+			copy.absorption = source.absorption && {
+				...source.absorption,
+				delta: { ...source.absorption.delta },
+			};
+			copy.transition = source.transition && { ...source.transition };
+			copy.drawn = source.drawn && {
+				...source.drawn,
+				poses: [...source.drawn.poses],
+			};
+			return copy;
+		};
+		const prefixes = new Map<
+			string,
+			{
+				trial: CharacterMotor;
+				consumed: number;
+				frame: number;
+				runs: { heading: WalkDirection; count: number }[];
+				stance?: QualityStance;
+				stances: number;
+				bad: number;
+				first?: Point;
+				last?: Point;
+			}
+		>();
+		const quality = (steps: PlannedStep<PredictedStance, FootPose>[]) => {
+			// Search nodes are immutable. Include every playback field and exact
+			// state/cycle identity; only identical complete candidates share results.
+			const stepSignatures = steps.map(
+				(step) =>
+					`${qualityId(step.state)}:${qualityId(step.pose.cycle)}:${poseKey(step.pose)}:${step.heading}:${step.arrivalHeading}:${step.stop}:${step.slide.x}:${step.slide.y}`,
+			);
+			const prefixKeys: string[] = [];
+			for (const signature of stepSignatures)
+				prefixKeys.push(
+					prefixKeys.length
+						? `${prefixKeys[prefixKeys.length - 1]};${signature}`
+						: signature,
+				);
+			const signature = prefixKeys[prefixKeys.length - 1] ?? "";
+			const saved = qualityCache.get(signature);
+			if (saved) {
+				if (!saved.clean)
+					qualityReasons.set(
+						saved.issues,
+						(qualityReasons.get(saved.issues) ?? 0) + 1,
+					);
+				return { clean: saved.clean };
+			}
+			let checkpoint:
+				| (typeof prefixes extends Map<string, infer V> ? V : never)
+				| undefined;
+			for (let i = prefixKeys.length - 1; i >= 0; i--) {
+				checkpoint = prefixes.get(prefixKeys[i]);
+				if (checkpoint) break;
+			}
+			const trial = checkpoint ? copyTrial(checkpoint.trial) : makeTrial();
+			trial.planned = steps.slice(checkpoint?.consumed ?? 0).map((step) => ({
 				...step,
 				state: { ...step.state },
 				slide: { ...step.slide },
 			}));
 			const start = trial.planned[0]?.state;
-			if (start) {
+			if (start && !checkpoint) {
 				trial.foot = start.foot;
 				trial.anchor = { ...start.anchor };
 			}
-			trial.beginWalk();
-			const runs: { heading: WalkDirection; count: number }[] = [];
-			let stance:
-				| { key: string; first: Point; last: Point; heading: WalkDirection }
-				| undefined;
-			let stances = 0,
-				bad = 0;
-			let first: Point | undefined, last: Point | undefined;
+			if (!checkpoint) trial.beginWalk();
+			const runs = checkpoint?.runs.map((run) => ({ ...run })) ?? [];
+			let stance: QualityStance | undefined = checkpoint?.stance && {
+				...checkpoint.stance,
+			};
+			let stances = checkpoint?.stances ?? 0,
+				bad = checkpoint?.bad ?? 0;
+			let first = checkpoint?.first,
+				last = checkpoint?.last;
+			let consumed = checkpoint?.consumed ?? 0;
 			const finish = () => {
 				if (
 					!stance ||
@@ -1180,19 +1352,54 @@ export class CharacterMotor {
 				if (run?.heading === stance.heading) run.count++;
 				else runs.push({ heading: stance.heading, count: 1 });
 			};
-			for (let frame = 0; trial.walking && frame < 2400; frame++) {
+			for (
+				let frame = checkpoint ? checkpoint.frame + 1 : 0;
+				trial.walking && frame < 2400;
+				frame++
+			) {
 				for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
 				if (!trial.walking) break;
 				const position = { x: trial.target.x, y: trial.target.y };
 				first ??= position;
 				last = position;
-				if (trial.transition || trial.drawn) continue;
-				const key = `${trial.heading}:${trial.foot}:${trial.anchor.x.toFixed(3)}:${trial.anchor.y.toFixed(3)}`;
-				const ground = trial.groundPoint(position);
-				if (stance?.key !== key) {
-					finish();
-					stance = { key, first: ground, last: ground, heading: trial.heading };
-				} else stance.last = ground;
+				if (!trial.transition && !trial.drawn) {
+					const key = `${trial.heading}:${trial.foot}:${trial.anchor.x.toFixed(3)}:${trial.anchor.y.toFixed(3)}`;
+					const ground = trial.groundPoint(position);
+					if (stance?.key !== key) {
+						finish();
+						stance = {
+							key,
+							first: ground,
+							last: ground,
+							heading: trial.heading,
+						};
+					} else stance.last = ground;
+				}
+				const nextConsumed = steps.length - trial.planned.length;
+				// planStance reads one following step for stride length. Include that
+				// lookahead in the exact key before sharing any capture-clock state.
+				if (
+					nextConsumed !== consumed &&
+					nextConsumed >= 2 &&
+					trial.planned.length >= 2
+				) {
+					const key = prefixKeys[nextConsumed];
+					if (!prefixes.has(key)) {
+						if (prefixes.size >= 2048) prefixes.clear();
+						prefixes.set(key, {
+							trial: copyTrial(trial),
+							consumed: nextConsumed,
+							frame,
+							runs: runs.map((run) => ({ ...run })),
+							stance: stance && { ...stance },
+							stances,
+							bad,
+							first,
+							last,
+						});
+					}
+				}
+				consumed = nextConsumed;
 			}
 			finish();
 			const mask = this.area.clearanceMask ?? this.area.mask;
@@ -1204,13 +1411,7 @@ export class CharacterMotor {
 					last &&
 					mask.data[cellAt(mask, first)] &&
 					mask.data[cellAt(mask, last)]
-						? routeCorners(
-								clearanceRoute(
-									this.area.clearanceMask ?? this.area.mask,
-									first,
-									last,
-								),
-							).length
+						? routeCorners(qualityRoute(first, last)).length
 						: 0;
 				routeBudgetCache.set(cornerKey, corners);
 			}
@@ -1245,6 +1446,8 @@ export class CharacterMotor {
 			if (!clean) {
 				qualityReasons.set(issues, (qualityReasons.get(issues) ?? 0) + 1);
 			}
+			if (qualityCache.size >= 8192) qualityCache.clear();
+			qualityCache.set(signature, { clean, issues });
 			return { clean };
 		};
 		const result = planFootsteps<PredictedStance, FootPose>(
@@ -1252,40 +1455,21 @@ export class CharacterMotor {
 			initial,
 			{
 				startTurnLimit: (state, pose, heading) => {
-					let limits = startLimits.get(state);
-					if (!limits) {
-						limits = new Map();
-						startLimits.set(state, limits);
-					}
-					const key = `${poseKey(pose)}:${heading}`;
-					const saved = limits.get(key);
-					if (saved !== undefined) return saved;
-					const trial = makeTrial();
-					trial.foot = state.foot;
-					trial.anchor = { ...state.anchor };
-					trial.planned = [
-						{
-							state: { ...state },
-							pose,
-							heading,
-							stop: false,
-							slide: { x: 0, y: 0 },
-						},
-					];
-					trial.beginWalk();
-					for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
-					// A safely placed body must not pivot outside clearance on its
-					// first captured pose. Boundary entrances retain their allowance.
-					const limit = mask.data[cellAt(mask, trial.target)]
-						? (options.maxHeadingChanges ?? Infinity)
-						: mask.data[cellAt(mask, qualityInitial.position)]
-							? -1
-							: 2;
-					limits.set(key, limit);
-					return limit;
+					if (captureInside(state, pose, heading))
+						return options.maxHeadingChanges ?? Infinity;
+					if (!mask.data[cellAt(mask, qualityInitial.position)]) return 2;
+					// Prefer starts whose first drawing is inside the routing mask.
+					// If every physically valid start falls outside it, retain the
+					// verifier's zero-corner budget rather than rejecting all motion.
+					hasInteriorStart ??= [initial, ...initialStarts].some((s) =>
+						GROUND_SECTORS.some((h) =>
+							entries(s, h, true).some((p) => captureInside(s, p, h)),
+						),
+					);
+					return hasInteriorStart ? -1 : 2;
 				},
 				acceptPlan: (steps) => quality(steps).clean,
-				starts,
+				starts: (state) => (state === initial ? initialStarts : starts(state)),
 				offset: (s, slide) => ({
 					...s,
 					anchor: { x: s.anchor.x + slide.x, y: s.anchor.y + slide.y },
@@ -1589,21 +1773,30 @@ export class CharacterMotor {
 	): boolean {
 		this.rejectionReason = "settle-does-not-fit";
 		if (!this.animation.standing) return true;
-		const direction = GROUND_SECTORS.find((d) => {
-			const selected = this.animation.select(d);
-			return (
-				selected.cycle.name === pose.cycle.name && selected.flipX === pose.flipX
-			);
-		});
-		if (!direction) return true;
-		const idle = this.animation.standing(direction);
-		if (!idle) return true;
-		const poses = (
-			standingOnly ? [idle.frame] : (idle.cycle.settleFrames ?? [idle.frame])
-		).map((frame) => ({
-			...idle,
-			frame,
-		}));
+		let byCycle = this.standingPoseCache.get(pose.cycle);
+		if (!byCycle) {
+			byCycle = new Map();
+			this.standingPoseCache.set(pose.cycle, byCycle);
+		}
+		const key = `${pose.flipX}:${standingOnly}`;
+		let poses = byCycle.get(key);
+		if (!poses) {
+			const direction = GROUND_SECTORS.find((d) => {
+				const selected = this.animation.select(d);
+				return (
+					selected.cycle.name === pose.cycle.name &&
+					selected.flipX === pose.flipX
+				);
+			});
+			const idle = direction && this.animation.standing(direction);
+			poses = idle
+				? (standingOnly
+						? [idle.frame]
+						: (idle.cycle.settleFrames ?? [idle.frame])
+					).map((frame) => ({ ...idle, frame }))
+				: [];
+			byCycle.set(key, poses);
+		}
 		let previous: Point | undefined;
 		return poses.every((rest) => {
 			const placed = lockedPlacement(
@@ -1715,8 +1908,14 @@ export class CharacterMotor {
 	) {
 		const lateral = Boolean(this.area.perspective.residual?.length);
 		const originX = lateral ? anchor.x : 0;
-		const key = `${pose.cycle.name}:${pose.flipX}:${pose.frame}:${foot}:${originX}:${anchor.y}:${lateral ? scale : 0}`;
-		const cached = this.stanceCache.get(key);
+		const key = lateral
+			? `${pose.cycle.name}:${pose.flipX}:${pose.frame}:${foot}:${originX}:${anchor.y}:${scale}`
+			: "";
+		const phase =
+			pose.frame * 4 + (pose.flipX ? 2 : 0) + (foot === "R" ? 1 : 0);
+		let phases = this.directStanceCache.get(pose.cycle);
+		let depths = phases?.get(phase);
+		const cached = lateral ? this.stanceCache.get(key) : depths?.get(anchor.y);
 		if (cached) return cached;
 		let valid = this.cycleValidity.get(pose.cycle);
 		if (valid === undefined) {
@@ -1755,7 +1954,27 @@ export class CharacterMotor {
 					scale,
 				);
 				const result = { samples, landing, end, frame, incoming };
-				if (this.stanceCache.size < 12000) this.stanceCache.set(key, result);
+				// Keep caching later search depths once the bounded working set fills.
+				if (this.stanceCacheCount.value >= 12000) {
+					this.stanceCache.clear();
+					this.directStanceCache.clear();
+					this.stanceCacheCount.value = 0;
+					phases = undefined;
+					depths = undefined;
+				}
+				if (lateral) this.stanceCache.set(key, result);
+				else {
+					if (!phases) {
+						phases = new Map();
+						this.directStanceCache.set(pose.cycle, phases);
+					}
+					if (!depths) {
+						depths = new Map();
+						phases.set(phase, depths);
+					}
+					depths.set(anchor.y, result);
+				}
+				this.stanceCacheCount.value++;
 				return result;
 			}
 			current.frame = frame;

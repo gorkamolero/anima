@@ -10,6 +10,15 @@ export function clearanceRoute(
 	start: Point,
 	target: Point,
 ): Point[] {
+	return clearanceRouteQuery(mask)(start, target);
+}
+
+/** Reuse deterministic Dijkstra frontiers within one click. The mask must remain
+ * unchanged for the query's lifetime. Settled parents and tie order are identical
+ * to independent queries; neither routes nor quality thresholds are approximated. */
+export function clearanceRouteQuery(
+	mask: FloorMask,
+): (start: Point, target: Point) => Point[] {
 	const { width: w, height: h, data } = mask;
 	const valid = (x: number, y: number) =>
 		x >= 0 && y >= 0 && x < w && y < h && data[y * w + x] > 0;
@@ -17,93 +26,108 @@ export function clearanceRoute(
 		const i = cellAt(mask, p);
 		return i >= 0 && data[i] ? i : nearestCell(mask, p);
 	};
-	const a = cell(start),
-		b = cell(target);
-	if (a < 0 || b < 0) return [];
-	const dist = new Float64Array(w * h).fill(Infinity),
-		prev = new Int32Array(w * h).fill(-1);
-	type Entry = { i: number; d: number };
-	const heap: Entry[] = [];
-	const less = (a: Entry, b: Entry) =>
-		a.d !== b.d
-			? a.d < b.d
-			: a.i % w !== b.i % w
-				? a.i % w < b.i % w
-				: a.i < b.i;
-	const push = (v: Entry) => {
-		let i = heap.length;
-		heap.push(v);
-		while (i) {
-			const p = (i - 1) >> 1;
-			if (!less(v, heap[p])) break;
-			heap[i] = heap[p];
-			i = p;
-		}
-		heap[i] = v;
-	};
-	const pop = () => {
-		const first = heap[0],
-			last = heap.pop();
-		if (heap.length && last) {
-			let i = 0;
-			while (2 * i + 1 < heap.length) {
-				let c = 2 * i + 1;
-				if (c + 1 < heap.length && less(heap[c + 1], heap[c])) c++;
-				if (!less(heap[c], last)) break;
-				heap[i] = heap[c];
-				i = c;
+
+	const build = (a: number) => {
+		const settled = new Uint8Array(w * h);
+		const dist = new Float64Array(w * h).fill(Infinity),
+			prev = new Int32Array(w * h).fill(-1);
+		type Entry = { i: number; d: number };
+		const heap: Entry[] = [];
+		const less = (a: Entry, b: Entry) =>
+			a.d !== b.d
+				? a.d < b.d
+				: a.i % w !== b.i % w
+					? a.i % w < b.i % w
+					: a.i < b.i;
+		const push = (v: Entry) => {
+			let i = heap.length;
+			heap.push(v);
+			while (i) {
+				const p = (i - 1) >> 1;
+				if (!less(v, heap[p])) break;
+				heap[i] = heap[p];
+				i = p;
 			}
-			heap[i] = last;
-		}
-		return first;
-	};
-	dist[a] = 0;
-	push({ i: a, d: 0 });
-	while (heap.length) {
-		const { i, d } = pop();
-		if (d !== dist[i]) continue;
-		if (i === b) break;
-		const x = i % w,
-			y = Math.floor(i / w);
-		for (let dx = -1; dx <= 1; dx++)
-			for (let dy = -1; dy <= 1; dy++) {
-				if ((!dx && !dy) || !valid(x + dx, y + dy)) continue;
-				const j = (y + dy) * w + x + dx,
-					// biome-ignore lint/suspicious/noApproximativeNumericConstant: match reviewer grid cost
-					nd = d + (dx && dy ? 1.4142 : 1);
-				if (nd < dist[j]) {
-					dist[j] = nd;
-					prev[j] = i;
-					push({ i: j, d: nd });
+			heap[i] = v;
+		};
+		const pop = () => {
+			const first = heap[0],
+				last = heap.pop();
+			if (heap.length && last) {
+				let i = 0;
+				while (2 * i + 1 < heap.length) {
+					let c = 2 * i + 1;
+					if (c + 1 < heap.length && less(heap[c + 1], heap[c])) c++;
+					if (!less(heap[c], last)) break;
+					heap[i] = heap[c];
+					i = c;
 				}
+				heap[i] = last;
 			}
-	}
-	if (a !== b && prev[b] < 0) return [cellPoint(mask, a)];
-	const path: number[] = [];
-	for (let i = b; i >= 0; i = prev[i]) path.push(i);
-	path.reverse();
-	// Python round uses ties-to-even at exact half cells.
-	const round = (n: number) =>
-		n - Math.floor(n) === 0.5 ? 2 * Math.round(n / 2) : Math.round(n);
-	const los = (p: number, q: number) => {
-		const x = p % w,
-			y = Math.floor(p / w),
-			dx = (q % w) - x,
-			dy = Math.floor(q / w) - y,
-			n = Math.max(Math.abs(dx), Math.abs(dy), 1);
-		for (let k = 0; k <= n; k++)
-			if (!valid(round(x + (dx * k) / n), round(y + (dy * k) / n)))
-				return false;
-		return true;
+			return first;
+		};
+		dist[a] = 0;
+		push({ i: a, d: 0 });
+		return (b: number) => {
+			while (heap.length && !settled[b]) {
+				const { i, d } = pop();
+				if (d !== dist[i]) continue;
+				settled[i] = 1;
+				const x = i % w,
+					y = Math.floor(i / w);
+				for (let dx = -1; dx <= 1; dx++)
+					for (let dy = -1; dy <= 1; dy++) {
+						if ((!dx && !dy) || !valid(x + dx, y + dy)) continue;
+						const j = (y + dy) * w + x + dx,
+							// biome-ignore lint/suspicious/noApproximativeNumericConstant: match reviewer grid cost
+							nd = d + (dx && dy ? 1.4142 : 1);
+						if (nd < dist[j]) {
+							dist[j] = nd;
+							prev[j] = i;
+							push({ i: j, d: nd });
+						}
+					}
+			}
+			if (a !== b && prev[b] < 0) return [cellPoint(mask, a)];
+			const path: number[] = [];
+			for (let i = b; i >= 0; i = prev[i]) path.push(i);
+			path.reverse();
+			// Python round uses ties-to-even at exact half cells.
+			const round = (n: number) =>
+				n - Math.floor(n) === 0.5 ? 2 * Math.round(n / 2) : Math.round(n);
+			const los = (p: number, q: number) => {
+				const x = p % w,
+					y = Math.floor(p / w),
+					dx = (q % w) - x,
+					dy = Math.floor(q / w) - y,
+					n = Math.max(Math.abs(dx), Math.abs(dy), 1);
+				for (let k = 0; k <= n; k++)
+					if (!valid(round(x + (dx * k) / n), round(y + (dy * k) / n)))
+						return false;
+				return true;
+			};
+			const out = [path[0]];
+			for (let i = 0; i < path.length - 1; ) {
+				let j = path.length - 1;
+				while (j > i + 1 && !los(path[i], path[j])) j--;
+				out.push(path[j]);
+				i = j;
+			}
+			return out.map((i) => cellPoint(mask, i));
+		};
 	};
-	const out = [path[0]];
-	for (let i = 0; i < path.length - 1; ) {
-		let j = path.length - 1;
-		while (j > i + 1 && !los(path[i], path[j])) j--;
-		out.push(path[j]);
-		i = j;
-	}
-	return out.map((i) => cellPoint(mask, i));
+	const searches = new Map<number, (b: number) => Point[]>();
+	return (start, target) => {
+		const a = cell(start),
+			b = cell(target);
+		if (a < 0 || b < 0) return [];
+		let search = searches.get(a);
+		if (!search) {
+			search = build(a);
+			searches.set(a, search);
+		}
+		return search(b);
+	};
 }
 
 export function routeCorners(route: readonly Point[]): Point[] {
