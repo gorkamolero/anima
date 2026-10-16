@@ -831,6 +831,9 @@ export class CharacterMotor {
 			8000,
 			Math.max(1600, Math.ceil(825 * directSpan)) +
 				Math.ceil(800 * Math.max(0, lateralSpan - directSpan)) +
+				// Each obstacle turn introduces another family of entry/stop phases.
+				// A mostly vertical detour has little lateral span to fund that work.
+				400 * routeCorners(route).length +
 				Math.ceil(
 					9 *
 						Math.max(
@@ -857,6 +860,7 @@ export class CharacterMotor {
 				costScale: 2,
 				cornerRadius: 1.2,
 				nodeBudget,
+				nearGoalNodeBudget: Math.min(8000, Math.ceil(nodeBudget * 1.25)),
 				resolution: 0.005,
 				...options,
 			},

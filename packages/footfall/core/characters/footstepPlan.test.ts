@@ -156,6 +156,27 @@ describe("state-lattice A*", () => {
 		expect(result.stats.reason).toBe("time-budget");
 		expect(result.stats.expanded).toBeLessThanOrEqual(5);
 	});
+	it("uses a bounded reserve to finish a nearby valid stop", () => {
+		const options = { firstArrival: true, nodeBudget: 2, now: () => 0 };
+		const target = { x: 0.6, y: 0 };
+		const partial = search(target, 0.3, () => true, options);
+		const finished = search(target, 0.3, () => true, {
+			...options,
+			nearGoalNodeBudget: 4,
+		});
+		expect(partial.complete).toBe(false);
+		expect(finished.complete).toBe(true);
+		expect(finished.stats.expanded).toBeLessThanOrEqual(4);
+	});
+	it("does not spend the near-goal reserve on a distant target", () => {
+		const result = search({ x: 10, y: 0 }, 0.3, () => true, {
+			firstArrival: true,
+			nodeBudget: 1,
+			nearGoalNodeBudget: 4,
+		});
+		expect(result.complete).toBe(false);
+		expect(result.stats.expanded).toBe(1);
+	});
 });
 
 it("searches both grounded starting supports even when the first has a safe partial stop", () => {

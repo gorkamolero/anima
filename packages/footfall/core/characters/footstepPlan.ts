@@ -111,6 +111,8 @@ export interface SearchOptions {
 	/** Preserve the complete click's route rules across a grounded restart. */
 	initialRoute?: RouteState;
 	nodeBudget?: number;
+	/** Extra bounded work for an incomplete arrival already within one stride. */
+	nearGoalNodeBudget?: number;
 	timeBudgetMs?: number;
 	/** Maximum path cost, including turns and the exit edge. */
 	costBound?: number;
@@ -490,7 +492,14 @@ export function planFootsteps<State, Pose>(
 			reason = best?.complete ? "complete" : "nearest-reachable";
 			break;
 		}
-		if (expanded >= (options.nodeBudget ?? 12000)) {
+		const activeBudget =
+			options.firstArrival &&
+			best &&
+			!best.complete &&
+			best.distance <= maxStride
+				? Math.max(options.nodeBudget ?? 12000, options.nearGoalNodeBudget ?? 0)
+				: (options.nodeBudget ?? 12000);
+		if (expanded >= activeBudget) {
 			reason = "node-budget";
 			break;
 		}
