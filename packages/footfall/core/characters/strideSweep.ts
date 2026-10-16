@@ -40,6 +40,10 @@ export function strideSweep(
 		freeObjects.set(objects, free);
 	}
 	const on = (m: FloorMask, p: Point) => m.data[cellAt(m, p)] > 0;
+	// A fully supported sole-only sweep needs no metric gap calculation.
+	// Preserve object exclusion even when raw floor includes the prop pixels.
+	if (!body.length && stanceSweep(raw, soles[0], soles[1]))
+		return !free || stanceSweep(free, soles[0], soles[1]);
 	const ground = (p: Point) => {
 		if (area.perspective.constant === undefined)
 			return toMetres(area.perspective, p);

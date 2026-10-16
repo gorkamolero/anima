@@ -106,3 +106,16 @@ it.each([
 		),
 	).toBe(accepted);
 });
+
+it("keeps object and boundary exclusions on fully supported sole-only sweeps", () => {
+	const area = fixture(0);
+	expect(strideSweep(area, soles, [])).toBe(true);
+	area.objectFootprints = {
+		...area.mask,
+		data: area.mask.data.map((_, i) => (i === 900 ? 1 : 0)),
+	};
+	expect(strideSweep(area, soles, [])).toBe(false);
+	expect(strideSweep(fixture(0), [{ x: -1, y: 800 }, soles[1]], [])).toBe(
+		false,
+	);
+});
