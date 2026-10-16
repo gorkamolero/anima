@@ -178,6 +178,34 @@ class Heap<T extends { priority: number }> {
 	}
 }
 
+/** Share one bounded search between normal route cost and a turn-neutral queue.
+ * Diversify only while no moving finish exists; each state is expanded once.
+ * Real route costs and acceptance constraints are unchanged. */
+class BalancedFrontier<T extends { priority: number; queuedTurnCost: number }> {
+	private queues = [
+		new Heap<{ priority: number; node: T }>(),
+		new Heap<{ priority: number; node: T }>(),
+	];
+	private visited = new WeakSet<T>();
+	private turn = 0;
+	constructor(private diversify: () => boolean) {}
+	push(node: T) {
+		this.queues[0].push({ priority: node.priority, node });
+		this.queues[1].push({
+			priority: node.priority - node.queuedTurnCost,
+			node,
+		});
+	}
+	pop(): T | undefined {
+		const queue = this.queues[this.diversify() ? this.turn++ % 2 : 0];
+		for (let entry = queue.pop(); entry; entry = queue.pop()) {
+			if (this.visited.has(entry.node)) continue;
+			this.visited.add(entry.node);
+			return entry.node;
+		}
+	}
+}
+
 /** A bounded frontier for starts outside routing clearance. Evaluate diverse
  * short prefixes before allowing one low-priority family to spend the budget.
  * This schedules the same search edges; it never retries a completed search. */
@@ -292,6 +320,7 @@ export function planFootsteps<State, Pose>(
 		return d + (weight - 1) * Math.max(0, d - (costBound - g));
 	};
 	type Node = {
+		queuedTurnCost: number;
 		changeLimit: number;
 		lastSupport?: string;
 		lastCounted?: boolean;
@@ -335,13 +364,18 @@ export function planFootsteps<State, Pose>(
 						if (node.g === costs.get(node.key)) costs.delete(node.key);
 					},
 				)
-			: new Heap<Node>();
+			: (options.searchWeight ?? 1) > 1
+				? new BalancedFrontier<Node>(
+						() => expanded >= (options.nodeBudget ?? 12000) / 8 && !best,
+					)
+				: new Heap<Node>();
 	const start: Node = {
 		changeLimit: options.maxHeadingChanges ?? Infinity,
 		sinceRest: options.minRestartRun ?? 0,
 		stances: 0,
 		origin: initial,
 		state: initial,
+		queuedTurnCost: 0,
 		g: 0,
 		f: heuristic(sim.position(initial)),
 		priority: (options.searchWeight ?? 1) * heuristic(sim.position(initial)),
@@ -760,6 +794,7 @@ export function planFootsteps<State, Pose>(
 							if (g >= (costs.get(k) ?? Infinity)) continue;
 							costs.set(k, g);
 							open.push({
+								queuedTurnCost: node.queuedTurnCost + turnPenalty,
 								state: standing,
 								origin: node.origin,
 								sinceRest: 0,
@@ -855,6 +890,7 @@ export function planFootsteps<State, Pose>(
 				}
 				costs.set(nextKey, g);
 				open.push({
+					queuedTurnCost: node.queuedTurnCost + turnPenalty,
 					changeLimit: captureLimit,
 					sinceRest: node.sinceRest + (counted ? 1 : 0),
 					stances: node.stances + (counted ? 1 : 0),

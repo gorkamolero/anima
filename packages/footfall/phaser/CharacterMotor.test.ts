@@ -85,7 +85,7 @@ function setup(standing = false, drawn = false) {
 	};
 }
 describe("contact motor", () => {
-	it("holds reverse starts for two ticks but advances stopping drawings every tick", async () => {
+	it("advances reverse starts and stopping drawings every tick on the locked boot", async () => {
 		const { motor, cycle, target, pose } = setup(true, true);
 		cycle.matchedCut = {
 			standing: "standing",
@@ -104,7 +104,7 @@ describe("contact motor", () => {
 			expect(p.x).toBeCloseTo(anchor.x, 9);
 			expect(p.y).toBeCloseTo(anchor.y, 9);
 		};
-		for (const expected of [0, 1, 1, 2, 2]) {
+		for (const expected of [1, 2]) {
 			motor.update(1000 / 24);
 			expect(pose().cycle.name).toBe("standing");
 			expect(pose().frame).toBe(expected);

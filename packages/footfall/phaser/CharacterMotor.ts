@@ -1185,8 +1185,8 @@ export class CharacterMotor {
 				limits = new Map();
 				startLimits.set(state, limits);
 			}
-			// First capture is at 1/24s; a drawn pivot/settle lasts 2/24s.
-			// Its position is independent of the following walking entry phase.
+			// At the first capture a pivot may already resume the reverse start.
+			// Only a via-pose keeps that sample independent of the next heading.
 			const idle = this.animation.standing?.(heading);
 			const closedFormSettle =
 				idle &&
@@ -1198,14 +1198,13 @@ export class CharacterMotor {
 							(idle.cycle.contacts[idle.frame][state.foot].y -
 								idle.cycle.frameHeight) >
 						0);
-			const key = state.pivot
-				? "pivot"
+			const key = state.pivot?.via
+				? "pivot-via"
 				: closedFormSettle && idle.cycle.settleFrames?.length
 					? `settle:${heading}`
 					: `${poseKey(pose)}:${heading}`;
 			const saved = limits.get(key);
 			if (saved !== undefined) {
-				if (saved) hasInteriorStart = true;
 				return saved;
 			}
 			const trial = makeTrial();
@@ -1224,10 +1223,8 @@ export class CharacterMotor {
 			for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
 			const inside = !!mask.data[cellAt(mask, trial.target)];
 			limits.set(key, inside);
-			if (inside) hasInteriorStart = true;
 			return inside;
 		};
-		let hasInteriorStart: boolean | undefined;
 		const qualityReasons = new Map<string, number>();
 		const qualityIds = new WeakMap<object, number>();
 		let nextQualityId = 0;
@@ -1510,16 +1507,10 @@ export class CharacterMotor {
 				startTurnLimit: (state, pose, heading) => {
 					if (captureInside(state, pose, heading))
 						return options.maxHeadingChanges ?? Infinity;
-					if (!mask.data[cellAt(mask, qualityInitial.position)]) return 2;
-					// Prefer starts whose first drawing is inside the routing mask.
-					// If every physically valid start falls outside it, retain the
-					// verifier's zero-corner budget rather than rejecting all motion.
-					hasInteriorStart ??= [initial, ...initialStarts].some((s) =>
-						GROUND_SECTORS.some((h) =>
-							entries(s, h, true).some((p) => captureInside(s, p, h)),
-						),
-					);
-					return hasInteriorStart ? -1 : 2;
+					// A boundary drawing has the verifier's zero-corner budget.
+					// Do not discard its valid route just because another start
+					// draws inside clearance; full playback still validates facing.
+					return 2;
 				},
 				acceptPlan: (steps) => assess(steps).clean,
 				finishRank: (steps) => assess(steps).maxJumpSquared,
@@ -2224,11 +2215,7 @@ export class CharacterMotor {
 		this.elapsed += delta;
 		if (this.drawn) {
 			// Never skip a drawn pose even if the caller advances a large time step.
-			if (
-				this.elapsed + 1e-8 <
-				(this.drawn.resume || this.drawn.resumeStart ? 2000 : 1000) / 24
-			)
-				return;
+			if (this.elapsed + 1e-8 < 1000 / 24) return;
 			this.elapsed = 0;
 			const d = this.drawn;
 			const next = d.poses.shift();
