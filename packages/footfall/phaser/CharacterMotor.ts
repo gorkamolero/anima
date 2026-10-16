@@ -1623,6 +1623,65 @@ export class CharacterMotor {
 			},
 			options,
 		);
+		// Refine only the drawings of intermediate stops, retaining their exact
+		// settled support and every subsequent route edge. This is not a search
+		// retry: full playback must remain clean and its worst jump must shrink.
+		let selectedQuality: ReturnType<typeof quality> | undefined;
+		for (let i = 1; i + 1 < result.steps.length; i++) {
+			const step = result.steps[i];
+			if (!step.stop || step.pose.firstStance || step.slide.x || step.slide.y)
+				continue;
+			const originalExit = exitFor(step.pose, step.state, step.heading);
+			if (!originalExit) continue;
+			const entryJump = (pose: FootPose) => {
+				const p = lockedPlacement(
+					step.state.anchor,
+					pose,
+					step.state.foot,
+					this.area.perspective,
+					this.area.baseScale,
+					this.area.scaleClamp,
+					step.state.scale,
+				);
+				const dx = p.x - step.state.end.x,
+					dy = p.y - step.state.end.y;
+				return dx * dx + dy * dy;
+			};
+			const originalJump = entryJump(step.pose);
+			for (const pose of entries(step.state, step.heading, false, true)) {
+				if (
+					pose.cycle !== step.pose.cycle ||
+					pose.flipX !== step.pose.flipX ||
+					pose.frame === step.pose.frame
+				)
+					continue;
+				if (entryJump(pose) >= originalJump) continue;
+				const exit = exitFor(pose, step.state, step.heading);
+				if (
+					!exit ||
+					exit.foot !== originalExit.foot ||
+					Math.abs(exit.anchor.x - originalExit.anchor.x) > 1e-8 ||
+					Math.abs(exit.anchor.y - originalExit.anchor.y) > 1e-8 ||
+					Math.abs(exit.position.scale - originalExit.position.scale) > 1e-8 ||
+					Math.abs(exit.position.x - originalExit.position.x) > 1e-8 ||
+					Math.abs(exit.position.y - originalExit.position.y) > 1e-8
+				)
+					continue;
+				selectedQuality ??= quality(result.steps);
+				const candidate = result.steps.map((s, j) =>
+					j === i ? { ...s, pose } : s,
+				);
+				const assessment = quality(candidate);
+				if (
+					assessment.clean &&
+					assessment.maxJumpSquared < selectedQuality.maxJumpSquared
+				) {
+					result.steps = candidate;
+					selectedQuality = assessment;
+					break;
+				}
+			}
+		}
 		for (const [reason, count] of qualityReasons)
 			rejections[`quality:${reason}`] = count;
 		Object.assign(result.stats.rejections, rejections);
