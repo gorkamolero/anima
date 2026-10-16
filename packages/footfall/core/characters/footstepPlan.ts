@@ -366,7 +366,9 @@ export function planFootsteps<State, Pose>(
 				)
 			: (options.searchWeight ?? 1) > 1
 				? new BalancedFrontier<Node>(
-						() => expanded >= (options.nodeBudget ?? 12000) / 8 && !best,
+						() =>
+							expanded - lastProgress >= (options.nodeBudget ?? 12000) / 8 &&
+							!best?.complete,
 					)
 				: new Heap<Node>();
 	const start: Node = {
@@ -424,6 +426,7 @@ export function planFootsteps<State, Pose>(
 		rejections[`search:${reason}`] = (rejections[`search:${reason}`] ?? 0) + 1;
 	};
 	let expanded = 0;
+	let lastProgress = 0;
 	let reason: SearchStats["reason"] = "nearest-reachable";
 	let bestScore = options.preferMotion
 		? Math.max(initialDistance * weight, costBound)
@@ -479,6 +482,7 @@ export function planFootsteps<State, Pose>(
 		return false;
 	};
 	search: for (let node = open.pop(); node; node = open.pop()) {
+		const previousBest = best;
 		if (node.g !== costs.get(node.key)) continue;
 		if (node.f >= searchBound()) {
 			if ((options.searchWeight ?? 1) !== 1 || options.layeredFrontier)
@@ -918,6 +922,7 @@ export function planFootsteps<State, Pose>(
 				generated++;
 			}
 		}
+		if (best !== previousBest) lastProgress = expanded;
 		if (options.firstArrival && best?.complete) {
 			reason = "complete";
 			break;
