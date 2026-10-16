@@ -6,6 +6,7 @@ import {
 import {
 	contactOnScreen,
 	type Foot,
+	type FootCycle,
 	type FootPose,
 	lockedPlacement,
 } from "../core/characters/footLock";
@@ -85,6 +86,7 @@ export class CharacterMotor {
 	private goal?: Point;
 	private lastStrideLength = 0;
 	private planned: PlannedStep<PredictedStance, FootPose>[] = [];
+	private cycleValidity = new WeakMap<FootCycle, boolean>();
 	private stanceCache = new Map<
 		string,
 		{
@@ -729,6 +731,7 @@ export class CharacterMotor {
 	/** Compare complete, physically simulated routes before admitting shorter phases. */
 	private buildPlan(options: SearchOptions = {}) {
 		this.stanceCache.clear();
+		this.cycleValidity = new WeakMap();
 		const alreadyAtTarget =
 			!this.animation.standing &&
 			this.goal &&
@@ -1120,6 +1123,7 @@ export class CharacterMotor {
 				show() {},
 			});
 			trial.stanceCache = this.stanceCache;
+			trial.cycleValidity = this.cycleValidity;
 			trial.pose = qualityInitial.pose;
 			trial.foot = qualityInitial.foot;
 			trial.anchor = { ...qualityInitial.anchor };
@@ -1454,12 +1458,22 @@ export class CharacterMotor {
 		};
 		this.pose = step.pose;
 		this.heading = step.heading;
+		// A late entry keeps its full support clock; its remaining drawings must
+		// not be stretched over the duration of an entire step.
+		const contacts = step.pose.cycle.contacts;
+		let supportStart = step.pose.frame;
+		if (contacts[supportStart].planted === this.foot) {
+			for (let n = 0; n < contacts.length - 1; n++) {
+				const previous = (supportStart + contacts.length - 1) % contacts.length;
+				if (contacts[previous].planted !== this.foot) break;
+				supportStart = previous;
+			}
+		}
 		let supportFrames = 1;
 		while (
-			supportFrames < step.pose.cycle.contacts.length &&
-			step.pose.cycle.contacts[
-				(step.pose.frame + supportFrames) % step.pose.cycle.contacts.length
-			].planted === this.foot
+			supportFrames < contacts.length &&
+			contacts[(supportStart + supportFrames) % contacts.length].planted ===
+				this.foot
 		)
 			supportFrames++;
 		this.frameMs = Math.max(
@@ -1534,8 +1548,7 @@ export class CharacterMotor {
 		);
 	}
 
-	/** Resume the source cycle clock after a partial entry; its slower entry
-	 * interval must not stretch every later support in a full-cycle exit. */
+	/** Use the source support clock even when an entry begins midway through it. */
 	private cycleFrameMs(pose: FootPose): number {
 		const authored = pose.cycle.frameDurationsMs?.[pose.frame];
 		if (authored !== undefined) return authored;
@@ -1701,15 +1714,17 @@ export class CharacterMotor {
 		const key = `${pose.cycle.name}:${pose.flipX}:${pose.frame}:${foot}:${originX}:${anchor.y}:${lateral ? scale : 0}`;
 		const cached = this.stanceCache.get(key);
 		if (cached) return cached;
-		if (
-			pose.cycle.contacts.some(
+		let valid = this.cycleValidity.get(pose.cycle);
+		if (valid === undefined) {
+			valid = !pose.cycle.contacts.some(
 				(c) => c[c.planted].y < 0 || c[c.planted].y > pose.cycle.frameHeight,
-			)
-		)
-			return;
+			);
+			this.cycleValidity.set(pose.cycle, valid);
+		}
+		if (!valid) return;
 		const origin = { x: originX, y: anchor.y };
 		const samples: (Point & { scale: number })[] = [];
-		let current = pose;
+		const current = { ...pose };
 		for (let i = 0; i < pose.cycle.contacts.length; i++) {
 			const p = lockedPlacement(
 				origin,
@@ -1739,7 +1754,7 @@ export class CharacterMotor {
 				if (this.stanceCache.size < 12000) this.stanceCache.set(key, result);
 				return result;
 			}
-			current = { ...pose, frame };
+			current.frame = frame;
 		}
 	}
 	/** Validate the planted and landing soles, every body sample and swept segment. */

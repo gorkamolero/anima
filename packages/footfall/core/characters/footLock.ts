@@ -59,11 +59,13 @@ export function lockedPlacement(
 	clamp: { min: number; max: number },
 	initialScale: number,
 ) {
-	const q = contactOffset(pose, foot);
+	const contact = pose.cycle.contacts[pose.frame][foot];
+	const qx = (contact.x - pose.cycle.frameWidth / 2) * (pose.flipX ? -1 : 1);
+	const qy = contact.y - pose.cycle.frameHeight;
 	// With no lateral residual, solve the contact/perspective fixed point
 	// directly. The clamped solution has the same fixed point as iteration.
 	if (!perspective.residual?.length) {
-		const denominator = 1 + baseScale * perspective.slope * q.y;
+		const denominator = 1 + baseScale * perspective.slope * qy;
 		if (perspective.constant !== undefined || denominator > 0) {
 			const raw =
 				perspective.constant !== undefined
@@ -76,7 +78,7 @@ export function lockedPlacement(
 				baseScale * clamp.min,
 				Math.min(baseScale * clamp.max, raw),
 			);
-			return { x: anchor.x - q.x * scale, y: anchor.y - q.y * scale, scale };
+			return { x: anchor.x - qx * scale, y: anchor.y - qy * scale, scale };
 		}
 	}
 	let scale = initialScale;
@@ -85,7 +87,7 @@ export function lockedPlacement(
 			baseScale *
 			scaleAt(
 				perspective,
-				{ x: anchor.x - q.x * scale, y: anchor.y - q.y * scale },
+				{ x: anchor.x - qx * scale, y: anchor.y - qy * scale },
 				clamp,
 			);
 		if (Math.abs(next - scale) < 1e-12) {
@@ -94,5 +96,5 @@ export function lockedPlacement(
 		}
 		scale = next;
 	}
-	return { x: anchor.x - q.x * scale, y: anchor.y - q.y * scale, scale };
+	return { x: anchor.x - qx * scale, y: anchor.y - qy * scale, scale };
 }

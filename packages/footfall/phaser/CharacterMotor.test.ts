@@ -1041,3 +1041,31 @@ it("a click plan contains standing pivots only at its first action and one final
 	expect(internal.planned.filter((step) => step.stop)).toHaveLength(1);
 	expect(internal.planned[internal.planned.length - 1]?.stop).toBe(true);
 });
+
+it("does not stretch a late entry over the duration of a complete support", () => {
+	const { motor, cycle, pose } = setup();
+	const original = cycle.contacts;
+	cycle.contacts = Array.from(
+		{ length: 24 },
+		(_, i) => original[Math.floor(i / 6)],
+	);
+	cycle.switchFrames = [0, 12];
+	motor.place({ x: 960, y: 850 });
+	const internal = motor as unknown as {
+		planned: unknown[];
+		planStance: () => boolean;
+	};
+	internal.planned = [
+		{
+			pose: { cycle, frame: 10, flipX: false },
+			heading: "right",
+			stop: false,
+			slide: { x: 0, y: 0 },
+			state: { anchor: { ...motor.anchor } },
+		},
+	];
+	expect(internal.planStance()).toBe(true);
+	motor.walking = true;
+	motor.update(1000 / 24);
+	expect(pose().frame).toBe(11);
+});
