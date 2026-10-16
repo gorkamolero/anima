@@ -7,6 +7,7 @@ import { z } from "zod";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
 import { getModel } from "../lib/model.js";
 import { reserveCall } from "./costs.js";
+import { isFloorCovering } from "./floor-surfaces.js";
 import type { GroundData, GroundVerdict, Raster } from "./ground.js";
 
 /** Outlines are sampled on the floor grid; a one-cell (8-neighbour) erosion
@@ -148,6 +149,7 @@ export async function floorOutlines(
 	);
 	const outlines: FloorOutline[] = [];
 	const add = (name: string, args: string[]) => {
+		if (isFloorCovering(name)) return;
 		const bytes = execFileSync(
 			"magick",
 			[
@@ -256,6 +258,7 @@ export function floorQuestions(
 		)
 			continue;
 		const standable =
+			isFloorCovering(object.name) ||
 			/^(?:(?:wooden|stone|cobblestone|cobbled|central|left|right|front|back) )*(?:dock|deck|floor|ground|street|road|rug|carpet|stairs|steps|aisle|plaza|pavement|porch)$/.test(
 				object.name.toLowerCase(),
 			);

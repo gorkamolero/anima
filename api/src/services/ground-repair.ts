@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
+import { isFloorCovering } from "./floor-surfaces.js";
 import type { GroundData, GroundVerdict, Raster } from "./ground.js";
 import { safeGroundLine } from "./ground-line.js";
 import { readRaster } from "./ground-perception.js";
@@ -71,6 +72,12 @@ export async function subtractCachedObstacles(
 	);
 	const excluded = new Uint8Array(floor.data.length);
 	for (const name of names) {
+		if (
+			isFloorCovering(
+				name.replace(`${hash}-obstacle-`, "").replace(/\.png$/, ""),
+			)
+		)
+			continue;
 		const mask = readRaster(resolve(root, name));
 		// Resample to the destination grid. Legacy floors may use
 		// 384x216; indexing a 192x108 obstacle directly corrupts those floors.
