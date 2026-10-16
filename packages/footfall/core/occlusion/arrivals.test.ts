@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { CharacterMotor } from "../../phaser/CharacterMotor";
 import { cellAt } from "../walkarea/navigation";
-import { beginArrival, passageArrival } from "./arrivals";
+import { beginArrival, passageArrival, resolveReturnExit } from "./arrivals";
+import type { Exit } from "./exits";
 
 const area = {
 	mask: {
@@ -13,6 +14,49 @@ const area = {
 	baseScale: 1,
 	scaleClamp: { min: 0, max: 2 },
 };
+describe("return entrance resolution", () => {
+	const travel = {
+		from: "depot",
+		exit: { id: "left", kind: "edge-left", region: [] } as Exit,
+	};
+	const near: Exit = { id: "near", kind: "near", to: "depot", region: [] };
+	it("uses the unique surviving return connection and its camera orientation", () => {
+		const connections = [
+			{ to: "depot", exit: "removed-right", entry: "left" },
+			{ to: "depot", exit: "near", entry: "far" },
+		];
+		const result = resolveReturnExit(area, [near], connections, travel, 1064);
+		expect(result.entry).toBe(near);
+		expect(result.kind).toBe("near");
+		expect(result.existing).toBe(connections[1]);
+	});
+	it("uses the physical orientation of an explicitly linked entrance", () => {
+		const result = resolveReturnExit(
+			area,
+			[near],
+			[{ to: "depot", exit: "near", entry: "left" }],
+			travel,
+			1064,
+		);
+		expect(result.kind).toBe("near");
+	});
+	it("does not choose arbitrarily among two return entrances", () => {
+		expect(() =>
+			resolveReturnExit(
+				area,
+				[near, { ...near, id: "other", kind: "door" }],
+				[],
+				travel,
+				1064,
+			),
+		).toThrow("No physical");
+	});
+	it("does not repurpose an entrance connected to another scene", () => {
+		expect(() =>
+			resolveReturnExit(area, [{ ...near, to: "elsewhere" }], [], travel, 1064),
+		).toThrow("No physical");
+	});
+});
 describe("perspective passage arrivals", () => {
 	it("starts far at the smallest reachable floor depth", () => {
 		expect(passageArrival(area, { x: 840, y: 600 }, "far", 1064)).toEqual({

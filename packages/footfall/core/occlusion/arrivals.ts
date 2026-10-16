@@ -47,7 +47,7 @@ export function resolveReturnExit(
 	travel: { from: string; exit: Exit },
 	maxY: number,
 ) {
-	const existing = connections.find(
+	let existing = connections.find(
 		(c) => c.to === travel.from && c.entry === travel.exit.id,
 	);
 	const kind: Exit["kind"] =
@@ -63,6 +63,21 @@ export function resolveReturnExit(
 	let entry =
 		exits.find((e) => e.id === existing?.exit) ??
 		exits.find((e) => e.kind === kind && (!e.to || e.to === travel.from));
+	if (!entry) {
+		// Floor derivation can remove an old edge entrance. A unique surviving
+		// connection to the source is authoritative even when the camera turns.
+		const returns = exits.filter(
+			(e) =>
+				e.to === travel.from ||
+				connections.some((c) => c.to === travel.from && c.exit === e.id),
+		);
+		if (returns.length === 1) {
+			entry = returns[0];
+			existing = connections.find(
+				(c) => c.to === travel.from && c.exit === entry?.id,
+			);
+		}
+	}
 	if (!entry && kind === "near") {
 		const cell = nearestCell(area.mask, { x: 960, y: maxY });
 		const p = cellPoint(area.mask, cell);
@@ -80,7 +95,7 @@ export function resolveReturnExit(
 		exits.push(entry);
 	}
 	if (!entry) throw new Error(`No physical ${kind} return exit in destination`);
-	return { existing, entry, kind };
+	return { existing, entry, kind: entry.kind };
 }
 
 /** Place at the actual return threshold and compute the inward walk. */
