@@ -1239,7 +1239,10 @@ export class CharacterMotor {
 			}
 			return id;
 		};
-		const qualityCache = new Map<string, { clean: boolean; issues: string }>();
+		const qualityCache = new Map<
+			string,
+			{ clean: boolean; issues: string; maxJumpSquared: number }
+		>();
 		type QualityStance = {
 			key: string;
 			first: Point;
@@ -1284,6 +1287,7 @@ export class CharacterMotor {
 				bad: number;
 				first?: Point;
 				last?: Point;
+				maxJumpSquared: number;
 			}
 		>();
 		const quality = (steps: PlannedStep<PredictedStance, FootPose>[]) => {
@@ -1308,13 +1312,19 @@ export class CharacterMotor {
 						saved.issues,
 						(qualityReasons.get(saved.issues) ?? 0) + 1,
 					);
-				return { clean: saved.clean };
+				return { clean: saved.clean, maxJumpSquared: saved.maxJumpSquared };
 			}
+			// The consumed prefix observes only the next anchor for stride length.
+			// Its future pose is not played until after restoring the checkpoint.
+			const checkpointKey = (consumed: number) => {
+				const next = steps[consumed].state.anchor;
+				return `${prefixKeys[consumed - 1]};next-anchor:${next.x}:${next.y}`;
+			};
 			let checkpoint:
 				| (typeof prefixes extends Map<string, infer V> ? V : never)
 				| undefined;
-			for (let i = prefixKeys.length - 1; i >= 0; i--) {
-				checkpoint = prefixes.get(prefixKeys[i]);
+			for (let i = steps.length - 1; i >= 1; i--) {
+				checkpoint = prefixes.get(checkpointKey(i));
 				if (checkpoint) break;
 			}
 			const trial = checkpoint ? copyTrial(checkpoint.trial) : makeTrial();
@@ -1337,6 +1347,7 @@ export class CharacterMotor {
 				bad = checkpoint?.bad ?? 0;
 			let first = checkpoint?.first,
 				last = checkpoint?.last;
+			let maxJumpSquared = checkpoint?.maxJumpSquared ?? 0;
 			let consumed = checkpoint?.consumed ?? 0;
 			const finish = () => {
 				if (
@@ -1369,6 +1380,11 @@ export class CharacterMotor {
 				for (let i = 0; i < 3; i++) trial.update(1000 / 24 / 3);
 				if (!trial.walking) break;
 				const position = { x: trial.target.x, y: trial.target.y };
+				if (last) {
+					const dx = position.x - last.x,
+						dy = position.y - last.y;
+					maxJumpSquared = Math.max(maxJumpSquared, dx * dx + dy * dy);
+				}
 				first ??= position;
 				last = position;
 				if (!trial.transition && !trial.drawn) {
@@ -1389,10 +1405,10 @@ export class CharacterMotor {
 				// lookahead in the exact key before sharing any capture-clock state.
 				if (
 					nextConsumed !== consumed &&
-					nextConsumed >= 2 &&
-					trial.planned.length >= 2
+					nextConsumed >= 1 &&
+					trial.planned.length >= 1
 				) {
-					const key = prefixKeys[nextConsumed];
+					const key = checkpointKey(nextConsumed);
 					if (!prefixes.has(key)) {
 						if (prefixes.size >= 2048) prefixes.clear();
 						prefixes.set(key, {
@@ -1405,6 +1421,7 @@ export class CharacterMotor {
 							bad,
 							first,
 							last,
+							maxJumpSquared,
 						});
 					}
 				}
@@ -1456,8 +1473,17 @@ export class CharacterMotor {
 				qualityReasons.set(issues, (qualityReasons.get(issues) ?? 0) + 1);
 			}
 			if (qualityCache.size >= 8192) qualityCache.clear();
-			qualityCache.set(signature, { clean, issues });
-			return { clean };
+			qualityCache.set(signature, { clean, issues, maxJumpSquared });
+			return { clean, maxJumpSquared };
+		};
+		let lastAssessedSteps: PlannedStep<PredictedStance, FootPose>[] | undefined;
+		let lastAssessment: ReturnType<typeof quality> | undefined;
+		const assess = (steps: PlannedStep<PredictedStance, FootPose>[]) => {
+			if (lastAssessedSteps !== steps || !lastAssessment) {
+				lastAssessment = quality(steps);
+				lastAssessedSteps = steps;
+			}
+			return lastAssessment;
 		};
 		const result = planFootsteps<PredictedStance, FootPose>(
 			this.goal,
@@ -1477,7 +1503,8 @@ export class CharacterMotor {
 					);
 					return hasInteriorStart ? -1 : 2;
 				},
-				acceptPlan: (steps) => quality(steps).clean,
+				acceptPlan: (steps) => assess(steps).clean,
+				finishRank: (steps) => assess(steps).maxJumpSquared,
 				starts: (state) => (state === initial ? initialStarts : starts(state)),
 				offset: (s, slide) => ({
 					...s,

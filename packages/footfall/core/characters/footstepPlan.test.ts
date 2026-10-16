@@ -921,3 +921,38 @@ it("evaluates each stop once while retaining stop-only phases", () => {
 	);
 	expect(stopped).toEqual(["walk", "stop-only"]);
 });
+
+it("ranks complete finishes without changing the route to the first arrival", () => {
+	const run = (rank: boolean) =>
+		planFootsteps(
+			{ x: 2, y: 0 },
+			{ x: 0, y: 0 },
+			{
+				position: (s) => s,
+				entry: () => undefined,
+				entries: (_s, h) => (h === "right" ? ["jump", "smooth"] : []),
+				advance: (s) => (s.x < 2 ? { x: s.x + 1, y: 0 } : undefined),
+				rest: (s) => s,
+				acceptRest: (s) => s.x === 2,
+				finishRank: rank
+					? (steps) => (steps.at(-1)?.pose === "smooth" ? 0 : 10)
+					: undefined,
+			},
+			{
+				now: () => 0,
+				firstArrival: true,
+				maxStride: 1,
+				costBound: 20,
+				nodeBudget: 100,
+				turnCost: 0,
+			},
+		);
+	const original = run(false),
+		ranked = run(true);
+	expect(original.complete).toBe(true);
+	expect(ranked.complete).toBe(true);
+	expect(original.steps.at(-1)?.pose).toBe("jump");
+	expect(ranked.steps.at(-1)?.pose).toBe("smooth");
+	expect(ranked.steps.slice(0, -1)).toEqual(original.steps.slice(0, -1));
+	expect(ranked.stats.expanded).toBe(original.stats.expanded);
+});

@@ -13,6 +13,8 @@ export interface PlannedStep<State, Pose> {
 export interface StepSimulation<State, Pose> {
 	/** Exact terminal validation; a rejected goal leaves this same frontier active. */
 	acceptPlan?(steps: PlannedStep<State, Pose>[]): boolean;
+	/** Rank valid finishes at the first reached support without changing route costs. */
+	finishRank?(steps: PlannedStep<State, Pose>[]): number;
 	/** A negative first-capture limit rejects the starting pose. */
 	startTurnLimit?(state: State, pose: Pose, heading: WalkDirection): number;
 	position(state: State): Point;
@@ -349,9 +351,19 @@ export function planFootsteps<State, Pose>(
 			steps.push(n.step);
 		return steps.reverse();
 	};
+	let bestFinishRank = Infinity;
+	let acceptedSteps: PlannedStep<State, Pose>[] = [];
+	const preferFinish = (complete: boolean) => {
+		if (!complete || !options.firstArrival || !sim.finishRank) return true;
+		const rank = sim.finishRank(acceptedSteps);
+		if (best?.complete && rank >= bestFinishRank) return false;
+		bestFinishRank = rank;
+		return true;
+	};
 	const acceptable = (node: Node, step: PlannedStep<State, Pose>) => {
+		acceptedSteps = collect(node, step);
 		if (options.preferMotion && node.stances === 0) return true;
-		if (!sim.acceptPlan || sim.acceptPlan(collect(node, step))) return true;
+		if (!sim.acceptPlan || sim.acceptPlan(acceptedSteps)) return true;
 		reject("playback-route");
 		return false;
 	};
@@ -431,6 +443,7 @@ export function planFootsteps<State, Pose>(
 						})
 					)
 						continue;
+					if (!preferFinish(complete)) continue;
 					const previousBest = best,
 						previousScore = bestScore;
 					bestScore = score;
@@ -703,7 +716,8 @@ export function planFootsteps<State, Pose>(
 						((options.firstArrival && complete) || score < bestScore) &&
 						(!sim.routeAllowed ||
 							sim.routeAllowed(node.origin, rest, changes)) &&
-						acceptable(node, stepFor(node, heading, stopPose, true))
+						acceptable(node, stepFor(node, heading, stopPose, true)) &&
+						preferFinish(complete)
 					) {
 						const previousBest = best,
 							previousScore = bestScore;
@@ -726,7 +740,7 @@ export function planFootsteps<State, Pose>(
 						}
 					}
 				}
-				if (options.firstArrival && best?.complete) {
+				if (options.firstArrival && best?.complete && !sim.finishRank) {
 					reason = "complete";
 					break search;
 				}
@@ -789,6 +803,10 @@ export function planFootsteps<State, Pose>(
 				});
 				generated++;
 			}
+		}
+		if (options.firstArrival && best?.complete) {
+			reason = "complete";
+			break;
 		}
 	}
 	if (!best?.complete && stationary?.complete) best = stationary;
