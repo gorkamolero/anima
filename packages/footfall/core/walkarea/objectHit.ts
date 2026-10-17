@@ -65,6 +65,10 @@ export function objectAtPoint<T extends WalkObject>(
 		return best;
 	});
 	return objects.find((object) => {
+		// Scene descriptions sometimes include the ground itself as an object.
+		// Outside the visible floor mask it must still request nearest reachable
+		// ground, rather than diverting the click into an object conversation.
+		if (/^(?:ground|floor)$/i.test(object.name.trim())) return false;
 		const outlines = layers.filter((_, i) => assigned[i] === object);
 		if (outlines.some((layer) => layer.alpha(x, y))) return true;
 		// An exact object mask can reject its box. A semantic category may

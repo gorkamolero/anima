@@ -4,6 +4,20 @@ import { objectAtPoint } from "./objectHit";
 describe("scene object hit testing", () => {
 	const object = { name: "Distant houses", bounds: [0.4, 0.4, 0.6, 0.6] };
 	const floor = { width: 1, height: 1, data: [1] };
+	it("routes ground outside the visible floor to nearest reachable walking", () => {
+		const excludedFloor = { width: 1, height: 1, data: [0] };
+		for (const name of ["ground", " Floor "]) {
+			const ground = { name, bounds: [0, 0, 1, 1] };
+			const layers = [{ data: { label: name }, alpha: () => true }];
+			expect(
+				objectAtPoint([ground], layers, excludedFloor, 50, 50, 100, 100),
+			).toBeUndefined();
+			const trap = { name: "floor hatch", bounds: [0, 0, 1, 1] };
+			expect(
+				objectAtPoint([ground, trap], layers, excludedFloor, 50, 50, 100, 100),
+			).toBe(trap);
+		}
+	});
 	it("keeps floor clicks from selecting an overlapping object", () => {
 		expect(
 			objectAtPoint([object], [], floor, 960, 540, 1920, 1080),
