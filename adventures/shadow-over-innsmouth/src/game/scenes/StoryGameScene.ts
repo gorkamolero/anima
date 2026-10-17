@@ -658,6 +658,10 @@ export class StoryGameScene extends BaseScene {
 			await this.restoreLocationImage();
 			if (this.travellingExit)
 				await this.arriveThroughExit(this.travellingExit);
+			localStorage.setItem(REVIEW_SCENE_KEY, id);
+			window.dispatchEvent(
+				new CustomEvent("anima:location-changed", { detail: id }),
+			);
 		} finally {
 			this.hermesSprite?.setVisible(this.geometryReady);
 			this.openWorldBusy = alreadyBusy;
@@ -1728,22 +1732,18 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private bindReviewEvents(): void {
-		const setScene = (sceneId: ReviewSceneId) => {
-			this.generatedPlace = undefined;
-			this.reviewSceneId = sceneId;
-			this.reviewOutput = [];
-			delete this.reviewCharacterOverrides[sceneId];
-			this.setHermesMotionState("idle");
-			localStorage.setItem(REVIEW_SCENE_KEY, sceneId);
-			if (this.world)
-				void this.patchWorld({ location: sceneId }).then(() =>
-					this.restoreLocationImage(),
-				);
-			this.renderReviewScene();
-		};
 		const onSceneChange = (event: Event) => {
-			const sceneId = (event as CustomEvent<ReviewSceneId>).detail;
-			if (sceneId === "outside" || sceneId === "inside") setScene(sceneId);
+			const sceneId = (event as CustomEvent<string>).detail;
+			if (typeof sceneId !== "string") return;
+			if (sceneId === "outside" || sceneId === "inside") {
+				delete this.reviewCharacterOverrides[sceneId];
+			}
+			this.setHermesMotionState("idle");
+			this.emitOpenWorldState({ status: "idle" });
+			void this.enterLocation(sceneId).catch((error: unknown) => {
+				this.emitOpenWorldState({ status: "error", message: String(error) });
+				window.dispatchEvent(new Event("anima:scene-load-error"));
+			});
 		};
 
 		window.addEventListener("anima:review-scene", onSceneChange);

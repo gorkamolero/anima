@@ -1,6 +1,6 @@
 import { type EffectCallback, useEffect, useState } from "react";
 
-type ReviewSceneId = "outside" | "inside";
+type ReviewSceneId = string;
 type FeedbackStatus = "reviewing" | "approved" | "revise";
 
 interface SceneFeedback {
@@ -23,7 +23,7 @@ type OpenWorldUiState =
 	  }
 	| { status: "error"; message: string };
 
-type FeedbackStore = Record<ReviewSceneId, SceneFeedback>;
+type FeedbackStore = Partial<Record<ReviewSceneId, SceneFeedback>>;
 
 const REVIEW_SCENE_KEY = "anima.shadow-over-innsmouth.review-scene";
 const FEEDBACK_KEY = "anima.shadow-over-innsmouth.scene-feedback";
@@ -54,7 +54,64 @@ export function GameUI() {
 		status: "idle",
 	});
 	const [freeText, setFreeText] = useState("");
-	const activeFeedback = feedback[sceneId];
+	const [scenes, setScenes] = useState(SCENES);
+	const [sceneError, setSceneError] = useState("");
+	const [sceneLoading, setSceneLoading] = useState(false);
+	const activeFeedback = feedback[sceneId] ?? {
+		status: "reviewing",
+		notes: "",
+	};
+
+	useMountEffect(() => {
+		const controller = new AbortController();
+		const api =
+			import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001/api";
+		void fetch(`${api}/places`, { signal: controller.signal })
+			.then((response) => {
+				if (!response.ok) throw new Error("Unable to load scenes");
+				return response.json();
+			})
+			.then(
+				(
+					places: Array<{
+						id: string;
+						description: string;
+						ground?: { ground?: string; walkable?: boolean; floor?: unknown };
+					}>,
+				) => {
+					setScenes([
+						...SCENES,
+						...places
+							.filter(
+								(place) =>
+									place.ground?.floor &&
+									place.ground.ground !== "failed" &&
+									place.ground.walkable !== false,
+							)
+							.map((place) => ({
+								id: place.id,
+								label: place.description.split(/[.:\n]/)[0].slice(0, 95),
+								detail: place.description,
+							})),
+					]);
+				},
+			)
+			.catch((error: Error) => {
+				if (!controller.signal.aborted) setSceneError(error.message);
+			});
+		const onLocation = (event: Event) => {
+			setSceneId((event as CustomEvent<string>).detail);
+			setSceneLoading(false);
+		};
+		const onSceneError = () => setSceneLoading(false);
+		window.addEventListener("anima:location-changed", onLocation);
+		window.addEventListener("anima:scene-load-error", onSceneError);
+		return () => {
+			controller.abort();
+			window.removeEventListener("anima:location-changed", onLocation);
+			window.removeEventListener("anima:scene-load-error", onSceneError);
+		};
+	});
 
 	useMountEffect(() => {
 		const onOpenWorldState = (event: Event) => {
@@ -67,8 +124,7 @@ export function GameUI() {
 	});
 
 	const selectScene = (nextSceneId: ReviewSceneId) => {
-		setSceneId(nextSceneId);
-		localStorage.setItem(REVIEW_SCENE_KEY, nextSceneId);
+		setSceneLoading(true);
 		window.dispatchEvent(
 			new CustomEvent("anima:review-scene", { detail: nextSceneId }),
 		);
@@ -78,7 +134,7 @@ export function GameUI() {
 		setFeedback((current) => ({
 			...current,
 			[sceneId]: {
-				...current[sceneId],
+				...(current[sceneId] ?? { status: "reviewing", notes: "" }),
 				...patch,
 			},
 		}));
@@ -132,7 +188,7 @@ export function GameUI() {
 				<div className="review-panel__header">
 					<div>
 						<p className="review-panel__eyebrow">Scene Review</p>
-						<h1>Starting Scenes</h1>
+						<h1>Walkable Scenes</h1>
 					</div>
 					<button
 						type="button"
@@ -147,23 +203,23 @@ export function GameUI() {
 				<div className="review-panel__body">
 					<span className="review-panel__status">{activeFeedback.status}</span>
 
-					<div
-						className="review-panel__tabs"
-						role="tablist"
-						aria-label="Scenes"
-					>
-						{SCENES.map((scene) => (
-							<button
-								type="button"
-								key={scene.id}
-								className={scene.id === sceneId ? "is-active" : ""}
-								onClick={() => selectScene(scene.id)}
-							>
-								<span>{scene.label}</span>
-								<small>{scene.detail}</small>
-							</button>
-						))}
-					</div>
+					<label className="review-panel__field">
+						<span>Scene ({scenes.length})</span>
+						<select
+							aria-label="Scene"
+							value={sceneId}
+							disabled={sceneLoading}
+							onChange={(event) => selectScene(event.currentTarget.value)}
+						>
+							{scenes.map((scene) => (
+								<option key={scene.id} value={scene.id}>
+									{scene.label}
+								</option>
+							))}
+						</select>
+					</label>
+					{sceneLoading ? <output>Loading scene…</output> : null}
+					{sceneError ? <p role="alert">{sceneError}</p> : null}
 
 					<label className="review-panel__field">
 						<span>Status</span>
@@ -298,7 +354,7 @@ function useMountEffect(effect: EffectCallback): void {
 
 function loadSceneId(): ReviewSceneId {
 	const stored = localStorage.getItem(REVIEW_SCENE_KEY);
-	return stored === "inside" || stored === "outside" ? stored : "outside";
+	return stored || "outside";
 }
 
 function loadFeedback(): FeedbackStore {
