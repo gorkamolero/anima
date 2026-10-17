@@ -25,7 +25,7 @@ export type { DerivedOccluder as Occluder } from "@anima/footfall/derive/types";
 import type { DerivedOccluder as Occluder } from "@anima/footfall/derive/types";
 
 const MODEL = "fal-ai/sam2/image";
-const VERSION = 22;
+const VERSION = 23;
 const cacheRoot = resolve(ROOT, "api/data/perception");
 const proofRoot = resolve(ROOT, "tmp/walkqa");
 const hashOf = (value: Buffer | string) =>
@@ -138,6 +138,12 @@ export function largestComponent(mask: FloorRaster): FloorRaster {
 	for (const n of best) data[n] = 1;
 	return { width: w, height: h, data };
 }
+/** Solid clutter rests along its lower outline; unlike a bench or tree, its
+ * side silhouette is not an overhang supported by a few deeper contacts. */
+export function hasSolidFront(label: string): boolean {
+	return /\b(desk|counter|crate|basket|net|fishnet)(?:s)?\b/i.test(label);
+}
+
 export function maskGeometry(
 	mask: FloorRaster,
 	floor?: FloorRaster,
@@ -474,7 +480,7 @@ async function derive(
 			floor,
 			supportFraction,
 			/post|pole/i.test(object.name) ? 0.00015 : 0.002,
-			/\b(desk|counter)\b/i.test(object.name),
+			hasSolidFront(object.name),
 		);
 		if (!geometry) continue;
 		const cleanPath = maskPath.replace(/\.png$/, ".clean.png");
@@ -651,7 +657,7 @@ export async function refineCachedOccluders(
 	const original = JSON.parse(
 		await readFile(`${stem}.occluders.json`, "utf8"),
 	) as (Occluder & { layerDerivation?: number })[];
-	if (original.every((o) => o.layerDerivation === 22)) return original;
+	if (original.every((o) => o.layerDerivation === VERSION)) return original;
 	const result: (Occluder & { layerDerivation: number })[] = [];
 	for (const o of original) {
 		const bytes = execFileSync(
@@ -677,6 +683,19 @@ export async function refineCachedOccluders(
 			height: 1080,
 			data: Array.from(bytes, (v) => (v > 127 ? 1 : 0)),
 		};
+		// Existing split layers already preserve the segmentation. Migrate their
+		// support geometry without splitting again or renaming their assets.
+		if (o.layerDerivation === 22 || o.layerDerivation === VERSION) {
+			const geometry = hasSolidFront(o.label)
+				? maskGeometry(mask, undefined, 0.8, 0.000005, true)
+				: undefined;
+			result.push({
+				...o,
+				baseline: geometry?.baseline ?? o.baseline,
+				layerDerivation: VERSION,
+			});
+			continue;
+		}
 		const split = splitFloorClutter(mask, o.label, perspective, o.baseline);
 		for (const kind of ["upright", "flat"] as const) {
 			const part = split[kind];
@@ -685,11 +704,11 @@ export async function refineCachedOccluders(
 				undefined,
 				0.8,
 				0.000005,
-				/\b(desk|counter)\b/i.test(o.label),
+				hasSolidFront(o.label),
 			);
 			if (!geometry) continue;
 			const { x, y, w, h } = geometry.bbox;
-			const png = `${basename(stem)}.occluder-${o.id}-${kind}-22.png`;
+			const png = `${basename(stem)}.occluder-${o.id}-${kind}-${VERSION}.png`;
 			execFileSync(
 				"magick",
 				[
@@ -728,7 +747,7 @@ export async function refineCachedOccluders(
 				obstacle:
 					kind !== "flat" ||
 					!/\b(debris|fragments?|litter|leaves|scattered)\b/i.test(o.label),
-				layerDerivation: 22,
+				layerDerivation: VERSION,
 				maskCoverage: {
 					referencePixels: count,
 					retainedPixels: count,

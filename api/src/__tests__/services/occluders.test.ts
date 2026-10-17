@@ -2,6 +2,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	canOcclude,
+	hasSolidFront,
 	maskGeometry,
 	splitFloorClutter,
 } from "../../services/occluders.js";
@@ -45,6 +46,29 @@ describe("hard-scene occluders", () => {
 });
 
 describe("floor-fragment derivation", () => {
+	it("keeps a shallow net apron in front of the walker beyond a deeper crate", () => {
+		const mask = { width: 192, height: 108, data: Array(192 * 108).fill(0) };
+		for (let x = 30; x < 52; x++)
+			for (let y = x < 40 ? 69 : 76; y < (x < 40 ? 83 : 79); y++)
+				mask.data[y * 192 + x] = 1;
+		for (const label of ["crate-0", "crates", "fishing nets", "basket"]) {
+			const geometry = maskGeometry(
+				mask,
+				undefined,
+				0.8,
+				0.000005,
+				hasSolidFront(label),
+			);
+			const last = geometry!.baseline.at(-1)!;
+			expect(last.x).toBeGreaterThan(480);
+			expect(last.y).toBe(790);
+			// A foot at y808 must be in front of this apron, not hidden by the
+			// crate's y830 support extrapolated across its full width.
+			expect(last.y).toBeLessThan(808);
+		}
+		for (const label of ["bench", "tree", "lamp post", "chair"])
+			expect(hasSolidFront(label)).toBe(false);
+	});
 	it("preserves every segmented pixel while separating a detached low fragment", () => {
 		const mask = { width: 192, height: 108, data: Array(192 * 108).fill(0) };
 		for (let y = 40; y < 90; y++)
