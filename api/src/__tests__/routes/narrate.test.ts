@@ -43,6 +43,38 @@ const request = {
 };
 
 describe("POST /api/narrate", () => {
+	it("keeps uncached walking-preview interactions offline and unchanged", async () => {
+		vi.stubEnv("ANIMA_NARRATION_CACHE_ONLY", "1");
+		try {
+			const app = new Hono();
+			app.route("/api", createNarrateRoutes());
+			for (const mode of ["options", "resolve"]) {
+				const response = await app.request("/api/narrate", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						...request,
+						mode,
+						...(mode === "resolve" ? { choice: "Look closer" } : {}),
+					}),
+				});
+				expect(response.status).toBe(200);
+				const result = await response.json();
+				if (mode === "options")
+					expect(narrateOptionsSchema.safeParse(result).success).toBe(true);
+				else {
+					expect(narrateResolveSchema.safeParse(result).success).toBe(true);
+					expect(result.statePatch).toEqual({});
+					expect(result.visual).toEqual({ delta: "none" });
+					expect(result.travel).toBeUndefined();
+				}
+			}
+			expect(getModel).not.toHaveBeenCalled();
+		} finally {
+			vi.unstubAllEnvs();
+		}
+	});
+
 	it("keeps painted and untouched pictures distinct even when the model says intact", () => {
 		const painted = rememberVisibleChange({
 			caption: "A red spiral marks the door.",

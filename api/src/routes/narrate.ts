@@ -656,6 +656,20 @@ export function createNarrateRoutes(model?: LanguageModel): Hono {
 				);
 			}
 		}
+		// Local walking previews may intentionally have no provider credentials.
+		// Serve cached story responses above; never invent or persist story changes.
+		if (process.env.ANIMA_NARRATION_CACHE_ONLY === "1") {
+			return c.json(
+				request.mode === "options"
+					? { options: ["Look closer", "Leave it alone", "Keep exploring"] }
+					: {
+							caption:
+								"This interaction is unavailable in the walking preview. You can keep exploring the room.",
+							statePatch: {},
+							visual: { delta: "none" },
+						},
+			);
+		}
 		const save = async (value: unknown) => {
 			if (db)
 				await db.execute({
