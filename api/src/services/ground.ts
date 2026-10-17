@@ -16,6 +16,7 @@ import {
 import { calibrateDepthScale } from "./ground-depth-scale.js";
 import { safeGroundLine } from "./ground-line.js";
 import { occluderWalkLinks } from "./ground-links.js";
+import { estimateMetricScale } from "./ground-metric-scale.js";
 import { cleanMainFloor, type FloorLink } from "./ground-normals.js";
 import {
 	DERIVATION_VERSION,
@@ -248,12 +249,22 @@ export async function deriveGround(
 					outlined,
 				)
 			: undefined;
+	// Preserve object-based calibration. Only replace the unanchored adult-size
+	// guess when neither a supplied reference nor semantic measurement exists.
+	const metricScale =
+		!originalReference &&
+		semanticScale?.status !== "estimated" &&
+		perceived.normalField
+			? estimateMetricScale(perceived.normalField, outlined)
+			: undefined;
 	const calibratedScale =
 		depthScale?.status === "accepted"
 			? depthScale
 			: semanticScale?.status === "estimated"
 				? semanticScale.calibration
-				: undefined;
+				: metricScale?.status === "estimated"
+					? metricScale
+					: undefined;
 	if (calibratedScale) {
 		guidance = {
 			...guidance,
@@ -276,13 +287,16 @@ export async function deriveGround(
 						? "reference-relative-depth"
 						: semanticScale?.status === "estimated"
 							? "semantic-vertical-height"
-							: "guidance",
+							: metricScale?.status === "estimated"
+								? "model-metric-estimate"
+								: "guidance",
 				reference: originalReference,
 				depthScale: depthScale ?? {
 					status: "unknown",
 					reason: "no reference or cached geometry",
 				},
 				semanticScale,
+				metricScale,
 				visualSignoff: false,
 			},
 			null,
@@ -324,7 +338,9 @@ export async function deriveGround(
 			? "Scale transferred by relative depth from the visible reference; visual validation remains required."
 			: semanticScale?.status === "estimated"
 				? `Scale uses a semantic height assumption of ${semanticScale.assumedHeightM}m ±${semanticScale.heightUncertaintyM}m; visual validation remains required.`
-				: `Scale remains unverified: ${depthScale?.status === "rejected" ? depthScale.reason : "no supported depth reference"}.`,
+				: metricScale?.status === "estimated"
+					? "Scale uses model-estimated metric geometry (1.75m adult); physical dimensions and visual size require validation."
+					: `Scale remains unverified: ${depthScale?.status === "rejected" ? depthScale.reason : "no supported depth reference"}.`,
 	];
 	if (data.scaleReference && data.walkArea) {
 		// Keep the measured projection over all reachable depths; an arbitrary
