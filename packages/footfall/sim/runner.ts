@@ -298,9 +298,11 @@ export async function simulateWalks({
 						if (fade.isRunning) continue;
 					}
 					try {
+						// A failed destination read must leave the source motor usable.
+						const destination = loadWalkRecords(travel.exit.to as string);
 						motor.detach();
 						await Promise.resolve();
-						geometry = loadWalkRecords(travel.exit.to as string);
+						geometry = destination;
 						location = geometry.location;
 						remember(geometry);
 						motor = makeMotor();
@@ -327,6 +329,8 @@ export async function simulateWalks({
 						visible = true;
 						busy = false;
 					} catch (error) {
+						location = geometry.location;
+						requested = undefined;
 						limitations.push(String(error));
 						emit({ status: "error", message: String(error) });
 						busy = false;
