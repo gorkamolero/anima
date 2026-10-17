@@ -5,6 +5,24 @@ import { stanceSweep } from "./stanceSweep";
 
 const freeObjects = new WeakMap<FloorMask, FloorMask>();
 
+function on(mask: FloorMask, point: Point): boolean {
+	return mask.data[cellAt(mask, point)] > 0;
+}
+
+function ground(area: WalkArea, point: Point): Point {
+	if (area.perspective.constant === undefined)
+		return toMetres(area.perspective, point);
+	const ppm =
+		(area.perspective.pixelsPerMetre ?? 300) * scaleAt(area.perspective, point);
+	return { x: point.x / ppm, y: point.y / ppm };
+}
+
+function distance(area: WalkArea, a: Point, b: Point): number {
+	const x = ground(area, a),
+		y = ground(area, b);
+	return Math.hypot(x.x - y.x, x.y - y.y);
+}
+
 /** Exact cell-boundary intervals, including arbitrarily short intersections. */
 function intervals(mask: FloorMask, a: Point, b: Point): number[] {
 	const cuts = [0, 1];
@@ -39,26 +57,18 @@ export function strideSweep(
 		free = { ...objects, data: objects.data.map((v) => (v ? 0 : 1)) };
 		freeObjects.set(objects, free);
 	}
-	const on = (m: FloorMask, p: Point) => m.data[cellAt(m, p)] > 0;
 	// A fully supported sole-only sweep needs no metric gap calculation.
 	// Preserve object exclusion even when raw floor includes the prop pixels.
 	if (!body.length && stanceSweep(raw, soles[0], soles[1]))
 		return !free || stanceSweep(free, soles[0], soles[1]);
-	const ground = (p: Point) => {
-		if (area.perspective.constant === undefined)
-			return toMetres(area.perspective, p);
-		const ppm =
-			(area.perspective.pixelsPerMetre ?? 300) * scaleAt(area.perspective, p);
-		return { x: p.x / ppm, y: p.y / ppm };
-	};
-	const distance = (a: Point, b: Point) => {
-		const x = ground(a),
-			y = ground(b);
-		return Math.hypot(x.x - y.x, x.y - y.y);
-	};
+	// The final body sweep rejects blocked clearance on supported floor even
+	// when another part of the stride crosses a gap. Reject that same condition
+	// before allocating interval lists or projecting gap lengths.
+	for (const point of body)
+		if (on(raw, point) && !on(clearance, point)) return false;
 	if (soles.some((p) => !on(raw, p) || (objects && on(objects, p))))
 		return false;
-	const limit = 0.4 * distance(...soles);
+	const limit = 0.4 * distance(area, ...soles);
 	const sweep = (input: readonly Point[], checkClearance: boolean) => {
 		const path = [...input];
 		// The body may still be above the gap at a support transfer. Measure the
@@ -86,7 +96,10 @@ export function strideSweep(
 						x: p.x + (end.x - p.x) * t,
 						y: p.y + (end.y - p.y) * t,
 					};
-					if (cellAt(raw, candidate) < 0 || distance(p, candidate) >= limit)
+					if (
+						cellAt(raw, candidate) < 0 ||
+						distance(area, p, candidate) >= limit
+					)
 						return;
 					if (on(raw, candidate)) return candidate;
 				}
@@ -137,7 +150,7 @@ export function strideSweep(
 					if (checkClearance && !on(clearance, p)) return false;
 					gap = 0;
 				} else {
-					gap += distance(at(cuts[i - 1]), at(cuts[i]));
+					gap += distance(area, at(cuts[i - 1]), at(cuts[i]));
 					if (!(gap < limit)) return false;
 				}
 			}
