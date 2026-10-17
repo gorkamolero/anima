@@ -49,6 +49,7 @@ import {
 } from "@anima/storyscript";
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import fullGameStory from "../../../story/full_game.story?raw";
+import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
@@ -658,6 +659,7 @@ export class StoryGameScene extends BaseScene {
 			await this.restoreLocationImage();
 			if (this.travellingExit)
 				await this.arriveThroughExit(this.travellingExit);
+			commitSceneRoute(id);
 			localStorage.setItem(REVIEW_SCENE_KEY, id);
 			window.dispatchEvent(
 				new CustomEvent("anima:location-changed", { detail: id }),
@@ -1050,9 +1052,10 @@ export class StoryGameScene extends BaseScene {
 			if (this.world.location === "inside" || this.world.location === "outside")
 				this.reviewSceneId = this.world.location;
 			Object.assign(this.snapshot.state.flags, this.world.flags);
-			await this.enterLocation(this.world.location);
+			await this.enterLocation(readSceneRoute() ?? this.world.location);
 		} catch (error) {
 			this.emitOpenWorldState({ status: "error", message: String(error) });
+			window.dispatchEvent(new Event("anima:scene-load-error"));
 		} finally {
 			this.openWorldBusy = false;
 		}
@@ -1732,6 +1735,13 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private bindReviewEvents(): void {
+		// Native document navigation gives each scene a fresh motor, animations,
+		// and pending asset requests. History traversal must do the same.
+		const onHistory = () => window.location.reload();
+		window.addEventListener("popstate", onHistory);
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+			window.removeEventListener("popstate", onHistory);
+		});
 		const onSceneChange = (event: Event) => {
 			const sceneId = (event as CustomEvent<string>).detail;
 			if (typeof sceneId !== "string") return;

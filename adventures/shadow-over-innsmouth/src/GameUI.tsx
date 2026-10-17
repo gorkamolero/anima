@@ -1,5 +1,7 @@
 import { type EffectCallback, useEffect, useState } from "react";
 
+import { readSceneRoute, sceneUrl } from "./sceneRoute";
+
 type ReviewSceneId = string;
 type FeedbackStatus = "reviewing" | "approved" | "revise";
 
@@ -49,14 +51,14 @@ export function GameUI() {
 	const [sceneId, setSceneId] = useState<ReviewSceneId>(loadSceneId);
 	const [feedback, setFeedback] = useState<FeedbackStore>(loadFeedback);
 	const [savedMessage, setSavedMessage] = useState("");
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 	const [openWorld, setOpenWorld] = useState<OpenWorldUiState>({
 		status: "idle",
 	});
 	const [freeText, setFreeText] = useState("");
 	const [scenes, setScenes] = useState(SCENES);
 	const [sceneError, setSceneError] = useState("");
-	const [sceneLoading, setSceneLoading] = useState(false);
+	const [sceneLoading, setSceneLoading] = useState(true);
 	const activeFeedback = feedback[sceneId] ?? {
 		status: "reviewing",
 		notes: "",
@@ -103,7 +105,12 @@ export function GameUI() {
 			setSceneId((event as CustomEvent<string>).detail);
 			setSceneLoading(false);
 		};
-		const onSceneError = () => setSceneLoading(false);
+		const onSceneError = () => {
+			setSceneLoading(false);
+			setSceneError(
+				"This scene could not load. Choose another scene or refresh to retry.",
+			);
+		};
 		window.addEventListener("anima:location-changed", onLocation);
 		window.addEventListener("anima:scene-load-error", onSceneError);
 		return () => {
@@ -125,9 +132,7 @@ export function GameUI() {
 
 	const selectScene = (nextSceneId: ReviewSceneId) => {
 		setSceneLoading(true);
-		window.dispatchEvent(
-			new CustomEvent("anima:review-scene", { detail: nextSceneId }),
-		);
+		window.location.assign(sceneUrl(nextSceneId));
 	};
 
 	const updateActiveFeedback = (patch: Partial<SceneFeedback>) => {
@@ -187,8 +192,8 @@ export function GameUI() {
 			>
 				<div className="review-panel__header">
 					<div>
-						<p className="review-panel__eyebrow">Scene Review</p>
-						<h1>Walkable Scenes</h1>
+						<p className="review-panel__eyebrow">Walking preview</p>
+						<h1>Explore Innsmouth</h1>
 					</div>
 					<button
 						type="button"
@@ -196,12 +201,12 @@ export function GameUI() {
 						onClick={() => setIsOpen((current) => !current)}
 						aria-expanded={isOpen}
 					>
-						{isOpen ? "Hide" : "Review"}
+						{isOpen ? "Hide" : "Scenes"}
 					</button>
 				</div>
 
 				<div className="review-panel__body">
-					<span className="review-panel__status">{activeFeedback.status}</span>
+					<p>Choose a scene, then click the ground to walk.</p>
 
 					<label className="review-panel__field">
 						<span>Scene ({scenes.length})</span>
@@ -211,6 +216,9 @@ export function GameUI() {
 							disabled={sceneLoading}
 							onChange={(event) => selectScene(event.currentTarget.value)}
 						>
+							{!scenes.some((scene) => scene.id === sceneId) ? (
+								<option value={sceneId}>Loading selected scene…</option>
+							) : null}
 							{scenes.map((scene) => (
 								<option key={scene.id} value={scene.id}>
 									{scene.label}
@@ -221,42 +229,45 @@ export function GameUI() {
 					{sceneLoading ? <output>Loading scene…</output> : null}
 					{sceneError ? <p role="alert">{sceneError}</p> : null}
 
-					<label className="review-panel__field">
-						<span>Status</span>
-						<select
-							value={activeFeedback.status}
-							onChange={(event) =>
-								updateActiveFeedback({
-									status: event.currentTarget.value as FeedbackStatus,
-								})
-							}
-						>
-							<option value="reviewing">Reviewing</option>
-							<option value="approved">Approved</option>
-							<option value="revise">Revise</option>
-						</select>
-					</label>
+					<details>
+						<summary>Scene feedback</summary>
+						<label className="review-panel__field">
+							<span>Status</span>
+							<select
+								value={activeFeedback.status}
+								onChange={(event) =>
+									updateActiveFeedback({
+										status: event.currentTarget.value as FeedbackStatus,
+									})
+								}
+							>
+								<option value="reviewing">Reviewing</option>
+								<option value="approved">Approved</option>
+								<option value="revise">Revise</option>
+							</select>
+						</label>
 
-					<label className="review-panel__field">
-						<span>Feedback</span>
-						<textarea
-							value={activeFeedback.notes}
-							onChange={(event) =>
-								updateActiveFeedback({ notes: event.currentTarget.value })
-							}
-							placeholder="Write what should change in this scene."
-						/>
-					</label>
+						<label className="review-panel__field">
+							<span>Feedback</span>
+							<textarea
+								value={activeFeedback.notes}
+								onChange={(event) =>
+									updateActiveFeedback({ notes: event.currentTarget.value })
+								}
+								placeholder="Write what should change in this scene."
+							/>
+						</label>
 
-					<div className="review-panel__actions">
-						<button type="button" onClick={saveFeedback}>
-							Save
-						</button>
-						<button type="button" onClick={copyFeedback}>
-							Copy JSON
-						</button>
-						{savedMessage ? <span>{savedMessage}</span> : null}
-					</div>
+						<div className="review-panel__actions">
+							<button type="button" onClick={saveFeedback}>
+								Save
+							</button>
+							<button type="button" onClick={copyFeedback}>
+								Copy JSON
+							</button>
+							{savedMessage ? <span>{savedMessage}</span> : null}
+						</div>
+					</details>
 				</div>
 			</aside>
 		</>
@@ -354,7 +365,7 @@ function useMountEffect(effect: EffectCallback): void {
 
 function loadSceneId(): ReviewSceneId {
 	const stored = localStorage.getItem(REVIEW_SCENE_KEY);
-	return stored || "outside";
+	return readSceneRoute() ?? stored ?? "outside";
 }
 
 function loadFeedback(): FeedbackStore {
