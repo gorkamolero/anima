@@ -856,6 +856,7 @@ export class CharacterMotor {
 				minTerminalRun: 2,
 				minFirstHeadingRun: options.pivotStops === false ? 2 : 0,
 				searchWeight: 3,
+				directHeuristic: true,
 				stopWeight: 128,
 				costScale: 2,
 				cornerRadius: 1.2,

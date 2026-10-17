@@ -100,7 +100,7 @@ export interface SearchOptions {
 	restartCost?: number;
 	minRestartRun?: number;
 	entryPhases?: "authored" | "all";
-	/** Try a lower bound that does not require continuous floor between steps. */
+	/** Add a straight-distance queue for stalled searches with obstacle detours. */
 	directHeuristic?: boolean;
 	searchWeight?: number;
 	/** Queue preference only; never excludes an arrival orientation. */
@@ -190,16 +190,29 @@ class BalancedFrontier<T extends { priority: number; queuedTurnCost: number }> {
 	];
 	private visited = new WeakSet<T>();
 	private turn = 0;
-	constructor(private diversify: () => boolean) {}
+	private schedule: number[];
+	constructor(
+		private diversify: () => boolean,
+		private alternatePriority?: (node: T) => number,
+	) {
+		if (alternatePriority) this.queues.push(new Heap());
+		this.schedule = alternatePriority ? [0, 1, 0, 1, 2] : [0, 1];
+	}
 	push(node: T) {
 		this.queues[0].push({ priority: node.priority, node });
 		this.queues[1].push({
 			priority: node.priority - node.queuedTurnCost,
 			node,
 		});
+		if (this.alternatePriority)
+			this.queues[2].push({ priority: this.alternatePriority(node), node });
 	}
 	pop(): T | undefined {
-		const queue = this.queues[this.diversify() ? this.turn++ % 2 : 0];
+		// Preserve four out of five stalled expansions for the established queues.
+		const queue =
+			this.queues[
+				this.diversify() ? this.schedule[this.turn++ % this.schedule.length] : 0
+			];
 		for (let entry = queue.pop(); entry; entry = queue.pop()) {
 			if (this.visited.has(entry.node)) continue;
 			this.visited.add(entry.node);
@@ -371,6 +384,16 @@ export function planFootsteps<State, Pose>(
 						() =>
 							expanded - lastProgress >= (options.nodeBudget ?? 12000) / 8 &&
 							!best?.complete,
+						// Ignore small routing-grid inflation; preserve the ordinary queue
+						// order unless navigation indicates a substantial obstacle detour.
+						options.directHeuristic &&
+							initialDistance >
+								distance(ground(sim.position(initial)), goal) * 1.1
+							? (node) =>
+									node.g +
+									(options.searchWeight ?? 1) *
+										distance(ground(sim.position(node.state)), goal)
+							: undefined,
 					)
 				: new Heap<Node>();
 	const start: Node = {
