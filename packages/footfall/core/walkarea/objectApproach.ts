@@ -1,5 +1,5 @@
 import { baselineYAt, type Occluder } from "../occlusion/occlusion";
-import { cellPoint, findPath } from "./navigation";
+import { cellPoint, findWalkPath } from "./navigation";
 import type { Point } from "./perspective";
 import type { WalkArea } from "./types";
 export interface WalkObject {
@@ -30,9 +30,9 @@ export function objectApproach(
 		(a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y),
 	);
 	for (const point of candidates.slice(0, 128)) {
-		const path = findPath(mask, start, point),
+		const path = findWalkPath(area, start, point),
 			end = path[path.length - 1];
 		if (end && Math.hypot(end.x - point.x, end.y - point.y) < 1) return path;
 	}
-	return findPath(mask, start, { x, y });
+	return findWalkPath(area, start, { x, y });
 }

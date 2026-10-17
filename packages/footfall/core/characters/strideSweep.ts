@@ -41,6 +41,33 @@ function intervals(mask: FloorMask, a: Point, b: Point): number[] {
 	return cuts;
 }
 
+/** Visit the same sorted boundary cuts lazily so short gaps do not require
+ * allocating and sorting a ray across the entire scene. Keep duplicate cuts
+ * at grid corners, matching intervals().sort(). */
+function* orderedIntervals(mask: FloorMask, a: Point, b: Point) {
+	const axes = [
+		[a.x, b.x, 1920 / mask.width],
+		[a.y, b.y, 1080 / mask.height],
+	].map(([start, end, size]) => {
+		const step = Math.sign(end - start);
+		const cell =
+			step > 0 ? Math.floor(start / size) + 1 : Math.ceil(start / size) - 1;
+		return { start, end, size, step, cell };
+	});
+	yield 0;
+	for (;;) {
+		const values = axes.map(({ start, end, size, step, cell }) => {
+			const t = step ? (cell * size - start) / (end - start) : Infinity;
+			return t < 1 ? t : Infinity;
+		});
+		const axis = values[0] <= values[1] ? 0 : 1;
+		if (!Number.isFinite(values[axis])) break;
+		yield values[axis];
+		axes[axis].cell += axes[axis].step;
+	}
+	yield 1;
+}
+
 /** The soles must have support. Only the airborne gap between them may lack
  * floor; a prop or a clearance exclusion on real floor is never a gap. Widths
  * are measured in ground metres, not a fixed number of screen pixels. */
@@ -89,9 +116,11 @@ export function strideSweep(
 					x: p.x + ((sign * dx) / length) * 3000,
 					y: p.y + ((sign * dy) / length) * 3000,
 				};
-				const cuts = intervals(raw, p, end).sort((a, b) => a - b);
-				for (let i = 1; i < cuts.length; i++) {
-					const t = cuts[i - 1] + Math.min(1e-7, (cuts[i] - cuts[i - 1]) / 2);
+				let previous = 0;
+				for (const cut of orderedIntervals(raw, p, end)) {
+					if (cut === 0) continue;
+					const t = previous + Math.min(1e-7, (cut - previous) / 2);
+					previous = cut;
 					const candidate = {
 						x: p.x + (end.x - p.x) * t,
 						y: p.y + (end.y - p.y) * t,
