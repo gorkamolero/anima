@@ -67,6 +67,8 @@ import {
 
 const SAVE_KEY = "anima.shadow-over-innsmouth.save";
 const SESSION_KEY = "anima.shadow-over-innsmouth.session";
+const WALKING_PREVIEW = import.meta.env.VITE_WALKING_PREVIEW === "1";
+
 const REVIEW_SCENE_KEY = "anima.shadow-over-innsmouth.review-scene";
 const API_BASE_URL =
 	import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001/api";
@@ -923,6 +925,10 @@ export class StoryGameScene extends BaseScene {
 			void this.walkGenerated(pointer.x, pointer.y);
 			return;
 		}
+		if (WALKING_PREVIEW) {
+			void this.walkGenerated(pointer.x, pointer.y);
+			return;
+		}
 		const scene = this.activeScene();
 		if (
 			this.visibleFloor &&
@@ -985,6 +991,12 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private updateReviewHotspotHover(): void {
+		if (WALKING_PREVIEW) {
+			this.stateText.setText(
+				"Click the ground to walk. Use Scenes to change location.",
+			);
+			return;
+		}
 		const scene = this.activeScene();
 		const pointer = this.input.activePointer;
 		const interactable = this.findInteractableAtPoint(pointer.x, pointer.y);
@@ -1105,6 +1117,7 @@ export class StoryGameScene extends BaseScene {
 			this.geometryReady = true;
 			this.optionsCache.clear();
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
+			if (WALKING_PREVIEW) return;
 			const location = this.locationId();
 			this.dwellTimer = setTimeout(() => {
 				if (location !== this.locationId()) return;
@@ -1290,6 +1303,7 @@ export class StoryGameScene extends BaseScene {
 			const primary = this.sceneExits.find((e) => e.kind === exit.kind);
 			if (primary) exit = { ...exit, id: primary.id, to: primary.to };
 		}
+		if (WALKING_PREVIEW && !exit.to) return;
 		const from = this.locationId();
 		this.travellingExit = { from, exit };
 		try {
@@ -1374,6 +1388,7 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private async resolveNarration(choice: string): Promise<void> {
+		if (WALKING_PREVIEW) return;
 		const interactable = this.selectedInteractable;
 		const physicalExit = Boolean(this.travellingExit);
 		if (!interactable || this.openWorldBusy) return;
