@@ -17,6 +17,7 @@ import { interactablesRoutes } from "./routes/interactables.js";
 import { narrateRoutes } from "./routes/narrate.js";
 import { occludersRoutes } from "./routes/occluders.js";
 import { placesRoutes } from "./routes/places.js";
+import { recordingsRoutes } from "./routes/recordings.js";
 import { sceneImageRoutes } from "./routes/scene-image.js";
 import { worldRoutes } from "./routes/world.js";
 
@@ -52,6 +53,7 @@ app.route("/api", occludersRoutes);
 app.route("/api", interactablesRoutes);
 app.route("/api", narrateRoutes);
 app.route("/api", sceneImageRoutes);
+app.route("/api", recordingsRoutes);
 
 // Generated scene images are served by the api, not Vite (see scene-image.ts)
 const generatedRoot = existsSync(resolve(process.cwd(), "adventures"))

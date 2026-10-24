@@ -117,6 +117,45 @@ export interface AgentDebugApi {
 		bodyPoints: number;
 		occluders: string[];
 	};
+	/**
+	 * Record the real, live-rendered canvas as video for `ms` while `action`
+	 * runs, with one telemetry sample per rendered frame (position, scale,
+	 * drawing, ground anchor, planted sole). Both are posted to the dev API
+	 * (`POST /api/dev/recordings/<name>`), landing in `tmp/recordings/`.
+	 * Unlike `captureFrame`, this films what the player sees, at the
+	 * display's own rate; nothing is stepped or simulated.
+	 */
+	record(options: {
+		name: string;
+		ms: number;
+		action?: () => void;
+		apiBase?: string;
+		characterId?: string;
+	}): Promise<RecordingSummary>;
+}
+export interface RecordingSample {
+	/** Milliseconds since recording start, at this render. */
+	t: number;
+	x: number;
+	y: number;
+	scale: number;
+	texture: string;
+	frame: number;
+	flipX: boolean;
+	anchor?: { x: number; y: number };
+	walking?: boolean;
+	heading?: string;
+	/** Screen position of the planted sole, when the motor exposes its pose. */
+	sole?: { foot: string; x: number; y: number };
+	bounds: { x: number; y: number; width: number; height: number };
+}
+export interface RecordingSummary {
+	name: string;
+	ms: number;
+	samples: number;
+	bytes: number;
+	video: string;
+	telemetry: string;
 }
 
 /**
@@ -449,6 +488,135 @@ export function installAgentDebug(scene: BaseScene): void {
 		},
 		visibility(characterId) {
 			return measureVisibility(scene, characterId);
+		},
+		async record(options) {
+			const apiBase = options.apiBase ?? "http://localhost:3001/api";
+			const characterId = options.characterId ?? "hermes";
+			const canvas = game.canvas as HTMLCanvasElement & {
+				captureStream(frameRate?: number): MediaStream;
+			};
+			const stream = canvas.captureStream();
+			const mimeType = ["video/webm;codecs=vp9", "video/webm"].find((m) =>
+				MediaRecorder.isTypeSupported(m),
+			);
+			const recorder = new MediaRecorder(stream, {
+				mimeType,
+				videoBitsPerSecond: 60_000_000,
+			});
+			const chunks: Blob[] = [];
+			recorder.ondataavailable = (event) => {
+				if (event.data.size) chunks.push(event.data);
+			};
+			const samples: RecordingSample[] = [];
+			const t0 = performance.now();
+			const character = scene.children
+				.getAll()
+				.find(
+					(child): child is Character =>
+						child instanceof Character &&
+						child.getCharacterId() === characterId,
+				);
+			const onRender = () => {
+				if (!character) return;
+				const motor = character.motor as unknown as
+					| {
+							pose?: {
+								cycle: {
+									contacts: {
+										planted: string;
+										L: { x: number; y: number };
+										R: { x: number; y: number };
+									}[];
+									frameWidth: number;
+									frameHeight: number;
+								};
+								frame: number;
+								flipX: boolean;
+							};
+							anchor: { x: number; y: number };
+							walking: boolean;
+							heading: string;
+					  }
+					| undefined;
+				const pose = motor?.pose;
+				let sole: RecordingSample["sole"];
+				if (pose) {
+					const contact = pose.cycle.contacts[pose.frame];
+					const point = contact[contact.planted as "L" | "R"];
+					sole = {
+						foot: contact.planted,
+						x:
+							character.x +
+							(point.x - pose.cycle.frameWidth / 2) *
+								(pose.flipX ? -1 : 1) *
+								character.scaleX,
+						y:
+							character.y +
+							(point.y - pose.cycle.frameHeight) * character.scaleY,
+					};
+				}
+				samples.push({
+					t: performance.now() - t0,
+					x: character.x,
+					y: character.y,
+					scale: character.scaleX,
+					texture: character.texture.key,
+					frame: Number(character.frame.name),
+					flipX: character.flipX,
+					anchor: motor ? { ...motor.anchor } : undefined,
+					walking: motor?.walking,
+					heading: motor?.heading,
+					sole,
+					bounds: rect(character.getBounds()),
+				});
+			};
+			game.events.on("postrender", onRender);
+			recorder.start(100);
+			try {
+				options.action?.();
+				await new Promise((resolve) => setTimeout(resolve, options.ms));
+			} finally {
+				game.events.off("postrender", onRender);
+			}
+			const stopped = new Promise<void>((resolve) => {
+				recorder.onstop = () => resolve();
+			});
+			recorder.stop();
+			await stopped;
+			for (const track of stream.getTracks()) track.stop();
+			const video = new Blob(chunks, { type: mimeType ?? "video/webm" });
+			const upload = await fetch(`${apiBase}/dev/recordings/${options.name}`, {
+				method: "POST",
+				headers: { "Content-Type": video.type },
+				body: video,
+			});
+			if (!upload.ok)
+				throw new Error(`Recording upload failed: ${await upload.text()}`);
+			const videoInfo = (await upload.json()) as { path: string };
+			const telemetry = await fetch(
+				`${apiBase}/dev/recordings/${options.name}`,
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						name: options.name,
+						ms: options.ms,
+						characterId,
+						samples,
+					}),
+				},
+			);
+			if (!telemetry.ok)
+				throw new Error(`Telemetry upload failed: ${await telemetry.text()}`);
+			const telemetryInfo = (await telemetry.json()) as { path: string };
+			return {
+				name: options.name,
+				ms: options.ms,
+				samples: samples.length,
+				bytes: video.size,
+				video: videoInfo.path,
+				telemetry: telemetryInfo.path,
+			};
 		},
 	};
 

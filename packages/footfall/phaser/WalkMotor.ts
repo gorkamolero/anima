@@ -340,10 +340,12 @@ export class WalkMotor {
 		}
 		this.setWalkingHeading(this.headingTowards(target));
 		// Drive lateral cycles by distance so the planted sole stays on the boards
-		// at any speed; depth cycles have no lateral sole travel, so they keep time.
+		// at any speed. Use the cycle's mean step, not each frame's tracked step:
+		// per-frame steps carry tracking noise, and locking to them would turn
+		// that noise into an uneven animation cadence. Depth cycles keep time.
 		const g = this.gait(this.pose.cycle);
 		const index = Math.floor(this.phase) % this.pose.cycle.contacts.length;
-		const drawnStep = g.steps[index] * this.scale * this.sheetScale(this.pose);
+		const drawnStep = g.mean * this.scale * this.sheetScale(this.pose);
 		this.phase +=
 			g.lateral && drawnStep > 0
 				? Math.abs(this.anchor.x - from.x) / drawnStep
