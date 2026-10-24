@@ -167,6 +167,11 @@ for (let k = 0; k < total; k++) {
 		"-compose",
 		"CopyOpacity",
 		"-composite",
+		// Interpolated frames come back with softer alpha edges than the source
+		// drawings; firm them up so the silhouette does not pulse every nth frame.
+		...(k % factor === 0
+			? []
+			: ["-channel", "A", "-sigmoidal-contrast", "7x50%", "+channel"]),
 		"-resize",
 		`${resize}%`,
 		frame,

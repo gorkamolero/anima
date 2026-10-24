@@ -41,6 +41,7 @@ export {
 	nearestCell,
 	nearestReachable,
 	refineMask,
+	roundCorners,
 } from "./walkarea/navigation";
 export {
 	objectApproach,

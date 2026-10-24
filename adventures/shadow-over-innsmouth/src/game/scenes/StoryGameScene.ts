@@ -22,6 +22,7 @@ import {
 	objectFacingPoint,
 	renderDepthForOccluder,
 	resolveReturnExit,
+	roundCorners,
 	sceneExitApproaches,
 	type WalkArea,
 	type WalkDirection,
@@ -970,9 +971,16 @@ export class StoryGameScene extends BaseScene {
 
 	/** Read-only path preview for editor and click-to-walk verification. */
 	public previewWalk(x: number, y: number): ScenePoint[] {
-		return this.walkArea && this.hermesSprite
-			? findWalkPath(this.walkArea, this.hermesSprite, { x, y })
-			: [];
+		// Route from the ground point under the feet, not the sprite origin: the
+		// origin sits below the soles, and starting there bends every walk downhill.
+		const start = this.hermesMotor?.anchor ?? this.hermesSprite;
+		if (!this.walkArea || !start) return [];
+		// Round route corners so a detour ramps perspective smoothly instead of kinking.
+		return roundCorners(
+			this.walkArea.mask,
+			findWalkPath(this.walkArea, start, { x, y }),
+			80,
+		);
 	}
 	/** Both authored and generated free walks use the same navigation. */
 	public async walkGenerated(x: number, y: number): Promise<void> {

@@ -4,6 +4,8 @@ import type { Point } from "../walkarea/perspective";
 export interface ArrivalMotor {
 	heading: WalkDirection;
 	target: Point;
+	/** Ground point under the feet; preferred over the sprite origin for routing. */
+	anchor?: Point;
 	placeContact(point: Point): void;
 	inwardStop(point: Point): Point | undefined;
 }
@@ -160,6 +162,6 @@ export function beginArrival(
 			(edge ? 80 : kind === "near" ? -80 : kind === "far" ? 230 : 100),
 	};
 	const destination = edge ? (motor.inwardStop(desired) ?? desired) : desired;
-	const path = findPath(area.mask, motor.target, destination);
+	const path = findPath(area.mask, motor.anchor ?? motor.target, destination);
 	return path;
 }

@@ -69,7 +69,7 @@ export class WalkMotor {
 	private goal?: Point;
 	private phase = 0;
 	private resolve?: () => void;
-	private offsets = new Map<string, GroundOffset>();
+	private offsets = new Map<string, { x: number; soleY: number[] }>();
 	private gaits = new Map<string, GaitProfile>();
 	private readonly speed: number;
 	private readonly tolerance: number;
@@ -141,33 +141,40 @@ export class WalkMotor {
 		return metresPerDrawing / secondsPerDrawing;
 	}
 
-	/** Mean sole midpoint of a sheet, relative to the sprite origin (bottom centre),
-	 * in unscaled sheet pixels. Averaged over the cycle so the body never inherits
-	 * per-frame tracking noise; the gait's own bob is in the drawings. */
+	/** Offset from the sprite origin (bottom centre) to the ground point, in
+	 * unscaled sheet pixels. Horizontal: the drawn body centre, averaged over
+	 * the cycle so tracking noise never reaches the body. Vertical: the lower
+	 * sole of the current frame, so the planted foot rests on the ground row
+	 * and the body bobs as drawn instead of the feet sinking and floating. */
 	private groundOffset(pose: FootPose): GroundOffset {
 		const key = `${pose.cycle.name}:${pose.flipX ? "f" : "n"}`;
-		const cached = this.offsets.get(key);
-		if (cached) return cached;
-		const { contacts, frameWidth, frameHeight, bodyCentreX } = pose.cycle;
-		let x = 0;
-		let y = 0;
-		for (const frame of contacts) {
-			x += (frame.L.x + frame.R.x) / 2 - frameWidth / 2;
-			y += Math.max(frame.L.y, frame.R.y) - frameHeight;
+		let sheet = this.offsets.get(key);
+		if (!sheet) {
+			const { contacts, frameWidth, frameHeight, bodyCentreX } = pose.cycle;
+			let x = 0;
+			for (const frame of contacts)
+				x += (frame.L.x + frame.R.x) / 2 - frameWidth / 2;
+			const bodyX =
+				bodyCentreX !== undefined
+					? bodyCentreX - frameWidth / 2
+					: x / contacts.length;
+			// Tracked contacts re-seed at each support switch, which leaves small
+			// steps in the lower-sole row. Smooth it around the cycle so the body
+			// glides; the planted sole stays within a pixel or two of the ground.
+			const raw = contacts.map(
+				(frame) => Math.max(frame.L.y, frame.R.y) - frameHeight,
+			);
+			const n = raw.length;
+			const half = Math.max(1, Math.round(n / 16));
+			const soleY = raw.map((_, i) => {
+				let sum = 0;
+				for (let k = -half; k <= half; k++) sum += raw[(i + k + n) % n];
+				return sum / (2 * half + 1);
+			});
+			sheet = { x: bodyX * (pose.flipX ? -1 : 1), soleY };
+			this.offsets.set(key, sheet);
 		}
-		// Align sheets on the drawn body when the sheet records it: a side walker's
-		// feet sit well ahead of the torso, and the torso is what the eye tracks
-		// across a cycle change. The feet still rest on the ground row.
-		const bodyX =
-			bodyCentreX !== undefined
-				? bodyCentreX - frameWidth / 2
-				: x / contacts.length;
-		const offset = {
-			x: bodyX * (pose.flipX ? -1 : 1),
-			y: y / contacts.length,
-		};
-		this.offsets.set(key, offset);
-		return offset;
+		return { x: sheet.x, y: sheet.soleY[pose.frame] ?? sheet.soleY[0] };
 	}
 
 	/** Sprite scale multiplier for a sheet: brings a reduced-resolution sheet back
