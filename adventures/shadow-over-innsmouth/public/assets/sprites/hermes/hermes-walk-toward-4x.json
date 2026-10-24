@@ -1233,35 +1233,8 @@
 			52
 		]
 	},
-	"pixelScale": 0.5,
-	"stabilisedShiftY": [
-		6,
-		6,
-		6,
-		1,
-		-6,
-		-9,
-		-9,
-		-5,
-		-2,
-		6,
-		6,
-		6,
-		6,
-		6,
-		6,
-		6,
-		1,
-		-8,
-		-14,
-		-14,
-		-8,
-		0,
-		6,
-		6,
-		6
-	],
 	"bodyCentreX": 156.6,
 	"bodyCentreY": 259.8,
-	"drawnHeight": 513.7
+	"drawnHeight": 513.8,
+	"pixelScale": 0.5
 }
