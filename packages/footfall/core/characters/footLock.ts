@@ -25,6 +25,10 @@ export interface FootCycle {
 	};
 	/** Visually verified passing poses; free-foot tracking alone is ambiguous at overlap. */
 	passingFrames?: number[];
+	/** Mean horizontal centre of the drawn body (opaque pixels), in sheet pixels. */
+	bodyCentreX?: number;
+	/** Mean height of the drawn body in sheet pixels, for cross-sheet size normalisation. */
+	drawnHeight?: number;
 }
 export interface FootPose {
 	/** Only the entry stance from standing gets the start-facing tolerance. */

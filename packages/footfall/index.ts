@@ -60,5 +60,5 @@ export {
 	sceneExitApproaches,
 } from "./core/walkarea/sceneGeometry";
 export type { FloorMask, WalkArea } from "./core/walkarea/types";
-export type { FootAnimation } from "./phaser/CharacterMotor";
-export { CharacterMotor } from "./phaser/CharacterMotor";
+export type { FootAnimation, WalkMotorOptions } from "./phaser/WalkMotor";
+export { WalkMotor as CharacterMotor, WalkMotor } from "./phaser/WalkMotor";

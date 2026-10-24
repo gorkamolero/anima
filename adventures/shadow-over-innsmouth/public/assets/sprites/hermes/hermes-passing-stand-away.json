@@ -148,5 +148,7 @@
 			"boundary": false
 		},
 		"retired": "hermes-matched-stand-away"
-	}
+	},
+	"bodyCentreX": 287.5,
+	"drawnHeight": 988.0
 }

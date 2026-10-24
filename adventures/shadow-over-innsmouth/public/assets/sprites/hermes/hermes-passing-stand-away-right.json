@@ -116,5 +116,7 @@
 				"legsRgbMAE": 10.179146937348191
 			}
 		]
-	}
+	},
+	"bodyCentreX": 307.5,
+	"drawnHeight": 1033.0
 }

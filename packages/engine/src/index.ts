@@ -65,8 +65,8 @@ export {
 	sceneExitApproaches,
 } from "@anima/footfall/core/walkarea/sceneGeometry";
 export type { FloorMask, WalkArea } from "@anima/footfall/core/walkarea/types";
-export type { FootAnimation } from "@anima/footfall/phaser/CharacterMotor";
-export { CharacterMotor } from "@anima/footfall/phaser/CharacterMotor";
+export type { FootAnimation } from "@anima/footfall/phaser/WalkMotor";
+export { WalkMotor as CharacterMotor } from "@anima/footfall/phaser/WalkMotor";
 export type {
 	ActiveSound,
 	AmbientSoundConfig,

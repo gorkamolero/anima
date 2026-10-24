@@ -1,4 +1,4 @@
-import type { CharacterMotor } from "@anima/footfall/phaser/CharacterMotor";
+import type { WalkMotor as CharacterMotor } from "@anima/footfall/phaser/WalkMotor";
 import { GameObjects, type Scene } from "phaser";
 import { registerWithEditor } from "../editor";
 import {

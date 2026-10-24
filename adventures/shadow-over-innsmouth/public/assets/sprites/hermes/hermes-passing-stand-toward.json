@@ -148,5 +148,7 @@
 			"boundary": false
 		},
 		"retired": "hermes-matched-stand-toward"
-	}
+	},
+	"bodyCentreX": 298.0,
+	"drawnHeight": 992.0
 }
