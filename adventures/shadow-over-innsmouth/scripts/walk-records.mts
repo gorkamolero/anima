@@ -5,7 +5,10 @@ import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
-import { classifyOccluder } from "@anima/footfall/core/occlusion/occlusion";
+import {
+	classifyOccluder,
+	type Occluder,
+} from "@anima/footfall/core/occlusion/occlusion";
 import { sceneFloor } from "@anima/footfall/core/walkarea/sceneFloor";
 import {
 	applySceneFootprints,
@@ -71,7 +74,7 @@ export function loadWalkRecords(location: string) {
 		(ground
 			? { horizonY: ground.horizonY, slope: ground.scaleSlope }
 			: undefined);
-	const objects = json(`${stem}.occluders.json`).map((o) =>
+	const objects = (json(`${stem}.occluders.json`) as Occluder[]).map((o) =>
 		perspective ? classifyOccluder(o, perspective) : o,
 	);
 	const alphaImages = JSON.parse(
@@ -139,7 +142,7 @@ print(json.dumps(out))`,
 				);
 	const final = sceneExitApproaches(
 		exits,
-		stored.connections.filter((c) => c.scene === location),
+		stored.connections.filter((c: { scene: string }) => c.scene === location),
 		area,
 		authored?.hotspots,
 		1064,
@@ -156,7 +159,9 @@ print(json.dumps(out))`,
 			: undefined,
 		layers,
 		visible: area.rawMask,
-		connections: stored.connections.filter((c) => c.scene === location),
+		connections: stored.connections.filter(
+			(c: { scene: string }) => c.scene === location,
+		),
 		description: place?.description ?? authored.description,
 		location,
 		area,
