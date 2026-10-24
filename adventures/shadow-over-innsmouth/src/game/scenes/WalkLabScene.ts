@@ -7,12 +7,32 @@ import {
 import {
 	type FloorMask,
 	type FootCycle,
+	type FootPose,
 	findWalkPath,
 	type WalkArea,
+	type WalkDirection,
 	WalkMotor,
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
 import { hermesFootAnimation } from "./hermesFootAnimation";
+
+/** The lab can swap the side cycle (`&sheet=`) to compare candidate sheets. */
+function labFootAnimation(
+	cycle: (texture: string) => FootCycle,
+	current: () => FootPose,
+	show: (pose: FootPose) => void,
+	sideSheet: string,
+) {
+	const base = hermesFootAnimation(cycle, current, show);
+	return {
+		...base,
+		select(direction: WalkDirection) {
+			if (direction === "left" || direction === "right")
+				return { cycle: cycle(sideSheet), flipX: direction === "right" };
+			return base.select(direction);
+		},
+	};
+}
 
 /**
  * Walk lab: a black field, one white line, Hermes and nothing else.
@@ -43,13 +63,17 @@ export class WalkLabScene extends BaseScene {
 		super({ key: "WalkLabScene" });
 	}
 
+	private get sideSheet(): string {
+		return this.params.get("sheet") ?? "hermes-fal-veo-transparent-loop-4x";
+	}
+
 	private get lineY(): number {
 		return Number(this.params.get("y")) || 900;
 	}
 
 	preload(): void {
 		const sheets = [
-			"hermes-fal-veo-transparent-loop-4x",
+			this.sideSheet,
 			"hermes-walk-away-4x",
 			"hermes-walk-toward-4x",
 			"hermes-walk-away-right-4x",
@@ -131,7 +155,7 @@ export class WalkLabScene extends BaseScene {
 			this.hermes,
 			area,
 			() => this.hermes?.anims.stop(),
-			hermesFootAnimation(cycle, current, show),
+			labFootAnimation(cycle, current, show, this.sideSheet),
 			{
 				speedMetresPerSecond: Number(this.params.get("speed")) || undefined,
 				verticalBob: Number(this.params.get("bob")) || 0,
