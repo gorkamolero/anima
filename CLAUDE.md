@@ -82,6 +82,7 @@ cd adventures/shadow-over-innsmouth && pnpm verify:art # live scene vs art landm
 # videos drift the figure and snap it back at each footfall.
 uv run scripts/sprite-factory.py audit-drift --sheet <sheet-base>   # FAIL = jerk in game
 uv run scripts/sprite-factory.py register --sheet <sheet-base>      # fix in place
+uv run scripts/sprite-factory.py audit-steps --sheet <sheet-base>   # FAIL = limp (steps differ)
 ```
 
 ## Sprite Tools Dependencies

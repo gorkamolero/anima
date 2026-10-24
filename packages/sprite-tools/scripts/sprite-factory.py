@@ -723,5 +723,37 @@ def register(sheet: str):
 
 
 
+@cli.command("audit-steps")
+@click.option("--sheet", required=True, type=click.Path(), help="Sheet base path, without extension (needs contacts and switchFrames)")
+@click.option("--max-ratio", default=1.2, type=float, help="Allowed ratio between the longest and shortest step, in frames and in travel")
+def audit_steps(sheet: str, max_ratio: float):
+    """Fail if the steps of a walk cycle differ in length or duration: a limp."""
+    base = Path(sheet)
+    meta = json.loads(base.with_suffix(".json").read_text())
+    contacts, switches = meta.get("contacts", []), meta.get("switchFrames", [])
+    if len(contacts) < 2 or len(switches) < 2:
+        raise click.ClickException("sheet has no tracked contacts or switch frames")
+    n = len(contacts)
+    stances = []
+    for k, start in enumerate(switches):
+        end = switches[(k + 1) % len(switches)]
+        length = (end - start) % n or n
+        foot = contacts[start]["planted"]
+        travel = sum(
+            abs(contacts[(start + i + 1) % n][foot]["x"] - contacts[(start + i) % n][foot]["x"])
+            for i in range(length - 1)
+        )
+        stances.append((foot, length, travel))
+    frames_ratio = max(l for _, l, _ in stances) / min(l for _, l, _ in stances)
+    travels = [t for _, _, t in stances]
+    travel_ratio = (max(travels) / min(travels)) if min(travels) > 1e-6 else 1.0
+    lateral = max(travels) > meta["frameWidth"] * 0.1
+    verdict = "PASS" if frames_ratio <= max_ratio and (not lateral or travel_ratio <= max_ratio) else "FAIL"
+    detail = ", ".join(f"{foot}: {l} frames / {t:.0f}px" for foot, l, t in stances)
+    click.echo(f"{verdict} {base.name}: steps {detail}; frame ratio {frames_ratio:.2f}, travel ratio {travel_ratio:.2f} (allowed {max_ratio:.2f})")
+    if verdict == "FAIL":
+        raise SystemExit(1)
+
+
 if __name__ == "__main__":
     cli()
