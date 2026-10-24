@@ -52,12 +52,20 @@ const out = resolve(dir, name);
 const framesDir = resolve(out, "frames");
 mkdirSync(framesDir, { recursive: true });
 
-const FONT = ["/System/Library/Fonts/Supplemental/Arial.ttf", "/System/Library/Fonts/Helvetica.ttc", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"].find(existsSync);
+const FONT = [
+	"/System/Library/Fonts/Supplemental/Arial.ttf",
+	"/System/Library/Fonts/Helvetica.ttc",
+	"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+].find(existsSync);
 const run = (cmd, argv) => {
 	try {
-		return execFileSync(cmd, argv, { stdio: ["ignore", "pipe", "pipe"] }).toString();
+		return execFileSync(cmd, argv, {
+			stdio: ["ignore", "pipe", "pipe"],
+		}).toString();
 	} catch (error) {
-		console.error(`${cmd} ${argv.join(" ")}\n${error.stderr?.toString() ?? error.message}`);
+		console.error(
+			`${cmd} ${argv.join(" ")}\n${error.stderr?.toString() ?? error.message}`,
+		);
 		process.exit(1);
 	}
 };
@@ -277,8 +285,12 @@ const stat = (arr) => {
 		? `median ${s[s.length >> 1].toFixed(2)} p90 ${s[Math.floor(s.length * 0.9)].toFixed(2)} max ${s.at(-1).toFixed(2)} n ${s.length}`
 		: "none";
 };
+const sampleSteps = samples
+	.slice(1)
+	.filter((b) => b.walking)
+	.map((b, i) => Math.hypot(b.x - samples[i].x, b.y - samples[i].y));
 lines.push(
-	`body px per video frame while walking: ${stat(steps)}; frames with zero motion: ${steps.filter((d) => d === 0).length}`,
+	`body px per video frame while walking: ${stat(steps)}; render samples with zero motion: ${sampleSteps.filter((d) => d === 0).length} of ${sampleSteps.length}`,
 );
 lines.push(`drawing holds (video frames per drawing): ${stat(holds)}`);
 lines.push(`planted sole slide per drawing change: ${stat(slides)}`);
