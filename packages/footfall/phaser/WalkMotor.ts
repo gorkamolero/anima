@@ -212,23 +212,33 @@ export class WalkMotor {
 				bodyCentreX !== undefined
 					? bodyCentreX - frameWidth / 2
 					: x / contacts.length;
-			// Tracked contacts re-seed at each support switch, which leaves small
-			// steps in the lower-sole row. Smooth it around the cycle so the body
-			// glides; the planted sole stays within a pixel or two of the ground.
+			// Bob as the body really does it: the hip drops as the legs spread and
+			// rises as the support leg comes vertical (an inverted pendulum). Foot
+			// spread is read from the contacts, which track cleanly; the drop is
+			// leg length minus the pendulum height for that spread. Both strides
+			// get the same curve.
 			const raw = contacts.map(
 				(frame) => Math.max(frame.L.y, frame.R.y) - frameHeight,
 			);
 			const n = raw.length;
-			const half = Math.max(1, Math.round(n / 16));
-			const soleY = raw.map((_, i) => {
+			const leg = 0.53 * (pose.cycle.drawnHeight ?? frameHeight * 0.9);
+			const spread = contacts.map((frame) => Math.abs(frame.L.x - frame.R.x));
+			const half = Math.max(1, Math.round(n / 24));
+			const dip = spread.map((_, i) => {
 				let sum = 0;
-				for (let k = -half; k <= half; k++) sum += raw[(i + k + n) % n];
-				return sum / (2 * half + 1);
+				for (let k = -half; k <= half; k++) sum += spread[(i + k + n) % n];
+				const s = sum / (2 * half + 1) / 2;
+				return leg - Math.sqrt(Math.max(0, leg * leg - s * s));
 			});
+			const curve = symmetricStride(dip, pose.cycle.switchFrames);
+			const dipMean = curve.reduce((a, b) => a + b, 0) / n;
+			const base = raw.reduce((a, b) => a + b, 0) / n;
+			// Lower the body by the drop: a smaller offset draws the origin lower.
+			const soleY = curve.map((d) => base - (d - dipMean));
 			sheet = {
 				x: bodyX * (pose.flipX ? -1 : 1),
-				soleY: symmetricStride(soleY, pose.cycle.switchFrames),
-				mean: soleY.reduce((a, b) => a + b, 0) / n,
+				soleY,
+				mean: base,
 			};
 			this.offsets.set(key, sheet);
 		}
