@@ -119,7 +119,9 @@ export class WalkMotor {
 			steps: raw.map((v) => (Number.isFinite(v) && v > 0 ? v : mean)),
 			mean,
 			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
-			lateral: mean >= 4,
+			// Lateral when the sole travels at least a quarter frame width per
+			// cycle; depth cycles track a few pixels of noise at most.
+			lateral: mean * n >= cycle.frameWidth / 4,
 		};
 		this.gaits.set(cycle.name, profile);
 		return profile;
@@ -132,7 +134,8 @@ export class WalkMotor {
 		if (!g.lateral) return 1.3;
 		const ppm =
 			this.area.perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
-		const metresPerDrawing = (g.mean * this.area.baseScale) / ppm;
+		const metresPerDrawing =
+			(g.mean / (pose.cycle.pixelScale ?? 1)) * (this.area.baseScale / ppm);
 		const secondsPerDrawing =
 			g.durations.reduce((a, b) => a + b, 0) / g.durations.length / 1000;
 		return metresPerDrawing / secondsPerDrawing;
@@ -167,11 +170,20 @@ export class WalkMotor {
 		return offset;
 	}
 
-	/** Sheets drawn at slightly different sizes are normalised to the side cycle. */
+	/** Sprite scale multiplier for a sheet: brings a reduced-resolution sheet back
+	 * to canonical size and normalises drawn height against the side cycle. */
 	private sheetScale(pose: FootPose): number {
-		const reference = this.animation.select("left").cycle.drawnHeight;
-		const own = pose.cycle.drawnHeight;
-		return reference && own ? reference / own : 1;
+		const reference = this.animation.select("left").cycle;
+		const own = pose.cycle;
+		const ownPixel = own.pixelScale ?? 1;
+		const canonical = (h?: number, p = 1) => (h ? h / p : undefined);
+		const refHeight = canonical(
+			reference.drawnHeight,
+			reference.pixelScale ?? 1,
+		);
+		const ownHeight = canonical(own.drawnHeight, ownPixel);
+		const normalise = refHeight && ownHeight ? refHeight / ownHeight : 1;
+		return normalise / ownPixel;
 	}
 
 	private apply(): void {
