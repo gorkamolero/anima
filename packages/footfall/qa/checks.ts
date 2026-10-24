@@ -18,7 +18,7 @@ export interface FrameLog {
 		heading?: string;
 		anchor: Point;
 		ground: Point;
-		arrival?: { target: Point; anchor: Point; halfStride: number };
+		arrival?: { target: Point; anchor: Point };
 	};
 }
 export type SheetLookup = (texture: string) => FootCycle;
@@ -205,51 +205,19 @@ export function checkFacing(
 		changeLimit,
 	};
 }
-/** Port of arrival_vs_standable.py; choose the nearest clearance cell in raster space. */
-export function checkArrival(rows: readonly FrameLog[], geometry: GeometryLog) {
+/** Completed walks reach the exact navigation endpoint; scene transfers are separate. */
+export function checkArrival(rows: readonly FrameLog[]) {
 	const end = rows.filter((r) => r.contact.arrival).at(-1);
 	if (!end) return { status: "unmeasured" as const };
 	if (end.location !== (rows.find((r) => r.walking)?.location ?? end.location))
 		return { status: "exit" as const };
-	const area = areaAt(geometry, end),
-		mask = area.clearanceMask ?? area.mask,
-		a = end.contact.arrival as NonNullable<FrameLog["contact"]["arrival"]>;
-	const x = Math.min(
-			mask.width - 1,
-			Math.max(0, Math.trunc((a.target.x * mask.width) / 1920)),
-		),
-		y = Math.min(
-			mask.height - 1,
-			Math.max(0, Math.trunc((a.target.y * mask.height) / 1080)),
-		);
-	let best = Infinity,
-		point: Point | undefined;
-	// Column-first order matches EDT's tie preference on the first transform axis.
-	for (let col = 0; col < mask.width; col++)
-		for (let row = 0; row < mask.height; row++)
-			if (mask.data[row * mask.width + col]) {
-				const d = (col - x) ** 2 + (row - y) ** 2;
-				if (d < best) {
-					best = d;
-					point = {
-						x: ((col + 0.5) * 1920) / mask.width,
-						y: ((row + 0.5) * 1080) / mask.height,
-					};
-				}
-			}
-	if (!point) return { status: "unmeasured" as const };
-	const distance = dist(a.anchor, point),
-		ratio = distance / a.halfStride;
+	const arrival = end.contact.arrival as NonNullable<
+		FrameLog["contact"]["arrival"]
+	>;
+	const distance = dist(arrival.anchor, arrival.target);
 	return {
-		status:
-			ratio <= 1
-				? ("half" as const)
-				: ratio <= 2
-					? ("one" as const)
-					: ("far" as const),
+		status: distance <= 1e-6 ? ("arrived" as const) : ("far" as const),
 		distance,
-		halfStride: a.halfStride,
-		ratio,
 	};
 }
 export interface DepthFrame extends FrameLog {

@@ -1,38 +1,20 @@
 # Footfall
 
-`@anima/footfall` is Anima's deterministic, sprite-contact-driven walking system for 2.5D adventure backgrounds. It contains the production geometry and footstep planner, the Phaser motor binding, a headless runner, derivation contracts and reusable QA functions. Innsmouth is one consumer; game narrative, asset naming, persistence and provider credentials stay outside the package.
+`@anima/footfall` is Anima's deterministic, continuous-path walking system for 2.5D adventure backgrounds. It contains the production geometry and navigation, the Phaser motor binding, a headless runner, derivation contracts and reusable QA functions. Innsmouth is one consumer; game narrative, asset naming, persistence and provider credentials stay outside the package.
 
 ## Model
 
-**Perspective.** A horizon and scale slope project screen positions to ground space and back. Optional horizontal residuals preserve authored calibration. A walk area supplies base scale and clamps. Degenerate legacy calibration can use a constant model. Derivation records can carry regional depth/scale descriptions; the current runtime walk area still uses one perspective model.
+`WalkMotor` moves the ground point (`anchor`) continuously along a copied navigation path on every render update. Ground speed is constant in metres per second: screen speed is `speedMetresPerSecond × pixelsPerMetre × scaleAt(anchor)`. Perspective supplies depth scaling, optional horizontal calibration and scale clamps. Navigation uses floor masks and object clearance; occluder baselines determine draw order from the ground point.
 
-Object scale references are checked against cached segmented instances of the same category. An overlapping but contradictory reference falls back to the existing adult-height guidance; missing segmentation preserves the reference. This checks the reference rectangle, not the assumed physical height. Calibration-only derivation revisions reuse provider evidence.
+The ground heading selects the directional drawing. Each cycle advances at its native `fps`, independently of movement, and turns preserve the fractional gait phase. Per-sheet `bodyCentreX` aligns the drawn body horizontally; otherwise the motor uses the cycle's mean sole midpoint. The mean sole row locates the drawing vertically. Optional `drawnHeight` normalises each sheet's sprite scale relative to the `left` cycle.
 
-**Walk area.** Row-major binary masks describe visible floor, raw physical support, routing clearance and object footprints separately. Clearance erosion happens in ground units. Baseline-guided geometric bridging restores floor behind occluders; it does not predict hidden floor with a trained model. Supported narrow gaps retain their existing stride-sweep rules.
-
-**Footstep lattice.** Navigation proposes a route; the bounded planner searches authored stance transitions in eight ground headings. Each transition uses the sheet's physical contact points, permitted entry/exit phases, facing validity and clearance. Authored strides determine attainable arrivals: arbitrary clicks need not coincide with a planted stop.
-
-**Foot locking and settles.** The motor projects the planted contact through the current scale and flip, then solves sprite placement around that anchor. Switching support, standing pivots and drawn settle frames retain the existing timing, cancellation and worker behavior. No pose interpolation or altered animation data is introduced by this package. The pure planner requires an injected `now` clock. The motor uses a virtual clock and a deterministic 1,600–8, 000-node budget based on horizontal ground span so worker and headless route selection remain identical.
-
-Starting pivots, reverse starts and stopping drawings advance once per 24 Hz output frame. Dense walking cycles use the shared per-support clock; sparse cycles retain the cadence floor. Run189 has zero repeated visible draw-state pairs across 180 walks, down from 439 starting holds in run171. This is telemetry evidence; complete visual sign-off remains open.
-
-Before a nonterminal direction change, the motor can finish a safe portion of the outgoing support using its existing drawings. It keeps the planted sole and the incoming stance's landing unchanged, and uses the same clearance and physical-gap checks as ordinary walking. This reduces abrupt direction cuts without interpolating poses or sliding the anchor. Stops cancel the pending turn; a pivot-to-walk handoff does not repeat an already visible identical idle frame.
-
-Weighted searches initially retain normal route-cost ordering. If no moving finish has been found after the first eighth of the fixed budget, they alternate with a turn-neutral queue over the same states. Each state is expanded once, without retrying the search or relaxing route costs and facing checks. Unweighted searches preserve their original ordering. This recovers the cellar route under faster starting animation without the route changes caused by unconditional diversification.
-
-The search also funds entry and stop choices at clearance-route turns. A live return from town previously stopped short of the depot door because the largely vertical detour received too little work allowance. The captured browser request is retained as a regression fixture; the corrected live replay enters the interior without widening arrival or exit thresholds. The search remains single-pass with its existing maximum node allowance. Run288 preserves arrival/facing/safety totals, but its main planning p90 is308ms, above the300ms target; this timing requirement remains open.
-
-**Occlusion.** Occluder baselines determine behind/in-front ordering from the planted foot. Alpha-aware object hits and support footprints are separate from draw order. Numbered semantic outlines are associated with named interactables by category and bounding-box overlap, then tested against their actual alpha. Partial category masks add positive hits while preserving named-box fallback; exact named masks remain authoritative, with split outlines combined. The Phaser adapter loads alpha masks and renders object layers; the pure core consumes geometry and alpha callbacks.
-
-Flat-layer classification records whether it comes from explicit artwork or estimated physical height. Correcting scene scale recalculates height-derived layers while preserving deliberately flat masks. Legacy version22 split masks recover this distinction from their component kind. Run270 corrects the pier post previously drawn below the boots; all180 movement trajectories and support anchors remain identical to260. This fixes that observed layer defect, not the outstanding scene-wide visual review.
-
-**Exits.** Boundary-inclusive regions, requested-exit guards, latches and return approaches determine when travel may begin. The game owns travel and narrative resolution. The runner receives scene records and transition timing so the same motion and exit logic can run without browser rendering.
+On arrival the anchor snaps exactly to the final waypoint, the standing pose appears, `walking` becomes false, and the walk promise resolves. The arrival record exposes the target and final anchor for exit handling. Boundary-inclusive exit regions, requested-exit guards and latches decide when travel starts; the game owns destination loading and narrative resolution. `stop()` resolves an interrupted walk at its current anchor and shows the standing pose.
 
 ## Layout
 
-- `core/characters/`: foot contacts, locking, stance/stride sweeps, heading, clearance routes and lattice search.
+- `core/characters/`: contact types and projection helpers, plus ground-heading selection.
 - `core/walkarea/`, `core/groundline/`, `core/occlusion/`: perspective, masks, navigation, authored anchors, floor bridging, object hits, arrivals and exits. No DOM, Phaser or Node runtime imports.
-- `phaser/`: worker-backed motor, sprite pose binding, placement debug overlay and occluder layers.
+- `phaser/`: continuous walking motor, sprite pose binding, placement debug overlay and occluder layers.
 - `derive/`: image-to-ground/occluder/exit provider contract and serialized data types. The existing cached fal implementation lives in `api/src/services/footfall-provider.ts`.
 - `sim/`: injected headless runner, scene/walk interfaces and capture-clock subdivision.
 - `qa/`: deterministic coverage plans and log checks. Reviewer Python programs remain independent acceptance tools.
@@ -40,18 +22,18 @@ Flat-layer classification records whether it comes from explicit artwork or esti
 ## Quick start
 
 ```ts
-import { CharacterMotor, findPath } from '@anima/footfall';
+import { WalkMotor, findWalkPath } from '@anima/footfall';
 import { spriteFootBinding } from '@anima/footfall/phaser/spriteFootBinding';
 
 const binding = spriteFootBinding(() => sprite, name => sheets[name]);
-const motor = new CharacterMotor(sprite, area, onMotion, {
+const motor = new WalkMotor(sprite, area, onMotion, {
   current: binding.current,
   show: binding.show,
   select: heading => directionalPose(heading),
   standing: heading => standingPose(heading),
 });
 motor.place(spawn);
-void motor.walk(findPath(area.mask, sprite, clickedPoint));
+void motor.walk(findWalkPath(area, motor.anchor, clickedPoint));
 // Call once from the Phaser scene update:
 motor.update(deltaMs);
 // Scene shutdown:
@@ -70,7 +52,7 @@ Coordinates use the existing 1920 × 1080 scene space. Sprite contacts use unsca
  "switchFrames":[0]}
 ```
 
-`FootCycle` also supports `frameDurationsMs`, `passingFrames`, `settleFrames`, and `matchedCut` (standing sheet, compatible headings, entry and exit frames). Contact labels must match the authored drawings. Every displayed frame needs contact data.
+Optional `bodyCentreX` and `drawnHeight` describe the drawn body in sheet pixels. Every displayed frame needs contact data. Walking animation advances at the cycle's native `fps`.
 
 ```json
 {"mask":{"width":2,"height":2,"data":[0, 0,1,1]},
@@ -100,7 +82,7 @@ Call `simulateWalks` from `sim/runner` with:
 - `Fade`: your transition clock (Innsmouth uses Phaser's actual Fade implementation);
 - `save(path,value)`: your log sink, plus optional `out`, selected walk names, extra sprite occluders and immediate-transition locations.
 
-The runner returns a report and writes per-frame arrays, events, search rejections and scene geometry through the sink. It makes no provider calls. For live verification against generated candidates, the API accepts `ANIMA_WORLD_DB_URL=file:/absolute/path/to/qa.db`; a copied database can contain those derivations without changing the saved world. Unset it to use the normal project database. Shipped anchor assets are separate from database-backed generated scenes and must be accounted for explicitly. Execution timings in the top-level run report are diagnostic; scene JSON is deterministic.
+The runner returns a report and writes per-frame arrays, events and scene geometry through the sink. It makes no provider calls. For live verification against generated candidates, the API accepts `ANIMA_WORLD_DB_URL=file:/absolute/path/to/qa.db`; a copied database can contain those derivations without changing the saved world. Unset it to use the normal project database. Shipped anchor assets are separate from database-backed generated scenes and must be accounted for explicitly. The frame arrays contain sprite position, scale, texture/frame, heading, ground anchor, path, arrival, draw order and interaction state. The run report includes frame counts, arrivals, limitations and elapsed time; elapsed time is diagnostic.
 
 Innsmouth's read-only adapter remains runnable from the repository root:
 
@@ -115,33 +97,12 @@ pnpm --filter @anima/footfall lint
 For example, with the emitted frame array and geometry JSON:
 
 ```ts
-import { checkFootLock, checkFloor, checkScale } from '@anima/footfall/qa';
+import { checkFloor, checkScale } from '@anima/footfall/qa';
 const metadata = (texture: string) => sheets[texture];
 const results = {
-  lock: checkFootLock(frames, metadata),
   floor: checkFloor(frames, geometry, metadata),
-  scale: checkScale(frames, geometry),
+  scale: checkScale(frames, geometry, metadata, leftCycle),
 };
 ```
 
-For QA, import `qa/checks`: `checkFootLock`, `checkFloor`, `checkScale`, `checkFacing`, `checkArrival`, `checkDrawOrder`, `checkPath`, `checkExits` and `checkFrozenFrames`. Supply sheet metadata and scene areas. Facing accepts the independently calculated route corner count; path checking accepts an independent shortest octilinear distance; draw order requires exact alpha-overlap callbacks. Frozen-frame checking requires rendered frame hashes, not transform logs. Telemetry cannot establish drawn-boot accuracy or pixel-height correctness; retain rendered review and the independent reviewer tools for those bars.
-
-## Planning bounds and current evidence
-
-Each click uses one bounded footstep search. Support changes and grounded restarts are edges in that frontier; there is no retry ladder. Starts whose sprite origin is outside routing clearance use a bounded layered frontier, sharing work across path depths and heading histories so one locally cheap branch cannot consume the entire budget. Other starts use the weighted frontier, alternating its two existing priorities after one eighth of the node budget passes without an improved partial finish. Progress resets that interval; a partial finish no longer disables diversification permanently. The selection happens before the single search, and node budgets and physical/turn constraints stay unchanged. State retains heading/run limits and the captured start's turn allowance. Intermediate pivots use normal body clearance. Exact terminal playback validates measured facing before accepting a route.
-
-Planning reuses deterministic Dijkstra frontiers, exact stance samples, immutable entry/standing pose lists, and playback-prefix checkpoints. Checkpoints include the following step because its anchor determines stride length. These caches do not approximate positions, weaken collision checks or change the fixed node budgets. Planning changes are checked against per-frame motion logs; interaction event timing is checked separately.
-
-Current verification (2026-10-16, run260 with derivation25 cached candidates): main passes with115 half-stride arrivals,137 facing passes, planning p90289ms/max803ms; generated passes with32 arrivals,41 facing, p90268ms/max459ms. Both have zero reversals, flicker, foot-lock, floor and object-contact failures.204 package tests,146 API tests, root typecheck and lint pass. These results include cached candidate floors and rebuilt occluder artifacts; original saved floor files remain unchanged. All13 near/middle/far comparisons were reviewed: alley remains undersized and grocery oversized, both documented named limitations; other sampled scenes look plausible with reference uncertainty retained. This is not full visual sign-off.
-
-After the single route search, intermediate walking stances and stops may use a different entry phase only if the complete stance or exit retains its support foot, anchor, body position and scale. The complete playback must also retain its terminal position, scale, support and arrival record. Candidates must reduce the entry displacement and pass full playback quality with a smaller maximum jump. The first passing improvement is retained; route edges and costs are unchanged. In run135, this refinement reduced visible peak jumps in 28 of 180 walks versus run128, with none larger and all endpoints unchanged. Run156 retains identical playback in 177 of 180 walks versus135; three destination-entry sequences change without increasing visible peak jumps. Those historical gates retained their arrival/facing counts. This supplements the complete-terminal ranking in run128; it does not eliminate all turn defects. Original saved scene floors remain unchanged by the candidate override. The exact captured road request now completes at 5.8 px residual versus a 38.2 px half-stride tolerance (previously 102.4 px short). Its production replay passes facing, foot-lock, floor, object-contact, scale and exact-alpha draw-order checks. This replay does not establish completion of the live town journey.
-
-The complete Footfall goal remains open. Fresh run256 path evidence passes35/171 same-scene walks and0/9 whole transfers. Some wall flags track the sprite canvas origin rather than a physical foot; that requires further diagnosis, not a silent pass. The separate current-exit-region probe triggers20/20 exits, but only10/20 complete transfers; cached narration and destination coverage remain incomplete.
-
-Run259 rendered-pixel comparisons cover20,500 adjacent visible walking pairs across180 walks with zero frozen pairs and no missing destination backgrounds. Run260 has exactly the same render inputs. Matched start transitions use the walking entry pose directly instead of replaying its standing-sheet copy, including sheets with different canvas padding. All180 movement paths and endpoints remain identical to256. The fresh256 exact-alpha draw-order audit passes180/180, but complete current contact-sheet/feet/crossing review, live art verification and an uninterrupted town replay still require sign-off. See `tmp/walkqa/report.md` and `tmp/walkqa/reports/FINAL.md` for the requirement-level evidence and named limitations.
-
-A first-arrival search with a valid incomplete stop within one stride can use a bounded 25% node reserve, capped at the existing 8000-node maximum. The reserve continues the current frontier and preserves all arrival and collision checks. It resolves the continuous cellar ladder click; distant targets retain their original allowance. Run294 passes both reviewer gates and 210 Footfall/146 API tests plus root typecheck/lint. Strict planning timing remains open (main p90 306ms, generated 319ms).
-
-Run304 corrects legacy upright rug/carpet layers: floor textiles are explicit flat, nonblocking artwork, independently of their depth-spanning image height. Rolled carpets and rug displays are not matched. The lobby cross-room click now completes in one request; all-scene gates pass with main half120/far5 and generated half33/far6, zero safety counters. Strict planning p90 is253ms main and292ms generated (max567/493ms). All215 Footfall and146 API tests plus root typecheck pass. This does not close the remaining scale, route, exit or visual-review requirements.
-
-Run326 adds a secondary straight-distance queue only for stalled searches with substantial navigation detours. It shares the existing frontier and budget, preserving collision and turn constraints. Both formerly incomplete road left-side clicks now arrive; no previously complete run304 click regresses. The captured production road request is covered by a regression test. Early rejection of already-blocked body samples and shared metric helpers reduce collision-check overhead; all180 movement, drawing and support traces match run313 exactly. Main/generated gates pass with half122/33, far3/5, zero safety counters, planning p90202/280ms and max439/421ms. All216 Footfall and146 API tests, root typecheck and lint pass. These aggregate gates do not close the16 incomplete plans or the existing scale, exit and visual-review limitations.
+For QA, import `qa/checks`: `checkFloor`, `checkScale`, `checkFacing`, `checkArrival`, `checkDrawOrder`, `checkPath`, `checkExits` and `checkFrozenFrames`. Supply sheet metadata and scene areas. Scale checking takes the sheet lookup and reference left cycle when height normalisation is used. Facing compares consecutive ground positions and accepts the independently calculated route corner count plus scene geometry (needed for constant perspective); arrival checks the exact final navigation endpoint. path checking accepts an independent shortest octilinear distance; draw order requires exact alpha-overlap callbacks. Frozen-frame checking requires rendered frame hashes, not transform logs. Telemetry cannot establish drawn-boot accuracy or pixel-height correctness; retain rendered review and the independent reviewer tools for those bars.

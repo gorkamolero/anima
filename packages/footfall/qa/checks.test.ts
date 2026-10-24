@@ -64,6 +64,15 @@ describe("reviewer log-check ports", () => {
 		expect(checkScale([row()], { area }).pass).toBe(true);
 		expect(checkScale([{ ...row(), scale: 1 }], { area }).pass).toBe(false);
 	});
+	it("checks scale at the ground anchor with per-sheet height normalisation", () => {
+		const r = { ...row(), y: 900, scale: 1.62 };
+		const lookup = () => ({ ...sheet, drawnHeight: 100 });
+		const reference = { ...sheet, drawnHeight: 200 };
+		expect(checkScale([r], { area }, lookup, reference).pass).toBe(true);
+		expect(
+			checkScale([{ ...r, scale: 0.81 }], { area }, lookup, reference).pass,
+		).toBe(false);
+	});
 	it("judges heading from continuous ground movement", () => {
 		const make = (dx: number, dy: number) =>
 			Array.from({ length: 36 }, (_, i) => ({
@@ -78,14 +87,15 @@ describe("reviewer log-check ports", () => {
 		expect(checkFacing(make(0, 0.03)).pass).toBe(true);
 		expect(checkFacing(make(0.03, 0)).pass).toBe(false);
 	});
-	it("measures arrival at nearest standable cell", () => {
+	it("checks exact arrival at the navigation endpoint", () => {
 		const r = row();
 		r.contact.arrival = {
-			target: { x: 480, y: 100 },
+			target: { x: 480, y: 810 },
 			anchor: { x: 480, y: 810 },
-			halfStride: 50,
 		};
-		expect(checkArrival([r], { area }).status).toBe("half");
+		expect(checkArrival([r]).status).toBe("arrived");
+		r.contact.arrival.anchor.x += 10;
+		expect(checkArrival([r]).status).toBe("far");
 	});
 	it("rejects duplicate or wrong-destination exit triggers", () => {
 		const event = { type: "triggerExit", data: { id: "door", to: "hall" } };
