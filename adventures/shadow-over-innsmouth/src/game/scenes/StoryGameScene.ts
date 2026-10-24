@@ -305,6 +305,10 @@ export class StoryGameScene extends BaseScene {
 		);
 		for (const texture of [
 			HERMES_WALK_4X_TEXTURE,
+			`${HERMES_AWAY_TEXTURE}-4x`,
+			`${HERMES_TOWARD_TEXTURE}-4x`,
+			`${HERMES_AWAY_DIAGONAL_TEXTURE}-4x`,
+			`${HERMES_TOWARD_DIAGONAL_TEXTURE}-4x`,
 			HERMES_AWAY_TEXTURE,
 			"hermes-passing-stand-away",
 			"hermes-passing-stand-away-right",

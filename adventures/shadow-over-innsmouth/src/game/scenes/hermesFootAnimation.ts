@@ -19,7 +19,7 @@ export function hermesFootAnimation(
 			const texture =
 				direction === "left" || direction === "right"
 					? "hermes-fal-veo-transparent-loop-4x"
-					: `hermes-walk-${suffix}`;
+					: `hermes-walk-${suffix}-4x`;
 			return {
 				cycle: cycle(texture),
 				flipX: direction === "right" || direction.endsWith("-left"),
