@@ -25,6 +25,10 @@ export interface WalkMotorOptions {
 	speedMetresPerSecond?: number;
 	/** Screen distance within which a walk counts as having reached its goal. */
 	arrivalTolerance?: number;
+	/** How much of the drawing's own vertical bob reaches the body: 0 glides
+	 * with a constant sole row per sheet (default), 1 rests the lower sole on
+	 * the ground every frame and lets the body rise and fall as drawn. */
+	verticalBob?: number;
 }
 interface GroundOffset {
 	x: number;
@@ -69,7 +73,11 @@ export class WalkMotor {
 	private goal?: Point;
 	private phase = 0;
 	private resolve?: () => void;
-	private offsets = new Map<string, { x: number; soleY: number[] }>();
+	private offsets = new Map<
+		string,
+		{ x: number; soleY: number[]; mean: number }
+	>();
+	private readonly verticalBob: number;
 	private gaits = new Map<string, GaitProfile>();
 	private readonly speed: number;
 	private readonly tolerance: number;
@@ -88,6 +96,7 @@ export class WalkMotor {
 		target.motor?.detach();
 		target.motor = this;
 		this.tolerance = options.arrivalTolerance ?? 2;
+		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
 		this.speed =
 			options.speedMetresPerSecond ??
 			this.naturalSpeed(animation.select("left"));
@@ -171,10 +180,18 @@ export class WalkMotor {
 				for (let k = -half; k <= half; k++) sum += raw[(i + k + n) % n];
 				return sum / (2 * half + 1);
 			});
-			sheet = { x: bodyX * (pose.flipX ? -1 : 1), soleY };
+			sheet = {
+				x: bodyX * (pose.flipX ? -1 : 1),
+				soleY,
+				mean: soleY.reduce((a, b) => a + b, 0) / n,
+			};
 			this.offsets.set(key, sheet);
 		}
-		return { x: sheet.x, y: sheet.soleY[pose.frame] ?? sheet.soleY[0] };
+		const frame = sheet.soleY[pose.frame] ?? sheet.soleY[0];
+		return {
+			x: sheet.x,
+			y: sheet.mean + (frame - sheet.mean) * this.verticalBob,
+		};
 	}
 
 	/** Sprite scale multiplier for a sheet: brings a reduced-resolution sheet back
