@@ -32,6 +32,8 @@ const StartGame = (parent: string) => {
 
 	// Handle resize
 	const handleResize = () => {
+		// React StrictMode double-mounts leave a destroyed first instance behind.
+		if (!game.isRunning || !game.scale?.parentSize) return;
 		game.scale.setParentSize(window.innerWidth, window.innerHeight);
 		game.scale.refresh();
 	};

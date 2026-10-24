@@ -80,6 +80,70 @@ for (let i = 0; i < n; i++) {
 	const src = resolve(work, "src", `f${pad(i)}.png`);
 	run("magick", [image, "-crop", `${fw}x${fh}+${x}+${y}`, "+repage", src]);
 }
+// Stabilise: AI walk videos drift the whole figure down through a stance and
+// snap it back at the plant. Register every frame so the top of the figure sits
+// on one row; the same shift moves that frame's contacts. The gait's real bob
+// is far smaller than this drift and survives in the drawing's leg geometry.
+const stabilise = !args.includes("--no-stabilise");
+const shifts = [];
+if (stabilise) {
+	const tops = [];
+	for (let i = 0; i < n; i++) {
+		const src = resolve(work, "src", `f${pad(i)}.png`);
+		const page = run("magick", [
+			src,
+			"-alpha",
+			"extract",
+			"-threshold",
+			"15%",
+			"-format",
+			"%@",
+			"info:",
+		]).trim();
+		const m = /^(\d+)x(\d+)\+(\d+)\+(\d+)$/.exec(page);
+		tops.push(m ? Number(m[4]) : 0);
+	}
+	const target = Math.round(tops.reduce((a, b) => a + b, 0) / tops.length);
+	for (let i = 0; i < n; i++) {
+		const dy = target - tops[i];
+		shifts.push(dy);
+		if (!dy) continue;
+		const src = resolve(work, "src", `f${pad(i)}.png`);
+		// Move the figure by dy without wrapping: pad one edge, trim the other.
+		run("magick", [
+			src,
+			"-background",
+			"none",
+			...(dy > 0
+				? [
+						"-gravity",
+						"north",
+						"-splice",
+						`0x${dy}`,
+						"-gravity",
+						"south",
+						"-chop",
+						`0x${dy}`,
+					]
+				: [
+						"-gravity",
+						"south",
+						"-splice",
+						`0x${-dy}`,
+						"-gravity",
+						"north",
+						"-chop",
+						`0x${-dy}`,
+					]),
+			"+repage",
+			src,
+		]);
+	}
+	console.log(
+		`stabilised: head row ${Math.min(...tops)}..${Math.max(...tops)} -> ${target}; shifts ${shifts.join(",")}`,
+	);
+}
+
 // Wrap: the interpolator needs frames after the last one to finish the loop.
 const wrap = 3;
 for (let i = 0; i < wrap; i++) {
@@ -178,6 +242,30 @@ for (let k = 0; k < total; k++) {
 	]);
 	tiles.push(frame);
 }
+// Measure the drawn body on the output frames: alignment data must describe
+// the pixels that ship, not the source before registration and reduction.
+const boxes = tiles
+	.map((tile) => {
+		const page = run("magick", [
+			tile,
+			"-alpha",
+			"extract",
+			"-threshold",
+			"15%",
+			"-format",
+			"%@",
+			"info:",
+		]).trim();
+		const m = /^(\d+)x(\d+)\+(\d+)\+(\d+)$/.exec(page);
+		return m
+			? { w: Number(m[1]), h: Number(m[2]), x: Number(m[3]), y: Number(m[4]) }
+			: null;
+	})
+	.filter(Boolean);
+const mean = (f) => boxes.reduce((a, b) => a + f(b), 0) / boxes.length;
+const bodyCentreX = Math.round(mean((b) => b.x + b.w / 2) * 10) / 10;
+const bodyCentreY = Math.round(mean((b) => b.y + b.h / 2) * 10) / 10;
+const drawnHeight = Math.round(mean((b) => b.h) * 10) / 10;
 const pixelScale = resize / 100;
 const outW = Math.round(fw * pixelScale);
 const outH = Math.round(fh * pixelScale);
@@ -201,8 +289,17 @@ const frameDurationsMs = [];
 for (let k = 0; k < total; k++) {
 	const i = Math.floor(k / factor);
 	const t = (k % factor) / factor;
-	const a = meta.contacts[i];
-	const b = meta.contacts[(i + 1) % n];
+	const shifted = (index) => {
+		const c = meta.contacts[index];
+		const dy = shifts[index] ?? 0;
+		return {
+			planted: c.planted,
+			L: { x: c.L.x, y: c.L.y + dy },
+			R: { x: c.R.x, y: c.R.y + dy },
+		};
+	};
+	const a = shifted(i);
+	const b = shifted((i + 1) % n);
 	const lerp = (p, q) => ({
 		x: Math.round((p.x * (1 - t) + q.x * t) * pixelScale * 100) / 100,
 		y: Math.round((p.y * (1 - t) + q.y * t) * pixelScale * 100) / 100,
@@ -239,13 +336,11 @@ const out = {
 				},
 			}
 		: {}),
-	...(meta.bodyCentreX !== undefined
-		? { bodyCentreX: Math.round(meta.bodyCentreX * pixelScale * 10) / 10 }
-		: {}),
-	...(meta.drawnHeight !== undefined
-		? { drawnHeight: Math.round(meta.drawnHeight * pixelScale * 10) / 10 }
-		: {}),
+	bodyCentreX,
+	bodyCentreY,
+	drawnHeight,
 	pixelScale,
+	...(stabilise ? { stabilisedShiftY: shifts } : {}),
 };
 writeFileSync(
 	resolve(spritesDir, `${outName}.json`),
