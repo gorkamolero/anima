@@ -78,7 +78,7 @@ export class WalkLabScene extends BaseScene {
 	create(): void {
 		this.add.rectangle(960, 540, 1920, 1080, 0x000000).setDepth(0);
 		const y = this.lineY;
-		this.add.rectangle(960, y, 1920, 2, 0xffffff).setDepth(1);
+		this.add.rectangle(960, y, 1920, 4, 0xffffff).setDepth(1);
 		for (let x = 0; x <= 1920; x += 100)
 			this.add.rectangle(x, y, 1, 12, 0x666666).setDepth(1);
 		super.create();
