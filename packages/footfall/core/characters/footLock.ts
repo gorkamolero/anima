@@ -27,6 +27,8 @@ export interface FootCycle {
 	passingFrames?: number[];
 	/** Mean horizontal centre of the drawn body (opaque pixels), in sheet pixels. */
 	bodyCentreX?: number;
+	/** Mean vertical centre of the drawn body (opaque pixels), in sheet pixels. */
+	bodyCentreY?: number;
 	/** Mean height of the drawn body in sheet pixels, for cross-sheet size normalisation. */
 	drawnHeight?: number;
 	/** Sheet pixels per canonical pixel: 0.5 for a sheet stored at half resolution. */

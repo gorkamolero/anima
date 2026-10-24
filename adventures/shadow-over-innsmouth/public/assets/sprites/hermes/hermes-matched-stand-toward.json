@@ -36,5 +36,8 @@
 		},
 		"method": "restore full canvas dimensions, local grey key, translation-only upper-body registration; reviewed shoe landmarks",
 		"origin": [0.5, 1]
-	}
+	},
+	"bodyCentreX": 308.0,
+	"bodyCentreY": 532.0,
+	"drawnHeight": 1032.0
 }

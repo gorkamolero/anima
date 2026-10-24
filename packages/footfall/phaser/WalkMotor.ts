@@ -79,6 +79,7 @@ export class WalkMotor {
 	>();
 	private readonly verticalBob: number;
 	private gaits = new Map<string, GaitProfile>();
+	private alignments = new Map<string, number>();
 	private readonly speed: number;
 	private readonly tolerance: number;
 
@@ -124,8 +125,18 @@ export class WalkMotor {
 		const mean = valid.length
 			? valid.reduce((a, b) => a + b, 0) / valid.length
 			: 0;
+		// Tracked steps carry frame-to-frame noise; locking each drawing to its raw
+		// step makes the legs race or stall. Smooth the profile around the cycle so
+		// slow stride-speed changes are followed and noise is not.
+		const filled = raw.map((v) => (Number.isFinite(v) && v > 0 ? v : mean));
+		const half = Math.max(1, Math.round(n / 12));
+		const steps = filled.map((_, i) => {
+			let sum = 0;
+			for (let k = -half; k <= half; k++) sum += filled[(i + k + n) % n];
+			return sum / (2 * half + 1);
+		});
 		const profile: GaitProfile = {
-			steps: raw.map((v) => (Number.isFinite(v) && v > 0 ? v : mean)),
+			steps,
 			mean,
 			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
 			// Lateral when the sole travels at least a quarter frame width per
@@ -190,8 +201,37 @@ export class WalkMotor {
 		const frame = sheet.soleY[pose.frame] ?? sheet.soleY[0];
 		return {
 			x: sheet.x,
-			y: sheet.mean + (frame - sheet.mean) * this.verticalBob,
+			y:
+				sheet.mean +
+				this.bodyAlignment(pose) +
+				(frame - sheet.mean) * this.verticalBob,
 		};
+	}
+
+	/** Vertical correction, in this sheet's pixels, that puts its drawn body
+	 * centre at the same height above the ground as the reference sheet's, so
+	 * a cycle change never moves the torso. Zero when a sheet lacks the data. */
+	private bodyAlignment(pose: FootPose): number {
+		const own = pose.cycle;
+		const ref = this.animation.select("left").cycle;
+		if (own.bodyCentreY === undefined || ref.bodyCentreY === undefined)
+			return 0;
+		const cached = this.alignments.get(own.name);
+		if (cached !== undefined) return cached;
+		const soleMean = (cycle: FootCycle) =>
+			cycle.contacts.reduce(
+				(sum, f) => sum + Math.max(f.L.y, f.R.y) - cycle.frameHeight,
+				0,
+			) / cycle.contacts.length;
+		// Height of the body centre above the ground row, in canonical pixels.
+		const height = (cycle: FootCycle, centreY: number) =>
+			(soleMean(cycle) - (centreY - cycle.frameHeight)) /
+			(cycle.pixelScale ?? 1);
+		const correction =
+			(height(ref, ref.bodyCentreY) - height(own, own.bodyCentreY)) *
+			(own.pixelScale ?? 1);
+		this.alignments.set(own.name, correction);
+		return correction;
 	}
 
 	/** Sprite scale multiplier for a sheet: brings a reduced-resolution sheet back

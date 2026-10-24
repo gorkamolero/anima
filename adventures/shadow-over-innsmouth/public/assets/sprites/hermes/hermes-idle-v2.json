@@ -93,5 +93,8 @@
 			"y": 1224
 		},
 		"patch": [22.880000000000003, 56.07]
-	}
+	},
+	"bodyCentreX": 175.9,
+	"bodyCentreY": 624.0,
+	"drawnHeight": 1242.0
 }

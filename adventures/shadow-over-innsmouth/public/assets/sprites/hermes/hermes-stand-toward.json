@@ -27,5 +27,8 @@
 		"referenceHeightMedian": 1030.5,
 		"visibleHeight": 1030,
 		"origin": [0.5, 1]
-	}
+	},
+	"bodyCentreX": 306.0,
+	"bodyCentreY": 544.0,
+	"drawnHeight": 1030.0
 }

@@ -1473,7 +1473,8 @@
 			44
 		]
 	},
-	"bodyCentreX": 156.1,
-	"drawnHeight": 511.7,
-	"pixelScale": 0.5
+	"pixelScale": 0.5,
+	"bodyCentreX": 156.3,
+	"bodyCentreY": 259.2,
+	"drawnHeight": 512.6
 }
