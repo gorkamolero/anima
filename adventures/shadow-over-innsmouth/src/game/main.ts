@@ -1,6 +1,7 @@
 import { AUTO, Game } from "phaser";
 import { isAudioMuted } from "./narratorVoice";
 import { StoryGameScene } from "./scenes/StoryGameScene";
+import { WalkLabScene } from "./scenes/WalkLabScene";
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: AUTO,
@@ -13,7 +14,10 @@ const config: Phaser.Types.Core.GameConfig = {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
 	},
-	scene: [StoryGameScene],
+	// `?lab=1` opens the walk lab: a black field and one line, for judging motion.
+	scene: new URLSearchParams(window.location.search).has("lab")
+		? [WalkLabScene]
+		: [StoryGameScene],
 	physics: {
 		default: "arcade",
 		arcade: {
