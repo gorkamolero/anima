@@ -43,6 +43,40 @@ interface GaitProfile {
 	lateral: boolean;
 }
 
+/** Each stride of a walk should rise and fall the same. Resample the curve over
+ * every stance (switch to switch) onto one phase axis, average them, and lay
+ * that one curve back over each stance. Cycles without two switches pass through. */
+function symmetricStride(curve: number[], switches: number[]): number[] {
+	const n = curve.length;
+	if (switches.length !== 2 || n < 4) return curve;
+	const stances = switches.map((start, k) => {
+		const end = switches[(k + 1) % 2];
+		const length = (((end - start) % n) + n) % n || n;
+		return { start, length };
+	});
+	const samples = 64;
+	const shared = new Array(samples).fill(0);
+	for (const { start, length } of stances)
+		for (let j = 0; j < samples; j++) {
+			const u = (j / samples) * length;
+			const i0 = Math.floor(u);
+			const t = u - i0;
+			const a = curve[(start + i0) % n];
+			const b = curve[(start + i0 + 1) % n];
+			shared[j] += (a * (1 - t) + b * t) / stances.length;
+		}
+	const out = [...curve];
+	for (const { start, length } of stances)
+		for (let i = 0; i < length; i++) {
+			const u = (i / length) * samples;
+			const j0 = Math.floor(u) % samples;
+			const t = u - Math.floor(u);
+			out[(start + i) % n] =
+				shared[j0] * (1 - t) + shared[(j0 + 1) % samples] * t;
+		}
+	return out;
+}
+
 const DEFAULT_PIXELS_PER_METRE = 300;
 
 /**
@@ -193,7 +227,7 @@ export class WalkMotor {
 			});
 			sheet = {
 				x: bodyX * (pose.flipX ? -1 : 1),
-				soleY,
+				soleY: symmetricStride(soleY, pose.cycle.switchFrames),
 				mean: soleY.reduce((a, b) => a + b, 0) / n,
 			};
 			this.offsets.set(key, sheet);
