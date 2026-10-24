@@ -491,6 +491,14 @@ def process(
     for warning in warnings[:8]:
         click.echo(f"Warning: {warning}")
     create_phaser_sheet(trimmed_frames, output_base, fps, cols)
+    _meta, _frames = load_sheet_frames(output_base)
+    _drift = drift_report(_meta, _frames)
+    if abs(_drift["worstStep"]) > _meta["frameHeight"] * 0.006:
+        click.secho(
+            f"WARNING: figure jumps {_drift['worstStep']:+d}px between frames {_drift['worstFrame']} "
+            f"and {_drift['worstFrame'] + 1}; run `sprite-factory.py register --sheet {output_base}` before using this sheet",
+            fg="red",
+        )
     qc_path = output_base.with_name(f"{output_base.name}-qc-magenta").with_suffix(".png")
     write_magenta_contact_sheet(trimmed_frames, qc_path, cols)
     click.echo(f"QC magenta sheet saved: {qc_path}")
@@ -572,6 +580,14 @@ def process_alpha(
         sheet_frames, trim_box = trim_to_global_bbox(raw_frames, work_dir / "frames-trimmed")
 
     create_phaser_sheet(sheet_frames, output_base, fps, cols)
+    _meta, _frames = load_sheet_frames(output_base)
+    _drift = drift_report(_meta, _frames)
+    if abs(_drift["worstStep"]) > _meta["frameHeight"] * 0.006:
+        click.secho(
+            f"WARNING: figure jumps {_drift['worstStep']:+d}px between frames {_drift['worstFrame']} "
+            f"and {_drift['worstFrame'] + 1}; run `sprite-factory.py register --sheet {output_base}` before using this sheet",
+            fg="red",
+        )
     qc_path = output_base.with_name(f"{output_base.name}-qc-magenta").with_suffix(".png")
     write_magenta_contact_sheet(sheet_frames, qc_path, cols)
     click.echo(f"QC magenta sheet saved: {qc_path}")
@@ -610,6 +626,101 @@ def process_alpha(
 
     if not keep_work:
         shutil.rmtree(work_dir)
+
+
+# --- Frame registration and drift audit -------------------------------------
+# Generated walk videos let the whole figure drift through a stride and snap
+# back at the footfall. A sheet with that snap jerks in every scene, whatever
+# the motor does, so sheets are registered here and audited before they ship.
+
+def load_sheet_frames(base: Path) -> tuple[dict, list[Image.Image]]:
+    meta = json.loads(base.with_suffix(".json").read_text())
+    image = Image.open(base.with_suffix(".png")).convert("RGBA")
+    w, h, cols = meta["frameWidth"], meta["frameHeight"], meta["cols"]
+    return meta, [
+        image.crop(((i % cols) * w, (i // cols) * h, (i % cols + 1) * w, (i // cols + 1) * h))
+        for i in range(meta["frameCount"])
+    ]
+
+
+def figure_top(frame: Image.Image) -> int:
+    bbox = frame.getchannel("A").point(lambda a: 255 if a > 40 else 0).getbbox()
+    return bbox[1] if bbox else 0
+
+
+def drift_report(meta: dict, frames: list[Image.Image]) -> dict:
+    tops = [figure_top(f) for f in frames]
+    n = len(tops)
+    steps = [tops[(i + 1) % n] - tops[i] for i in range(n)]
+    worst = max(range(n), key=lambda i: abs(steps[i]))
+    return {
+        "frameHeight": meta["frameHeight"],
+        "topRange": max(tops) - min(tops),
+        "worstStep": steps[worst],
+        "worstFrame": worst,
+        "tops": tops,
+    }
+
+
+@cli.command("audit-drift")
+@click.option("--sheet", required=True, type=click.Path(), help="Sheet base path, without extension")
+@click.option("--max-step", default=0.6, type=float, help="Allowed figure move between consecutive frames, % of frame height")
+def audit_drift(sheet: str, max_step: float):
+    """Fail if the figure jumps between consecutive frames of a sheet."""
+    base = Path(sheet)
+    meta, frames = load_sheet_frames(base)
+    report = drift_report(meta, frames)
+    allowed = meta["frameHeight"] * max_step / 100
+    verdict = "PASS" if abs(report["worstStep"]) <= allowed else "FAIL"
+    click.echo(
+        f"{verdict} {base.name}: head row moves {report['worstStep']:+d}px between frames "
+        f"{report['worstFrame']} and {(report['worstFrame'] + 1) % len(frames)} "
+        f"(allowed {allowed:.1f}px); head row range {report['topRange']}px over the cycle"
+    )
+    if verdict == "FAIL":
+        raise SystemExit(1)
+
+
+@cli.command("register")
+@click.option("--sheet", required=True, type=click.Path(), help="Sheet base path, without extension; rewritten in place")
+def register(sheet: str):
+    """Shift every frame so the figure's head row is constant; contacts follow."""
+    base = Path(sheet)
+    meta, frames = load_sheet_frames(base)
+    tops = [figure_top(f) for f in frames]
+    target = round(sum(tops) / len(tops))
+    shifts = [target - t for t in tops]
+    w, h, cols = meta["frameWidth"], meta["frameHeight"], meta["cols"]
+    rows = (len(frames) + cols - 1) // cols
+    # Grow the frame rather than clip: figures often touch the bottom edge.
+    boxes = [f.getchannel("A").point(lambda a: 255 if a > 40 else 0).getbbox() or (0, 0, 0, 0) for f in frames]
+    overflow = max(0, max(b[3] + dy - h for b, dy in zip(boxes, shifts)))
+    underflow = max(0, max(-(b[1] + dy) for b, dy in zip(boxes, shifts)))
+    shifts = [dy + underflow for dy in shifts]
+    new_h = h + overflow + underflow
+    canvas = Image.new("RGBA", (w * cols, new_h * rows))
+    for i, (frame, dy) in enumerate(zip(frames, shifts)):
+        tile = Image.new("RGBA", (w, new_h))
+        tile.paste(frame, (0, dy))
+        canvas.paste(tile, ((i % cols) * w, (i // cols) * new_h))
+    meta["frameHeight"] = new_h
+    for i, contact in enumerate(meta.get("contacts", [])):
+        for foot in ("L", "R"):
+            if foot in contact:
+                contact[foot]["y"] += shifts[i]
+    for group in ("switches", "swing"):
+        for seed in meta.get("contactSeeds", {}).get(group, []):
+            seed["point"]["y"] += shifts[seed["frame"]]
+    meta["registration"] = {
+        "method": "constant head row; integer vertical shift per frame; contacts shifted",
+        "headRow": target + underflow,
+        "shifts": shifts,
+        "frameHeightBefore": h,
+    }
+    canvas.save(base.with_suffix(".png"))
+    base.with_suffix(".json").write_text(json.dumps(meta, indent="\t") + "\n")
+    click.echo(f"registered {base.name}: head row {min(tops)}..{max(tops)} -> {target}; shifts {shifts}")
+
 
 
 if __name__ == "__main__":

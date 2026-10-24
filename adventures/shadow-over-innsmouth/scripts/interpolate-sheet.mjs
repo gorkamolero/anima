@@ -80,11 +80,11 @@ for (let i = 0; i < n; i++) {
 	const src = resolve(work, "src", `f${pad(i)}.png`);
 	run("magick", [image, "-crop", `${fw}x${fh}+${x}+${y}`, "+repage", src]);
 }
-// Stabilise: AI walk videos drift the whole figure down through a stance and
-// snap it back at the plant. Register every frame so the top of the figure sits
-// on one row; the same shift moves that frame's contacts. The gait's real bob
-// is far smaller than this drift and survives in the drawing's leg geometry.
-const stabilise = !args.includes("--no-stabilise");
+// Optional registration for an unregistered source: shift every frame so the
+// top of the figure sits on one row, and move that frame's contacts to match.
+// Sources are registered by the sprite factory (`sprite-factory.py register`);
+// `--stabilise` is only for an unregistered sheet handed in ad hoc.
+const stabilise = args.includes("--stabilise");
 const shifts = [];
 if (stabilise) {
 	const tops = [];
