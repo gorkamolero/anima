@@ -78,6 +78,10 @@ cd adventures/shadow-over-innsmouth && pnpm verify:art # live scene vs art landm
 ./scripts/chromakey.sh <input> <output> [--fuzz 20]
 ./scripts/split-characters.sh <input> <output-dir>
 ./scripts/hedra-video.py --image <img> --audio <audio> --output <out>
+# Every walk sheet must pass the drift audit before it reaches a scene; AI walk
+# videos drift the figure and snap it back at each footfall.
+uv run scripts/sprite-factory.py audit-drift --sheet <sheet-base>   # FAIL = jerk in game
+uv run scripts/sprite-factory.py register --sheet <sheet-base>      # fix in place
 ```
 
 ## Sprite Tools Dependencies
