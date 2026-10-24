@@ -30,6 +30,14 @@ interface GroundOffset {
 	x: number;
 	y: number;
 }
+interface GaitProfile {
+	/** Sheet pixels the planted sole travels from each frame to the next. */
+	steps: number[];
+	mean: number;
+	durations: number[];
+	/** True for cycles whose motion is across the screen; depth cycles are timed. */
+	lateral: boolean;
+}
 
 const DEFAULT_PIXELS_PER_METRE = 300;
 
@@ -62,6 +70,7 @@ export class WalkMotor {
 	private phase = 0;
 	private resolve?: () => void;
 	private offsets = new Map<string, GroundOffset>();
+	private gaits = new Map<string, GaitProfile>();
 	private readonly speed: number;
 	private readonly tolerance: number;
 
@@ -89,28 +98,44 @@ export class WalkMotor {
 		if (this.target.motor === this) this.target.motor = undefined;
 	}
 
-	/** Metres per second at which the side cycle's planted foot stays still. */
+	/** Per-frame gait data for a cycle: how far the planted sole travels across
+	 * the sheet from one drawing to the next, and each drawing's duration. */
+	private gait(cycle: FootCycle): GaitProfile {
+		const cached = this.gaits.get(cycle.name);
+		if (cached) return cached;
+		const { contacts, fps, frameDurationsMs } = cycle;
+		const n = contacts.length;
+		const raw = contacts.map((frame, i) => {
+			const next = contacts[(i + 1) % n];
+			return next.planted === frame.planted
+				? Math.abs(next[frame.planted].x - frame[frame.planted].x)
+				: Number.NaN;
+		});
+		const valid = raw.filter((v) => Number.isFinite(v) && v > 0);
+		const mean = valid.length
+			? valid.reduce((a, b) => a + b, 0) / valid.length
+			: 0;
+		const profile: GaitProfile = {
+			steps: raw.map((v) => (Number.isFinite(v) && v > 0 ? v : mean)),
+			mean,
+			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
+			lateral: mean >= 4,
+		};
+		this.gaits.set(cycle.name, profile);
+		return profile;
+	}
+
+	/** Metres per second at which the side cycle plays at its authored rate with
+	 * the planted sole still on the ground. */
 	private naturalSpeed(pose: Omit<FootPose, "frame">): number {
-		const { contacts, fps, frameDurationsMs } = pose.cycle;
-		let sheetDistance = 0;
-		let durationMs = 0;
-		for (let i = 0; i < contacts.length; i++) {
-			const previous = contacts[(i + contacts.length - 1) % contacts.length];
-			const current = contacts[i];
-			if (previous.planted === current.planted) {
-				const foot = current.planted;
-				sheetDistance += Math.abs(previous[foot].x - current[foot].x);
-			} else {
-				// Support transfer: the incoming sole was tracked in both frames.
-				const foot = current.planted;
-				sheetDistance += Math.abs(previous[foot].x - current[foot].x);
-			}
-			durationMs += frameDurationsMs?.[i] ?? 1000 / fps;
-		}
+		const g = this.gait(pose.cycle);
+		if (!g.lateral) return 1.3;
 		const ppm =
 			this.area.perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
-		const metres = (sheetDistance * this.area.baseScale) / ppm;
-		return durationMs > 0 && metres > 0 ? metres / (durationMs / 1000) : 1.3;
+		const metresPerDrawing = (g.mean * this.area.baseScale) / ppm;
+		const secondsPerDrawing =
+			g.durations.reduce((a, b) => a + b, 0) / g.durations.length / 1000;
+		return metresPerDrawing / secondsPerDrawing;
 	}
 
 	/** Mean sole midpoint of a sheet, relative to the sprite origin (bottom centre),
@@ -283,6 +308,7 @@ export class WalkMotor {
 
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
+		const from = { ...this.anchor };
 		let remaining = (this.screenSpeed() * delta) / 1000;
 		while (remaining > 0 && this.segment < this.path.length) {
 			const next = this.path[this.segment];
@@ -313,7 +339,15 @@ export class WalkMotor {
 			return;
 		}
 		this.setWalkingHeading(this.headingTowards(target));
-		this.phase += (delta * this.pose.cycle.fps) / 1000;
+		// Drive lateral cycles by distance so the planted sole stays on the boards
+		// at any speed; depth cycles have no lateral sole travel, so they keep time.
+		const g = this.gait(this.pose.cycle);
+		const index = Math.floor(this.phase) % this.pose.cycle.contacts.length;
+		const drawnStep = g.steps[index] * this.scale * this.sheetScale(this.pose);
+		this.phase +=
+			g.lateral && drawnStep > 0
+				? Math.abs(this.anchor.x - from.x) / drawnStep
+				: delta / g.durations[index];
 		this.pose = {
 			...this.pose,
 			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
