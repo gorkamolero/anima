@@ -4,7 +4,6 @@ export type {
 	FootCycle,
 	FootPose,
 } from "./characters/footLock";
-export { planFootsteps } from "./characters/footstepPlan";
 export type { WalkDirection } from "./characters/walkHeading";
 export { headingFromGround } from "./characters/walkHeading";
 export { GroundLine } from "./groundline/GroundLine";

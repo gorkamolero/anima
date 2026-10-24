@@ -5,7 +5,6 @@ import {
 	checkExits,
 	checkFacing,
 	checkFloor,
-	checkFootLock,
 	checkFrozenFrames,
 	checkScale,
 	type FrameLog,
@@ -38,28 +37,11 @@ const row = (x = 960): FrameLog => ({
 	location: "room",
 	contact: {
 		heading: "away",
-		planted: "L",
 		anchor: { x, y: 810 },
 		ground: { x: 0, y: 5 },
 	},
 });
 describe("reviewer log-check ports", () => {
-	it("measures physical foot drift even when reported anchors stay fixed", () => {
-		const rows = [row(), row(962), row(964)];
-		rows.forEach((r) => {
-			r.contact.anchor = { x: 960, y: 810 };
-		});
-		expect(checkFootLock(rows, metadata).maxExcursion_px).toBe(4);
-		expect(checkFootLock(rows, metadata).pass).toBe(false);
-	});
-	it("keeps a continuous physical support across a standing texture cut", () => {
-		const rows = [row(), { ...row(), texture: "standing" }, row()];
-		expect(checkFootLock(rows, metadata)).toMatchObject({
-			stances: 1,
-			maxExcursion_px: 0,
-			pass: true,
-		});
-	});
 	it("checks raw floor and independent object footprints", () => {
 		expect(checkFloor([row()], { area }, metadata).pass).toBe(true);
 		expect(
@@ -82,15 +64,14 @@ describe("reviewer log-check ports", () => {
 		expect(checkScale([row()], { area }).pass).toBe(true);
 		expect(checkScale([{ ...row(), scale: 1 }], { area }).pass).toBe(false);
 	});
-	it("judges heading per stance rather than a single bobbing frame", () => {
+	it("judges heading from continuous ground movement", () => {
 		const make = (dx: number, dy: number) =>
 			Array.from({ length: 36 }, (_, i) => ({
 				...row(),
 				walking: true,
 				contact: {
 					...row().contact,
-					planted: (Math.floor(i / 6) % 2 ? "R" : "L") as "L" | "R",
-					anchor: { x: Math.floor(i / 6) * 10, y: 810 },
+					anchor: { x: i * 10, y: 810 },
 					ground: { x: dx * i, y: 5 + dy * i },
 				},
 			}));

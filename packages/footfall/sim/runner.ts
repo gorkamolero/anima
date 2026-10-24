@@ -10,7 +10,7 @@ import {
 import { objectAtPoint } from "../core/walkarea/objectHit";
 import type { Point } from "../core/walkarea/perspective";
 import type { WalkArea } from "../core/walkarea/types";
-import { CharacterMotor } from "../phaser/CharacterMotor";
+import { WalkMotor } from "../phaser/WalkMotor";
 import { captureSteps } from "./captureClock";
 import type { LoggedOccluder, SceneRecord, SimulationOptions } from "./types";
 /** Shared virtual-clock runner. All scene, asset and output I/O is injected. */
@@ -81,7 +81,7 @@ export async function simulateWalks({
 				},
 			};
 			const makeMotor = () =>
-				new CharacterMotor(
+				new WalkMotor(
 					sprite,
 					geometry.area,
 					() => {},
@@ -94,9 +94,6 @@ export async function simulateWalks({
 					),
 				);
 			let motor = makeMotor();
-			const searches = new Set<
-				NonNullable<ReturnType<CharacterMotor["snapshot"]>["plan"]["search"]>
-			>();
 			motor.heading = "right";
 			motor.place({ x: beat.start[0], y: beat.start[1] });
 			let blocked = false,
@@ -113,8 +110,7 @@ export async function simulateWalks({
 				events: unknown[] = [],
 				limitations: string[] = [];
 			let frame = -1,
-				idle = 0,
-				planningMs = 0;
+				idle = 0;
 			const fade = new Fade({ emit() {}, scene: {} });
 			let fadeStarted = false;
 			const emit = (data: unknown) =>
@@ -162,12 +158,10 @@ export async function simulateWalks({
 			};
 			const walk = (path: Point[], after?: () => void | Promise<void>) => {
 				blocked = true;
-				const start = performance.now();
 				void motor.walk(path).then(() => {
 					blocked = false;
 					after?.();
 				});
-				planningMs += performance.now() - start;
 			};
 			walk(
 				route,
@@ -248,8 +242,7 @@ export async function simulateWalks({
 					path: { x: number; y: number }[];
 					goal?: { x: number; y: number };
 				};
-				const search = motor.snapshot().plan.search;
-				if (search) searches.add(search);
+				const snapshot = motor.snapshot();
 				const row = {
 					t: frame / 24,
 					visible,
@@ -260,7 +253,15 @@ export async function simulateWalks({
 					texture: pose.cycle.name,
 					frame: pose.frame,
 					walking: motor.walking,
-					contact: motor.snapshot(),
+					contact: {
+						...snapshot,
+						plan: {
+							pending: snapshot.plan.pending,
+							remaining: snapshot.plan.remaining,
+							distance: snapshot.plan.distance,
+							complete: snapshot.plan.complete,
+						},
+					},
 					path: state.path,
 					target: state.goal ?? null,
 					location,
@@ -358,22 +359,10 @@ export async function simulateWalks({
 				completed: idle >= 12,
 				limitations,
 			});
-			const rejections: Record<string, number> = {};
-			for (const search of searches)
-				for (const [reason, count] of Object.entries(search.rejections ?? {}))
-					rejections[reason] = (rejections[reason] ?? 0) + count;
-			save(`${dir}/${beat.name}-rejections.json`, {
-				searches: [...searches],
-				rejections,
-			});
 			results.push({
 				scene,
 				walk: beat.name,
 				frames: rows.length,
-				planningMs,
-				search: motor.snapshot().plan.search,
-				searches: [...searches],
-				rejections,
 				arrival: motor.arrival,
 				limitations,
 			});

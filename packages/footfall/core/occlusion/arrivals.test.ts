@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CharacterMotor } from "../../phaser/CharacterMotor";
+import { WalkMotor } from "../../phaser/WalkMotor";
 import { cellAt } from "../walkarea/navigation";
 import { beginArrival, passageArrival, resolveReturnExit } from "./arrivals";
 import type { Exit } from "./exits";
@@ -116,7 +116,7 @@ it("puts a door arrival's sole on floor when the threshold is the first floor ro
 		setScale() {},
 		setDepth() {},
 	};
-	const motor = new CharacterMotor(target, area, () => {}, {
+	const motor = new WalkMotor(target, area, () => {}, {
 		current: () => pose,
 		select: () => pose,
 		show: () => {},

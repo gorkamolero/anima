@@ -3,7 +3,7 @@ import type { Exit } from "../core/occlusion/exits";
 import type { Occluder } from "../core/occlusion/occlusion";
 import type { WalkObject } from "../core/walkarea/objectApproach";
 import type { FloorMask, WalkArea } from "../core/walkarea/types";
-import type { FootAnimation } from "../phaser/CharacterMotor";
+import type { FootAnimation } from "../phaser/WalkMotor";
 
 export interface WalkBeat {
 	name: string;

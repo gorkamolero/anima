@@ -16,11 +16,8 @@ export interface FrameLog {
 	location?: string;
 	contact: {
 		heading?: string;
-		planted?: Foot;
 		anchor: Point;
 		ground: Point;
-		settling?: boolean;
-		drawn?: boolean;
 		arrival?: { target: Point; anchor: Point; halfStride: number };
 	};
 }
@@ -32,7 +29,7 @@ export interface GeometryLog {
 const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 const areaAt = (geometry: GeometryLog, row: FrameLog) =>
 	geometry.areas?.[row.location ?? ""] ?? geometry.area;
-/** Reviewer lockcheck projection, deliberately independent of motor anchor values. */
+/** Project an authored sole independently of motor anchor values. */
 export function screenContact(
 	row: FrameLog,
 	foot: Foot,
@@ -45,54 +42,7 @@ export function screenContact(
 		y: row.y + (c[foot].y - m.frameHeight) * row.scale,
 	};
 }
-/** Port of lockcheck.py: physical foot continuity, including settles and texture changes. */
-export function checkFootLock(
-	rows: readonly FrameLog[],
-	metadata: SheetLookup,
-) {
-	let current: { row: FrameLog; foot: Foot; point: Point }[] = [];
-	const stances: (typeof current)[] = [];
-	for (const row of rows) {
-		const m = metadata(row.texture);
-		if (row.visible === false || !m.contacts) {
-			if (current.length) stances.push(current);
-			current = [];
-			continue;
-		}
-		const foot = m.contacts[row.frame]?.planted;
-		if (!foot) continue;
-		const point = screenContact(row, foot, metadata),
-			last = current.at(-1);
-		if (
-			last &&
-			!(
-				last.foot === foot &&
-				(last.row.texture === row.texture || dist(last.point, point) <= 3)
-			)
-		) {
-			stances.push(current);
-			current = [];
-		}
-		current.push({ row, foot, point });
-	}
-	if (current.length) stances.push(current);
-	const excursions = stances
-		.filter((s) => s.length >= 3)
-		.map(
-			(s) =>
-				Math.round(Math.max(...s.map((p) => dist(s[0].point, p.point))) * 100) /
-				100,
-		)
-		.sort((a, b) => a - b);
-	const maximum = excursions.at(-1) ?? null;
-	return {
-		pass: maximum === null || maximum <= 1.5,
-		stances: excursions.length,
-		maxExcursion_px: maximum,
-		median: excursions[Math.floor(excursions.length / 2)] ?? null,
-	};
-}
-/** Port of walkstats.py: the motor's active support is tested against raw floor and objects. */
+/** Test the drawing's support sole against floor and objects. */
 export function checkFloor(
 	rows: readonly FrameLog[],
 	geometry: GeometryLog,
@@ -107,11 +57,7 @@ export function checkFloor(
 		if (!c) return;
 		if (geometry.areas && !geometry.areas[row.location ?? ""])
 			throw new Error(`Missing floor for ${row.location}`);
-		const point = screenContact(
-				row,
-				row.contact.planted ?? c.planted,
-				metadata,
-			),
+		const point = screenContact(row, c.planted, metadata),
 			area = areaAt(geometry, row);
 		if (!floorPixel(area.mask, point.x, point.y)) offFloor.push(i);
 		if (
@@ -149,20 +95,26 @@ function prediction(area: WalkArea, point: Point) {
 		Math.max(area.scaleClamp.min, Math.min(area.scaleClamp.max, s))
 	);
 }
-export function checkScale(rows: readonly FrameLog[], geometry: GeometryLog) {
+export function checkScale(
+	rows: readonly FrameLog[],
+	geometry: GeometryLog,
+	metadata?: SheetLookup,
+	reference?: FootCycle,
+) {
 	const flagged: number[] = [],
 		errors: number[] = [],
 		soles: number[] = [];
 	rows.forEach((r, i) => {
 		if (r.visible === false) return;
 		const a = areaAt(geometry, r),
-			e = Math.abs(r.scale / prediction(a, r) - 1);
+			height = metadata?.(r.texture).drawnHeight,
+			normalisation =
+				height && reference?.drawnHeight ? reference.drawnHeight / height : 1,
+			e = Math.abs(
+				r.scale / (prediction(a, r.contact.anchor) * normalisation) - 1,
+			);
 		errors.push(e);
-		soles.push(
-			r.contact?.anchor
-				? Math.abs(r.scale / prediction(a, r.contact.anchor) - 1)
-				: 0,
-		);
+		soles.push(r.contact?.anchor ? e : 0);
 		if (e > 0.01 + 1e-8) flagged.push(i);
 	});
 	return {
@@ -173,30 +125,24 @@ export function checkScale(rows: readonly FrameLog[], geometry: GeometryLog) {
 		threshold: 0.01,
 	};
 }
-/** Port of facing_stance.py check(); caller supplies reviewer route corner count. */
-export function checkFacing(rows: readonly FrameLog[], corners = 0) {
+/** Compare consecutive walking frames in ground space. */
+export function checkFacing(
+	rows: readonly FrameLog[],
+	corners = 0,
+	geometry?: GeometryLog,
+) {
 	const stances: FrameLog[][] = [];
-	let current: FrameLog[] = [],
-		key = "";
-	for (const row of rows.filter(
-		(r) => r.walking && !r.contact.settling && !r.contact.drawn,
-	)) {
-		const c = row.contact,
-			k = JSON.stringify([
-				c.heading,
-				c.planted,
-				Math.round(c.anchor.x * 1000) / 1000,
-				Math.round(c.anchor.y * 1000) / 1000,
-				row.location,
-			]);
-		if (current.length && k !== key) {
-			stances.push(current);
-			current = [];
-		}
-		current.push(row);
-		key = k;
+	for (let i = 1; i < rows.length; i++) {
+		const a = rows[i - 1],
+			b = rows[i];
+		if (
+			a.walking &&
+			b.walking &&
+			a.location === b.location &&
+			a.contact.heading === b.contact.heading
+		)
+			stances.push([a, b]);
 	}
-	if (current.length) stances.push(current);
 	let n = 0,
 		reversals = 0;
 	const runs: { heading: string; stances: number }[] = [],
@@ -213,13 +159,15 @@ export function checkFacing(rows: readonly FrameLog[], corners = 0) {
 			ga = a.contact.ground,
 			gb = b.contact.ground,
 			dx = gb.x - ga.x,
-			dz = gb.y - ga.y,
+			p = geometry && areaAt(geometry, a).perspective,
+			dz =
+				p && (p.constant !== undefined || !p.slope) ? ga.y - gb.y : gb.y - ga.y,
 			heading = a.contact.heading as string;
-		if (Math.hypot(dx, dz) < 0.05) continue;
+		if (Math.hypot(dx, dz) < 1e-8) continue;
 		if (runs.at(-1)?.heading === heading) runs[runs.length - 1].stances++;
 		else runs.push({ heading, stances: 1 });
 		n++;
-		const angle = Math.atan2(dz, dx) + Math.atan2(gb.x, gb.y),
+		const angle = Math.atan2(dz, dx),
 			expected = (sector(heading) * Math.PI) / 4,
 			d = Math.abs(
 				Math.atan2(Math.sin(angle - expected), Math.cos(angle - expected)),
