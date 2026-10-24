@@ -86,7 +86,7 @@ const SHOW_DEBUG_OVERLAY =
 	new URLSearchParams(window.location.search).get("debug") === "1";
 const HERMES_TEXTURE = "hermes-fal-veo-transparent-loop";
 /** Motion-interpolated 4x side cycle: 120 drawings per loop, half-resolution frames. */
-const HERMES_WALK_4X_TEXTURE = "hermes-fal-veo-transparent-loop-4x";
+const HERMES_WALK_4X_TEXTURE = "hermes-walk-side-v2-4x";
 const HERMES_AWAY_TEXTURE = "hermes-walk-away";
 const HERMES_TOWARD_TEXTURE = "hermes-walk-toward";
 const HERMES_AWAY_DIAGONAL_TEXTURE = "hermes-walk-away-right";

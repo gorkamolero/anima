@@ -64,7 +64,7 @@ export class WalkLabScene extends BaseScene {
 	}
 
 	private get sideSheet(): string {
-		return this.params.get("sheet") ?? "hermes-fal-veo-transparent-loop-4x";
+		return this.params.get("sheet") ?? "hermes-walk-side-v2-4x";
 	}
 
 	private get lineY(): number {
