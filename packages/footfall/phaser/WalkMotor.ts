@@ -29,6 +29,9 @@ export interface WalkMotorOptions {
 	 * with a constant sole row per sheet (default), 1 rests the lower sole on
 	 * the ground every frame and lets the body rise and fall as drawn. */
 	verticalBob?: number;
+	/** Where the bob curve comes from: "pendulum" models the hip drop from the
+	 * feet's spread; "drawing" follows the drawn feet (sheet soleRows). */
+	bobMode?: "pendulum" | "drawing";
 }
 interface GroundOffset {
 	x: number;
@@ -112,6 +115,7 @@ export class WalkMotor {
 		{ x: number; soleY: number[]; mean: number }
 	>();
 	private readonly verticalBob: number;
+	private readonly bobMode: "pendulum" | "drawing";
 	private gaits = new Map<string, GaitProfile>();
 	private alignments = new Map<string, number>();
 	private readonly speed: number;
@@ -132,6 +136,7 @@ export class WalkMotor {
 		target.motor = this;
 		this.tolerance = options.arrivalTolerance ?? 2;
 		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
+		this.bobMode = options.bobMode ?? "pendulum";
 		this.speed =
 			options.speedMetresPerSecond ??
 			this.naturalSpeed(animation.select("left"));
@@ -230,11 +235,23 @@ export class WalkMotor {
 				const s = sum / (2 * half + 1) / 2;
 				return leg - Math.sqrt(Math.max(0, leg * leg - s * s));
 			});
-			const curve = symmetricStride(dip, pose.cycle.switchFrames);
-			const dipMean = curve.reduce((a, b) => a + b, 0) / n;
 			const base = raw.reduce((a, b) => a + b, 0) / n;
-			// Lower the body by the drop: a smaller offset draws the origin lower.
-			const soleY = curve.map((d) => base - (d - dipMean));
+			let soleY: number[];
+			if (this.bobMode === "drawing" && pose.cycle.soleRows?.length === n) {
+				// Follow the drawn feet: rest the figure's bottom row on the ground,
+				// lightly smoothed, so the body sits where the drawn legs put it.
+				const rows = pose.cycle.soleRows.map((r) => r - frameHeight);
+				const smooth = rows.map(
+					(_, i) => (rows[(i + n - 1) % n] + rows[i] + rows[(i + 1) % n]) / 3,
+				);
+				const rowMean = smooth.reduce((a, b) => a + b, 0) / n;
+				soleY = smooth.map((r) => base + (r - rowMean));
+			} else {
+				const curve = symmetricStride(dip, pose.cycle.switchFrames);
+				const dipMean = curve.reduce((a, b) => a + b, 0) / n;
+				// Lower the body by the drop: a smaller offset draws the origin lower.
+				soleY = curve.map((d) => base - (d - dipMean));
+			}
 			sheet = {
 				x: bodyX * (pose.flipX ? -1 : 1),
 				soleY,

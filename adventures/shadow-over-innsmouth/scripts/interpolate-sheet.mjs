@@ -266,6 +266,8 @@ const mean = (f) => boxes.reduce((a, b) => a + f(b), 0) / boxes.length;
 const bodyCentreX = Math.round(mean((b) => b.x + b.w / 2) * 10) / 10;
 const bodyCentreY = Math.round(mean((b) => b.y + b.h / 2) * 10) / 10;
 const drawnHeight = Math.round(mean((b) => b.h) * 10) / 10;
+// Bottom row of the drawn figure per frame: where the drawing puts the feet.
+const soleRows = boxes.map((b) => b.y + b.h);
 const pixelScale = resize / 100;
 const outW = Math.round(fw * pixelScale);
 const outH = Math.round(fh * pixelScale);
@@ -339,6 +341,7 @@ const out = {
 	bodyCentreX,
 	bodyCentreY,
 	drawnHeight,
+	soleRows,
 	pixelScale,
 	...(stabilise ? { stabilisedShiftY: shifts } : {}),
 };

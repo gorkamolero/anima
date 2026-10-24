@@ -33,6 +33,8 @@ export interface FootCycle {
 	drawnHeight?: number;
 	/** Sheet pixels per canonical pixel: 0.5 for a sheet stored at half resolution. */
 	pixelScale?: number;
+	/** Bottom row of the drawn figure in each frame: where the drawing puts the feet. */
+	soleRows?: number[];
 }
 export interface FootPose {
 	/** Only the entry stance from standing gets the start-facing tolerance. */

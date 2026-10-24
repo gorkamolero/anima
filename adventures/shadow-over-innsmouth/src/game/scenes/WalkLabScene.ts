@@ -135,6 +135,7 @@ export class WalkLabScene extends BaseScene {
 			{
 				speedMetresPerSecond: Number(this.params.get("speed")) || undefined,
 				verticalBob: Number(this.params.get("bob")) || 0,
+				bobMode: this.params.get("mode") === "drawing" ? "drawing" : "pendulum",
 			},
 		);
 		this.motor.heading = "right";
