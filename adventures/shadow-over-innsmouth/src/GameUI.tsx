@@ -1,5 +1,8 @@
 import { type EffectCallback, useEffect, useState } from "react";
 
+import { type DialogueState, speakerColours } from "./dialogue";
+import "./styles/dialogue.css";
+
 import { readSceneRoute, sceneUrl } from "./sceneRoute";
 
 type ReviewSceneId = string;
@@ -55,6 +58,7 @@ export function GameUI() {
 	const [openWorld, setOpenWorld] = useState<OpenWorldUiState>({
 		status: "idle",
 	});
+	const [dialogue, setDialogue] = useState<DialogueState | null>(null);
 	const [freeText, setFreeText] = useState("");
 	const [scenes, setScenes] = useState(SCENES);
 	const [sceneError, setSceneError] = useState("");
@@ -121,12 +125,16 @@ export function GameUI() {
 	});
 
 	useMountEffect(() => {
+		const onDialogue = (event: Event) =>
+			setDialogue((event as CustomEvent<DialogueState | null>).detail);
+		window.addEventListener("anima:dialogue-state", onDialogue);
 		const onOpenWorldState = (event: Event) => {
 			setOpenWorld((event as CustomEvent<OpenWorldUiState>).detail);
 		};
 		window.addEventListener("anima:open-world-state", onOpenWorldState);
 		return () => {
 			window.removeEventListener("anima:open-world-state", onOpenWorldState);
+			window.removeEventListener("anima:dialogue-state", onDialogue);
 		};
 	});
 
@@ -180,6 +188,21 @@ export function GameUI() {
 	return (
 		<>
 			<OpenWorldPrompt
+				dialogue={dialogue}
+				onAdvance={() =>
+					window.dispatchEvent(
+						new CustomEvent("anima:dialogue-advance", {
+							detail: { id: dialogue?.id },
+						}),
+					)
+				}
+				onStoryChoice={(index) =>
+					window.dispatchEvent(
+						new CustomEvent("anima:dialogue-choice", {
+							detail: { id: dialogue?.id, index },
+						}),
+					)
+				}
 				state={openWorld}
 				freeText={freeText}
 				onFreeTextChange={setFreeText}
@@ -207,6 +230,7 @@ export function GameUI() {
 
 				<div className="review-panel__body">
 					<p>Choose a scene, then click the ground to walk.</p>
+					<a href="/?act=1&scene=inside">Play Act 1</a>
 
 					<label className="review-panel__field">
 						<span>Scene ({scenes.length})</span>
@@ -276,82 +300,118 @@ export function GameUI() {
 
 function OpenWorldPrompt({
 	state,
+	dialogue,
+	onAdvance,
+	onStoryChoice,
 	freeText,
 	onFreeTextChange,
 	onChoose,
 	onSubmitFreeText,
 }: {
 	state: OpenWorldUiState;
+	dialogue: DialogueState | null;
+	onAdvance: () => void;
+	onStoryChoice: (index: number) => void;
 	freeText: string;
 	onFreeTextChange: (value: string) => void;
 	onChoose: (choice: string) => void;
 	onSubmitFreeText: (event: React.FormEvent<HTMLFormElement>) => void;
 }) {
-	if (state.status === "idle") return null;
-
+	useEffect(() => {
+		const key = (event: KeyboardEvent) => {
+			if (
+				!dialogue ||
+				dialogue.choices.length ||
+				event.repeat ||
+				(event.target instanceof HTMLElement &&
+					event.target.closest("input, textarea, select, button, a"))
+			)
+				return;
+			if (event.code === "Space" || event.code === "Enter") {
+				event.preventDefault();
+				onAdvance();
+			}
+		};
+		window.addEventListener("keydown", key);
+		return () => window.removeEventListener("keydown", key);
+	}, [dialogue, onAdvance]);
+	if (!dialogue && state.status === "idle") return null;
+	const speaker = dialogue?.speaker ?? "Narrator";
+	const text =
+		dialogue?.text ??
+		(state.status === "resolved"
+			? state.caption
+			: state.status === "error"
+				? state.message
+				: state.status === "options"
+					? `${state.object} — What does Hermes do?`
+					: state.status === "loading"
+						? state.object
+						: "The salt air hangs still.");
+	const choices =
+		dialogue?.choices ??
+		(state.status === "options"
+			? state.options.map((text, index) => ({ text, index }))
+			: []);
 	return (
 		<section
-			className={`open-world-prompt open-world-prompt--${state.status}`}
+			className="dialogue-panel"
+			aria-label="Dialogue"
 			aria-live="polite"
-			aria-label="Narrator choices"
 		>
-			{state.status === "loading" || state.status === "resolving" ? (
-				<p className="open-world-prompt__waiting">
-					{state.status === "loading"
-						? `${state.object}`
-						: "The salt air hangs still."}
-				</p>
+			<strong
+				style={{ color: speakerColours[speaker] ?? speakerColours.Narrator }}
+			>
+				{speaker[0].toUpperCase() + speaker.slice(1)}
+			</strong>
+			{dialogue?.pendingArt ? (
+				<small className="dialogue-panel__pending">
+					[{dialogue.pendingArt}]
+				</small>
 			) : null}
-
-			{state.status === "options" ? (
-				<>
-					<p className="open-world-prompt__eyebrow">{state.object}</p>
-					<h2>What does Hermes do?</h2>
-					<div className="open-world-prompt__options">
-						{state.options.map((option) => (
-							<button
-								type="button"
-								key={option}
-								onClick={() => onChoose(option)}
-							>
-								{option}
-							</button>
-						))}
+			{dialogue && !choices.length ? (
+				<button
+					type="button"
+					className="dialogue-panel__line"
+					onClick={onAdvance}
+				>
+					{text}
+					<span className="dialogue-panel__hint">
+						{dialogue.busy ? "..." : "Click · Space · Enter"}
+					</span>
+				</button>
+			) : (
+				<p>{text}</p>
+			)}
+			<ol className="dialogue-panel__choices">
+				{choices.map((choice) => (
+					<li key={choice.index}>
+						<button
+							type="button"
+							onClick={() =>
+								dialogue ? onStoryChoice(choice.index) : onChoose(choice.text)
+							}
+						>
+							{choice.text}
+						</button>
+					</li>
+				))}
+			</ol>
+			{!dialogue && state.status === "options" ? (
+				<form onSubmit={onSubmitFreeText}>
+					<label htmlFor="open-world-free-text">Or write your own action</label>
+					<div>
+						<input
+							id="open-world-free-text"
+							value={freeText}
+							onChange={(event) => onFreeTextChange(event.currentTarget.value)}
+							autoComplete="off"
+						/>
+						<button type="submit" disabled={!freeText.trim()}>
+							Do it
+						</button>
 					</div>
-					<form
-						className="open-world-prompt__free-text"
-						onSubmit={onSubmitFreeText}
-					>
-						<label htmlFor="open-world-free-text">
-							Or write your own action
-						</label>
-						<div>
-							<input
-								id="open-world-free-text"
-								value={freeText}
-								onChange={(event) =>
-									onFreeTextChange(event.currentTarget.value)
-								}
-								placeholder="I…"
-								autoComplete="off"
-							/>
-							<button type="submit" disabled={!freeText.trim()}>
-								Do it
-							</button>
-						</div>
-					</form>
-				</>
-			) : null}
-
-			{state.status === "resolved" ? (
-				<>
-					<p className="open-world-prompt__eyebrow">{state.object}</p>
-					<p className="open-world-prompt__caption">{state.caption}</p>
-				</>
-			) : null}
-
-			{state.status === "error" ? (
-				<p className="open-world-prompt__error">{state.message}</p>
+				</form>
 			) : null}
 		</section>
 	);

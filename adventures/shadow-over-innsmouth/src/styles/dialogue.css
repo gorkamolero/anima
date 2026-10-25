@@ -1,0 +1,76 @@
+.dialogue-panel {
+	position: fixed;
+	z-index: 40;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(760px, 90vw);
+	box-sizing: border-box;
+	padding: 16px 24px;
+	background: #10191cf5;
+	border: 1px solid #748b87;
+	border-radius: 8px;
+	color: #f3ede0;
+	box-shadow: 0 6px 30px #0008;
+	font:
+		18px / 1.45 Georgia,
+		serif;
+}
+.dialogue-panel strong {
+	display: block;
+	font: bold 15px / 1.4 system-ui;
+}
+.dialogue-panel button {
+	color: inherit;
+	background: #263a3e;
+	border: 1px solid #6e8785;
+	border-radius: 4px;
+	padding: 8px 12px;
+	cursor: pointer;
+	font: inherit;
+	text-align: left;
+}
+.dialogue-panel button:focus-visible {
+	outline: 3px solid #d8b3ed;
+}
+.dialogue-panel .dialogue-panel__line {
+	display: block;
+	width: 100%;
+	padding: 8px 0 0;
+	background: transparent;
+	border: 0;
+}
+.dialogue-panel__hint {
+	display: block;
+	text-align: right;
+	color: #b9caca;
+	font: 12px system-ui;
+	min-height: 18px;
+}
+.dialogue-panel__choices {
+	margin: 8px 0 0;
+	padding-left: 24px;
+}
+.dialogue-panel__choices:empty {
+	display: none;
+}
+.dialogue-panel__choices button {
+	width: 100%;
+	margin: 3px 0;
+}
+.dialogue-panel__pending {
+	color: #efc481;
+}
+.dialogue-panel form {
+	font: 13px system-ui;
+	margin-top: 12px;
+}
+.dialogue-panel form div {
+	display: flex;
+	gap: 8px;
+	margin-top: 5px;
+}
+.dialogue-panel input {
+	flex: 1;
+	min-width: 0;
+}
