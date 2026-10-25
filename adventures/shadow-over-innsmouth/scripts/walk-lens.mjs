@@ -105,7 +105,7 @@ const pts = run("ffprobe", [
 	.filter((v) => Number.isFinite(v));
 let frameFiles = readdirSync(framesDir)
 	.filter((f) => f.endsWith(".png"))
-	.sort((a,b) => Number.parseInt(a,10) - Number.parseInt(b,10));
+	.sort((a, b) => Number.parseInt(a, 10) - Number.parseInt(b, 10));
 if (
 	resume &&
 	(frameFiles.length !== pts.length ||
@@ -118,7 +118,7 @@ if (
 	decode();
 	frameFiles = readdirSync(framesDir)
 		.filter((f) => f.endsWith(".png"))
-		.sort((a,b) => Number.parseInt(a,10) - Number.parseInt(b,10));
+		.sort((a, b) => Number.parseInt(a, 10) - Number.parseInt(b, 10));
 }
 const reusableClip = (name, multiplier = 1) => {
 	const file = resolve(out, name);
