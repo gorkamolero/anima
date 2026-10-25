@@ -285,10 +285,26 @@ const stat = (arr) => {
 		? `median ${s[s.length >> 1].toFixed(2)} p90 ${s[Math.floor(s.length * 0.9)].toFixed(2)} max ${s.at(-1).toFixed(2)} n ${s.length}`
 		: "none";
 };
-const sampleSteps = samples
-	.slice(1)
-	.filter((b) => b.walking)
-	.map((b, i) => Math.hypot(b.x - samples[i].x, b.y - samples[i].y));
+const sampleSteps = samples.slice(1).flatMap((b, i) => {
+	const a = samples[i];
+	return a.walking && b.walking
+		? [Math.hypot(b.x - a.x, b.y - a.y)] : [];
+});
+const renderPairs = samples.slice(1).flatMap((b, i) => {
+	const a = samples[i];
+	return a.walking && b.walking ? [{ a, b }] : [];
+});
+const renderSlides = renderPairs.filter(({a,b}) => a.sole && b.sole && a.sole.foot === b.sole.foot && a.texture === b.texture && a.frame !== b.frame)
+	.map(({a,b}) => Math.hypot(b.sole.x-a.sole.x,b.sole.y-a.sole.y));
+const median = values => values.length ? [...values].sort((a,b)=>a-b)[values.length>>1] : null;
+writeFileSync(resolve(out, "metrics.json"), JSON.stringify({
+	videoFrames: frames, renderSamples: samples.length, movingRenderPairs: renderPairs.length,
+	zeroBodyMotion: sampleSteps.filter(d=>d===0).length,
+	heldDrawingPairs: renderPairs.filter(({a,b})=>a.texture===b.texture && a.frame===b.frame).length,
+	soleSlideMedian: median(renderSlides), soleSlidePairs: renderSlides.length,
+	limitation: "Telemetry aligned to real canvas video; sole coordinates use sheet contacts, not independent pixel tracking."
+}, null, 2));
+
 lines.push(
 	`body px per video frame while walking: ${stat(steps)}; render samples with zero motion: ${sampleSteps.filter((d) => d === 0).length} of ${sampleSteps.length}`,
 );
