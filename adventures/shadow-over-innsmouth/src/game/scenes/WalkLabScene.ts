@@ -245,6 +245,9 @@ export class WalkLabScene extends BaseScene {
 								this.params.get("mode") === "drawing" ? "drawing" : "pendulum",
 						}
 					: {}),
+				...(this.params.get("sole") === "planted"
+					? { solePlacement: "planted" as const }
+					: {}),
 			},
 		);
 		this.motor.heading = "right";

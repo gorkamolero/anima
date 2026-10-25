@@ -3,7 +3,7 @@ import type { WalkDirection, WalkMotorOptions } from "@anima/footfall";
 /**
  * Hermes' walk constants. The game reads them; the walk lab (`?lab=1&floor=1`)
  * starts from them and lets URL parameters override them for a look
- * (`stride`, `tempo`, `bob`, `mode`, `speed`). Pace was set by eye in the lab; the stride is the drawn one so the feet stay planted at every heading.
+ * (`stride`, `tempo`, `bob`, `mode`, `speed`, `sole=planted`). Pace was set by eye in the lab; the stride is the drawn one so the feet stay planted at every heading.
  */
 export const HERMES_WALK: WalkMotorOptions = {
 	gait: {

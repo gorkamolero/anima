@@ -49,6 +49,12 @@ export interface WalkMotorOptions {
 	/** Where the bob curve comes from: "pendulum" models the hip drop from the
 	 * feet's spread; "drawing" follows the drawn feet (sheet soleRows). */
 	bobMode?: "pendulum" | "drawing";
+	/** "uniform" (default): the body moves evenly every render and the planted
+	 * sole falls short of its ground point by the step between two drawings.
+	 * "planted": draw the body so the sole sits exactly on its ground point,
+	 * absorbing that step in the body's motion instead. Both errors are at
+	 * most one drawing's sole travel; the lab (`?sole=planted`) shows either. */
+	solePlacement?: "planted" | "uniform";
 }
 /** How long each standing pose of a pivot is held. */
 const PIVOT_POSE_MS = 80;
@@ -147,6 +153,9 @@ export class WalkMotor {
 	private sheetProgress = 0;
 	/** Last-stride adjustment so the walk ends on a feet-together frame. */
 	private arrivalFit?: { baseProgress: number; baseU: number; length: number };
+	solePlacement: "planted" | "uniform";
+	/** Screen offset of the drawing from the anchor that plants the sole. */
+	private drawShift = { x: 0, y: 0 };
 	/** A pivot in progress: the standing poses still to show before walking off. */
 	private pivot?: { poses: WalkDirection[]; shown: number; elapsed: number; to: WalkDirection };
 	private resolve?: () => void;
@@ -176,6 +185,7 @@ export class WalkMotor {
 		target.motor?.detach();
 		target.motor = this;
 		this.tolerance = options.arrivalTolerance ?? 2;
+		this.solePlacement = options.solePlacement ?? "uniform";
 		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
 		this.bobMode = options.bobMode ?? "pendulum";
 		this.gaitOptions = options.gait ?? {};
@@ -434,8 +444,8 @@ export class WalkMotor {
 		const offset = this.groundOffset(placed);
 		const offsetScale = this.scale * this.sheetScale(placed);
 		this.target.setPosition(
-			this.anchor.x - offset.x * offsetScale,
-			this.anchor.y - offset.y * offsetScale,
+			this.anchor.x + this.drawShift.x - offset.x * offsetScale,
+			this.anchor.y + this.drawShift.y - offset.y * offsetScale,
 		);
 		this.target.setScale(drawn);
 		this.target.setDepth(10 + this.anchor.y / 20);
@@ -476,6 +486,7 @@ export class WalkMotor {
 	}
 
 	private showStanding(): void {
+		this.drawShift = { x: 0, y: 0 };
 		const standing = this.animation.standing?.(this.heading);
 		this.pose = standing ?? {
 			...this.animation.select(this.heading),
@@ -717,7 +728,49 @@ export class WalkMotor {
 		this.sheetProgress += movedMetres;
 		this.planArrival(toG, here);
 		this.pose = { ...this.pose, frame: this.frameAt(this.pose.cycle) };
+		this.drawShift = { x: 0, y: 0 };
+		if (this.solePlacement === "planted") {
+			// The drawing shows the body a little behind where it is (less than
+			// one drawing's sole travel). Draw it there, so the sole stays put.
+			const behind = this.drawingLag(this.pose.cycle);
+			const next = toG(target);
+			const dx = next.x - here.x;
+			const dy = next.y - here.y;
+			const d = Math.hypot(dx, dy);
+			if (behind > 0 && d > 1e-9) {
+				const drawn = ground
+					? fromG({
+							x: here.x - (dx / d) * behind,
+							y: here.y - (dy / d) * behind,
+						})
+					: (() => {
+							const px =
+								behind * ppm * scaleAt(p, this.anchor, this.area.scaleClamp);
+							return {
+								x: this.anchor.x - (dx / d) * px,
+								y: this.anchor.y - (dy / d) * px,
+							};
+						})();
+				this.drawShift = {
+					x: drawn.x - this.anchor.x,
+					y: drawn.y - this.anchor.y,
+				};
+			}
+		}
 		this.apply();
+	}
+
+	/** Metres the body has walked beyond what the chosen drawing shows. */
+	private drawingLag(cycle: FootCycle): number {
+		const g = this.gait(cycle);
+		const length = this.stride().metres * this.stridesInSheet(cycle);
+		const fit = this.arrivalFit;
+		const raw = fit
+			? fit.baseU + (this.sheetProgress - fit.baseProgress) / fit.length
+			: this.sheetProgress / length;
+		const u = ((raw % 1) + 1) % 1;
+		const lag = u - g.cumulative[this.frameAt(cycle)];
+		return lag > 0 ? lag * (fit ? fit.length : length) : 0;
 	}
 
 	/** Within the last stride, stretch or shrink it a little so the walk ends on
