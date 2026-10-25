@@ -35,6 +35,8 @@ export interface WalkMotorOptions {
 	/** Drawings advanced per unit of body distance, relative to the tracked
 	 * stride: above 1 the legs cycle faster for the same ground covered. */
 	gaitRate?: number;
+	/** Per-heading override of gaitRate, e.g. a longer stride for the side cycle. */
+	gaitRateByHeading?: Partial<Record<WalkDirection, number>>;
 }
 interface GroundOffset {
 	x: number;
@@ -120,6 +122,7 @@ export class WalkMotor {
 	private readonly verticalBob: number;
 	private readonly bobMode: "pendulum" | "drawing";
 	private readonly gaitRate: number;
+	private readonly gaitRateByHeading: Partial<Record<WalkDirection, number>>;
 	private gaits = new Map<string, GaitProfile>();
 	private alignments = new Map<string, number>();
 	private readonly speed: number;
@@ -142,6 +145,7 @@ export class WalkMotor {
 		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
 		this.bobMode = options.bobMode ?? "pendulum";
 		this.gaitRate = options.gaitRate ?? 1;
+		this.gaitRateByHeading = options.gaitRateByHeading ?? {};
 		this.speed =
 			options.speedMetresPerSecond ??
 			this.naturalSpeed(animation.select("left"));
@@ -493,7 +497,8 @@ export class WalkMotor {
 		this.phase +=
 			(g.lateral && drawnStep > 0
 				? Math.abs(this.anchor.x - from.x) / drawnStep
-				: delta / g.durations[index]) * this.gaitRate;
+				: delta / g.durations[index]) *
+			(this.gaitRateByHeading[this.heading] ?? this.gaitRate);
 		this.pose = {
 			...this.pose,
 			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
