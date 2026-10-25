@@ -32,6 +32,9 @@ export interface WalkMotorOptions {
 	/** Where the bob curve comes from: "pendulum" models the hip drop from the
 	 * feet's spread; "drawing" follows the drawn feet (sheet soleRows). */
 	bobMode?: "pendulum" | "drawing";
+	/** Drawings advanced per unit of body distance, relative to the tracked
+	 * stride: above 1 the legs cycle faster for the same ground covered. */
+	gaitRate?: number;
 }
 interface GroundOffset {
 	x: number;
@@ -116,6 +119,7 @@ export class WalkMotor {
 	>();
 	private readonly verticalBob: number;
 	private readonly bobMode: "pendulum" | "drawing";
+	private readonly gaitRate: number;
 	private gaits = new Map<string, GaitProfile>();
 	private alignments = new Map<string, number>();
 	private readonly speed: number;
@@ -137,6 +141,7 @@ export class WalkMotor {
 		this.tolerance = options.arrivalTolerance ?? 2;
 		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
 		this.bobMode = options.bobMode ?? "pendulum";
+		this.gaitRate = options.gaitRate ?? 1;
 		this.speed =
 			options.speedMetresPerSecond ??
 			this.naturalSpeed(animation.select("left"));
@@ -486,9 +491,9 @@ export class WalkMotor {
 		const step = Math.max(g.steps[index], g.mean / 3);
 		const drawnStep = step * this.scale * this.sheetScale(this.pose);
 		this.phase +=
-			g.lateral && drawnStep > 0
+			(g.lateral && drawnStep > 0
 				? Math.abs(this.anchor.x - from.x) / drawnStep
-				: delta / g.durations[index];
+				: delta / g.durations[index]) * this.gaitRate;
 		this.pose = {
 			...this.pose,
 			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
