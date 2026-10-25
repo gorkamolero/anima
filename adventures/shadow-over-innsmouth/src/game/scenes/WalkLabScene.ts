@@ -14,7 +14,7 @@ import {
 	WalkMotor,
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
-import { HERMES_WALK } from "../hermesWalk";
+import { HERMES_WALK, HERMES_WALK_SHEETS } from "../hermesWalk";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 
 /** The lab can swap the side cycle (`&sheet=`) to compare candidate sheets. */
@@ -65,7 +65,7 @@ export class WalkLabScene extends BaseScene {
 	}
 
 	private get sideSheet(): string {
-		return this.params.get("sheet") ?? "hermes-walk-side-v2-4x";
+		return this.params.get("sheet") ?? HERMES_WALK_SHEETS.side;
 	}
 
 	private get lineY(): number {
@@ -75,10 +75,7 @@ export class WalkLabScene extends BaseScene {
 	preload(): void {
 		const sheets = [
 			this.sideSheet,
-			"hermes-walk-away-4x",
-			"hermes-walk-toward-4x",
-			"hermes-walk-away-right-4x",
-			"hermes-walk-toward-right-4x",
+			...Object.values(HERMES_WALK_SHEETS).filter((s) => s !== this.sideSheet),
 			"hermes-passing-stand-side",
 			"hermes-passing-stand-away",
 			"hermes-passing-stand-toward",

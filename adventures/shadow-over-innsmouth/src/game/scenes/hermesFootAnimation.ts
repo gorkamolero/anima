@@ -1,4 +1,5 @@
 import type { FootAnimation, FootCycle, FootPose } from "@anima/footfall";
+import { hermesWalkSheet } from "../hermesWalk";
 import { hermesStanding } from "./hermesStanding";
 
 /** The renderer supplies only asset lookup and pose display. */
@@ -11,19 +12,8 @@ export function hermesFootAnimation(
 		current,
 		show,
 		select(direction) {
-			const suffix = direction.startsWith("away-")
-				? "away-right"
-				: direction.startsWith("toward-")
-					? "toward-right"
-					: direction;
-			const texture =
-				direction === "left" || direction === "right"
-					? "hermes-walk-side-v2-4x"
-					: `hermes-walk-${suffix}-4x`;
-			return {
-				cycle: cycle(texture),
-				flipX: direction === "right" || direction.endsWith("-left"),
-			};
+			const { texture, flipX } = hermesWalkSheet(direction);
+			return { cycle: cycle(texture), flipX };
 		},
 		standing(direction) {
 			const { texture, flipX } = hermesStanding(direction);
