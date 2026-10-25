@@ -88,7 +88,28 @@ the third character in one of them. Rendered by the lens, waiting in
 - Status file and board updated when a track completes, not per step.
 - Anything blocked on Gorka is written in `tmp/overnight/BLOCKED.md`, not guessed.
 
+## Track 4: the whole story
+
+Acts 1 to 4 exist in `story/*.story`. With the dialogue panel working, play them: every
+scene the story names gets a place (authored or generated through the pipeline), every
+hotspot the story names exists, and the acts run end to end. Where art is missing the
+panel says so and the story keeps flowing; the missing-art list is part of the report.
+
+## Track 5: the cast
+
+Every named NPC the acts reach gets a walking sprite through `make-character.mjs`: the
+clerk, the bus driver, Zadok, the Gilman House desk man, and whoever else Act 1 to 4
+put on screen. One image each, then the pipeline. Same audits as Hermes.
+
+## Track 6: the swarm
+
+AI player archetypes (the curious one, the rusher, the completionist) drive the acts
+through `window.__anima` and the narrator, hundreds of sessions, and report every dead
+end, unreachable hotspot and broken transition into one table. This is how Acts 2 to 4
+get tested overnight without a human clicking every branch, and it warms the caches.
+
 ## Not tonight
 
-Acts 2 to 4, NPC sprites beyond Kat and the third character, video moments, the
-player swarm, stairs, 16-direction walks.
+Video moments (paid, slow, nothing plays them yet), stairs (the floor model has no
+height), 16-direction walks (cheap now, but the eye does not tell 22.5 degrees apart at
+this sprite size; revisit if a scene shows the gap).
