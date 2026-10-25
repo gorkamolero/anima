@@ -1358,6 +1358,7 @@ export class StoryGameScene extends BaseScene {
 					);
 			}, 2000);
 		} catch (error) {
+			console.warn("Scene geometry unavailable", error);
 			this.geometryReady = false;
 			this.hermesMotor?.stop();
 			if (this.walkArea)

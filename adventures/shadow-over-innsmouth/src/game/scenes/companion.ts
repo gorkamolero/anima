@@ -70,29 +70,41 @@ export class Companion {
 		this.load(sheets);
 	}
 
+	/** Fetch the sheets that exist and register them as textures directly, so
+	 * the scene's own loader never sees a missing heading. */
 	private load(sheets: ReturnType<typeof characterWalkSheets>): void {
 		const textures = [
 			...Object.values(sheets.walk),
 			...Object.values(sheets.stand),
 		];
-		for (const texture of textures) {
-			this.scene.load.once(`filecomplete-json-${texture}-meta`, () => {
-				const meta = this.scene.cache.json.get(`${texture}-meta`) as FootCycle;
-				this.scene.load.spritesheet(
-					texture,
-					`assets/sprites/${this.name}/${texture}.png`,
-					{ frameWidth: meta.frameWidth, frameHeight: meta.frameHeight },
-				);
-			});
-			this.scene.load.json(
-				`${texture}-meta`,
-				`assets/sprites/${this.name}/${texture}.json`,
-			);
-		}
-		this.scene.load.once("complete", () => {
-			this.loaded = true;
+		void Promise.all(textures.map((texture) => this.loadSheet(texture))).then(
+			() => {
+				this.loaded = true;
+			},
+		);
+	}
+
+	private async loadSheet(texture: string): Promise<void> {
+		const base = `assets/sprites/${this.name}/${texture}`;
+		const response = await fetch(`${base}.json`).catch(() => undefined);
+		if (!response?.ok) return;
+		const meta = (await response.json().catch(() => undefined)) as
+			| FootCycle
+			| undefined;
+		if (!meta?.frameWidth || !meta.frameHeight || !meta.contacts) return;
+		const image = new Image();
+		const ready = new Promise<boolean>((resolve) => {
+			image.onload = () => resolve(true);
+			image.onerror = () => resolve(false);
 		});
-		this.scene.load.start();
+		image.src = `${base}.png`;
+		if (!(await ready)) return;
+		if (!this.scene.textures.exists(texture))
+			this.scene.textures.addSpriteSheet(texture, image, {
+				frameWidth: meta.frameWidth,
+				frameHeight: meta.frameHeight,
+			});
+		this.scene.cache.json.add(`${texture}-meta`, meta);
 	}
 
 	private animation(): FootAnimation {
