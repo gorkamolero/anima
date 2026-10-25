@@ -177,7 +177,9 @@ export async function simulateWalks({
 							if (transfer) return;
 							object = interactable.name;
 							busy = true;
-							await motor.facePoint(objectFacingPoint(interactable));
+							await motor.facePoint(
+								objectFacingPoint(interactable, geometry.area),
+							);
 							emit({ status: "loading", object });
 							try {
 								emit({

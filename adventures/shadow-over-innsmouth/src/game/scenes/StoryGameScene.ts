@@ -1426,8 +1426,13 @@ export class StoryGameScene extends BaseScene {
 		} finally {
 			this.approachingObject = false;
 		}
-		if (generation === this.geometryGeneration && !this.openWorldBusy)
-			await this.requestNarrationOptions(object);
+		if (generation === this.geometryGeneration && !this.openWorldBusy) {
+			const approachedObject = {
+				...object,
+				facingPoint: objectFacingPoint(object, this.walkArea),
+			};
+			await this.requestNarrationOptions(approachedObject);
+		}
 	}
 
 	private async arriveThroughExit(travel: {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { lineOfSight } from "./navigation";
-import { objectApproach } from "./objectApproach";
+import { objectApproach, objectFacingPoint } from "./objectApproach";
 import type { WalkArea } from "./types";
 
 function area(connected: boolean) {
@@ -37,4 +37,17 @@ describe("object approach", () => {
 		);
 		expect(path.at(-1)?.x).toBeLessThan(960);
 	});
+});
+
+it("keeps elevated facing targets on the finite ground side of the horizon", () => {
+	const geometry = area(true);
+	geometry.perspective.horizonY = 475.2;
+	const clouds = { name: "clouds", bounds: [0, 0, 1, 0.44] };
+	const point = objectFacingPoint(clouds, geometry);
+	expect(point).toEqual({ x: 960, y: 476.2 });
+	expect(objectFacingPoint({ ...clouds, facingPoint: point })).toEqual(point);
+	expect(clouds.bounds).toEqual([0, 0, 1, 0.44]);
+	expect(
+		objectFacingPoint({ name: "door", bounds: [0.2, 0.2, 0.3, 0.8] }, geometry),
+	).toEqual({ x: 480, y: 864 });
 });
