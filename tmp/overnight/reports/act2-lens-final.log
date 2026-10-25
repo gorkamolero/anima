@@ -1,0 +1,6 @@
+recording act2-playthrough: 14070 video frames, 14083 telemetry samples, 239.97 s
+region x246 y0 1248x1080
+body px per video frame while walking: none; render samples with zero motion: 0 of 0
+drawing holds (video frames per drawing): median 540.00 p90 1444.00 max 1444.00 n 8
+planted sole lateral slide per drawing change (lateral sheets): none
+wrote /Users/gorkolas/Developer/anima/tmp/recordings/act2-playthrough

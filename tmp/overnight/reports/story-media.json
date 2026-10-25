@@ -1,0 +1,106 @@
+[
+  {
+    "act": "2",
+    "media": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "nb_frames": "14069"
+        }
+      ],
+      "format": {
+        "duration": "240.000000"
+      }
+    },
+    "lensSummary": "recording act2-playthrough: 14070 video frames, 14083 telemetry samples, 239.97 s\nregion x246 y0 1248x1080\nbody px per video frame while walking: none; render samples with zero motion: 0 of 0\ndrawing holds (video frames per drawing): median 540.00 p90 1444.00 max 1444.00 n 8\nplanted sole lateral slide per drawing change (lateral sheets): none",
+    "artifacts": [
+      "tmp/recordings/act2-playthrough.mp4",
+      "tmp/recordings/act2-playthrough/report.txt",
+      "tmp/recordings/act2-playthrough/realtime.mp4",
+      "tmp/recordings/act2-playthrough/slowmo.mp4",
+      "tmp/recordings/act2-playthrough/fixed-strip.png",
+      "tmp/recordings/act2-playthrough/stabilised-strip.png"
+    ]
+  },
+  {
+    "act": "3",
+    "media": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "nb_frames": "6987"
+        }
+      ],
+      "format": {
+        "duration": "119.983333"
+      }
+    },
+    "lensSummary": "recording act3-playthrough: 6987 video frames, 6997 telemetry samples, 119.98 s\nregion x279 y233 834x846\nbody px per video frame while walking: none; render samples with zero motion: 0 of 0\ndrawing holds (video frames per drawing): median 134.00 p90 982.00 max 1949.00 n 11\nplanted sole slide per drawing change: none",
+    "artifacts": [
+      "tmp/recordings/act3-playthrough.mp4",
+      "tmp/recordings/act3-playthrough/report.txt",
+      "tmp/recordings/act3-playthrough/realtime.mp4",
+      "tmp/recordings/act3-playthrough/slowmo.mp4",
+      "tmp/recordings/act3-playthrough/fixed-strip.png",
+      "tmp/recordings/act3-playthrough/stabilised-strip.png"
+    ]
+  },
+  {
+    "act": "3b",
+    "media": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "nb_frames": "7177"
+        }
+      ],
+      "format": {
+        "duration": "120.003217"
+      }
+    },
+    "lensSummary": "recording act3b-playthrough: 7184 video frames, 7184 telemetry samples, 119.98 s\nregion x279 y418 358x550\nbody px per video frame while walking: none; render samples with zero motion: 0 of 0\ndrawing holds (video frames per drawing): median 204.00 p90 440.00 max 440.00 n 5\nplanted sole lateral slide per drawing change (lateral sheets): none",
+    "artifacts": [
+      "tmp/recordings/act3b-playthrough.mp4",
+      "tmp/recordings/act3b-playthrough/report.txt",
+      "tmp/recordings/act3b-playthrough/realtime.mp4",
+      "tmp/recordings/act3b-playthrough/slowmo.mp4",
+      "tmp/recordings/act3b-playthrough/fixed-strip.png",
+      "tmp/recordings/act3b-playthrough/stabilised-strip.png"
+    ]
+  },
+  {
+    "act": "4",
+    "media": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "nb_frames": "7066"
+        }
+      ],
+      "format": {
+        "duration": "120.016667"
+      }
+    },
+    "lensSummary": "recording act4-playthrough: 7066 video frames, 7074 telemetry samples, 119.98 s\nregion x279 y119 802x960\nbody px per video frame while walking: none; render samples with zero motion: 0 of 0\ndrawing holds (video frames per drawing): median 299.00 p90 1232.00 max 1232.00 n 4\nplanted sole lateral slide per drawing change (lateral sheets): none",
+    "artifacts": [
+      "tmp/recordings/act4-playthrough.mp4",
+      "tmp/recordings/act4-playthrough/report.txt",
+      "tmp/recordings/act4-playthrough/realtime.mp4",
+      "tmp/recordings/act4-playthrough/slowmo.mp4",
+      "tmp/recordings/act4-playthrough/fixed-strip.png",
+      "tmp/recordings/act4-playthrough/stabilised-strip.png"
+    ]
+  }
+]

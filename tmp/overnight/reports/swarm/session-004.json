@@ -1,0 +1,1091 @@
+{
+  "choiceCounts": {
+    "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.": [
+      1,
+      0,
+      0
+    ],
+    "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go": [
+      1,
+      0,
+      0
+    ],
+    "the_beach|I can't.|I wish I could.|Take me with you.": [
+      1,
+      0,
+      0
+    ]
+  },
+  "config": {
+    "act": "4",
+    "archetype": "curious",
+    "choiceCounts": {
+      "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.": [
+        1,
+        0,
+        0
+      ],
+      "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go": [
+        1,
+        0,
+        0
+      ],
+      "the_beach|I can't.|I wish I could.|Take me with you.": [
+        1,
+        0,
+        0
+      ]
+    },
+    "noticed": false,
+    "seed": 0,
+    "timeout": 600000
+  },
+  "failures": [],
+  "final": {
+    "choices": [],
+    "ended": true,
+    "ending": "GAME_END",
+    "hotspots": [],
+    "location": "inside",
+    "output": [
+      "## GAME_END",
+      "S H A D O W   O V E R   I N N S M O U T H",
+      "THE END",
+      "She found her family.",
+      "He found his heart.",
+      "The sea keeps its secrets.",
+      "Thank you for playing.",
+      "The end."
+    ],
+    "scene": "GAME_END",
+    "story": {
+      "flags": {
+        "beach_call": true,
+        "clerk_noticed_interest": false
+      },
+      "inventory": [],
+      "scene": "GAME_END"
+    },
+    "visits": [
+      "GAME_END"
+    ]
+  },
+  "passed": true,
+  "trace": [
+    {
+      "action": "start",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "desk",
+          "name": "Desk",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "## Hermes's Apartment, Boston",
+        "A small apartment. Books everywhere.",
+        "Research you'll never publish.",
+        "A bottle on the desk. Mostly empty.",
+        "One year.",
+        "You told no one. Who would believe you?",
+        "The government raid in '28 proved it was real.",
+        "But they covered it up. Called it 'bootleggers.'",
+        "Bootleggers with gills.",
+        "hermes (thinks): I dream about her.",
+        "hermes (thinks): Every night. The same dream.",
+        "hermes (thinks): She's calling me."
+      ],
+      "scene": "one_year_later",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later"
+      },
+      "time": 1792898560432,
+      "visits": [
+        "one_year_later"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "desk",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "desk",
+          "name": "Desk",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "## Hermes's Apartment, Boston",
+        "A small apartment. Books everywhere.",
+        "Research you'll never publish.",
+        "A bottle on the desk. Mostly empty.",
+        "One year.",
+        "You told no one. Who would believe you?",
+        "The government raid in '28 proved it was real.",
+        "But they covered it up. Called it 'bootleggers.'",
+        "Bootleggers with gills.",
+        "hermes (thinks): I dream about her.",
+        "hermes (thinks): Every night. The same dream.",
+        "hermes (thinks): She's calling me."
+      ],
+      "scene": "one_year_later",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later"
+      },
+      "time": 1792898560432,
+      "visits": [
+        "one_year_later"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "window",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "desk",
+          "name": "Desk",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Research notes. Newspaper clippings.",
+        "A map of the Massachusetts coast.",
+        "Innsmouth is circled. So is another location.",
+        "A beach. Thirty miles north."
+      ],
+      "scene": "one_year_later",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later"
+      },
+      "time": 1792898560478,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "bed",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "desk",
+          "name": "Desk",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The city lights.",
+        "Normal people living normal lives.",
+        "hermes (thinks): That used to be me."
+      ],
+      "scene": "one_year_later",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later"
+      },
+      "time": 1792898560521,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "bed",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "desk",
+          "name": "Desk",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You don't sleep much anymore.",
+        "When you do, you dream of water."
+      ],
+      "scene": "one_year_later",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later"
+      },
+      "time": 1792898560564,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_dream",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "kat_dream",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You lie down.",
+        "Close your eyes.",
+        "And you're there again.",
+        "## The Dream",
+        "Underwater. But you can breathe.",
+        "A city of impossible geometry.",
+        "Spires of coral and bone.",
+        "And she's there. Waiting.",
+        "The dream is always the same.",
+        "She's standing at the edge of the city.",
+        "Half-transformed. Beautiful in a way that hurts.",
+        "She speaks. Not with words."
+      ],
+      "scene": "the_dream",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_dream"
+      },
+      "time": 1792898560609,
+      "visits": [
+        "the_dream"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "kat_dream",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "kat_dream",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "She looks... peaceful.",
+        "For the first time since you met her.",
+        "Like she finally belongs somewhere."
+      ],
+      "scene": "the_dream",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_dream"
+      },
+      "time": 1792898560652,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "kat: You came.",
+        "hermes: I always come. I can't stop.",
+        "kat: I know.",
+        "kat: I'm sorry. I didn't mean to call you.",
+        "kat: It just... happens.",
+        "hermes: Are you okay?",
+        "She laughs. Bubbles rise from her mouth.",
+        "kat: I'm more okay than I've ever been.",
+        "kat: This is what I was meant for.",
+        "kat: I just didn't know it.",
+        "hermes: I miss you.",
+        "kat: I know.",
+        "kat: I miss you too. The human part of me.",
+        "kat: It's still there. Smaller every day.",
+        "kat: But it remembers you.",
+        "She touches your face. The way she did in the church.",
+        "kat: Come to the beach. Tomorrow night.",
+        "kat: I want to see you. One last time.",
+        "kat: Before I forget how.",
+        "You wake up.",
+        "Your pillow is wet. Seawater.",
+        "hermes (thinks): Tomorrow night.",
+        "## Hermes's Apartment, Boston",
+        "Daylight makes everything seem less real.",
+        "But the salt on your pillow doesn't lie.",
+        "She's calling you.",
+        "The question is whether you'll answer.",
+        "hermes (thinks): I could ignore it.",
+        "hermes (thinks): Stay here. Keep pretending.",
+        "hermes (thinks): Or I could see her one more time."
+      ],
+      "scene": "one_year_later_morning",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later_morning"
+      },
+      "time": 1792898560701,
+      "visits": [
+        "one_year_later_morning"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The world is out there.",
+        "Normal and safe and boring."
+      ],
+      "scene": "one_year_later_morning",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "one_year_later_morning"
+      },
+      "time": 1792898560745,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_beach",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "kat_beach",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 675
+          },
+          "id": "water",
+          "name": "The Water",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "## The Beach",
+        "Waves on rocks. Moon on water.",
+        "You've been here for hours.",
+        "Then: a shape in the surf.",
+        "She's here.",
+        "She rises from the water.",
+        "Changed. More than in the dream.",
+        "Scales where there was skin. Gills on her neck.",
+        "But her eyes. Her eyes are still hers.",
+        "Still gold. Still sad. Still human enough."
+      ],
+      "scene": "the_beach",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_beach"
+      },
+      "time": 1792898595088,
+      "visits": [
+        "drive_to_beach",
+        "the_beach"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "water",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "kat_beach",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 675
+          },
+          "id": "water",
+          "name": "The Water",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "She's beautiful.",
+        "Not human-beautiful. Something else.",
+        "Something ancient. Something true."
+      ],
+      "scene": "the_beach",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_beach"
+      },
+      "time": 1792898595132,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_beach",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "kat_beach",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 675
+          },
+          "id": "water",
+          "name": "The Water",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "Black water. Endless.",
+        "Things move beneath the surface.",
+        "Her family. Her people.",
+        "Waiting."
+      ],
+      "scene": "the_beach",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_beach"
+      },
+      "time": 1792898595176,
+      "visits": []
+    },
+    {
+      "action": {
+        "choice": 0,
+        "key": "the_beach|I can't.|I wish I could.|Take me with you.",
+        "text": "I can't."
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "I can't."
+        },
+        {
+          "index": 1,
+          "text": "I wish I could."
+        },
+        {
+          "index": 2,
+          "text": "Take me with you."
+        }
+      ],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "kat_beach",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 675
+          },
+          "id": "water",
+          "name": "The Water",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "She walks up the beach toward you.",
+        "Stops just out of reach.",
+        "kat: You came.",
+        "hermes: I had to.",
+        "hermes: I've been coming here for a year.",
+        "hermes: Hoping you'd—",
+        "kat: I know.",
+        "kat: I felt you. Every time.",
+        "kat: I'm sorry.",
+        "kat: I shouldn't have called. But I...",
+        "She struggles. Words are harder for her now.",
+        "kat: I wanted you to see. Before I go.",
+        "hermes: Go where?",
+        "kat: Deeper. There are cities down there, Hermes.",
+        "kat: Older than anything on land.",
+        "kat: I've seen them. I belong there.",
+        "hermes: Kat—",
+        "kat: My name isn't Kat anymore.",
+        "kat: I don't think it ever was.",
+        "She looks at you. THE LOOK again.",
+        "The same one from the church.",
+        "The one that says: I see you. All of you.",
+        "kat: You could come with me."
+      ],
+      "scene": "the_beach",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_beach"
+      },
+      "time": 1792898595224,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_walking",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 450
+          },
+          "id": "kat_walking",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "hermes: I can't. I'm not like you.",
+        "kat: No. You're not.",
+        "kat: You're exactly what you're supposed to be.",
+        "kat: That's why I loved you.",
+        "hermes: Loved?",
+        "kat: Love. Present tense.",
+        "kat: I'll always love you.",
+        "kat: Even when I forget what love means.",
+        "## The Beach",
+        "She turns toward the water.",
+        "You know what happens next.",
+        "You knew it the moment you met her.",
+        "She walks toward the sea.",
+        "Each step taking her further from you.",
+        "From everything human."
+      ],
+      "scene": "the_end",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_end"
+      },
+      "time": 1792898595250,
+      "visits": [
+        "the_end"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "kat_walking",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 450
+          },
+          "id": "kat_walking",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "She's almost to the water.",
+        "Don't watch. Watch. It doesn't matter.",
+        "This is happening either way."
+      ],
+      "scene": "the_end",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "the_end"
+      },
+      "time": 1792898595294,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "end",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 675
+          },
+          "id": "end",
+          "name": "The End",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-a53d08124ed6c715c32e",
+      "output": [
+        "hermes: KAT!",
+        "She stops. Turns.",
+        "One last look.",
+        "kat: Thank you.",
+        "kat: For seeing me.",
+        "kat: The real me.",
+        "kat: Even the parts I was afraid of.",
+        "hermes: Kat, please—",
+        "kat: Goodbye, Hermes.",
+        "She walks into the water.",
+        "Doesn't look back.",
+        "The waves close over her head.",
+        "For a moment, you see her shape beneath the surface.",
+        "Then she's gone.",
+        "You stand on the beach until dawn.",
+        "Waiting for something that won't happen.",
+        "She's not coming back.",
+        "She was never going to.",
+        "You knew that.",
+        "You came anyway.",
+        "That's what love is.",
+        "Showing up even when you know how it ends.",
+        "## The Beach",
+        "Dawn breaks.",
+        "The sea is calm.",
+        "Empty.",
+        "Like nothing happened.",
+        "You drive home.",
+        "You don't tell anyone.",
+        "Who would believe you?",
+        "Years later, you'll still dream of her.",
+        "Swimming through impossible cities.",
+        "Happy, in a way she never was on land.",
+        "Sometimes, when you're near the ocean,",
+        "you think you hear her voice.",
+        "Calling you.",
+        "You never answer.",
+        "But you always listen."
+      ],
+      "scene": "epilogue",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "epilogue"
+      },
+      "time": 1792898595344,
+      "visits": [
+        "epilogue"
+      ]
+    },
+    {
+      "action": "end",
+      "choices": [],
+      "ended": true,
+      "ending": "GAME_END",
+      "hotspots": [],
+      "location": "inside",
+      "output": [
+        "## GAME_END",
+        "S H A D O W   O V E R   I N N S M O U T H",
+        "THE END",
+        "She found her family.",
+        "He found his heart.",
+        "The sea keeps its secrets.",
+        "Thank you for playing.",
+        "The end."
+      ],
+      "scene": "GAME_END",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "GAME_END"
+      },
+      "time": 1792898630833,
+      "visits": [
+        "GAME_END"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4446 @@
+{
+  "choiceCounts": {
+    "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.": [
+      4,
+      4,
+      3
+    ],
+    "confrontation_setup|I'll follow you anywhere.|I can't.|Then let me hear your choice.|Let me try to save you.": [
+      2,
+      0,
+      0,
+      4
+    ],
+    "confrontation_setup|I'm coming.|...You're right.": [
+      1,
+      0
+    ],
+    "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go": [
+      2,
+      2,
+      1
+    ],
+    "confrontation_setup|Step into the water|Hesitate": [
+      2,
+      0
+    ],
+    "confrontation_setup|Then let me stay with you.|Don't do this.|...Okay.": [
+      1,
+      1,
+      0
+    ],
+    "grocery_store|I'm researching the history of Innsmouth.|Do you know the Marsh family?|Never mind.": [
+      2,
+      2,
+      1
+    ],
+    "pier_meeting|What are the Deep Ones?|What kind of trade?": [
+      4,
+      3
+    ],
+    "pier_meeting|What happens when they change completely?|And Dagon? The church?": [
+      4,
+      3
+    ],
+    "rescue_boat_race|Pull her into the boat|It's okay. Go to them.": [
+      1,
+      1
+    ],
+    "rescue_boat|Hold out your hand|You have to choose.": [
+      1,
+      1
+    ],
+    "rescue_choice_left|Pull her along|Let her lead": [
+      1,
+      1
+    ],
+    "rescue_choice_right|Can you swim us out?|Push through to the boat": [
+      2,
+      2
+    ],
+    "rescue_swim|Reach for her|Come with us!": [
+      1,
+      1
+    ],
+    "surface_she_leaves|Search her things|Don't look": [
+      2,
+      1
+    ],
+    "the_beach|I can't.|I wish I could.|Take me with you.": [
+      2,
+      2,
+      1
+    ]
+  },
+  "config": {
+    "act": "2",
+    "archetype": "completionist",
+    "choiceCounts": {
+      "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.": [
+        4,
+        4,
+        3
+      ],
+      "confrontation_setup|I'll follow you anywhere.|I can't.|Then let me hear your choice.|Let me try to save you.": [
+        2,
+        0,
+        0,
+        4
+      ],
+      "confrontation_setup|I'm coming.|...You're right.": [
+        1,
+        0
+      ],
+      "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go": [
+        2,
+        2,
+        1
+      ],
+      "confrontation_setup|Step into the water|Hesitate": [
+        2,
+        0
+      ],
+      "confrontation_setup|Then let me stay with you.|Don't do this.|...Okay.": [
+        1,
+        1,
+        0
+      ],
+      "grocery_store|I'm researching the history of Innsmouth.|Do you know the Marsh family?|Never mind.": [
+        2,
+        2,
+        1
+      ],
+      "pier_meeting|What are the Deep Ones?|What kind of trade?": [
+        4,
+        3
+      ],
+      "pier_meeting|What happens when they change completely?|And Dagon? The church?": [
+        4,
+        3
+      ],
+      "rescue_boat_race|Pull her into the boat|It's okay. Go to them.": [
+        1,
+        1
+      ],
+      "rescue_boat|Hold out your hand|You have to choose.": [
+        1,
+        1
+      ],
+      "rescue_choice_left|Pull her along|Let her lead": [
+        1,
+        1
+      ],
+      "rescue_choice_right|Can you swim us out?|Push through to the boat": [
+        2,
+        2
+      ],
+      "rescue_swim|Reach for her|Come with us!": [
+        1,
+        1
+      ],
+      "surface_she_leaves|Search her things|Don't look": [
+        2,
+        1
+      ],
+      "the_beach|I can't.|I wish I could.|Take me with you.": [
+        2,
+        2,
+        1
+      ]
+    },
+    "noticed": false,
+    "seed": 14,
+    "timeout": 600000
+  },
+  "failures": [],
+  "final": {
+    "choices": [],
+    "ended": true,
+    "ending": "ACT_END",
+    "hotspots": [],
+    "location": "place-96acfd3d8faaf8f903fe",
+    "output": [
+      "zadok: Father Dagon. Mother Hydra.",
+      "zadok: They're the old ones. Big as houses.",
+      "zadok: The church worships them. Has for a hundred years.",
+      "He grabs your arm. His grip is iron.",
+      "zadok: The Marsh girl. The one you've been talking to.",
+      "hermes: Kat?",
+      "zadok: She's got the blood. Strong blood.",
+      "zadok: They'll come for her tonight.",
+      "zadok: And for you, because you know.",
+      "He stands. Stumbles.",
+      "zadok: Run. Both of you. NOW.",
+      "A sound. Splashing. From the water.",
+      "zadok: They're here. Oh god. They're HERE.",
+      "Shapes rise from the harbor.",
+      "Not human. Not anymore.",
+      "Act complete."
+    ],
+    "scene": "pier_meeting",
+    "story": {
+      "flags": {
+        "clerk_noticed_interest": false,
+        "knows_deep_ones": true,
+        "knows_kat_marsh": true,
+        "knows_library_entrance": true,
+        "noticed_followers": true,
+        "read_newspapers": true,
+        "talked_kat_library": true,
+        "talked_to_kat_square": true,
+        "talked_to_zadok": true,
+        "visited_harbor": true,
+        "visited_library": true,
+        "visited_square": true,
+        "zadok_meeting": true,
+        "zadok_told_truth": true
+      },
+      "inventory": [
+        "notebook",
+        "old_newspaper",
+        "marsh_book"
+      ],
+      "scene": "pier_meeting"
+    },
+    "visits": []
+  },
+  "passed": true,
+  "trace": [
+    {
+      "action": "start",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "## Room 7, Gilman House",
+        "A cramped room that smells of salt and mildew.",
+        "The wallpaper peels in long strips.",
+        "Water stains on the ceiling form patterns that almost look deliberate.",
+        "Through the grimy window: fog, and the distant harbor.",
+        "You didn't sleep well.",
+        "Dreams of water. Of something calling from below.",
+        "hermes (thinks): Just a dream.",
+        "hermes (thinks): Today I find answers."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693815,
+      "visits": [
+        "hotel_room"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "window",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "## Room 7, Gilman House",
+        "A cramped room that smells of salt and mildew.",
+        "The wallpaper peels in long strips.",
+        "Water stains on the ceiling form patterns that almost look deliberate.",
+        "Through the grimy window: fog, and the distant harbor.",
+        "You didn't sleep well.",
+        "Dreams of water. Of something calling from below.",
+        "hermes (thinks): Just a dream.",
+        "hermes (thinks): Today I find answers."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693815,
+      "visits": [
+        "hotel_room"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "bed",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The fog is thinner now. You can see the town.",
+        "Crumbling buildings. Empty streets.",
+        "The harbor is busy though. Fishing boats.",
+        "hermes (thinks): They fish at night. Sleep during the day.",
+        "hermes (thinks): Nocturnal fishermen. That's... unusual."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693860,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The sheets are damp. They were damp when you got in.",
+        "You slept on top of the covers."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693903,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "notebook",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The lock is flimsy. A chair is wedged under the handle.",
+        "You put it there last night.",
+        "You don't remember why."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693947,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "notebook",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Your research notes.",
+        "Innsmouth: founded 1643. Population decline after 1846.",
+        "The Esoteric Order of Dagon — local religious group.",
+        "Captain Obed Marsh — brought 'prosperity' from the South Seas.",
+        "hermes (thinks): Everyone I asked about this place got nervous.",
+        "hermes (thinks): Now I know why."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792899693990,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "[Received: notebook]",
+        "You pocket the notebook."
+      ],
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "hotel_room"
+      },
+      "time": 1792899694034,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "church",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "Time to explore this town.",
+        "## Innsmouth Town Square",
+        "The heart of Innsmouth.",
+        "A dried-up fountain. Boarded storefronts.",
+        "The few people on the street don't look at you.",
+        "They don't look at anything directly.",
+        "The town is worse in daylight.",
+        "Half the buildings are abandoned. The rest should be.",
+        "A church dominates the north side. The fish symbol again."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709489,
+      "visits": [
+        "town_square"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "grocery",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "The Esoteric Order of Dagon.",
+        "The doors are closed. Chained, actually.",
+        "But you can hear something inside. Chanting?",
+        "hermes (thinks): Services are at night. Of course they are."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709533,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "locals",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "One of the few businesses still open.",
+        "The sign says 'MARSH GROCERY'.",
+        "Everything in this town is named Marsh."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709576,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_figure",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "A group of townspeople.",
+        "They're watching you. Pretending not to.",
+        "Their features are... off. Wide mouths. Bulging eyes.",
+        "hermes (thinks): Inbreeding. Small town. That's all it is."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709621,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "harbor_road",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "Someone standing by the old library.",
+        "Dark hair. Leather jacket.",
+        "hermes (thinks): The woman from the bus."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709666,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "library_direction",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "A road leading down to the waterfront.",
+        "The smell of fish is stronger from there."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709708,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "church",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "The old library. Closed for twenty years.",
+        "But Kat said there's a way in. Back window."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709751,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "locals",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "The chains are thick. You're not getting in this way.",
+        "hermes (thinks): There might be another entrance."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709794,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_figure",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "You approach them.",
+        "They disperse before you get close.",
+        "One of them spits on the ground where you were about to step."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709837,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "grocery",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "You catch up to her by the old library.",
+        "kat: Following me?",
+        "hermes: I... no. Well. Maybe.",
+        "She almost smiles. Almost.",
+        "kat: The library's been closed for twenty years.",
+        "hermes: I noticed.",
+        "kat: But there's a way in. Around back.",
+        "hermes: Why are you telling me this?",
+        "She looks at you. Really looks.",
+        "For a moment, something passes between you.",
+        "kat: Because you're looking for the same thing I am.",
+        "hermes: Which is?",
+        "kat: The truth about this place.",
+        "She walks away.",
+        "kat: The back window. It's unlocked.",
+        "hermes (thinks): Who is she?",
+        "hermes (thinks): And why do I trust her?"
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899709883,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "proprietor",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "output": [
+        "## Marsh Grocery",
+        "Dusty shelves. Mostly canned goods.",
+        "The proprietor watches you from behind the counter.",
+        "He has the Innsmouth look. Worse than most.",
+        "A bell jingles as you enter.",
+        "The man behind the counter doesn't greet you.",
+        "He just... watches."
+      ],
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792899720065,
+      "visits": [
+        "grocery_store"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "shelves",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "output": [
+        "He's old. Very old.",
+        "His neck has ridges. Like gills.",
+        "hermes (thinks): Skin condition. Has to be."
+      ],
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792899720108,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "shelves",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "output": [
+        "Canned fish. Dried fish. Salted fish.",
+        "Nothing fresh. Nothing that isn't fish.",
+        "Except...",
+        "There's an old newspaper tucked behind some cans."
+      ],
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792899720152,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "proprietor",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "output": [
+        "You pull out the newspaper.",
+        "It's from 1927. Headline: 'FEDERAL RAID ON INNSMOUTH'",
+        "hermes (thinks): A raid? What did they find?",
+        "[Received: old_newspaper]"
+      ],
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792899720196,
+      "visits": []
+    },
+    {
+      "action": {
+        "choice": 1,
+        "key": "grocery_store|I'm researching the history of Innsmouth.|Do you know the Marsh family?|Never mind.",
+        "text": "Do you know the Marsh family?"
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "I'm researching the history of Innsmouth."
+        },
+        {
+          "index": 1,
+          "text": "Do you know the Marsh family?"
+        },
+        {
+          "index": 2,
+          "text": "Never mind."
+        }
+      ],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "output": [
+        "proprietor: ..."
+      ],
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792899720237,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "library_direction",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "proprietor: Everyone's Marsh here.",
+        "hermes: I mean the original family. Captain Obed—",
+        "He reaches under the counter.",
+        "hermes (thinks): Time to go.",
+        "## Innsmouth Town Square",
+        "The heart of Innsmouth.",
+        "A dried-up fountain. Boarded storefronts.",
+        "The few people on the street don't look at you.",
+        "They don't look at anything directly."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899729570,
+      "visits": [
+        "town_square"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "history_section",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You slip around back. The window is unlocked, just like she said.",
+        "## Innsmouth Public Library",
+        "Abandoned for decades. Dust everywhere.",
+        "Most books are gone. Or destroyed.",
+        "But some remain. Hidden in the back.",
+        "You climbed through the back window.",
+        "The library is a tomb of knowledge.",
+        "Whatever they didn't want people to read is still here."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899737898,
+      "visits": [
+        "library"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "newspaper_archive",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Most shelves are empty.",
+        "But there's a book hidden behind others.",
+        "'The Marsh Family: A History'",
+        "hermes (thinks): This could be useful."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899737941,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_library",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Stacks of old Innsmouth Couriers.",
+        "The dates stop in 1928.",
+        "The year after the federal raid."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899737985,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "history_section",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "She's here. Reading something.",
+        "Her face is pale."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899738029,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "newspaper_archive",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You take the book.",
+        "[Received: marsh_book]",
+        "It details Captain Obed Marsh's 'trade' with the South Seas.",
+        "hermes (thinks): He didn't bring back gold. He brought back... something else."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899738071,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_library",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You flip through the papers.",
+        "Headlines about missing persons. Strange lights over Devil Reef.",
+        "Then: 'GOVERNMENT COVER-UP?' — the last issue.",
+        "hermes (thinks): They knew. And they were silenced."
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899738116,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "window",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "history_section",
+          "name": "Local History Section",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "newspaper_archive",
+          "name": "Newspaper Archive",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "kat_library",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "She doesn't look up when you approach.",
+        "kat: I found my grandmother's name.",
+        "hermes: In the town records?",
+        "She hands you a ledger. Handwritten.",
+        "Names. Dates. Pairings.",
+        "Like a stud book for horses.",
+        "kat: They kept track of who had children with who.",
+        "kat: My grandmother. She's in here. 1904.",
+        "kat: She got out. Changed her name.",
+        "kat: My mother never talked about it.",
+        "hermes: Kat...",
+        "kat: My real name is Katherine. Katherine Marsh.",
+        "She finally looks at you.",
+        "Her eyes are wet. And something else.",
+        "A flicker of something gold in her irises.",
+        "kat: I came here to find my family.",
+        "kat: I think I found more than that.",
+        "hermes (thinks): She's one of them.",
+        "hermes (thinks): But she didn't know.",
+        "hermes (thinks): Does it matter?"
+      ],
+      "scene": "library",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "library"
+      },
+      "time": 1792899738163,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "harbor_road",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "## Innsmouth Town Square",
+        "The heart of Innsmouth.",
+        "A dried-up fountain. Boarded storefronts.",
+        "The few people on the street don't look at you.",
+        "They don't look at anything directly."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899755936,
+      "visits": [
+        "town_square"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "devil_reef",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 150
+          },
+          "id": "devil_reef",
+          "name": "Devil Reef",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 675
+          },
+          "id": "old_drunk",
+          "name": "Old Man",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 563
+          },
+          "id": "fishing_boats",
+          "name": "Fishing Boats",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Back to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "## Innsmouth Harbor",
+        "Rotting piers. Fishing boats in various states of decay.",
+        "The smell is overwhelming. Not just fish.",
+        "Something else. Something wrong.",
+        "Offshore, through the fog: Devil Reef.",
+        "The harbor is busy despite the town being dead.",
+        "Fishermen work on their boats. They don't look up.",
+        "They're all... wrong. More wrong than the others.",
+        "hermes (thinks): The ones who work the water are the worst."
+      ],
+      "scene": "harbor",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "harbor"
+      },
+      "time": 1792899763847,
+      "visits": [
+        "harbor"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "old_drunk",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 150
+          },
+          "id": "devil_reef",
+          "name": "Devil Reef",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 675
+          },
+          "id": "old_drunk",
+          "name": "Old Man",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 563
+          },
+          "id": "fishing_boats",
+          "name": "Fishing Boats",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Back to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "A rocky outcrop about a mile offshore.",
+        "Something's on it. Buildings?",
+        "No. That can't be right.",
+        "hermes (thinks): The stories say that's where they come from.",
+        "hermes (thinks): Where WHAT comes from?"
+      ],
+      "scene": "harbor",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "harbor"
+      },
+      "time": 1792899763893,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "fishing_boats",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 150
+          },
+          "id": "devil_reef",
+          "name": "Devil Reef",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 675
+          },
+          "id": "old_drunk",
+          "name": "Old Man",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 563
+          },
+          "id": "fishing_boats",
+          "name": "Fishing Boats",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Back to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "An old man sitting on a crate.",
+        "He's different from the others. More human.",
+        "He's drinking from a bottle."
+      ],
+      "scene": "harbor",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "harbor"
+      },
+      "time": 1792899763936,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "old_drunk",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 150
+          },
+          "id": "devil_reef",
+          "name": "Devil Reef",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 675
+          },
+          "id": "old_drunk",
+          "name": "Old Man",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 563
+          },
+          "id": "fishing_boats",
+          "name": "Fishing Boats",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Back to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "The boats go out at night. Come back at dawn.",
+        "Their nets are full but...",
+        "hermes (thinks): That's not fish.",
+        "One of the fishermen notices you looking.",
+        "You look away."
+      ],
+      "scene": "harbor",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "harbor"
+      },
+      "time": 1792899763981,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "town_direction",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 150
+          },
+          "id": "devil_reef",
+          "name": "Devil Reef",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 675
+          },
+          "id": "old_drunk",
+          "name": "Old Man",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 563
+          },
+          "id": "fishing_boats",
+          "name": "Fishing Boats",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Back to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "The old man looks up at you.",
+        "His eyes are clear. Afraid.",
+        "zadok: You're not from here.",
+        "hermes: No. I'm researching—",
+        "zadok: Don't say it out loud.",
+        "He looks around. Terrified.",
+        "zadok: Buy me a drink. Down by the old pier. Sunset.",
+        "zadok: I'll tell you everything.",
+        "zadok: Then you run. You hear me? You RUN.",
+        "hermes (thinks): Finally. Someone who'll talk.",
+        "hermes (thinks): But why is he so scared?"
+      ],
+      "scene": "harbor",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "harbor"
+      },
+      "time": 1792899764025,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "hotel_direction",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "output": [
+        "## Innsmouth Town Square",
+        "The heart of Innsmouth.",
+        "A dried-up fountain. Boarded storefronts.",
+        "The few people on the street don't look at you.",
+        "They don't look at anything directly."
+      ],
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792899772814,
+      "visits": [
+        "town_square"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "stairs",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1063,
+            "y": 338
+          },
+          "id": "stairs",
+          "name": "Stairs",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 530,
+            "y": 450
+          },
+          "id": "front_door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-7672fad03a2b6c668284",
+      "output": [
+        "## Gilman House Hotel",
+        "The lobby is darker now.",
+        "The clerk is gone.",
+        "Something is different. Wrong.",
+        "You can hear movement upstairs. Multiple footsteps.",
+        "hermes (thinks): Zadok. Sunset. The old pier.",
+        "hermes (thinks): But something's wrong here.",
+        "You notice them now.",
+        "Shapes in doorways. Watching.",
+        "You've been followed all day."
+      ],
+      "scene": "hotel_lobby_evening",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "hotel_lobby_evening"
+      },
+      "time": 1792899780080,
+      "visits": [
+        "hotel_lobby_evening"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "front_door",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1063,
+            "y": 338
+          },
+          "id": "stairs",
+          "name": "Stairs",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 530,
+            "y": 450
+          },
+          "id": "front_door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-7672fad03a2b6c668284",
+      "output": [
+        "You can hear them up there.",
+        "In the hallway. Outside your room.",
+        "hermes (thinks): Don't go up there."
+      ],
+      "scene": "hotel_lobby_evening",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "hotel_lobby_evening"
+      },
+      "time": 1792899780124,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "stairs",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1063,
+            "y": 338
+          },
+          "id": "stairs",
+          "name": "Stairs",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 530,
+            "y": 450
+          },
+          "id": "front_door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-7672fad03a2b6c668284",
+      "output": [
+        "Sunset. The meeting with Zadok.",
+        "It might be your only chance."
+      ],
+      "scene": "hotel_lobby_evening",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "hotel_lobby_evening"
+      },
+      "time": 1792899780168,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "front_door",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1063,
+            "y": 338
+          },
+          "id": "stairs",
+          "name": "Stairs",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 530,
+            "y": 450
+          },
+          "id": "front_door",
+          "name": "Front Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-7672fad03a2b6c668284",
+      "output": [
+        "Not yet. You need to meet Zadok first.",
+        "Then you need to run."
+      ],
+      "scene": "hotel_lobby_evening",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "hotel_lobby_evening"
+      },
+      "time": 1792899780212,
+      "visits": []
+    },
+    {
+      "action": {
+        "choice": 1,
+        "key": "pier_meeting|What are the Deep Ones?|What kind of trade?",
+        "text": "What kind of trade?"
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "What are the Deep Ones?"
+        },
+        {
+          "index": 1,
+          "text": "What kind of trade?"
+        }
+      ],
+      "ended": false,
+      "hotspots": [],
+      "location": "place-96acfd3d8faaf8f903fe",
+      "output": [
+        "## Old Pier",
+        "The sun bleeds into the ocean.",
+        "Zadok is waiting. Drunk. Terrified.",
+        "He starts talking before you even sit down.",
+        "zadok: Obed Marsh. 1838. He sailed to the South Seas.",
+        "zadok: Found an island. Traded with them.",
+        "hermes: Traded with who?",
+        "zadok: The Deep Ones.",
+        "He drinks. His hands are shaking."
+      ],
+      "scene": "pier_meeting",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "pier_meeting"
+      },
+      "time": 1792899789800,
+      "visits": [
+        "pier_meeting"
+      ]
+    },
+    {
+      "action": {
+        "choice": 1,
+        "key": "pier_meeting|What happens when they change completely?|And Dagon? The church?",
+        "text": "And Dagon? The church?"
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "What happens when they change completely?"
+        },
+        {
+          "index": 1,
+          "text": "And Dagon? The church?"
+        }
+      ],
+      "ended": false,
+      "hotspots": [],
+      "location": "place-96acfd3d8faaf8f903fe",
+      "output": [
+        "zadok: Gold. Fish. More than any nets could catch.",
+        "zadok: In exchange for...",
+        "He can't say it.",
+        "zadok: Breeding. They wanted to breed with us.",
+        "hermes: That's insane.",
+        "zadok: Is it? You seen the people here.",
+        "zadok: The Marsh family first. Then others.",
+        "zadok: Children look normal at first. Then they change.",
+        "hermes: The Innsmouth look.",
+        "zadok: Now you're getting it."
+      ],
+      "scene": "pier_meeting",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "pier_meeting"
+      },
+      "time": 1792899789824,
+      "visits": []
+    },
+    {
+      "action": "end",
+      "choices": [],
+      "ended": true,
+      "ending": "ACT_END",
+      "hotspots": [],
+      "location": "place-96acfd3d8faaf8f903fe",
+      "output": [
+        "zadok: Father Dagon. Mother Hydra.",
+        "zadok: They're the old ones. Big as houses.",
+        "zadok: The church worships them. Has for a hundred years.",
+        "He grabs your arm. His grip is iron.",
+        "zadok: The Marsh girl. The one you've been talking to.",
+        "hermes: Kat?",
+        "zadok: She's got the blood. Strong blood.",
+        "zadok: They'll come for her tonight.",
+        "zadok: And for you, because you know.",
+        "He stands. Stumbles.",
+        "zadok: Run. Both of you. NOW.",
+        "A sound. Splashing. From the water.",
+        "zadok: They're here. Oh god. They're HERE.",
+        "Shapes rise from the harbor.",
+        "Not human. Not anymore.",
+        "Act complete."
+      ],
+      "scene": "pier_meeting",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_deep_ones": true,
+          "knows_kat_marsh": true,
+          "knows_library_entrance": true,
+          "noticed_followers": true,
+          "read_newspapers": true,
+          "talked_kat_library": true,
+          "talked_to_kat_square": true,
+          "talked_to_zadok": true,
+          "visited_harbor": true,
+          "visited_library": true,
+          "visited_square": true,
+          "zadok_meeting": true,
+          "zadok_told_truth": true
+        },
+        "inventory": [
+          "notebook",
+          "old_newspaper",
+          "marsh_book"
+        ],
+        "scene": "pier_meeting"
+      },
+      "time": 1792899789851,
+      "visits": []
+    }
+  ]
+}

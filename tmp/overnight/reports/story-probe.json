@@ -1,0 +1,2089 @@
+{
+  "choiceCounts": {
+    "grocery_store|I'm researching the history of Innsmouth.|Do you know the Marsh family?|Never mind.": [
+      1,
+      0,
+      0
+    ]
+  },
+  "config": {
+    "act": "2",
+    "archetype": "curious",
+    "seed": 0
+  },
+  "failures": [
+    {
+      "detail": "Error: Transition/dialogue failed to settle",
+      "scene": "town_square",
+      "type": "session failure"
+    },
+    {
+      "detail": "Error: Unable to save world",
+      "type": "error thrown"
+    }
+  ],
+  "final": {
+    "choices": [],
+    "ended": false,
+    "hotspots": [
+      {
+        "bounds": {
+          "height": 55,
+          "width": 220,
+          "x": 823,
+          "y": 450
+        },
+        "id": "proprietor",
+        "name": "Proprietor",
+        "verbs": [
+          "look",
+          "talk"
+        ]
+      },
+      {
+        "bounds": {
+          "height": 55,
+          "width": 220,
+          "x": 357,
+          "y": 338
+        },
+        "id": "shelves",
+        "name": "Shelves",
+        "verbs": [
+          "look",
+          "use"
+        ]
+      },
+      {
+        "bounds": {
+          "height": 55,
+          "width": 220,
+          "x": 90,
+          "y": 450
+        },
+        "id": "door",
+        "name": "Exit",
+        "verbs": [
+          "use"
+        ]
+      }
+    ],
+    "location": "place-0be8458a1e434dd7ee9e",
+    "scene": "town_square",
+    "story": {
+      "flags": {
+        "clerk_noticed_interest": false,
+        "grocery_hostile": true,
+        "knows_library_entrance": true,
+        "talked_to_kat_square": true,
+        "visited_square": true
+      },
+      "inventory": [
+        "notebook"
+      ],
+      "scene": "town_square"
+    }
+  },
+  "passed": false,
+  "trace": [
+    {
+      "action": "start",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338467
+    },
+    {
+      "action": {
+        "hotspot": "window",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338467
+    },
+    {
+      "action": {
+        "hotspot": "bed",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338550
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338606
+    },
+    {
+      "action": {
+        "hotspot": "notebook",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338669
+    },
+    {
+      "action": {
+        "hotspot": "notebook",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338753
+    },
+    {
+      "action": {
+        "hotspot": "door",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "window",
+          "name": "Window",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "bed",
+          "name": "Bed",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "door",
+          "name": "Door",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 370
+          },
+          "id": "notebook",
+          "name": "Your Notebook",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "hotel_room",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "hotel_room"
+      },
+      "time": 1792897338810
+    },
+    {
+      "action": {
+        "hotspot": "church",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344030
+    },
+    {
+      "action": {
+        "hotspot": "church",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344100
+    },
+    {
+      "action": {
+        "hotspot": "grocery",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344156
+    },
+    {
+      "action": {
+        "hotspot": "locals",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344220
+    },
+    {
+      "action": {
+        "hotspot": "locals",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344290
+    },
+    {
+      "action": {
+        "hotspot": "kat_figure",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344353
+    },
+    {
+      "action": {
+        "hotspot": "kat_figure",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344418
+    },
+    {
+      "action": {
+        "hotspot": "harbor_road",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344582
+    },
+    {
+      "action": {
+        "hotspot": "library_direction",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344638
+    },
+    {
+      "action": {
+        "hotspot": "grocery",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 850,
+            "y": 150
+          },
+          "id": "church",
+          "name": "Church of Dagon",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "grocery",
+          "name": "Grocery Store",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1197,
+            "y": 563
+          },
+          "id": "locals",
+          "name": "Locals",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1303,
+            "y": 675
+          },
+          "id": "kat_figure",
+          "name": "Figure in the Distance",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1557,
+            "y": 450
+          },
+          "id": "harbor_road",
+          "name": "Road to Harbor",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "hotel_direction",
+          "name": "Back to Hotel",
+          "verbs": [
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1437,
+            "y": 338
+          },
+          "id": "library_direction",
+          "name": "Old Library",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897344697
+    },
+    {
+      "action": {
+        "hotspot": "proprietor",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792897350396
+    },
+    {
+      "action": {
+        "hotspot": "proprietor",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792897350459
+    },
+    {
+      "action": {
+        "choice": 0,
+        "key": "grocery_store|I'm researching the history of Innsmouth.|Do you know the Marsh family?|Never mind.",
+        "text": "I'm researching the history of Innsmouth."
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "I'm researching the history of Innsmouth."
+        },
+        {
+          "index": 1,
+          "text": "Do you know the Marsh family?"
+        },
+        {
+          "index": 2,
+          "text": "Never mind."
+        }
+      ],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-045884673aa9e212d400",
+      "scene": "grocery_store",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "grocery_store"
+      },
+      "time": 1792897350509
+    },
+    {
+      "action": "failure",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 450
+          },
+          "id": "proprietor",
+          "name": "Proprietor",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 357,
+            "y": 338
+          },
+          "id": "shelves",
+          "name": "Shelves",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 90,
+            "y": 450
+          },
+          "id": "door",
+          "name": "Exit",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-0be8458a1e434dd7ee9e",
+      "scene": "town_square",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "grocery_hostile": true,
+          "knows_library_entrance": true,
+          "talked_to_kat_square": true,
+          "visited_square": true
+        },
+        "inventory": [
+          "notebook"
+        ],
+        "scene": "town_square"
+      },
+      "time": 1792897394091
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{"act":"3","passed":true,"failures":[],"recording":{"bytes":172282788,"ms":120000,"name":"act3-playthrough","samples":6997,"telemetry":"/Users/gorkolas/Developer/anima/tmp/recordings/act3-playthrough.json","video":"/Users/gorkolas/Developer/anima/tmp/recordings/act3-playthrough.webm"}}
+{"act":"3b","passed":false,"failures":[{"detail":"Error: Transition/dialogue failed to settle","scene":"confrontation_setup","type":"session failure"}],"recording":{"bytes":183965004,"ms":120000,"name":"act3b-playthrough","samples":7078,"telemetry":"/Users/gorkolas/Developer/anima/tmp/recordings/act3b-playthrough.json","video":"/Users/gorkolas/Developer/anima/tmp/recordings/act3b-playthrough.webm"}}
+file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/story-player.mjs:278
+		if (!result.passed) throw Error(`Act ${act} failed`);
+		                          ^
+
+Error: Act 3b failed
+    at playtest (file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/story-player.mjs:278:29)
+    at async file:///Users/gorkolas/Developer/anima/adventures/shadow-over-innsmouth/scripts/playtest-act3.mjs:4:1
+
+Node.js v24.21.0

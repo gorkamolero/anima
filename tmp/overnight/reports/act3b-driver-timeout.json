@@ -1,0 +1,536 @@
+{
+  "choiceCounts": {},
+  "config": {
+    "act": "3b",
+    "archetype": "curious",
+    "lineDelay": 300,
+    "seed": 0
+  },
+  "failures": [
+    {
+      "detail": "Error: Transition/dialogue failed to settle",
+      "scene": "confrontation_setup",
+      "type": "session failure"
+    }
+  ],
+  "final": {
+    "choices": [],
+    "ended": false,
+    "hotspots": [],
+    "location": "inside",
+    "scene": "kat_still_fighting",
+    "story": {
+      "flags": {
+        "clerk_noticed_interest": false,
+        "kat_far_gone": false
+      },
+      "inventory": [],
+      "scene": "confrontation_setup"
+    }
+  },
+  "passed": false,
+  "trace": [
+    {
+      "action": "start",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792897734641
+    },
+    {
+      "action": {
+        "hotspot": "rowboat",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792897734642
+    },
+    {
+      "action": {
+        "hotspot": "abel",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792897734987
+    },
+    {
+      "action": {
+        "hotspot": "abel",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792897735935
+    },
+    {
+      "action": {
+        "hotspot": "rowboat",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792897736582
+    },
+    {
+      "action": {
+        "hotspot": "path_down",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792897754055
+    },
+    {
+      "action": {
+        "hotspot": "structures",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792897755303
+    },
+    {
+      "action": {
+        "hotspot": "water_edge",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792897757153
+    },
+    {
+      "action": {
+        "hotspot": "path_down",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792897758702
+    },
+    {
+      "action": "failure",
+      "choices": [],
+      "ended": false,
+      "hotspots": [],
+      "location": "inside",
+      "scene": "kat_still_fighting",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_far_gone": false
+        },
+        "inventory": [],
+        "scene": "confrontation_setup"
+      },
+      "time": 1792897806299
+    }
+  ],
+  "recording": {
+    "bytes": 183965004,
+    "ms": 120000,
+    "name": "act3b-playthrough",
+    "samples": 7078,
+    "telemetry": "/Users/gorkolas/Developer/anima/tmp/recordings/act3b-playthrough.json",
+    "video": "/Users/gorkolas/Developer/anima/tmp/recordings/act3b-playthrough.webm"
+  }
+}

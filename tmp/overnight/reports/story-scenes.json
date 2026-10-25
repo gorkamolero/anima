@@ -1,0 +1,320 @@
+[
+  {
+    "act": "act2.story",
+    "scene": "hotel_room",
+    "place": "inside",
+    "stub": "hotel room pending"
+  },
+  {
+    "act": "act2.story",
+    "scene": "town_square",
+    "place": "place-0be8458a1e434dd7ee9e",
+    "stub": null
+  },
+  {
+    "act": "act2.story",
+    "scene": "grocery_store",
+    "place": "place-045884673aa9e212d400",
+    "stub": null
+  },
+  {
+    "act": "act2.story",
+    "scene": "harbor",
+    "place": "place-2a19481aac649a2e69f1",
+    "stub": null
+  },
+  {
+    "act": "act2.story",
+    "scene": "library",
+    "place": "inside",
+    "stub": "library pending"
+  },
+  {
+    "act": "act2.story",
+    "scene": "hotel_lobby_evening",
+    "place": "place-7672fad03a2b6c668284",
+    "stub": null
+  },
+  {
+    "act": "act2.story",
+    "scene": "pier_meeting",
+    "place": "place-96acfd3d8faaf8f903fe",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "chase_begins",
+    "place": "place-2a19481aac649a2e69f1",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "street_chase",
+    "place": "place-2635d8cd03bce818a634",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "church_exterior",
+    "place": "inside",
+    "stub": "church exterior pending"
+  },
+  {
+    "act": "act3.story",
+    "scene": "church_interior",
+    "place": "place-15965c132f18663902c3",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "church_escape",
+    "place": "place-e3110e2fd21ee4e07819",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "escape_road",
+    "place": "place-f2d0a7f7f76225002663",
+    "stub": null
+  },
+  {
+    "act": "act3.story",
+    "scene": "act3_end",
+    "place": "inside",
+    "stub": "act3 end pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "devil_reef_approach",
+    "place": "inside",
+    "stub": "devil reef approach pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "devil_reef",
+    "place": "inside",
+    "stub": "devil reef pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "reef_descent",
+    "place": "inside",
+    "stub": "reef descent pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "reef_chamber",
+    "place": "inside",
+    "stub": "reef chamber pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "kat_still_fighting",
+    "place": "inside",
+    "stub": "kat still fighting pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "kat_further_gone",
+    "place": "inside",
+    "stub": "kat further gone pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "confrontation_setup",
+    "place": "inside",
+    "stub": "confrontation setup pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "reef_departure",
+    "place": "inside",
+    "stub": "reef departure pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "reef_departure_far_gone",
+    "place": "inside",
+    "stub": "reef departure far gone pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_escape",
+    "place": "inside",
+    "stub": "rescue escape pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_choice_left",
+    "place": "inside",
+    "stub": "rescue choice left pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_choice_right",
+    "place": "inside",
+    "stub": "rescue choice right pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_swim",
+    "place": "inside",
+    "stub": "rescue swim pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_boat_race",
+    "place": "inside",
+    "stub": "rescue boat race pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_boat",
+    "place": "inside",
+    "stub": "rescue boat pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ending_together_deep",
+    "place": "inside",
+    "stub": "ending together deep pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ending_witness_release",
+    "place": "inside",
+    "stub": "ending witness release pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ending_witness_mutual",
+    "place": "inside",
+    "stub": "ending witness mutual pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ending_witness_failed",
+    "place": "inside",
+    "stub": "ending witness failed pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_ending_lost",
+    "place": "inside",
+    "stub": "rescue ending lost pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_ending_apart",
+    "place": "inside",
+    "stub": "rescue ending apart pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_ending_together_broken",
+    "place": "inside",
+    "stub": "rescue ending together broken pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_ending_together_uncertain",
+    "place": "inside",
+    "stub": "rescue ending together uncertain pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "rescue_ending_together_choice",
+    "place": "inside",
+    "stub": "rescue ending together choice pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "surface_false_victory",
+    "place": "inside",
+    "stub": "surface false victory pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "surface_she_leaves",
+    "place": "inside",
+    "stub": "surface she leaves pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ACT4_TRANSITION",
+    "place": "inside",
+    "stub": "act4 transition pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "ending_to_act4",
+    "place": "inside",
+    "stub": "ending to act4 pending"
+  },
+  {
+    "act": "act3b_devil_reef.story",
+    "scene": "GAME_END_ABYSSAL",
+    "place": "inside",
+    "stub": "game end abyssal pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "one_year_later",
+    "place": "inside",
+    "stub": "one year later pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "the_dream",
+    "place": "inside",
+    "stub": "the dream pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "one_year_later_morning",
+    "place": "inside",
+    "stub": "one year later morning pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "drive_to_beach",
+    "place": "place-f2d0a7f7f76225002663",
+    "stub": null
+  },
+  {
+    "act": "act4.story",
+    "scene": "the_beach",
+    "place": "place-a53d08124ed6c715c32e",
+    "stub": null
+  },
+  {
+    "act": "act4.story",
+    "scene": "the_end",
+    "place": "place-a53d08124ed6c715c32e",
+    "stub": null
+  },
+  {
+    "act": "act4.story",
+    "scene": "the_end_together",
+    "place": "inside",
+    "stub": "the end together pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "GAME_END_TOGETHER",
+    "place": "inside",
+    "stub": "game end together pending"
+  },
+  {
+    "act": "act4.story",
+    "scene": "epilogue",
+    "place": "place-a53d08124ed6c715c32e",
+    "stub": null
+  },
+  {
+    "act": "act4.story",
+    "scene": "GAME_END",
+    "place": "inside",
+    "stub": "game end pending"
+  }
+]

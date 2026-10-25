@@ -1,0 +1,62 @@
+[
+  {
+    "session": 2,
+    "config": {
+      "act": "3",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": false,
+    "failures": [
+      {
+        "type": "runner error",
+        "detail": "Error: Timed out: !!window.__anima?.scene.getReviewQaSnapshot().story && !!window.__anima?.scene.getReviewQaSnapshot().dialogue"
+      }
+    ],
+    "tracePath": "tmp/overnight/reports/swarm/session-002.json"
+  },
+  {
+    "session": 3,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": false,
+    "failures": [
+      {
+        "type": "runner error",
+        "detail": "Error: Timed out: !!window.__anima?.scene.getReviewQaSnapshot().story && !!window.__anima?.scene.getReviewQaSnapshot().dialogue"
+      }
+    ],
+    "tracePath": "tmp/overnight/reports/swarm/session-003.json"
+  },
+  {
+    "session": 5,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-005.json"
+  },
+  {
+    "session": 4,
+    "config": {
+      "act": "4",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-004.json"
+  }
+]

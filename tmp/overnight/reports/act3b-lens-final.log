@@ -1,0 +1,6 @@
+recording act3b-playthrough: 7184 video frames, 7184 telemetry samples, 119.98 s
+region x279 y418 358x550
+body px per video frame while walking: none; render samples with zero motion: 0 of 0
+drawing holds (video frames per drawing): median 204.00 p90 440.00 max 440.00 n 5
+planted sole lateral slide per drawing change (lateral sheets): none
+wrote /Users/gorkolas/Developer/anima/tmp/recordings/act3b-playthrough

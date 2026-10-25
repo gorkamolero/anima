@@ -1,0 +1,104 @@
+[
+  {
+    "id": "place-aa7dd184a5f30fbc1f89",
+    "description": "A narrow, fog-choked alleyway between two dilapidated Innsmouth houses. The air is thick with a metallic tang, and shadows deepen the further you go.",
+    "template": "exterior",
+    "background": "/generated/c63f20139efe9768cdcfc11536be1976e4e9d63b79b658e8f226bee887715687.png"
+  },
+  {
+    "id": "place-d3fc732744430e25f7c1",
+    "description": "Innsmouth main street",
+    "template": "exterior",
+    "background": "/generated/18f6b8fd6d3377a771df48295e271e04a342febf616f3516fc2f7039d50ecba4.png"
+  },
+  {
+    "id": "place-395743b437774b879679",
+    "description": "The oppressive outskirts of Innsmouth. Dilapidated houses with boarded-up windows, an old, peeling sign for the Gilman House Hotel, and the pervasive smell of dead fish and something else. The sea is a constant, ominous presence.",
+    "template": "exterior",
+    "background": "/generated/6065315bab13a573e90332cdee9e30dc20d22c31238b985b255cb48a71651023.png"
+  },
+  {
+    "id": "place-e3110e2fd21ee4e07819",
+    "description": "A narrow, cobblestone street, lined with decrepit, gambrel-roofed houses. Many windows are boarded up, and those that aren't reveal glimpses of dark, empty interiors. The air is heavy with the smell of dead fish and decay. A distant foghorn sounds, a mournful cry swallowed almost immediately by the oppressive quiet.",
+    "template": "exterior",
+    "background": "/generated/32cdaf1549b261691e0ed8d31c6ebcc4fbc2307fba8b6a5b522018e7d8a8a031.png"
+  },
+  {
+    "id": "place-96acfd3d8faaf8f903fe",
+    "description": "A cluttered wooden fishing pier at dusk: stacked crates, coiled rope, mooring posts and draped nets crowd the boards; gaps between planks show dark water; a narrow passage winds between the clutter toward the end of the pier.",
+    "template": "exterior",
+    "background": "/generated/5ca32cfdd011640725ee52cf1e1d8fbd07a6ce6bdb34d4f5df52206964b4b53a.png"
+  },
+  {
+    "id": "place-7587ff22de8e1ebc9f87",
+    "description": "A narrow cobbled street that climbs away from the viewer in broad shallow stone steps between leaning gambrel-roofed houses, a lamp post halfway up, the top of the street lost in fog.",
+    "template": "exterior",
+    "background": "/generated/67c70f3cb8a7ab38f4a2b913e1edb3229b5f5527c0b12d575d27587889120354.png"
+  },
+  {
+    "id": "place-15965c132f18663902c3",
+    "description": "The nave of a decaying New England church: rows of wooden pews on both sides of a central aisle leading to a pulpit, stone pillars along the aisle, grey light through tall windows.",
+    "template": "interior",
+    "background": "/generated/d6712b323288f5b703fd5777986bcaf409abf9ba7c4d92a08ad1370044b3283e.png"
+  },
+  {
+    "id": "place-7672fad03a2b6c668284",
+    "description": "The shabby lobby of the Gilman House hotel: a reception desk on one side, two square pillars, a worn rug, and a staircase rising along the back wall.",
+    "template": "interior",
+    "background": "/generated/c90a58cccf2e625ab3772618b423b32e3514301ae271b87043f1fba952b2787a.png"
+  },
+  {
+    "id": "place-0be8458a1e434dd7ee9e",
+    "description": "Innsmouth's town square: a round stone fountain in the middle of a cobbled plaza that can be walked around, two iron lamp posts, crumbling storefronts around the edges.",
+    "template": "exterior",
+    "background": "/generated/9de0b0b530db823471f7dc156d1caccbad62696da6aaf3583ae38504da5b7643.png"
+  },
+  {
+    "id": "place-045884673aa9e212d400",
+    "description": "A dim small-town grocery: three parallel aisles of tall shelves running away from the viewer with narrow gaps between them, a counter at the front, sacks and barrels on the floor.",
+    "template": "interior",
+    "background": "/generated/f85387676a3d18ef2656f63572d3f284e5d887bac5131eb521f0b7bdfef79c44.png"
+  },
+  {
+    "id": "place-f2d0a7f7f76225002663",
+    "description": "A desolate, fog-shrouded road leading into the eerie, decaying town of Innsmouth. Twisted trees line the path, their branches like skeletal fingers grasping at the perpetually dim sky. The air grows heavy with the scent of brine and something else, something ancient and unpleasant.",
+    "template": "exterior",
+    "background": "/generated/37de2d52aca2e0188e37400ed24632e409879ba43b2ce072689ffc95659f11bc.png"
+  },
+  {
+    "id": "place-2635d8cd03bce818a634",
+    "description": "A narrow, dark alley running alongside a decaying house in Innsmouth. The air is thick with the smell of brine and decay. What little light penetrates the fog struggles to reach the cobblestones.",
+    "template": "exterior",
+    "background": "/generated/1d101aa95cf774b158dde34bf80f48529c4413f0b2a35305dc699ec083a4427a.png"
+  },
+  {
+    "id": "place-2a19481aac649a2e69f1",
+    "description": "A broad stone quay road stretches across the foreground, its surface worn smooth by years of maritime activity. A sturdy stone railing separates the road from the dark, lapping waters of the harbor, with the distant, fog-shrouded line of Devil Reef just visible on the horizon.",
+    "template": "exterior",
+    "background": "/generated/4eedf5c92f74f7b2ba7337b5895402dd62d690ba2abb9017c4862d058044f5a9.png"
+  },
+  {
+    "id": "place-c65c23ccd4fb41403e93",
+    "description": "A narrow, fog-choked alleyway between two dilapidated Innsmouth houses. The walls are stained with grime and salt, and the air is thick with the scent of decay. Twisted pipes and damp refuse line the path.",
+    "template": "exterior",
+    "background": "/generated/bab58f54e80ab0d0377ffb9d83a4871bd0c2e33036d37e621c481704f8e23e96.png"
+  },
+  {
+    "id": "place-a53d08124ed6c715c32e",
+    "description": "A wild rocky beach at low tide, with irregular tide pools full of dark seawater, scattered large boulders on wet shingle, and a rough dry path between the rocks. The sea meets a foggy horizon. No buildings, docks, vehicles or people.",
+    "template": "exterior",
+    "background": "/generated/49e6739ac9b1c003800abf1b270f04dc78ddf7cb19cddf5267d82ea466e24fcc.png"
+  },
+  {
+    "id": "place-a3da054dbc2afb584327",
+    "description": "A fog-bound old graveyard, crooked weathered headstones scattered over uneven bare earth, a tall wrought iron fence enclosing the cemetery, an open iron gate, and a winding dirt path between graves disappearing into thick fog. No fountain, houses, vehicles or people.",
+    "template": "exterior",
+    "background": "/generated/1c284017474b2aa32f811497ad4a0b2d6f716002f71d652b5ecd289087685b69.png"
+  },
+  {
+    "id": "place-675c8639872575208930",
+    "description": "A cramped low-ceilinged stone cellar, rough damp floor, stacks of wooden crates crowding both sides, a wooden ladder leading to an open ceiling hatch, low beams and a single hanging oil lamp. A narrow route runs between crates. No reception desk, pews, shop shelves, vehicles or people.",
+    "template": "interior",
+    "background": "/generated/ad81acfb24cbcf2c2566fcd7456054677e203265650bd988f1ec20b9c5bb1dbc.png"
+  }
+]

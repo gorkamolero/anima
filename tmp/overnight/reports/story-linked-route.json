@@ -1,0 +1,1807 @@
+{
+  "choiceCounts": {
+    "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.": [
+      1,
+      0,
+      0
+    ],
+    "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go": [
+      1,
+      0,
+      0
+    ]
+  },
+  "config": {
+    "act": "3",
+    "archetype": "completionist",
+    "reef": true,
+    "seed": 0,
+    "timeout": 600000
+  },
+  "failures": [],
+  "final": {
+    "choices": [],
+    "ended": true,
+    "ending": "ACT_END",
+    "hotspots": [],
+    "location": "inside",
+    "output": [
+      "## ACT4_TRANSITION",
+      "A C T   F O U R",
+      "O N E   Y E A R   L A T E R",
+      "Act complete."
+    ],
+    "scene": "ACT4_TRANSITION",
+    "story": {
+      "flags": {
+        "beach_call": true,
+        "clerk_noticed_interest": false,
+        "kat_far_gone": false,
+        "kat_goodbye": true,
+        "reef_outcome": "pushed_away",
+        "the_look": true
+      },
+      "inventory": [],
+      "scene": "ACT4_TRANSITION"
+    },
+    "visits": [
+      "reef_departure",
+      "ending_to_act4",
+      "ACT4_TRANSITION"
+    ]
+  },
+  "passed": true,
+  "trace": [
+    {
+      "action": "start",
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Run to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "## Innsmouth Harbor",
+        "They're coming out of the water.",
+        "Dozens of them. Hundreds.",
+        "Shapes that were once human. And shapes that never were.",
+        "Zadok is gone. Pulled into the dark.",
+        "You didn't see what took him.",
+        "You don't want to know.",
+        "hermes (thinks): Run. He said run.",
+        "hermes (thinks): Kat. I have to find Kat."
+      ],
+      "scene": "chase_begins",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "chase_begins"
+      },
+      "time": 1792899314117,
+      "visits": [
+        "chase_begins"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "town_direction",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 890,
+            "y": 450
+          },
+          "id": "town_direction",
+          "name": "Run to Town",
+          "verbs": [
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2a19481aac649a2e69f1",
+      "output": [
+        "## Innsmouth Harbor",
+        "They're coming out of the water.",
+        "Dozens of them. Hundreds.",
+        "Shapes that were once human. And shapes that never were.",
+        "Zadok is gone. Pulled into the dark.",
+        "You didn't see what took him.",
+        "You don't want to know.",
+        "hermes (thinks): Run. He said run.",
+        "hermes (thinks): Kat. I have to find Kat."
+      ],
+      "scene": "chase_begins",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "chase_begins"
+      },
+      "time": 1792899314117,
+      "visits": [
+        "chase_begins"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "alley",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 450
+          },
+          "id": "alley",
+          "name": "Alley",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1090,
+            "y": 450
+          },
+          "id": "main_street",
+          "name": "Main Street",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2635d8cd03bce818a634",
+      "output": [
+        "You run.",
+        "Behind you: wet footsteps. Croaking.",
+        "Don't look back.",
+        "## Innsmouth Streets",
+        "Dark streets. Darker shapes in doorways.",
+        "They're everywhere. The whole town.",
+        "The whole town is THEM.",
+        "Every corner: more of them.",
+        "They're not fast. But they don't stop.",
+        "They don't get tired."
+      ],
+      "scene": "street_chase",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "street_chase"
+      },
+      "time": 1792899319090,
+      "visits": [
+        "street_chase"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "main_street",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 450
+          },
+          "id": "alley",
+          "name": "Alley",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1090,
+            "y": 450
+          },
+          "id": "main_street",
+          "name": "Main Street",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2635d8cd03bce818a634",
+      "output": [
+        "A narrow gap between buildings.",
+        "Too small for the bigger ones."
+      ],
+      "scene": "street_chase",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "street_chase"
+      },
+      "time": 1792899319133,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "main_street",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 450
+          },
+          "id": "alley",
+          "name": "Alley",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1090,
+            "y": 450
+          },
+          "id": "main_street",
+          "name": "Main Street",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2635d8cd03bce818a634",
+      "output": [
+        "Blocked. A wall of them.",
+        "Croaking. Waiting."
+      ],
+      "scene": "street_chase",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "street_chase"
+      },
+      "time": 1792899319177,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "alley",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 397,
+            "y": 450
+          },
+          "id": "alley",
+          "name": "Alley",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1090,
+            "y": 450
+          },
+          "id": "main_street",
+          "name": "Main Street",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-2635d8cd03bce818a634",
+      "output": [
+        "No. Not that way."
+      ],
+      "scene": "street_chase",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "street_chase"
+      },
+      "time": 1792899319220,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "church_door",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "church_door",
+          "name": "Church Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "hide",
+          "name": "Hide",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You squeeze through.",
+        "Something grabs at you. Misses.",
+        "You keep running.",
+        "## Church of Dagon",
+        "The church looms above.",
+        "The chains are gone now. Doors open.",
+        "Light flickers inside. Chanting.",
+        "You see her.",
+        "Kat. Being led inside.",
+        "She's not fighting.",
+        "hermes (thinks): No. NO."
+      ],
+      "scene": "church_exterior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_exterior"
+      },
+      "time": 1792899325635,
+      "visits": [
+        "church_exterior"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "hide",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "church_door",
+          "name": "Church Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "hide",
+          "name": "Hide",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "They took her inside.",
+        "The chanting is louder now."
+      ],
+      "scene": "church_exterior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_exterior"
+      },
+      "time": 1792899325678,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "church_door",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "church_door",
+          "name": "Church Doors",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "hide",
+          "name": "Hide",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "You could hide. Wait for dawn.",
+        "Let them have her."
+      ],
+      "scene": "church_exterior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_exterior"
+      },
+      "time": 1792899325721,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_altar",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 338
+          },
+          "id": "kat_altar",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 563
+          },
+          "id": "congregation",
+          "name": "The Congregation",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 930,
+            "y": 225
+          },
+          "id": "pit",
+          "name": "The Pit",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-15965c132f18663902c3",
+      "output": [
+        "hermes (thinks): This is stupid. This is so stupid.",
+        "You go in anyway.",
+        "## Inside the Church of Dagon",
+        "Not a church. A temple.",
+        "The pews are filled with them. Watching.",
+        "At the altar: Kat. And something rising from below.",
+        "They don't stop you.",
+        "They want you to see.",
+        "Kat stands at the altar. Her eyes are gold now.",
+        "She's not afraid. She's... listening.",
+        "To something beneath the floor. Beneath the earth.",
+        "Something vast."
+      ],
+      "scene": "church_interior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_interior"
+      },
+      "time": 1792899341487,
+      "visits": [
+        "church_interior"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "congregation",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 338
+          },
+          "id": "kat_altar",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 563
+          },
+          "id": "congregation",
+          "name": "The Congregation",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 930,
+            "y": 225
+          },
+          "id": "pit",
+          "name": "The Pit",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-15965c132f18663902c3",
+      "output": [
+        "She's changing. Right in front of you.",
+        "Her skin ripples. Glistens.",
+        "But her eyes find yours.",
+        "She's still in there. Still her."
+      ],
+      "scene": "church_interior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_interior"
+      },
+      "time": 1792899341530,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "pit",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 338
+          },
+          "id": "kat_altar",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 563
+          },
+          "id": "congregation",
+          "name": "The Congregation",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 930,
+            "y": 225
+          },
+          "id": "pit",
+          "name": "The Pit",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-15965c132f18663902c3",
+      "output": [
+        "Rows of them. Silent now.",
+        "Waiting for something.",
+        "Some are barely human. Some aren't at all.",
+        "In the front row: the hotel clerk. The grocery man.",
+        "They were watching you the whole time."
+      ],
+      "scene": "church_interior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_interior"
+      },
+      "time": 1792899341575,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "kat_altar",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 823,
+            "y": 338
+          },
+          "id": "kat_altar",
+          "name": "Kat",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 690,
+            "y": 563
+          },
+          "id": "congregation",
+          "name": "The Congregation",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 930,
+            "y": 225
+          },
+          "id": "pit",
+          "name": "The Pit",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "place-15965c132f18663902c3",
+      "output": [
+        "Behind the altar: an opening.",
+        "Stairs leading down into water.",
+        "Something moves in the dark below.",
+        "Something enormous.",
+        "hermes (thinks): Dagon."
+      ],
+      "scene": "church_interior",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false
+        },
+        "inventory": [],
+        "scene": "church_interior"
+      },
+      "time": 1792899341617,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "harbor_boat",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1503,
+            "y": 720
+          },
+          "id": "harbor_boat",
+          "name": "Abel's Boat — Devil Reef",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 450
+          },
+          "id": "road",
+          "name": "Road Out",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "back",
+          "name": "Go Back",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-e3110e2fd21ee4e07819",
+      "output": [
+        "You push through them. They let you.",
+        "You reach her.",
+        "hermes: Kat. We have to go.",
+        "She looks at you. Really looks.",
+        "THE LOOK. The one you'll remember forever.",
+        "kat: I can hear them, Hermes.",
+        "kat: My family. They're calling me.",
+        "hermes: That's not your family. Your family is—",
+        "kat: Dead. Gone. I never belonged up there.",
+        "kat: I always knew something was wrong with me.",
+        "kat: Now I know what.",
+        "hermes: Kat, please.",
+        "She touches your face. Her fingers are cold. Webbed.",
+        "kat: You found me. At the end of everything, you found me.",
+        "kat: That matters. Remember that it mattered.",
+        "hermes: I'm not leaving without you.",
+        "kat: Yes. You are.",
+        "She pushes you. Hard.",
+        "The congregation parts. A path to the door.",
+        "kat: Go. While they let you.",
+        "kat: I'm buying you this. Don't waste it.",
+        "## Innsmouth Streets",
+        "You run.",
+        "They don't follow.",
+        "She bought you this. Don't waste it.",
+        "Your legs burn. Your lungs burn.",
+        "But you keep running.",
+        "Past the hotel. Past the square.",
+        "Toward the road out of town.",
+        "hermes (thinks): I could go back.",
+        "hermes (thinks): I should go back.",
+        "But you don't.",
+        "Because she told you not to."
+      ],
+      "scene": "church_escape",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "church_escape"
+      },
+      "time": 1792899348857,
+      "visits": [
+        "church_escape"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "road",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1503,
+            "y": 720
+          },
+          "id": "harbor_boat",
+          "name": "Abel's Boat — Devil Reef",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 450
+          },
+          "id": "road",
+          "name": "Road Out",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "back",
+          "name": "Go Back",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-e3110e2fd21ee4e07819",
+      "output": [
+        "A boat waits at the harbor. One more chance to find her."
+      ],
+      "scene": "church_escape",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "church_escape"
+      },
+      "time": 1792899348900,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "back",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1503,
+            "y": 720
+          },
+          "id": "harbor_boat",
+          "name": "Abel's Boat — Devil Reef",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 450
+          },
+          "id": "road",
+          "name": "Road Out",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "back",
+          "name": "Go Back",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-e3110e2fd21ee4e07819",
+      "output": [
+        "The road to Arkham.",
+        "To the real world.",
+        "To forgetting."
+      ],
+      "scene": "church_escape",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "church_escape"
+      },
+      "time": 1792899348945,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "harbor_boat",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1503,
+            "y": 720
+          },
+          "id": "harbor_boat",
+          "name": "Abel's Boat — Devil Reef",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 1157,
+            "y": 450
+          },
+          "id": "road",
+          "name": "Road Out",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 55,
+            "width": 220,
+            "x": 290,
+            "y": 450
+          },
+          "id": "back",
+          "name": "Go Back",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        }
+      ],
+      "location": "place-e3110e2fd21ee4e07819",
+      "output": [
+        "hermes (thinks): I could try.",
+        "hermes (thinks): I could save her."
+      ],
+      "scene": "church_escape",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "church_escape"
+      },
+      "time": 1792899348987,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "rowboat",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "## Abel's Boat - Near Devil Reef",
+        "The reef rises from black water.",
+        "Wrong angles. Surfaces that breathe.",
+        "Abel cuts the engine.",
+        "abel: This is as close as I go.",
+        "His hands shake on the wheel.",
+        "Not fear. Longing.",
+        "abel: Some nights I don't wake up in bed.",
+        "abel: I find myself at the shore. Waist-deep.",
+        "abel: My body knows where it wants to go.",
+        "hermes: How do you stop it?",
+        "abel: Willpower. And distance.",
+        "abel: Eliza... she didn't have enough of either.",
+        "He looks at the reef. THE LOOK — but different.",
+        "Not love. Grief that never ends.",
+        "abel: I can't go closer. The call is too strong.",
+        "abel: But you — you're still human enough.",
+        "abel: For now."
+      ],
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792899356781,
+      "visits": [
+        "devil_reef_approach"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "abel",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Small. Weathered. It'll hold."
+      ],
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792899356825,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "abel",
+        "verb": "talk"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Forty years of fighting what he is.",
+        "Scars up both arms. Self-made barriers.",
+        "He's losing. Slowly. But losing."
+      ],
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792899356868,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "rowboat",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "rowboat",
+          "name": "Rowboat",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "abel",
+          "name": "Abel",
+          "verbs": [
+            "look",
+            "talk"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "abel: Go. Find her.",
+        "abel: Before it's too late for both of you."
+      ],
+      "scene": "devil_reef_approach",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef_approach"
+      },
+      "time": 1792899356911,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "path_down",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "hermes: Wait for me?",
+        "abel: I'll wait.",
+        "abel: But if you're not back by dawn...",
+        "hermes: I know.",
+        "abel: No. You don't.",
+        "abel: Dawn is when the tide turns.",
+        "abel: After that, the reef goes under.",
+        "abel: And so does anyone on it.",
+        "## Devil Reef - Surface",
+        "Rock that isn't just rock.",
+        "Structures grown from it, or growing into it.",
+        "The line between natural and built is gone.",
+        "The chanting comes from below.",
+        "Your feet touch the reef.",
+        "The rock is warm. Pulsing. Alive.",
+        "The boat engine coughs. Fades into fog.",
+        "You're alone.",
+        "hermes (thinks): Fifteen minutes.",
+        "hermes (thinks): Find her. Get out.",
+        "The chanting rises. A path leads down.",
+        "Into the reef. Into the dark."
+      ],
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792899356958,
+      "visits": [
+        "devil_reef"
+      ]
+    },
+    {
+      "action": {
+        "hotspot": "structures",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Carved steps. Worn smooth by centuries of feet.",
+        "They spiral down into the rock.",
+        "The chanting comes from below.",
+        "And light. Green. Flickering."
+      ],
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792899357001,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "water_edge",
+        "verb": "look"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "Windows. Doorways. All wrong angles.",
+        "Some are empty. Some have shapes inside.",
+        "Watching. Waiting.",
+        "They know you're here.",
+        "hermes (thinks): Of course they know.",
+        "hermes (thinks): They let you come."
+      ],
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792899357044,
+      "visits": []
+    },
+    {
+      "action": {
+        "hotspot": "path_down",
+        "verb": "use"
+      },
+      "choices": [],
+      "ended": false,
+      "hotspots": [
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 110,
+            "y": 210
+          },
+          "id": "path_down",
+          "name": "Path Down",
+          "verbs": [
+            "look",
+            "use"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 670,
+            "y": 210
+          },
+          "id": "structures",
+          "name": "Structures",
+          "verbs": [
+            "look"
+          ]
+        },
+        {
+          "bounds": {
+            "height": 90,
+            "width": 420,
+            "x": 1230,
+            "y": 210
+          },
+          "id": "water_edge",
+          "name": "Water's Edge",
+          "verbs": [
+            "look"
+          ]
+        }
+      ],
+      "location": "inside",
+      "output": [
+        "The water laps at the reef.",
+        "Shapes beneath. Circling. Patient.",
+        "They're not attacking.",
+        "They're waiting.",
+        "hermes (thinks): Waiting for what?"
+      ],
+      "scene": "devil_reef",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "devil_reef"
+      },
+      "time": 1792899357089,
+      "visits": []
+    },
+    {
+      "action": {
+        "choice": 0,
+        "key": "confrontation_setup|I came to bring you home.|I know what you're becoming. I saw the photos.|Schoeppi needs you.",
+        "text": "I came to bring you home."
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "I came to bring you home."
+        },
+        {
+          "index": 1,
+          "text": "I know what you're becoming. I saw the photos."
+        },
+        {
+          "index": 2,
+          "text": "Schoeppi needs you."
+        }
+      ],
+      "ended": false,
+      "hotspots": [],
+      "location": "inside",
+      "output": [
+        "## confrontation_setup",
+        "You step forward.",
+        "A figure turns. Eyes reflecting green light.",
+        "Then another. Then more.",
+        "They see you now.",
+        "The chanting stops.",
+        "Silence.",
+        "Kat turns.",
+        "She sees you.",
+        "kat: ...",
+        "kat: You shouldn't have come.",
+        "But there's relief in her voice. Hidden. Desperate.",
+        "kat: They'll take you too.",
+        "Schoeppi sees you. Whines. Strains toward you.",
+        "The one thing that still makes sense.",
+        "The congregation watches. Patient. They have time.",
+        "You don't."
+      ],
+      "scene": "confrontation_setup",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_far_gone": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "confrontation_setup"
+      },
+      "time": 1792899357204,
+      "visits": [
+        "reef_descent",
+        "reef_chamber",
+        "kat_still_fighting",
+        "confrontation_setup"
+      ]
+    },
+    {
+      "action": {
+        "choice": 0,
+        "key": "confrontation_setup|I'm not leaving without you.|Come with us. Please.|Take Schoeppi and go",
+        "text": "I'm not leaving without you."
+      },
+      "choices": [
+        {
+          "index": 0,
+          "text": "I'm not leaving without you."
+        },
+        {
+          "index": 1,
+          "text": "Come with us. Please."
+        },
+        {
+          "index": 2,
+          "text": "Take Schoeppi and go"
+        }
+      ],
+      "ended": false,
+      "hotspots": [],
+      "location": "inside",
+      "output": [
+        "kat: Home?",
+        "kat: I don't have a home. I never did.",
+        "kat: But here... they want me here.",
+        "hermes: They're using you. Using the dog.",
+        "kat: I know.",
+        "kat: But if I leave—",
+        "She looks at Schoeppi. Back at you.",
+        "kat: Take him. Get him out.",
+        "kat: I'll buy you time.",
+        "She's giving you Schoeppi. She's giving you a way out.",
+        "But not herself."
+      ],
+      "scene": "confrontation_setup",
+      "story": {
+        "flags": {
+          "clerk_noticed_interest": false,
+          "kat_far_gone": false,
+          "kat_goodbye": true,
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "confrontation_setup"
+      },
+      "time": 1792899357230,
+      "visits": []
+    },
+    {
+      "action": "end",
+      "choices": [],
+      "ended": true,
+      "ending": "ACT_END",
+      "hotspots": [],
+      "location": "inside",
+      "output": [
+        "## ACT4_TRANSITION",
+        "A C T   F O U R",
+        "O N E   Y E A R   L A T E R",
+        "Act complete."
+      ],
+      "scene": "ACT4_TRANSITION",
+      "story": {
+        "flags": {
+          "beach_call": true,
+          "clerk_noticed_interest": false,
+          "kat_far_gone": false,
+          "kat_goodbye": true,
+          "reef_outcome": "pushed_away",
+          "the_look": true
+        },
+        "inventory": [],
+        "scene": "ACT4_TRANSITION"
+      },
+      "time": 1792899357304,
+      "visits": [
+        "reef_departure",
+        "ending_to_act4",
+        "ACT4_TRANSITION"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Testing types with tsc and vue-tsc is an experimental feature.
+Breaking changes might not follow SemVer, please pin Vitest's version when using it.
+
+ RUN  v4.0.16 /Users/gorkolas/Developer/anima
+
+ ✓ adventures/shadow-over-innsmouth/src/game/storyDialogue.test.ts (3 tests) 7ms
+ ✓ adventures/shadow-over-innsmouth/src/game/storyContinuation.test.ts (2 tests) 1ms
+ ✓ packages/storyscript/src/runtime.test.ts (8 tests) 8ms
+ ✓ adventures/shadow-over-innsmouth/src/game/storyActs.test.ts (10 tests) 16ms
+
+ Test Files  4 passed (4)
+      Tests  23 passed (23)
+Type Errors  no errors
+   Start at  22:01:54
+   Duration  491ms (transform 125ms, setup 37ms, import 150ms, tests 32ms, environment 1.14s)
+

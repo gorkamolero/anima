@@ -1,0 +1,6 @@
+recording act4-playthrough: 7066 video frames, 7074 telemetry samples, 119.98 s
+region x279 y119 802x960
+body px per video frame while walking: none; render samples with zero motion: 0 of 0
+drawing holds (video frames per drawing): median 299.00 p90 1232.00 max 1232.00 n 4
+planted sole lateral slide per drawing change (lateral sheets): none
+wrote /Users/gorkolas/Developer/anima/tmp/recordings/act4-playthrough

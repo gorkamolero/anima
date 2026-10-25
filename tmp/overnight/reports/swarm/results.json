@@ -1,0 +1,1562 @@
+[
+  {
+    "session": 1,
+    "config": {
+      "act": "2",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-001.json"
+  },
+  {
+    "session": 2,
+    "config": {
+      "act": "3",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-002.json"
+  },
+  {
+    "session": 3,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-003.json"
+  },
+  {
+    "session": 4,
+    "config": {
+      "act": "4",
+      "seed": 0,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-004.json"
+  },
+  {
+    "session": 5,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-005.json"
+  },
+  {
+    "session": 6,
+    "config": {
+      "act": "2",
+      "seed": 1,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-006.json"
+  },
+  {
+    "session": 7,
+    "config": {
+      "act": "3",
+      "seed": 1,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-007.json"
+  },
+  {
+    "session": 8,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-008.json"
+  },
+  {
+    "session": 9,
+    "config": {
+      "act": "4",
+      "seed": 1,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-009.json"
+  },
+  {
+    "session": 10,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-010.json"
+  },
+  {
+    "session": 11,
+    "config": {
+      "act": "2",
+      "seed": 2,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-011.json"
+  },
+  {
+    "session": 12,
+    "config": {
+      "act": "3",
+      "seed": 2,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-012.json"
+  },
+  {
+    "session": 13,
+    "config": {
+      "act": "3b",
+      "seed": 2,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-013.json"
+  },
+  {
+    "session": 14,
+    "config": {
+      "act": "4",
+      "seed": 2,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-014.json"
+  },
+  {
+    "session": 15,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-015.json"
+  },
+  {
+    "session": 16,
+    "config": {
+      "act": "2",
+      "seed": 3,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-016.json"
+  },
+  {
+    "session": 17,
+    "config": {
+      "act": "3",
+      "seed": 3,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-017.json"
+  },
+  {
+    "session": 18,
+    "config": {
+      "act": "3b",
+      "seed": 3,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-018.json"
+  },
+  {
+    "session": 19,
+    "config": {
+      "act": "4",
+      "seed": 3,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-019.json"
+  },
+  {
+    "session": 20,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-020.json"
+  },
+  {
+    "session": 21,
+    "config": {
+      "act": "2",
+      "seed": 4,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-021.json"
+  },
+  {
+    "session": 22,
+    "config": {
+      "act": "3",
+      "seed": 4,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-022.json"
+  },
+  {
+    "session": 23,
+    "config": {
+      "act": "3b",
+      "seed": 4,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-023.json"
+  },
+  {
+    "session": 24,
+    "config": {
+      "act": "4",
+      "seed": 4,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-024.json"
+  },
+  {
+    "session": 25,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-025.json"
+  },
+  {
+    "session": 26,
+    "config": {
+      "act": "2",
+      "seed": 5,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-026.json"
+  },
+  {
+    "session": 27,
+    "config": {
+      "act": "3",
+      "seed": 5,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-027.json"
+  },
+  {
+    "session": 28,
+    "config": {
+      "act": "3b",
+      "seed": 5,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-028.json"
+  },
+  {
+    "session": 29,
+    "config": {
+      "act": "4",
+      "seed": 5,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_TOGETHER",
+    "tracePath": "tmp/overnight/reports/swarm/session-029.json"
+  },
+  {
+    "session": 30,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-030.json"
+  },
+  {
+    "session": 31,
+    "config": {
+      "act": "2",
+      "seed": 6,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-031.json"
+  },
+  {
+    "session": 32,
+    "config": {
+      "act": "3",
+      "seed": 6,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-032.json"
+  },
+  {
+    "session": 33,
+    "config": {
+      "act": "3b",
+      "seed": 6,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-033.json"
+  },
+  {
+    "session": 34,
+    "config": {
+      "act": "4",
+      "seed": 6,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_TOGETHER",
+    "tracePath": "tmp/overnight/reports/swarm/session-034.json"
+  },
+  {
+    "session": 35,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-035.json"
+  },
+  {
+    "session": 36,
+    "config": {
+      "act": "2",
+      "seed": 7,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-036.json"
+  },
+  {
+    "session": 37,
+    "config": {
+      "act": "3",
+      "seed": 7,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-037.json"
+  },
+  {
+    "session": 38,
+    "config": {
+      "act": "3b",
+      "seed": 7,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-038.json"
+  },
+  {
+    "session": 39,
+    "config": {
+      "act": "4",
+      "seed": 7,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-039.json"
+  },
+  {
+    "session": 40,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-040.json"
+  },
+  {
+    "session": 41,
+    "config": {
+      "act": "2",
+      "seed": 8,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-041.json"
+  },
+  {
+    "session": 42,
+    "config": {
+      "act": "3",
+      "seed": 8,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-042.json"
+  },
+  {
+    "session": 43,
+    "config": {
+      "act": "3b",
+      "seed": 8,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-043.json"
+  },
+  {
+    "session": 44,
+    "config": {
+      "act": "4",
+      "seed": 8,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-044.json"
+  },
+  {
+    "session": 45,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-045.json"
+  },
+  {
+    "session": 46,
+    "config": {
+      "act": "2",
+      "seed": 9,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-046.json"
+  },
+  {
+    "session": 47,
+    "config": {
+      "act": "3",
+      "seed": 9,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-047.json"
+  },
+  {
+    "session": 48,
+    "config": {
+      "act": "3b",
+      "seed": 9,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-048.json"
+  },
+  {
+    "session": 49,
+    "config": {
+      "act": "4",
+      "seed": 9,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-049.json"
+  },
+  {
+    "session": 50,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-050.json"
+  },
+  {
+    "session": 51,
+    "config": {
+      "act": "2",
+      "seed": 10,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-051.json"
+  },
+  {
+    "session": 52,
+    "config": {
+      "act": "3",
+      "seed": 10,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-052.json"
+  },
+  {
+    "session": 53,
+    "config": {
+      "act": "3b",
+      "seed": 10,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-053.json"
+  },
+  {
+    "session": 54,
+    "config": {
+      "act": "4",
+      "seed": 10,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-054.json"
+  },
+  {
+    "session": 55,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-055.json"
+  },
+  {
+    "session": 56,
+    "config": {
+      "act": "2",
+      "seed": 11,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-056.json"
+  },
+  {
+    "session": 57,
+    "config": {
+      "act": "3",
+      "seed": 11,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-057.json"
+  },
+  {
+    "session": 58,
+    "config": {
+      "act": "3b",
+      "seed": 11,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-058.json"
+  },
+  {
+    "session": 59,
+    "config": {
+      "act": "4",
+      "seed": 11,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-059.json"
+  },
+  {
+    "session": 60,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-060.json"
+  },
+  {
+    "session": 61,
+    "config": {
+      "act": "2",
+      "seed": 12,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-061.json"
+  },
+  {
+    "session": 62,
+    "config": {
+      "act": "3",
+      "seed": 12,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-062.json"
+  },
+  {
+    "session": 63,
+    "config": {
+      "act": "3b",
+      "seed": 12,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-063.json"
+  },
+  {
+    "session": 64,
+    "config": {
+      "act": "4",
+      "seed": 12,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-064.json"
+  },
+  {
+    "session": 65,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-065.json"
+  },
+  {
+    "session": 66,
+    "config": {
+      "act": "2",
+      "seed": 13,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-066.json"
+  },
+  {
+    "session": 67,
+    "config": {
+      "act": "3",
+      "seed": 13,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-067.json"
+  },
+  {
+    "session": 68,
+    "config": {
+      "act": "3b",
+      "seed": 13,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-068.json"
+  },
+  {
+    "session": 69,
+    "config": {
+      "act": "4",
+      "seed": 13,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-069.json"
+  },
+  {
+    "session": 70,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-070.json"
+  },
+  {
+    "session": 71,
+    "config": {
+      "act": "2",
+      "seed": 14,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-071.json"
+  },
+  {
+    "session": 72,
+    "config": {
+      "act": "3",
+      "seed": 14,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-072.json"
+  },
+  {
+    "session": 73,
+    "config": {
+      "act": "3b",
+      "seed": 14,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-073.json"
+  },
+  {
+    "session": 74,
+    "config": {
+      "act": "4",
+      "seed": 14,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_TOGETHER",
+    "tracePath": "tmp/overnight/reports/swarm/session-074.json"
+  },
+  {
+    "session": 75,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-075.json"
+  },
+  {
+    "session": 76,
+    "config": {
+      "act": "2",
+      "seed": 15,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-076.json"
+  },
+  {
+    "session": 77,
+    "config": {
+      "act": "3",
+      "seed": 15,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-077.json"
+  },
+  {
+    "session": 78,
+    "config": {
+      "act": "3b",
+      "seed": 15,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-078.json"
+  },
+  {
+    "session": 79,
+    "config": {
+      "act": "4",
+      "seed": 15,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_TOGETHER",
+    "tracePath": "tmp/overnight/reports/swarm/session-079.json"
+  },
+  {
+    "session": 80,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-080.json"
+  },
+  {
+    "session": 81,
+    "config": {
+      "act": "2",
+      "seed": 16,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-081.json"
+  },
+  {
+    "session": 82,
+    "config": {
+      "act": "3",
+      "seed": 16,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-082.json"
+  },
+  {
+    "session": 83,
+    "config": {
+      "act": "3b",
+      "seed": 16,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-083.json"
+  },
+  {
+    "session": 84,
+    "config": {
+      "act": "4",
+      "seed": 16,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-084.json"
+  },
+  {
+    "session": 85,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-085.json"
+  },
+  {
+    "session": 86,
+    "config": {
+      "act": "2",
+      "seed": 17,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-086.json"
+  },
+  {
+    "session": 87,
+    "config": {
+      "act": "3",
+      "seed": 17,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-087.json"
+  },
+  {
+    "session": 88,
+    "config": {
+      "act": "3b",
+      "seed": 17,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-088.json"
+  },
+  {
+    "session": 89,
+    "config": {
+      "act": "4",
+      "seed": 17,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-089.json"
+  },
+  {
+    "session": 90,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_ABYSSAL",
+    "tracePath": "tmp/overnight/reports/swarm/session-090.json"
+  },
+  {
+    "session": 91,
+    "config": {
+      "act": "2",
+      "seed": 18,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-091.json"
+  },
+  {
+    "session": 92,
+    "config": {
+      "act": "3",
+      "seed": 18,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-092.json"
+  },
+  {
+    "session": 93,
+    "config": {
+      "act": "3b",
+      "seed": 18,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-093.json"
+  },
+  {
+    "session": 94,
+    "config": {
+      "act": "4",
+      "seed": 18,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-094.json"
+  },
+  {
+    "session": 95,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-095.json"
+  },
+  {
+    "session": 96,
+    "config": {
+      "act": "2",
+      "seed": 19,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-096.json"
+  },
+  {
+    "session": 97,
+    "config": {
+      "act": "3",
+      "seed": 19,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-097.json"
+  },
+  {
+    "session": 98,
+    "config": {
+      "act": "3b",
+      "seed": 19,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-098.json"
+  },
+  {
+    "session": 99,
+    "config": {
+      "act": "4",
+      "seed": 19,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-099.json"
+  },
+  {
+    "session": 100,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-100.json"
+  },
+  {
+    "session": 101,
+    "config": {
+      "act": "2",
+      "seed": 20,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-101.json"
+  },
+  {
+    "session": 102,
+    "config": {
+      "act": "3",
+      "seed": 20,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-102.json"
+  },
+  {
+    "session": 103,
+    "config": {
+      "act": "3b",
+      "seed": 20,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-103.json"
+  },
+  {
+    "session": 104,
+    "config": {
+      "act": "4",
+      "seed": 20,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-104.json"
+  },
+  {
+    "session": 105,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-105.json"
+  },
+  {
+    "session": 106,
+    "config": {
+      "act": "2",
+      "seed": 21,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-106.json"
+  },
+  {
+    "session": 107,
+    "config": {
+      "act": "3",
+      "seed": 21,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-107.json"
+  },
+  {
+    "session": 108,
+    "config": {
+      "act": "3b",
+      "seed": 21,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-108.json"
+  },
+  {
+    "session": 109,
+    "config": {
+      "act": "4",
+      "seed": 21,
+      "archetype": "curious",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-109.json"
+  },
+  {
+    "session": 110,
+    "config": {
+      "act": "3b",
+      "seed": 0,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-110.json"
+  },
+  {
+    "session": 111,
+    "config": {
+      "act": "2",
+      "seed": 22,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-111.json"
+  },
+  {
+    "session": 112,
+    "config": {
+      "act": "3",
+      "seed": 22,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-112.json"
+  },
+  {
+    "session": 113,
+    "config": {
+      "act": "3b",
+      "seed": 22,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-113.json"
+  },
+  {
+    "session": 114,
+    "config": {
+      "act": "4",
+      "seed": 22,
+      "archetype": "rusher",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-114.json"
+  },
+  {
+    "session": 115,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-115.json"
+  },
+  {
+    "session": 116,
+    "config": {
+      "act": "2",
+      "seed": 23,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-116.json"
+  },
+  {
+    "session": 117,
+    "config": {
+      "act": "3",
+      "seed": 23,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-117.json"
+  },
+  {
+    "session": 118,
+    "config": {
+      "act": "3b",
+      "seed": 23,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-118.json"
+  },
+  {
+    "session": 119,
+    "config": {
+      "act": "4",
+      "seed": 23,
+      "archetype": "completionist",
+      "noticed": false
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "GAME_END_TOGETHER",
+    "tracePath": "tmp/overnight/reports/swarm/session-119.json"
+  },
+  {
+    "session": 120,
+    "config": {
+      "act": "3b",
+      "seed": 1,
+      "archetype": "completionist",
+      "noticed": true
+    },
+    "passed": true,
+    "failures": [],
+    "ending": "ACT_END",
+    "tracePath": "tmp/overnight/reports/swarm/session-120.json"
+  }
+]
