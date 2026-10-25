@@ -176,7 +176,7 @@ function standing() {
 			name: `${spec.name}-stand-${d}`, image: `${spec.name}-stand-${d}.png`, frameWidth: w, frameHeight: h, frameCount: 1, cols: 1, rows: 1, fps: 1,
 			contacts: [{ planted: "L", L: { x: cx - box.w * 0.08, y: soleY }, R: { x: cx + box.w * 0.08, y: soleY } }], switchFrames: [0],
 			source: { sheet: meta.name, frame: best, frameCount: meta.frameCount, method: "feet-together frame of the stride; feet row and body centre measured from pixels" },
-			bodyCentreX: cx, bodyCentreY: box.y + box.h / 2, drawnHeight: box.h, pixelScale: meta.pixelScale ?? 1,
+			bodyCentreX: cx, bodyCentreY: box.y + box.h / 2, drawnHeight: box.h, pixelScale: meta.pixelScale ?? 1, facing: meta.facing,
 		}, null, "\t")}\n`);
 		log(`standing ${d}: frame ${best} (spread ${bestSpread.toFixed(0)} px)`);
 	}

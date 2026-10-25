@@ -352,6 +352,7 @@ const out = {
 	drawnHeight,
 	soleRows,
 	pixelScale,
+	facing: meta.facing,
 	...(stabilise ? { stabilisedShiftY: shifts } : {}),
 };
 writeFileSync(

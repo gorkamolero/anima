@@ -33,6 +33,8 @@ export interface FootCycle {
 	drawnHeight?: number;
 	/** Sheet pixels per canonical pixel: 0.5 for a sheet stored at half resolution. */
 	pixelScale?: number;
+	/** Which way a side or diagonal sheet is drawn facing; "left" when absent. */
+	facing?: "left" | "right";
 	/** Bottom row of the drawn figure in each frame: where the drawing puts the feet. */
 	soleRows?: number[];
 	/** For a pose cut from a walk sheet: which sheet and frame, and that sheet's

@@ -1,5 +1,5 @@
 import type { FootAnimation, FootCycle, FootPose } from "@anima/footfall";
-import { hermesWalkSheet } from "../hermesWalk";
+import { facingFlip, hermesWalkSheet } from "../hermesWalk";
 import { hermesStanding } from "./hermesStanding";
 
 /** The renderer supplies only asset lookup and pose display. */
@@ -13,11 +13,13 @@ export function hermesFootAnimation(
 		show,
 		select(direction) {
 			const { texture, flipX } = hermesWalkSheet(direction);
-			return { cycle: cycle(texture), flipX };
+			const drawn = cycle(texture);
+			return { cycle: drawn, flipX: facingFlip(drawn, flipX) };
 		},
 		standing(direction) {
 			const { texture, flipX } = hermesStanding(direction);
-			return { cycle: cycle(texture), frame: 0, flipX };
+			const drawn = cycle(texture);
+			return { cycle: drawn, frame: 0, flipX: facingFlip(drawn, flipX) };
 		},
 	};
 }

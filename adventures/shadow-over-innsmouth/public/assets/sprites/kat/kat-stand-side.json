@@ -1,0 +1,41 @@
+{
+	"name": "kat-stand-side",
+	"image": "kat-stand-side.png",
+	"frameWidth": 497,
+	"frameHeight": 970,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 1,
+	"contacts": [
+		{
+			"planted": "L",
+			"L": {
+				"x": 186.76,
+				"y": 947
+			},
+			"R": {
+				"x": 239.24,
+				"y": 947
+			}
+		}
+	],
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "kat-walk-side",
+		"frame": 9,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+	},
+	"bodyCentreX": 213,
+	"bodyCentreY": 473.5,
+	"drawnHeight": 947,
+	"pixelScale": 1,
+	"facing": "right",
+	"facingCheck": {
+		"method": "codex vision, first frame",
+		"frame": "kat-walk-side.frame0.png",
+		"date": "2026-10-25T21:51:38.391Z"
+	}
+}

@@ -13,7 +13,12 @@ import {
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
 import type Phaser from "phaser";
-import { characterWalkSheets, HERMES_WALK, walkSheetFor } from "../hermesWalk";
+import {
+	characterWalkSheets,
+	facingFlip,
+	HERMES_WALK,
+	walkSheetFor,
+} from "../hermesWalk";
 
 /** Where the companion keeps station, in ground metres: beside him on a depth
  * walk, a stride and a half behind him on a lateral walk so the two figures
@@ -132,11 +137,13 @@ export class Companion {
 			show,
 			select(direction) {
 				const { texture, flipX } = pick(walk, direction);
-				return { cycle: cycle(texture), flipX };
+				const drawn = cycle(texture);
+				return { cycle: drawn, flipX: facingFlip(drawn, flipX) };
 			},
 			standing(direction) {
 				const { texture, flipX } = pick(stand, direction);
-				return { cycle: cycle(texture), frame: 0, flipX };
+				const drawn = cycle(texture);
+				return { cycle: drawn, frame: 0, flipX: facingFlip(drawn, flipX) };
 			},
 		};
 	}

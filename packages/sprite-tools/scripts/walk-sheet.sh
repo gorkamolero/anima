@@ -2,7 +2,7 @@
 # Build a walk-cycle sheet from a raw generated video, with the rulers in the loop.
 #   scripts/walk-sheet.sh <raw.mp4> <sheet-base> [facing=left] [fps=24] [skip-frames=36]
 # Steps: BRIA background removal -> frames -> one stride cut by gait (cut-stride.py) -> drift audit/register
-#        -> plant seeds -> contact tracking -> step and skid audits -> 4x interpolated sheet.
+#        -> plant seeds -> contact tracking -> step and skid audits -> facing check -> 4x interpolated sheet.
 set -euo pipefail
 RAW=$1; BASE=$2; FACING=${3:-left}; FPS=${4:-24}; LMIN=${5:-36}
 HERE=$(cd "$(dirname "$0")/.." && pwd); ROOT=$(cd "$HERE/../.." && pwd)
@@ -18,5 +18,7 @@ uv run scripts/sprite-factory.py audit-drift --sheet "$BASE"
 uv run --with numpy --with pillow python3 scripts/root-motion.py "$BASE.json" --seeds "$BASE-seeds.json" --debug "$ROOT/tmp/walkqa/contacts-$(basename "$BASE")"
 uv run scripts/sprite-factory.py audit-steps --sheet "$BASE"
 uv run scripts/sprite-factory.py audit-skid --sheet "$BASE"
+# Which way the figure actually faces; the game mirrors from this, never from the prompt.
+node scripts/facing-check.mjs "$BASE"
 cd "$ROOT/adventures/shadow-over-innsmouth" && node scripts/interpolate-sheet.mjs "$BASE"
 cd "$HERE" && uv run scripts/sprite-factory.py audit-drift --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-steps --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-skid --sheet "$BASE-4x"

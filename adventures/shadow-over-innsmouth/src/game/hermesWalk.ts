@@ -99,3 +99,13 @@ export function walkSheetFor(
 			return { texture: sheets.towardDiagonal, flipX: true };
 	}
 }
+
+/** Sheet maps assume a side or diagonal sheet is drawn facing left. A sheet
+ * whose metadata says it faces right (`facing`, recorded by
+ * sprite-tools/scripts/facing-check.mjs) is mirrored the other way round. */
+export function facingFlip(
+	cycle: { facing?: "left" | "right" },
+	flipX: boolean,
+): boolean {
+	return cycle.facing === "right" ? !flipX : flipX;
+}
