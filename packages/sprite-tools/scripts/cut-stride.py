@@ -98,4 +98,22 @@ meta = {
                "method": "cut-stride.py: one stride between plants, chosen by step symmetry then seam similarity"},
 }
 args.sheet.with_suffix(".json").write_text(json.dumps(meta, indent="\t") + "\n")
+
+# Seeds for root-motion.py from the same plants, so the stance split matches the cut.
+front = "left" if args.facing == "left" else "right"
+def sole_point(i):
+    a = alphas[i]; ys, xs = np.nonzero(a); bottom = ys.max(); top = max(0, bottom - round(h * args.band))
+    band = a[top:bottom + 1]; occ = np.nonzero(band.sum(axis=0))[0]
+    gaps = np.diff(occ)
+    if len(gaps) and gaps.max() > 4:
+        cut = occ[gaps.argmax()]; left = occ[occ <= cut]; right = occ[occ > cut]
+    else:
+        mid = int(np.median(occ)); left = occ[occ <= mid]; right = occ[occ > mid]
+    cols_ = left if front == "left" else right
+    yy, xx = np.nonzero(band[:, cols_.min():cols_.max() + 1]); low = yy >= np.percentile(yy, 70)
+    return {"x": float(cols_.min() + np.median(xx[low]) - x0), "y": float(top + np.median(yy[low]) - y0)}
+seeds = {"switches": [{"frame": 0, "foot": "L", "point": sole_point(s)}, {"frame": plants[plants.index(s) + 1] - s, "foot": "R", "point": sole_point(plants[plants.index(s) + 1])}],
+         "patch": [max(12, fw * 0.065), max(15, fh * 0.045)], "searchRadius": 24, "method": "cut-stride.py plants"}
+args.sheet.with_name(args.sheet.name + "-seeds.json").write_text(json.dumps(seeds, indent=2) + "\n")
+print(f"seeds: plants at 0 and {seeds['switches'][1]['frame']}")
 print(f"wrote {args.sheet}.png/.json {fw}x{fh} x{n}")

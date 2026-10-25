@@ -14,7 +14,7 @@ FRAMES="${RAW%.*}.frames"
 uv run scripts/cut-stride.py "$FRAMES" "$BASE" --fps "$FPS" --cols 8 --facing "$FACING" --skip "$LMIN"
 uv run scripts/sprite-factory.py audit-drift --sheet "$BASE" || uv run scripts/sprite-factory.py register --sheet "$BASE"
 uv run scripts/sprite-factory.py audit-drift --sheet "$BASE"
-uv run scripts/seed-steps.py "$BASE.json" --facing "$FACING" --out "$BASE-seeds.json"
+# seeds come from cut-stride.py (same plants as the cut)
 uv run --with numpy --with pillow python3 scripts/root-motion.py "$BASE.json" --seeds "$BASE-seeds.json" --debug "$ROOT/tmp/walkqa/contacts-$(basename "$BASE")"
 uv run scripts/sprite-factory.py audit-steps --sheet "$BASE"
 cd "$ROOT/adventures/shadow-over-innsmouth" && node scripts/interpolate-sheet.mjs "$(basename "$BASE")"
