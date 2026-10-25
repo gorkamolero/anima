@@ -537,12 +537,7 @@
 			}
 		}
 	],
-	"switchFrames": [
-		2,
-		14,
-		24,
-		36
-	],
+	"switchFrames": [2, 14, 24, 36],
 	"contactMethod": "physical-foot stance seeds; chained 48px boot SSD with local masked refinement; swing tracked backwards from landing",
 	"contactSeeds": {
 		"switches": [
@@ -579,10 +574,7 @@
 				}
 			}
 		],
-		"patch": [
-			45,
-			45
-		],
+		"patch": [45, 45],
 		"swing": [
 			{
 				"frame": 7,
@@ -618,24 +610,12 @@
 			}
 		]
 	},
-	"passingFrames": [
-		8,
-		21,
-		30,
-		44
-	],
+	"passingFrames": [8, 21, 30, 44],
 	"matchedCut": {
 		"standing": "hermes-passing-stand-away-right",
-		"headings": [
-			"away-right",
-			"away-left"
-		],
-		"exitFrames": [
-			8
-		],
-		"entryFrames": [
-			8
-		],
+		"headings": ["away-right", "away-left"],
+		"exitFrames": [8],
+		"entryFrames": [8],
 		"metrics": [
 			{
 				"frame": 0,
@@ -1312,14 +1292,7 @@
 		],
 		"method": "single standing source frame; sole aligned alpha>127 IoU, lower body below 62% hip; head and torso alpha centroids; reviewed free boot soles"
 	},
-	"reviewedPassingFrames": [
-		8,
-		9,
-		21,
-		29,
-		30,
-		44
-	],
+	"reviewedPassingFrames": [8, 9, 21, 29, 30, 44],
 	"reviewedFreeBootSoles": {
 		"8": {
 			"R": {
@@ -1365,54 +1338,9 @@
 		"method": "constant head row; integer vertical shift per frame; contacts shifted",
 		"headRow": 11,
 		"shifts": [
-			-9,
-			-16,
-			-13,
-			-12,
-			-8,
-			-2,
-			3,
-			7,
-			9,
-			11,
-			11,
-			5,
-			-6,
-			-14,
-			-14,
-			-9,
-			-4,
-			1,
-			7,
-			8,
-			11,
-			11,
-			11,
-			-1,
-			-5,
-			-4,
-			1,
-			5,
-			7,
-			9,
-			11,
-			11,
-			8,
-			0,
-			-6,
-			-15,
-			-17,
-			-12,
-			-8,
-			-3,
-			1,
-			5,
-			9,
-			11,
-			11,
-			11,
-			7,
-			-2
+			-9, -16, -13, -12, -8, -2, 3, 7, 9, 11, 11, 5, -6, -14, -14, -9, -4, 1, 7,
+			8, 11, 11, 11, -1, -5, -4, 1, 5, 7, 9, 11, 11, 8, 0, -6, -15, -17, -12,
+			-8, -3, 1, 5, 9, 11, 11, 11, 7, -2
 		],
 		"frameHeightBefore": 1059
 	}

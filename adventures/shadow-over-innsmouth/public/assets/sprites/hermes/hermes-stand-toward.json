@@ -20,13 +20,12 @@
 			}
 		}
 	],
-	"switchFrames": [
-		0
-	],
+	"switchFrames": [0],
 	"source": {
 		"sheet": "hermes-walk-toward",
 		"frame": 3,
-		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels",
+		"frameCount": 25
 	},
 	"bodyCentreX": 312.5,
 	"bodyCentreY": 524.5,

@@ -101,6 +101,16 @@ function symmetricStride(curve: number[], switches: number[]): number[] {
 	return out;
 }
 
+/** Ground row of each frame relative to the sprite origin (bottom centre), in
+ * sheet pixels: the drawn feet's lowest pixel row when the sheet records it,
+ * otherwise the lower tracked sole. */
+function soleRows(cycle: FootCycle): number[] {
+	const n = cycle.contacts.length;
+	if (cycle.soleRows && cycle.soleRows.length === n)
+		return cycle.soleRows.map((r) => r - cycle.frameHeight);
+	return cycle.contacts.map((f) => Math.max(f.L.y, f.R.y) - cycle.frameHeight);
+}
+
 const DEFAULT_PIXELS_PER_METRE = 300;
 
 /**
@@ -303,9 +313,9 @@ export class WalkMotor {
 			// spread is read from the contacts, which track cleanly; the drop is
 			// leg length minus the pendulum height for that spread. Both strides
 			// get the same curve.
-			const raw = contacts.map(
-				(frame) => Math.max(frame.L.y, frame.R.y) - frameHeight,
-			);
+			// The ground row is the drawn feet's lowest pixel row when the sheet
+			// records it; tracked contacts sit at the sole's centre, a few pixels up.
+			const raw = soleRows(pose.cycle);
 			const n = raw.length;
 			const leg = 0.53 * (pose.cycle.drawnHeight ?? frameHeight * 0.9);
 			const spread = contacts.map((frame) => Math.abs(frame.L.x - frame.R.x));
@@ -360,11 +370,10 @@ export class WalkMotor {
 			return 0;
 		const cached = this.alignments.get(own.name);
 		if (cached !== undefined) return cached;
-		const soleMean = (cycle: FootCycle) =>
-			cycle.contacts.reduce(
-				(sum, f) => sum + Math.max(f.L.y, f.R.y) - cycle.frameHeight,
-				0,
-			) / cycle.contacts.length;
+		const soleMean = (cycle: FootCycle) => {
+			const rows = soleRows(cycle);
+			return rows.reduce((a, b) => a + b, 0) / rows.length;
+		};
 		// Height of the body centre above the ground row, in canonical pixels.
 		const height = (cycle: FootCycle, centreY: number) =>
 			(soleMean(cycle) - (centreY - cycle.frameHeight)) /
@@ -392,15 +401,35 @@ export class WalkMotor {
 		return normalise / ownPixel;
 	}
 
+	/** A standing pose cut from a walk sheet is placed exactly as the walk placed
+	 * that frame, so a stop or start is the same drawing in the same place. */
+	private placementPose(pose: FootPose): FootPose {
+		const src = pose.cycle.source;
+		if (
+			pose.cycle.contacts.length !== 1 ||
+			src?.frame === undefined ||
+			!src.sheet ||
+			!src.frameCount
+		)
+			return pose;
+		const walk = this.animation.select(this.heading);
+		if (!walk.cycle.name.startsWith(src.sheet)) return pose;
+		const n = walk.cycle.contacts.length;
+		const frame = Math.round((src.frame * n) / src.frameCount) % n;
+		return { cycle: walk.cycle, frame, flipX: pose.flipX };
+	}
+
 	private apply(): void {
 		if (!this.pose) return;
 		const { perspective, baseScale, scaleClamp } = this.area;
 		this.scale = baseScale * scaleAt(perspective, this.anchor, scaleClamp);
 		const drawn = this.scale * this.sheetScale(this.pose);
-		const offset = this.groundOffset(this.pose);
+		const placed = this.placementPose(this.pose);
+		const offset = this.groundOffset(placed);
+		const offsetScale = this.scale * this.sheetScale(placed);
 		this.target.setPosition(
-			this.anchor.x - offset.x * drawn,
-			this.anchor.y - offset.y * drawn,
+			this.anchor.x - offset.x * offsetScale,
+			this.anchor.y - offset.y * offsetScale,
 		);
 		this.target.setScale(drawn);
 		this.target.setDepth(10 + this.anchor.y / 20);

@@ -747,7 +747,9 @@ def audit_steps(sheet: str, max_ratio: float):
     frames_ratio = max(l for _, l, _ in stances) / min(l for _, l, _ in stances)
     travels = [t for _, _, t in stances]
     travel_ratio = (max(travels) / min(travels)) if min(travels) > 1e-6 else 1.0
-    lateral = max(travels) > meta["frameWidth"] * 0.1
+    # Same rule as the motor: a cycle is lateral when its soles travel at least a
+    # quarter frame width per cycle; depth cycles only show tracking noise.
+    lateral = sum(travels) >= meta["frameWidth"] / 4
     verdict = "PASS" if frames_ratio <= max_ratio and (not lateral or travel_ratio <= max_ratio) else "FAIL"
     detail = ", ".join(f"{foot}: {l} frames / {t:.0f}px" for foot, l, t in stances)
     click.echo(f"{verdict} {base.name}: steps {detail}; frame ratio {frames_ratio:.2f}, travel ratio {travel_ratio:.2f} (allowed {max_ratio:.2f})")

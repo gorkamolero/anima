@@ -20,13 +20,12 @@
 			}
 		}
 	],
-	"switchFrames": [
-		0
-	],
+	"switchFrames": [0],
 	"source": {
 		"sheet": "hermes-walk-away",
 		"frame": 28,
-		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels",
+		"frameCount": 30
 	},
 	"bodyCentreX": 334.5,
 	"bodyCentreY": 499.0,

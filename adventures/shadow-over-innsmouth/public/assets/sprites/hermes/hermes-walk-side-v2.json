@@ -11,22 +11,8 @@
 		"frames": "output/fal/hermes-veo-walk-v2/frames",
 		"start": 89,
 		"end": 120,
-		"plants": [
-			43,
-			58,
-			73,
-			89,
-			105,
-			121,
-			136,
-			151,
-			167,
-			182
-		],
-		"steps": [
-			16,
-			16
-		],
+		"plants": [43, 58, 73, 89, 105, 121, 136, 151, 167, 182],
+		"steps": [16, 16],
 		"seam": 0.04790005190317631,
 		"method": "cut-stride.py: one stride between plants, chosen by step symmetry then seam similarity"
 	},
@@ -384,10 +370,7 @@
 			"planted": "R"
 		}
 	],
-	"switchFrames": [
-		0,
-		16
-	],
+	"switchFrames": [0, 16],
 	"contactMethod": "physical-foot stance seeds; chained 48px boot SSD with local masked refinement; swing tracked backwards from landing",
 	"contactSeeds": {
 		"switches": [
@@ -408,10 +391,7 @@
 				}
 			}
 		],
-		"patch": [
-			39.0,
-			46.845
-		],
+		"patch": [39.0, 46.845],
 		"searchRadius": 24,
 		"method": "cut-stride.py plants"
 	}

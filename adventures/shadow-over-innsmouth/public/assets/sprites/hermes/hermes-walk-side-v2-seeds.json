@@ -1,26 +1,23 @@
 {
-  "switches": [
-    {
-      "frame": 0,
-      "foot": "L",
-      "point": {
-        "x": 127.0,
-        "y": 995.0
-      }
-    },
-    {
-      "frame": 16,
-      "foot": "R",
-      "point": {
-        "x": 149.0,
-        "y": 997.0
-      }
-    }
-  ],
-  "patch": [
-    39.0,
-    46.845
-  ],
-  "searchRadius": 24,
-  "method": "cut-stride.py plants"
+	"switches": [
+		{
+			"frame": 0,
+			"foot": "L",
+			"point": {
+				"x": 127.0,
+				"y": 995.0
+			}
+		},
+		{
+			"frame": 16,
+			"foot": "R",
+			"point": {
+				"x": 149.0,
+				"y": 997.0
+			}
+		}
+	],
+	"patch": [39.0, 46.845],
+	"searchRadius": 24,
+	"method": "cut-stride.py plants"
 }

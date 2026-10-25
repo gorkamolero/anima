@@ -20,13 +20,12 @@
 			}
 		}
 	],
-	"switchFrames": [
-		0
-	],
+	"switchFrames": [0],
 	"source": {
 		"sheet": "hermes-walk-side-v2",
 		"frame": 9,
-		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels",
+		"frameCount": 32
 	},
 	"bodyCentreX": 315.5,
 	"bodyCentreY": 520.5,

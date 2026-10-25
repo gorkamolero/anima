@@ -35,6 +35,9 @@ export interface FootCycle {
 	pixelScale?: number;
 	/** Bottom row of the drawn figure in each frame: where the drawing puts the feet. */
 	soleRows?: number[];
+	/** For a pose cut from a walk sheet: which sheet and frame, and that sheet's
+	 * frame count, so the motor can place it exactly as the walk placed that frame. */
+	source?: { sheet?: string; frame?: number; frameCount?: number };
 }
 export interface FootPose {
 	/** Only the entry stance from standing gets the start-facing tolerance. */
