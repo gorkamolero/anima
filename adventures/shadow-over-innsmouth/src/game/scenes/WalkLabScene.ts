@@ -14,6 +14,7 @@ import {
 	WalkMotor,
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
+import { HERMES_WALK } from "../walkTuning";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 
 /** The lab can swap the side cycle (`&sheet=`) to compare candidate sheets. */
@@ -182,14 +183,27 @@ export class WalkLabScene extends BaseScene {
 			() => this.hermes?.anims.stop(),
 			labFootAnimation(cycle, current, show, this.sideSheet),
 			{
+				...HERMES_WALK,
+				// URL overrides for experiments; the game itself reads walkTuning.ts.
 				speedMetresPerSecond: Number(this.params.get("speed")) || undefined,
-				// &stride= (multiple of the drawn stride) and &tempo= (strides per second).
 				gait: {
-					strideScale: Number(this.params.get("stride")) || undefined,
-					stridesPerSecond: Number(this.params.get("tempo")) || undefined,
+					...HERMES_WALK.gait,
+					...(this.params.has("stride")
+						? { strideScale: Number(this.params.get("stride")) }
+						: {}),
+					...(this.params.has("tempo")
+						? { stridesPerSecond: Number(this.params.get("tempo")) }
+						: {}),
 				},
-				verticalBob: Number(this.params.get("bob")) || 0,
-				bobMode: this.params.get("mode") === "drawing" ? "drawing" : "pendulum",
+				...(this.params.has("bob")
+					? { verticalBob: Number(this.params.get("bob")) }
+					: {}),
+				...(this.params.has("mode")
+					? {
+							bobMode:
+								this.params.get("mode") === "drawing" ? "drawing" : "pendulum",
+						}
+					: {}),
 			},
 		);
 		this.motor.heading = "right";

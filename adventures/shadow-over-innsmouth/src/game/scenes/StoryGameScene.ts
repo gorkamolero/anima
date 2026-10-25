@@ -52,6 +52,7 @@ import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.grou
 import fullGameStory from "../../../story/full_game.story?raw";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
+import { HERMES_WALK } from "../walkTuning";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
 import {
@@ -712,13 +713,7 @@ export class StoryGameScene extends BaseScene {
 					this.hermesSprite?.anims.stop();
 				},
 				hermesFootAnimation(cycle, current, show),
-				// Half of the stride's pendulum drop reaches the torso: chosen by eye in the lab.
-				{
-					verticalBob: 0.5,
-					// Chosen by eye in the walk lab (?lab=1). One stride and tempo for
-					// every heading; body speed in ground metres follows from them.
-					gait: { strideScale: 1.47, stridesPerSecond: 0.85 },
-				},
+				HERMES_WALK,
 			);
 		}
 		this.setSceneBackground(
