@@ -56,6 +56,9 @@ interface GroundOffset {
 interface GaitProfile {
 	/** Sheet pixels the planted sole travels from each frame to the next. */
 	steps: number[];
+	/** Per-frame phase weights, proportional to the steps and normalised so
+	 * their reciprocals sum to the frame count. */
+	weights: number[];
 	mean: number;
 	durations: number[];
 	/** True for cycles whose motion is across the screen; depth cycles are timed. */
@@ -190,8 +193,11 @@ export class WalkMotor {
 			for (let k = -half; k <= half; k++) sum += filled[(i + k + n) % n];
 			return sum / (2 * half + 1);
 		});
+		const floored = steps.map((v) => Math.max(v, mean / 3));
+		const harmonic = floored.reduce((a, b) => a + 1 / b, 0);
 		const profile: GaitProfile = {
 			steps,
+			weights: floored.map((v) => (v * harmonic) / n),
 			mean,
 			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
 			// Lateral when the sole travels at least a quarter frame width per
@@ -556,9 +562,9 @@ export class WalkMotor {
 		const n = this.pose.cycle.contacts.length;
 		const index = Math.floor(this.phase) % n;
 		const stride = this.stride();
-		const weight = g.lateral
-			? Math.max(g.steps[index], g.mean / 3) / g.mean
-			: 1;
+		// Weights are normalised so one stride of metres is exactly one cycle of
+		// drawings whatever the step profile; otherwise uneven sheets drift in tempo.
+		const weight = g.lateral ? g.weights[index] : 1;
 		this.phase +=
 			((movedMetres / stride.metres) * n) /
 			this.stridesInSheet(this.pose.cycle) /
