@@ -183,20 +183,12 @@ export class WalkLabScene extends BaseScene {
 			labFootAnimation(cycle, current, show, this.sideSheet),
 			{
 				speedMetresPerSecond: Number(this.params.get("speed")) || undefined,
+				// &stride= (multiple of the drawn stride) and &tempo= (strides per second).
+				gait: {
+					strideScale: Number(this.params.get("stride")) || undefined,
+					stridesPerSecond: Number(this.params.get("tempo")) || undefined,
+				},
 				verticalBob: Number(this.params.get("bob")) || 0,
-				gaitRate: Number(this.params.get("gait")) || 1,
-				speedByHeading: this.params.has("sidespeed")
-					? {
-							left: Number(this.params.get("sidespeed")),
-							right: Number(this.params.get("sidespeed")),
-						}
-					: {},
-				gaitRateByHeading: this.params.has("sidegait")
-					? {
-							left: Number(this.params.get("sidegait")),
-							right: Number(this.params.get("sidegait")),
-						}
-					: {},
 				bobMode: this.params.get("mode") === "drawing" ? "drawing" : "pendulum",
 			},
 		);

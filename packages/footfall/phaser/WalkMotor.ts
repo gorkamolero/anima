@@ -4,7 +4,12 @@ import {
 	type WalkDirection,
 } from "../core/characters/walkHeading";
 import { cellPoint, nearestCell } from "../core/walkarea/navigation";
-import { type Point, scaleAt, toMetres } from "../core/walkarea/perspective";
+import {
+	fromMetres,
+	type Point,
+	scaleAt,
+	toMetres,
+} from "../core/walkarea/perspective";
 import type { WalkArea } from "../core/walkarea/types";
 
 export interface MotorTarget extends Point {
@@ -19,26 +24,30 @@ export interface FootAnimation {
 	show(pose: FootPose): void;
 	standing?(direction: WalkDirection): FootPose | undefined;
 }
+/** The two things a person tunes on a walk. Body speed follows from them:
+ * metres per second = drawn stride × strideScale × stridesPerSecond. */
+export interface GaitSettings {
+	/** Stride length as a multiple of the stride the side sheet draws (1 = as drawn). */
+	strideScale?: number;
+	/** Stride length in metres; overrides strideScale. */
+	strideMetres?: number;
+	/** Full strides (two steps) per second. Default: the side sheet's authored rate. */
+	stridesPerSecond?: number;
+}
 export interface WalkMotorOptions {
-	/** Ground speed in metres per second. Default: the side walk cycle's own
-	 * speed at its native frame rate, so that cycle never slides. */
+	/** One gait for every heading: a person has one stride and one tempo. */
+	gait?: GaitSettings;
+	/** Absolute body speed in metres per second. Overrides the gait-derived
+	 * speed; the legs then keep their stride and follow the ground. */
 	speedMetresPerSecond?: number;
 	/** Screen distance within which a walk counts as having reached its goal. */
 	arrivalTolerance?: number;
-	/** How much of the drawing's own vertical bob reaches the body: 0 glides
-	 * with a constant sole row per sheet (default), 1 rests the lower sole on
-	 * the ground every frame and lets the body rise and fall as drawn. */
+	/** How much of the stride's vertical bob reaches the body: 0 glides with a
+	 * constant sole row per sheet (default), 1 is the full bob. */
 	verticalBob?: number;
 	/** Where the bob curve comes from: "pendulum" models the hip drop from the
 	 * feet's spread; "drawing" follows the drawn feet (sheet soleRows). */
 	bobMode?: "pendulum" | "drawing";
-	/** Drawings advanced per unit of body distance, relative to the tracked
-	 * stride: above 1 the legs cycle faster for the same ground covered. */
-	gaitRate?: number;
-	/** Per-heading override of gaitRate, e.g. a longer stride for the side cycle. */
-	gaitRateByHeading?: Partial<Record<WalkDirection, number>>;
-	/** Per-heading ground speed in metres per second, overriding speedMetresPerSecond. */
-	speedByHeading?: Partial<Record<WalkDirection, number>>;
 }
 interface GroundOffset {
 	x: number;
@@ -123,12 +132,10 @@ export class WalkMotor {
 	>();
 	private readonly verticalBob: number;
 	private readonly bobMode: "pendulum" | "drawing";
-	private readonly gaitRate: number;
-	private readonly gaitRateByHeading: Partial<Record<WalkDirection, number>>;
-	private readonly speedByHeading: Partial<Record<WalkDirection, number>>;
+	private readonly gaitOptions: GaitSettings;
 	private gaits = new Map<string, GaitProfile>();
 	private alignments = new Map<string, number>();
-	private readonly speed: number;
+	private readonly fixedSpeed?: number;
 	private readonly tolerance: number;
 
 	constructor(
@@ -147,12 +154,8 @@ export class WalkMotor {
 		this.tolerance = options.arrivalTolerance ?? 2;
 		this.verticalBob = Math.min(1, Math.max(0, options.verticalBob ?? 0));
 		this.bobMode = options.bobMode ?? "pendulum";
-		this.gaitRate = options.gaitRate ?? 1;
-		this.gaitRateByHeading = options.gaitRateByHeading ?? {};
-		this.speedByHeading = options.speedByHeading ?? {};
-		this.speed =
-			options.speedMetresPerSecond ??
-			this.naturalSpeed(animation.select("left"));
+		this.gaitOptions = options.gait ?? {};
+		this.fixedSpeed = options.speedMetresPerSecond;
 	}
 
 	detach(): void {
@@ -199,18 +202,40 @@ export class WalkMotor {
 		return profile;
 	}
 
-	/** Metres per second at which the side cycle plays at its authored rate with
-	 * the planted sole still on the ground. */
-	private naturalSpeed(pose: Omit<FootPose, "frame">): number {
-		const g = this.gait(pose.cycle);
+	/** Full strides per second at a sheet's authored frame durations. */
+	private naturalCadence(cycle: FootCycle): number {
+		const ms = this.gait(cycle).durations.reduce((a, b) => a + b, 0);
+		return ms > 0 ? 1000 / ms : 1;
+	}
+
+	/** Metres the side sheet's drawn stride covers at this scene's scale. */
+	private drawnStrideMetres(): number {
+		const cycle = this.animation.select("left").cycle;
+		const g = this.gait(cycle);
 		if (!g.lateral) return 1.3;
 		const ppm =
 			this.area.perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
-		const metresPerDrawing =
-			(g.mean / (pose.cycle.pixelScale ?? 1)) * (this.area.baseScale / ppm);
-		const secondsPerDrawing =
-			g.durations.reduce((a, b) => a + b, 0) / g.durations.length / 1000;
-		return metresPerDrawing / secondsPerDrawing;
+		const sheetPx =
+			g.steps.reduce((a, b) => a + b, 0) / (cycle.pixelScale ?? 1);
+		return sheetPx * (this.area.baseScale / ppm);
+	}
+
+	/** The stride and tempo in force, in metres and strides per second. */
+	private stride(): { metres: number; perSecond: number } {
+		const o = this.gaitOptions;
+		return {
+			metres: o.strideMetres ?? this.drawnStrideMetres() * (o.strideScale ?? 1),
+			perSecond:
+				o.stridesPerSecond ??
+				this.naturalCadence(this.animation.select("left").cycle),
+		};
+	}
+
+	/** Body speed in metres per second, the same for every heading. */
+	private bodySpeed(): number {
+		if (this.fixedSpeed !== undefined) return this.fixedSpeed;
+		const { metres, perSecond } = this.stride();
+		return metres * perSecond;
 	}
 
 	/** Offset from the sprite origin (bottom centre) to the ground point, in
@@ -343,8 +368,15 @@ export class WalkMotor {
 	private screenSpeed(): number {
 		const { perspective, scaleClamp } = this.area;
 		const ppm = perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
-		const speed = this.speedByHeading[this.heading] ?? this.speed;
-		return speed * ppm * scaleAt(perspective, this.anchor, scaleClamp);
+		return (
+			this.bodySpeed() * ppm * scaleAt(perspective, this.anchor, scaleClamp)
+		);
+	}
+
+	/** Whether the perspective can map screen points to ground metres. */
+	private hasGround(): boolean {
+		const p = this.area.perspective;
+		return p.constant === undefined && !!p.slope;
 	}
 
 	private groundVector(from: Point, to: Point): { dX: number; dZ: number } {
@@ -459,25 +491,41 @@ export class WalkMotor {
 
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
-		const from = { ...this.anchor };
-		let remaining = (this.screenSpeed() * delta) / 1000;
+		const p = this.area.perspective;
+		const ground = this.hasGround();
+		// Walk a fixed number of metres this frame along the path, measured on
+		// the ground. A screen pixel of depth is far more ground than a screen
+		// pixel sideways, so screen-space pacing would sprint on diagonals.
+		const toG = (q: Point) => (ground ? toMetres(p, q) : q);
+		const fromG = (q: Point) => (ground ? fromMetres(p, q) : q);
+		const ppm = p.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
+		let remaining = ground
+			? (this.bodySpeed() * delta) / 1000
+			: (this.screenSpeed() * delta) / 1000;
+		let here = toG(this.anchor);
+		let movedMetres = 0;
 		while (remaining > 0 && this.segment < this.path.length) {
-			const next = this.path[this.segment];
-			const dx = next.x - this.anchor.x;
-			const dy = next.y - this.anchor.y;
+			const next = toG(this.path[this.segment]);
+			const dx = next.x - here.x;
+			const dy = next.y - here.y;
 			const distance = Math.hypot(dx, dy);
 			if (distance <= remaining) {
-				this.anchor = { ...next };
+				here = next;
 				remaining -= distance;
+				movedMetres += distance;
 				this.segment++;
 				continue;
 			}
-			this.anchor = {
-				x: this.anchor.x + (dx / distance) * remaining,
-				y: this.anchor.y + (dy / distance) * remaining,
+			here = {
+				x: here.x + (dx / distance) * remaining,
+				y: here.y + (dy / distance) * remaining,
 			};
+			movedMetres += remaining;
 			remaining = 0;
 		}
+		this.anchor = fromG(here);
+		if (!ground)
+			movedMetres /= ppm * scaleAt(p, this.anchor, this.area.scaleClamp);
 		const target = this.path[this.segment];
 		const goal = this.goal;
 		if (
@@ -495,15 +543,16 @@ export class WalkMotor {
 		// frame's own sole step: with drawings at display rate the resulting
 		// cadence jitter is below one render frame, and the foot never skates.
 		// Depth cycles have no lateral sole travel, so they keep time.
+		// The drawings follow the ground: one full cycle per stride of metres,
+		// each frame weighted by its own drawn sole step so the feet stay planted.
 		const g = this.gait(this.pose.cycle);
-		const index = Math.floor(this.phase) % this.pose.cycle.contacts.length;
-		const step = Math.max(g.steps[index], g.mean / 3);
-		const drawnStep = step * this.scale * this.sheetScale(this.pose);
-		this.phase +=
-			(g.lateral && drawnStep > 0
-				? Math.abs(this.anchor.x - from.x) / drawnStep
-				: delta / g.durations[index]) *
-			(this.gaitRateByHeading[this.heading] ?? this.gaitRate);
+		const n = this.pose.cycle.contacts.length;
+		const index = Math.floor(this.phase) % n;
+		const stride = this.stride();
+		const weight = g.lateral
+			? Math.max(g.steps[index], g.mean / 3) / g.mean
+			: 1;
+		this.phase += ((movedMetres / stride.metres) * n) / weight;
 		this.pose = {
 			...this.pose,
 			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
@@ -577,7 +626,8 @@ export class WalkMotor {
 			anchor: { ...this.anchor },
 			frame: this.pose?.frame,
 			cycle: this.pose?.cycle.name,
-			speedMetresPerSecond: this.speed,
+			speedMetresPerSecond: this.bodySpeed(),
+			gait: this.stride(),
 			screenSpeed: this.screenSpeed(),
 		};
 	}

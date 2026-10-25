@@ -715,12 +715,9 @@ export class StoryGameScene extends BaseScene {
 				// Half of the stride's pendulum drop reaches the torso: chosen by eye in the lab.
 				{
 					verticalBob: 0.5,
-					gaitRate: 0.85,
-					// The side cycle covers 1.25x more ground per stride than the others.
-					// Same leg tempo (speed x gait = 1.105), 1.25x the ground per second.
-					gaitRateByHeading: { left: 0.68, right: 0.68 },
-					speedMetresPerSecond: 1.3,
-					speedByHeading: { left: 1.625, right: 1.625 },
+					// Chosen by eye in the walk lab (?lab=1). One stride and tempo for
+					// every heading; body speed in ground metres follows from them.
+					gait: { strideScale: 1.47, stridesPerSecond: 0.85 },
 				},
 			);
 		}

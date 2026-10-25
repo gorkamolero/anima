@@ -143,20 +143,27 @@ describe("WalkMotor", () => {
 		expect(motor.anchor).toEqual({ x: 930, y: 500 });
 	});
 
-	it("preserves fractional gait phase through a heading change at native frame rates", () => {
-		const { motor, cycles, pose } = fixture();
-		cycles.away.fps = 4;
+	it("keeps the gait phase continuous through a heading change", () => {
+		const { motor, pose } = fixture();
 		void motor.walk([
 			{ x: 1060, y: 500 },
 			{ x: 1060, y: 200 },
 		]);
-		motor.update(750); // phase 1.5 in the right cycle
-		expect(pose().frame).toBe(1);
-		motor.update(250); // turn, then add 1 frame: phase 2.5
-		expect(motor.heading).toBe("away");
-		expect(pose().frame).toBe(0);
-		motor.update(125); // retained half-frame reaches phase 3
-		expect(pose().frame).toBe(1);
+		// Drawings follow ground metres, so the same distance always advances the
+		// phase by the same amount; a turn must not restart the stride.
+		const frames: number[] = [];
+		let turned = false;
+		for (let i = 0; i < 400 && !turned; i++) {
+			motor.update(10);
+			frames.push(pose().frame);
+			turned = motor.heading === "away";
+		}
+		expect(turned).toBe(true);
+		const before = frames.at(-2);
+		const after = frames.at(-1);
+		// The frame shown right after the turn is the next one in sequence (or the
+		// same one), never a jump back to the cycle's start from a later frame.
+		expect([before, (before! + 1) % 2]).toContain(after);
 	});
 
 	it("stops mid-walk, resolves its promise, and shows the standing pose", async () => {

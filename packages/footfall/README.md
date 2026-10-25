@@ -4,7 +4,7 @@
 
 ## Model
 
-`WalkMotor` moves the ground point (`anchor`) continuously along a copied navigation path on every render update. Ground speed is constant in metres per second: screen speed is `speedMetresPerSecond × pixelsPerMetre × scaleAt(anchor)`. Perspective supplies depth scaling, optional horizontal calibration and scale clamps. Navigation uses floor masks and object clearance; occluder baselines determine draw order from the ground point.
+`WalkMotor` moves the ground point (`anchor`) continuously along a copied navigation path on every render update. Ground speed follows the gait: `strideScale` (a multiple of the stride the sheet draws) times `stridesPerSecond`, per heading if wanted; screen speed is that times `pixelsPerMetre × scaleAt(anchor)`. `speedMetresPerSecond` overrides it absolutely. Perspective supplies depth scaling, optional horizontal calibration and scale clamps. Navigation uses floor masks and object clearance; occluder baselines determine draw order from the ground point.
 
 The ground heading selects the directional drawing. Side and diagonal cycles advance by distance travelled: each drawing lasts as long as the body needs to cover the sheet distance the planted sole travels to the next drawing, so the feet stay on the ground at any speed. Depth cycles (toward, away) have no lateral sole travel and advance at their authored frame durations. Turns preserve the fractional gait phase. The default ground speed is the side cycle's own speed at its authored rate. Per-sheet `bodyCentreX` aligns the drawn body horizontally; otherwise the motor uses the cycle's mean sole midpoint. The mean sole row locates the drawing vertically. Optional `drawnHeight` normalises each sheet's sprite scale relative to the `left` cycle.
 
