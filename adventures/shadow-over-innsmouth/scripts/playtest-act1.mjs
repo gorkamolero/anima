@@ -42,7 +42,7 @@ async function capture(name) {
 	browser("screenshot", resolve(out, `act1-${name}.png`));
 }
 async function drain() {
-	for (let i = 0; i < 80; i++) {
+	for (let i = 0; i < 400; i++) {
 		const state = qa();
 		if (state.dialogue?.choices.length || !state.dialogueLocked) return state;
 		if (state.dialogue) {
@@ -83,7 +83,7 @@ try {
 	);
 	await drain();
 	evaluate(
-		"window.__act1Recording = window.__anima.record({name:'act1-playthrough',ms:60000}); true",
+		"window.__act1Recording = window.__anima.record({name:'act1-playthrough',ms:120000}); true",
 	);
 	await hotspot("schedule_board");
 	await capture("schedule");
@@ -141,13 +141,18 @@ try {
 	await drain();
 	await capture("arrival");
 	assert.equal(qa().location, "place-d3fc732744430e25f7c1");
-	const recording = await evaluate("window.__act1Recording");
+	evaluate(
+		"window.__act1Recording.then(result => {window.__act1RecordingResult = result}); true",
+	);
+	await poll("window.__act1RecordingResult ?? false", 130000);
+	const recording = evaluate("window.__act1RecordingResult");
 	writeFileSync(
 		resolve(out, "act1-playtest.json"),
 		JSON.stringify({ passed: true, evidence, recording }, null, 2),
 	);
 	console.log(JSON.stringify({ passed: true, recording }, null, 2));
 } catch (error) {
+	await capture("failure");
 	writeFileSync(
 		resolve(out, "act1-playtest.json"),
 		JSON.stringify({ passed: false, error: String(error), evidence }, null, 2),
