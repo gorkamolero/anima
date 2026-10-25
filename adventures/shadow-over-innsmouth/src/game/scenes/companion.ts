@@ -23,6 +23,8 @@ import { characterWalkSheets, HERMES_WALK, walkSheetFor } from "../hermesWalk";
 const BESIDE_M = 1.0;
 const BEHIND_M = 1.3;
 const SLACK_M = 0.25;
+/** Closer than this and she steps back to her station. */
+const CLOSE_M = 0.6;
 const REPLAN_MS = 250;
 
 type SheetSet = ReturnType<typeof characterWalkSheets>["walk"];
@@ -216,11 +218,21 @@ export class Companion {
 		if (this.sinceReplan < REPLAN_MS) return;
 		this.sinceReplan = 0;
 		const target = this.station(leader.anchor, leader.heading);
+		const ppm = this.pixelsPerMetre(target);
 		const off = Math.hypot(
 			target.x - motor.anchor.x,
 			target.y - motor.anchor.y,
 		);
-		if (off > SLACK_M * this.pixelsPerMetre(target)) {
+		const gap = Math.hypot(
+			leader.anchor.x - motor.anchor.x,
+			leader.anchor.y - motor.anchor.y,
+		);
+		// The station is how close she keeps, not a spot she must stand on: she
+		// walks when he has drawn further away than that, or when he has come
+		// too close, never backwards to a point behind her.
+		const tooFar = gap > (BEHIND_M + SLACK_M) * ppm;
+		const tooClose = gap < CLOSE_M * ppm;
+		if (off > SLACK_M * ppm && (tooFar || tooClose)) {
 			const path = roundCorners(
 				area.mask,
 				findWalkPath(area, motor.anchor, target),
