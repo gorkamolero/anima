@@ -8,6 +8,8 @@
  * spec.json:
  *   {
  *     "name": "kat",
+ *     "concept": "...",            // optional: draw the source image from this text when it is missing
+ *     "styleRefs": ["docs/art/@hermes.jpeg"],
  *     "source": "sources/innsmouth/kat-neutral-source-candidate.png",   // approved standing image
  *     "refs": ["docs/art/@kat.jpeg"],                                   // extra identity references
  *     "description": "slim young woman, short messy black hair, ...",   // what must stay identical
@@ -18,6 +20,7 @@
  *   }
  *
  * Stages (each skips work whose output already exists):
+ *   source     draw the approved image from `concept` when none exists (house style refs)
  *   keyframes  direction stills from the source via fal-ai/nano-banana-2/edit
  *   videos     in-place walk clips per direction via scripts/video-generate.ts
  *   sheets     scripts/walk-sheet.sh per direction: matte, gait cut, audits, contacts, 4x
@@ -82,6 +85,26 @@ const run = (cmd, argv, opts = {}) => {
 	const r = spawnSync(cmd, argv, { cwd: tools, stdio: "inherit", ...opts });
 	if (r.status !== 0) throw new Error(`${cmd} ${argv.join(" ")} failed (${r.status})`);
 };
+
+// ------------------------------------------------------------------- source
+/** No approved image yet: draw the character from `concept` in the house style,
+ * using the style references, as a neutral full-body standing still. */
+async function source() {
+	const target = resolve(tools, spec.source);
+	if (existsSync(target)) { log("source: reusing"); return; }
+	if (!spec.concept) throw new Error("spec needs a `concept` to draw a source image");
+	const { fal } = await import("@fal-ai/client");
+	fal.config({ credentials: process.env.FAL_KEY });
+	const refFiles = (spec.styleRefs ?? []).map((p) => resolve(tools, p));
+	const urls = await Promise.all(refFiles.map(async (p) => fal.storage.upload(new Blob([readFileSync(p)], { type: p.endsWith(".jpeg") || p.endsWith(".jpg") ? "image/jpeg" : "image/png" }))));
+	const prompt = `Create exactly ONE full-body character still of a NEW character in the same art style as the reference images: clean hand-inked painterly cartoon rendering, fine fabric texture, muted colours. The character: ${spec.concept} Standing relaxed upright, three-quarter view facing slightly left, arms down, feet slightly apart, neutral expression. Full body and all shoes visible. Centered figure occupies 82 percent of portrait image height, generous empty margin. Plain uniform #828282 gray background, no floor, no shadows, no text, no extra figures.`;
+	mkdirSync(dirname(target), { recursive: true });
+	log("source: fal-ai/nano-banana-2/edit (new character in house style)");
+	const r = await fal.subscribe("fal-ai/nano-banana-2/edit", { input: { prompt, image_urls: urls, aspect_ratio: "9:16", num_images: 1, output_format: "png", limit_generations: true } });
+	const res = await fetch(r.data.images[0].url);
+	writeFileSync(target, new Uint8Array(await res.arrayBuffer()));
+	writeFileSync(`${target}.manifest.json`, JSON.stringify({ model: "fal-ai/nano-banana-2/edit", requestId: r.requestId, styleReferences: refFiles, prompt }, null, 2));
+}
 
 // ---------------------------------------------------------------- keyframes
 async function keyframes() {
@@ -152,7 +175,7 @@ function standing() {
 	}
 }
 
-const stages = { keyframes, videos, sheets, standing };
+const stages = { source, keyframes, videos, sheets, standing };
 const order = stage === "all" ? Object.keys(stages) : [stage];
 for (const s of order) await stages[s]();
 const map = Object.fromEntries(wanted.map((d) => [d, { walk: `${spec.name}-walk-${d}-4x`, stand: `${spec.name}-stand-${d}` }]));

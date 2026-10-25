@@ -1,0 +1,11 @@
+{
+  "name": "zadok",
+  "source": "sources/characters/generated/zadok-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "Zadok Allen, a very old drunk of Innsmouth: ninety, gaunt, a white beard stained yellow, wild white hair, watery red-rimmed eyes, a filthy long black coat over a torn sweater, baggy trousers held by rope, broken boots, a bottle in one coat pocket.",
+  "description": "Gaunt old man of ninety, wild white hair, long yellowed white beard, red-rimmed watery eyes, filthy long black coat over a torn brown sweater, baggy trousers tied with rope, broken boots.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/zadok",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/zadok"
+}

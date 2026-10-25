@@ -1,0 +1,11 @@
+{
+  "name": "proprietor",
+  "source": "sources/characters/generated/proprietor-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "The Gilman House hotel clerk: a sallow, heavy man of fifty with the first signs of the Innsmouth look, flat wide mouth, thinning slicked hair, a stained white shirt with sleeve garters, a dark waistcoat, dark trousers, a watch chain.",
+  "description": "Heavy sallow man of fifty, flat wide mouth, thinning slicked dark hair, stained white shirt with sleeve garters, dark waistcoat, dark trousers, watch chain.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/proprietor",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/proprietor"
+}

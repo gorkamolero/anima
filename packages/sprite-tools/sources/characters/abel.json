@@ -1,0 +1,11 @@
+{
+  "name": "abel",
+  "source": "sources/characters/generated/abel-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "Abel, a young Innsmouth man in his twenties who still looks human: pale, thin, nervous, dark hair cut badly, a grey fisherman's sweater with holes, oilskin trousers, rubber boots, a knitted cap in his hand.",
+  "description": "Pale thin nervous young man, badly cut dark hair, grey holed fisherman's sweater, dark oilskin trousers, black rubber boots.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/abel",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/abel"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "farmer",
+  "source": "sources/characters/generated/farmer-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "An old New England farmer met on the road outside Innsmouth: weathered, sunburnt, white stubble, a battered straw hat, patched flannel shirt, denim overalls, muddy boots, a pitchfork he is not carrying now.",
+  "description": "Weathered sunburnt old farmer, white stubble, battered straw hat, patched red flannel shirt, blue denim overalls, muddy boots.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/farmer",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/farmer"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "driver",
+  "source": "sources/characters/generated/driver-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "The Innsmouth bus driver, a lean man with the Innsmouth look: narrow head, bulging unblinking eyes, grey-skinned, almost no hair, long arms, a rumpled grey bus company jacket over a yellowed shirt, dark trousers, a peaked driver's cap.",
+  "description": "Lean grey-skinned man with a narrow head, bulging pale eyes, almost no hair, long arms, rumpled grey bus company jacket over a yellowed shirt, dark trousers, peaked driver's cap.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/driver",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/driver"
+}

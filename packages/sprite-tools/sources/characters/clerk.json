@@ -1,0 +1,11 @@
+{
+  "name": "clerk",
+  "source": "sources/characters/generated/clerk-source.png",
+  "styleRefs": ["../../docs/art/@hermes.jpeg", "../../docs/art/@kat.jpeg"],
+  "concept": "A tired man in his sixties who has sold bus tickets in a small-town depot for thirty years: thin grey hair combed over, deep lines, reading glasses on a cord, a faded blue short-sleeved uniform shirt with a name badge, dark trousers, worn black shoes, a pen in the shirt pocket.",
+  "description": "Thin man in his sixties, grey comb-over, lined face, reading glasses on a cord around his neck, faded blue short-sleeved uniform shirt with a name badge, dark trousers, worn black shoes.",
+  "pronoun": "he",
+  "carried": "",
+  "out": "output/characters/clerk",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/clerk"
+}
