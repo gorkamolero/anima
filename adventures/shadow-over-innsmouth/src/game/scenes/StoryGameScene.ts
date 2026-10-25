@@ -49,10 +49,13 @@ import {
 	validateStoryGraph,
 } from "@anima/storyscript";
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
+import act1Story from "../../../story/act1.story?raw";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
+import { act1Hotspots } from "../act1Hotspots";
 import { HERMES_WALK, HERMES_WALK_SHEETS } from "../hermesWalk";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
+import { StoryDialogue } from "../storyDialogue";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
 import {
@@ -199,6 +202,11 @@ const BACKGROUNDS: Record<string, string> = {
 export class StoryGameScene extends BaseScene {
 	protected readonly config = REVIEW_SCENE_CONFIG;
 	private runtime!: StoryRuntime;
+	private readonly act1 =
+		new URLSearchParams(window.location.search).get("act") === "1";
+	private dialogue?: StoryDialogue;
+	private dialogueLocked = false;
+	private storyVisualScene = "";
 	private snapshot!: StoryRuntimeSnapshot;
 	private background?: Phaser.GameObjects.Image;
 	private outputText!: Phaser.GameObjects.Text;
@@ -348,9 +356,9 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	create(): void {
-		const graph = parseStoryScript(fullGameStory);
+		const graph = parseStoryScript(this.act1 ? act1Story : fullGameStory);
 		const diagnostics = validateStoryGraph(graph);
-		const savedState = this.loadState();
+		const savedState = this.act1 ? undefined : this.loadState();
 
 		this.runtime = new StoryRuntime(graph, savedState);
 		this.snapshot = this.runtime.start();
@@ -368,8 +376,11 @@ export class StoryGameScene extends BaseScene {
 		this.bindReviewEvents();
 		this.bindOpenWorldEvents();
 		this.setupInputHandlers();
-		void this.restoreWorld();
+		void this.restoreWorld().then(() => {
+			if (this.act1) this.startAct1();
+		});
 
+		if (this.act1) return;
 		this.input.keyboard?.on("keydown-S", () => this.saveState());
 		this.input.keyboard?.on("keydown-L", () => {
 			const state = this.loadState();
@@ -388,6 +399,77 @@ export class StoryGameScene extends BaseScene {
 			this.placementDebugEnabled = !this.placementDebugEnabled;
 			this.refreshPlacementDebugOverlay();
 		});
+	}
+
+	private startAct1(): void {
+		this.dialogue = new StoryDialogue(
+			this.runtime,
+			API_BASE_URL,
+			(locked) => {
+				this.dialogueLocked = locked;
+				if (locked) this.hermesMotor?.stop();
+			},
+			async (snapshot) => {
+				this.snapshot = snapshot;
+				const id = snapshot.scene?.originalId ?? "";
+				if (this.storyVisualScene !== id) {
+					this.storyVisualScene = id;
+					if (id === "bus_station" || id === "bus_interior") {
+						const kat = REVIEW_SCENES.inside.characters.kat;
+						if (kat)
+							this.reviewCharacterOverrides.inside = {
+								kat: {
+									...kat,
+									visible: true,
+									states: {
+										seatedIdle: { ...kat.states?.seatedIdle, visible: true },
+										seatedTalk: { ...kat.states?.seatedTalk, visible: true },
+									},
+								},
+							};
+						await this.enterLocation("inside");
+					} else if (id === "innsmouth_streets") {
+						await this.enterLocation("place-d3fc732744430e25f7c1");
+					}
+				}
+				this.renderSceneHotspots(this.activeScene());
+				this.titleText.setText(snapshot.scene?.location ?? id);
+				this.stateText.setText(
+					`Inventory: ${snapshot.state.inventory.join(", ") || "empty"}`,
+				);
+				this.outputText.setText(
+					id === "bus_interior"
+						? "[bus interior pending] — select a labelled hotspot"
+						: "Click a hotspot to interact. Click the ground to walk.",
+				);
+				return id === "bus_interior" ? "bus interior pending" : undefined;
+			},
+		);
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () =>
+			this.dialogue?.destroy(),
+		);
+		void this.dialogue.present(this.snapshot);
+	}
+
+	private async performStoryAction(
+		id: string,
+		verb: StoryVerb,
+		point: ScenePoint,
+	): Promise<void> {
+		if (this.dialogueLocked || !this.dialogue) return;
+		this.dialogueLocked = true;
+		this.hermesMotor?.stop();
+		await this.hermesMotor?.facePoint(point);
+		if (
+			id === "exit" &&
+			this.snapshot.scene?.originalId === "bus_station" &&
+			this.reviewSceneId === "inside"
+		) {
+			await this.enterLocation("outside");
+			this.dialogueLocked = false;
+			return;
+		}
+		this.dialogue.perform(id, verb);
 	}
 
 	private createLayout(): void {
@@ -776,6 +858,41 @@ export class StoryGameScene extends BaseScene {
 	private renderSceneHotspots(scene: ReviewScene): void {
 		for (const hotspot of this.hotspots) hotspot.destroy();
 		this.hotspots = [];
+		if (this.act1 && this.snapshot.scene) {
+			for (const object of this.commandObjects) object.destroy();
+			this.commandObjects = [];
+			for (const hotspot of act1Hotspots(
+				this.snapshot.scene,
+				this.reviewSceneId === "outside" && !this.generatedPlace,
+			)) {
+				const { bounds } = hotspot;
+				const verbs = VERBS.filter((verb) => hotspot.actions[verb]?.length);
+				const perform = (verb: StoryVerb) => {
+					void this.performStoryAction(hotspot.id, verb, {
+						x: bounds.x + bounds.width / 2,
+						y: bounds.y + bounds.height / 2,
+					});
+				};
+				this.addHotspot({
+					id: hotspot.id,
+					name: hotspot.name,
+					...bounds,
+					verbs: verbs.map((v) => v.toLowerCase() as HotspotVerb),
+					onInteract: (verb) => perform(this.toStoryVerb(verb)),
+				});
+				if (this.snapshot.scene.originalId === "bus_interior")
+					this.addButton(bounds.x, bounds.y, 230, hotspot.name, () =>
+						perform(
+							verbs.includes("TALK")
+								? "TALK"
+								: verbs.includes("USE")
+									? "USE"
+									: "LOOK",
+						),
+					);
+			}
+			return;
+		}
 
 		for (const hotspot of scene.hotspots) {
 			if (!hotspot.bounds) continue;
@@ -922,9 +1039,27 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	protected override handlePointerDown(pointer: Phaser.Input.Pointer): void {
-		if (!this.hermesSprite?.visible || this.inputBlocked || this.openWorldBusy)
+		if (
+			!this.hermesSprite?.visible ||
+			this.inputBlocked ||
+			this.openWorldBusy ||
+			this.dialogueLocked
+		)
 			return;
 		if (pointer.y < TITLE_BAR_HEIGHT || pointer.y > MAX_FEET_Y) return;
+		if (this.act1) {
+			const hotspot = this.findHotspotAtPoint(pointer.x, pointer.y);
+			if (hotspot) {
+				const verb = hotspot.verbs.includes("talk")
+					? "talk"
+					: hotspot.verbs.includes("use")
+						? "use"
+						: "look";
+				hotspot.interact(verb);
+				return;
+			}
+			if (this.snapshot.scene?.originalId === "bus_interior") return;
+		}
 		if (exitAt(pointer, this.sceneExits)) {
 			void this.walkGenerated(pointer.x, pointer.y);
 			return;
@@ -1128,7 +1263,7 @@ export class StoryGameScene extends BaseScene {
 			this.geometryReady = true;
 			this.optionsCache.clear();
 			if (this.dwellTimer) clearTimeout(this.dwellTimer);
-			if (WALKING_PREVIEW) return;
+			if (WALKING_PREVIEW || this.act1) return;
 			const location = this.locationId();
 			this.dwellTimer = setTimeout(() => {
 				if (location !== this.locationId()) return;
@@ -1399,7 +1534,7 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private async resolveNarration(choice: string): Promise<void> {
-		if (WALKING_PREVIEW) return;
+		if (WALKING_PREVIEW || this.act1) return;
 		const interactable = this.selectedInteractable;
 		const physicalExit = Boolean(this.travellingExit);
 		if (!interactable || this.openWorldBusy) return;
@@ -1845,6 +1980,9 @@ export class StoryGameScene extends BaseScene {
 		const scene = this.activeScene();
 		const hermesBounds = this.hermesSprite?.getBounds();
 		return {
+			story: this.act1 ? this.snapshot : undefined,
+			dialogue: this.dialogue?.state ?? null,
+			dialogueLocked: this.dialogueLocked,
 			reviewSceneId: this.reviewSceneId,
 			location: this.locationId(),
 			generatedPlace: this.generatedPlace,
