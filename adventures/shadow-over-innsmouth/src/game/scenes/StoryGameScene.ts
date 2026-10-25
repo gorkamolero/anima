@@ -717,8 +717,10 @@ export class StoryGameScene extends BaseScene {
 					verticalBob: 0.5,
 					gaitRate: 0.85,
 					// The side cycle covers 1.25x more ground per stride than the others.
+					// Same leg tempo (speed x gait = 1.105), 1.25x the ground per second.
 					gaitRateByHeading: { left: 0.68, right: 0.68 },
 					speedMetresPerSecond: 1.3,
+					speedByHeading: { left: 1.625, right: 1.625 },
 				},
 			);
 		}

@@ -185,6 +185,12 @@ export class WalkLabScene extends BaseScene {
 				speedMetresPerSecond: Number(this.params.get("speed")) || undefined,
 				verticalBob: Number(this.params.get("bob")) || 0,
 				gaitRate: Number(this.params.get("gait")) || 1,
+				speedByHeading: this.params.has("sidespeed")
+					? {
+							left: Number(this.params.get("sidespeed")),
+							right: Number(this.params.get("sidespeed")),
+						}
+					: {},
 				gaitRateByHeading: this.params.has("sidegait")
 					? {
 							left: Number(this.params.get("sidegait")),

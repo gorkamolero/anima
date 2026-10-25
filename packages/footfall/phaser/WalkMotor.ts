@@ -37,6 +37,8 @@ export interface WalkMotorOptions {
 	gaitRate?: number;
 	/** Per-heading override of gaitRate, e.g. a longer stride for the side cycle. */
 	gaitRateByHeading?: Partial<Record<WalkDirection, number>>;
+	/** Per-heading ground speed in metres per second, overriding speedMetresPerSecond. */
+	speedByHeading?: Partial<Record<WalkDirection, number>>;
 }
 interface GroundOffset {
 	x: number;
@@ -123,6 +125,7 @@ export class WalkMotor {
 	private readonly bobMode: "pendulum" | "drawing";
 	private readonly gaitRate: number;
 	private readonly gaitRateByHeading: Partial<Record<WalkDirection, number>>;
+	private readonly speedByHeading: Partial<Record<WalkDirection, number>>;
 	private gaits = new Map<string, GaitProfile>();
 	private alignments = new Map<string, number>();
 	private readonly speed: number;
@@ -146,6 +149,7 @@ export class WalkMotor {
 		this.bobMode = options.bobMode ?? "pendulum";
 		this.gaitRate = options.gaitRate ?? 1;
 		this.gaitRateByHeading = options.gaitRateByHeading ?? {};
+		this.speedByHeading = options.speedByHeading ?? {};
 		this.speed =
 			options.speedMetresPerSecond ??
 			this.naturalSpeed(animation.select("left"));
@@ -339,7 +343,8 @@ export class WalkMotor {
 	private screenSpeed(): number {
 		const { perspective, scaleClamp } = this.area;
 		const ppm = perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
-		return this.speed * ppm * scaleAt(perspective, this.anchor, scaleClamp);
+		const speed = this.speedByHeading[this.heading] ?? this.speed;
+		return speed * ppm * scaleAt(perspective, this.anchor, scaleClamp);
 	}
 
 	private groundVector(from: Point, to: Point): { dX: number; dZ: number } {
