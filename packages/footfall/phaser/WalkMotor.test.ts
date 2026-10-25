@@ -75,6 +75,8 @@ function fixture() {
 		},
 		{ speedMetresPerSecond: 2 },
 	);
+	// Face the way most walks go, so a start is a start and not a pivot.
+	motor.face("right");
 	motor.place({ x: 960, y: 500 }, false);
 	return { motor, target, area, cycles, animate, pose: () => pose };
 }
@@ -164,6 +166,44 @@ describe("WalkMotor", () => {
 		// The frame shown right after the turn is the next one in sequence (or the
 		// same one), never a jump back to the cycle's start from a later frame.
 		expect([before, (before! + 1) % 2]).toContain(after);
+	});
+
+	it("pivots through the standing poses on a reversal, then walks off", () => {
+		const { motor, pose } = fixture();
+		void motor.walk([{ x: 1800, y: 500 }]);
+		for (let i = 0; i < 30; i++) motor.update(10);
+		expect(motor.heading).toBe("right");
+		const turned = { ...motor.anchor };
+		void motor.walk([{ x: 100, y: 500 }]);
+		// A 180-degree turn stands through the three headings between, facing
+		// the camera on the way, and the body does not move while it turns.
+		const seen: string[] = [];
+		for (let i = 0; i < 30; i++) {
+			motor.update(10);
+			const name = pose().cycle.name;
+			if (seen.at(-1) !== name) seen.push(name);
+		}
+		expect(seen).toEqual([
+			"idle-toward-right",
+			"idle-toward",
+			"idle-toward-left",
+			"left",
+		]);
+		expect(motor.heading).toBe("left");
+		const poses = seen.length;
+		expect(poses).toBe(4);
+		expect(motor.anchor.x).toBeLessThan(turned.x);
+		expect(turned.x - motor.anchor.x).toBeLessThan(10);
+	});
+
+	it("switches cycles in stride for a turn under 135 degrees", () => {
+		const { motor, pose } = fixture();
+		void motor.walk([{ x: 1800, y: 500 }]);
+		for (let i = 0; i < 30; i++) motor.update(10);
+		void motor.walk([{ x: motor.anchor.x, y: 100 }]);
+		motor.update(10);
+		expect(motor.heading).toBe("away");
+		expect(pose().cycle.name).toBe("away");
 	});
 
 	it("stops mid-walk, resolves its promise, and shows the standing pose", async () => {

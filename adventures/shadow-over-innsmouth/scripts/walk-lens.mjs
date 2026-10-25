@@ -11,7 +11,7 @@
  *   stabilised-strip.png crops centred on the character, every N frames
  *   slowmo.mp4 / .gif    the walked region at 1/slow speed, 2x magnified
  *   realtime.mp4         the walked region at real speed
- *   report.txt           per-frame body motion, drawing holds, sole slide
+ *   report.txt           per-frame body motion, drawing holds, lateral sole slide
  *
  * Requires ffmpeg and ImageMagick (magick) on PATH.
  */
@@ -277,7 +277,9 @@ for (let i = 1; i < perFrame.length; i++) {
 			a.sole.foot === b.sole.foot &&
 			a.texture === b.texture
 		)
-			slides.push(Math.hypot(b.sole.x - a.sole.x, b.sole.y - a.sole.y));
+			// Lateral only: a sheet cannot draw a planted sole receding in depth,
+			// so an away or toward walk moves the sole up-screen with the body.
+			slides.push(Math.abs(b.sole.x - a.sole.x));
 	}
 }
 const stat = (arr) => {
@@ -303,7 +305,7 @@ const renderSlides = renderPairs
 			a.texture === b.texture &&
 			a.frame !== b.frame,
 	)
-	.map(({ a, b }) => Math.hypot(b.sole.x - a.sole.x, b.sole.y - a.sole.y));
+	.map(({ a, b }) => Math.abs(b.sole.x - a.sole.x));
 const median = (values) =>
 	values.length ? [...values].sort((a, b) => a - b)[values.length >> 1] : null;
 writeFileSync(
@@ -320,7 +322,7 @@ writeFileSync(
 			soleSlideMedian: median(renderSlides),
 			soleSlidePairs: renderSlides.length,
 			limitation:
-				"Telemetry aligned to real canvas video; sole coordinates use sheet contacts, not independent pixel tracking.",
+				"Telemetry aligned to real canvas video; sole coordinates use sheet contacts, not independent pixel tracking. Slide is lateral (x) only.",
 		},
 		null,
 		2,
@@ -331,7 +333,7 @@ lines.push(
 	`body px per video frame while walking: ${stat(steps)}; render samples with zero motion: ${sampleSteps.filter((d) => d === 0).length} of ${sampleSteps.length}`,
 );
 lines.push(`drawing holds (video frames per drawing): ${stat(holds)}`);
-lines.push(`planted sole slide per drawing change: ${stat(slides)}`);
+lines.push(`planted sole lateral slide per drawing change: ${stat(slides)}`);
 lines.push("");
 lines.push(
 	"frame  t(s)   x       y      scale  texture#frame          dx     dy",

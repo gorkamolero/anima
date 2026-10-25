@@ -1,5 +1,6 @@
 import type { FootCycle, FootPose } from "../core/characters/footLock";
 import {
+	GROUND_SECTORS,
 	headingFromGround,
 	type WalkDirection,
 } from "../core/characters/walkHeading";
@@ -49,6 +50,9 @@ export interface WalkMotorOptions {
 	 * feet's spread; "drawing" follows the drawn feet (sheet soleRows). */
 	bobMode?: "pendulum" | "drawing";
 }
+/** How long each standing pose of a pivot is held. */
+const PIVOT_POSE_MS = 80;
+
 interface GroundOffset {
 	x: number;
 	y: number;
@@ -143,6 +147,8 @@ export class WalkMotor {
 	private sheetProgress = 0;
 	/** Last-stride adjustment so the walk ends on a feet-together frame. */
 	private arrivalFit?: { baseProgress: number; baseU: number; length: number };
+	/** A pivot in progress: the standing poses still to show before walking off. */
+	private pivot?: { poses: WalkDirection[]; shown: number; elapsed: number; to: WalkDirection };
 	private resolve?: () => void;
 	private offsets = new Map<
 		string,
@@ -481,6 +487,63 @@ export class WalkMotor {
 	private setWalkingHeading(heading: WalkDirection): void {
 		if (this.pose && heading === this.heading && this.isWalkCycle(this.pose))
 			return;
+		if (this.pivot) return;
+		const between = this.pivotPoses(this.heading, heading);
+		if (between.length) {
+			// A reversal is a pivot, not a flip: the body stops and turns through
+			// the standing poses between the two headings, then walks off.
+			this.pivot = { poses: between, shown: 0, elapsed: 0, to: heading };
+			this.heading = between[0];
+			this.showStanding();
+			return;
+		}
+		this.startWalkCycle(heading);
+	}
+
+	/** Headings to stand in on the way round from one heading to another, for a
+	 * turn of 135 degrees or more; the shorter way round, via the camera when
+	 * both are equal. Smaller turns switch cycles in stride. */
+	private pivotPoses(from: WalkDirection, to: WalkDirection): WalkDirection[] {
+		const a = GROUND_SECTORS.indexOf(from);
+		const b = GROUND_SECTORS.indexOf(to);
+		if (a < 0 || b < 0) return [];
+		const forward = (b - a + 8) % 8;
+		const steps = Math.min(forward, 8 - forward);
+		if (steps < 3) return [];
+		let direction = forward <= 4 ? 1 : -1;
+		if (steps === 4) {
+			// Either way is as short: turn the face past the camera.
+			const towardIndex = GROUND_SECTORS.indexOf("toward");
+			const viaForward = (towardIndex - a + 8) % 8;
+			direction = viaForward > 0 && viaForward < 4 ? 1 : -1;
+		}
+		const poses: WalkDirection[] = [];
+		for (let k = 1; k < steps; k++)
+			poses.push(GROUND_SECTORS[(a + direction * k + 8) % 8]);
+		return poses;
+	}
+
+	/** Hold the pivot's standing poses in turn; returns the time left over once
+	 * the pivot has ended, or 0 while it is still turning. */
+	private advancePivot(delta: number): number {
+		const pivot = this.pivot;
+		if (!pivot) return delta;
+		pivot.elapsed += delta;
+		while (pivot.elapsed >= PIVOT_POSE_MS) {
+			pivot.elapsed -= PIVOT_POSE_MS;
+			pivot.shown++;
+			if (pivot.shown >= pivot.poses.length) {
+				this.pivot = undefined;
+				this.startWalkCycle(pivot.to);
+				return pivot.elapsed;
+			}
+			this.heading = pivot.poses[pivot.shown];
+			this.showStanding();
+		}
+		return 0;
+	}
+
+	private startWalkCycle(heading: WalkDirection): void {
 		const fromStanding = !this.pose || !this.isWalkCycle(this.pose);
 		this.heading = heading;
 		const selected = this.animation.select(heading);
@@ -596,6 +659,11 @@ export class WalkMotor {
 
 	update(delta: number): void {
 		if (!this.walking || !this.pose || delta <= 0) return;
+		if (this.pivot) {
+			// Whatever is left of this frame after the pivot ends is walked.
+			delta = this.advancePivot(delta);
+			if (delta <= 0) return;
+		}
 		const p = this.area.perspective;
 		const ground = this.hasGround();
 		// Walk a fixed number of metres this frame along the path, measured on
@@ -700,6 +768,7 @@ export class WalkMotor {
 			absorbedDistance: 0,
 		};
 		this.path = [];
+		this.pivot = undefined;
 		this.showStanding();
 		this.finish();
 	}
@@ -717,6 +786,7 @@ export class WalkMotor {
 		const wasWalking = this.walking;
 		this.path = [];
 		this.segment = 0;
+		this.pivot = undefined;
 		if (wasWalking) {
 			this.showStanding();
 			this.finish();
