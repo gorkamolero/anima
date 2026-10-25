@@ -75,3 +75,44 @@ describe("StoryRuntime", () => {
 		expect(validateStoryGraph(graph)).toEqual([]);
 	});
 });
+
+describe("Act 1 route", () => {
+	const path = existsSync(
+		"../../adventures/shadow-over-innsmouth/story/act1.story",
+	)
+		? "../../adventures/shadow-over-innsmouth/story/act1.story"
+		: "adventures/shadow-over-innsmouth/story/act1.story";
+	it("gates boarding, nested ticket choices, Kat flags and arrival", () => {
+		const runtime = new StoryRuntime(
+			parseStoryScript(readFileSync(path, "utf8")),
+		);
+		runtime.start();
+		expect(runtime.perform("exit", "USE").state.scene).toBe("bus_station");
+		expect(runtime.perform("ticket_window", "TALK").choices).toHaveLength(3);
+		expect(runtime.choose(0).choices).toHaveLength(3);
+		expect(runtime.choose(1).state).toMatchObject({
+			inventory: ["bus_ticket"],
+			flags: { clerk_warned: true },
+		});
+		expect(runtime.perform("bench", "TALK").output).toHaveLength(2);
+		expect(runtime.perform("exit", "USE").state.scene).toBe("bus_interior");
+		expect(runtime.perform("rest", "USE").output).toContain(
+			"You should talk to her first.",
+		);
+		expect(runtime.perform("window", "LOOK").output).toContain(
+			"Farmland. Stone walls. Normal New England.",
+		);
+		expect(runtime.perform("window", "LOOK").output).toContain(
+			"Salt marsh now. Fog rolling in.",
+		);
+		expect(runtime.perform("kat", "TALK").choices).toHaveLength(3);
+		expect(runtime.choose(1).state.flags).toMatchObject({
+			talked_to_kat_bus: true,
+			kat_revealed_family: true,
+		});
+		expect(runtime.perform("kat", "TALK").choices).toHaveLength(0);
+		expect(runtime.perform("rest", "USE").state.scene).toBe(
+			"innsmouth_streets",
+		);
+	});
+});

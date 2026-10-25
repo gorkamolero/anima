@@ -128,6 +128,7 @@ export class StoryRuntime {
 	private choiceOriginOrder = 0;
 	private ended = false;
 	private ending?: string;
+	private jumpSerial = 0;
 
 	constructor(graph: StoryGraph, initialState?: Partial<StoryState>) {
 		this.graph = graph;
@@ -228,12 +229,14 @@ export class StoryRuntime {
 			const line = lines[index]?.trim() ?? "";
 
 			if (line.startsWith("IF ")) {
+				const jumpSerial = this.jumpSerial;
 				const result = this.executeIfBlock(
 					lines,
 					index,
 					originOrder,
 					allowPlain,
 				);
+				if (this.jumpSerial !== jumpSerial) return;
 				index = result;
 				continue;
 			}
@@ -272,7 +275,7 @@ export class StoryRuntime {
 
 		while (index < lines.length && depth > 0) {
 			const line = lines[index].trim();
-			if (line.startsWith("IF ")) depth++;
+			if (line.startsWith("IF ") || line === "CHOICE") depth++;
 			else if (line === "ELSE" && depth === 1) elseIndex = index;
 			else if (line === "END") {
 				depth--;
@@ -308,7 +311,7 @@ export class StoryRuntime {
 
 		while (index < lines.length && depth > 0) {
 			const line = lines[index].trim();
-			if (line === "CHOICE") {
+			if (line === "CHOICE" || line.startsWith("IF ")) {
 				depth++;
 				index++;
 				continue;
@@ -329,7 +332,7 @@ export class StoryRuntime {
 				let innerDepth = 0;
 				while (cursor < lines.length) {
 					const next = lines[cursor].trim();
-					if (next === "CHOICE") innerDepth++;
+					if (next === "CHOICE" || next.startsWith("IF ")) innerDepth++;
 					if (next === "END") {
 						if (innerDepth > 0) innerDepth--;
 						else break;
@@ -386,6 +389,7 @@ export class StoryRuntime {
 	}
 
 	private goto(target: string, originOrder: number): void {
+		this.jumpSerial++;
 		if (target === "END") return;
 		if (target === "ACT_END") {
 			const nextScene = this.graph.scenes.find(
@@ -442,6 +446,9 @@ export class StoryRuntime {
 
 	private evaluateCondition(condition: string): boolean {
 		const cond = condition.trim();
+		if (cond.startsWith("NOT ")) return !this.evaluateCondition(cond.slice(4));
+		const at = cond.match(/^AT\((\w+)\)$/);
+		if (at) return this.currentScene()?.originalId === at[1];
 		const notHas = cond.match(/^NOT HAS\((\w+)\)$/);
 		if (notHas) return !this.inventory.has(notHas[1]);
 		const has = cond.match(/^HAS\((\w+)\)$/);
