@@ -79,7 +79,7 @@ export function loadWalkRecords(location: string) {
 	);
 	const alphaImages = JSON.parse(
 		execFileSync(
-			"tmp/walkqa/tools/venv/bin/python",
+			process.env.WALK_PYTHON ?? "tmp/overnight/venv/bin/python",
 			[
 				"-c",
 				`import json,sys,base64
@@ -207,3 +207,5 @@ export function storedOptions(location: string, object: string) {
 		throw new Error(`Uncached narration options: ${location}/${object}`);
 	return value.options;
 }
+
+export const storedLocations = ["outside", "inside", ...Object.keys(stored.places).filter(id => stored.places[id].ground.ground !== "failed")];

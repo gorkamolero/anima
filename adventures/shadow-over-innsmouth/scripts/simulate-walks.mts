@@ -1,11 +1,13 @@
-#!/usr/bin/env tsx
+import { generateWalkPlan } from "@anima/footfall/qa/plans";
+
 /** Read-only Innsmouth adapter for the reusable Footfall runner. */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { simulateWalks } from "@anima/footfall/sim/runner";
-import { loadWalkRecords, storedOptions } from "./walk-records.mts";
+import { loadWalkRecords, storedOptions, storedLocations } from "./walk-records.mts";
 
+const { HERMES_WALK } = createRequire(import.meta.url)("../src/game/hermesWalk.ts");
 const { hermesFootAnimation } = createRequire(import.meta.url)(
 	"../src/game/scenes/hermesFootAnimation.ts",
 ) as typeof import("../src/game/scenes/hermesFootAnimation.ts");
@@ -18,11 +20,11 @@ const arg = (name: string, fallback: string) =>
 	process.argv
 		.find((a) => a.startsWith(`--${name}=`))
 		?.slice(name.length + 3) ?? fallback;
-const corpus = arg("corpus", "tmp/walkqa/harness-24");
-const out = resolve("tmp/walkqa/sim", arg("run", "26-current"));
+const corpus = arg("corpus", "");
+const out = resolve(arg("out", "tmp/overnight/sim"));
 const scenes = arg(
 	"scenes",
-	"outside,inside,road,alley,pier,stepped-street,church,lobby,grocery,square",
+	storedLocations.join(","),
 ).split(",");
 const selected = arg("walks", "").split(",").filter(Boolean);
 const json = (path: string) => JSON.parse(readFileSync(path, "utf8"));
@@ -40,14 +42,15 @@ const report = await simulateWalks({
 		scenes.map((scene) => [
 			scene,
 			{
-				location: json(`${corpus}/${scene}/navigation.json`).location,
-				plan: json(`${corpus}/${scene}/plan.json`),
+				location: corpus ? json(`${corpus}/${scene}/navigation.json`).location : scene,
+				plan: corpus ? json(`${corpus}/${scene}/plan.json`) : generateWalkPlan(loadWalkRecords(scene)),
 			},
 		]),
 	),
 	sheets: (name) => json(`${assets}/${name}.json`),
 	animation: hermesFootAnimation,
 	initialTexture: "hermes-passing-stand-side",
+	motorOptions: HERMES_WALK,
 	loadWalkRecords,
 	storedOptions,
 	Fade,

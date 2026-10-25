@@ -2,12 +2,11 @@ import type { FootCycle, FootPose } from "../core/characters/footLock";
 import { beginArrival, resolveReturnExit } from "../core/occlusion/arrivals";
 import { exitAt, exitForFrame } from "../core/occlusion/exits";
 import { renderDepthForOccluder } from "../core/occlusion/occlusion";
-import { findWalkPath } from "../core/walkarea/navigation";
+import { findWalkPath, roundCorners } from "../core/walkarea/navigation";
 import {
 	objectApproach,
 	objectFacingPoint,
 } from "../core/walkarea/objectApproach";
-import { objectAtPoint } from "../core/walkarea/objectHit";
 import type { Point } from "../core/walkarea/perspective";
 import type { WalkArea } from "../core/walkarea/types";
 import { WalkMotor } from "../phaser/WalkMotor";
@@ -20,6 +19,7 @@ export async function simulateWalks({
 	sheets,
 	animation,
 	initialTexture,
+	motorOptions,
 	loadWalkRecords,
 	storedOptions,
 	Fade,
@@ -92,6 +92,7 @@ export async function simulateWalks({
 							pose = p;
 						},
 					),
+					motorOptions,
 				);
 			let motor = makeMotor();
 			motor.heading = "right";
@@ -126,27 +127,27 @@ export async function simulateWalks({
 				y: Math.floor(beat.click[1]),
 			};
 			const exit = exitAt(clicked, geometry.exits);
-			const interactable = exit
-				? undefined
-				: objectAtPoint(
-						geometry.interactables,
-						geometry.layers,
-						geometry.visible,
-						clicked.x,
-						clicked.y,
-						1920,
-						1080,
-					);
+			const interactable = beat.object
+				? geometry.interactables.find((object) => object.name === beat.object)
+				: undefined;
 			requested = exit?.id;
 			const route = interactable
 				? objectApproach(
 						geometry.area,
-						sprite,
+						motor.anchor,
 						geometry.objects,
 						interactable,
 						clicked.x,
 					)
-				: findWalkPath(geometry.area, sprite, exit?.approach ?? clicked);
+				: roundCorners(
+						geometry.area.mask,
+						findWalkPath(
+							geometry.area,
+							motor.anchor,
+							exit?.approach ?? clicked,
+						),
+						80,
+					);
 			const setup = {
 				start: { x: sprite.x, y: sprite.y },
 				startAnchor: { ...motor.anchor },
@@ -158,10 +159,16 @@ export async function simulateWalks({
 			};
 			const walk = (path: Point[], after?: () => void | Promise<void>) => {
 				blocked = true;
-				void motor.walk(path).then(() => {
-					blocked = false;
-					after?.();
-				});
+				void motor
+					.walk(path)
+					.then(async () => {
+						blocked = false;
+						await after?.();
+					})
+					.catch((error) => {
+						busy = false;
+						limitations.push(String(error));
+					});
 			};
 			walk(
 				route,
@@ -256,10 +263,9 @@ export async function simulateWalks({
 					contact: {
 						...snapshot,
 						plan: {
-							pending: snapshot.plan.pending,
+							pending: false,
 							remaining: snapshot.plan.remaining,
-							distance: snapshot.plan.distance,
-							complete: snapshot.plan.complete,
+							complete: true,
 						},
 					},
 					path: state.path,
@@ -342,11 +348,7 @@ export async function simulateWalks({
 					await Promise.resolve();
 				}
 				idle =
-					!row.walking &&
-					!row.contact.plan.pending &&
-					!row.ui &&
-					!row.arriving &&
-					!row.inputBlocked
+					!row.walking && !row.ui && !row.arriving && !row.inputBlocked
 						? idle + 1
 						: 0;
 				if (idle >= 12 && frame >= 27) break;

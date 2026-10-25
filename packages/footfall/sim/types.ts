@@ -3,7 +3,7 @@ import type { Exit } from "../core/occlusion/exits";
 import type { Occluder } from "../core/occlusion/occlusion";
 import type { WalkObject } from "../core/walkarea/objectApproach";
 import type { FloorMask, WalkArea } from "../core/walkarea/types";
-import type { FootAnimation } from "../phaser/WalkMotor";
+import type { FootAnimation, WalkMotorOptions } from "../phaser/WalkMotor";
 
 export interface WalkBeat {
 	name: string;
@@ -53,6 +53,7 @@ export interface SimulationOptions {
 		show: (pose: FootPose) => void,
 	): FootAnimation;
 	initialTexture: string;
+	motorOptions?: WalkMotorOptions;
 	loadWalkRecords(location: string): SceneRecord;
 	storedOptions(location: string, object: string): unknown;
 	save(path: string, value: unknown): void;

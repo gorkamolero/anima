@@ -1,3 +1,4 @@
+import { exitAt } from "../core/occlusion/exits";
 import { baselineYAt } from "../core/occlusion/occlusion";
 import { cellPoint, findPath, nearestCell } from "../core/walkarea/navigation";
 import type { Point } from "../core/walkarea/perspective";
@@ -41,7 +42,9 @@ export function generateWalkPlan(scene: SceneRecord): WalkPlan {
 		}
 		if (queue.length > component.length) component = queue;
 	}
-	const points = component.map((i) => cellPoint(mask, i));
+	const componentPoints = component.map((i) => cellPoint(mask, i));
+	const nonExitPoints = componentPoints.filter((p) => !exitAt(p, scene.exits));
+	const points = nonExitPoints.length ? nonExitPoints : componentPoints;
 	const left = Math.min(...points.map((p) => p.x)),
 		right = Math.max(...points.map((p) => p.x)),
 		top = Math.min(...points.map((p) => p.y)),
@@ -140,16 +143,17 @@ export function generateWalkPlan(scene: SceneRecord): WalkPlan {
 	if (gap) add("narrow-gap", pick(gap.x - 80, gap.y), pick(gap.x + 80, gap.y));
 	else add("narrow-gap", nl, nr, { coverageFailure: "No corridor candidate" });
 	add("unreachable", centre, { x: mid, y: Math.max(65, top - 180) });
-	const object = scene.interactables[0];
-	if (object) {
+	for (const [index, object] of scene.interactables.entries()) {
 		const [x0, y0, x1, y1] = object.bounds;
 		add(
-			"object",
+			`object-${index}`,
 			centre,
 			{ x: (x0 + x1) * 960, y: (y0 + y1) * 540 },
 			{ object: object.name },
 		);
-	} else add("object", centre, centre, { coverageFailure: "No interactables" });
+	}
+	if (!scene.interactables.length)
+		add("object", centre, centre, { coverageFailure: "No interactables" });
 	for (const exit of scene.exits) {
 		const n = exit.region.length;
 		if (!n) continue;
