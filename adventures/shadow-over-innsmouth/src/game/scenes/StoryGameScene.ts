@@ -713,7 +713,7 @@ export class StoryGameScene extends BaseScene {
 				},
 				hermesFootAnimation(cycle, current, show),
 				// Half of the stride's pendulum drop reaches the torso: chosen by eye in the lab.
-				{ verticalBob: 0.5, gaitRate: 0.92, speedMetresPerSecond: 1.15 },
+				{ verticalBob: 0.5, gaitRate: 0.85, speedMetresPerSecond: 1.3 },
 			);
 		}
 		this.setSceneBackground(
