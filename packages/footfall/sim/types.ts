@@ -10,6 +10,7 @@ export interface WalkBeat {
 	start: [number, number];
 	click: [number, number];
 	object?: string;
+	occluder?: string;
 	exit?: string;
 	expectedDestination?: string;
 	coverageFailure?: string;

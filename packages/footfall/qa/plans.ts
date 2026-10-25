@@ -81,9 +81,10 @@ export function generateWalkPlan(scene: SceneRecord): WalkPlan {
 	add("diagonal-away", nl, fr);
 	add("diagonal-toward", fl, nr);
 	let rear = false;
-	for (const o of [...scene.objects].sort(
-		(a, b) => b.bbox.w * b.bbox.h - a.bbox.w * a.bbox.h,
-	)) {
+	for (const o of [...scene.objects]
+		.filter((o) => !o.floorDecal)
+		.sort((a, b) => b.bbox.w * b.bbox.h - a.bbox.w * a.bbox.h)
+		.slice(0, 1)) {
 		if (!o.baseline.length) continue;
 		const candidates = points.filter(
 			(p) =>
@@ -93,24 +94,20 @@ export function generateWalkPlan(scene: SceneRecord): WalkPlan {
 				p.y > baselineYAt(o, p.x) - 100,
 		);
 		if (!candidates.length) continue;
-		const behind = candidates.reduce((a, b) =>
-				Math.abs(b.x - o.bbox.x - o.bbox.w / 2) <
-				Math.abs(a.x - o.bbox.x - o.bbox.w / 2)
-					? b
-					: a,
-			),
-			front = pick(o.bbox.x + o.bbox.w / 2, o.bbox.y + o.bbox.h + 70);
-		add("occluder-behind", front, behind);
-		add("occluder-back", behind, front);
+		const leftBehind = candidates.reduce((a, b) => (b.x < a.x ? b : a));
+		const rightBehind = candidates.reduce((a, b) => (b.x > a.x ? b : a));
+		if (rightBehind.x - leftBehind.x < 40) continue;
+		add("occluder-behind", leftBehind, rightBehind, { occluder: o.id });
+		add("occluder-back", rightBehind, leftBehind, { occluder: o.id });
 		rear = true;
 		break;
 	}
 	if (!rear) {
 		add("occluder-behind", centre, deep, {
-			coverageFailure: "No reachable rear strip found",
+			coverageFailure: "No reachable crossing behind the largest occluder",
 		});
 		add("occluder-back", deep, centre, {
-			coverageFailure: "No reachable rear strip found",
+			coverageFailure: "No reachable crossing behind the largest occluder",
 		});
 	}
 	// Choose a narrow cell on a through-route, avoiding terminal extrema.
