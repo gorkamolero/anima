@@ -1370,7 +1370,7 @@ export class StoryGameScene extends BaseScene {
 		if (!this.walkArea || !this.hermesSprite) return;
 		const path = objectApproach(
 			this.walkArea,
-			this.hermesSprite,
+			this.hermesMotor?.anchor ?? this.hermesSprite,
 			this.objectLayers.map((l) => l.data),
 			object,
 			x,
