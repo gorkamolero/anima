@@ -102,9 +102,28 @@ export class WalkLabScene extends BaseScene {
 	create(): void {
 		this.add.rectangle(960, 540, 1920, 1080, 0x000000).setDepth(0);
 		const y = this.lineY;
-		this.add.rectangle(960, y, 1920, 4, 0xffffff).setDepth(1);
-		for (let x = 0; x <= 1920; x += 100)
-			this.add.rectangle(x, y, 1, 12, 0x666666).setDepth(1);
+		const floor = this.params.has("floor");
+		const horizon = 300;
+		const near = 1060;
+		const far = floor ? 560 : y;
+		if (floor) {
+			// Perspective floor: rows converge on the horizon, so depth reads by eye.
+			const g = this.add.graphics().setDepth(1);
+			g.lineStyle(1, 0x555555, 1);
+			for (let gy = far; gy <= near; gy += 50) g.lineBetween(0, gy, 1920, gy);
+			for (let gx = -1920; gx <= 3840; gx += 240) {
+				const t = (near - horizon) / (far - horizon);
+				const xFar = 960 + (gx - 960) / t;
+				g.lineBetween(gx, near, xFar, far);
+			}
+			g.lineStyle(3, 0xffffff, 1);
+			g.lineBetween(0, far, 1920, far);
+			g.lineBetween(0, near, 1920, near);
+		} else {
+			this.add.rectangle(960, y, 1920, 4, 0xffffff).setDepth(1);
+			for (let x = 0; x <= 1920; x += 100)
+				this.add.rectangle(x, y, 1, 12, 0x666666).setDepth(1);
+		}
 		super.create();
 
 		const animConfig: CharacterAnimConfig = {
@@ -133,17 +152,23 @@ export class WalkLabScene extends BaseScene {
 		this.hermes.setDepth(10);
 		this.hermes.setWorldBoundsCollision(false);
 
-		// One walkable row: every click resolves to a point on the line.
+		// One walkable row (the line), or the whole floor between the two white lines.
 		const mask: FloorMask = {
 			width: 192,
 			height: 108,
 			data: new Array(192 * 108).fill(0),
 		};
-		const row = Math.min(107, Math.max(0, Math.round(y / 10)));
-		for (let c = 0; c < 192; c++) mask.data[row * 192 + c] = 1;
+		if (floor) {
+			for (let r = Math.round(far / 10); r <= Math.round(near / 10) - 1; r++)
+				for (let c = 0; c < 192; c++) mask.data[r * 192 + c] = 1;
+		} else {
+			const row = Math.min(107, Math.max(0, Math.round(y / 10)));
+			for (let c = 0; c < 192; c++) mask.data[row * 192 + c] = 1;
+		}
+
 		const area: WalkArea = {
 			mask,
-			perspective: { horizonY: 300, slope: 0.0012, pixelsPerMetre: 300 },
+			perspective: { horizonY: horizon, slope: 0.0012, pixelsPerMetre: 300 },
 			baseScale: 0.5,
 			scaleClamp: { min: 0.1, max: 2 },
 		};
@@ -169,7 +194,10 @@ export class WalkLabScene extends BaseScene {
 		this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
 			if (!this.motor) return;
 			void this.motor.walk(
-				findWalkPath(area, this.motor.anchor, { x: pointer.worldX, y }),
+				findWalkPath(area, this.motor.anchor, {
+					x: pointer.worldX,
+					y: floor ? pointer.worldY : y,
+				}),
 			);
 		});
 		(window as unknown as { __lab: unknown }).__lab = {
