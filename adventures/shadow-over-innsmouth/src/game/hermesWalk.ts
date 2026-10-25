@@ -37,23 +37,55 @@ export function hermesWalkSheet(direction: WalkDirection): {
 	texture: string;
 	flipX: boolean;
 } {
-	const s = HERMES_WALK_SHEETS;
+	return walkSheetFor(HERMES_WALK_SHEETS, direction);
+}
+
+/** Sheet names a character built by `sprite-tools/scripts/make-character.mjs` ships
+ * with: `<name>-walk-<direction>-4x` and `<name>-stand-<direction>`. */
+export function characterWalkSheets(name: string) {
+	const walk = (d: string) => `${name}-walk-${d}-4x`;
+	const stand = (d: string) => `${name}-stand-${d}`;
+	return {
+		walk: {
+			side: walk("side"),
+			away: walk("away"),
+			toward: walk("toward"),
+			awayDiagonal: walk("awayDiagonal"),
+			towardDiagonal: walk("towardDiagonal"),
+		},
+		stand: {
+			side: stand("side"),
+			away: stand("away"),
+			toward: stand("toward"),
+			awayDiagonal: stand("awayDiagonal"),
+			towardDiagonal: stand("towardDiagonal"),
+		},
+	};
+}
+
+type SheetSet = ReturnType<typeof characterWalkSheets>["walk"];
+
+/** The sheet and mirror for a direction, given a sheet set. */
+export function walkSheetFor(
+	sheets: SheetSet,
+	direction: WalkDirection,
+): { texture: string; flipX: boolean } {
 	switch (direction) {
 		case "left":
-			return { texture: s.side, flipX: false };
+			return { texture: sheets.side, flipX: false };
 		case "right":
-			return { texture: s.side, flipX: true };
+			return { texture: sheets.side, flipX: true };
 		case "away":
-			return { texture: s.away, flipX: false };
+			return { texture: sheets.away, flipX: false };
 		case "toward":
-			return { texture: s.toward, flipX: false };
+			return { texture: sheets.toward, flipX: false };
 		case "away-right":
-			return { texture: s.awayDiagonal, flipX: false };
+			return { texture: sheets.awayDiagonal, flipX: false };
 		case "away-left":
-			return { texture: s.awayDiagonal, flipX: true };
+			return { texture: sheets.awayDiagonal, flipX: true };
 		case "toward-right":
-			return { texture: s.towardDiagonal, flipX: false };
+			return { texture: sheets.towardDiagonal, flipX: false };
 		case "toward-left":
-			return { texture: s.towardDiagonal, flipX: true };
+			return { texture: sheets.towardDiagonal, flipX: true };
 	}
 }

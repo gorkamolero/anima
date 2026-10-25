@@ -1,0 +1,10 @@
+{
+  "name": "kat",
+  "source": "sources/innsmouth/kat-neutral-source-candidate.png",
+  "refs": ["../../docs/art/@kat.jpeg"],
+  "description": "Slim young woman with short, messy, jet-black hair, a pencil tucked over one ear, heavy dark eye shadow and a sullen expression, pale skin. Black leather biker jacket with silver studs, worn open over a black band T-shirt. Light blue skinny jeans ripped at the knees. Black lace-up combat boots. An olive canvas backpack with a red anarchy patch on both shoulders.",
+  "pronoun": "she",
+  "carried": "the backpack stays on her back",
+  "out": "output/characters/kat",
+  "sprites": "../../adventures/shadow-over-innsmouth/public/assets/sprites/kat"
+}

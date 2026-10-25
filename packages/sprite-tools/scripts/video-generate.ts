@@ -30,7 +30,7 @@ function parseArgs(argv: string[]): Options {
   npx tsx scripts/video-generate.ts --image <ref.png> --prompt <prompt> --output <video.mp4>
 
 Options:
-  --model <model>          fal.ai model, default fal-ai/veo3.1/fast/image-to-video. Alias: veo
+  --model <model>          fal.ai model, default fal-ai/veo3.1/fast/image-to-video. Aliases: veo, flux (FLUX 3 Max), seedance
   --aspect <ratio>         auto, 16:9, or 9:16. Default 9:16
   --duration <seconds>     4s, 6s, or 8s. Default 4s
   --resolution <res>       720p, 1080p, or 4k. Default 720p
@@ -67,7 +67,14 @@ Options:
 				options.prompt = next;
 				break;
 			case "--model":
-				options.model = next === "veo" ? "fal-ai/veo3.1/fast/image-to-video" : next;
+				options.model =
+					next === "veo"
+						? "fal-ai/veo3.1/fast/image-to-video"
+						: next === "flux"
+							? "blackforestlabs/flux-3-max/image-to-video"
+							: next === "seedance"
+								? "bytedance/seedance-2.0/image-to-video"
+								: next;
 				break;
 			case "--aspect":
 			case "--aspect-ratio":
@@ -188,16 +195,38 @@ async function main() {
 	fal.config({ credentials: token });
 
 	const imageUrl = await uploadImage(options.image);
-	const input = {
-		image_url: imageUrl,
-		prompt: withSpriteConstraints(options.prompt, options.constraintPreset),
-		aspect_ratio: options.aspectRatio,
-		duration: options.duration,
-		resolution: options.resolution,
-		generate_audio: options.generateAudio,
-		auto_fix: false,
-		safety_tolerance: "4",
-	};
+	const prompt = withSpriteConstraints(options.prompt, options.constraintPreset);
+	const seconds = Number.parseInt(options.duration, 10);
+	// Each family has its own schema; send only what it accepts.
+	const input: Record<string, unknown> = options.model.startsWith("blackforestlabs/")
+		? {
+				image_url: imageUrl,
+				prompt,
+				aspect_ratio: options.aspectRatio,
+				duration: Math.min(20, Math.max(5, seconds || 5)),
+				resolution: options.resolution === "1080p" ? "1080p" : "720p",
+				generate_audio: options.generateAudio,
+				reasoning_level: "high",
+			}
+		: options.model.startsWith("bytedance/seedance")
+			? {
+					image_url: imageUrl,
+					prompt,
+					aspect_ratio: options.aspectRatio,
+					duration: String(Math.min(15, Math.max(4, seconds || 5))),
+					resolution: options.resolution,
+					generate_audio: options.generateAudio,
+				}
+			: {
+					image_url: imageUrl,
+					prompt,
+					aspect_ratio: options.aspectRatio,
+					duration: options.duration,
+					resolution: options.resolution,
+					generate_audio: options.generateAudio,
+					auto_fix: false,
+					safety_tolerance: "4",
+				};
 
 	console.log(`Generating ${basename(options.output)} with ${options.model}`);
 	const result = await fal.subscribe(options.model, {

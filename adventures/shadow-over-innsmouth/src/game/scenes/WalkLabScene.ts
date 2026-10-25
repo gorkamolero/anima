@@ -14,7 +14,12 @@ import {
 	WalkMotor,
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
-import { HERMES_WALK, HERMES_WALK_SHEETS } from "../hermesWalk";
+import {
+	characterWalkSheets,
+	HERMES_WALK,
+	HERMES_WALK_SHEETS,
+	walkSheetFor,
+} from "../hermesWalk";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 
 /** The lab can swap the side cycle (`&sheet=`) to compare candidate sheets. */
@@ -23,24 +28,30 @@ function labFootAnimation(
 	current: () => FootPose,
 	show: (pose: FootPose) => void,
 	sideSheet: string,
+	character?: string,
 ) {
 	const base = hermesFootAnimation(cycle, current, show);
+	const set = character ? characterWalkSheets(character) : undefined;
 	return {
 		...base,
 		select(direction: WalkDirection) {
+			if (set)
+				return {
+					cycle: cycle(walkSheetFor(set.walk, direction).texture),
+					flipX: walkSheetFor(set.walk, direction).flipX,
+				};
 			if (direction === "left" || direction === "right")
 				return { cycle: cycle(sideSheet), flipX: direction === "right" };
 			return base.select(direction);
 		},
+		standing(direction: WalkDirection) {
+			if (!set) return base.standing?.(direction);
+			const { texture, flipX } = walkSheetFor(set.stand, direction);
+			return { cycle: cycle(texture), frame: 0, flipX };
+		},
 	};
 }
 
-/**
- * Walk lab: a black field, one white line, Hermes and nothing else.
- * Open with `?lab=1`. Click anywhere to walk along the line; `&bob=0.5`
- * lets some of the drawing's vertical bob through, `&speed=1.2` sets
- * metres per second, `&y=700` moves the line (and so the perspective scale).
- */
 export class WalkLabScene extends BaseScene {
 	protected readonly config: SceneConfig = {
 		sceneName: "WalkLabScene",
@@ -64,8 +75,18 @@ export class WalkLabScene extends BaseScene {
 		super({ key: "WalkLabScene" });
 	}
 
+	/** `&character=kat` walks a character built by make-character.mjs instead of Hermes. */
+	private get character(): string | null {
+		return this.params.get("character");
+	}
+
 	private get sideSheet(): string {
-		return this.params.get("sheet") ?? HERMES_WALK_SHEETS.side;
+		return (
+			this.params.get("sheet") ??
+			(this.character
+				? characterWalkSheets(this.character).walk.side
+				: HERMES_WALK_SHEETS.side)
+		);
 	}
 
 	private get lineY(): number {
@@ -73,22 +94,38 @@ export class WalkLabScene extends BaseScene {
 	}
 
 	preload(): void {
-		const sheets = [
-			this.sideSheet,
-			...Object.values(HERMES_WALK_SHEETS).filter((s) => s !== this.sideSheet),
-			"hermes-passing-stand-side",
-			"hermes-passing-stand-away",
-			"hermes-passing-stand-toward",
-			"hermes-passing-stand-away-right",
-			"hermes-passing-stand-toward-right",
-		];
-		for (const texture of sheets) {
+		const character = this.character
+			? characterWalkSheets(this.character)
+			: undefined;
+		const sheets = character
+			? [
+					this.sideSheet,
+					...Object.values(character.walk),
+					...Object.values(character.stand),
+				]
+			: [
+					this.sideSheet,
+					...Object.values(HERMES_WALK_SHEETS).filter(
+						(s) => s !== this.sideSheet,
+					),
+					"hermes-passing-stand-side",
+					"hermes-passing-stand-away",
+					"hermes-passing-stand-toward",
+					"hermes-passing-stand-away-right",
+					"hermes-passing-stand-toward-right",
+				];
+		const folder = this.character ?? "hermes";
+		for (const texture of [...new Set(sheets)]) {
 			this.load.once(`filecomplete-json-${texture}-meta`, () => {
 				const meta = this.cache.json.get(`${texture}-meta`) as FootCycle;
-				this.load.spritesheet(texture, `assets/sprites/hermes/${texture}.png`, {
-					frameWidth: meta.frameWidth,
-					frameHeight: meta.frameHeight,
-				});
+				this.load.spritesheet(
+					texture,
+					`assets/sprites/${folder}/${texture}.png`,
+					{
+						frameWidth: meta.frameWidth,
+						frameHeight: meta.frameHeight,
+					},
+				);
 			});
 			this.load.json(
 				`${texture}-meta`,
@@ -142,7 +179,9 @@ export class WalkLabScene extends BaseScene {
 			this,
 			400,
 			y,
-			"hermes-passing-stand-side",
+			this.character
+				? characterWalkSheets(this.character).stand.side
+				: "hermes-passing-stand-side",
 			animConfig,
 			0.4,
 			"hermes",
@@ -178,7 +217,13 @@ export class WalkLabScene extends BaseScene {
 			this.hermes,
 			area,
 			() => this.hermes?.anims.stop(),
-			labFootAnimation(cycle, current, show, this.sideSheet),
+			labFootAnimation(
+				cycle,
+				current,
+				show,
+				this.sideSheet,
+				this.character ?? undefined,
+			),
 			{
 				...HERMES_WALK,
 				// URL overrides for experiments; the game itself reads walkTuning.ts.
