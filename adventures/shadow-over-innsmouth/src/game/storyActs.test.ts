@@ -125,3 +125,25 @@ it("covers all reef decisions, including revised rescue endings", () => {
 		});
 	}
 });
+
+it("starts the next act with carried flags and inventory, at its own first scene", () => {
+	const { runtime: r } = createAct("4", false, {
+		scene: "ACT4_TRANSITION",
+		inventory: ["notebook"],
+		flags: {
+			surface_path: true,
+			kat_left_note: true,
+			clerk_noticed_interest: true,
+		},
+	});
+	expect(r.start()).toMatchObject({
+		scene: { originalId: "one_year_later" },
+		state: { inventory: ["notebook"], flags: { clerk_noticed_interest: true } },
+	});
+	r.perform("bed", "USE");
+	r.perform("kat_dream", "TALK");
+	r.perform("door", "USE");
+	expect(r.perform("kat_beach", "TALK").output.join("\n")).toContain(
+		"You said you were sorry.",
+	);
+});

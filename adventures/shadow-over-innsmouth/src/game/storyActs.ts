@@ -1,11 +1,19 @@
-import { parseStoryScript, StoryRuntime } from "@anima/storyscript";
+import {
+	parseStoryScript,
+	StoryRuntime,
+	type StoryState,
+} from "@anima/storyscript";
 import act1 from "../../story/act1.story?raw";
 import act2 from "../../story/act2.story?raw";
 import act3 from "../../story/act3.story?raw";
 import reef from "../../story/act3b_devil_reef.story?raw";
 import act4 from "../../story/act4.story?raw";
 
-export function createAct(act: string, noticed = false) {
+export function createAct(
+	act: string,
+	noticed = false,
+	initialState?: Partial<StoryState>,
+) {
 	const source =
 		(
 			{
@@ -28,7 +36,14 @@ export function createAct(act: string, noticed = false) {
 		graph,
 		runtime: new StoryRuntime(
 			graph,
-			{ flags: { clerk_noticed_interest: noticed } },
+			{
+				inventory: initialState?.inventory,
+				flags: {
+					...initialState?.flags,
+					clerk_noticed_interest:
+						initialState?.flags?.clerk_noticed_interest ?? noticed,
+				},
+			},
 			endTargets,
 		),
 	};

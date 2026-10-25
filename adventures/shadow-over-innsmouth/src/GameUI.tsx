@@ -3,6 +3,8 @@ import { type EffectCallback, useEffect, useState } from "react";
 import { type DialogueState, speakerColours } from "./dialogue";
 import "./styles/dialogue.css";
 
+import { type ActCompletion, CONTINUATION_KEY } from "./game/storyContinuation";
+
 import { readSceneRoute, sceneUrl } from "./sceneRoute";
 
 type ReviewSceneId = string;
@@ -62,6 +64,7 @@ export function GameUI() {
 		status: "idle",
 	});
 	const [dialogue, setDialogue] = useState<DialogueState | null>(null);
+	const [completion, setCompletion] = useState<ActCompletion | null>(null);
 	const [freeText, setFreeText] = useState("");
 	const [scenes, setScenes] = useState(SCENES);
 	const [sceneError, setSceneError] = useState("");
@@ -130,6 +133,9 @@ export function GameUI() {
 	useMountEffect(() => {
 		const onDialogue = (event: Event) =>
 			setDialogue((event as CustomEvent<DialogueState | null>).detail);
+		const onComplete = (event: Event) =>
+			setCompletion((event as CustomEvent<ActCompletion>).detail);
+		window.addEventListener("anima:story-complete", onComplete);
 		window.addEventListener("anima:dialogue-state", onDialogue);
 		window.dispatchEvent(new Event("anima:dialogue-request"));
 		const onNarratorFinished = () => setOpenWorld({ status: "idle" });
@@ -141,6 +147,7 @@ export function GameUI() {
 		return () => {
 			window.removeEventListener("anima:open-world-state", onOpenWorldState);
 			window.removeEventListener("anima:dialogue-state", onDialogue);
+			window.removeEventListener("anima:story-complete", onComplete);
 			window.removeEventListener("anima:narrator-finished", onNarratorFinished);
 		};
 	});
@@ -194,6 +201,29 @@ export function GameUI() {
 
 	return (
 		<>
+			{completion && !dialogue ? (
+				<section className="dialogue-panel" aria-label="Act complete">
+					<strong>Act {completion.act} complete</strong>
+					{completion.continuation ? (
+						<button
+							type="button"
+							onClick={() => {
+								const next = completion.continuation;
+								if (!next) return;
+								sessionStorage.setItem(CONTINUATION_KEY, JSON.stringify(next));
+								const params = new URLSearchParams(window.location.search);
+								params.set("act", next.next);
+								params.set("continue", "1");
+								window.location.assign(`/?${params}`);
+							}}
+						>
+							Continue to Act {completion.continuation.next}
+						</button>
+					) : (
+						<p>The end.</p>
+					)}
+				</section>
+			) : null}
 			<OpenWorldPrompt
 				dialogue={dialogue}
 				onAdvance={() => {

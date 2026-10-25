@@ -113,8 +113,8 @@ END
 	);
 	const scenes: string[] = [];
 	dialogue = new StoryDialogue(runtime, "/api", vi.fn(), async (snapshot) => {
-		scenes.push(snapshot.scene!.originalId);
-		return `${snapshot.scene!.originalId} pending`;
+		scenes.push(snapshot.scene?.originalId ?? "missing scene");
+		return `${snapshot.scene?.originalId} pending`;
 	});
 	await dialogue.present(runtime.start());
 	expect(scenes).toEqual(["first"]);

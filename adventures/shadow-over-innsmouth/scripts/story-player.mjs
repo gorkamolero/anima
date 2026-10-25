@@ -109,7 +109,7 @@ export async function player(config) {
 			}
 			if (q.dialogue?.choices.length) {
 				const choices = q.dialogue.choices;
-				const key = s + "|" + choices.map((c) => c.text).join("|");
+				const key = `${s}|${choices.map((c) => c.text).join("|")}`;
 				const counts = choiceCounts[key] ?? Array(choices.length).fill(0);
 				const index =
 					config.choicePlan?.[choiceDepth++] ??
@@ -152,7 +152,7 @@ export async function player(config) {
 					);
 				action = options.find(
 					({ h, verb }) =>
-						!seen.has(s + ":" + h.id + ":" + verb) &&
+						!seen.has(`${s}:${h.id}:${verb}`) &&
 						(verb === "look" ||
 							verb === "talk" ||
 							!(
@@ -188,7 +188,7 @@ export async function player(config) {
 				throw Error(`Dead end: no hotspot advances the story at ${s}`);
 			const { h, verb } = action,
 				b = h.bounds;
-			seen.add(s + ":" + h.id + ":" + verb);
+			seen.add(`${s}:${h.id}:${verb}`);
 			log({ hotspot: h.id, verb });
 			const x = b.x + b.width / 2,
 				y = b.y + b.height / 2;
@@ -198,7 +198,7 @@ export async function player(config) {
 			window.dispatchEvent(
 				new KeyboardEvent("keydown", {
 					key: verb[0],
-					code: "Key" + verb[0].toUpperCase(),
+					code: `Key${verb[0].toUpperCase()}`,
 					keyCode: verb.toUpperCase().charCodeAt(0),
 					bubbles: true,
 				}),
@@ -280,7 +280,7 @@ export async function playtest(act) {
 		);
 		evaluate(
 			session,
-			`window.__storyResult=null; (${player.toString()})(${JSON.stringify({ act, archetype: "curious", seed: 0, lineDelay: 300 })}).then(r=>window.__storyResult=r); true`,
+			`window.__storyResult=null; (${player.toString()})(${JSON.stringify({ act, archetype: act === "2" ? "rusher" : "curious", seed: 0, lineDelay: 300 })}).then(r=>window.__storyResult=r); true`,
 		);
 		const result = await poll(session, "window.__storyResult", 300000);
 		result.playthroughMs = evaluate(

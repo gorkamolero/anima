@@ -60,6 +60,7 @@ import {
 } from "../hermesWalk";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import { createAct, storyPlace } from "../storyActs";
+import { continuationFor, readContinuation } from "../storyContinuation";
 import { StoryDialogue } from "../storyDialogue";
 import { Companion } from "./companion";
 import { hermesFootAnimation } from "./hermesFootAnimation";
@@ -373,6 +374,7 @@ export class StoryGameScene extends BaseScene {
 			? createAct(
 					this.actNumber,
 					new URLSearchParams(window.location.search).get("noticed") === "1",
+					readContinuation(this.actNumber),
 				)
 			: undefined;
 		const graph = act?.graph ?? parseStoryScript(fullGameStory);
@@ -467,6 +469,18 @@ export class StoryGameScene extends BaseScene {
 			(locked) => {
 				this.dialogueLocked = locked;
 				if (locked) this.hermesMotor?.stop();
+				else if (this.runtime.snapshot().ended) {
+					const snapshot = this.runtime.snapshot();
+					window.dispatchEvent(
+						new CustomEvent("anima:story-complete", {
+							detail: {
+								act: this.actNumber,
+								ending: snapshot.ending,
+								continuation: continuationFor(this.actNumber, snapshot),
+							},
+						}),
+					);
+				}
 			},
 			async (snapshot) => {
 				this.snapshot = snapshot;
