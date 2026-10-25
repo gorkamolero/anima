@@ -15,14 +15,14 @@ import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
 import type Phaser from "phaser";
 import { characterWalkSheets, HERMES_WALK, walkSheetFor } from "../hermesWalk";
 
-/** Where the companion keeps station, in ground-plane pixels at scale 1
- * (about a metre): beside him on a depth walk, a step behind and to one side
- * on a lateral walk so the two figures do not overlap. `SLACK_PX` is how far
- * off station she may drift before she walks again. */
-const BESIDE_PX = 110;
-const BEHIND_PX = 90;
-const OFFSET_PX = 50;
-const SLACK_PX = 35;
+/** Where the companion keeps station, in ground metres: beside him on a depth
+ * walk, a stride and a half behind him on a lateral walk so the two figures
+ * never overlap. `SLACK_M` is how far off station she may drift before she
+ * walks again. Metres become screen pixels through the scene's perspective,
+ * the same way the motor paces its stride. */
+const BESIDE_M = 1.0;
+const BEHIND_M = 1.3;
+const SLACK_M = 0.25;
 const REPLAN_MS = 250;
 
 type SheetSet = ReturnType<typeof characterWalkSheets>["walk"];
@@ -181,22 +181,27 @@ export class Companion {
 		return motor;
 	}
 
+	/** Screen pixels per ground metre at a floor point. */
+	private pixelsPerMetre(at: { x: number; y: number }): number {
+		const area = this.area;
+		if (!area) return 300;
+		const ppm = area.perspective.pixelsPerMetre ?? 300;
+		return ppm * scaleAt(area.perspective, at, area.scaleClamp);
+	}
+
 	private station(
 		anchor: { x: number; y: number },
 		heading: WalkDirection,
 	): { x: number; y: number } {
-		const area = this.area;
-		if (!area) return anchor;
-		const s =
-			area.baseScale * scaleAt(area.perspective, anchor, area.scaleClamp);
+		const s = this.pixelsPerMetre(anchor);
 		// Keep to the side she is already on; never cross in front of him.
 		if (this.motor) this.side = Math.sign(this.motor.anchor.x - anchor.x) || -1;
 		let offset: { x: number; y: number };
 		if (heading === "left" || heading === "right") {
 			const ahead = heading === "right" ? 1 : -1;
-			offset = { x: -ahead * BEHIND_PX, y: this.side * OFFSET_PX };
+			offset = { x: -ahead * BEHIND_M, y: 0 };
 		} else {
-			offset = { x: this.side * BESIDE_PX, y: 0 };
+			offset = { x: this.side * BESIDE_M, y: 0 };
 		}
 		return { x: anchor.x + offset.x * s, y: anchor.y + offset.y * s };
 	}
@@ -211,22 +216,45 @@ export class Companion {
 		if (this.sinceReplan < REPLAN_MS) return;
 		this.sinceReplan = 0;
 		const target = this.station(leader.anchor, leader.heading);
-		const s =
-			area.baseScale * scaleAt(area.perspective, target, area.scaleClamp);
 		const off = Math.hypot(
 			target.x - motor.anchor.x,
 			target.y - motor.anchor.y,
 		);
-		if (off > SLACK_PX * s) {
+		if (off > SLACK_M * this.pixelsPerMetre(target)) {
 			const path = roundCorners(
 				area.mask,
 				findWalkPath(area, motor.anchor, target),
 				80,
 			);
 			if (path.length) void motor.walk(path);
-		} else if (!motor.walking && motor.heading !== leader.heading) {
-			motor.face(leader.heading);
+		} else if (!motor.walking && !leader.walking) {
+			// At rest she looks at him, not where he is looking.
+			const facing = this.headingTo(motor.anchor, leader.anchor);
+			if (facing !== motor.heading) motor.face(facing);
 		}
+	}
+
+	/** The eight-way heading from one floor point to another. */
+	private headingTo(
+		from: { x: number; y: number },
+		to: { x: number; y: number },
+	): WalkDirection {
+		const dx = to.x - from.x;
+		const dy = to.y - from.y;
+		const angle = (Math.atan2(-dy, dx) * 180) / Math.PI;
+		const sector = Math.round(((angle + 360) % 360) / 45) % 8;
+		return (
+			[
+				"right",
+				"away-right",
+				"away",
+				"away-left",
+				"left",
+				"toward-left",
+				"toward",
+				"toward-right",
+			] as const
+		)[sector];
 	}
 
 	destroy(): void {
