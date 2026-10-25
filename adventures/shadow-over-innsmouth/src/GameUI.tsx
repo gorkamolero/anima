@@ -132,6 +132,8 @@ export function GameUI() {
 			setDialogue((event as CustomEvent<DialogueState | null>).detail);
 		window.addEventListener("anima:dialogue-state", onDialogue);
 		window.dispatchEvent(new Event("anima:dialogue-request"));
+		const onNarratorFinished = () => setOpenWorld({ status: "idle" });
+		window.addEventListener("anima:narrator-finished", onNarratorFinished);
 		const onOpenWorldState = (event: Event) => {
 			setOpenWorld((event as CustomEvent<OpenWorldUiState>).detail);
 		};
@@ -139,6 +141,7 @@ export function GameUI() {
 		return () => {
 			window.removeEventListener("anima:open-world-state", onOpenWorldState);
 			window.removeEventListener("anima:dialogue-state", onDialogue);
+			window.removeEventListener("anima:narrator-finished", onNarratorFinished);
 		};
 	});
 

@@ -54,7 +54,11 @@ import fullGameStory from "../../../story/full_game.story?raw";
 import { type DialogueState, speakerColours } from "../../dialogue";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
 import { act1Hotspots } from "../act1Hotspots";
-import { HERMES_WALK, HERMES_WALK_SHEETS } from "../hermesWalk";
+import {
+	HERMES_STAND_SHEETS,
+	HERMES_WALK,
+	HERMES_WALK_SHEETS,
+} from "../hermesWalk";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import { StoryDialogue } from "../storyDialogue";
 import { hermesFootAnimation } from "./hermesFootAnimation";
@@ -316,6 +320,7 @@ export class StoryGameScene extends BaseScene {
 		);
 		for (const texture of [
 			...Object.values(HERMES_WALK_SHEETS),
+			...Object.values(HERMES_STAND_SHEETS),
 			HERMES_AWAY_TEXTURE,
 			"hermes-passing-stand-away",
 			"hermes-passing-stand-away-right",
@@ -1712,6 +1717,7 @@ export class StoryGameScene extends BaseScene {
 					imageEditMs: this.lastImageEditMs,
 					voicing: false,
 				});
+			window.dispatchEvent(new Event("anima:narrator-finished"));
 		} catch (error) {
 			this.emitOpenWorldState({
 				status: "error",
