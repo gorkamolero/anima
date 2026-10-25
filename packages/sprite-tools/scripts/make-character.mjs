@@ -25,7 +25,7 @@
  *   videos     in-place walk clips per direction via scripts/video-generate.ts
  *   sheets     scripts/walk-sheet.sh per direction: matte, gait cut, audits, contacts, 4x
  *   standing   one standing sheet per direction from the stride's feet-together frame
- * Every sheet must pass audit-drift and audit-steps; the stage fails loudly if one does not.
+ * Every sheet must pass audit-drift, audit-steps and audit-skid; the stage fails loudly if one does not.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";

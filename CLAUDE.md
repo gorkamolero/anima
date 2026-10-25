@@ -83,6 +83,7 @@ cd adventures/shadow-over-innsmouth && pnpm verify:art # live scene vs art landm
 uv run scripts/sprite-factory.py audit-drift --sheet <sheet-base>   # FAIL = jerk in game
 uv run scripts/sprite-factory.py register --sheet <sheet-base>      # fix in place
 uv run scripts/sprite-factory.py audit-steps --sheet <sheet-base>   # FAIL = limp (steps differ)
+uv run scripts/sprite-factory.py audit-skid --sheet <sheet-base>    # FAIL = sole skids (regenerate the clip)
 ```
 
 ## Sprite Tools Dependencies

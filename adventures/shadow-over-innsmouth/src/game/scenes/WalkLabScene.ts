@@ -126,7 +126,7 @@ export class WalkLabScene extends BaseScene {
 			});
 			this.load.json(
 				`${texture}-meta`,
-				`assets/sprites/hermes/${texture}.json`,
+				`assets/sprites/${folder}/${texture}.json`,
 			);
 		}
 	}
@@ -166,7 +166,9 @@ export class WalkLabScene extends BaseScene {
 			},
 			idle: {
 				key: "lab-idle",
-				texture: HERMES_STAND_SHEETS.side,
+				texture: this.character
+					? characterWalkSheets(this.character).stand.side
+					: HERMES_STAND_SHEETS.side,
 				frames: { start: 0, end: 0 },
 				frameRate: 1,
 			},

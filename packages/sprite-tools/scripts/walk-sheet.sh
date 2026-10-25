@@ -2,7 +2,7 @@
 # Build a walk-cycle sheet from a raw generated video, with the rulers in the loop.
 #   scripts/walk-sheet.sh <raw.mp4> <sheet-base> [facing=left] [fps=24] [skip-frames=36]
 # Steps: BRIA background removal -> frames -> one stride cut by gait (cut-stride.py) -> drift audit/register
-#        -> plant seeds -> contact tracking -> step audit -> 4x interpolated sheet.
+#        -> plant seeds -> contact tracking -> step and skid audits -> 4x interpolated sheet.
 set -euo pipefail
 RAW=$1; BASE=$2; FACING=${3:-left}; FPS=${4:-24}; LMIN=${5:-36}
 HERE=$(cd "$(dirname "$0")/.." && pwd); ROOT=$(cd "$HERE/../.." && pwd)
@@ -17,5 +17,6 @@ uv run scripts/sprite-factory.py audit-drift --sheet "$BASE"
 # seeds come from cut-stride.py (same plants as the cut)
 uv run --with numpy --with pillow python3 scripts/root-motion.py "$BASE.json" --seeds "$BASE-seeds.json" --debug "$ROOT/tmp/walkqa/contacts-$(basename "$BASE")"
 uv run scripts/sprite-factory.py audit-steps --sheet "$BASE"
+uv run scripts/sprite-factory.py audit-skid --sheet "$BASE"
 cd "$ROOT/adventures/shadow-over-innsmouth" && node scripts/interpolate-sheet.mjs "$BASE"
-cd "$HERE" && uv run scripts/sprite-factory.py audit-drift --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-steps --sheet "$BASE-4x"
+cd "$HERE" && uv run scripts/sprite-factory.py audit-drift --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-steps --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-skid --sheet "$BASE-4x"

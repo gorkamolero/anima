@@ -47,7 +47,7 @@ Done means:
    then the same pipeline), walking in one of the five new scenes.
 3. Hermes gains stop and pivot sheets through the same path; the lab shows a start,
    a stop and a 180-degree reversal without a visible cut.
-4. Every sheet in the game passes `audit-drift` and `audit-steps`; the pipeline
+4. Every sheet in the game passes `audit-drift`, `audit-steps` and `audit-skid`; the pipeline
    refuses to ship one that does not.
 
 ## Track 3: dialogue and the game

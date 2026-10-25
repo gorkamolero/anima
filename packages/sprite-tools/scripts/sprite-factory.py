@@ -757,5 +757,52 @@ def audit_steps(sheet: str, max_ratio: float):
         raise SystemExit(1)
 
 
+@cli.command("audit-skid")
+@click.option("--sheet", required=True, type=click.Path(), help="Sheet base path, without extension (needs contacts and switchFrames)")
+@click.option("--max-deviation", default=0.3, type=float, help="Allowed median deviation of the planted foot's per-frame travel, as a fraction of its median travel")
+def audit_skid(sheet: str, max_deviation: float):
+    """Fail if the planted foot does not travel evenly through its stance: the source clip skids.
+
+    In a lateral cycle the camera tracks the body, so the planted foot must slide
+    backwards at one speed. A foot that hovers, stalls or sweeps inside a stance
+    is a video defect the motor cannot hide: the sole skids on the floor however
+    the drawings are paced. Depth cycles have no lateral travel and pass.
+    """
+    base = Path(sheet)
+    meta = json.loads(base.with_suffix(".json").read_text())
+    contacts, switches = meta.get("contacts", []), meta.get("switchFrames", [])
+    if len(contacts) < 2 or len(switches) < 2:
+        raise click.ClickException("sheet has no tracked contacts or switch frames")
+    n = len(contacts)
+    stances = []
+    for k, start in enumerate(switches):
+        end = switches[(k + 1) % len(switches)]
+        length = (end - start) % n or n
+        foot = contacts[start]["planted"]
+        travel = [
+            contacts[(start + i + 1) % n][foot]["x"] - contacts[(start + i) % n][foot]["x"]
+            for i in range(length - 1)
+        ]
+        stances.append((foot, travel))
+    total = sum(abs(t) for _, travel in stances for t in travel)
+    if total < meta["frameWidth"] / 4:
+        click.echo(f"PASS {base.name}: depth cycle, soles travel {total:.0f}px in all; skid not measured")
+        return
+    worst = 0.0
+    details = []
+    for foot, travel in stances:
+        ordered = sorted(travel)
+        median = ordered[len(ordered) // 2]
+        deviations = sorted(abs(t - median) for t in travel)
+        deviation = deviations[len(deviations) // 2]
+        ratio = deviation / abs(median) if abs(median) > 1e-6 else float("inf")
+        worst = max(worst, ratio)
+        details.append(f"{foot}: {median:.1f}px/frame, deviation {deviation:.1f}px ({ratio:.0%})")
+    verdict = "PASS" if worst <= max_deviation else "FAIL"
+    click.echo(f"{verdict} {base.name}: planted foot travel {'; '.join(details)} (allowed {max_deviation:.0%})")
+    if verdict == "FAIL":
+        raise SystemExit(1)
+
+
 if __name__ == "__main__":
     cli()
