@@ -435,6 +435,8 @@ export class WalkMotor {
 	 * left/right wherever the character stands, like a hand-built room. */
 	private headingTowards(point: Point): WalkDirection {
 		const { dX, dZ } = this.groundVector(this.anchor, point);
+		// A point on or above the horizon has no ground position; keep facing as is.
+		if (!Number.isFinite(dX) || !Number.isFinite(dZ)) return this.heading;
 		return headingFromGround(dX, dZ, this.heading);
 	}
 
