@@ -1,11 +1,9 @@
 import type { WalkMotorOptions } from "@anima/footfall";
 
 /**
- * Hermes' walk, as tuned by eye in the walk lab (`?lab=1&floor=1`).
- * This is the single source of truth: the game reads it, and the lab starts
- * from it and lets URL parameters override it while experimenting
- * (`stride`, `tempo`, `bob`, `mode`, `speed`). Change the values here to
- * change the game.
+ * Hermes' walk constants. The game reads them; the walk lab (`?lab=1&floor=1`)
+ * starts from them and lets URL parameters override them for a look
+ * (`stride`, `tempo`, `bob`, `mode`, `speed`). Values were set by eye in the lab.
  */
 export const HERMES_WALK: WalkMotorOptions = {
 	gait: {

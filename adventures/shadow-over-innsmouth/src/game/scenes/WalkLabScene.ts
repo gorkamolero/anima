@@ -14,7 +14,7 @@ import {
 	WalkMotor,
 } from "@anima/footfall";
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
-import { HERMES_WALK } from "../walkTuning";
+import { HERMES_WALK } from "../hermesWalk";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 
 /** The lab can swap the side cycle (`&sheet=`) to compare candidate sheets. */

@@ -51,8 +51,8 @@ import {
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
+import { HERMES_WALK } from "../hermesWalk";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
-import { HERMES_WALK } from "../walkTuning";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
 import {
