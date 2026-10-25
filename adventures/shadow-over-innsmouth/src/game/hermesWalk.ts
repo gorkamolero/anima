@@ -28,7 +28,7 @@ export const HERMES_WALK_SHEETS = {
 	side: "hermes-walk-side-v2-4x",
 	away: "hermes-walk-away-4x",
 	toward: "hermes-walk-toward-4x",
-	awayDiagonal: "hermes-walk-away-right-4x",
+	awayDiagonal: "hermes-walk-away-right-v2-4x",
 	towardDiagonal: "hermes-walk-toward-right-4x",
 } as const;
 
