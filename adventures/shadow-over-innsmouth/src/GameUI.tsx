@@ -23,6 +23,7 @@ type OpenWorldUiState =
 			status: "resolved";
 			object: string;
 			caption: string;
+			voicing?: boolean;
 			imagePrompt?: string;
 			imageEditMs?: number;
 	  }
@@ -192,13 +193,18 @@ export function GameUI() {
 		<>
 			<OpenWorldPrompt
 				dialogue={dialogue}
-				onAdvance={() =>
+				onAdvance={() => {
+					if (!dialogue) {
+						window.dispatchEvent(new Event("anima:narrator-advance"));
+						setOpenWorld({ status: "idle" });
+						return;
+					}
 					window.dispatchEvent(
 						new CustomEvent("anima:dialogue-advance", {
 							detail: { id: dialogue?.id },
 						}),
-					)
-				}
+					);
+				}}
 				onStoryChoice={(index) =>
 					window.dispatchEvent(
 						new CustomEvent("anima:dialogue-choice", {
@@ -323,8 +329,8 @@ function OpenWorldPrompt({
 	useEffect(() => {
 		const key = (event: KeyboardEvent) => {
 			if (
-				!dialogue ||
-				dialogue.choices.length ||
+				(!dialogue && state.status !== "resolved") ||
+				dialogue?.choices.length ||
 				event.repeat ||
 				(event.target instanceof HTMLElement &&
 					event.target.closest("input, textarea, select, button, a"))
@@ -337,7 +343,7 @@ function OpenWorldPrompt({
 		};
 		window.addEventListener("keydown", key);
 		return () => window.removeEventListener("keydown", key);
-	}, [dialogue, onAdvance]);
+	}, [dialogue, onAdvance, state.status]);
 	if (!dialogue && state.status === "idle") return null;
 	const speaker = dialogue?.speaker ?? "Narrator";
 	const text =
@@ -372,7 +378,7 @@ function OpenWorldPrompt({
 					[{dialogue.pendingArt}]
 				</small>
 			) : null}
-			{dialogue && !choices.length ? (
+			{(dialogue || state.status === "resolved") && !choices.length ? (
 				<button
 					type="button"
 					className="dialogue-panel__line"
@@ -380,7 +386,9 @@ function OpenWorldPrompt({
 				>
 					{text}
 					<span className="dialogue-panel__hint">
-						{dialogue.busy ? "..." : "Click · Space · Enter"}
+						{dialogue?.busy || (state.status === "resolved" && state.voicing)
+							? "..."
+							: "Click · Space · Enter"}
 					</span>
 				</button>
 			) : (

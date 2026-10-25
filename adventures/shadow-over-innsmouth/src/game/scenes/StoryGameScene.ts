@@ -182,6 +182,7 @@ type OpenWorldUiState =
 			status: "resolved";
 			object: string;
 			caption: string;
+			voicing?: boolean;
 			imagePrompt?: string;
 			imageEditMs?: number;
 	  }
@@ -267,6 +268,7 @@ export class StoryGameScene extends BaseScene {
 	private generatedPlace?: GeneratedPlace;
 	private optionsCache = new Map<string, Promise<[string, string, string]>>();
 	private dwellTimer?: ReturnType<typeof setTimeout>;
+	private captionDismissed = false;
 	private captionVoice?: ReturnType<typeof speakCaption>;
 	private lastResolution?: NarrationResolution;
 	private locationImages = new Map<string, string>();
@@ -1598,6 +1600,7 @@ export class StoryGameScene extends BaseScene {
 			this.lastResolution = resolution;
 			this.optionsCache.clear();
 			this.captionVoice?.stop();
+			this.captionDismissed = false;
 			this.captionVoice = speakCaption(
 				resolution.caption,
 				API_BASE_URL,
@@ -1611,6 +1614,7 @@ export class StoryGameScene extends BaseScene {
 				status: "resolved",
 				object: interactable.name,
 				caption: resolution.caption,
+				voicing: !isAudioMuted(),
 			});
 			await this.patchWorld({
 				statePatch: resolution.statePatch,
@@ -1699,13 +1703,15 @@ export class StoryGameScene extends BaseScene {
 			}
 			await fullCaption;
 			this.saveState();
-			this.emitOpenWorldState({
-				status: "resolved",
-				object: interactable.name,
-				caption: resolution.caption,
-				imagePrompt: this.lastOpenWorldImagePrompt,
-				imageEditMs: this.lastImageEditMs,
-			});
+			if (!this.captionDismissed)
+				this.emitOpenWorldState({
+					status: "resolved",
+					object: interactable.name,
+					caption: resolution.caption,
+					imagePrompt: this.lastOpenWorldImagePrompt,
+					imageEditMs: this.lastImageEditMs,
+					voicing: false,
+				});
 		} catch (error) {
 			this.emitOpenWorldState({
 				status: "error",
@@ -1955,6 +1961,15 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private bindOpenWorldEvents(): void {
+		const onAdvance = () => {
+			this.captionDismissed = true;
+			this.captionVoice?.stop();
+			this.emitOpenWorldState({ status: "idle" });
+		};
+		window.addEventListener("anima:narrator-advance", onAdvance);
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () =>
+			window.removeEventListener("anima:narrator-advance", onAdvance),
+		);
 		const onChoice = (event: Event) => {
 			const choice = (event as CustomEvent<{ choice?: string }>).detail.choice;
 			if (typeof choice === "string" && choice.length > 0) {
