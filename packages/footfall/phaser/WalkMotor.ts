@@ -56,9 +56,9 @@ interface GroundOffset {
 interface GaitProfile {
 	/** Sheet pixels the planted sole travels from each frame to the next. */
 	steps: number[];
-	/** Per-frame phase weights, proportional to the steps and normalised so
-	 * their reciprocals sum to the frame count. */
-	weights: number[];
+	/** Fraction of the sheet's total sole travel reached at the start of each
+	 * frame (0 for frame 0, rising to just under 1). Uniform for depth cycles. */
+	cumulative: number[];
 	mean: number;
 	durations: number[];
 	/** True for cycles whose motion is across the screen; depth cycles are timed. */
@@ -127,7 +127,8 @@ export class WalkMotor {
 	private path: Point[] = [];
 	private segment = 0;
 	private goal?: Point;
-	private phase = 0;
+	/** Metres walked since the current pass through the sheet began. */
+	private sheetProgress = 0;
 	private resolve?: () => void;
 	private offsets = new Map<
 		string,
@@ -193,16 +194,23 @@ export class WalkMotor {
 			for (let k = -half; k <= half; k++) sum += filled[(i + k + n) % n];
 			return sum / (2 * half + 1);
 		});
+		const lateral = mean * n >= cycle.frameWidth / 4;
 		const floored = steps.map((v) => Math.max(v, mean / 3));
-		const harmonic = floored.reduce((a, b) => a + 1 / b, 0);
+		const total = floored.reduce((a, b) => a + b, 0);
+		const cumulative: number[] = [];
+		let acc = 0;
+		for (let i = 0; i < n; i++) {
+			cumulative.push(lateral ? acc / total : i / n);
+			acc += floored[i];
+		}
 		const profile: GaitProfile = {
 			steps,
-			weights: floored.map((v) => (v * harmonic) / n),
+			cumulative,
 			mean,
 			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
 			// Lateral when the sole travels at least a quarter frame width per
 			// cycle; depth cycles track a few pixels of noise at most.
-			lateral: mean * n >= cycle.frameWidth / 4,
+			lateral,
 		};
 		this.gaits.set(cycle.name, profile);
 		return profile;
@@ -420,14 +428,31 @@ export class WalkMotor {
 	private setWalkingHeading(heading: WalkDirection): void {
 		if (this.pose && heading === this.heading && this.isWalkCycle(this.pose))
 			return;
-		const from = this.pose?.cycle.contacts.length ?? 1;
 		this.heading = heading;
 		const selected = this.animation.select(heading);
-		const to = selected.cycle.contacts.length;
-		// Keep the gait phase across cycle changes so a turn does not restart the stride.
-		this.phase = ((this.phase % from) / from) * to;
-		this.pose = { ...selected, frame: Math.floor(this.phase) % to };
+		// Progress is metres within the stride, so a turn keeps the gait phase.
+		this.sheetProgress = this.sheetProgress % this.stride().metres;
+		this.pose = { ...selected, frame: this.frameAt(selected.cycle) };
 		this.animate("walk", heading, 1);
+	}
+
+	/** The drawing for the metres walked into the current pass of a sheet:
+	 * the sheet's sole travel is laid over its strides of metres, and the frame
+	 * whose cumulative travel the progress has reached is shown. Exact for any
+	 * step profile and any render step, so tempo never drifts. */
+	private frameAt(cycle: FootCycle): number {
+		const g = this.gait(cycle);
+		const n = cycle.contacts.length;
+		const length = this.stride().metres * this.stridesInSheet(cycle);
+		const u = (((this.sheetProgress % length) + length) % length) / length;
+		let lo = 0;
+		let hi = n - 1;
+		while (lo < hi) {
+			const mid = (lo + hi + 1) >> 1;
+			if (g.cumulative[mid] <= u) lo = mid;
+			else hi = mid - 1;
+		}
+		return lo;
 	}
 
 	private isWalkCycle(pose: FootPose): boolean {
@@ -482,7 +507,7 @@ export class WalkMotor {
 			return Promise.resolve();
 		}
 		this.walking = true;
-		this.phase = 0;
+		this.sheetProgress = 0;
 		this.setWalkingHeading(
 			initialHeading ?? this.headingTowards(this.path[this.segment]),
 		);
@@ -551,28 +576,11 @@ export class WalkMotor {
 			return;
 		}
 		this.setWalkingHeading(this.headingTowards(target));
-		// Drive lateral cycles by distance so the planted sole stays on the boards
-		// at any speed. Each drawing lasts as long as the body needs to cover that
-		// frame's own sole step: with drawings at display rate the resulting
-		// cadence jitter is below one render frame, and the foot never skates.
-		// Depth cycles have no lateral sole travel, so they keep time.
-		// The drawings follow the ground: one full cycle per stride of metres,
-		// each frame weighted by its own drawn sole step so the feet stay planted.
-		const g = this.gait(this.pose.cycle);
-		const n = this.pose.cycle.contacts.length;
-		const index = Math.floor(this.phase) % n;
-		const stride = this.stride();
-		// Weights are normalised so one stride of metres is exactly one cycle of
-		// drawings whatever the step profile; otherwise uneven sheets drift in tempo.
-		const weight = g.lateral ? g.weights[index] : 1;
-		this.phase +=
-			((movedMetres / stride.metres) * n) /
-			this.stridesInSheet(this.pose.cycle) /
-			weight;
-		this.pose = {
-			...this.pose,
-			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
-		};
+		// The drawings follow the ground: metres walked select the frame through
+		// the sheet's cumulative sole travel, so the feet stay planted and one
+		// stride of metres is exactly one cycle, for any heading or step profile.
+		this.sheetProgress += movedMetres;
+		this.pose = { ...this.pose, frame: this.frameAt(this.pose.cycle) };
 		this.apply();
 	}
 
