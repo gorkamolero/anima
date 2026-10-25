@@ -21,6 +21,13 @@ import { recordingsRoutes } from "./routes/recordings.js";
 import { sceneImageRoutes } from "./routes/scene-image.js";
 import { worldRoutes } from "./routes/world.js";
 
+// Keys for paid services live in api/keys.local (gitignored, KEY=value per
+// line). The app launches this server with the environment it was opened
+// with, so a key added to the shell profile later never reaches it.
+try {
+	process.loadEnvFile(new URL("../keys.local", import.meta.url).pathname);
+} catch {}
+
 export const app = new Hono();
 
 // Middleware

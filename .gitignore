@@ -42,3 +42,6 @@ api/data/
 tmp/
 packages/sprite-tools/output/
 *.occluders.cache.json
+
+# paid-service keys for the API dev server
+api/keys.local
