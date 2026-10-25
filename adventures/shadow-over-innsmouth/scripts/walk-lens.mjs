@@ -105,7 +105,7 @@ const pts = run("ffprobe", [
 	.filter((v) => Number.isFinite(v));
 let frameFiles = readdirSync(framesDir)
 	.filter((f) => f.endsWith(".png"))
-	.sort();
+	.sort((a,b) => Number.parseInt(a,10) - Number.parseInt(b,10));
 if (
 	resume &&
 	(frameFiles.length !== pts.length ||
@@ -118,7 +118,7 @@ if (
 	decode();
 	frameFiles = readdirSync(framesDir)
 		.filter((f) => f.endsWith(".png"))
-		.sort();
+		.sort((a,b) => Number.parseInt(a,10) - Number.parseInt(b,10));
 }
 const reusableClip = (name, multiplier = 1) => {
 	const file = resolve(out, name);
@@ -157,6 +157,34 @@ const frames = frameFiles.length;
 // 2. Telemetry aligned to video frames by time.
 const telemetry = JSON.parse(readFileSync(telemetryPath, "utf8"));
 const samples = telemetry.samples;
+// Older recordings carry no lateral flag on the sole; derive it from the
+// sheet's contacts with the motor's rule (soles travel a quarter frame width).
+const lateralByTexture = new Map();
+const sheetLateral = (texture) => {
+	if (lateralByTexture.has(texture)) return lateralByTexture.get(texture);
+	let lateral;
+	const spritesDir = resolve(import.meta.dirname, "../public/assets/sprites");
+	for (const folder of readdirSync(spritesDir)) {
+		const file = resolve(spritesDir, folder, `${texture}.json`);
+		if (!existsSync(file)) continue;
+		const meta = JSON.parse(readFileSync(file, "utf8"));
+		const contacts = meta.contacts ?? [];
+		let travel = 0;
+		for (let i = 0; i < contacts.length; i++) {
+			const a = contacts[i];
+			const b = contacts[(i + 1) % contacts.length];
+			if (a.planted === b.planted)
+				travel += Math.abs(b[a.planted].x - a[a.planted].x);
+		}
+		lateral = contacts.length ? travel >= meta.frameWidth / 4 : undefined;
+		break;
+	}
+	lateralByTexture.set(texture, lateral);
+	return lateral;
+};
+for (const sample of samples)
+	if (sample.sole && sample.sole.lateral === undefined)
+		sample.sole.lateral = sheetLateral(sample.texture);
 const sampleAt = (seconds) => {
 	const t = seconds * 1000;
 	let best = samples[0];
