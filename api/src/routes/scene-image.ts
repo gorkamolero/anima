@@ -6,6 +6,7 @@ import { fal } from "@fal-ai/client";
 import { Hono } from "hono";
 import { z } from "zod";
 import { ANCHORS, imagePath } from "../lib/backgrounds.js";
+import { editWithCodex } from "../services/codex-image.js";
 import { recordCall, reserveCall } from "../services/costs.js";
 import {
 	getWorldDb,
@@ -101,7 +102,11 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 	const generatedDirectory =
 		options.generatedDirectory ?? DEFAULT_GENERATED_DIRECTORY;
 	const backgrounds = options.backgrounds ?? SCENE_BACKGROUNDS;
-	const editImage = options.editImage ?? editWithFal;
+	// SCENE_IMAGE_PROVIDER=fal selects fal's nano-banana edit; the default is
+	// Codex's built-in generator with the same input image and prompt.
+	const editImage =
+		options.editImage ??
+		(process.env.SCENE_IMAGE_PROVIDER === "fal" ? editWithFal : editWithCodex);
 	const fetchImage = options.fetchImage ?? fetch;
 
 	routes.post("/scene-image", async (c) => {
@@ -170,7 +175,7 @@ export function createSceneImageRoutes(options: SceneImageOptions = {}): Hono {
 			);
 			const response = await fetchImage(remoteUrl);
 			if (!response.ok) {
-				throw new Error(`Unable to download fal image: ${response.status}`);
+				throw new Error(`Unable to read the edited image: ${response.status}`);
 			}
 			await writeFile(outputPath, Buffer.from(await response.arrayBuffer()));
 			await (await getWorldDb()).execute({
