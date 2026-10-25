@@ -13,6 +13,11 @@ import {
 	judgeFloorOverlay,
 } from "../services/ground.js";
 import { referenceLandmark } from "../services/ground-calibration.js";
+import {
+	applyMeasuredScale,
+	measureScaleWithCodex,
+	recordMeasuredScale,
+} from "../services/ground-measured-scale.js";
 import { groundMaskReview, groundOverlay } from "../services/ground-overlay.js";
 import { proofDirectory } from "../services/ground-perception.js";
 import { repairGround } from "../services/ground-repair.js";
@@ -402,6 +407,40 @@ placesRoutes.post("/places", async (c) => {
 
 /** Explicit per-place refresh; reuse the stored background and retain a working
  * previous floor if the attempted replacement fails. Audit lives beside proofs. */
+/** Re-measure a place's scale from a door in its painting (no depth model). */
+placesRoutes.post("/places/:id/measure-scale", async (c) => {
+	const id = c.req.param("id");
+	const place = await getPlace(id);
+	if (!place) return c.json({ error: "Unknown place" }, 404);
+	try {
+		const measured = await measureScaleWithCodex(imagePath(place.background), id);
+		const before = {
+			horizonY: place.ground.horizonY,
+			scaleSlope: place.ground.scaleSlope,
+		};
+		const ground = applyMeasuredScale(place.ground, measured);
+		const updated = { ...place, ground };
+		await (await getWorldDb()).execute({
+			sql: "INSERT OR REPLACE INTO places VALUES (?, ?)",
+			args: [id, JSON.stringify(updated)],
+		});
+		await recordMeasuredScale(id, measured, before, {
+			horizonY: ground.horizonY,
+			scaleSlope: ground.scaleSlope,
+		});
+		return c.json({
+			id,
+			before,
+			after: { horizonY: ground.horizonY, scaleSlope: ground.scaleSlope },
+			references: measured.references,
+			cameraHeightM: measured.cameraHeightM,
+			notes: measured.notes,
+		});
+	} catch (error) {
+		return c.json({ error: derivationError(error) }, 422);
+	}
+});
+
 placesRoutes.post("/places/:id/rederive", async (c) => {
 	const id = c.req.param("id");
 	const place = await getPlace(id);
