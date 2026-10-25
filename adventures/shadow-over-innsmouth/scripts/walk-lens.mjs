@@ -176,16 +176,17 @@ run("ffmpeg", [
 	resolve(out, "slowmo.mp4"),
 ]);
 const gifWidth = Math.min(900, region.w * magnify);
-if (!args.includes("--skip-gif")) run("ffmpeg", [
-	"-y",
-	"-loglevel",
-	"error",
-	"-i",
-	video,
-	"-vf",
-	`${crop},setpts=${slow}*PTS,fps=30,scale=${gifWidth}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer`,
-	resolve(out, "slowmo.gif"),
-]);
+if (!args.includes("--skip-gif"))
+	run("ffmpeg", [
+		"-y",
+		"-loglevel",
+		"error",
+		"-i",
+		video,
+		"-vf",
+		`${crop},setpts=${slow}*PTS,fps=30,scale=${gifWidth}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=128[p];[b][p]paletteuse=dither=bayer`,
+		resolve(out, "slowmo.gif"),
+	]);
 
 // 5. Strips. Fixed camera: the same region every time, so translation is visible.
 //    Stabilised: centred on the character, so drawing changes are visible.
@@ -287,23 +288,44 @@ const stat = (arr) => {
 };
 const sampleSteps = samples.slice(1).flatMap((b, i) => {
 	const a = samples[i];
-	return a.walking && b.walking
-		? [Math.hypot(b.x - a.x, b.y - a.y)] : [];
+	return a.walking && b.walking ? [Math.hypot(b.x - a.x, b.y - a.y)] : [];
 });
 const renderPairs = samples.slice(1).flatMap((b, i) => {
 	const a = samples[i];
 	return a.walking && b.walking ? [{ a, b }] : [];
 });
-const renderSlides = renderPairs.filter(({a,b}) => a.sole && b.sole && a.sole.foot === b.sole.foot && a.texture === b.texture && a.frame !== b.frame)
-	.map(({a,b}) => Math.hypot(b.sole.x-a.sole.x,b.sole.y-a.sole.y));
-const median = values => values.length ? [...values].sort((a,b)=>a-b)[values.length>>1] : null;
-writeFileSync(resolve(out, "metrics.json"), JSON.stringify({
-	videoFrames: frames, renderSamples: samples.length, movingRenderPairs: renderPairs.length,
-	zeroBodyMotion: sampleSteps.filter(d=>d===0).length,
-	heldDrawingPairs: renderPairs.filter(({a,b})=>a.texture===b.texture && a.frame===b.frame).length,
-	soleSlideMedian: median(renderSlides), soleSlidePairs: renderSlides.length,
-	limitation: "Telemetry aligned to real canvas video; sole coordinates use sheet contacts, not independent pixel tracking."
-}, null, 2));
+const renderSlides = renderPairs
+	.filter(
+		({ a, b }) =>
+			a.sole &&
+			b.sole &&
+			a.sole.foot === b.sole.foot &&
+			a.texture === b.texture &&
+			a.frame !== b.frame,
+	)
+	.map(({ a, b }) => Math.hypot(b.sole.x - a.sole.x, b.sole.y - a.sole.y));
+const median = (values) =>
+	values.length ? [...values].sort((a, b) => a - b)[values.length >> 1] : null;
+writeFileSync(
+	resolve(out, "metrics.json"),
+	JSON.stringify(
+		{
+			videoFrames: frames,
+			renderSamples: samples.length,
+			movingRenderPairs: renderPairs.length,
+			zeroBodyMotion: sampleSteps.filter((d) => d === 0).length,
+			heldDrawingPairs: renderPairs.filter(
+				({ a, b }) => a.texture === b.texture && a.frame === b.frame,
+			).length,
+			soleSlideMedian: median(renderSlides),
+			soleSlidePairs: renderSlides.length,
+			limitation:
+				"Telemetry aligned to real canvas video; sole coordinates use sheet contacts, not independent pixel tracking.",
+		},
+		null,
+		2,
+	),
+);
 
 lines.push(
 	`body px per video frame while walking: ${stat(steps)}; render samples with zero motion: ${sampleSteps.filter((d) => d === 0).length} of ${sampleSteps.length}`,

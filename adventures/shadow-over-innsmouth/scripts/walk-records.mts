@@ -208,4 +208,10 @@ export function storedOptions(location: string, object: string) {
 	return value.options;
 }
 
-export const storedLocations = ["outside", "inside", ...Object.keys(stored.places).filter(id => stored.places[id].ground.ground !== "failed")];
+export const storedLocations = [
+	"outside",
+	"inside",
+	...Object.keys(stored.places).filter(
+		(id) => stored.places[id].ground.ground !== "failed",
+	),
+];

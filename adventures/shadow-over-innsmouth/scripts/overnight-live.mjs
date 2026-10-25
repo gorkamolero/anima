@@ -1,32 +1,89 @@
-import {spawnSync} from 'node:child_process';
-import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
-const failuresOnly=process.argv.includes('--failures');
-const crossingsOnly=process.argv.includes('--crossings');
-const objectsOnly=process.argv.includes('--objects');
-const session=objectsOnly?'track1-objects':crossingsOnly?'track1-crossings':failuresOnly?'track1-failures':'track1', out='tmp/overnight/reports';
-const run=(args,input)=>{const r=spawnSync('agent-browser',['--session',session,...args],{input,encoding:'utf8',maxBuffer:64*1024*1024});if(r.status)throw Error(r.stderr||r.stdout);return r.stdout.trim()};
-const ev=s=>JSON.parse(run(['eval','--stdin'],s));
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const scenes=['outside','inside',...(await(await fetch('http://localhost:3001/api/places')).json()).map(p=>p.id)];
-const selected=process.argv.find(a=>a.startsWith('--scenes='))?.slice(9).split(',')??scenes;
-mkdirSync(`${out}/scale`,{recursive:true});
-run(['network','route','**/api/narrate','--body',JSON.stringify({options:['QA disabled','QA disabled','QA disabled']})]);
-for(const id of selected){
- const file=`${out}/${id}${objectsOnly?"-objects":crossingsOnly?"-crossings":failuresOnly?"-failures":""}-live.json`;
- if(process.argv.includes('--resume')&&existsSync(file))continue;
- try{
- run(['open',`http://localhost:8080/?scene=${id}&mute=1`]);
- for(let i=0;i<120;i++){if(ev(`(()=>{window.__anima?.step(100);return Boolean(window.__anima?.scene?.geometryReady && !window.__anima.scene.openWorldBusy)})()`))break;await sleep(500);}
- ev(`(()=>{const s=window.__anima.scene;window.track1Load=false;void s.enterLocation(${JSON.stringify(id)}).then(()=>window.track1Load=true);return true})()`);
- for(let i=0;i<120;i++){if(ev('(()=>{window.__anima.step(100);return window.track1Load && window.__anima.scene.geometryReady})()'))break;await sleep(500);}
- const plan=JSON.parse(readFileSync(`tmp/overnight/sim/${id}/plan.json`));
- if(failuresOnly)plan.beats=plan.beats.filter(b=>b.coverageFailure || (b.exit&&!b.expectedDestination) || (id==='place-a53d08124ed6c715c32e'&&b.object==='clouds'));
- if(crossingsOnly)plan.beats=plan.beats.filter(b=>b.name.startsWith("occluder-"));
- if(objectsOnly)plan.beats=plan.beats.filter(b=>b.object);
- if(!plan.beats.length)continue;
- // Use a short real recording for each scene's most demanding crossing; full
- // route/exit/object assertions execute at the real render clock below.
- const result=ev(`(()=>{const s=window.__anima.scene;window.track1={results:[],done:false};
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+
+const failuresOnly = process.argv.includes("--failures");
+const crossingsOnly = process.argv.includes("--crossings");
+const objectsOnly = process.argv.includes("--objects");
+const session = objectsOnly
+		? "track1-objects"
+		: crossingsOnly
+			? "track1-crossings"
+			: failuresOnly
+				? "track1-failures"
+				: "track1",
+	out = "tmp/overnight/reports";
+const run = (args, input) => {
+	const r = spawnSync("agent-browser", ["--session", session, ...args], {
+		input,
+		encoding: "utf8",
+		maxBuffer: 64 * 1024 * 1024,
+	});
+	if (r.status) throw Error(r.stderr || r.stdout);
+	return r.stdout.trim();
+};
+const ev = (s) => JSON.parse(run(["eval", "--stdin"], s));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const scenes = [
+	"outside",
+	"inside",
+	...(await (await fetch("http://localhost:3001/api/places")).json()).map(
+		(p) => p.id,
+	),
+];
+const selected =
+	process.argv
+		.find((a) => a.startsWith("--scenes="))
+		?.slice(9)
+		.split(",") ?? scenes;
+mkdirSync(`${out}/scale`, { recursive: true });
+run([
+	"network",
+	"route",
+	"**/api/narrate",
+	"--body",
+	JSON.stringify({ options: ["QA disabled", "QA disabled", "QA disabled"] }),
+]);
+for (const id of selected) {
+	const file = `${out}/${id}${objectsOnly ? "-objects" : crossingsOnly ? "-crossings" : failuresOnly ? "-failures" : ""}-live.json`;
+	if (process.argv.includes("--resume") && existsSync(file)) continue;
+	try {
+		run(["open", `http://localhost:8080/?scene=${id}&mute=1`]);
+		for (let i = 0; i < 120; i++) {
+			if (
+				ev(
+					`(()=>{window.__anima?.step(100);return Boolean(window.__anima?.scene?.geometryReady && !window.__anima.scene.openWorldBusy)})()`,
+				)
+			)
+				break;
+			await sleep(500);
+		}
+		ev(
+			`(()=>{const s=window.__anima.scene;window.track1Load=false;void s.enterLocation(${JSON.stringify(id)}).then(()=>window.track1Load=true);return true})()`,
+		);
+		for (let i = 0; i < 120; i++) {
+			if (
+				ev(
+					"(()=>{window.__anima.step(100);return window.track1Load && window.__anima.scene.geometryReady})()",
+				)
+			)
+				break;
+			await sleep(500);
+		}
+		const plan = JSON.parse(readFileSync(`tmp/overnight/sim/${id}/plan.json`));
+		if (failuresOnly)
+			plan.beats = plan.beats.filter(
+				(b) =>
+					b.coverageFailure ||
+					(b.exit && !b.expectedDestination) ||
+					(id === "place-a53d08124ed6c715c32e" && b.object === "clouds"),
+			);
+		if (crossingsOnly)
+			plan.beats = plan.beats.filter((b) => b.name.startsWith("occluder-"));
+		if (objectsOnly) plan.beats = plan.beats.filter((b) => b.object);
+		if (!plan.beats.length) continue;
+		// Use a short real recording for each scene's most demanding crossing; full
+		// route/exit/object assertions use the debug clock; only records run in real time.
+		ev(`(()=>{const s=window.__anima.scene;window.track1={results:[],done:false};
  const originalFetch=s.fetchOptions,originalResolve=s.resolveNarration,originalTrigger=s.triggerExit;
  s.fetchOptions=async()=>['QA: narration disabled','QA: narration disabled','QA: narration disabled'];
  s.resolveNarration=async()=>{throw Error('Unconnected exit: generation outside five-place budget')};
@@ -57,9 +114,21 @@ for(const id of selected){
  }
  window.track1.done=true;
  })().catch(e=>{window.track1.error=String(e);window.track1.done=true}).finally(()=>{s.fetchOptions=originalFetch;s.resolveNarration=originalResolve;s.triggerExit=originalTrigger});return true})()`);
- for(let i=0;i<1800;i++){const r=ev('({done:window.track1?.done,error:window.track1?.error,count:window.track1?.results.length})');if(r.done)break;if(i%30===0)console.log(id,JSON.stringify(r));await sleep(1000);}
- const results=ev('({done:window.track1.done,error:window.track1.error,results:window.track1.results})');
- writeFileSync(file,JSON.stringify(results,null,2));
- console.log('COMPLETE',id,results.results.length,results.error??'');
- }catch(e){writeFileSync(file,JSON.stringify({error:String(e)}));console.log('ERROR',id,String(e));}
+		for (let i = 0; i < 1800; i++) {
+			const r = ev(
+				"({done:window.track1?.done,error:window.track1?.error,count:window.track1?.results.length})",
+			);
+			if (r.done) break;
+			if (i % 30 === 0) console.log(id, JSON.stringify(r));
+			await sleep(1000);
+		}
+		const results = ev(
+			"({done:window.track1.done,error:window.track1.error,results:window.track1.results})",
+		);
+		writeFileSync(file, JSON.stringify(results, null, 2));
+		console.log("COMPLETE", id, results.results.length, results.error ?? "");
+	} catch (e) {
+		writeFileSync(file, JSON.stringify({ error: String(e) }));
+		console.log("ERROR", id, String(e));
+	}
 }
