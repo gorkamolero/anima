@@ -442,9 +442,11 @@ export class StoryGameScene extends BaseScene {
 						]
 							.filter(Boolean)
 							.join("\n")
-					: storyPlace(this.storyVisualScene).pendingArt
-						? `[${storyPlace(this.storyVisualScene).pendingArt}] — select a labelled hotspot`
-						: "L: Look · T: Talk · U: Use. Click a hotspot; click ground to walk.",
+					: this.snapshot.ended
+						? `Act ${this.actNumber} complete — ${this.snapshot.ending}. Choose an act from the story menu.`
+						: storyPlace(this.storyVisualScene).pendingArt
+							? `[${storyPlace(this.storyVisualScene).pendingArt}] — select a labelled hotspot`
+							: "L: Look · T: Talk · U: Use. Click a hotspot; click ground to walk.",
 			);
 			if (this.katSeatedSprite?.visible)
 				this.katSeatedSprite.play(

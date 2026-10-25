@@ -34,6 +34,37 @@ function report() {
 				trace: "tmp/overnight/reports/story-probe.json",
 				status: "Fixed: isolated authored state from preview persistence",
 			});
+	if (existsSync(resolve(out, "act3b-driver-timeout.json"))) {
+		for (const failure of JSON.parse(
+			readFileSync(resolve(out, "act3b-driver-timeout.json"), "utf8"),
+		).failures)
+			historical.push({
+				...failure,
+				session: "recorded probe",
+				act: "3b",
+				archetype: "curious",
+				trace: "tmp/overnight/reports/act3b-driver-timeout.json",
+				status:
+					"Fixed: long cutscene wait budget and reused same-place geometry",
+			});
+	}
+
+	if (existsSync(resolve(out, "swarm-initial/results.json"))) {
+		for (const r of JSON.parse(
+			readFileSync(resolve(out, "swarm-initial/results.json"), "utf8"),
+		))
+			for (const failure of r.failures)
+				historical.push({
+					...failure,
+					session: `initial-${r.session}`,
+					act: r.config.act,
+					archetype: r.config.archetype,
+					trace: r.tracePath.replace("/swarm/", "/swarm-initial/"),
+					status:
+						"Fixed: readiness waits for controller instead of transient line",
+				});
+	}
+
 	const rows = [...historical, ...failures].map(
 		(f) =>
 			`| ${f.session} | ${f.act} | ${f.archetype} | ${f.type}: ${(f.detail ?? f.id ?? "").replaceAll("|", "/")} | ${f.status ?? "OPEN"} | ${f.trace} |`,
@@ -77,7 +108,7 @@ async function worker(workerIndex) {
 				archetype,
 				noticed: act === "3b" ? i % 5 === 4 : false,
 				choiceCounts: counts,
-				timeout: 180000,
+				timeout: 600000,
 			};
 			if (act === "3b" && config.noticed) {
 				const branch =

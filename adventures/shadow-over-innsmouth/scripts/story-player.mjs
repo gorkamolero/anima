@@ -203,6 +203,14 @@ export async function player(config) {
 				}),
 			);
 			a.click(x, y);
+			window.dispatchEvent(
+				new KeyboardEvent("keyup", {
+					key: verb[0],
+					code: `Key${verb[0].toUpperCase()}`,
+					keyCode: verb.toUpperCase().charCodeAt(0),
+					bubbles: true,
+				}),
+			);
 			await sleep(40);
 			await a.waitUntil(
 				() => qa().dialogueLocked || !a.scene.hermesMotor.walking,
@@ -247,7 +255,8 @@ export async function runSession(session, config) {
 	);
 	await poll(
 		session,
-		"!!window.__anima?.scene.getReviewQaSnapshot().story && !!window.__anima?.scene.getReviewQaSnapshot().dialogue",
+		"!!window.__anima?.scene.getReviewQaSnapshot().story && !!window.__anima?.scene.dialogue",
+		120000,
 	);
 	evaluate(
 		session,
@@ -266,14 +275,14 @@ export async function playtest(act) {
 		);
 		evaluate(
 			session,
-			`window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:${act === "2" || act === "3b" ? 180000 : 120000}}).then(r=>window.__recordResult=r); true`,
+			`window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:${act === "2" ? 180000 : 120000}}).then(r=>window.__recordResult=r); true`,
 		);
 		evaluate(
 			session,
 			`window.__storyResult=null; (${player.toString()})(${JSON.stringify({ act, archetype: "curious", seed: 0, lineDelay: 300 })}).then(r=>window.__storyResult=r); true`,
 		);
 		const result = await poll(session, "window.__storyResult", 240000);
-		result.recording = await poll(session, "window.__recordResult", 130000);
+		result.recording = await poll(session, "window.__recordResult", 240000);
 		browser(session, "screenshot", resolve(out, `act${act}-end.png`));
 		writeFileSync(
 			resolve(out, `act${act}-playtest.json`),
