@@ -481,9 +481,12 @@ export class StoryGameScene extends BaseScene {
 									},
 								},
 							};
-						await this.enterLocation("inside");
+						if (this.locationId() !== "inside" || !this.geometryReady)
+							await this.enterLocation("inside");
 					} else {
-						await this.enterLocation(storyPlace(id).location);
+						const location = storyPlace(id).location;
+						if (this.locationId() !== location || !this.geometryReady)
+							await this.enterLocation(location);
 					}
 				}
 				this.renderSceneHotspots(this.activeScene());

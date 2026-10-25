@@ -91,3 +91,37 @@ describe("authored act routes", () => {
 			}
 	});
 });
+
+it("covers all reef decisions, including revised rescue endings", () => {
+	const cases = [
+		{ side: "path_left", choices: [0, 0, 0], ending: "GAME_END_ABYSSAL" },
+		{ side: "path_left", choices: [1, 0, 1, 0], ending: "GAME_END_ABYSSAL" },
+		{ side: "path_left", choices: [2, 0, 1, 1], ending: "ACT_END" },
+		{ side: "path_left", choices: [0, 1], ending: "ACT_END" },
+		{ side: "path_left", choices: [0, 2, 0, 0], ending: "GAME_END_ABYSSAL" },
+		{ side: "path_left", choices: [1, 2, 1], ending: "ACT_END" },
+		{ side: "path_left", choices: [2, 2, 2], ending: "ACT_END" },
+		{ side: "path_left", choices: [0, 3, 0, 0, 0], ending: "ACT_END" },
+		{ side: "path_left", choices: [1, 3, 1, 1, 1], ending: "ACT_END" },
+		{ side: "path_right", choices: [2, 3, 0, 0], ending: "ACT_END" },
+		{ side: "path_right", choices: [0, 3, 0, 1], ending: "ACT_END" },
+		{ side: "path_right", choices: [1, 3, 1, 0, 0], ending: "ACT_END" },
+		{ side: "path_right", choices: [2, 3, 1, 1], ending: "ACT_END" },
+	];
+	for (const route of cases) {
+		const { runtime: r } = createAct("3b", true);
+		r.start();
+		r.perform("rowboat", "USE");
+		r.perform("path_down", "USE");
+		for (const index of route.choices) {
+			if (r.snapshot().scene?.originalId === "rescue_escape")
+				r.perform(route.side, "USE");
+			expect(r.snapshot().choices[index], JSON.stringify(route)).toBeDefined();
+			r.choose(index);
+		}
+		expect(r.snapshot(), JSON.stringify(route)).toMatchObject({
+			ended: true,
+			ending: route.ending,
+		});
+	}
+});

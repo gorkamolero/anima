@@ -89,3 +89,45 @@ describe("Story dialogue presentation", () => {
 		expect(dialogue.state).toBeNull();
 	});
 });
+
+it("presents automatic scene transitions in order with their own stub labels", async () => {
+	vi.useFakeTimers();
+	const runtime = new StoryRuntime(
+		parseStoryScript(`
+SCENE first
+  ON_ENTER
+    "First room."
+    -> second
+  END
+END
+SCENE second
+  ON_ENTER
+    "Second room."
+    CHOICE
+      > Finish
+        -> GAME_END
+    END
+  END
+END
+`),
+	);
+	const scenes: string[] = [];
+	dialogue = new StoryDialogue(runtime, "/api", vi.fn(), async (snapshot) => {
+		scenes.push(snapshot.scene!.originalId);
+		return `${snapshot.scene!.originalId} pending`;
+	});
+	await dialogue.present(runtime.start());
+	expect(scenes).toEqual(["first"]);
+	expect(dialogue.state).toMatchObject({
+		text: "First room.",
+		pendingArt: "first pending",
+	});
+	await vi.advanceTimersByTimeAsync(2500);
+	expect(scenes).toEqual(["first", "second"]);
+	expect(dialogue.state).toMatchObject({
+		text: "Second room.",
+		pendingArt: "second pending",
+	});
+	await vi.advanceTimersByTimeAsync(2500);
+	expect(dialogue.state?.choices).toHaveLength(1);
+});

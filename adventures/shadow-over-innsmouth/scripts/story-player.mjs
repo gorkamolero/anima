@@ -39,18 +39,23 @@ export async function player(config) {
 		scene: qa().story.scene?.originalId,
 		ended: qa().story.ended,
 		ending: qa().story.ending,
+		visits: qa().story.visits?.map((v) => v.scene.originalId),
+		output: qa().story.output,
 		location: qa().location,
 		hotspots: a.snapshot().hotspots,
 		choices: qa().dialogue?.choices ?? [],
 	});
+	let choiceDepth = 0;
 	const log = (action) => trace.push({ time: Date.now(), action, ...state() });
 	const events = [];
 	const onError = (e) => events.push(e.message ?? String(e.reason));
 	window.addEventListener("error", onError);
 	window.addEventListener("unhandledrejection", onError);
 	async function settle() {
-		for (let n = 0; n < 2000; n++) {
+		for (let n = 0; n < 20000; n++) {
 			const q = qa();
+			if (q.dialogue?.text.startsWith("[Scene transition failed:"))
+				throw Error(q.dialogue.text);
 			if (q.dialogue?.choices.length || !q.dialogueLocked) return;
 			if (q.dialogue) {
 				if (config.lineDelay) await sleep(config.lineDelay);
@@ -107,9 +112,10 @@ export async function player(config) {
 				const key = s + "|" + choices.map((c) => c.text).join("|");
 				const counts = choiceCounts[key] ?? Array(choices.length).fill(0);
 				const index =
-					config.archetype === "rusher"
+					config.choicePlan?.[choiceDepth++] ??
+					(config.archetype === "rusher"
 						? 0
-						: counts.indexOf(Math.min(...counts));
+						: counts.indexOf(Math.min(...counts)));
 				counts[index]++;
 				choiceCounts[key] = counts;
 				log({ choice: index, text: choices[index].text, key });
@@ -120,7 +126,9 @@ export async function player(config) {
 				);
 				await settle();
 				if (
-					JSON.stringify(qa().dialogue?.choices) === JSON.stringify(choices) &&
+					JSON.stringify(qa().story.state) === JSON.stringify(q.story.state) &&
+					!qa().story.ended &&
+					qa().story.choices.length === 0 &&
 					qa().story.output.length === 0
 				)
 					failures.push({ type: "choice does nothing", scene: s, index });
@@ -134,9 +142,13 @@ export async function player(config) {
 			let action;
 			if (config.archetype !== "rusher") {
 				// Exhaust observations, conversations, and non-travel uses before leaving.
-				const options = hotspots.flatMap((h) =>
-					h.verbs.map((verb) => ({ h, verb })),
-				);
+				const options = hotspots
+					.flatMap((h) => h.verbs.map((verb) => ({ h, verb })))
+					.sort(
+						(a, b) =>
+							({ look: 0, use: 1, talk: 2 })[a.verb] -
+							{ look: 0, use: 1, talk: 2 }[b.verb],
+					);
 				action = options.find(
 					({ h, verb }) =>
 						!seen.has(s + ":" + h.id + ":" + verb) &&
@@ -254,7 +266,7 @@ export async function playtest(act) {
 		);
 		evaluate(
 			session,
-			`window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:120000}).then(r=>window.__recordResult=r); true`,
+			`window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:${act === "2" || act === "3b" ? 180000 : 120000}}).then(r=>window.__recordResult=r); true`,
 		);
 		evaluate(
 			session,

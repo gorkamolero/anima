@@ -42,61 +42,98 @@ function report() {
 	writeFileSync(resolve(out, "swarm.md"), text);
 	writeFileSync(resolve(dir, "results.json"), JSON.stringify(results, null, 2));
 }
+// Completionist memory: enumerate alternative decisions at each observed reef menu.
+// Only choice indices and the two available escape hotspots differ; no runtime state is set.
+const reefPlans = [
+	{ seed: 0, plan: [0, 0, 0] },
+	{ seed: 0, plan: [1, 0, 1, 0] },
+	{ seed: 0, plan: [2, 0, 1, 1] },
+	{ seed: 0, plan: [0, 1] },
+	{ seed: 0, plan: [0, 2, 0, 0] },
+	{ seed: 0, plan: [1, 2, 1] },
+	{ seed: 0, plan: [2, 2, 2] },
+	{ seed: 0, plan: [0, 3, 0, 0, 0] },
+	{ seed: 0, plan: [1, 3, 1, 1, 1] },
+	{ seed: 1, plan: [2, 3, 0, 0] },
+	{ seed: 1, plan: [0, 3, 0, 1] },
+	{ seed: 1, plan: [1, 3, 1, 0, 0] },
+	{ seed: 1, plan: [2, 3, 1, 1] },
+];
 const acts = ["2", "3", "3b", "4", "3b"];
-try {
-	for (let i = 0; i < n; i++) {
-		const act = acts[i % acts.length],
-			seed = Math.floor(i / acts.length),
-			archetype = ["curious", "rusher", "completionist"][
-				Math.floor(i / acts.length) % 3
-			];
-		const config = {
-			act,
-			seed,
-			archetype,
-			noticed: act === "3b" ? i % 5 === 4 : false,
-			choiceCounts: counts,
-			timeout: 180000,
-		};
-		let result;
-		try {
-			result = await runSession("anima-swarm", config);
-		} catch (e) {
-			result = {
-				passed: false,
-				config,
-				failures: [{ type: "runner error", detail: String(e) }],
-				trace: [],
+let nextSession = 0;
+async function worker(workerIndex) {
+	const session = `anima-swarm-${workerIndex}`;
+	try {
+		while (nextSession < n) {
+			const i = nextSession++;
+			const act = acts[i % acts.length],
+				seed = Math.floor(i / acts.length),
+				archetype = ["curious", "rusher", "completionist"][
+					Math.floor(i / acts.length) % 3
+				];
+			const config = {
+				act,
+				seed,
+				archetype,
+				noticed: act === "3b" ? i % 5 === 4 : false,
+				choiceCounts: counts,
+				timeout: 180000,
 			};
-		}
-		Object.assign(counts, result.choiceCounts ?? {});
-		for (const t of result.trace ?? [])
-			if (t.action?.key) {
-				const key = t.action.key;
-				const value = coverage.get(key) ?? Array(t.choices.length).fill(0);
-				value[t.action.choice]++;
-				coverage.set(key, value);
+			if (act === "3b" && config.noticed) {
+				const branch =
+					reefPlans[Math.floor(i / acts.length) % reefPlans.length];
+				config.archetype = "completionist";
+				config.choicePlan = branch.plan;
+				config.seed = branch.seed;
 			}
-		const tracePath = `tmp/overnight/reports/swarm/session-${String(i + 1).padStart(3, "0")}.json`;
-		writeFileSync(
-			resolve(dir, `session-${String(i + 1).padStart(3, "0")}.json`),
-			JSON.stringify(result, null, 2),
-		);
-		results.push({
-			session: i + 1,
-			config: { act, seed, archetype, noticed: config.noticed },
-			passed: result.passed,
-			failures: result.failures,
-			ending: result.final?.ending,
-			tracePath,
-		});
+			let result;
+			try {
+				result = await runSession(session, config);
+			} catch (e) {
+				result = {
+					passed: false,
+					config,
+					failures: [{ type: "runner error", detail: String(e) }],
+					trace: [],
+				};
+			}
+			Object.assign(counts, result.choiceCounts ?? {});
+			for (const t of result.trace ?? [])
+				if (t.action?.key) {
+					const key = t.action.key;
+					const value = coverage.get(key) ?? Array(t.choices.length).fill(0);
+					value[t.action.choice]++;
+					coverage.set(key, value);
+				}
+			const tracePath = `tmp/overnight/reports/swarm/session-${String(i + 1).padStart(3, "0")}.json`;
+			writeFileSync(
+				resolve(dir, `session-${String(i + 1).padStart(3, "0")}.json`),
+				JSON.stringify(result, null, 2),
+			);
+			results.push({
+				session: i + 1,
+				config: {
+					act,
+					seed: config.seed,
+					archetype: config.archetype,
+					noticed: config.noticed,
+				},
+				passed: result.passed,
+				failures: result.failures,
+				ending: result.final?.ending,
+				tracePath,
+			});
+			report();
+			console.log(
+				`${i + 1}/${n} act ${act} ${archetype}: ${result.passed ? "PASS" : JSON.stringify(result.failures)}`,
+			);
+		}
+	} finally {
+		browser(session, "close");
 		report();
-		console.log(
-			`${i + 1}/${n} act ${act} ${archetype}: ${result.passed ? "PASS" : JSON.stringify(result.failures)}`,
-		);
 	}
-} finally {
-	browser("anima-swarm", "close");
-	report();
 }
+await Promise.all(Array.from({ length: 3 }, (_, i) => worker(i)));
+results.sort((a, b) => a.session - b.session);
+report();
 if (results.some((r) => !r.passed)) process.exitCode = 1;
