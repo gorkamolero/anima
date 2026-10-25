@@ -176,7 +176,7 @@ run("ffmpeg", [
 	resolve(out, "slowmo.mp4"),
 ]);
 const gifWidth = Math.min(900, region.w * magnify);
-run("ffmpeg", [
+if (!args.includes("--skip-gif")) run("ffmpeg", [
 	"-y",
 	"-loglevel",
 	"error",
