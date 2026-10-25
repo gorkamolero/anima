@@ -197,8 +197,8 @@ export async function simulateWalks({
 					: undefined,
 			);
 			await Promise.resolve();
-			for (frame = 0; frame < 2400; frame++) {
-				for (const delta of captureSteps(1000 / 24)) {
+			for (frame = 0; frame < 6000; frame++) {
+				for (const delta of captureSteps(1000 / 60)) {
 					fade.update(0, delta);
 					const wasWalking = motor.walking;
 					motor.update(delta);
@@ -253,7 +253,7 @@ export async function simulateWalks({
 				};
 				const snapshot = motor.snapshot();
 				const row = {
-					t: frame / 24,
+					t: frame / 60,
 					visible,
 					x: sprite.x,
 					y: sprite.y,
@@ -379,6 +379,7 @@ export async function simulateWalks({
 	}
 	const report = {
 		status: "requires-final-browser-confirmation",
+		captureFps: 60,
 		elapsedMs: performance.now() - began,
 		walks: results.length,
 		results,
