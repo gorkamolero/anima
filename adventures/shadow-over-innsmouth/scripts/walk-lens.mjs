@@ -13,6 +13,9 @@
  *   realtime.mp4         the walked region at real speed
  *   report.txt           per-frame body motion, drawing holds, lateral sole slide
  *
+ * --resume reuses complete frames and verified MP4s newer than the source.
+ * --skip-gif omits the optional memory-heavy GIF.
+ *
  * Requires ffmpeg and ImageMagick (magick) on PATH.
  */
 import { execFileSync } from "node:child_process";
@@ -21,6 +24,7 @@ import {
 	mkdirSync,
 	readdirSync,
 	readFileSync,
+	statSync,
 	writeFileSync,
 } from "node:fs";
 import { resolve } from "node:path";
@@ -71,16 +75,19 @@ const run = (cmd, argv) => {
 };
 
 // 1. Every frame, full resolution, with its presentation time.
-run("ffmpeg", [
-	"-y",
-	"-loglevel",
-	"error",
-	"-i",
-	video,
-	"-fps_mode",
-	"passthrough",
-	resolve(framesDir, "%04d.png"),
-]);
+const resume = args.includes("--resume");
+const decode = () =>
+	run("ffmpeg", [
+		"-y",
+		"-loglevel",
+		"error",
+		"-i",
+		video,
+		"-fps_mode",
+		"passthrough",
+		resolve(framesDir, "%04d.png"),
+	]);
+if (!resume) decode();
 const pts = run("ffprobe", [
 	"-v",
 	"error",
@@ -96,9 +103,55 @@ const pts = run("ffprobe", [
 	.split("\n")
 	.map(Number)
 	.filter((v) => Number.isFinite(v));
-const frameFiles = readdirSync(framesDir)
+let frameFiles = readdirSync(framesDir)
 	.filter((f) => f.endsWith(".png"))
 	.sort();
+if (
+	resume &&
+	(frameFiles.length !== pts.length ||
+		frameFiles.some(
+			(file, i) =>
+				file !== `${String(i + 1).padStart(4, "0")}.png` ||
+				statSync(resolve(framesDir, file)).mtimeMs < statSync(video).mtimeMs,
+		))
+) {
+	decode();
+	frameFiles = readdirSync(framesDir)
+		.filter((f) => f.endsWith(".png"))
+		.sort();
+}
+const reusableClip = (name, multiplier = 1) => {
+	const file = resolve(out, name);
+	if (
+		!resume ||
+		!existsSync(file) ||
+		statSync(file).mtimeMs < statSync(video).mtimeMs
+	)
+		return false;
+	try {
+		const duration = Number(
+			execFileSync(
+				"ffprobe",
+				[
+					"-v",
+					"error",
+					"-show_entries",
+					"format=duration",
+					"-of",
+					"default=noprint_wrappers=1:nokey=1",
+					file,
+				],
+				{ encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+			),
+		);
+		return (
+			Number.isFinite(duration) &&
+			Math.abs(duration - (pts.at(-1) ?? 0) * multiplier) < 1
+		);
+	} catch {
+		return false;
+	}
+};
 const frames = frameFiles.length;
 
 // 2. Telemetry aligned to video frames by time.
@@ -143,38 +196,40 @@ const crop = `crop=${region.w}:${region.h}:${region.x}:${region.y}`;
 
 // 4. Clips: real time and slow motion, magnified 2x, from the actual recording.
 const magnify = region.w * 2 <= 1920 ? 2 : 1;
-run("ffmpeg", [
-	"-y",
-	"-loglevel",
-	"error",
-	"-i",
-	video,
-	"-vf",
-	`${crop},scale=iw*${magnify}:ih*${magnify}:flags=neighbor`,
-	"-c:v",
-	"libx264",
-	"-pix_fmt",
-	"yuv420p",
-	"-crf",
-	"16",
-	resolve(out, "realtime.mp4"),
-]);
-run("ffmpeg", [
-	"-y",
-	"-loglevel",
-	"error",
-	"-i",
-	video,
-	"-vf",
-	`${crop},scale=iw*${magnify}:ih*${magnify}:flags=neighbor,setpts=${slow}*PTS`,
-	"-c:v",
-	"libx264",
-	"-pix_fmt",
-	"yuv420p",
-	"-crf",
-	"16",
-	resolve(out, "slowmo.mp4"),
-]);
+if (!reusableClip("realtime.mp4"))
+	run("ffmpeg", [
+		"-y",
+		"-loglevel",
+		"error",
+		"-i",
+		video,
+		"-vf",
+		`${crop},scale=iw*${magnify}:ih*${magnify}:flags=neighbor`,
+		"-c:v",
+		"libx264",
+		"-pix_fmt",
+		"yuv420p",
+		"-crf",
+		"16",
+		resolve(out, "realtime.mp4"),
+	]);
+if (!reusableClip("slowmo.mp4", slow))
+	run("ffmpeg", [
+		"-y",
+		"-loglevel",
+		"error",
+		"-i",
+		video,
+		"-vf",
+		`${crop},scale=iw*${magnify}:ih*${magnify}:flags=neighbor,setpts=${slow}*PTS`,
+		"-c:v",
+		"libx264",
+		"-pix_fmt",
+		"yuv420p",
+		"-crf",
+		"16",
+		resolve(out, "slowmo.mp4"),
+	]);
 const gifWidth = Math.min(900, region.w * magnify);
 if (!args.includes("--skip-gif"))
 	run("ffmpeg", [
@@ -275,10 +330,12 @@ for (let i = 1; i < perFrame.length; i++) {
 			a.sole &&
 			b.sole &&
 			a.sole.foot === b.sole.foot &&
-			a.texture === b.texture
+			a.texture === b.texture &&
+			a.sole.lateral !== false
 		)
-			// Lateral only: a sheet cannot draw a planted sole receding in depth,
-			// so an away or toward walk moves the sole up-screen with the body.
+			// Lateral sheets only, x only: a sheet cannot draw a planted sole
+			// receding in depth, and a depth sheet's soles treadmill under the
+			// body, so neither is a planting fault the motor could fix.
 			slides.push(Math.abs(b.sole.x - a.sole.x));
 	}
 }
@@ -303,6 +360,7 @@ const renderSlides = renderPairs
 			b.sole &&
 			a.sole.foot === b.sole.foot &&
 			a.texture === b.texture &&
+			a.sole.lateral !== false &&
 			a.frame !== b.frame,
 	)
 	.map(({ a, b }) => Math.abs(b.sole.x - a.sole.x));
@@ -333,7 +391,9 @@ lines.push(
 	`body px per video frame while walking: ${stat(steps)}; render samples with zero motion: ${sampleSteps.filter((d) => d === 0).length} of ${sampleSteps.length}`,
 );
 lines.push(`drawing holds (video frames per drawing): ${stat(holds)}`);
-lines.push(`planted sole lateral slide per drawing change: ${stat(slides)}`);
+lines.push(
+	`planted sole lateral slide per drawing change (lateral sheets): ${stat(slides)}`,
+);
 lines.push("");
 lines.push(
 	"frame  t(s)   x       y      scale  texture#frame          dx     dy",

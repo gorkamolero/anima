@@ -61,6 +61,7 @@ import {
 import { isAudioMuted, speakCaption } from "../narratorVoice";
 import { createAct, storyPlace } from "../storyActs";
 import { StoryDialogue } from "../storyDialogue";
+import { Companion } from "./companion";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
 import {
@@ -223,6 +224,8 @@ export class StoryGameScene extends BaseScene {
 	private hermesSprite?: Character;
 	private katSprite?: Phaser.GameObjects.Sprite;
 	private katSeatedSprite?: Phaser.GameObjects.Sprite;
+	/** `?companion=<name>`: a second walking character keeping station beside Hermes. */
+	private companion?: Companion;
 	private hermesFacing: 1 | -1 = 1;
 	private walkArea?: WalkArea;
 	private geometryReady = false;
@@ -700,6 +703,7 @@ export class StoryGameScene extends BaseScene {
 		super.update(_time, delta);
 		const wasWalking = this.hermesMotor?.walking;
 		this.hermesMotor?.update(delta);
+		this.companion?.update(delta);
 		if (this.hermesSprite) {
 			for (const layer of this.objectLayers)
 				layer.image.setDepth(
@@ -850,6 +854,13 @@ export class StoryGameScene extends BaseScene {
 				hermesFootAnimation(cycle, current, show),
 				HERMES_WALK,
 			);
+			const wanted = new URLSearchParams(window.location.search).get(
+				"companion",
+			);
+			if (wanted && !this.companion)
+				this.companion = new Companion(this, wanted);
+			if (this.walkArea && this.hermesMotor)
+				this.companion?.attach(this.walkArea, this.hermesMotor);
 		}
 		this.setSceneBackground(
 			this.locationImages.get(this.locationId()) ?? scene.background,
@@ -1036,7 +1047,7 @@ export class StoryGameScene extends BaseScene {
 		}
 
 		const kat = characters.kat;
-		if (kat) {
+		if (kat && !this.companion) {
 			this.placeKat(kat);
 		} else {
 			this.katSprite?.setVisible(false);

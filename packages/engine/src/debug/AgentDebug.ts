@@ -145,8 +145,11 @@ export interface RecordingSample {
 	anchor?: { x: number; y: number };
 	walking?: boolean;
 	heading?: string;
-	/** Screen position of the planted sole, when the motor exposes its pose. */
-	sole?: { foot: string; x: number; y: number };
+	/** Screen position of the planted sole, when the motor exposes its pose.
+	 * `lateral` is whether the drawn cycle moves its soles across the frame
+	 * (side and diagonal sheets); a depth sheet's soles treadmill under the
+	 * body, so their screen slide is not a planting fault. */
+	sole?: { foot: string; x: number; y: number; lateral: boolean };
 	bounds: { x: number; y: number; width: number; height: number };
 }
 export interface RecordingSummary {
@@ -330,6 +333,29 @@ function dispatchMouse(
  * Install `window.__anima` for the given scene. Called from BaseScene.create();
  * the most recently created scene wins, which matches "the active scene".
  */
+const lateralCycles = new WeakMap<object, boolean>();
+/** Same rule as the motor and the step audit: a cycle is lateral when its
+ * planted soles travel at least a quarter frame width over the cycle. */
+function cycleIsLateral(cycle: {
+	frameWidth: number;
+	contacts: { planted: string; L: { x: number }; R: { x: number } }[];
+}): boolean {
+	const cached = lateralCycles.get(cycle);
+	if (cached !== undefined) return cached;
+	let travel = 0;
+	const n = cycle.contacts.length;
+	for (let i = 0; i < n; i++) {
+		const a = cycle.contacts[i];
+		const b = cycle.contacts[(i + 1) % n];
+		if (a.planted !== b.planted) continue;
+		const foot = a.planted as "L" | "R";
+		travel += Math.abs(b[foot].x - a[foot].x);
+	}
+	const lateral = travel >= cycle.frameWidth / 4;
+	lateralCycles.set(cycle, lateral);
+	return lateral;
+}
+
 export function installAgentDebug(scene: BaseScene): void {
 	if (typeof window === "undefined") return;
 
@@ -545,6 +571,7 @@ export function installAgentDebug(scene: BaseScene): void {
 					const point = contact[contact.planted as "L" | "R"];
 					sole = {
 						foot: contact.planted,
+						lateral: cycleIsLateral(pose.cycle),
 						x:
 							character.x +
 							(point.x - pose.cycle.frameWidth / 2) *

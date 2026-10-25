@@ -68,6 +68,7 @@ tsx packages/storyscript/src/interpreter.ts adventures/shadow-over-innsmouth/sto
 # Use it for ALL browser-based game debugging - hidden tabs freeze RAF and Phaser
 # ignores synthetic PointerEvents; __anima handles both.
 cd adventures/shadow-over-innsmouth && pnpm playtest   # full journey, needs pnpm dev running
+# ?companion=kat puts a second make-character.mjs character on the floor, keeping station beside Hermes.
 # Art landmarks - backgrounds ship <image>.landmarks.json describing their geometry;
 # scale curves & hotspot bounds are DERIVED from them, never hand-tuned. After any
 # art change: update the landmarks file, then run verify:art and apply its suggestions.
