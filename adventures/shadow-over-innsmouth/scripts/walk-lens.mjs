@@ -25,6 +25,7 @@ import {
 	readdirSync,
 	readFileSync,
 	statSync,
+	unlinkSync,
 	writeFileSync,
 } from "node:fs";
 import { resolve } from "node:path";
@@ -76,7 +77,9 @@ const run = (cmd, argv) => {
 
 // 1. Every frame, full resolution, with its presentation time.
 const resume = args.includes("--resume");
-const decode = () =>
+const decode = () => {
+	for (const file of readdirSync(framesDir))
+		if (/^\d+\.png$/.test(file)) unlinkSync(resolve(framesDir, file));
 	run("ffmpeg", [
 		"-y",
 		"-loglevel",
@@ -87,6 +90,7 @@ const decode = () =>
 		"passthrough",
 		resolve(framesDir, "%04d.png"),
 	]);
+};
 if (!resume) decode();
 const pts = run("ffprobe", [
 	"-v",

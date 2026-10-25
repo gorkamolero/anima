@@ -202,3 +202,24 @@ END
 		expect(act.start().ended).toBe(true);
 	});
 });
+
+it("evaluates OR below AND and NOT precedence", () => {
+	const r = new StoryRuntime(
+		parseStoryScript(`
+SCENE start
+  ON_ENTER
+    SET a = false
+    SET b = true
+    IF a OR b AND NOT a
+      SET matched = true
+    END
+    IF a OR NOT b
+      SET wrong = true
+    END
+  END
+END
+`),
+	);
+	expect(r.start().state.flags).toMatchObject({ matched: true });
+	expect(r.snapshot().state.flags.wrong).toBeUndefined();
+});

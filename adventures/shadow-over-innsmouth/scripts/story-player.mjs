@@ -119,6 +119,7 @@ export async function player(config) {
 				counts[index]++;
 				choiceCounts[key] = counts;
 				log({ choice: index, text: choices[index].text, key });
+				if (config.lineDelay) await sleep(800);
 				window.dispatchEvent(
 					new CustomEvent("anima:dialogue-choice", {
 						detail: { id: q.dialogue.id, index },
@@ -275,14 +276,20 @@ export async function playtest(act) {
 		);
 		evaluate(
 			session,
-			`window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:${act === "2" ? 180000 : 120000}}).then(r=>window.__recordResult=r); true`,
+			`window.__recordStartedAt=Date.now(); window.__recordResult=null; window.__anima.record({name:${JSON.stringify(name)},ms:${act === "2" ? 240000 : 120000}}).then(r=>window.__recordResult=r); true`,
 		);
 		evaluate(
 			session,
 			`window.__storyResult=null; (${player.toString()})(${JSON.stringify({ act, archetype: "curious", seed: 0, lineDelay: 300 })}).then(r=>window.__storyResult=r); true`,
 		);
-		const result = await poll(session, "window.__storyResult", 240000);
-		result.recording = await poll(session, "window.__recordResult", 240000);
+		const result = await poll(session, "window.__storyResult", 300000);
+		result.playthroughMs = evaluate(
+			session,
+			"Date.now() - window.__recordStartedAt",
+		);
+		if (result.playthroughMs > (act === "2" ? 240000 : 120000))
+			throw Error("Recording ended before the playthrough");
+		result.recording = await poll(session, "window.__recordResult", 300000);
 		browser(session, "screenshot", resolve(out, `act${act}-end.png`));
 		writeFileSync(
 			resolve(out, `act${act}-playtest.json`),
