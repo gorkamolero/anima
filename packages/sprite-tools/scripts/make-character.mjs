@@ -165,11 +165,18 @@ function standing() {
 		const { frameWidth: w, frameHeight: h, cols } = meta;
 		const x = (best % cols) * w, y = Math.floor(best / cols) * h;
 		execFileSync("magick", [resolve(sprites, meta.image), "-crop", `${w}x${h}+${x}+${y}`, "+repage", `${target}.png`]);
-		const c = meta.contacts[best];
+		// Measure the drawn figure of that frame: the feet row and body centre come
+		// from the pixels, never from a tracked contact.
+		const page = execFileSync("magick", [`${target}.png`, "-alpha", "extract", "-threshold", "15%", "-format", "%@", "info:"]).toString().trim();
+		const mm = /^(\d+)x(\d+)\+(\d+)\+(\d+)$/.exec(page);
+		const box = mm ? { w: +mm[1], h: +mm[2], x: +mm[3], y: +mm[4] } : { w, h, x: 0, y: 0 };
+		const soleY = box.y + box.h;
+		const cx = box.x + box.w / 2;
 		writeFileSync(`${target}.json`, `${JSON.stringify({
 			name: `${spec.name}-stand-${d}`, image: `${spec.name}-stand-${d}.png`, frameWidth: w, frameHeight: h, frameCount: 1, cols: 1, rows: 1, fps: 1,
-			contacts: [{ planted: c.planted, L: c.L, R: c.R }], switchFrames: [0], source: { sheet: meta.name, frame: best, method: "feet-together frame of the stride" },
-			bodyCentreX: meta.bodyCentreX, bodyCentreY: meta.bodyCentreY, drawnHeight: meta.drawnHeight,
+			contacts: [{ planted: "L", L: { x: cx - box.w * 0.08, y: soleY }, R: { x: cx + box.w * 0.08, y: soleY } }], switchFrames: [0],
+			source: { sheet: meta.name, frame: best, method: "feet-together frame of the stride; feet row and body centre measured from pixels" },
+			bodyCentreX: cx, bodyCentreY: box.y + box.h / 2, drawnHeight: box.h, pixelScale: meta.pixelScale ?? 1,
 		}, null, "\t")}\n`);
 		log(`standing ${d}: frame ${best} (spread ${bestSpread.toFixed(0)} px)`);
 	}

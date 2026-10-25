@@ -1,0 +1,35 @@
+{
+	"name": "hermes-stand-side",
+	"image": "hermes-stand-side.png",
+	"frameWidth": 600,
+	"frameHeight": 1041,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 1,
+	"contacts": [
+		{
+			"planted": "L",
+			"L": {
+				"x": 293.5,
+				"y": 1041
+			},
+			"R": {
+				"x": 337.5,
+				"y": 1041
+			}
+		}
+	],
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "hermes-walk-side-v2",
+		"frame": 9,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+	},
+	"bodyCentreX": 315.5,
+	"bodyCentreY": 520.5,
+	"drawnHeight": 1041,
+	"pixelScale": 1
+}

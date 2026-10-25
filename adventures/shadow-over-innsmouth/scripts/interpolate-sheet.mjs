@@ -21,7 +21,7 @@ import {
 	rmSync,
 	writeFileSync,
 } from "node:fs";
-import { resolve } from "node:path";
+import { basename, dirname, resolve } from "node:path";
 
 const args = process.argv.slice(2);
 const name = args.find((a) => !a.startsWith("--"));
@@ -39,15 +39,16 @@ const factor = flag("factor", 4);
 const resize = flag("resize", 50);
 const cols = flag("cols", 12);
 
-const spritesDir = resolve(
-	import.meta.dirname,
-	"../public/assets/sprites/hermes",
-);
+// A bare name means the Hermes folder; a path with a slash names the sheet's own folder.
+const spritesDir = name.includes("/")
+	? dirname(resolve(name))
+	: resolve(import.meta.dirname, "../public/assets/sprites/hermes");
+const sheetName = basename(name);
 const root = resolve(import.meta.dirname, "../../..");
 const meta = JSON.parse(
-	readFileSync(resolve(spritesDir, `${name}.json`), "utf8"),
+	readFileSync(resolve(spritesDir, `${sheetName}.json`), "utf8"),
 );
-const image = resolve(spritesDir, meta.image ?? `${name}.png`);
+const image = resolve(spritesDir, meta.image ?? `${sheetName}.png`);
 if (!existsSync(image)) throw new Error(`Missing ${image}`);
 const { frameWidth: fw, frameHeight: fh, frameCount: n } = meta;
 const srcCols = meta.cols ?? Math.floor(4096 / fw);
@@ -55,7 +56,7 @@ const fps = meta.fps;
 const durations =
 	meta.frameDurationsMs ?? Array.from({ length: n }, () => 1000 / fps);
 
-const work = resolve(root, "tmp/interp", `${name}-${factor}x`);
+const work = resolve(root, "tmp/interp", `${sheetName}-${factor}x`);
 rmSync(work, { recursive: true, force: true });
 for (const d of ["src", "stack", "out", "frames"])
 	mkdirSync(resolve(work, d), { recursive: true });
@@ -272,7 +273,7 @@ const pixelScale = resize / 100;
 const outW = Math.round(fw * pixelScale);
 const outH = Math.round(fh * pixelScale);
 const rows = Math.ceil(total / cols);
-const outName = `${name}-${factor}x`;
+const outName = `${sheetName}-${factor}x`;
 run("magick", [
 	"montage",
 	...tiles,
@@ -306,14 +307,22 @@ for (let k = 0; k < total; k++) {
 		x: Math.round((p.x * (1 - t) + q.x * t) * pixelScale * 100) / 100,
 		y: Math.round((p.y * (1 - t) + q.y * t) * pixelScale * 100) / 100,
 	});
-	contacts.push({ planted: a.planted, L: lerp(a.L, b.L), R: lerp(a.R, b.R) });
+	// Across a support switch the outgoing planted foot stays where it was
+	// planted; only the incoming foot is in flight. Interpolating both would
+	// slide the planted sole and inflate that stance's travel.
+	const outgoing = a.planted !== b.planted ? a.planted : null;
+	contacts.push({
+		planted: a.planted,
+		L: outgoing === "L" ? lerp(a.L, a.L) : lerp(a.L, b.L),
+		R: outgoing === "R" ? lerp(a.R, a.R) : lerp(a.R, b.R),
+	});
 	frameDurationsMs.push(durations[i] / factor);
 }
 const scaleFrames = (list) => (list ?? []).map((f) => f * factor);
 const out = {
 	name: outName,
 	image: `${outName}.png`,
-	source: name,
+	source: sheetName,
 	interpolation: `ffmpeg minterpolate mci/aobmc/bidir, ${factor}x, colour and alpha stacked; frames stored at ${resize}%`,
 	frameWidth: outW,
 	frameHeight: outH,

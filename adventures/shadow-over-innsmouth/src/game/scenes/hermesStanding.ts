@@ -1,17 +1,7 @@
 import type { WalkDirection } from "@anima/footfall";
+import { HERMES_STAND_SHEETS, walkSheetFor } from "../hermesWalk";
 
-/** Side artwork faces left; the diagonal originals face right. */
+/** The standing drawing for a direction: the walk sheet's feet-together frame. */
 export function hermesStanding(direction: WalkDirection) {
-	const suffix = direction.startsWith("away-")
-		? "away-right"
-		: direction.startsWith("toward-")
-			? "toward-right"
-			: direction;
-	return {
-		texture:
-			direction === "left" || direction === "right"
-				? "hermes-passing-stand-side"
-				: `hermes-passing-stand-${suffix}`,
-		flipX: direction === "right" || direction.endsWith("-left"),
-	};
+	return walkSheetFor(HERMES_STAND_SHEETS, direction);
 }

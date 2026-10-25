@@ -32,6 +32,16 @@ export const HERMES_WALK_SHEETS = {
 	towardDiagonal: "hermes-walk-toward-right-4x",
 } as const;
 
+/** Standing poses cut from each walk sheet's feet-together frame, so a stop or
+ * a start is the same drawing the walk passes through: no cut. */
+export const HERMES_STAND_SHEETS = {
+	side: "hermes-stand-side",
+	away: "hermes-stand-away",
+	toward: "hermes-stand-toward",
+	awayDiagonal: "hermes-stand-awayDiagonal",
+	towardDiagonal: "hermes-stand-towardDiagonal",
+} as const;
+
 /** The sheet and mirror for a walking direction. */
 export function hermesWalkSheet(direction: WalkDirection): {
 	texture: string;

@@ -17,5 +17,5 @@ uv run scripts/sprite-factory.py audit-drift --sheet "$BASE"
 # seeds come from cut-stride.py (same plants as the cut)
 uv run --with numpy --with pillow python3 scripts/root-motion.py "$BASE.json" --seeds "$BASE-seeds.json" --debug "$ROOT/tmp/walkqa/contacts-$(basename "$BASE")"
 uv run scripts/sprite-factory.py audit-steps --sheet "$BASE"
-cd "$ROOT/adventures/shadow-over-innsmouth" && node scripts/interpolate-sheet.mjs "$(basename "$BASE")"
+cd "$ROOT/adventures/shadow-over-innsmouth" && node scripts/interpolate-sheet.mjs "$BASE"
 cd "$HERE" && uv run scripts/sprite-factory.py audit-drift --sheet "$BASE-4x" && uv run scripts/sprite-factory.py audit-steps --sheet "$BASE-4x"

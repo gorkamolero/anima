@@ -59,6 +59,8 @@ interface GaitProfile {
 	/** Fraction of the sheet's total sole travel reached at the start of each
 	 * frame (0 for frame 0, rising to just under 1). Uniform for depth cycles. */
 	cumulative: number[];
+	/** Feet-together frames, one per stance: where a standing pose cuts in cleanly. */
+	passing: number[];
 	mean: number;
 	durations: number[];
 	/** True for cycles whose motion is across the screen; depth cycles are timed. */
@@ -129,6 +131,8 @@ export class WalkMotor {
 	private goal?: Point;
 	/** Metres walked since the current pass through the sheet began. */
 	private sheetProgress = 0;
+	/** Last-stride adjustment so the walk ends on a feet-together frame. */
+	private arrivalFit?: { baseProgress: number; baseU: number; length: number };
 	private resolve?: () => void;
 	private offsets = new Map<
 		string,
@@ -203,9 +207,27 @@ export class WalkMotor {
 			cumulative.push(lateral ? acc / total : i / n);
 			acc += floored[i];
 		}
+		// Feet together: local minima of foot spread, at least a quarter sheet apart.
+		const spread = contacts.map((c) => Math.abs(c.L.x - c.R.x));
+		const minima = spread
+			.map((v, i) => ({ v, i }))
+			.filter(
+				({ v, i }) => v <= spread[(i + n - 1) % n] && v <= spread[(i + 1) % n],
+			)
+			.sort((a, b) => a.v - b.v);
+		const passing: number[] = [];
+		for (const { i } of minima)
+			if (
+				passing.every(
+					(q) => Math.min((i - q + n) % n, (q - i + n) % n) >= n / 4,
+				)
+			)
+				passing.push(i);
+		passing.sort((a, b) => a - b);
 		const profile: GaitProfile = {
 			steps,
 			cumulative,
+			passing: passing.length ? passing : [0],
 			mean,
 			durations: contacts.map((_, i) => frameDurationsMs?.[i] ?? 1000 / fps),
 			// Lateral when the sole travels at least a quarter frame width per
@@ -428,10 +450,19 @@ export class WalkMotor {
 	private setWalkingHeading(heading: WalkDirection): void {
 		if (this.pose && heading === this.heading && this.isWalkCycle(this.pose))
 			return;
+		const fromStanding = !this.pose || !this.isWalkCycle(this.pose);
 		this.heading = heading;
 		const selected = this.animation.select(heading);
 		// Progress is metres within the stride, so a turn keeps the gait phase.
 		this.sheetProgress = this.sheetProgress % this.stride().metres;
+		this.arrivalFit = undefined;
+		if (fromStanding) {
+			// Starting from standing: begin at a feet-together frame, which the
+			// standing pose already matches, so the start is not a cut.
+			const g = this.gait(selected.cycle);
+			const length = this.stride().metres * this.stridesInSheet(selected.cycle);
+			this.sheetProgress = g.cumulative[g.passing[0]] * length;
+		}
 		this.pose = { ...selected, frame: this.frameAt(selected.cycle) };
 		this.animate("walk", heading, 1);
 	}
@@ -444,7 +475,11 @@ export class WalkMotor {
 		const g = this.gait(cycle);
 		const n = cycle.contacts.length;
 		const length = this.stride().metres * this.stridesInSheet(cycle);
-		const u = (((this.sheetProgress % length) + length) % length) / length;
+		const fit = this.arrivalFit;
+		const raw = fit
+			? fit.baseU + (this.sheetProgress - fit.baseProgress) / fit.length
+			: this.sheetProgress / length;
+		const u = ((raw % 1) + 1) % 1;
 		let lo = 0;
 		let hi = n - 1;
 		while (lo < hi) {
@@ -507,6 +542,7 @@ export class WalkMotor {
 			return Promise.resolve();
 		}
 		this.walking = true;
+		this.arrivalFit = undefined;
 		this.sheetProgress = 0;
 		this.setWalkingHeading(
 			initialHeading ?? this.headingTowards(this.path[this.segment]),
@@ -580,8 +616,45 @@ export class WalkMotor {
 		// the sheet's cumulative sole travel, so the feet stay planted and one
 		// stride of metres is exactly one cycle, for any heading or step profile.
 		this.sheetProgress += movedMetres;
+		this.planArrival(toG, here);
 		this.pose = { ...this.pose, frame: this.frameAt(this.pose.cycle) };
 		this.apply();
+	}
+
+	/** Within the last stride, stretch or shrink it a little so the walk ends on
+	 * a feet-together frame; the standing pose then cuts in without a jump. */
+	private planArrival(toG: (q: Point) => Point, here: Point): void {
+		if (this.arrivalFit || !this.pose) return;
+		let remaining = 0;
+		let from = here;
+		for (let i = this.segment; i < this.path.length; i++) {
+			const next = toG(this.path[i]);
+			remaining += Math.hypot(next.x - from.x, next.y - from.y);
+			from = next;
+		}
+		const cycle = this.pose.cycle;
+		const g = this.gait(cycle);
+		const strides = this.stridesInSheet(cycle);
+		const length = this.stride().metres * strides;
+		if (remaining > (length / strides) * 1.3) return;
+		const u = (((this.sheetProgress / length) % 1) + 1) % 1;
+		// Landing points ahead: feet-together frames in this pass or the next.
+		const candidates = g.passing
+			.flatMap((f) => [g.cumulative[f], g.cumulative[f] + 1])
+			.map((c) => c - u)
+			.filter((d) => d > 0.05)
+			.sort((a, b) => a - b);
+		for (const d of candidates) {
+			const fitted = remaining / d;
+			if (fitted >= length * 0.7 && fitted <= length * 1.4) {
+				this.arrivalFit = {
+					baseProgress: this.sheetProgress,
+					baseU: u,
+					length: fitted,
+				};
+				return;
+			}
+		}
 	}
 
 	private arrive(): void {

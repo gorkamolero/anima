@@ -1,0 +1,35 @@
+{
+	"name": "hermes-stand-towardDiagonal",
+	"image": "hermes-stand-towardDiagonal.png",
+	"frameWidth": 612,
+	"frameHeight": 1059,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 1,
+	"contacts": [
+		{
+			"planted": "L",
+			"L": {
+				"x": 263.4,
+				"y": 1045
+			},
+			"R": {
+				"x": 314.6,
+				"y": 1045
+			}
+		}
+	],
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "hermes-walk-toward-right",
+		"frame": 8,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+	},
+	"bodyCentreX": 289.0,
+	"bodyCentreY": 527.0,
+	"drawnHeight": 1036,
+	"pixelScale": 1
+}

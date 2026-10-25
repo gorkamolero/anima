@@ -1,34 +1,35 @@
 {
 	"name": "hermes-stand-away",
 	"image": "hermes-stand-away.png",
-	"frameWidth": 612,
+	"frameWidth": 619,
 	"frameHeight": 1059,
 	"frameCount": 1,
 	"cols": 1,
 	"rows": 1,
-	"fps": 24,
+	"fps": 1,
 	"contacts": [
 		{
+			"planted": "L",
 			"L": {
-				"x": 253.0,
-				"y": 1058.0
+				"x": 307.22,
+				"y": 992
 			},
 			"R": {
-				"x": 358.5,
-				"y": 1058.0
-			},
-			"planted": "L"
+				"x": 361.78,
+				"y": 992
+			}
 		}
 	],
-	"switchFrames": [],
-	"normalization": {
-		"reference": "hermes-fal-veo-transparent-loop",
-		"alphaThreshold": 127,
-		"referenceHeightMedian": 1030.5,
-		"visibleHeight": 1030,
-		"origin": [0.5, 1]
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "hermes-walk-away",
+		"frame": 28,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
 	},
-	"bodyCentreX": 306.0,
-	"bodyCentreY": 544.0,
-	"drawnHeight": 1030.0
+	"bodyCentreX": 334.5,
+	"bodyCentreY": 499.0,
+	"drawnHeight": 986,
+	"pixelScale": 1
 }

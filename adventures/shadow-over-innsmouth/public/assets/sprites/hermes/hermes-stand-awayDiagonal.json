@@ -1,0 +1,35 @@
+{
+	"name": "hermes-stand-awayDiagonal",
+	"image": "hermes-stand-awayDiagonal.png",
+	"frameWidth": 599,
+	"frameHeight": 1251,
+	"frameCount": 1,
+	"cols": 1,
+	"rows": 1,
+	"fps": 1,
+	"contacts": [
+		{
+			"planted": "L",
+			"L": {
+				"x": 232.88,
+				"y": 1208
+			},
+			"R": {
+				"x": 291.12,
+				"y": 1208
+			}
+		}
+	],
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "hermes-walk-away-right-v2",
+		"frame": 22,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
+	},
+	"bodyCentreX": 262.0,
+	"bodyCentreY": 604.0,
+	"drawnHeight": 1208,
+	"pixelScale": 1
+}

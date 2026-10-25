@@ -16,6 +16,7 @@ import {
 import { spriteFootBinding } from "@anima/footfall/phaser/spriteFootBinding";
 import {
 	characterWalkSheets,
+	HERMES_STAND_SHEETS,
 	HERMES_WALK,
 	HERMES_WALK_SHEETS,
 	walkSheetFor,
@@ -108,11 +109,7 @@ export class WalkLabScene extends BaseScene {
 					...Object.values(HERMES_WALK_SHEETS).filter(
 						(s) => s !== this.sideSheet,
 					),
-					"hermes-passing-stand-side",
-					"hermes-passing-stand-away",
-					"hermes-passing-stand-toward",
-					"hermes-passing-stand-away-right",
-					"hermes-passing-stand-toward-right",
+					...Object.values(HERMES_STAND_SHEETS),
 				];
 		const folder = this.character ?? "hermes";
 		for (const texture of [...new Set(sheets)]) {
@@ -169,7 +166,7 @@ export class WalkLabScene extends BaseScene {
 			},
 			idle: {
 				key: "lab-idle",
-				texture: "hermes-passing-stand-side",
+				texture: HERMES_STAND_SHEETS.side,
 				frames: { start: 0, end: 0 },
 				frameRate: 1,
 			},
@@ -181,7 +178,7 @@ export class WalkLabScene extends BaseScene {
 			y,
 			this.character
 				? characterWalkSheets(this.character).stand.side
-				: "hermes-passing-stand-side",
+				: HERMES_STAND_SHEETS.side,
 			animConfig,
 			0.4,
 			"hermes",

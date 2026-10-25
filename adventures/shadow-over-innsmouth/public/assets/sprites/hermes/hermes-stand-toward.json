@@ -1,34 +1,35 @@
 {
 	"name": "hermes-stand-toward",
 	"image": "hermes-stand-toward.png",
-	"frameWidth": 612,
+	"frameWidth": 633,
 	"frameHeight": 1059,
 	"frameCount": 1,
 	"cols": 1,
 	"rows": 1,
-	"fps": 24,
+	"fps": 1,
 	"contacts": [
 		{
+			"planted": "L",
 			"L": {
-				"x": 390.0,
-				"y": 1058.0
+				"x": 282.82,
+				"y": 1043
 			},
 			"R": {
-				"x": 209.0,
-				"y": 1054.0
-			},
-			"planted": "L"
+				"x": 342.18,
+				"y": 1043
+			}
 		}
 	],
-	"switchFrames": [],
-	"normalization": {
-		"reference": "hermes-fal-veo-transparent-loop",
-		"alphaThreshold": 127,
-		"referenceHeightMedian": 1030.5,
-		"visibleHeight": 1030,
-		"origin": [0.5, 1]
+	"switchFrames": [
+		0
+	],
+	"source": {
+		"sheet": "hermes-walk-toward",
+		"frame": 3,
+		"method": "feet-together frame of the stride; feet row and body centre measured from pixels"
 	},
-	"bodyCentreX": 306.0,
-	"bodyCentreY": 544.0,
-	"drawnHeight": 1030.0
+	"bodyCentreX": 312.5,
+	"bodyCentreY": 524.5,
+	"drawnHeight": 1037,
+	"pixelScale": 1
 }
