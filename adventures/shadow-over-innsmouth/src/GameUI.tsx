@@ -54,7 +54,9 @@ export function GameUI() {
 	const [sceneId, setSceneId] = useState<ReviewSceneId>(loadSceneId);
 	const [feedback, setFeedback] = useState<FeedbackStore>(loadFeedback);
 	const [savedMessage, setSavedMessage] = useState("");
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(
+		new URLSearchParams(window.location.search).get("act") !== "1",
+	);
 	const [openWorld, setOpenWorld] = useState<OpenWorldUiState>({
 		status: "idle",
 	});
@@ -128,6 +130,7 @@ export function GameUI() {
 		const onDialogue = (event: Event) =>
 			setDialogue((event as CustomEvent<DialogueState | null>).detail);
 		window.addEventListener("anima:dialogue-state", onDialogue);
+		window.dispatchEvent(new Event("anima:dialogue-request"));
 		const onOpenWorldState = (event: Event) => {
 			setOpenWorld((event as CustomEvent<OpenWorldUiState>).detail);
 		};

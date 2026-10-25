@@ -33,7 +33,7 @@ export function speakCaption(caption: string, api: string, muted: boolean) {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ text }),
-			signal: controller.signal,
+			signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
 		});
 		if (!response.ok)
 			throw new Error(`Narrator audio failed: ${response.status}`);

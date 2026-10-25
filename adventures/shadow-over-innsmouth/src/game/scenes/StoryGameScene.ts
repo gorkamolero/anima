@@ -51,6 +51,7 @@ import {
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
 import act1Story from "../../../story/act1.story?raw";
 import fullGameStory from "../../../story/full_game.story?raw";
+import { type DialogueState, speakerColours } from "../../dialogue";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
 import { act1Hotspots } from "../act1Hotspots";
 import { HERMES_WALK, HERMES_WALK_SHEETS } from "../hermesWalk";
@@ -362,7 +363,7 @@ export class StoryGameScene extends BaseScene {
 
 		this.runtime = new StoryRuntime(graph, savedState);
 		this.snapshot = this.runtime.start();
-		if (diagnostics.length > 0) {
+		if (diagnostics.length > 0 && !this.act1) {
 			this.snapshot.output.push(
 				...diagnostics.slice(0, 4).map((item) => `[Story warning] ${item}`),
 			);
@@ -402,6 +403,35 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private startAct1(): void {
+		// Mirror the DOM dialogue into the canvas so __anima.record includes it.
+		const onDialogue = (event: Event) => {
+			const state = (event as CustomEvent<DialogueState | null>).detail;
+			this.outputText.setColor(
+				speakerColours[state?.speaker ?? "Narrator"] ?? "#f4f0df",
+			);
+			this.outputText.setText(
+				state
+					? [
+							state.pendingArt ? `[${state.pendingArt}]` : "",
+							`${state.speaker}: ${state.text}`,
+							...state.choices.map((c) => `${c.index + 1}. ${c.text}`),
+						]
+							.filter(Boolean)
+							.join("\n")
+					: this.storyVisualScene === "bus_interior"
+						? "[bus interior pending] — select a labelled hotspot"
+						: "Click a hotspot to interact. Click the ground to walk.",
+			);
+			if (this.katSeatedSprite?.visible)
+				this.katSeatedSprite.play(
+					`${KAT_SEATED_TEXTURE}-${state?.speaker === "kat" ? "talk" : "idle"}`,
+					true,
+				);
+		};
+		window.addEventListener("anima:dialogue-state", onDialogue);
+		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () =>
+			window.removeEventListener("anima:dialogue-state", onDialogue),
+		);
 		this.dialogue = new StoryDialogue(
 			this.runtime,
 			API_BASE_URL,
@@ -1137,6 +1167,7 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private updateReviewHotspotHover(): void {
+		if (this.act1) return;
 		if (WALKING_PREVIEW) {
 			this.stateText.setText(
 				"Click the ground to walk. Use Scenes to change location.",
