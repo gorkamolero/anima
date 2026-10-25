@@ -270,6 +270,16 @@ SCENE church_escape
     "Because she told you not to."
   END
 
+  HOTSPOT harbor_boat [550, 350, 110, 70]
+    name: "Abel's Boat — Devil Reef"
+    LOOK
+      "A boat waits at the harbor. One more chance to find her."
+    END
+    USE
+      -> devil_reef_approach
+    END
+  END
+
   HOTSPOT road [400, 200, 150, 100]
     name: "Road Out"
     LOOK

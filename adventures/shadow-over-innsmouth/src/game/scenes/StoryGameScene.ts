@@ -49,7 +49,6 @@ import {
 	validateStoryGraph,
 } from "@anima/storyscript";
 import exteriorGround from "../../../public/backgrounds/bus-station-flat-v1.ground.json";
-import act1Story from "../../../story/act1.story?raw";
 import fullGameStory from "../../../story/full_game.story?raw";
 import { type DialogueState, speakerColours } from "../../dialogue";
 import { commitSceneRoute, readSceneRoute } from "../../sceneRoute";
@@ -60,6 +59,7 @@ import {
 	HERMES_WALK_SHEETS,
 } from "../hermesWalk";
 import { isAudioMuted, speakCaption } from "../narratorVoice";
+import { createAct, storyPlace } from "../storyActs";
 import { StoryDialogue } from "../storyDialogue";
 import { hermesFootAnimation } from "./hermesFootAnimation";
 import { hermesStanding } from "./hermesStanding";
@@ -208,10 +208,12 @@ const BACKGROUNDS: Record<string, string> = {
 export class StoryGameScene extends BaseScene {
 	protected readonly config = REVIEW_SCENE_CONFIG;
 	private runtime!: StoryRuntime;
-	private readonly act1 =
-		new URLSearchParams(window.location.search).get("act") === "1";
+	private readonly actNumber =
+		new URLSearchParams(window.location.search).get("act") ?? "";
+	private readonly act1 = ["1", "2", "3", "3b", "4"].includes(this.actNumber);
 	private dialogue?: StoryDialogue;
 	private dialogueLocked = false;
+	private storyVerb?: StoryVerb;
 	private storyVisualScene = "";
 	private snapshot!: StoryRuntimeSnapshot;
 	private background?: Phaser.GameObjects.Image;
@@ -364,11 +366,17 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	create(): void {
-		const graph = parseStoryScript(this.act1 ? act1Story : fullGameStory);
+		const act = this.act1
+			? createAct(
+					this.actNumber,
+					new URLSearchParams(window.location.search).get("noticed") === "1",
+				)
+			: undefined;
+		const graph = act?.graph ?? parseStoryScript(fullGameStory);
 		const diagnostics = validateStoryGraph(graph);
 		const savedState = this.act1 ? undefined : this.loadState();
 
-		this.runtime = new StoryRuntime(graph, savedState);
+		this.runtime = act?.runtime ?? new StoryRuntime(graph, savedState);
 		this.snapshot = this.runtime.start();
 		if (diagnostics.length > 0 && !this.act1) {
 			this.snapshot.output.push(
@@ -384,7 +392,7 @@ export class StoryGameScene extends BaseScene {
 		this.bindReviewEvents();
 		this.bindOpenWorldEvents();
 		this.setupInputHandlers();
-		void this.restoreWorld().then(() => {
+		void (this.act1 ? Promise.resolve() : this.restoreWorld()).then(() => {
 			if (this.act1) this.startAct1();
 		});
 
@@ -410,6 +418,15 @@ export class StoryGameScene extends BaseScene {
 	}
 
 	private startAct1(): void {
+		for (const verb of ["LOOK", "TALK", "USE"] as StoryVerb[]) {
+			this.input.keyboard?.on(`keydown-${verb[0]}`, () => {
+				this.storyVerb = verb;
+				if (!this.dialogueLocked)
+					this.outputText.setText(
+						`${verb}: click a labelled hotspot. L: Look · T: Talk · U: Use`,
+					);
+			});
+		}
 		// Mirror the DOM dialogue into the canvas so __anima.record includes it.
 		const onDialogue = (event: Event) => {
 			const state = (event as CustomEvent<DialogueState | null>).detail;
@@ -425,9 +442,9 @@ export class StoryGameScene extends BaseScene {
 						]
 							.filter(Boolean)
 							.join("\n")
-					: this.storyVisualScene === "bus_interior"
-						? "[bus interior pending] — select a labelled hotspot"
-						: "Click a hotspot to interact. Click the ground to walk.",
+					: storyPlace(this.storyVisualScene).pendingArt
+						? `[${storyPlace(this.storyVisualScene).pendingArt}] — select a labelled hotspot`
+						: "L: Look · T: Talk · U: Use. Click a hotspot; click ground to walk.",
 			);
 			if (this.katSeatedSprite?.visible)
 				this.katSeatedSprite.play(
@@ -465,8 +482,8 @@ export class StoryGameScene extends BaseScene {
 								},
 							};
 						await this.enterLocation("inside");
-					} else if (id === "innsmouth_streets") {
-						await this.enterLocation("place-d3fc732744430e25f7c1");
+					} else {
+						await this.enterLocation(storyPlace(id).location);
 					}
 				}
 				this.renderSceneHotspots(this.activeScene());
@@ -475,11 +492,11 @@ export class StoryGameScene extends BaseScene {
 					`Inventory: ${snapshot.state.inventory.join(", ") || "empty"}`,
 				);
 				this.outputText.setText(
-					id === "bus_interior"
-						? "[bus interior pending] — select a labelled hotspot"
-						: "Click a hotspot to interact. Click the ground to walk.",
+					storyPlace(id).pendingArt
+						? `[${storyPlace(id).pendingArt}] — select a labelled hotspot`
+						: "L: Look · T: Talk · U: Use. Click a hotspot; click ground to walk.",
 				);
-				return id === "bus_interior" ? "bus interior pending" : undefined;
+				return storyPlace(id).pendingArt;
 			},
 		);
 		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () =>
@@ -917,14 +934,16 @@ export class StoryGameScene extends BaseScene {
 					verbs: verbs.map((v) => v.toLowerCase() as HotspotVerb),
 					onInteract: (verb) => perform(this.toStoryVerb(verb)),
 				});
-				if (this.snapshot.scene.originalId === "bus_interior")
-					this.addButton(bounds.x, bounds.y, 230, hotspot.name, () =>
+				if (this.snapshot.scene.originalId !== "bus_station")
+					this.addButton(bounds.x, bounds.y, bounds.width, hotspot.name, () =>
 						perform(
-							verbs.includes("TALK")
-								? "TALK"
-								: verbs.includes("USE")
-									? "USE"
-									: "LOOK",
+							this.storyVerb && verbs.includes(this.storyVerb)
+								? this.storyVerb
+								: verbs.includes("TALK")
+									? "TALK"
+									: verbs.includes("USE")
+										? "USE"
+										: "LOOK",
 						),
 					);
 			}
@@ -1087,11 +1106,17 @@ export class StoryGameScene extends BaseScene {
 		if (this.act1) {
 			const hotspot = this.findHotspotAtPoint(pointer.x, pointer.y);
 			if (hotspot) {
-				const verb = hotspot.verbs.includes("talk")
-					? "talk"
-					: hotspot.verbs.includes("use")
-						? "use"
-						: "look";
+				const selected = this.storyVerb?.toLowerCase() as
+					| HotspotVerb
+					| undefined;
+				const verb =
+					selected && hotspot.verbs.includes(selected)
+						? selected
+						: hotspot.verbs.includes("talk")
+							? "talk"
+							: hotspot.verbs.includes("use")
+								? "use"
+								: "look";
 				hotspot.interact(verb);
 				return;
 			}
@@ -1257,6 +1282,8 @@ export class StoryGameScene extends BaseScene {
 		}
 	}
 	private async patchWorld(patch: unknown): Promise<void> {
+		// Authored acts own isolated runtime state; preview-world persistence is unrelated.
+		if (this.act1) return;
 		const response = await fetch(
 			`${API_BASE_URL}/world/${this.worldSessionId}`,
 			{

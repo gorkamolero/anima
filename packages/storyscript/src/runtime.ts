@@ -59,6 +59,7 @@ export interface StoryRuntimeSnapshot {
 	choices: StoryChoice[];
 	ended: boolean;
 	ending?: string;
+	visits?: Array<{ scene: StoryScene; outputStart: number }>;
 }
 
 type StoryBlock = StoryScene | StoryDialogue | StoryTrigger;
@@ -124,13 +125,23 @@ export class StoryRuntime {
 	private flags: Record<string, StoryValue> = {};
 	private currentSceneId = "";
 	private output: string[] = [];
+	private visits: Array<{ scene: StoryScene; outputStart: number }> = [];
 	private choices: ChoiceContent[] = [];
 	private choiceOriginOrder = 0;
 	private ended = false;
 	private ending?: string;
 	private jumpSerial = 0;
+	private continuations: Array<{
+		lines: string[];
+		order: number;
+		plain: boolean;
+	}> = [];
 
-	constructor(graph: StoryGraph, initialState?: Partial<StoryState>) {
+	constructor(
+		graph: StoryGraph,
+		initialState?: Partial<StoryState>,
+		private endTargets: string[] = [],
+	) {
 		this.graph = graph;
 		this.currentSceneId = initialState?.scene ?? graph.scenes[0]?.id ?? "";
 		this.inventory = new Set(initialState?.inventory ?? []);
@@ -139,6 +150,7 @@ export class StoryRuntime {
 
 	start(): StoryRuntimeSnapshot {
 		this.output = [];
+		this.visits = [];
 		this.choices = [];
 		this.ended = false;
 		this.ending = undefined;
@@ -149,6 +161,7 @@ export class StoryRuntime {
 
 	look(): StoryRuntimeSnapshot {
 		this.output = [];
+		this.visits = [];
 		this.choices = [];
 		const scene = this.currentScene();
 		if (scene) this.describeScene(scene, false);
@@ -157,6 +170,7 @@ export class StoryRuntime {
 
 	perform(hotspotId: string, verb: StoryVerb): StoryRuntimeSnapshot {
 		this.output = [];
+		this.visits = [];
 		this.choices = [];
 		const scene = this.currentScene();
 		const hotspot = scene?.hotspots.find((item) => item.id === hotspotId);
@@ -171,6 +185,7 @@ export class StoryRuntime {
 
 	choose(index: number): StoryRuntimeSnapshot {
 		this.output = [];
+		this.visits = [];
 		const selected = this.choices[index];
 		this.choices = [];
 		if (!selected) {
@@ -178,6 +193,11 @@ export class StoryRuntime {
 			return this.snapshot();
 		}
 		this.executeLines(selected.content, this.choiceOriginOrder);
+		while (!this.choices.length && !this.ended && this.continuations.length) {
+			const next = this.continuations.shift();
+			if (!next) break;
+			this.executeLines(next.lines, next.order, next.plain);
+		}
 		return this.snapshot();
 	}
 
@@ -196,6 +216,7 @@ export class StoryRuntime {
 			})),
 			ended: this.ended,
 			ending: this.ending,
+			visits: [...this.visits],
 		};
 	}
 
@@ -210,6 +231,7 @@ export class StoryRuntime {
 			return;
 		}
 		this.currentSceneId = scene.id;
+		this.visits.push({ scene, outputStart: this.output.length });
 		this.describeScene(scene, true);
 	}
 
@@ -237,6 +259,14 @@ export class StoryRuntime {
 					allowPlain,
 				);
 				if (this.jumpSerial !== jumpSerial) return;
+				if (this.choices.length) {
+					this.continuations.push({
+						lines: lines.slice(result),
+						order: originOrder,
+						plain: allowPlain,
+					});
+					return;
+				}
 				index = result;
 				continue;
 			}
@@ -245,8 +275,12 @@ export class StoryRuntime {
 				const { nextIndex, choices } = this.parseChoiceBlock(lines, index);
 				this.choices = choices;
 				this.choiceOriginOrder = originOrder;
-				index = nextIndex;
-				continue;
+				this.continuations.unshift({
+					lines: lines.slice(nextIndex),
+					order: originOrder,
+					plain: allowPlain,
+				});
+				return;
 			}
 
 			const target = getGotoTarget(line);
@@ -332,12 +366,12 @@ export class StoryRuntime {
 				let innerDepth = 0;
 				while (cursor < lines.length) {
 					const next = lines[cursor].trim();
+					if (next.startsWith("> ") && innerDepth === 0) break;
 					if (next === "CHOICE" || next.startsWith("IF ")) innerDepth++;
 					if (next === "END") {
 						if (innerDepth > 0) innerDepth--;
 						else break;
 					}
-					if (next.startsWith("> ") && innerDepth === 0) break;
 					content.push(next);
 					cursor++;
 				}
@@ -390,15 +424,29 @@ export class StoryRuntime {
 
 	private goto(target: string, originOrder: number): void {
 		this.jumpSerial++;
+		this.continuations = [];
+		if (this.endTargets.includes(target)) {
+			this.ended = true;
+			this.ending = "ACT_END";
+			this.output.push("Act complete.");
+			return;
+		}
 		if (target === "END") return;
 		if (target === "ACT_END") {
 			const nextScene = this.graph.scenes.find(
 				(scene) => scene.order > originOrder,
 			);
 			if (nextScene) this.enterScene(nextScene.id);
+			else {
+				this.ended = true;
+				this.ending = "ACT_END";
+				this.output.push("Act complete.");
+			}
 			return;
 		}
-		if (target === "GAME_END" || target === "GAME_END_TOGETHER") {
+		if (target.startsWith("GAME_END")) {
+			const credits = this.findTarget(target, originOrder);
+			if (credits && isScene(credits)) this.enterScene(credits.id);
 			this.ended = true;
 			this.ending = target;
 			this.output.push(
@@ -446,6 +494,10 @@ export class StoryRuntime {
 
 	private evaluateCondition(condition: string): boolean {
 		const cond = condition.trim();
+		if (cond.includes(" OR "))
+			return cond.split(" OR ").some((c) => this.evaluateCondition(c));
+		if (cond.includes(" AND "))
+			return cond.split(" AND ").every((c) => this.evaluateCondition(c));
 		if (cond.startsWith("NOT ")) return !this.evaluateCondition(cond.slice(4));
 		const at = cond.match(/^AT\((\w+)\)$/);
 		if (at) return this.currentScene()?.originalId === at[1];
@@ -542,6 +594,8 @@ class StoryScriptParser {
 				scene.onEnter = content;
 				index = next;
 				continue;
+			} else if (line.startsWith("-> ")) {
+				scene.onEnter.push(line);
 			} else if (line.startsWith("HOTSPOT ")) {
 				const [hotspot, next] = parseHotspot(this.lines, index);
 				scene.hotspots.push(hotspot);
@@ -652,10 +706,13 @@ function parseHotspot(lines: string[], start: number): [StoryHotspot, number] {
 
 function parseSimpleBlock(lines: string[], start: number): [string[], number] {
 	const content: string[] = [];
+	const baseIndent = indentOf(lines[start - 1]);
 	let index = start;
 	while (index < lines.length) {
 		const line = lines[index].trim();
-		if (line === "END") return [content, index + 1];
+		if (isTopLevelBlock(line)) return [content, index];
+		if (line === "END" && indentOf(lines[index]) <= baseIndent)
+			return [content, index + 1];
 		if (line && !line.startsWith("#")) content.push(line);
 		index++;
 	}

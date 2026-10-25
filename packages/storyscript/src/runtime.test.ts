@@ -116,3 +116,89 @@ describe("Act 1 route", () => {
 		);
 	});
 });
+
+describe("later act control flow", () => {
+	it("parses nested entry blocks, scene arrows, and resumes after choices", () => {
+		const r = new StoryRuntime(
+			parseStoryScript(`
+SCENE start
+  ON_ENTER
+    IF NOT seen AND NOT HAS(key)
+      SET seen = true
+      CHOICE
+        > First
+          GIVE key
+        > Second
+          GIVE other
+      END
+      SET resumed_inner = true
+    END
+    SET resumed_outer = true
+  END
+  -> finish
+END
+SCENE finish
+  ON_ENTER
+    "Finished."
+    -> GAME_END
+  END
+END
+`),
+		);
+		expect(r.start().choices).toHaveLength(2);
+		const result = r.choose(0);
+		expect(result.state.flags).toMatchObject({
+			seen: true,
+			resumed_inner: true,
+			resumed_outer: true,
+		});
+		expect(result.ended).toBe(true);
+	});
+	it("honours a jump out of a choice instead of resuming its old scene", () => {
+		const r = new StoryRuntime(
+			parseStoryScript(`
+SCENE start
+  ON_ENTER
+    CHOICE
+      > Leave
+        -> finish
+    END
+    SET stale = true
+  END
+END
+SCENE finish
+  ON_ENTER
+    -> GAME_END
+  END
+END
+`),
+		);
+		r.start();
+		expect(r.choose(0).state.flags.stale).toBeUndefined();
+	});
+	it("ends standalone acts and renders authored credits", () => {
+		const r = new StoryRuntime(
+			parseStoryScript(`
+SCENE start
+  ON_ENTER
+    -> GAME_END_ABYSSAL
+  END
+END
+SCENE GAME_END_ABYSSAL
+  ON_ENTER
+    "Thank you for playing."
+  END
+END
+`),
+		);
+		expect(r.start()).toMatchObject({
+			ended: true,
+			ending: "GAME_END_ABYSSAL",
+			output: expect.arrayContaining(["Thank you for playing."]),
+		});
+		const act = new StoryRuntime(
+			parseStoryScript("SCENE start\n  ON_ENTER\n    -> ACT_END\n  END\nEND"),
+		);
+		expect(act.start().ended).toBe(true);
+	});
+});

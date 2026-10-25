@@ -14,6 +14,7 @@ export class StoryDialogue {
 	private serial = 0;
 	private voice?: ReturnType<typeof speakCaption>;
 	private pendingArt?: string;
+	private segments: StoryRuntimeSnapshot[] = [];
 	constructor(
 		private runtime: StoryRuntime,
 		private api: string,
@@ -49,8 +50,29 @@ export class StoryDialogue {
 		this.onLock(true);
 		this.state = null;
 		this.snapshot = snapshot;
-		this.pendingArt = await this.onScene(snapshot);
-		this.lines = snapshot.output.filter((line) => !line.startsWith("## "));
+		const visits = snapshot.visits ?? [];
+		this.segments = visits.map((visit, index) => ({
+			...snapshot,
+			scene: visit.scene,
+			output: snapshot.output.slice(
+				index === 0 ? 0 : visit.outputStart,
+				visits[index + 1]?.outputStart,
+			),
+		}));
+		if (!this.segments.length) this.segments = [snapshot];
+		await this.presentSegment();
+	}
+	private async presentSegment(): Promise<void> {
+		const segment = this.segments.shift();
+		if (!segment) return;
+		this.state = null;
+		try {
+			this.pendingArt = await this.onScene(segment);
+			this.lines = segment.output.filter((line) => !line.startsWith("## "));
+		} catch (error) {
+			this.segments = [];
+			this.lines = [`[Scene transition failed: ${String(error)}]`];
+		}
 		this.next();
 	}
 	perform(id: string, verb: StoryVerb): void {
@@ -76,6 +98,8 @@ export class StoryDialogue {
 			void this.voice.full.then(() => {
 				if (this.state?.id === id) this.next();
 			});
+		} else if (this.segments.length) {
+			void this.presentSegment();
 		} else if (this.snapshot.choices.length) {
 			this.state = {
 				id,

@@ -465,6 +465,9 @@ DIALOGUE far_gone_choice
       
       -> reef_departure_far_gone
       
+    > "Then let me hear your choice."
+      -> release_path
+
     > "Let me try to save you."
       hermes: "Let me try. Please."
       hermes: "I have a boat. Abel's waiting."
