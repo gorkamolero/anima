@@ -202,10 +202,15 @@ export class WalkMotor {
 		return profile;
 	}
 
+	/** Strides a sheet holds: one per pair of support switches. */
+	private stridesInSheet(cycle: FootCycle): number {
+		return Math.max(1, Math.floor(cycle.switchFrames.length / 2));
+	}
+
 	/** Full strides per second at a sheet's authored frame durations. */
 	private naturalCadence(cycle: FootCycle): number {
 		const ms = this.gait(cycle).durations.reduce((a, b) => a + b, 0);
-		return ms > 0 ? 1000 / ms : 1;
+		return ms > 0 ? (1000 / ms) * this.stridesInSheet(cycle) : 1;
 	}
 
 	/** Metres the side sheet's drawn stride covers at this scene's scale. */
@@ -216,7 +221,9 @@ export class WalkMotor {
 		const ppm =
 			this.area.perspective.pixelsPerMetre ?? DEFAULT_PIXELS_PER_METRE;
 		const sheetPx =
-			g.steps.reduce((a, b) => a + b, 0) / (cycle.pixelScale ?? 1);
+			g.steps.reduce((a, b) => a + b, 0) /
+			(cycle.pixelScale ?? 1) /
+			this.stridesInSheet(cycle);
 		return sheetPx * (this.area.baseScale / ppm);
 	}
 
@@ -552,7 +559,10 @@ export class WalkMotor {
 		const weight = g.lateral
 			? Math.max(g.steps[index], g.mean / 3) / g.mean
 			: 1;
-		this.phase += ((movedMetres / stride.metres) * n) / weight;
+		this.phase +=
+			((movedMetres / stride.metres) * n) /
+			this.stridesInSheet(this.pose.cycle) /
+			weight;
 		this.pose = {
 			...this.pose,
 			frame: Math.floor(this.phase) % this.pose.cycle.contacts.length,
