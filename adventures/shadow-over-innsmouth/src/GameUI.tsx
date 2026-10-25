@@ -56,7 +56,7 @@ export function GameUI() {
 	const [feedback, setFeedback] = useState<FeedbackStore>(loadFeedback);
 	const [savedMessage, setSavedMessage] = useState("");
 	const [isOpen, setIsOpen] = useState(
-		new URLSearchParams(window.location.search).get("act") !== "1",
+		!new URLSearchParams(window.location.search).has("act"),
 	);
 	const [openWorld, setOpenWorld] = useState<OpenWorldUiState>({
 		status: "idle",
@@ -242,7 +242,17 @@ export function GameUI() {
 
 				<div className="review-panel__body">
 					<p>Choose a scene, then click the ground to walk.</p>
-					<a href="/?act=1&scene=inside">Play Act 1</a>
+					<nav aria-label="Story acts">
+						{["1", "2", "3", "3b", "4"].map((act) => (
+							<a
+								key={act}
+								href={`/?act=${act}&scene=inside`}
+								style={{ marginRight: 12 }}
+							>
+								Play Act {act}
+							</a>
+						))}
+					</nav>
 
 					<label className="review-panel__field">
 						<span>Scene ({scenes.length})</span>
