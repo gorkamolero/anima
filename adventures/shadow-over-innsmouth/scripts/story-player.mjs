@@ -271,7 +271,7 @@ export async function runSession(session, config) {
 	});
 }
 export async function playtest(act) {
-	await tracePlaythrough({ act }, async () => {
+	await tracePlaythrough({ act, session: `anima-act${act}` }, async () => {
 	const session = `anima-act${act}`,
 		name = `act${act}-playthrough`;
 	try {

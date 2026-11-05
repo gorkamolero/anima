@@ -184,7 +184,7 @@ labels. Unreviewed inputs have no expected output. `floor_agreement` and aggrega
 `floor_agreement_rate` evaluate only reviewed inputs. `floor_pass_rate` reports the
 judge's pass rate, not accuracy; `floor_completion_rate` tracks completed verdicts.
 
-Judge traces/spans are `anima-floor-judge`, with model generations, token usage and
+Judge traces/spans are `judge-floor`, with model generations, token usage and
 duration (provider cost when available). Scores include `floor_pass`, per-question
 `floor_pass_<question>` or advisory `floor_coverage_<question>`,
 `floor_probability_<question>`, `false_walkable_threshold`, and
@@ -193,7 +193,7 @@ Ground compositing samples use `sample_<index>_floor_pass` plus an overall
 `floor_pass`. Reasons are score comments.
 
 Run the existing story-player callers or `playtest-town.mjs` as usual with Langfuse
-keys exported. Each run emits `anima-playthrough`, timed scene/action spans,
+keys exported. Each run emits `play-story`, timed scene/action spans,
 `ended` (boolean), `failure_count` (numeric), and a failure event for every failure.
 For town, `ended` means the scripted journey completed, not a narrative ending.
 Browser startup errors also produce a failed trace. Playthroughs flush after each
@@ -207,3 +207,12 @@ pnpm typecheck                              # from repository root
 pnpm --filter @anima/api exec tsc -p tsconfig.langfuse.json
 pnpm exec vitest run --typecheck.enabled=false api/src/__tests__/services
 ```
+
+Judge observations use type `evaluator`; Vercel AI SDK model calls use automatic
+`generation` tracing with full model input context and media attachments. The raw
+HTTP Decisions endpoint uses `decide-floor-hazards` with explicit generation usage
+and request media. Question IDs, scene/actions, models and variants are metadata,
+not observation names. Playthrough steps use `play-step` spans; these scripted
+players are not AI agents. Trace summaries show place/background/questions and
+pass/reason/probabilities, or scripted completion/failure counts. Tags are `anima`,
+`floor-judge` or `playthrough`, and the variant; browser sessions set `sessionId`.

@@ -419,7 +419,7 @@ async function replayTown() {
 	if (uncached.length)
 		throw Error(`Town replay made ${uncached.length} uncached calls`);
 }
-await tracePlaythrough({ script: "playtest-town", run, url }, async () => {
+await tracePlaythrough({ script: "playtest-town", session, run, url }, async () => {
 try {
 	browser(["set", "viewport", "1920", "1080"]);
 	browser(["open", url]);

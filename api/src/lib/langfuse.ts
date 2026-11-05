@@ -37,22 +37,45 @@ export async function shutdownLangfuse() {
 	await flushLangfuse().catch(() => {});
 	await Promise.allSettled([runtime.client.shutdown(), runtime.sdk.shutdown()]);
 }
-export function judgeTelemetry(functionId: string) {
-	return langfuse() ? { isEnabled: true, functionId, recordInputs: false, recordOutputs: true } : undefined;
+export function judgeTelemetry(functionId: string, metadata: Record<string, string> = {}) {
+	return langfuse() ? { isEnabled: true, functionId, recordInputs: true, recordOutputs: true, metadata } : undefined;
 }
-export async function traceJudge<T>(judge: string, input: unknown, task: () => Promise<T>): Promise<T> {
-	if (!langfuse()) return task();
-	return startActiveObservation("anima-floor-judge", async (span) => {
-		span.update({ input, metadata: { judge } });
+export interface JudgeTraceContext {
+	place?: string;
+	background?: string;
+	variant?: string;
+	model?: string;
+	prompt?: string;
+	sessionId?: string;
+}
+export async function traceJudge<T>(judge: string, context: JudgeTraceContext, task: (setQuestions: (questions: unknown) => void) => Promise<T>): Promise<T> {
+	if (!langfuse()) return task(() => {});
+	return startActiveObservation("judge-floor", async (span) => {
+		const input = { place: context.place ?? null, background: context.background ?? null, questions: [] as unknown };
+		const metadata = { judge, ...context, variant: context.variant ?? "baseline" };
+		span.update({ input, metadata });
+		span.updateTrace({ name: "judge-floor", input, sessionId: context.sessionId, tags: ["anima", "floor-judge", metadata.variant], metadata });
 		try {
-			const result = await task();
-			span.update({ output: result });
+			const result = await task((questions) => {
+				input.questions = questions;
+				span.update({ input });
+				span.updateTrace({ input });
+			});
+			const verdicts = (Array.isArray(result) ? result : [result]) as GroundVerdict[];
+			const output = {
+				pass: verdicts.every((verdict) => verdict?.pass === true),
+				why: verdicts.map((verdict) => verdict?.why).filter(Boolean).join("; "),
+				probabilities: verdicts.length === 1 ? verdicts[0]?.probabilities ?? {} : verdicts.map((verdict) => verdict?.probabilities ?? {}),
+			};
+			span.update({ output, metadata: { ...metadata, rawOutput: result } });
+			span.updateTrace({ output });
 			return result;
 		} catch (error) {
 			span.update({ level: "ERROR", statusMessage: "Judge invocation failed" });
+			span.updateTrace({ output: { error: "Judge invocation failed" } });
 			throw error;
 		}
-	});
+	}, { asType: "evaluator" });
 }
 export function verdictScores(verdict: GroundVerdict, threshold: number, prefix = ""): Evaluation[] {
 	const scores: Evaluation[] = [{ name: `${prefix}floor_pass`, value: Number(verdict.pass), dataType: "BOOLEAN", comment: verdict.why }];
@@ -78,10 +101,10 @@ export function scoreVerdict(verdict: GroundVerdict, threshold: number, prefix =
 	const client = langfuse();
 	if (client) for (const score of verdictScores(verdict, threshold, prefix)) client.score.activeTrace(score);
 }
-export async function traceDecision<T extends { usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; cost?: number } }>(model: string, task: () => Promise<T>): Promise<T> {
+export async function traceDecision<T extends { usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; cost?: number } }>(model: string, task: () => Promise<T>, input?: unknown): Promise<T> {
 	if (!langfuse()) return task();
-	return startActiveObservation("floor-decisions", async (generation) => {
-		generation.update({ model });
+	return startActiveObservation("decide-floor-hazards", async (generation) => {
+		generation.update({ model, input });
 		try {
 			const result = await task();
 			const usage = result.usage;
@@ -104,23 +127,29 @@ export interface PlaythroughResult {
 	final?: { ended?: boolean };
 }
 /** Scripted browser results only: these are not AI judgments. */
-export async function tracePlaythrough<T>(input: unknown, task: () => Promise<T>, resultOf: (result: T) => PlaythroughResult = (r) => r as PlaythroughResult): Promise<T> {
+export async function tracePlaythrough<T>(input: { session?: string; sessionId?: string; variant?: string; act?: string; script?: string; config?: Record<string, unknown>; [key: string]: unknown }, task: () => Promise<T>, resultOf: (result: T) => PlaythroughResult = (r) => r as PlaythroughResult): Promise<T> {
 	const client = langfuse();
 	if (!client) return task();
 	try {
-		return await startActiveObservation("anima-playthrough", async (span) => {
-			span.update({ input, metadata: { kind: "scripted-browser-playthrough" } });
+		return await startActiveObservation("play-story", async (span) => {
+			const variant = input.variant ?? String(input.config?.archetype ?? "scripted");
+			const summary = { harness: input.script ?? "story-player", act: input.act ?? input.config?.act ?? null };
+			const metadata = { kind: "scripted-browser-playthrough", variant, rawInput: input };
+			span.update({ input: summary, metadata });
+			span.updateTrace({ name: "play-story", input: summary, sessionId: input.sessionId ?? input.session, tags: ["anima", "playthrough", variant], metadata });
 			const record = (result: PlaythroughResult) => {
 				const failures = result.failures ?? [];
 				client.score.activeTrace({ name: "ended", value: Number(result.final?.ended === true), dataType: "BOOLEAN", comment: "Scripted completion state; no AI evaluator." });
 				client.score.activeTrace({ name: "failure_count", value: failures.length, dataType: "NUMERIC", comment: JSON.stringify(failures) });
 				const steps = result.trace ?? [];
 				for (const [i, step] of steps.entries()) {
-					const child = startObservation(`${step.scene ?? "scene"}: ${step.action}`, { output: step }, { startTime: new Date(step.time) });
+					const child = startObservation("play-step", { input: { scene: step.scene, action: step.action }, metadata: { scene: step.scene, action: step.action, rawStep: step } }, { startTime: new Date(step.time) });
 					child.end(new Date(steps[i + 1]?.time ?? step.time));
 				}
-				for (const failure of failures) startObservation("playthrough-failure", { output: failure, level: "ERROR" }, { asType: "event" }).end();
-				span.update({ output: result });
+				for (const failure of failures) startObservation("record-playthrough-failure", { output: failure, level: "ERROR" }, { asType: "event" }).end();
+				const output = { ended: result.final?.ended === true, failure_count: failures.length, failures, steps: steps.length };
+				span.update({ output, metadata: { ...metadata, rawOutput: result } });
+				span.updateTrace({ output });
 			};
 			try {
 				const value = await task();

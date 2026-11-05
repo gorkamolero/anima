@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => {
-	const observation = { update: vi.fn(), end: vi.fn() };
+	const observation = { update: vi.fn(), updateTrace: vi.fn(), end: vi.fn() };
 	return { observation, score: vi.fn(), active: vi.fn(async (_name, task) => task(observation)), start: vi.fn(() => observation), client: vi.fn(), sdk: vi.fn(), flush: vi.fn(), shutdown: vi.fn() };
 });
 vi.mock("@langfuse/client", () => ({ LangfuseClient: class {
@@ -52,9 +52,10 @@ it("initializes once from env, captures Decisions usage/cost and flushes on shut
 		lf.scoreVerdict({ pass: true, why: "clear" }, 0.6);
 		return lf.traceDecision("decision-model", async () => ({ usage: { prompt_tokens: 10, completion_tokens: 4, total_tokens: 14, cost: 0.002 } }));
 	});
+	expect(lf.judgeTelemetry("label-floor-outlines")).toMatchObject({ recordInputs: true, recordOutputs: true });
 	expect(mocks.client).toHaveBeenCalledTimes(1);
 	expect(mocks.client).toHaveBeenCalledWith(expect.objectContaining({ baseUrl: "https://example.invalid" }));
-	expect(mocks.active.mock.calls.map((call) => call[0])).toEqual(["anima-floor-judge", "floor-decisions"]);
+	expect(mocks.active.mock.calls.map((call) => call[0])).toEqual(["judge-floor", "decide-floor-hazards"]);
 	expect(mocks.observation.update).toHaveBeenCalledWith(expect.objectContaining({ usageDetails: { input: 10, output: 4, total: 14 }, costDetails: { total: 0.002 } }));
 	expect(mocks.score).toHaveBeenCalledWith(expect.objectContaining({ name: "floor_pass", comment: "clear" }));
 	await lf.shutdownLangfuse(); await lf.shutdownLangfuse();
@@ -68,7 +69,8 @@ it("emits scripted step spans, completion and every failure without model calls"
 	expect(await lf.tracePlaythrough({}, async () => result)).toBe(result);
 	expect(mocks.score).toHaveBeenCalledWith(expect.objectContaining({ name: "ended", value: 1, dataType: "BOOLEAN" }));
 	expect(mocks.score).toHaveBeenCalledWith(expect.objectContaining({ name: "failure_count", value: 2, dataType: "NUMERIC" }));
-	expect(mocks.start.mock.calls.map((call) => call[0])).toEqual(["depot: start", "town: end", "playthrough-failure", "playthrough-failure"]);
+	expect(mocks.start.mock.calls[0][1]).toMatchObject({ metadata: { scene: "depot", action: "start" } });
+	expect(mocks.start.mock.calls.map((call) => call[0])).toEqual(["play-step", "play-step", "record-playthrough-failure", "record-playthrough-failure"]);
 	await expect(lf.tracePlaythrough({}, async () => { throw Error("browser unavailable"); })).rejects.toThrow("browser unavailable");
 	expect(mocks.score).toHaveBeenCalledWith(expect.objectContaining({ name: "ended", value: 0 }));
 });

@@ -91,7 +91,7 @@ export async function outlineLabels(
 		: (
 				await generateObject({
 					model: getModel(),
-					experimental_telemetry: judgeTelemetry("floor-outline-labels"),
+					experimental_telemetry: judgeTelemetry("label-floor-outlines"),
 					mode: "json",
 					temperature: 0,
 					schema: z.object({
@@ -324,6 +324,10 @@ export interface FloorJudgeOptions {
 	prompt?: string;
 	fresh?: boolean;
 	recordScores?: boolean;
+	place?: string;
+	background?: string;
+	variant?: string;
+	sessionId?: string;
 	/** Frozen experiment inputs: never re-read mutable segmentation caches. */
 	outlines?: FloorOutline[];
 	referencePath?: string;
@@ -337,7 +341,7 @@ export async function asymmetricFloorJudge(
 	referenceImage?: string,
 	options: FloorJudgeOptions = {},
 ): Promise<GroundVerdict> {
-	return traceJudge("asymmetricFloorJudge", { overlay, referenceImage, model: options.model, prompt: options.prompt }, async () => {
+	return traceJudge("asymmetricFloorJudge", { place: options.place, background: options.background ?? referenceImage, model: options.model ?? (options.prompt ? "google/gemini-2.5-flash" : "openai/gpt-6-luna-decisions"), prompt: options.prompt, variant: options.variant, sessionId: options.sessionId }, async (setQuestions) => {
 	const outlines = options.outlines ?? (
 		ground && referenceImage
 			? await floorOutlines(referenceImage, ground.floor)
@@ -363,6 +367,7 @@ export async function asymmetricFloorJudge(
 		ground,
 		outlines,
 	);
+	setQuestions(Object.entries(questions).map(([name, question]) => ({ name, ...question })));
 	const bytes = await readFile(overlay);
 	const reference = options.referencePath || referenceImage
 		? await readFile(options.referencePath ?? imagePath(referenceImage!))
@@ -439,7 +444,10 @@ export async function asymmetricFloorJudge(
 				answers: Record<string, { noul?: number; score?: number }>;
 				usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; cost?: number };
 			};
-			});
+			}, [{ role: "user", content: [
+				{ type: "text", text: JSON.stringify({ questions, instructions: "Inspect the attached image: grayscale background, bright GREEN walkable mask. Missing floor is safe. Return image-grounded probabilities." }) },
+				{ type: "image_url", image_url: { url: `data:image/png;base64,${bytes.toString("base64")}` } },
+			] }]);
 			const probabilities = Object.fromEntries(
 				Object.keys(questions).map((k) => [
 					k,
@@ -461,7 +469,7 @@ export async function asymmetricFloorJudge(
 					reserveCall("perception");
 					const { object } = await generateObject({
 						model: getModel(options.model),
-						experimental_telemetry: judgeTelemetry(`floor-question-${name}`),
+						experimental_telemetry: judgeTelemetry("answer-floor-question", { question: name, variant: options.variant ?? "baseline" }),
 						mode: "json",
 						temperature: 0,
 						schema:
@@ -491,12 +499,12 @@ export async function asymmetricFloorJudge(
 												},
 												{
 													type: "image" as const,
-													image: reference,
+													image: new URL(`data:image/png;base64,${reference.toString("base64")}`),
 													mediaType: "image/png",
 												},
 											]
 										: []),
-									{ type: "image", image: bytes, mediaType: "image/png" },
+									{ type: "image", image: new URL(`data:image/png;base64,${bytes.toString("base64")}`), mediaType: "image/png" },
 								],
 							},
 						],
@@ -614,7 +622,7 @@ export async function locateFloorHazards(
 	const question = `Locate the suspected non-standable surfaces cited by these failed floor checks. Return normalized [x0,y0,x1,y1] bounding boxes tightly containing the suspected objects or water/wall/sky patches. The boxes will ONLY REMOVE green floor. Include the entire suspected object, not surrounding safe floor. Do not change the verdict. Rejected checks: ${JSON.stringify((verdict.rejected ?? []).map((k) => ({ question: verdict.questions?.[k], name: k })))}. Evidence: ${JSON.stringify((verdict as GroundVerdict & { evidence?: unknown }).evidence)}`;
 	const { object } = await generateObject({
 		model: getModel(),
-		experimental_telemetry: judgeTelemetry("floor-hazard-localization"),
+		experimental_telemetry: judgeTelemetry("locate-floor-hazards"),
 		mode: "json",
 		temperature: 0,
 		schema: z.object({
@@ -628,7 +636,7 @@ export async function locateFloorHazards(
 					{ type: "text", text: question },
 					{
 						type: "image",
-						image: await readFile(verdict.overlay),
+						image: new URL(`data:image/png;base64,${(await readFile(verdict.overlay)).toString("base64")}`),
 						mediaType: "image/png",
 					},
 				],

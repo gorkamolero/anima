@@ -42,7 +42,7 @@ try {
 				name: variant,
 				runName: `${variant}-${new Date().toISOString()}`,
 				data: selected,
-				metadata: { variant, model: model ?? "openai/gpt-6-luna-decisions", fallbackModel: model ?? "google/gemini-2.5-flash", prompt: prompt ?? null, threshold: FALSE_WALKABLE_THRESHOLD, n: count },
+				metadata: { variant, model: model ?? (prompt ? "google/gemini-2.5-flash" : "openai/gpt-6-luna-decisions"), fallbackModel: model ?? "google/gemini-2.5-flash", prompt: prompt ?? null, threshold: FALSE_WALKABLE_THRESHOLD, n: count },
 				maxConcurrency: 1,
 				task: async ({ input }) => {
 					const snapshotId = (input as { snapshotId: string }).snapshotId;
@@ -54,7 +54,7 @@ try {
 						const referencePath = resolve(temporary, "reference.png");
 						await writeFile(overlay, Buffer.from(frozen.overlay, "base64"));
 						await writeFile(referencePath, Buffer.from(frozen.image, "base64"));
-						return await asymmetricFloorJudge(overlay, frozen.objects, frozen.ground, undefined, { model, prompt, fresh: true, recordScores: false, outlines: frozen.outlines, referencePath, frozenLabels: true });
+						return await asymmetricFloorJudge(overlay, frozen.objects, frozen.ground, undefined, { model, prompt, variant, place: frozen.place, background: frozen.background, fresh: true, recordScores: false, outlines: frozen.outlines, referencePath, frozenLabels: true });
 					} finally { await rm(temporary, { recursive: true, force: true }); }
 				},
 				evaluators: [async ({ output, expectedOutput }) => [

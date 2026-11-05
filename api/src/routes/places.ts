@@ -203,6 +203,7 @@ async function createPlace(
 				objects,
 				ground,
 				image.url,
+				{ place: id, background: image.url },
 			);
 			ground.verdicts.push(verdict);
 			ground.notes = [

@@ -391,7 +391,7 @@ export async function judgeGround(
 	data: GroundData,
 	key = basename(image, ".png"),
 ): Promise<GroundVerdict[]> {
-	return traceJudge("judgeGround", { image, key }, async () => {
+	return traceJudge("judgeGround", { place: key, background: image, model: "google/gemini-2.5-flash" }, async (setQuestions) => {
 	const source = imagePath(image);
 	const id = basename(source, ".png");
 	const out = proofDirectory(key);
@@ -435,10 +435,11 @@ export async function judgeGround(
 		]);
 		const question =
 			"Judge only the composited bespectacled man with a satchel: are the feet on visible walkable floor (including rugs or steps), and is the size plausible next to the surroundings? pass=true only if both. Ignore lack of contact shadow and foreground occlusion: this diagnostic has no shadow or occluder layers. Do not reject just for these rendering omissions. Reject feet actually on furniture/water/walls, or clearly incorrect size. Explain specific evidence.";
+		setQuestions([question]);
 		const started = Date.now();
 		const { object } = await generateObject({
 			model: getModel(),
-			experimental_telemetry: judgeTelemetry("ground-judge"),
+			experimental_telemetry: judgeTelemetry("assess-ground-placement"),
 			mode: "json",
 			schema: z.object({ pass: z.boolean(), why: z.string() }),
 			messages: [
@@ -451,7 +452,7 @@ export async function judgeGround(
 						},
 						{
 							type: "image",
-							image: await readFile(path),
+							image: new URL(`data:image/png;base64,${(await readFile(path)).toString("base64")}`),
 							mediaType: "image/png",
 						},
 					],
