@@ -1,6 +1,9 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+const tracePlaythrough = process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY
+	? (await import("../../../api/src/lib/langfuse.ts")).tracePlaythrough
+	: async (_input, task) => task();
 export const root = resolve(import.meta.dirname, "../../..");
 export const out = resolve(root, "tmp/overnight/reports");
 mkdirSync(out, { recursive: true });
@@ -249,6 +252,7 @@ export async function player(config) {
 	};
 }
 export async function runSession(session, config) {
+	return tracePlaythrough({ session, config }, async () => {
 	browser(
 		session,
 		"open",
@@ -264,8 +268,10 @@ export async function runSession(session, config) {
 		`window.__storyResult=null; (${player.toString()})(${JSON.stringify(config)}).then(r=>window.__storyResult=r).catch(e=>window.__storyResult={passed:false,failures:[{detail:String(e)}]}); true`,
 	);
 	return await poll(session, "window.__storyResult", config.timeout ?? 300000);
+	});
 }
 export async function playtest(act) {
+	await tracePlaythrough({ act }, async () => {
 	const session = `anima-act${act}`,
 		name = `act${act}-playthrough`;
 	try {
@@ -303,8 +309,10 @@ export async function playtest(act) {
 				recording: result.recording,
 			}),
 		);
-		if (!result.passed) throw Error(`Act ${act} failed`);
+		if (!result.passed) throw Object.assign(Error(`Act ${act} failed`), { playthrough: result });
+		return result;
 	} finally {
 		browser(session, "close");
 	}
+	});
 }

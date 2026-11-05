@@ -144,3 +144,66 @@ No JSON. No AST. Just execution.
 ## License
 
 MIT
+
+## Langfuse judges and scripted playthroughs
+
+The API's floor and ground vision judges optionally report to Langfuse. The browser
+playthroughs are scripted and are **not AI-judged**. Set `LANGFUSE_PUBLIC_KEY` and
+`LANGFUSE_SECRET_KEY` in the process environment; `LANGFUSE_BASE_URL` defaults to
+`https://cloud.langfuse.com`. Without both keys, telemetry is a silent no-op.
+Use Node 22.18+ (or Node 24), pnpm, and ImageMagick for the local snapshot.
+
+From the repository root:
+
+```bash
+cd api
+# Offline: freeze existing cached places, images, masks, labels and outlines.
+pnpm exec tsx scripts/langfuse-judge-experiment.ts --snapshot-only
+# Real run: requires Langfuse keys and the API's model credentials.
+pnpm exec tsx scripts/langfuse-judge-experiment.ts --variant=baseline --n=2
+pnpm exec tsx scripts/langfuse-judge-experiment.ts --variant=vision-silhouette --n=2 --model=google/gemini-2.5-flash --prompt='Check the object silhouette carefully.'
+```
+
+The runner reuses API startup credential loading. It upserts stable content-hash
+item IDs into `anima-floor-places` and uses hosted items with the v4 experiment
+runner. Runs are named `<variant>-<ISO timestamp>` and can be compared in the
+dataset-run view. The default is two items, sequentially. Each item may ask several
+model questions. An explicit model or prompt selects the per-question vision path;
+the baseline tries Decisions first, then the existing vision fallback. Runs bypass
+verdict caches and do not overwrite them. No images or perception are generated.
+The local snapshot at `api/data/langfuse-floor-places/items.json` is reused unchanged;
+keep it for comparisons. Hosted dataset inputs reference content-hash snapshot IDs
+(with place/background identifiers); image bytes stay local to avoid oversized
+dataset requests. The runner verifies every snapshot hash before use. Copy this
+snapshot when running experiments on another machine. Cached vocabulary mappings are used when available;
+otherwise the original labels are retained conservatively.
+
+The current cache contains one reviewer-approved anchor mask. Its exact mask has
+`expectedOutput.pass=true` with review provenance; prior model verdicts are never
+labels. Unreviewed inputs have no expected output. `floor_agreement` and aggregate
+`floor_agreement_rate` evaluate only reviewed inputs. `floor_pass_rate` reports the
+judge's pass rate, not accuracy; `floor_completion_rate` tracks completed verdicts.
+
+Judge traces/spans are `anima-floor-judge`, with model generations, token usage and
+duration (provider cost when available). Scores include `floor_pass`, per-question
+`floor_pass_<question>` or advisory `floor_coverage_<question>`,
+`floor_probability_<question>`, `false_walkable_threshold`, and
+`floor_outline_<name>_{fraction,pixels,covered,pass}` / `floor_outline_threshold`.
+Ground compositing samples use `sample_<index>_floor_pass` plus an overall
+`floor_pass`. Reasons are score comments.
+
+Run the existing story-player callers or `playtest-town.mjs` as usual with Langfuse
+keys exported. Each run emits `anima-playthrough`, timed scene/action spans,
+`ended` (boolean), `failure_count` (numeric), and a failure event for every failure.
+For town, `ended` means the scripted journey completed, not a narrative ending.
+Browser startup errors also produce a failed trace. Playthroughs flush after each
+run; the shared runtime flushes/shuts down on normal exit and termination signals.
+No new model calls are introduced by playthrough tracing.
+
+Offline verification:
+
+```bash
+pnpm typecheck                              # from repository root
+pnpm --filter @anima/api exec tsc -p tsconfig.langfuse.json
+pnpm exec vitest run --typecheck.enabled=false api/src/__tests__/services
+```

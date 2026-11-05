@@ -92,3 +92,17 @@ it("does not treat missing fallback answers as safe probabilities", async () => 
 		"Invalid or missing probability",
 	);
 });
+
+it("uses an explicit vision variant without Decisions and keeps experiment verdicts out of live caches", async () => {
+	const fetch = vi.fn();
+	vi.stubGlobal("fetch", fetch);
+	mocks.generate.mockResolvedValue({ object: { yes: false, confidence: 0.9, evidence: "clear" } });
+	const { asymmetricFloorJudge } = await import("../../services/floor-judge.js");
+	await asymmetricFloorJudge("/proof/mask.png", [], undefined, undefined, {
+		model: "test/vision", prompt: "Inspect the silhouette", fresh: true,
+	});
+	expect(fetch).not.toHaveBeenCalled();
+	expect(mocks.generate).toHaveBeenCalledOnce();
+	expect(JSON.stringify(mocks.generate.mock.calls)).toContain("Inspect the silhouette");
+	expect(mocks.write.mock.calls.some(([path]) => String(path).endsWith("-asymmetric.json"))).toBe(false);
+});

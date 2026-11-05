@@ -5,6 +5,7 @@ import { dirname, resolve } from "node:path";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, ROOT } from "../lib/backgrounds.js";
+import { judgeTelemetry, scoreVerdict, traceDecision, traceJudge } from "../lib/langfuse.js";
 import { getModel } from "../lib/model.js";
 import { reserveCall } from "./costs.js";
 import { isFloorCovering } from "./floor-surfaces.js";
@@ -52,9 +53,10 @@ export function hasOutline(object: FloorObject, outlines: FloorOutline[]) {
 }
 /** Interaction labels and segmenter class names can differ (including plural
  * classes). Resolve vocabulary only; the model never judges outlined pixels. */
-async function outlineLabels(
+export async function outlineLabels(
 	objects: FloorObject[],
 	outlines: FloorOutline[],
+	cacheOnly = false,
 ): Promise<FloorObject[]> {
 	const pending = objects.filter((o) => !hasOutline(o, outlines));
 	if (!pending.length || !outlines.length) return objects;
@@ -76,6 +78,7 @@ async function outlineLabels(
 		`${hash}-outline-labels.json`,
 	);
 	const cached = await readFile(path, "utf8").catch(() => null);
+	if (!cached && cacheOnly) return objects;
 	if (!cached) reserveCall("perception");
 	const mapping: {
 		matches: Array<{
@@ -88,6 +91,7 @@ async function outlineLabels(
 		: (
 				await generateObject({
 					model: getModel(),
+					experimental_telemetry: judgeTelemetry("floor-outline-labels"),
 					mode: "json",
 					temperature: 0,
 					schema: z.object({
@@ -315,17 +319,29 @@ export function floorVerdict(
 		rejected,
 	};
 }
+export interface FloorJudgeOptions {
+	model?: string;
+	prompt?: string;
+	fresh?: boolean;
+	recordScores?: boolean;
+	/** Frozen experiment inputs: never re-read mutable segmentation caches. */
+	outlines?: FloorOutline[];
+	referencePath?: string;
+	frozenLabels?: boolean;
+}
 let imageUnsupported: string | undefined;
 export async function asymmetricFloorJudge(
 	overlay: string,
 	objects: FloorObject[] = [],
 	ground?: GroundData,
 	referenceImage?: string,
+	options: FloorJudgeOptions = {},
 ): Promise<GroundVerdict> {
-	const outlines =
+	return traceJudge("asymmetricFloorJudge", { overlay, referenceImage, model: options.model, prompt: options.prompt }, async () => {
+	const outlines = options.outlines ?? (
 		ground && referenceImage
 			? await floorOutlines(referenceImage, ground.floor)
-			: [];
+			: []);
 	const deterministic = ground
 		? outlines.map((o) => ({
 				name: o.name,
@@ -343,17 +359,18 @@ export async function asymmetricFloorJudge(
 				}
 			: undefined;
 	const questions = floorQuestions(
-		await outlineLabels(objects, outlines),
+		options.frozenLabels ? objects : await outlineLabels(objects, outlines),
 		ground,
 		outlines,
 	);
 	const bytes = await readFile(overlay);
-	const reference = referenceImage
-		? await readFile(imagePath(referenceImage))
+	const reference = options.referencePath || referenceImage
+		? await readFile(options.referencePath ?? imagePath(referenceImage!))
 		: undefined;
 	const fingerprint = createHash("sha256")
 		.update("asymmetric-v4-outline-arithmetic")
 		.update(JSON.stringify(questions))
+		.update(options.model || options.prompt ? JSON.stringify({ model: options.model, prompt: options.prompt }) : "")
 		.update(reference ?? "")
 		.update(
 			execFileSync("magick", [overlay, "-depth", "8", "rgb:-"], {
@@ -374,11 +391,13 @@ export async function asymmetricFloorJudge(
 	};
 	if (!Object.keys(questions).length)
 		result = { probabilities: {}, provider: "deterministic-outlines" };
-	else if (stored) result = JSON.parse(stored);
+	else if (stored && !options.fresh) result = JSON.parse(stored);
 	else {
 		try {
+			if (options.model || options.prompt) throw new Error("Explicit vision variant");
 			if (imageUnsupported) throw new Error(imageUnsupported);
 			reserveCall("decision");
+			const payload = await traceDecision("openai/gpt-6-luna-decisions", async () => {
 			const response = await fetch(
 				"https://openrouter.ai/api/alpha/decisions",
 				{
@@ -416,9 +435,11 @@ export async function asymmetricFloorJudge(
 					`Decision image request failed (HTTP ${response.status})`,
 				);
 			}
-			const payload = (await response.json()) as {
+			return (await response.json()) as {
 				answers: Record<string, { noul?: number; score?: number }>;
+				usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; cost?: number };
 			};
+			});
 			const probabilities = Object.fromEntries(
 				Object.keys(questions).map((k) => [
 					k,
@@ -439,7 +460,8 @@ export async function asymmetricFloorJudge(
 				Object.entries(questions).map(async ([name, question]) => {
 					reserveCall("perception");
 					const { object } = await generateObject({
-						model: getModel(),
+						model: getModel(options.model),
+						experimental_telemetry: judgeTelemetry(`floor-question-${name}`),
 						mode: "json",
 						temperature: 0,
 						schema:
@@ -459,7 +481,7 @@ export async function asymmetricFloorJudge(
 								content: [
 									{
 										type: "text",
-										text: `Inspect the image and answer ONLY this typed question. For noul give yes=true only when the forbidden inclusion actually exists (for advisory floor coverage, yes means covered); confidence is certainty in that yes/no answer. For score give the coverage fraction. First locate actual bright GREEN pixels on the named surface. Grayscale pixels are excluded. Adjacent green floor does not mean an object is green. Missing floor is safe. Docks, decks, streets, steps and rugs are standable. For a hazard report describe exactly which green pixels are on the forbidden surface. Question: ${JSON.stringify(question)}`,
+										text: `${options.prompt ? `${options.prompt}\n` : ""}Inspect the image and answer ONLY this typed question. For noul give yes=true only when the forbidden inclusion actually exists (for advisory floor coverage, yes means covered); confidence is certainty in that yes/no answer. For score give the coverage fraction. First locate actual bright GREEN pixels on the named surface. Grayscale pixels are excluded. Adjacent green floor does not mean an object is green. Missing floor is safe. Docks, decks, streets, steps and rugs are standable. For a hazard report describe exactly which green pixels are on the forbidden surface. Question: ${JSON.stringify(question)}`,
 									},
 									...(reference
 										? [
@@ -504,14 +526,14 @@ export async function asymmetricFloorJudge(
 				probabilities: Object.fromEntries(
 					answers.map((a) => [a.name, a.probability]),
 				),
-				provider: "google/gemini-2.5-flash",
+				provider: options.model ?? "google/gemini-2.5-flash",
 				fallbackReason,
 				...{ evidence: answers },
 			};
 		}
 		floorVerdict(questions, result.probabilities);
 		await mkdir(dirname(cache), { recursive: true });
-		await writeFile(cache, JSON.stringify(result, null, 2));
+		if (!options.fresh) await writeFile(cache, JSON.stringify(result, null, 2));
 	}
 	const decision = floorVerdict(questions, result.probabilities);
 	if (rejectedOutlines.length) {
@@ -540,7 +562,9 @@ export async function asymmetricFloorJudge(
 		overlay.replace(/\.png$/, "-probabilities.json"),
 		JSON.stringify(verdict, null, 2),
 	);
+	if (options.recordScores !== false) scoreVerdict(verdict, FALSE_WALKABLE_THRESHOLD);
 	return verdict;
+	});
 }
 export async function labelledFloorObjects(
 	image: string,
@@ -590,6 +614,7 @@ export async function locateFloorHazards(
 	const question = `Locate the suspected non-standable surfaces cited by these failed floor checks. Return normalized [x0,y0,x1,y1] bounding boxes tightly containing the suspected objects or water/wall/sky patches. The boxes will ONLY REMOVE green floor. Include the entire suspected object, not surrounding safe floor. Do not change the verdict. Rejected checks: ${JSON.stringify((verdict.rejected ?? []).map((k) => ({ question: verdict.questions?.[k], name: k })))}. Evidence: ${JSON.stringify((verdict as GroundVerdict & { evidence?: unknown }).evidence)}`;
 	const { object } = await generateObject({
 		model: getModel(),
+		experimental_telemetry: judgeTelemetry("floor-hazard-localization"),
 		mode: "json",
 		temperature: 0,
 		schema: z.object({

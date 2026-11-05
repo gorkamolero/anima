@@ -4,6 +4,9 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+const tracePlaythrough = process.env.LANGFUSE_PUBLIC_KEY && process.env.LANGFUSE_SECRET_KEY
+	? (await import("../../../api/src/lib/langfuse.ts")).tracePlaythrough
+	: async (_input, task) => task();
 const root = fileURLToPath(new URL("../../../", import.meta.url));
 const out = resolve(root, "tmp/open-world-demo");
 mkdirSync(out, { recursive: true });
@@ -110,7 +113,7 @@ async function frame(step, extra = {}) {
 	const data = evaluate('window.__anima.captureFrame({format:"png"})');
 	const name = `${String(++index).padStart(2, "0")}-run${run}-${step}.png`;
 	writeFileSync(resolve(out, name), Buffer.from(data.split(",")[1], "base64"));
-	records.push({ step, frame: name, ms: 0, ...extra });
+	records.push({ step, time: Date.now(), frame: name, ms: 0, ...extra });
 	report();
 	console.log(step, extra.caption ?? "");
 }
@@ -416,6 +419,7 @@ async function replayTown() {
 	if (uncached.length)
 		throw Error(`Town replay made ${uncached.length} uncached calls`);
 }
+await tracePlaythrough({ script: "playtest-town", run, url }, async () => {
 try {
 	browser(["set", "viewport", "1920", "1080"]);
 	browser(["open", url]);
@@ -448,7 +452,7 @@ try {
 		await replayTown();
 		report();
 		console.log("PASS saved town replay: 0 uncached calls");
-		process.exit(0);
+		return { final: { ended: true }, failures: [], trace: records.map((r) => ({ ...r, action: r.step, scene: r.place?.id })) };
 	}
 	const originalDepotImage = qa().backgroundTextureKey;
 	const changed = await action(
@@ -573,8 +577,11 @@ try {
 	});
 	if (video.status !== 0) throw new Error(video.stderr.slice(-2000));
 	console.log("PASS", resolve(out, "journey.md"));
+	return { final: { ended: true }, failures: [], trace: records.map((r) => ({ ...r, action: r.step, scene: r.place?.id })) };
 } catch (error) {
 	report(error.message);
 	console.error(error);
 	process.exitCode = 1;
+	return { final: { ended: false }, failures: [String(error)], trace: records.map((r) => ({ ...r, action: r.step, scene: r.place?.id })) };
 }
+});

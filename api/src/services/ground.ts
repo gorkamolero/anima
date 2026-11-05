@@ -7,6 +7,7 @@ import { depthRegions } from "@anima/footfall/core/walkarea/regions";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { imagePath, PUBLIC } from "../lib/backgrounds.js";
+import { judgeTelemetry, scoreVerdict, traceJudge } from "../lib/langfuse.js";
 import { getModel } from "../lib/model.js";
 import { recordCall } from "./costs.js";
 import {
@@ -390,6 +391,7 @@ export async function judgeGround(
 	data: GroundData,
 	key = basename(image, ".png"),
 ): Promise<GroundVerdict[]> {
+	return traceJudge("judgeGround", { image, key }, async () => {
 	const source = imagePath(image);
 	const id = basename(source, ".png");
 	const out = proofDirectory(key);
@@ -436,6 +438,7 @@ export async function judgeGround(
 		const started = Date.now();
 		const { object } = await generateObject({
 			model: getModel(),
+			experimental_telemetry: judgeTelemetry("ground-judge"),
 			mode: "json",
 			schema: z.object({ pass: z.boolean(), why: z.string() }),
 			messages: [
@@ -468,7 +471,10 @@ export async function judgeGround(
 			path.replace(/\.png$/, ".json"),
 			JSON.stringify(verdict, null, 2),
 		);
+		scoreVerdict(verdict, 0.6, `sample_${i}_`);
 		verdicts.push(verdict);
 	}
+	scoreVerdict({ pass: verdicts.every((v) => v.pass), why: verdicts.map((v) => v.why).join("; ") }, 0.6);
 	return verdicts;
+	});
 }
