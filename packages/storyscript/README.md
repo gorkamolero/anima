@@ -165,7 +165,7 @@ pnpm exec tsx scripts/langfuse-judge-experiment.ts --variant=vision-silhouette -
 ```
 
 The runner reuses API startup credential loading. It upserts stable content-hash
-item IDs into `anima-floor-places` and uses hosted items with the v4 experiment
+item IDs into `anima-floor-places` and uses hosted items with the v6 experiment
 runner. Runs are named `<variant>-<ISO timestamp>` and can be compared in the
 dataset-run view. The default is two items, sequentially. Each item may ask several
 model questions. An explicit model or prompt selects the per-question vision path;
@@ -185,12 +185,12 @@ labels. Unreviewed inputs have no expected output. `floor_agreement` and aggrega
 judge's pass rate, not accuracy; `floor_completion_rate` tracks completed verdicts.
 
 Judge traces/spans are `judge-floor`, with model generations, token usage and
-duration (provider cost when available). Scores include `floor_pass`, per-question
-`floor_pass_<question>` or advisory `floor_coverage_<question>`,
-`floor_probability_<question>`, `false_walkable_threshold`, and
-`floor_outline_<name>_{fraction,pixels,covered,pass}` / `floor_outline_threshold`.
-Ground compositing samples use `sample_<index>_floor_pass` plus an overall
-`floor_pass`. Reasons are score comments.
+duration (provider cost when available). Scores use a fixed set: `floor_pass`, `floor_agreement`,
+`false_walkable_max_probability`, `floor_failed_questions`,
+`floor_outline_max_fraction`, and `floor_outline_failed`. Advisory coverage is
+excluded from hazard maxima/counts. Per-question probabilities and outline detail
+remain in score comments and judge metadata; ground samples remain in judge
+metadata with one overall `floor_pass`. Run aggregates are unchanged.
 
 Run the existing story-player callers or `playtest-town.mjs` as usual with Langfuse
 keys exported. Each run emits `play-story`, timed scene/action spans,

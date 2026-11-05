@@ -17,9 +17,9 @@
 	"dependencies": {
 		"@fal-ai/client": "^1.10.0",
 		"@hono/node-server": "^1.13.0",
-		"@langfuse/client": "^4.6.1",
-		"@langfuse/otel": "^4.6.1",
-		"@langfuse/tracing": "^4.6.1",
+		"@langfuse/client": "^6.1.1",
+		"@langfuse/otel": "^6.1.1",
+		"@langfuse/tracing": "^6.1.1",
 		"@libsql/client": "^0.18.0",
 		"@openrouter/ai-sdk-provider": "1.5.4",
 		"@opentelemetry/core": "^2.12.0",

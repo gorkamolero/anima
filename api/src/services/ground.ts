@@ -472,7 +472,6 @@ export async function judgeGround(
 			path.replace(/\.png$/, ".json"),
 			JSON.stringify(verdict, null, 2),
 		);
-		scoreVerdict(verdict, 0.6, `sample_${i}_`);
 		verdicts.push(verdict);
 	}
 	scoreVerdict({ pass: verdicts.every((v) => v.pass), why: verdicts.map((v) => v.why).join("; ") }, 0.6);

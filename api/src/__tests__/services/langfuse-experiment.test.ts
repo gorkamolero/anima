@@ -29,7 +29,7 @@ it("runs the default two hosted items, variant configuration, evaluations and cl
 	mocks.build.mockResolvedValue(items);
 	mocks.get.mockResolvedValue({ items: [...items].reverse().map((item) => ({ ...item, input: { snapshotId: item.id } })) });
 	mocks.judge.mockResolvedValue({ pass: true, why: "safe" });
-	mocks.client.mockReturnValue({ createDataset: mocks.createDataset, createDatasetItem: mocks.createDatasetItem, dataset: { get: mocks.get }, experiment: { run: mocks.run } });
+	mocks.client.mockReturnValue({ api: { datasets: { create: mocks.createDataset }, datasetItems: { create: mocks.createDatasetItem } }, dataset: { get: mocks.get }, experiment: { run: mocks.run } });
 	mocks.run.mockImplementation(async (config) => {
 		expect(config.data.map((item: { id: string }) => item.id)).toEqual(["a", "b"]);
 		expect(config.runName).toMatch(/^test-variant-/);

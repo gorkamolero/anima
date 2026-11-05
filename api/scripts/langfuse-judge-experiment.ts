@@ -25,8 +25,8 @@ try {
 			const model = arg("model");
 			const prompt = arg("prompt");
 			const variant = arg("variant") ?? (model || prompt ? "vision-variant" : "baseline");
-			await client.createDataset({ name: DATASET_NAME, description: "Frozen cached floor inputs; expected outputs only from explicit reviewer approvals." });
-			for (const item of items) await client.createDatasetItem({
+			await client.api.datasets.create({ name: DATASET_NAME, description: "Frozen cached floor inputs; expected outputs only from explicit reviewer approvals." });
+			for (const item of items) await client.api.datasetItems.create({
 				datasetName: DATASET_NAME, id: item.id,
 				input: { snapshotId: item.id, place: item.input.place, background: item.input.background },
 				expectedOutput: item.expectedOutput,

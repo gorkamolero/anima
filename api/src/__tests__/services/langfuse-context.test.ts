@@ -6,12 +6,14 @@ import { getActiveTraceId, startActiveObservation } from "@langfuse/tracing";
 
 const captured = vi.hoisted(() => ({ spans: [] as any[], scores: [] as any[] }));
 // Real NodeSDK and Langfuse tracing; replace only the network sinks.
-vi.mock("@langfuse/otel", () => ({ LangfuseSpanProcessor: class {
-	onStart() {}
-	onEnd(span: unknown) { captured.spans.push(span); }
-	async forceFlush() {}
-	async shutdown() {}
-} }));
+vi.mock("@langfuse/otel", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@langfuse/otel")>();
+	return { LangfuseSpanProcessor: class extends actual.LangfuseSpanProcessor {
+		constructor() { super({ publicKey: "test", secretKey: "test", exporter: { export: (_spans, callback) => callback({ code: 0 }), shutdown: async () => {} } }); }
+		// Keep real propagation in onStart; intercept onEnd before media/network export.
+		onEnd(span: Parameters<InstanceType<typeof actual.LangfuseSpanProcessor>["onEnd"]>[0]) { captured.spans.push(span); }
+	} };
+});
 vi.mock("@langfuse/client", () => ({ LangfuseClient: class {
 	score = { activeTrace: (score: unknown) => captured.scores.push({ score, traceId: getActiveTraceId() }) };
 	async flush() {}
@@ -41,8 +43,8 @@ it("keeps judge generations and scores on the caller trace, and separates playth
 		const judge = captured.spans.find((span) => span.name === "judge-floor");
 		expect(judge.attributes["langfuse.observation.type"]).toBe("evaluator");
 		expect(judge.attributes["langfuse.trace.tags"]).toEqual(["anima", "floor-judge", "candidate"]);
-		expect(JSON.parse(judge.attributes["langfuse.trace.input"])).toMatchObject({ place: "pier", background: "/pier.png", questions: [{ name: "environment" }] });
-		expect(JSON.parse(judge.attributes["langfuse.trace.output"])).toEqual({ pass: true, why: "clear", probabilities: { environment: 0.1 } });
+		expect(JSON.parse(judge.attributes["langfuse.observation.input"])).toMatchObject({ place: "pier", background: "/pier.png", questions: [{ name: "environment" }] });
+		expect(JSON.parse(judge.attributes["langfuse.observation.output"])).toEqual({ pass: true, why: "clear", probabilities: { environment: 0.1 } });
 		// Exercise the actual AI SDK telemetry with an entirely local provider stub.
 		await traceJudge("floor", {}, async () => (await generateObject({
 			model: { specificationVersion: "v2", provider: "stub", modelId: "local-vision", supportedUrls: {}, doGenerate: async () => ({ content: [{ type: "text", text: '{"pass":true}' }], finishReason: "stop", usage: { inputTokens: 5, outputTokens: 3 }, warnings: [] }), doStream: async () => { throw Error("unused"); } },
@@ -61,7 +63,7 @@ it("keeps judge generations and scores on the caller trace, and separates playth
 		expect(play.spanContext().traceId).not.toBe(callerId);
 		expect(play.attributes["session.id"]).toBe("game-session");
 		expect(play.attributes["langfuse.trace.tags"]).toEqual(["anima", "playthrough", "curious"]);
-		expect(JSON.parse(play.attributes["langfuse.trace.output"])).toMatchObject({ ended: true, failure_count: 0 });
+		expect(JSON.parse(play.attributes["langfuse.observation.output"])).toMatchObject({ ended: true, failure_count: 0 });
 		expect(captured.scores.filter((entry) => entry.score.name === "ended")[0].traceId).toBe(play.spanContext().traceId);
 	} finally {
 		await shutdownLangfuse(); listener.mockRestore(); vi.unstubAllEnvs();

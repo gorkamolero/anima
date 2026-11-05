@@ -1,6 +1,6 @@
 import { LangfuseClient, type Evaluation } from "@langfuse/client";
 import { LangfuseSpanProcessor } from "@langfuse/otel";
-import { startActiveObservation, startObservation } from "@langfuse/tracing";
+import { startActiveObservation, startObservation, propagateAttributes } from "@langfuse/tracing";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import type { GroundVerdict } from "../services/ground.js";
 
@@ -50,16 +50,14 @@ export interface JudgeTraceContext {
 }
 export async function traceJudge<T>(judge: string, context: JudgeTraceContext, task: (setQuestions: (questions: unknown) => void) => Promise<T>): Promise<T> {
 	if (!langfuse()) return task(() => {});
-	return startActiveObservation("judge-floor", async (span) => {
+	return propagateAttributes({ traceName: "judge-floor", sessionId: context.sessionId, tags: ["anima", "floor-judge", context.variant ?? "baseline"], metadata: { variant: context.variant ?? "baseline", ...(context.model ? { model: context.model } : {}) } }, () => startActiveObservation("judge-floor", async (span) => {
 		const input = { place: context.place ?? null, background: context.background ?? null, questions: [] as unknown };
 		const metadata = { judge, ...context, variant: context.variant ?? "baseline" };
 		span.update({ input, metadata });
-		span.updateTrace({ name: "judge-floor", input, sessionId: context.sessionId, tags: ["anima", "floor-judge", metadata.variant], metadata });
 		try {
 			const result = await task((questions) => {
 				input.questions = questions;
 				span.update({ input });
-				span.updateTrace({ input });
 			});
 			const verdicts = (Array.isArray(result) ? result : [result]) as GroundVerdict[];
 			const output = {
@@ -68,38 +66,39 @@ export async function traceJudge<T>(judge: string, context: JudgeTraceContext, t
 				probabilities: verdicts.length === 1 ? verdicts[0]?.probabilities ?? {} : verdicts.map((verdict) => verdict?.probabilities ?? {}),
 			};
 			span.update({ output, metadata: { ...metadata, rawOutput: result } });
-			span.updateTrace({ output });
 			return result;
 		} catch (error) {
 			span.update({ level: "ERROR", statusMessage: "Judge invocation failed" });
-			span.updateTrace({ output: { error: "Judge invocation failed" } });
+			span.update({ output: { error: "Judge invocation failed" } });
 			throw error;
 		}
-	}, { asType: "evaluator" });
+	}, { asType: "evaluator" }));
 }
-export function verdictScores(verdict: GroundVerdict, threshold: number, prefix = ""): Evaluation[] {
-	const scores: Evaluation[] = [{ name: `${prefix}floor_pass`, value: Number(verdict.pass), dataType: "BOOLEAN", comment: verdict.why }];
-	const evidence = (verdict as GroundVerdict & { evidence?: Array<{ name: string; evidence: string }> }).evidence;
-	for (const [name, probability] of Object.entries(verdict.probabilities ?? {})) {
-		const question = verdict.questions?.[name];
-		const comment = evidence?.find((e) => e.name === name)?.evidence ?? verdict.why;
-		scores.push({ name: `${prefix}floor_probability_${name}`, value: probability, dataType: "NUMERIC", comment });
-		if (question?.type === "noul") scores.push({
-			name: `${prefix}floor_${question.advisory ? "coverage" : "pass"}_${name}`,
-			value: Number(question.advisory ? probability >= threshold : probability < threshold), dataType: "BOOLEAN", comment,
+export function verdictScores(verdict: GroundVerdict, threshold: number): Evaluation[] {
+	const scores: Evaluation[] = [{ name: "floor_pass", value: Number(verdict.pass), dataType: "BOOLEAN", comment: verdict.why }];
+	if (verdict.probabilities) {
+		const hazards = Object.entries(verdict.probabilities).filter(([name]) => {
+			const question = verdict.questions?.[name];
+			return question?.type === "noul" && !question.advisory;
 		});
+		const comment = JSON.stringify({ why: verdict.why, threshold, probabilities: verdict.probabilities, questions: verdict.questions });
+		scores.push(
+			{ name: "false_walkable_max_probability", value: Math.max(0, ...hazards.map(([, probability]) => probability)), dataType: "NUMERIC", comment },
+			{ name: "floor_failed_questions", value: hazards.filter(([, probability]) => probability >= threshold).length, dataType: "NUMERIC", comment },
+		);
 	}
-	if (verdict.probabilities) scores.push({ name: `${prefix}false_walkable_threshold`, value: threshold, dataType: "NUMERIC", comment: "Hazard probabilities at or above this threshold fail; advisory coverage does not." });
-	for (const outline of verdict.deterministic ?? []) {
-		for (const metric of ["fraction", "pixels", "covered"] as const) scores.push({ name: `${prefix}floor_outline_${outline.name}_${metric}`, value: outline[metric], dataType: "NUMERIC", comment: verdict.why });
-		scores.push({ name: `${prefix}floor_outline_${outline.name}_pass`, value: Number(outline.pass), dataType: "BOOLEAN", comment: verdict.why });
+	if (verdict.deterministic) {
+		const comment = JSON.stringify({ why: verdict.why, threshold: 0.2, outlines: verdict.deterministic });
+		scores.push(
+			{ name: "floor_outline_max_fraction", value: Math.max(0, ...verdict.deterministic.map((outline) => outline.fraction)), dataType: "NUMERIC", comment },
+			{ name: "floor_outline_failed", value: verdict.deterministic.filter((outline) => !outline.pass).length, dataType: "NUMERIC", comment },
+		);
 	}
-	if (verdict.deterministic?.length) scores.push({ name: `${prefix}floor_outline_threshold`, value: 0.2, dataType: "NUMERIC", comment: "Eroded outline overlap above 0.2 fails." });
 	return scores;
 }
-export function scoreVerdict(verdict: GroundVerdict, threshold: number, prefix = "") {
+export function scoreVerdict(verdict: GroundVerdict, threshold: number) {
 	const client = langfuse();
-	if (client) for (const score of verdictScores(verdict, threshold, prefix)) client.score.activeTrace(score);
+	if (client) for (const score of verdictScores(verdict, threshold)) client.score.activeTrace(score);
 }
 export async function traceDecision<T extends { usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number; cost?: number } }>(model: string, task: () => Promise<T>, input?: unknown): Promise<T> {
 	if (!langfuse()) return task();
@@ -130,13 +129,12 @@ export interface PlaythroughResult {
 export async function tracePlaythrough<T>(input: { session?: string; sessionId?: string; variant?: string; act?: string; script?: string; config?: Record<string, unknown>; [key: string]: unknown }, task: () => Promise<T>, resultOf: (result: T) => PlaythroughResult = (r) => r as PlaythroughResult): Promise<T> {
 	const client = langfuse();
 	if (!client) return task();
+	const variant = input.variant ?? String(input.config?.archetype ?? "scripted");
 	try {
-		return await startActiveObservation("play-story", async (span) => {
-			const variant = input.variant ?? String(input.config?.archetype ?? "scripted");
+		return await propagateAttributes({ traceName: "play-story", sessionId: input.sessionId ?? input.session, tags: ["anima", "playthrough", variant], metadata: { variant } }, () => startActiveObservation("play-story", async (span) => {
 			const summary = { harness: input.script ?? "story-player", act: input.act ?? input.config?.act ?? null };
 			const metadata = { kind: "scripted-browser-playthrough", variant, rawInput: input };
 			span.update({ input: summary, metadata });
-			span.updateTrace({ name: "play-story", input: summary, sessionId: input.sessionId ?? input.session, tags: ["anima", "playthrough", variant], metadata });
 			const record = (result: PlaythroughResult) => {
 				const failures = result.failures ?? [];
 				client.score.activeTrace({ name: "ended", value: Number(result.final?.ended === true), dataType: "BOOLEAN", comment: "Scripted completion state; no AI evaluator." });
@@ -149,7 +147,6 @@ export async function tracePlaythrough<T>(input: { session?: string; sessionId?:
 				for (const failure of failures) startObservation("record-playthrough-failure", { output: failure, level: "ERROR" }, { asType: "event" }).end();
 				const output = { ended: result.final?.ended === true, failure_count: failures.length, failures, steps: steps.length };
 				span.update({ output, metadata: { ...metadata, rawOutput: result } });
-				span.updateTrace({ output });
 			};
 			try {
 				const value = await task();
@@ -159,7 +156,7 @@ export async function tracePlaythrough<T>(input: { session?: string; sessionId?:
 				record((error as { playthrough?: PlaythroughResult })?.playthrough ?? { failures: [String(error)], final: { ended: false } });
 				throw error;
 			}
-		});
+		}));
 	} finally {
 		await flushLangfuse().catch(() => {});
 	}
