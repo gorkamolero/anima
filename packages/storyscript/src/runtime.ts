@@ -59,6 +59,7 @@ export interface StoryRuntimeSnapshot {
 	choices: StoryChoice[];
 	ended: boolean;
 	ending?: string;
+	halted?: "max_scenes";
 	visits?: Array<{ scene: StoryScene; outputStart: number }>;
 }
 
@@ -131,6 +132,8 @@ export class StoryRuntime {
 	private ended = false;
 	private ending?: string;
 	private jumpSerial = 0;
+	private sceneVisits = 0;
+	private halted?: "max_scenes";
 	private continuations: Array<{
 		lines: string[];
 		order: number;
@@ -141,6 +144,7 @@ export class StoryRuntime {
 		graph: StoryGraph,
 		initialState?: Partial<StoryState>,
 		private endTargets: string[] = [],
+		private limits: { maxSceneVisits?: number } = {},
 	) {
 		this.graph = graph;
 		this.currentSceneId = initialState?.scene ?? graph.scenes[0]?.id ?? "";
@@ -149,6 +153,8 @@ export class StoryRuntime {
 	}
 
 	start(): StoryRuntimeSnapshot {
+		this.sceneVisits = 0;
+		this.halted = undefined;
 		this.output = [];
 		this.visits = [];
 		this.choices = [];
@@ -216,6 +222,7 @@ export class StoryRuntime {
 			})),
 			ended: this.ended,
 			ending: this.ending,
+			...(this.halted ? { halted: this.halted } : {}),
 			visits: [...this.visits],
 		};
 	}
@@ -225,11 +232,16 @@ export class StoryRuntime {
 	}
 
 	private enterScene(sceneId: string): void {
+		if (this.sceneVisits >= (this.limits.maxSceneVisits ?? Infinity)) {
+			this.halted = "max_scenes";
+			return;
+		}
 		const scene = this.graph.scenes.find((item) => item.id === sceneId);
 		if (!scene) {
 			this.output.push(`[Scene not found: ${sceneId}]`);
 			return;
 		}
+		this.sceneVisits++;
 		this.currentSceneId = scene.id;
 		this.visits.push({ scene, outputStart: this.output.length });
 		this.describeScene(scene, true);
@@ -247,7 +259,12 @@ export class StoryRuntime {
 		allowPlain = false,
 	): void {
 		let index = 0;
-		while (index < lines.length && this.choices.length === 0 && !this.ended) {
+		while (
+			index < lines.length &&
+			this.choices.length === 0 &&
+			!this.ended &&
+			!this.halted
+		) {
 			const line = lines[index]?.trim() ?? "";
 
 			if (line.startsWith("IF ")) {
@@ -447,6 +464,7 @@ export class StoryRuntime {
 		if (target.startsWith("GAME_END")) {
 			const credits = this.findTarget(target, originOrder);
 			if (credits && isScene(credits)) this.enterScene(credits.id);
+			if (this.halted) return;
 			this.ended = true;
 			this.ending = target;
 			this.output.push(
