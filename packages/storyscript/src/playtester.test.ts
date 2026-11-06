@@ -129,7 +129,9 @@ describe("story playtester", () => {
 		const report = await playStory(story, mock);
 		expect(report.stopReason).toBe("player_error");
 		expect(report.modelCalls).toBe(3);
-		expect(report.costUsd).toBeNull();
+		expect(report.costUsd).toBeCloseTo(0.05);
+		expect(report.callsWithoutCost).toBe(1);
+		expect(report.costComplete).toBe(false);
 	});
 	it("caps automatic scene loops inside a single runtime action", async () => {
 		const report = await playStory(

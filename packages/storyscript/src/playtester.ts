@@ -43,7 +43,16 @@ export interface ModelResult<T> {
 	value: T;
 	costUsd: number | null;
 }
+export interface ActFacts {
+	reachedEnding: boolean;
+	sceneCoverage: number;
+	stopReason: string;
+	stuck: boolean;
+	invalidActions: number;
+	deadReferences: string[];
+}
 export interface PlaytestAdapter {
+	retryableJudgeError?(error: unknown): boolean;
 	decide(input: {
 		snapshot: PlayerView;
 		transcript: SceneRecord[];
@@ -51,7 +60,7 @@ export interface PlaytestAdapter {
 	judgeScene(scene: SceneRecord): Promise<ModelResult<Verdict>>;
 	judgeAct(input: {
 		scenes: SceneRecord[];
-		stopReason: string;
+		facts: ActFacts;
 	}): Promise<ModelResult<Verdict>>;
 	scene?<T>(scene: SceneRecord, task: () => Promise<T>): Promise<T>;
 }
@@ -91,14 +100,14 @@ export async function playStory(
 	const scenes: SceneRecord[] = [];
 	let modelCalls = 0,
 		knownCostUsd = 0,
-		costComplete = true,
+		callsWithoutCost = 0,
 		invalidActions = 0;
 	let stopReason = "";
 	let actVerdict: Verdict | undefined;
 	const evaluationErrors: string[] = [];
 	const actions = new Map<string, number>();
 	const account = <T>(result: ModelResult<T>) => {
-		if (result.costUsd === null) costComplete = false;
+		if (result.costUsd === null) callsWithoutCost++;
 		else knownCostUsd += result.costUsd;
 		return result.value;
 	};
@@ -134,7 +143,7 @@ export async function playStory(
 					stopReason = "max_actions_per_scene";
 					break;
 				}
-				// Reserve calls for this scene and the act; disable retries in the adapter.
+				// Reserve two evaluation calls; all judgments and retries run after playback.
 				if (modelCalls >= caps.maxModelCalls - 2) {
 					stopReason = "max_model_calls";
 					break;
@@ -146,7 +155,7 @@ export async function playStory(
 						await adapter.decide({ snapshot: view, transcript: scenes }),
 					);
 				} catch {
-					costComplete = false;
+					callsWithoutCost++;
 					stopReason = "player_error";
 					break;
 				}
@@ -181,16 +190,6 @@ export async function playStory(
 				stopReason ||= snapshot.halted ?? "";
 				ingest(snapshot);
 			}
-			if (modelCalls < caps.maxModelCalls - 1) {
-				modelCalls++;
-				try {
-					record.verdict = account(await adapter.judgeScene(record));
-				} catch {
-					costComplete = false;
-					evaluationErrors.push("scene_judge_error");
-					stopReason ||= "scene_judge_error";
-				}
-			}
 		};
 		if (adapter.scene) await adapter.scene(record, task);
 		else await task();
@@ -200,15 +199,60 @@ export async function playStory(
 		}
 	}
 	stopReason = snapshot.ended ? "ending" : stopReason || "max_model_calls";
-	if (modelCalls < caps.maxModelCalls) {
-		modelCalls++;
-		try {
-			actVerdict = account(await adapter.judgeAct({ scenes, stopReason }));
-		} catch {
-			costComplete = false;
-			evaluationErrors.push("act_judge_error");
+	const facts: ActFacts = {
+		reachedEnding: snapshot.ended,
+		stopReason,
+		sceneCoverage: graph.scenes.length
+			? new Set(scenes.map((s) => s.sceneId)).size / graph.scenes.length
+			: 0,
+		stuck:
+			!snapshot.ended &&
+			!snapshot.choices.length &&
+			!playerView(snapshot).hotspots.some((h) => h.verbs.length),
+		invalidActions,
+		deadReferences: validateStoryGraph(graph),
+	};
+	// Playback is complete. Judge failures cannot affect runtime or stopReason.
+	const judge = async (
+		task: () => Promise<ModelResult<Verdict>>,
+		label: string,
+		reserve: number,
+	) => {
+		for (
+			let attempt = 0;
+			attempt < 2 && modelCalls < caps.maxModelCalls - reserve;
+			attempt++
+		) {
+			modelCalls++;
+			try {
+				return account(await task());
+			} catch (error) {
+				callsWithoutCost++;
+				if (
+					attempt === 0 &&
+					adapter.retryableJudgeError?.(error) &&
+					modelCalls < caps.maxModelCalls - reserve
+				)
+					continue;
+				evaluationErrors.push(label);
+				return undefined;
+			}
 		}
-	}
+		evaluationErrors.push(`${label}:max_model_calls`);
+		return undefined;
+	};
+	for (const scene of scenes)
+		scene.verdict = await judge(
+			() => adapter.judgeScene(scene),
+			`scene_judge_error:${scene.sceneId}`,
+			1,
+		);
+	actVerdict = await judge(
+		() => adapter.judgeAct({ scenes, facts }),
+		"act_judge_error",
+		0,
+	);
+
 	return {
 		scenes,
 		actVerdict,
@@ -228,9 +272,10 @@ export async function playStory(
 		invalidActions,
 		deadReferences: validateStoryGraph(graph),
 		modelCalls,
-		costUsd: costComplete ? knownCostUsd : null,
+		costUsd: knownCostUsd,
 		knownCostUsd,
-		costComplete,
+		costComplete: callsWithoutCost === 0,
+		callsWithoutCost,
 		unjudgedScenes: scenes.filter((s) => !s.verdict).length,
 	};
 }

@@ -111,4 +111,123 @@ describe("AI story experiment offline", () => {
 		).toBe(false);
 		expect(verdictSchema.safeParse({ pacing: 11 }).success).toBe(false);
 	});
+	it("finishes playback before judging, retries parse failures once, and continues judging", async () => {
+		const player = createStoryMock(),
+			judge = createStoryMock();
+		const generate = judge.doGenerate;
+		let attempts = 0;
+		judge.doGenerate = async (options) => {
+			expect(player.doGenerateCalls).toHaveLength(2);
+			expect(options.maxOutputTokens).toBe(16384);
+			attempts++;
+			const result = await generate(options);
+			// Both attempts at scene one fail; scene two succeeds; act fails once then succeeds.
+			return [1, 2, 4].includes(attempts)
+				? { ...result, content: [{ type: "text", text: "not JSON" }] }
+				: result;
+		};
+		const twoScenes =
+			source.replace("-> GAME_END", "-> next") +
+			"\n" +
+			source.replace("SCENE start", "SCENE next");
+		const report = await playStory(
+			twoScenes,
+			createStoryAdapter(player, judge, "curious-explorer"),
+		);
+		expect(report).toMatchObject({
+			reachedEnding: true,
+			stopReason: "ending",
+			unjudgedScenes: 1,
+			modelCalls: 7,
+			callsWithoutCost: 3,
+		});
+		expect(attempts).toBe(5);
+		expect(report.scenes[1].verdict).toBeDefined();
+		expect(report.actVerdict).toBeDefined();
+		expect(report.evaluationErrors).toEqual(["scene_judge_error:start"]);
+	});
+	it("passes deterministic facts and incomplete-act instructions to the act judge", async () => {
+		const judge = createStoryMock();
+		const incomplete =
+			source.replace("-> GAME_END", "-> missing") + "\nSCENE unseen\nEND";
+		const report = await playStory(
+			incomplete,
+			createStoryAdapter(createStoryMock(), judge, "curious-explorer"),
+			{ maxActions: 1 },
+		);
+		const call = judge.doGenerateCalls.at(-1)!;
+		const user = call.prompt
+			.filter((m) => m.role === "user")
+			.flatMap((m) => m.content)
+			.filter((c) => c.type === "text")
+			.map((c) => c.text)
+			.join("");
+		expect(JSON.parse(user).facts).toEqual({
+			reachedEnding: false,
+			sceneCoverage: 0.5,
+			stopReason: "max_actions_per_scene",
+			stuck: false,
+			invalidActions: 0,
+			deadReferences: ['Unknown target "missing" in scene start'],
+		});
+		expect(JSON.stringify(call.prompt)).toContain(
+			"An unfinished act cannot score as a finished one",
+		);
+		expect(report.reachedEnding).toBe(false);
+	});
+	it("always emits known cost with missing-call count and dead-reference names", async () => {
+		const judge = createStoryMock(),
+			player = createStoryMock();
+		const generate = judge.doGenerate;
+		let calls = 0;
+		judge.doGenerate = async (options) => {
+			const result = await generate(options);
+			return {
+				...result,
+				providerMetadata:
+					++calls === 1 ? {} : { openrouter: { usage: { cost: 0.25 } } },
+			};
+		};
+		const report = await playStory(
+			source + "\nDIALOGUE broken\n  -> grocery_store\nEND",
+			createStoryAdapter(player, judge, "curious-explorer"),
+		);
+		const scores = storyScores(report);
+		expect(report).toMatchObject({
+			costUsd: 0.25,
+			callsWithoutCost: 1,
+			costComplete: false,
+		});
+		expect(scores.find((s) => s.name === "cost_usd")).toMatchObject({
+			value: 0.25,
+			dataType: "NUMERIC",
+			comment: expect.stringContaining("1 calls lacked cost"),
+		});
+		expect(scores.find((s) => s.name === "dead_references")).toMatchObject({
+			value: 1,
+			dataType: "NUMERIC",
+			comment: expect.stringContaining("grocery_store"),
+		});
+	});
+	it("counts retry attempts against the hard total cap", async () => {
+		const judge = createStoryMock();
+		const generate = judge.doGenerate;
+		judge.doGenerate = async (options) => ({
+			...(await generate(options)),
+			content: [{ type: "text", text: "bad JSON" }],
+		});
+		const report = await playStory(
+			source,
+			createStoryAdapter(createStoryMock(), judge, "curious-explorer"),
+			{ maxModelCalls: 4 },
+		);
+		expect(report).toMatchObject({
+			modelCalls: 4,
+			reachedEnding: true,
+			stopReason: "ending",
+			unjudgedScenes: 1,
+			callsWithoutCost: 3,
+		});
+		expect(report.actVerdict).toBeUndefined();
+	});
 });

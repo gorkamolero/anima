@@ -1,4 +1,4 @@
-import { generateObject, type LanguageModel } from "ai";
+import { generateObject, NoObjectGeneratedError, type LanguageModel } from "ai";
 import { z } from "zod";
 import { propagateAttributes, startActiveObservation } from "@langfuse/tracing";
 import type { Evaluation } from "@langfuse/client";
@@ -61,7 +61,7 @@ export function createStoryAdapter(
 			system,
 			prompt: JSON.stringify(input),
 			maxRetries: 0,
-			maxOutputTokens: 1800,
+			maxOutputTokens: name === "choose-action" ? 1800 : 16384,
 			abortSignal: AbortSignal.timeout(90_000),
 			experimental_telemetry: {
 				isEnabled: telemetry,
@@ -84,7 +84,11 @@ export function createStoryAdapter(
 		};
 	}
 	const evaluate = (name: "judge-scene" | "judge-act", input: unknown) => {
-		const task = () => invoke(name, judge, verdictSchema, judgePrompt, input);
+		const system =
+			name === "judge-act"
+				? `${judgePrompt} The supplied deterministic facts are authoritative. An unfinished act cannot score as a finished one. Assess overall delivery of the whole act, explicitly accounting for reachedEnding, sceneCoverage, stopReason, stuck, invalidActions and deadReferences. Do not extrapolate unseen scenes or an unexperienced ending; explain how incomplete coverage and failure to reach an ending lower the overall verdict.`
+				: judgePrompt;
+		const task = () => invoke(name, judge, verdictSchema, system, input);
 		return telemetry
 			? startActiveObservation(
 					name,
@@ -99,6 +103,7 @@ export function createStoryAdapter(
 			: task();
 	};
 	return {
+		retryableJudgeError: (error) => NoObjectGeneratedError.isInstance(error),
 		decide: (input) =>
 			invoke(
 				"choose-action",
@@ -159,6 +164,7 @@ export const SCORE_NAMES = [
 	"stuck",
 	"invalid_actions",
 	"cost_usd",
+	"dead_references",
 ] as const;
 export const RUN_SCORE_NAMES = [
 	"mean_act_overall",
@@ -225,7 +231,12 @@ export function storyScores(report: PlaytestReport): Evaluation[] {
 			report.costUsd,
 			report.costComplete
 				? "Provider-reported cost summed across player and judge calls."
-				: `Incomplete provider accounting; known subtotal USD ${report.knownCostUsd}. Missing cost is not zero.`,
+				: `Incomplete provider accounting; known subtotal USD ${report.knownCostUsd}; ${report.callsWithoutCost} calls lacked cost. Actual total may be higher.`,
+		),
+		...numeric(
+			"dead_references",
+			report.deadReferences.length,
+			JSON.stringify(report.deadReferences),
 		),
 	];
 }
